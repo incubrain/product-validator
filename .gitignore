@@ -1,10 +1,31 @@
-node_modules
-*.log*
-.nuxt
-.nitro
-.cache
-.output
+# Dependencies
+node_modules/
+.pnpm-store/
+
+# Build outputs
+.output/
+.mastra/
+.nuxt/
+.nitro/
+.cache/
+dist/
+
+# Environment
 .env
-dist
-.unlighthouse
-data/kv
+.env.*
+!.env.example
+
+# Logs
+logs/
+*.log
+
+# OS
+.DS_Store
+.fleet
+.idea
+
+# Turbo
+.turbo/
+
+# Repomix
+repomix-*
