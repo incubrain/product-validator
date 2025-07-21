@@ -47,7 +47,7 @@
   },
   "dependencies": {
     "@heroicons/vue": "^2.0.18",
-    "@vercel/kv": "^0.2.2",
+    "@vercel/kv": "^3.0.0",
     "drizzle-orm": "^0.27.2",
     "postgres": "^3.3.5",
     "winston": "^3.10.0"
