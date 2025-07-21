@@ -15,7 +15,7 @@
   },
   "devDependencies": {
     "@iconify-json/material-symbols": "^1.1.52",
-    "@iconify-json/mdi": "^1.1.52",
+    "@iconify-json/mdi": "^1.2.3",
     "@nuxt/content": "^2.7.0",
     "@nuxt/devtools": "^0.5.5",
     "@nuxt/image": "^1.0.0-rc.1",
