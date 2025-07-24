@@ -1,59 +1,92 @@
 {
-  "typescript.tsserver.log": "off",
-  "typescript.tsserver.enableTracing": true,
-
-  // ESLint Configuration
-  // "eslint.useFlatConfig": true,
-  "eslint.validate": ["javascript", "typescript", "vue"],
-
-  // Your existing MDC settings (keep these)
-  "[markdown]": {
-    "editor.defaultFormatter": "Nuxt.mdc",
-    "editor.formatOnSave": true,
-    "editor.formatOnPaste": true,
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true,
-    "editor.detectIndentation": false
-  },
-  "[mdc]": {
-    "editor.defaultFormatter": "Nuxt.mdc",
-    "editor.formatOnSave": true,
-    "editor.formatOnPaste": true,
-    "editor.tabSize": 2,
-    "editor.insertSpaces": true,
-    "editor.detectIndentation": false
-  },
-
-  // Keep existing Prettier settings
-  "editor.formatOnSave": true,
-
-  // TypeScript performance optimizations
-  "typescript.tsserver.experimental.enableProjectDiagnostics": false, // Changed from true
-  "typescript.tsserver.maxTsServerMemory": 8192,
-  "typescript.disableAutomaticTypeAcquisition": true,
-  "typescript.tsserver.watchOptions": {
-    "watchFile": "useFsEvents",
-    "watchDirectory": "useFsEvents",
-    "fallbackPolling": "dynamicPriorityPolling",
-    "synchronousWatchDirectory": true
-  },
-  "typescript.preferences.importModuleSpecifier": "project-relative",
-  "typescript.tsdk": "node_modules/typescript/lib",
-  "typescript.enablePromptUseWorkspaceTsdk": true,
-
-  // Keep existing editor settings
+  // Disable the default formatter, use eslint instead
+  "editor.formatOnSave": false,
+  // Auto fix
   "editor.codeActionsOnSave": {
-    "source.fixAll.eslint": "always"
+    "source.fixAll.eslint": "explicit",
+    "source.organizeImports": "never"
   },
-
-  "editor.quickSuggestions": {
-    "strings": "on"
-  },
-
+  // Silent the stylistic rules in you IDE, but still auto fix them
+  "eslint.rules.customizations": [
+    {
+      "rule": "style/*",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "format/*",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-indent",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-spacing",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-spaces",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-order",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-dangle",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*-newline",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*quotes",
+      "severity": "off",
+      "fixable": true
+    },
+    {
+      "rule": "*semi",
+      "severity": "off",
+      "fixable": true
+    }
+  ],
+  // Enable eslint for all supported languages
+  "eslint.validate": [
+    "javascript",
+    "javascriptreact",
+    "typescript",
+    "typescriptreact",
+    "vue",
+    "html",
+    "markdown",
+    "json",
+    "jsonc",
+    "yaml",
+    "toml",
+    "xml",
+    "gql",
+    "graphql",
+    "astro",
+    "svelte",
+    "css",
+    "less",
+    "scss",
+    "pcss",
+    "postcss"
+  ],
   "tailwindCSS.classAttributes": [
-    "class", 
-    "className", 
-    "ui",
+    "class",
+    "className",
+    "ui"
   ],
 
   "tailwindCSS.experimental.classRegex": [
@@ -68,12 +101,11 @@
   "tailwindCSS.codeActions": true,
   "tailwindCSS.validate": true,
 
-  // Keep existing file associations
   "files.associations": {
     "*.css": "tailwindcss",
-    "*.mdc": "mdc",
     "*.md": "markdown"
   },
+
   "tailwindCSS.includeLanguages": {
     "vue": "html",
     "typescript": "javascript",
@@ -81,15 +113,15 @@
   },
 
   "tailwindCSS.classFunctions": [
-    "tv", 
-    "clsx", 
+    "tv",
+    "clsx",
     "cn",
     "createUIComponent"
   ],
 
   "tailwindCSS.files.exclude": [
-    "**/.git/**", 
-    "**/node_modules/**", 
+    "**/.git/**",
+    "**/node_modules/**",
     "**/.nuxt/**",
     "**/.output/**"
   ],
@@ -97,72 +129,4 @@
   "mdc.enableFormatting": true,
   "mdc.debug": true,
   "mdc.enableComponentMetadataCompletions": true,
-
-  // Keep existing terminal profiles
-  "terminal.integrated.profiles.linux": {
-    "Frontend": {
-      "path": "bash",
-      "icon": "browser",
-      "color": "terminal.ansiGreen"
-    },
-    "Backend": {
-      "path": "bash",
-      "icon": "server",
-      "color": "terminal.ansiBlue"
-    }
-  },
-
-  // Keep your existing excludes but add some performance-related ones
-  "files.watcherExclude": {
-    "**/.git/objects/**": true,
-    "**/.git/subtree-cache/**": true,
-    "**/dist/**": true,
-    "**/ai-context/**": true,
-    "**/ai-docs/**": true,
-    "**/backups/**": true,
-    "**/debug/**": true,
-    "**/logs/**": true,
-    "**/tmp/**": true,
-    "**/.cli-store/**": true,
-    "**/.output/**": true,
-    "**/.playground/**": true,
-    "**/.nuxt/**": true,
-    "**/coverage/**": true,
-    "**/.cache/**": true,
-    "**/build/**": true
-  },
-
-  // Keep existing search excludes
-  "search.exclude": {
-    "**/node_modules": true,
-    "**/dist": true,
-    "**/ai-context": true,
-    "**/ai-docs": true,
-    "**/backups": true,
-    "**/debug": true,
-    "**/logs": true,
-    "**/tmp": true,
-    "**/.output": true,
-    "**/.playground": true,
-    "**/.cli-store": true,
-    "**/.nuxt": true
-  },
-
-  // Modified files.exclude to help with performance
-  "files.exclude": {
-    "**/.git": true,
-    "**/.DS_Store": true,
-    "**/node_modules": false,
-    "**/dist": false,
-    "**/.cache": true,
-    "**/coverage": true
-  },
-
-  // Add some workspace memory settings
-  "js/ts.implicitProjectConfig.checkJs": false,
-  "javascript.updateImportsOnFileMove.enabled": "never",
-  "typescript.updateImportsOnFileMove.enabled": "never",
-  "typescript.suggestionActions.enabled": false,
-  "typescript.validate.enable": true,
-  "typescript.tsserver.useSyntaxServer": "auto"
 }
