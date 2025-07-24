@@ -18,6 +18,8 @@ logs
 .fleet
 .idea
 .eslintcache
+repomix-output.*
+**/repomix-output.*
 
 # Local env files
 .env
