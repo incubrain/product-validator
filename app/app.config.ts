@@ -7,7 +7,6 @@ export default defineAppConfig({
     //     size: 'sm'
     //   }
     // },
-
     colors: {
       primary: 'emerald',
       secondary: 'sky',

@@ -129,4 +129,15 @@
   "mdc.enableFormatting": true,
   "mdc.debug": true,
   "mdc.enableComponentMetadataCompletions": true,
+    // FORCE WORKSPACE TYPESCRIPT USAGE
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.preferences.includePackageJsonAutoImports": "on",
+  
+  // OVERRIDE PROBLEMATIC USER SETTINGS
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "typescript.updateImportsOnFileMove.enabled": "never",
+  "typescript.validate.enable": true,
+  "typescript.tsserver.useSyntaxServer": "auto",
+  "typescript.tsserver.maxTsServerMemory": 4096,
 }

@@ -218,17 +218,17 @@ export default defineNuxtConfig({
   //   ],
   // },
 
-  // debug: true,
+  debug: true,
   // typescript: {
   //   typeCheck: true, // Enable build-time type checking
   //   strict: true, // Keep strict mode
   // },
 
-  // replaces need for prettier
-  // configure - https://github.com/eslint-stylistic/eslint-stylistic/blob/main/packages/eslint-plugin/configs/customize.ts
-  // all rules - https://eslint.style/rules#rules
   eslint: {
     config: {
+      // replaces need for prettier
+      // configure - https://github.com/eslint-stylistic/eslint-stylistic/blob/main/packages/eslint-plugin/configs/customize.ts
+      // all rules - https://eslint.style/rules#rules
       stylistic: {
         pluginName: '@new-stylistic',
         indent: 2,
