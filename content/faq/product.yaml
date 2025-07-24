@@ -1,0 +1,15 @@
+faqs:
+  - question: What makes this different from other templates?
+    answer: Our template is intent-driven, meaning your business goals define the technical architecture. It's also AI-agent ready with built-in search capabilities.
+  
+  - question: Does it include a blog system?
+    answer: Yes, a complete blog system with categories, pagination, search, and SEO optimization is included out of the box.
+  
+  - question: Are analytics included?
+    answer: The template is structured for easy analytics integration, with conversion tracking points built into the architecture.
+  
+  - question: Can I add e-commerce functionality?
+    answer: While the current template focuses on authority building, the architecture is designed to extend to SaaS and e-commerce variants in future releases.
+  
+  - question: What about SEO optimization?
+    answer: Full SEO automation is included with meta tags, Schema.org structured data, and OG image generation based on your business configuration.

@@ -1,0 +1,402 @@
+/* assets/css/main.css - CORRECTED TAILWIND V4 SYNTAX */
+@import 'tailwindcss';
+@import '@nuxt/ui';
+
+@theme {
+  /* ========================================
+     GITHUB DARK THEME COLORS
+     ======================================== */
+
+  /* Our brand emerald (keep existing) */
+  --color-emerald-50: #ecfdf5;
+  --color-emerald-100: #d1fae5;
+  --color-emerald-200: #a7f3d0;
+  --color-emerald-300: #6ee7b7;
+  --color-emerald-400: #34d399;
+  --color-emerald-500: #10b981;
+  --color-emerald-600: #059669;
+  --color-emerald-700: #047857;
+  --color-emerald-800: #065f46;
+  --color-emerald-900: #064e3b;
+  --color-emerald-950: #022c22;
+
+  /* GitHub dark theme zinc overrides */
+  --color-zinc-50: #fafafa;
+  --color-zinc-100: #f4f4f5;
+  --color-zinc-200: #e4e4e7;
+  --color-zinc-300: #d4d4d8;
+  --color-zinc-400: #a1a1aa;
+  --color-zinc-500: #71717a;
+  --color-zinc-600: #52525b;
+  --color-zinc-700: #3f3f46;
+  --color-zinc-800: #27272a;
+  --color-zinc-900: #18181b;
+  --color-zinc-950: #09090b;
+
+  --gradient-neural-from: var(--color-emerald-950);
+  --gradient-neural-via: var(--color-blue-950);
+  --gradient-neural-to: var(--color-purple-950);
+
+  --gradient-quantum-from: var(--color-emerald-900);
+  --gradient-quantum-via: var(--ui-bg-elevated);
+  --gradient-quantum-to: var(--color-blue-950);
+
+  --gradient-cyber-center: var(--color-emerald-500);
+  --gradient-cyber-mid: var(--color-blue-500);
+
+  /* Custom typography (can't reproduce in Nuxt UI) */
+  --font-heading: 'Orbitron', sans-serif;
+  --font-mono: 'JetBrains Mono', monospace;
+
+  /* ========================================
+     RESPONSIVE BREAKPOINTS (Tailwind CSS)
+     ======================================== */
+  --breakpoint-sm: 640px;
+  --breakpoint-md: 768px;
+  --breakpoint-lg: 1024px;
+  --breakpoint-xl: 1280px;
+  --breakpoint-2xl: 1536px;
+}
+
+/* ========================================
+   NUXT UI GITHUB DARK THEME INTEGRATION
+   ======================================== */
+
+:root {
+  /* GitHub Dark Background System */
+  --ui-bg: #0d1117; /* GitHub main background */
+  --ui-bg-muted: #010409; /* Darker background */
+  --ui-bg-elevated: #161b22; /* GitHub foreground (cards/sidebar) */
+  --ui-bg-accented: #21262d; /* Hover/interactive states */
+  --ui-bg-inverted: #f0f6fc; /* Light mode fallback */
+
+  /* GitHub Dark Text System */
+  --ui-text-dimmed: #7d8590; /* GitHub text-tertiary */
+  --ui-text-muted: #8b949e; /* GitHub text-secondary */
+  --ui-text-toned: #c9d1d9; /* GitHub text-primary dimmed */
+  --ui-text: #f0f6fc; /* GitHub text-primary */
+  --ui-text-highlighted: #ffffff; /* Pure white for emphasis */
+  --ui-text-inverted: #24292f; /* Dark text for light backgrounds */
+
+  --ui-link-default: var(--ui-secondary);
+  --ui-link-hover: var(--color-blue-400);
+  --ui-link-active: var(--ui-secondary);
+
+  /* GitHub Dark Border System */
+  --ui-border: #30363d; /* GitHub border-default */
+  --ui-border-muted: #21262d; /* GitHub border-muted */
+  --ui-border-accented: var(--ui-border); /* GitHub border-danger for accents */
+  --ui-border-inverted: #d0d7de; /* Light mode borders */
+
+  /* Brand colors as Nuxt UI primary/secondary */
+  --ui-primary: var(--color-emerald-500);
+  --ui-secondary: var(--color-sky-800);
+
+  /* Radius and container (existing) */
+  --ui-radius: 0.375rem; /* 6px - GitHub's standard radius */
+  --ui-container: 80rem; /* 1280px max width */
+  --ui-nav-height: 4rem; /* 64px - Standard navigation height */
+
+  /* ========================================
+     COMPREHENSIVE SPACING SYSTEM
+     ======================================== */
+
+  /* Base Spacing Values (Template Customizable) */
+  --ui-spacing-section-base: 4rem; /* 64px - Main section spacing */
+  --ui-spacing-component-base: 1.5rem; /* 24px - Component internal spacing */
+  --ui-spacing-grid-base: 1.5rem; /* 24px - Grid gaps */
+  --ui-spacing-content-base: 1rem; /* 16px - Content flow spacing */
+
+  /* Responsive Multipliers */
+  --ui-spacing-mobile-factor: 0.625; /* 62.5% for mobile (tighter) */
+  --ui-spacing-tablet-factor: 0.875; /* 87.5% for tablet */
+  --ui-spacing-desktop-factor: 1.125; /* 112.5% for desktop (more spacious) */
+  --ui-spacing-xl-factor: 1.25; /* 125% for extra large screens */
+
+  /* Computed Responsive Values */
+  --ui-spacing-section: calc(var(--ui-spacing-section-base) * var(--ui-spacing-mobile-factor));
+  --ui-spacing-component: calc(var(--ui-spacing-component-base) * var(--ui-spacing-mobile-factor));
+  --ui-spacing-grid: calc(var(--ui-spacing-grid-base) * var(--ui-spacing-mobile-factor));
+  --ui-spacing-content: calc(var(--ui-spacing-content-base) * var(--ui-spacing-mobile-factor));
+
+  /* NUXT CHARTS */
+
+  /* Primary chart colors using your emerald/blue system */
+  --vis-color0: var(--color-emerald-500) !important; /* Growth/positive */
+  --vis-color1: var(--color-blue-500) !important; /* Secondary */
+  --vis-color2: var(--color-red-500) !important; /* Decline/negative */
+  --vis-color3: var(--color-amber-500) !important; /* Warning/neutral */
+
+  /* Background system matching GitHub Dark */
+  --vis-tooltip-background-color: var(--ui-bg-elevated) !important; /* #161b22 */
+  --vis-tooltip-border-color: var(--ui-border) !important; /* #30363d */
+
+  /* Text hierarchy matching your system */
+  --vis-tooltip-text-color: var(--ui-text-toned) !important; /* #c9d1d9 */
+  --tooltip-label-color: var(--ui-text-muted) !important; /* #8b949e */
+  --tooltip-value-color: var(--ui-text-highlighted) !important; /* #ffffff */
+
+  /* Axis styling */
+  --vis-axis-grid-color: var(--ui-border-muted) !important; /* #21262d */
+  --vis-axis-tick-label-color: var(--ui-text-muted) !important; /* #8b949e */
+  --vis-axis-label-color: var(--ui-text-toned) !important; /* #c9d1d9 */
+
+  /* Legend styling */
+  --vis-legend-label-color: var(--ui-text-toned) !important;
+}
+
+/* ========================================
+   RESPONSIVE SPACING OVERRIDES
+   ======================================== */
+
+/* Tablet (768px+) */
+@media (min-width: 768px) {
+  :root {
+    --ui-spacing-section: calc(var(--ui-spacing-section-base) * var(--ui-spacing-tablet-factor));
+    --ui-spacing-component: calc(
+      var(--ui-spacing-component-base) * var(--ui-spacing-tablet-factor)
+    );
+    --ui-spacing-grid: calc(var(--ui-spacing-grid-base) * var(--ui-spacing-tablet-factor));
+    --ui-spacing-content: calc(var(--ui-spacing-content-base) * var(--ui-spacing-tablet-factor));
+  }
+}
+
+/* Desktop (1024px+) */
+@media (min-width: 1024px) {
+  :root {
+    --ui-spacing-section: calc(var(--ui-spacing-section-base) * var(--ui-spacing-desktop-factor));
+    --ui-spacing-component: calc(
+      var(--ui-spacing-component-base) * var(--ui-spacing-desktop-factor)
+    );
+    --ui-spacing-grid: calc(var(--ui-spacing-grid-base) * var(--ui-spacing-desktop-factor));
+    --ui-spacing-content: calc(var(--ui-spacing-content-base) * var(--ui-spacing-desktop-factor));
+  }
+}
+
+/* Extra Large (1280px+) */
+@media (min-width: 1280px) {
+  :root {
+    --ui-spacing-section: calc(var(--ui-spacing-section-base) * var(--ui-spacing-xl-factor));
+    --ui-spacing-component: calc(var(--ui-spacing-component-base) * var(--ui-spacing-xl-factor));
+    --ui-spacing-grid: calc(var(--ui-spacing-grid-base) * var(--ui-spacing-xl-factor));
+    --ui-spacing-content: calc(var(--ui-spacing-content-base) * var(--ui-spacing-xl-factor));
+  }
+}
+
+/* ========================================
+   SEMANTIC SPACING UTILITIES (SIMPLE)
+   ======================================== */
+
+/* Section Spacing - For main page sections */
+@utility section-spacing {
+  padding-block: var(--ui-spacing-section);
+}
+
+@utility section-spacing-compact {
+  padding-block: calc(var(--ui-spacing-section) * 0.75);
+}
+
+@utility section-spacing-generous {
+  padding-block: calc(var(--ui-spacing-section) * 1.5);
+}
+
+/* Component Spacing - For internal component spacing */
+@utility component-spacing {
+  gap: var(--ui-spacing-component);
+}
+
+@utility component-spacing-sm {
+  gap: calc(var(--ui-spacing-component) * 0.75);
+}
+
+@utility component-spacing-lg {
+  gap: calc(var(--ui-spacing-component) * 1.25);
+}
+
+/* Grid Spacing - For grid layouts */
+@utility grid-spacing {
+  gap: var(--ui-spacing-grid);
+}
+
+@utility grid-spacing-sm {
+  gap: calc(var(--ui-spacing-grid) * 0.75);
+}
+
+@utility grid-spacing-lg {
+  gap: calc(var(--ui-spacing-grid) * 1.25);
+}
+
+/* Content Flow Spacing - For text content */
+@utility content-spacing {
+  gap: var(--ui-spacing-content);
+}
+
+/* Margin Utilities */
+@utility mt-section {
+  margin-top: var(--ui-spacing-section);
+}
+@utility mb-section {
+  margin-bottom: var(--ui-spacing-section);
+}
+@utility my-section {
+  margin-block: var(--ui-spacing-section);
+}
+
+@utility mt-component {
+  margin-top: var(--ui-spacing-component);
+}
+@utility mb-component {
+  margin-bottom: var(--ui-spacing-component);
+}
+@utility my-component {
+  margin-block: var(--ui-spacing-component);
+}
+
+/* Padding Utilities */
+@utility pt-section {
+  padding-top: var(--ui-spacing-section);
+}
+@utility pb-section {
+  padding-bottom: var(--ui-spacing-section);
+}
+@utility py-section {
+  padding-block: var(--ui-spacing-section);
+}
+
+@utility p-component {
+  padding: var(--ui-spacing-component);
+}
+@utility px-component {
+  padding-inline: var(--ui-spacing-component);
+}
+@utility py-component {
+  padding-block: var(--ui-spacing-component);
+}
+
+/* ========================================
+   COMPLEX SELECTORS (USE @layer utilities)
+   ======================================== */
+
+@layer utilities {
+  .space-y-section > * + * {
+    margin-top: var(--ui-spacing-section);
+  }
+
+  .space-y-component > * + * {
+    margin-top: var(--ui-spacing-component);
+  }
+
+  .space-y-content > * + * {
+    margin-top: var(--ui-spacing-content);
+  }
+
+  .ai-circuit-pattern {
+    background-color: var(--ui-bg);
+    background-image:
+      radial-gradient(circle at 20px 20px, rgba(16, 185, 129, 0.1) 1px, transparent 1px),
+      radial-gradient(circle at 40px 40px, rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+      linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+    background-size:
+      40px 40px,
+      80px 80px,
+      20px 20px,
+      20px 20px;
+  }
+
+  .ai-circuit-light {
+    background-image:
+      radial-gradient(circle at 20px 20px, rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+      radial-gradient(circle at 40px 40px, rgba(16, 185, 129, 0.025) 1px, transparent 1px),
+      linear-gradient(rgba(16, 185, 129, 0.015) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16, 185, 129, 0.015) 1px, transparent 1px);
+  }
+
+  .ai-circuit-strong {
+    background-image:
+      radial-gradient(circle at 20px 20px, rgba(16, 185, 129, 0.15) 1px, transparent 1px),
+      radial-gradient(circle at 40px 40px, rgba(16, 185, 129, 0.08) 1px, transparent 1px),
+      linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+  }
+
+  .ai-dots-pattern {
+    background-image: radial-gradient(circle, rgba(16, 185, 129, 0.1) 1px, transparent 1px);
+    background-size: 15px 15px;
+  }
+
+  .ai-grid-pattern {
+    background-image:
+      linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
+      linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+
+  .neural-network-pattern {
+    background-image:
+      radial-gradient(
+        circle at 25% 25%,
+        color-mix(in srgb, var(--ui-primary) 10%, transparent) 2px,
+        transparent 2px
+      ),
+      radial-gradient(
+        circle at 75% 75%,
+        color-mix(in srgb, var(--ui-secondary) 8%, transparent) 2px,
+        transparent 2px
+      ),
+      linear-gradient(
+        45deg,
+        transparent 48%,
+        color-mix(in srgb, var(--ui-primary) 3%, transparent) 50%,
+        transparent 52%
+      );
+    background-size:
+      60px 60px,
+      40px 40px,
+      30px 30px;
+  }
+
+  .quantum-dots-pattern {
+    background-image:
+      radial-gradient(
+        circle at 20% 80%,
+        color-mix(in srgb, var(--ui-primary) 8%, transparent) 1px,
+        transparent 2px
+      ),
+      radial-gradient(
+        circle at 80% 20%,
+        color-mix(in srgb, var(--ui-secondary) 6%, transparent) 1px,
+        transparent 2px
+      );
+    background-size:
+      40px 40px,
+      60px 60px;
+  }
+
+  .bg-gradient-neural {
+    background: linear-gradient(
+      135deg,
+      color-mix(in srgb, var(--gradient-neural-from) 30%, transparent),
+      color-mix(in srgb, var(--gradient-neural-via) 20%, transparent),
+      color-mix(in srgb, var(--gradient-neural-to) 25%, transparent)
+    );
+  }
+
+  .bg-gradient-quantum {
+    background: linear-gradient(
+      45deg,
+      color-mix(in srgb, var(--gradient-quantum-from) 40%, transparent),
+      color-mix(in srgb, var(--gradient-quantum-via) 10%, transparent),
+      color-mix(in srgb, var(--gradient-quantum-to) 30%, transparent)
+    );
+  }
+
+  .bg-gradient-cyber {
+    background: radial-gradient(
+      ellipse at center,
+      color-mix(in srgb, var(--gradient-cyber-center) 10%, transparent),
+      color-mix(in srgb, var(--gradient-cyber-mid) 5%, transparent),
+      transparent 70%
+    );
+  }
+}

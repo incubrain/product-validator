@@ -1,0 +1,43 @@
+{
+  "name": "nuxt-app",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix"
+  },
+  "dependencies": {
+    "@nuxt/content": "3.6.3",
+    "@nuxt/eslint": "1.5.2",
+    "@nuxt/image": "1.10.0",
+    "@nuxt/scripts": "0.11.9",
+    "@nuxt/test-utils": "3.19.2",
+    "@nuxt/ui": "3.2.0",
+    "@nuxtjs/seo": "^3.1.0",
+    "@unhead/vue": "^2.0.12",
+    "better-sqlite3": "^12.2.0",
+    "eslint": "^9.31.0",
+    "mermaid": "^11.8.1",
+    "nuxt": "^4.0.1",
+    "typescript": "^5.8.3",
+    "vue": "^3.5.17",
+    "vue-router": "^4.5.1",
+    "yaml": "^2.8.0"
+  },
+  "devDependencies": {
+    "@compodium/nuxt": "0.1.0-beta.11",
+    "@iconify-json/lucide": "^1.2.54",
+    "@iconify-json/mdi": "^1.2.3",
+    "@stylistic/eslint-plugin": "^5.2.0",
+    "@types/node": "^20.19.8",
+    "@vueuse/motion": "^3.0.3",
+    "@vueuse/nuxt": "13.4.0",
+    "vue-tsc": "^3.0.1"
+  },
+  "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
+}

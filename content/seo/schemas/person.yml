@@ -1,0 +1,40 @@
+# content/schemas/person.yml
+schema:
+  schemaType: person
+  data:
+    "@type": "Person"
+    name: "Drew MacGibbon"
+    givenName: "Drew"
+    familyName: "MacGibbon"
+    jobTitle: "CEO & Co-Founder"
+    description: "AI automation expert with 13 years of business building experience and 6 years in SaaS development. Leading the development of displacement-proof AI solutions."
+    
+    email: "drew@incubrain.org"
+    telephone: "+64123456789"
+    
+    worksFor:
+      "@type": "Organization"
+      name: "Incubrain Ltd"
+    
+    hasOccupation:
+      "@type": "Occupation"
+      name: "CEO & Founder"
+      occupationalCategory: "AI Automation Specialist"
+      skills:
+        - "AI Development"
+        - "Business Automation"
+        - "Space Technology"
+        - "SaaS Development"
+    
+    sameAs:
+      - "https://linkedin.com/in/drewmacgibbon"
+      - "https://github.com/drewmacgibbon"
+      - "https://twitter.com/drewmacgibbon"
+    
+    homeLocation:
+      "@type": "Place"
+      address:
+        "@type": "PostalAddress"
+        addressLocality: "Pune"
+        addressRegion: "Maharashtra"
+        addressCountry: "IN"

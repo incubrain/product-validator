@@ -1,0 +1,297 @@
+/* assets/css/motion.css - TAILWIND V4 COMPLIANT MOTION UTILITIES */
+
+@theme {
+  /* ========================================
+       MOTION DESIGN TOKENS
+       ======================================== */
+
+  /* Hover effect variables */
+  --hover-lift: translateY(-4px);
+  --hover-scale: scale(1.02);
+  --hover-glow: 0 10px 40px rgba(16, 185, 129, 0.15); /* emerald-500 with alpha */
+  --hover-duration: 0.25s;
+  --hover-easing: cubic-bezier(0.4, 0, 0.2, 1);
+
+  /* Card-specific motion variables */
+  --card-hover-lift: translateY(-2px);
+  --card-hover-shadow: 0 8px 32px rgba(0, 0, 0, 0.12);
+  --card-border-hover-rgb: 248, 81, 73; /* GitHub border-danger RGB */
+
+  /* Animation timing functions */
+  --ease-smooth: cubic-bezier(0.4, 0, 0.2, 1);
+  --ease-bounce: cubic-bezier(0.68, -0.55, 0.265, 1.55);
+  --ease-elastic: cubic-bezier(0.175, 0.885, 0.32, 1.275);
+
+  /* Duration scales */
+  --duration-fast: 150ms;
+  --duration-normal: 250ms;
+  --duration-slow: 350ms;
+  --duration-slower: 500ms;
+}
+
+/* ========================================
+     MOTION UTILITIES
+     ======================================== */
+
+@utility motion-card {
+  transition-property: transform, box-shadow, border-color;
+  transition-duration: var(--duration-normal);
+  transition-timing-function: var(--ease-smooth);
+}
+
+@utility motion-card {
+  @variant hover {
+    transform: var(--card-hover-lift);
+    box-shadow: var(--card-hover-shadow);
+    border-color: rgba(var(--card-border-hover-rgb), 0.8);
+  }
+}
+
+@utility hover-premium {
+  transition-property: transform, box-shadow, filter;
+  transition-duration: var(--duration-normal);
+  transition-timing-function: var(--ease-smooth);
+}
+
+@utility hover-premium {
+  @variant hover {
+    transform: var(--hover-lift) var(--hover-scale);
+    box-shadow: var(--hover-glow);
+    filter: brightness(1.05);
+  }
+}
+
+@utility hover-professional {
+  transition-property: transform, border-color;
+  transition-duration: var(--duration-normal);
+  transition-timing-function: var(--ease-smooth);
+}
+
+@utility hover-professional {
+  @variant hover {
+    transform: translateY(-1px);
+    border-color: var(--ui-border-accented);
+  }
+}
+
+@utility hover-lift {
+  transition-property: transform;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-smooth);
+}
+
+@utility hover-lift {
+  @variant hover {
+    transform: var(--hover-lift);
+  }
+}
+
+@utility hover-scale {
+  transition-property: transform;
+  transition-duration: var(--duration-fast);
+  transition-timing-function: var(--ease-smooth);
+}
+
+@utility hover-scale {
+  @variant hover {
+    transform: var(--hover-scale);
+  }
+}
+
+@utility hover-glow {
+  transition-property: box-shadow;
+  transition-duration: var(--duration-normal);
+  transition-timing-function: var(--ease-smooth);
+}
+
+@utility hover-glow {
+  @variant hover {
+    box-shadow: var(--hover-glow);
+  }
+}
+
+/* ========================================
+     GRADIENT UTILITIES
+     ======================================== */
+
+@utility gradient-emerald-soft {
+  background: linear-gradient(135deg, rgba(16, 185, 129, 0.08), rgba(16, 185, 129, 0.03));
+}
+
+@utility gradient-emerald-depth {
+  background: linear-gradient(135deg, var(--color-emerald-500), var(--color-emerald-600));
+}
+
+@utility gradient-card-elevated {
+  background: linear-gradient(135deg, var(--ui-bg-elevated), rgba(33, 38, 45, 0.8));
+}
+
+@utility gradient-tech-subtle {
+  background: linear-gradient(135deg, rgba(59, 130, 246, 0.05), rgba(22, 27, 34, 0.9));
+}
+
+@utility gradient-radial-primary {
+  background: radial-gradient(circle at 50% 0%, rgba(16, 185, 129, 0.1), transparent 60%);
+}
+
+@utility gradient-radial-depth {
+  background: radial-gradient(circle at top, var(--ui-bg-elevated), var(--ui-bg-muted));
+}
+
+/* ========================================
+     BACKDROP EFFECTS
+     ======================================== */
+
+@utility backdrop-card {
+  backdrop-filter: blur(8px) saturate(150%);
+  background: rgba(22, 27, 34, 0.7); /* ui-bg-elevated with alpha */
+  border: 1px solid rgba(48, 54, 61, 0.3); /* ui-border with alpha */
+  transition-property: backdrop-filter, background;
+  transition-duration: var(--duration-normal);
+  transition-timing-function: var(--ease-smooth);
+}
+
+@utility backdrop-card {
+  @variant hover {
+    backdrop-filter: blur(12px) saturate(180%);
+    background: rgba(22, 27, 34, 0.85);
+  }
+}
+
+@utility backdrop-glass-premium {
+  backdrop-filter: blur(16px) saturate(180%);
+  background: rgba(22, 27, 34, 0.6);
+  border: 1px solid rgba(48, 54, 61, 0.2);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.1);
+}
+
+@utility backdrop-subtle {
+  backdrop-filter: blur(8px);
+  background: rgba(13, 17, 23, 0.6); /* ui-bg with alpha */
+}
+
+/* ========================================
+     BORDER EFFECTS
+     ======================================== */
+
+@utility border-motion {
+  border: 1px solid var(--ui-border);
+  transition-property: border-color;
+  transition-duration: var(--duration-normal);
+  transition-timing-function: var(--ease-smooth);
+}
+
+@utility border-motion {
+  @variant hover {
+    border-color: var(--ui-border-accented);
+  }
+}
+
+@utility border-glow {
+  box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.2);
+  transition-property: box-shadow;
+  transition-duration: var(--duration-normal);
+  transition-timing-function: var(--ease-smooth);
+}
+
+@utility border-glow {
+  @variant hover {
+    box-shadow: 0 0 0 1px rgba(16, 185, 129, 0.4);
+  }
+}
+
+/* ========================================
+     ANIMATION KEYFRAMES (Outside @utility)
+     ======================================== */
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes slideUp {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes scaleIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}
+
+@keyframes pulseGlow {
+  0%,
+  100% {
+    box-shadow: 0 0 0 0 rgba(16, 185, 129, 0.4);
+  }
+  50% {
+    box-shadow: 0 0 0 10px rgba(16, 185, 129, 0);
+  }
+}
+
+/* ========================================
+     ANIMATION UTILITIES
+     ======================================== */
+
+@utility fade-in {
+  animation: fadeIn var(--duration-slow) var(--ease-smooth) forwards;
+}
+
+@utility slide-up {
+  animation: slideUp var(--duration-normal) var(--ease-smooth) forwards;
+}
+
+@utility scale-in {
+  animation: scaleIn var(--duration-normal) var(--ease-bounce) forwards;
+}
+
+@utility pulse-glow {
+  animation: pulseGlow 2s var(--ease-smooth) infinite;
+}
+
+/* ========================================
+     RESPONSIVE MOTION CONTROLS
+     ======================================== */
+
+/* Respect user motion preferences - using standard CSS since @utility can't be nested in media queries */
+@media (prefers-reduced-motion: reduce) {
+  .motion-card,
+  .hover-premium,
+  .hover-professional,
+  .backdrop-card,
+  .hover-lift,
+  .hover-scale,
+  .hover-glow {
+    transition: none !important;
+    transform: none !important;
+    animation: none !important;
+  }
+}
+
+/* Reduce motion complexity on mobile */
+@media (max-width: 768px) {
+  .hover-premium:hover {
+    transform: none;
+    box-shadow: var(--card-hover-shadow);
+  }
+
+  .motion-card:hover {
+    transform: none;
+  }
+}

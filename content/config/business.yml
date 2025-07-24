@@ -1,0 +1,47 @@
+# Core Business Identity
+data:
+  business:
+    name: IncuBrain Ltd
+    tagline: AI-Native Development Team
+    description: We build AI automation that pays for itself
+    legal_name: IncuBrain Technologies Limited
+    
+    # Authority Building
+    founder:
+      name: Drew MacGibbon
+      title: AI Automation Expert
+      bio: 13 years business building, 6 years SaaS development
+      credentials:
+        - AWS Certified
+        - Space Tech Veteran
+      
+    # Geographic Authority
+    location:
+      city: Pune
+      state: Maharashtra
+      country: India
+      timezone: Asia/Kolkata
+
+  # Contact Information
+  contact:
+    email: hello@incubrain.org
+    phone: +91-123-456-7890
+    business_hours: 9 AM - 6 PM IST, Mon-Fri
+    
+    # Full URLs for schema.org integration
+    social:
+      github: https://github.com/incubrain
+      linkedin: https://www.linkedin.com/company/incubrain
+      twitter: https://twitter.com/incubrain
+      discord: https://discord.gg/zSGHvNZXAa
+
+  # Service Authority
+  services:
+    categories:
+      - AI Automation
+      - Custom Development
+      - Business Consultation
+    specialties:
+      - Process Automation
+      - Space Tech Integration
+      - Global-Local Execution
