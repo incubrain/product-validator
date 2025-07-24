@@ -8,7 +8,7 @@ export const PAGINATION_DEFAULTS = {
 
 export const CONTENT_TYPE_LABELS = {
   blog: 'posts',
-  projects: 'projects', 
+  projects: 'projects',
   products: 'products',
   team: 'members',
 } as const

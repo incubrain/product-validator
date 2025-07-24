@@ -7,26 +7,26 @@ interface Props {
   // Image source
   src: string
   alt: string
-  
+
   // Display
   aspectRatio?: 'square' | 'video' | 'portrait' | 'wide' | 'auto'
   objectFit?: 'cover' | 'contain' | 'fill' | 'none'
-  
+
   // Optimization
   width?: number
   height?: number
   quality?: number
   format?: 'webp' | 'avif' | 'jpeg' | 'jpg' | 'png' | 'gif'
-  
+
   // Responsive
   sizes?: string
   densities?: string
-  
+
   // Behavior
   loading?: 'lazy' | 'eager'
   placeholder?: boolean | string | number | number[]
   preload?: boolean
-  
+
   // Theme
   ui?: any
   class?: string
@@ -38,7 +38,7 @@ const props = withDefaults(defineProps<Props>(), {
   loading: 'lazy',
   placeholder: true,
   quality: 80,
-  format: 'webp'
+  format: 'webp',
 })
 
 // Refs
@@ -62,8 +62,8 @@ const { stop } = useIntersectionObserver(
   },
   {
     threshold: 0.1,
-    rootMargin: '50px'
-  }
+    rootMargin: '50px',
+  },
 )
 
 // Load immediately if eager
@@ -82,13 +82,13 @@ const responsiveProps = computed(() => {
     format: props.format,
     loading: props.loading,
     placeholder: props.placeholder,
-    preload: props.preload
+    preload: props.preload,
   }
 
   // Add dimensions if provided
   if (props.width) baseProps.width = props.width
   if (props.height) baseProps.height = props.height
-  
+
   // Add responsive props
   if (props.sizes) baseProps.sizes = props.sizes
   if (props.densities) baseProps.densities = props.densities
@@ -97,7 +97,7 @@ const responsiveProps = computed(() => {
   if (isMobile.value) {
     // Reduce quality slightly on mobile to save bandwidth
     baseProps.quality = Math.max(60, (props.quality || 80) - 10)
-    
+
     // Add mobile-optimized densities if not specified
     if (!props.densities && isHighDPI.value) {
       baseProps.densities = 'x1 x2'
@@ -122,12 +122,12 @@ const handleError = (event: string | Event) => {
 // Computed styles with loading state
 const computedStyles = computed(() => imageStyles({
   ...props,
-  loading: !isLoaded.value && shouldLoad.value
+  loading: !isLoaded.value && shouldLoad.value,
 }))
 </script>
 
 <template>
-  <div 
+  <div
     ref="containerRef"
     :class="computedStyles.root()"
   >
@@ -141,21 +141,31 @@ const computedStyles = computed(() => imageStyles({
     />
 
     <!-- Error State -->
-    <div 
+    <div
       v-if="hasError"
       :class="computedStyles.error()"
     >
-      <UIcon name="i-lucide-image-off" class="size-8 mb-2" />
-      <p class="text-sm font-medium">Failed to load image</p>
-      <p class="text-xs mt-1 opacity-75">{{ src }}</p>
+      <UIcon
+        name="i-lucide-image-off"
+        class="size-8 mb-2"
+      />
+      <p class="text-sm font-medium">
+        Failed to load image
+      </p>
+      <p class="text-xs mt-1 opacity-75">
+        {{ src }}
+      </p>
     </div>
 
     <!-- Lazy Loading Placeholder -->
-    <div 
+    <div
       v-if="!shouldLoad && loading === 'lazy'"
       :class="computedStyles.placeholder()"
     >
-      <UIcon name="i-lucide-image" class="size-8 text-muted" />
+      <UIcon
+        name="i-lucide-image"
+        class="size-8 text-muted"
+      />
     </div>
   </div>
 </template>

@@ -53,28 +53,41 @@ const route = useRoute()
         :badge="badge"
       />
 
-      <NavPagination 
+      <NavPagination
         content-type="blog"
         :category="route.query.category"
       >
         <template
-          #default="{ 
-            items, 
-            loading, 
-            error, 
-            hasData, 
-            isEmpty 
+          #default="{
+            items,
+            loading,
+            error,
+            hasData,
+            isEmpty,
           }"
-        > 
+        >
           <!-- Error State -->
-          <div v-if="error" class="text-center py-section">
-            <UIcon name="i-lucide-alert-circle" class="size-12 text-error mx-auto mb-component" />
-            <h3 class="text-lg font-medium text-error mb-2">Failed to Load Content</h3>
-            <p class="text-muted">{{ error?.message || 'Please try again later' }}</p>
+          <div
+            v-if="error"
+            class="text-center py-section"
+          >
+            <UIcon
+              name="i-lucide-alert-circle"
+              class="size-12 text-error mx-auto mb-component"
+            />
+            <h3 class="text-lg font-medium text-error mb-2">
+              Failed to Load Content
+            </h3>
+            <p class="text-muted">
+              {{ error?.message || 'Please try again later' }}
+            </p>
           </div>
 
           <!-- Loading State -->
-          <LayoutGrid v-else-if="loading" variant="cards">
+          <LayoutGrid
+            v-else-if="loading"
+            variant="cards"
+          >
             <BlogPostCardSkeleton
               v-for="i in 6"
               :key="`skeleton-${i}`"
@@ -96,14 +109,24 @@ const route = useRoute()
             </LayoutGrid>
           </LayoutMotion>
 
-          <!-- Empty State Instead of this-->
-          <div v-else-if="isEmpty" class="text-center py-section">
-            <UIcon name="i-lucide-file-text" class="size-12 text-dimmed mx-auto mb-component" />
-            <h3 class="text-lg font-medium text-highlighted mb-2">No posts yet</h3>
-            <p class="text-muted">Check back soon for new content!</p>
+          <!-- Empty State Instead of this -->
+          <div
+            v-else-if="isEmpty"
+            class="text-center py-section"
+          >
+            <UIcon
+              name="i-lucide-file-text"
+              class="size-12 text-dimmed mx-auto mb-component"
+            />
+            <h3 class="text-lg font-medium text-highlighted mb-2">
+              No posts yet
+            </h3>
+            <p class="text-muted">
+              Check back soon for new content!
+            </p>
           </div>
         </template>
-       </NavPagination>
-     </section>
-   </div>
+      </NavPagination>
+    </section>
+  </div>
 </template>

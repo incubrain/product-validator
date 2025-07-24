@@ -67,7 +67,9 @@ const socialLinks = [
 
           <!-- Quick Links -->
           <div class="space-y-4">
-            <h3 class="font-semibold text-highlighted text-base">Quick Links</h3>
+            <h3 class="font-semibold text-highlighted text-base">
+              Quick Links
+            </h3>
             <nav class="flex flex-col space-y-3">
               <ULink
                 v-for="link in quickLinks"
@@ -82,7 +84,9 @@ const socialLinks = [
 
           <!-- Contact Info -->
           <div class="space-y-4">
-            <h3 class="font-semibold text-highlighted text-base">Get In Touch</h3>
+            <h3 class="font-semibold text-highlighted text-base">
+              Get In Touch
+            </h3>
             <div class="space-y-4">
               <UButton
                 label="WhatsApp"

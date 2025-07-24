@@ -2,7 +2,7 @@
 <script setup lang="ts">
 // Fetch page content from Nuxt Content
 const { data: pageContent } = await useAsyncData('home-page', () =>
-  queryCollection('pages').path('/').first()
+  queryCollection('pages').path('/').first(),
 )
 
 console.log('🔍 Home Page Content:', pageContent.value)

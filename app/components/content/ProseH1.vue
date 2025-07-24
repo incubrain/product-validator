@@ -4,7 +4,11 @@ const props = defineProps<{ id?: string }>()
 </script>
 
 <template>
-  <LayoutHeading :id="props.id" base="h1" variant="hero">
+  <LayoutHeading
+    :id="props.id"
+    base="h1"
+    variant="hero"
+  >
     <slot />
   </LayoutHeading>
-  </template>
+</template>

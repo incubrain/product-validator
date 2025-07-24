@@ -31,9 +31,9 @@ const props = withDefaults(defineProps<Props>(), {
   searchPlaceholder: 'Search...',
   showSearch: true,
   sticky: true,
-    title: 'Navigation',
-    category: 'all',
-    customItems: () => [],
+  title: 'Navigation',
+  category: 'all',
+  customItems: () => [],
 
 })
 
@@ -45,9 +45,9 @@ const { data: contentData, pending, error, refresh } = useLazyAsyncData(
   () => $fetch('/api/content/metadata', {
     query: {
       collection: props.contentType,
-      category: props.category || 'all'
-    }
-  })
+      category: props.category || 'all',
+    },
+  }),
 )
 
 // Generate navigation items from metadata
@@ -63,7 +63,7 @@ const navigationItems = computed(() => {
     label: 'All Items',
     path: props.basePath,
     count: categories.all || 0,
-    icon: 'i-lucide-grid-3x3'
+    icon: 'i-lucide-grid-3x3',
   })
 
   // Add category items (exclude 'all' from iteration)
@@ -75,7 +75,7 @@ const navigationItems = computed(() => {
         label: formatLabel(category),
         path: `${props.basePath}/${category}`,
         count: count as number,
-        icon: getGroupIcon(category)
+        icon: getGroupIcon(category),
       })
     })
 
@@ -94,7 +94,7 @@ const isLoading = computed(() => pending.value)
 function formatLabel(key: string): string {
   return key
     .split('-')
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+    .map((word) => word.charAt(0).toUpperCase() + word.slice(1))
     .join(' ')
 }
 
@@ -111,7 +111,7 @@ function getGroupIcon(group: string): string {
     'guide': 'i-lucide-map',
     'news': 'i-lucide-newspaper',
     'showcase': 'i-lucide-eye',
-    'template': 'i-lucide-layout-template'
+    'template': 'i-lucide-layout-template',
   }
   return iconMap[group] || 'i-lucide-folder'
 }
@@ -126,7 +126,10 @@ function getGroupIcon(group: string): string {
       class="bg-elevated/50 border-default"
       :class="{ 'sticky top-24': sticky }"
     >
-      <template v-if="showSearch" #header>
+      <template
+        v-if="showSearch"
+        #header
+      >
         <USkeleton class="h-10 w-full" />
       </template>
       <div class="space-y-2">
@@ -145,8 +148,13 @@ function getGroupIcon(group: string): string {
       :class="{ 'sticky top-24': sticky }"
     >
       <div class="text-center p-4">
-        <UIcon name="i-lucide-alert-circle" class="size-8 text-red-500 mx-auto mb-2" />
-        <p class="text-sm text-red-600 dark:text-red-400 mb-2">Failed to load navigation</p>
+        <UIcon
+          name="i-lucide-alert-circle"
+          class="size-8 text-red-500 mx-auto mb-2"
+        />
+        <p class="text-sm text-red-600 dark:text-red-400 mb-2">
+          Failed to load navigation
+        </p>
         <UButton
           variant="ghost"
           size="sm"
@@ -165,10 +173,19 @@ function getGroupIcon(group: string): string {
       :class="{ 'sticky top-24': sticky }"
     >
       <!-- Search Slot -->
-      <template v-if="showSearch" #header>
-        <slot name="search" :placeholder="searchPlaceholder">
+      <template
+        v-if="showSearch"
+        #header
+      >
+        <slot
+          name="search"
+          :placeholder="searchPlaceholder"
+        >
           <div class="relative">
-            <UIcon name="i-lucide-search" class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-4" />
+            <UIcon
+              name="i-lucide-search"
+              class="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 size-4"
+            />
             <input
               type="text"
               :placeholder="searchPlaceholder"
@@ -184,8 +201,8 @@ function getGroupIcon(group: string): string {
 
         <!-- Navigation Section -->
         <div class="space-y-3">
-          <h4 
-            v-if="title" 
+          <h4
+            v-if="title"
             class="text-sm font-medium text-muted uppercase tracking-wide"
           >
             {{ title }}
@@ -208,10 +225,10 @@ function getGroupIcon(group: string): string {
               "
             >
               <div class="flex items-center gap-2">
-                <UIcon 
-                  v-if="item.icon" 
-                  :name="item.icon" 
-                  class="size-4 shrink-0" 
+                <UIcon
+                  v-if="item.icon"
+                  :name="item.icon"
+                  class="size-4 shrink-0"
                 />
                 <span
                   class="text-sm truncate"
@@ -220,8 +237,8 @@ function getGroupIcon(group: string): string {
                   {{ item.label }}
                 </span>
               </div>
-              
-              <div 
+
+              <div
                 v-if="typeof item.count === 'number'"
                 class="text-xs flex rounded-full justify-center items-center relative w-6 h-5 shrink-0"
               >

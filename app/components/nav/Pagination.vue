@@ -1,8 +1,8 @@
 <!-- components/layout/NavPagination.vue -->
 <script setup lang="ts">
 import { useOffsetPagination } from '@vueuse/core'
-import { PAGINATION_DEFAULTS, CONTENT_TYPE_LABELS  } from '#shared/utils/pagination'
-import type {ContentType} from '#shared/utils/pagination';
+import { PAGINATION_DEFAULTS, CONTENT_TYPE_LABELS } from '#shared/utils/pagination'
+import type { ContentType } from '#shared/utils/pagination'
 
 interface Props {
   contentType: ContentType
@@ -22,7 +22,7 @@ const stateKey = `${props.contentType}${props.category ? `-${props.category}` : 
 const getInitialPage = () => {
   const urlPage = route.query.page ? Number(route.query.page) : null
   const storedPage = import.meta.client ? Number(localStorage.getItem(stateKey)) : null
-  
+
   // Validate page numbers
   if (urlPage && urlPage > 0) return urlPage
   if (storedPage && storedPage > 0) return storedPage
@@ -35,9 +35,9 @@ const { data: contentData, pending, error } = useLazyAsyncData(
   () => $fetch('/api/content/metadata', {
     query: {
       collection: props.contentType,
-      category: props.category || 'all'
-    }
-  })
+      category: props.category || 'all',
+    },
+  }),
 )
 
 // Data with error handling
@@ -59,25 +59,25 @@ const {
   total: totalItems,
   pageSize: itemsPerPage,
   page: getInitialPage(),
-  
+
   // CRITICAL: Handle page changes with routing + persistence + validation
   onPageChange: async ({ currentPage: newPage, pageCount: totalPages }) => {
     // Validate page bounds - redirect if invalid
     if (newPage > totalPages && totalPages > 0) {
-      await router.replace({ 
-        query: { ...route.query, page: totalPages > 1 ? totalPages : undefined } 
+      await router.replace({
+        query: { ...route.query, page: totalPages > 1 ? totalPages : undefined },
       })
       return
     }
-    
+
     // Update URL with query params (SEO friendly)
-    await router.push({ 
-      query: { 
-        ...route.query, 
-        page: newPage > 1 ? newPage : undefined 
-      } 
+    await router.push({
+      query: {
+        ...route.query,
+        page: newPage > 1 ? newPage : undefined,
+      },
     })
-    
+
     // Persist state
     if (import.meta.client) {
       if (newPage === 1) {
@@ -87,30 +87,30 @@ const {
       }
     }
   },
-  
+
   // Handle page size changes (if needed in future)
   onPageSizeChange: ({ currentPage: newPage, currentPageSize: newSize }) => {
     console.log(`Page size changed to ${newSize}, adjusting to page ${newPage}`)
   },
-  
-  // Handle total page count changes 
+
+  // Handle total page count changes
   onPageCountChange: ({ currentPage: newPage, pageCount: newCount }) => {
     // If current page exceeds new page count, redirect to last page
     if (newPage > newCount && newCount > 0) {
-      router.replace({ 
-        query: { ...route.query, page: newCount > 1 ? newCount : undefined } 
+      router.replace({
+        query: { ...route.query, page: newCount > 1 ? newCount : undefined },
       })
     }
-  }
+  },
 })
 
 // Client-side pagination with bounds checking
 const paginatedItems = computed(() => {
   if (!hasData.value) return []
-  
+
   const start = (currentPage.value - 1) * itemsPerPage
   const end = start + itemsPerPage
-  
+
   // Ensure we don't exceed array bounds
   return allItems.value.slice(start, Math.min(end, allItems.value.length))
 })
@@ -134,11 +134,11 @@ const resultsText = computed(() => {
   if (pending.value) return 'Loading...'
   if (error.value) return 'Error loading content'
   if (isEmpty.value) return 'No items found'
-  
+
   const itemName = CONTENT_TYPE_LABELS[props.contentType as keyof typeof CONTENT_TYPE_LABELS] || 'items'
   const singular = itemName.slice(0, -1)
   const label = totalItems.value === 1 ? singular : itemName
-  
+
   return `Showing ${startItem.value}-${endItem.value} of ${totalItems.value} ${label}`
 })
 
@@ -150,12 +150,12 @@ const canGoNext = computed(() => !isLastPage.value && hasData.value)
 const generateTo = (page: number) => {
   // Validate page bounds before generating route
   if (page < 1 || (pageCount.value > 0 && page > pageCount.value)) return undefined
-  
-  return { 
-    query: { 
-      ...route.query, 
-      page: page > 1 ? page : undefined 
-    } 
+
+  return {
+    query: {
+      ...route.query,
+      page: page > 1 ? page : undefined,
+    },
   }
 }
 
@@ -172,7 +172,7 @@ watchEffect(() => {
     const requestedPage = Number(route.query.page)
     if (requestedPage > pageCount.value) {
       router.replace({
-        query: { ...route.query, page: pageCount.value > 1 ? pageCount.value : undefined }
+        query: { ...route.query, page: pageCount.value > 1 ? pageCount.value : undefined },
       })
     }
   }
@@ -182,7 +182,7 @@ watchEffect(() => {
 <template>
   <div class="space-y-component">
     <!-- Content Slot with comprehensive data -->
-    <slot 
+    <slot
       :items="paginatedItems"
       :loading="pending"
       :error="error"
@@ -198,22 +198,49 @@ watchEffect(() => {
     />
 
     <!-- Error State -->
-    <div v-if="error" class="text-center py-section">
-      <UIcon name="i-lucide-alert-circle" class="size-12 text-error mx-auto mb-component" />
-      <h3 class="text-lg font-medium text-error mb-2">Failed to Load Content</h3>
-      <p class="text-muted">{{ error.message || 'Please try again later' }}</p>
+    <div
+      v-if="error"
+      class="text-center py-section"
+    >
+      <UIcon
+        name="i-lucide-alert-circle"
+        class="size-12 text-error mx-auto mb-component"
+      />
+      <h3 class="text-lg font-medium text-error mb-2">
+        Failed to Load Content
+      </h3>
+      <p class="text-muted">
+        {{ error.message || 'Please try again later' }}
+      </p>
     </div>
 
     <!-- Empty State -->
-    <div v-else-if="isEmpty" class="text-center py-section">
-      <UIcon name="i-lucide-file-text" class="size-12 text-dimmed mx-auto mb-component" />
-      <h3 class="text-lg font-medium text-highlighted mb-2">No {{ CONTENT_TYPE_LABELS[contentType] || 'items' }} found</h3>
-      <p class="text-muted">Check back soon for new content!</p>
+    <div
+      v-else-if="isEmpty"
+      class="text-center py-section"
+    >
+      <UIcon
+        name="i-lucide-file-text"
+        class="size-12 text-dimmed mx-auto mb-component"
+      />
+      <h3 class="text-lg font-medium text-highlighted mb-2">
+        No {{ CONTENT_TYPE_LABELS[contentType] || 'items' }} found
+      </h3>
+      <p class="text-muted">
+        Check back soon for new content!
+      </p>
     </div>
 
     <!-- Pagination UI with keyboard navigation -->
-    <div v-else-if="showPagination" class="flex flex-col sm:flex-row items-center justify-between gap-4">
-      <div class="text-sm text-muted" role="status" aria-live="polite">
+    <div
+      v-else-if="showPagination"
+      class="flex flex-col sm:flex-row items-center justify-between gap-4"
+    >
+      <div
+        class="text-sm text-muted"
+        role="status"
+        aria-live="polite"
+      >
         {{ resultsText }}
       </div>
 
@@ -252,8 +279,12 @@ watchEffect(() => {
     </div>
 
     <!-- Page info for keyboard users -->
-    <div v-if="showPagination" class="sr-only" aria-live="polite">
-      Page {{ currentPage }} of {{ pageCount }}. 
+    <div
+      v-if="showPagination"
+      class="sr-only"
+      aria-live="polite"
+    >
+      Page {{ currentPage }} of {{ pageCount }}.
       Use left and right arrow keys to navigate.
     </div>
   </div>

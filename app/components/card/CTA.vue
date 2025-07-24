@@ -12,7 +12,7 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  variant: 'inline'
+  variant: 'inline',
 })
 
 const styles = computed(() => ctaStyles(props))
@@ -21,10 +21,17 @@ const styles = computed(() => ctaStyles(props))
 <template>
   <div :class="styles.root()">
     <div :class="styles.content()">
-      <h3 :class="styles.title()">{{ title }}</h3>
-      <p v-if="subtitle" :class="styles.subtitle()">{{ subtitle }}</p>
+      <h3 :class="styles.title()">
+        {{ title }}
+      </h3>
+      <p
+        v-if="subtitle"
+        :class="styles.subtitle()"
+      >
+        {{ subtitle }}
+      </p>
     </div>
-    
+
     <div :class="styles.actions()">
       <UButton
         :to="ctaLink"

@@ -11,14 +11,14 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
-  as: 'p'
+  as: 'p',
 })
 
 const styles = computed(() => textStyles(props))
 </script>
 
 <template>
-  <component 
+  <component
     :is="as"
     :class="[styles.root(), $attrs.class]"
     v-bind="$attrs"

@@ -11,29 +11,29 @@ interface Props {
   title: string
   subtitle?: string
   description?: string
-  
+
   // Layout & Style
   layout?: 'split' | 'centered' | 'minimal' | 'fullscreen' | 'compact'
   mediaType?: 'cards' | 'image' | 'video' | 'none'
   hasBackground?: boolean
-  
+
   // Content
   cards?: Card[]
-  
+
   // Media props
   mediaSrc?: string
   mediaAlt?: string
   mediaPoster?: string
-  
+
   // CTA
   showCta?: boolean
   ctaText?: string
   ctaLink?: string
   ctaDescription?: string
-  
+
   // Background
   backgroundPreset?: 'none' | 'neural' | 'quantum' | 'cyber' | 'circuit' | 'minimal'
-  
+
   // Theme
   ui?: any
 }
@@ -85,8 +85,8 @@ const stackVariant = computed(() => {
 </script>
 
 <template>
-  <LayoutSection 
-    :variant="sectionVariant" 
+  <LayoutSection
+    :variant="sectionVariant"
     :background="hasBackground ? backgroundPreset : 'none'"
     :class="$attrs.class"
   >
@@ -98,29 +98,36 @@ const stackVariant = computed(() => {
             <LayoutStack :variant="stackVariant">
               <!-- Text Content -->
               <LayoutStack variant="default">
-                <LayoutHeading anchor variant="hero" :text="title" />
+                <LayoutHeading
+                  anchor
+                  variant="hero"
+                  :text="title"
+                />
 
-                <LayoutText 
+                <LayoutText
                   v-if="subtitle"
                   variant="subtitle"
                   :text="subtitle"
                 />
-                
-                <LayoutText 
+
+                <LayoutText
                   v-if="description"
                   variant="description"
                   :text="description"
                 />
               </LayoutStack>
-              
+
               <!-- CTA for split layout -->
-              <LayoutStack v-if="showCta" variant="compact">
-                <LayoutText 
+              <LayoutStack
+                v-if="showCta"
+                variant="compact"
+              >
+                <LayoutText
                   v-if="ctaDescription"
                   variant="caption"
                   :text="ctaDescription"
                 />
-                
+
                 <LayoutCluster variant="default">
                   <UButton
                     :label="ctaText"
@@ -133,10 +140,13 @@ const stackVariant = computed(() => {
               </LayoutStack>
             </LayoutStack>
           </template>
-          
+
           <template #secondary>
             <!-- Cards for split - vertical stack -->
-            <LayoutStack v-if="mediaType === 'cards' && cards?.length" variant="default">
+            <LayoutStack
+              v-if="mediaType === 'cards' && cards?.length"
+              variant="default"
+            >
               <LayoutCenter variant="narrow">
                 <LayoutStack variant="compact">
                   <UCard
@@ -156,17 +166,23 @@ const stackVariant = computed(() => {
                         />
                       </div>
                       <LayoutStack variant="compact">
-                        <LayoutHeading variant="card" :text="card.title" />
-                        <LayoutText variant="small" :text="card.description" />
+                        <LayoutHeading
+                          variant="card"
+                          :text="card.title"
+                        />
+                        <LayoutText
+                          variant="small"
+                          :text="card.description"
+                        />
                       </LayoutStack>
                     </LayoutCluster>
                   </UCard>
                 </LayoutStack>
               </LayoutCenter>
             </LayoutStack>
-            
+
             <!-- Image -->
-            <LayoutFrame 
+            <LayoutFrame
               v-else-if="mediaType === 'image' && mediaSrc"
               variant="video"
             >
@@ -179,14 +195,14 @@ const stackVariant = computed(() => {
             </LayoutFrame>
 
             <!-- Video -->
-            <LayoutFrame 
+            <LayoutFrame
               v-else-if="mediaType === 'video' && mediaSrc"
               variant="video"
             >
               <MediaVideo
                 :src="mediaSrc"
                 :poster="mediaPoster"
-                :autoplay="false" 
+                :autoplay="false"
                 muted
               />
             </LayoutFrame>
@@ -199,25 +215,24 @@ const stackVariant = computed(() => {
     <template v-else>
       <LayoutCenter :variant="centerVariant">
         <LayoutStack :variant="stackVariant">
-          
           <!-- Text Section -->
           <LayoutCenter variant="text-only">
             <LayoutStack variant="default">
-              <LayoutHeading 
-              :id="title"
-              :text="title"
+              <LayoutHeading
+                :id="title"
+                :text="title"
                 anchor
                 :variant="layout === 'fullscreen' ? 'hero' : 'section'"
               />
-              
-              <LayoutText 
-              v-if="subtitle"
-                :text="subtitle" 
+
+              <LayoutText
+                v-if="subtitle"
+                :text="subtitle"
                 :variant="layout === 'fullscreen' ? 'hero-subtitle' : 'subtitle'"
               />
-              
-              <LayoutText 
-              v-if="description"
+
+              <LayoutText
+                v-if="description"
                 :text="description"
                 variant="description"
               />
@@ -226,9 +241,11 @@ const stackVariant = computed(() => {
 
           <!-- Media Section -->
           <div v-if="mediaType !== 'none'">
-            
             <!-- Cards Grid -->
-            <LayoutGrid v-if="mediaType === 'cards' && cards?.length" variant="thirds">
+            <LayoutGrid
+              v-if="mediaType === 'cards' && cards?.length"
+              variant="thirds"
+            >
               <UCard
                 v-for="(card, index) in cards"
                 :key="card.title"
@@ -246,16 +263,25 @@ const stackVariant = computed(() => {
                     />
                   </div>
                   <LayoutStack variant="centered">
-                    <LayoutHeading :text="title" variant="card" />
-                    <LayoutText :text="card.description" variant="small" />
+                    <LayoutHeading
+                      :text="title"
+                      variant="card"
+                    />
+                    <LayoutText
+                      :text="card.description"
+                      variant="small"
+                    />
                   </LayoutStack>
                 </LayoutStack>
               </UCard>
             </LayoutGrid>
-            
+
             <!-- Image -->
             <LayoutCenter v-else-if="mediaType === 'image' && mediaSrc">
-              <LayoutFrame variant="video" class="max-w-4xl">
+              <LayoutFrame
+                variant="video"
+                class="max-w-4xl"
+              >
                 <MediaImage
                   :src="mediaSrc"
                   :alt="mediaAlt || title"
@@ -268,7 +294,10 @@ const stackVariant = computed(() => {
 
             <!-- Video -->
             <LayoutCenter v-else-if="mediaType === 'video' && mediaSrc">
-              <LayoutFrame variant="video" class="max-w-4xl">
+              <LayoutFrame
+                variant="video"
+                class="max-w-4xl"
+              >
                 <MediaVideo
                   :src="mediaSrc"
                   :poster="mediaPoster"
@@ -282,12 +311,12 @@ const stackVariant = computed(() => {
           <!-- CTA Section (for non-split layouts) -->
           <LayoutCenter v-if="showCta && layout !== 'split'">
             <LayoutStack variant="centered">
-              <LayoutText 
+              <LayoutText
                 v-if="ctaDescription"
                 variant="caption"
                 :text="ctaDescription"
               />
-              
+
               <LayoutCluster variant="centered">
                 <UButton
                   :label="ctaText"

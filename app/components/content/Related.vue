@@ -33,7 +33,7 @@ const props = withDefaults(defineProps<Props>(), {
   title: 'Related Content',
   badge: 'Continue Reading',
   badgeColor: 'primary',
-  gridCols: 'md:grid-cols-2'
+  gridCols: 'md:grid-cols-2',
 })
 
 // Query related content
@@ -51,7 +51,7 @@ const { data: relatedItems, pending } = await useAsyncData(
     }
 
     return await query.all()
-  }
+  },
 )
 
 const hasRelatedItems = computed(() => relatedItems.value && relatedItems.value.length > 0)
@@ -70,20 +70,20 @@ const hasRelatedItems = computed(() => relatedItems.value && relatedItems.value.
     />
 
     <!-- Loading State -->
-    <div 
+    <div
       v-if="pending"
       class="grid gap-6"
       :class="gridCols"
     >
-      <USkeleton 
-        v-for="i in limit" 
+      <USkeleton
+        v-for="i in limit"
         :key="i"
-        class="h-48 w-full" 
+        class="h-48 w-full"
       />
     </div>
 
     <!-- Related Items Grid -->
-    <div 
+    <div
       v-else
       class="grid gap-6"
       :class="gridCols"
@@ -91,21 +91,26 @@ const hasRelatedItems = computed(() => relatedItems.value && relatedItems.value.
       <!-- Default slot receives all items -->
       <slot :items="relatedItems">
         <!-- Fallback: render basic cards -->
-        <UCard 
+        <UCard
           v-for="(item, index) in relatedItems"
           :key="`${item.stem}-${index}`"
           class="hover:shadow-lg transition-shadow"
         >
           <template #header>
-            <h3 class="font-semibold line-clamp-2">{{ item.title }}</h3>
+            <h3 class="font-semibold line-clamp-2">
+              {{ item.title }}
+            </h3>
           </template>
-          
-          <p v-if="item.description" class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3">
+
+          <p
+            v-if="item.description"
+            class="text-sm text-gray-600 dark:text-gray-400 line-clamp-3"
+          >
             {{ item.description }}
           </p>
-          
+
           <template #footer>
-            <ULink 
+            <ULink
               :to="item.stem"
               class="text-sm text-primary hover:underline"
             >

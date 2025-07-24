@@ -22,14 +22,14 @@ const props = withDefaults(defineProps<Props>(), {
   orderDirection: 'DESC',
   previousLabel: 'Previous',
   nextLabel: 'Next',
-  showBorder: true
+  showBorder: true,
 })
 
 // Query surroundings for any collection
 const { data: surroundings } = await useAsyncData(
   `${props.collection}-surroundings-${props.currentPath}`,
   () => queryCollectionItemSurroundings(props.collection, props.currentPath)
-    .order(props.orderBy, props.orderDirection)
+    .order(props.orderBy, props.orderDirection),
 )
 
 const previousItem = computed(() => surroundings.value?.[0])
@@ -37,7 +37,7 @@ const nextItem = computed(() => surroundings.value?.[1])
 </script>
 
 <template>
-  <div 
+  <div
     class="flex justify-between items-center py-8"
     :class="{ 'border-t border-gray-200 dark:border-gray-700': showBorder }"
   >
@@ -62,8 +62,8 @@ const nextItem = computed(() => surroundings.value?.[1])
     </div>
 
     <!-- Spacer when no previous item -->
-    <div 
-      v-else 
+    <div
+      v-else
       class="flex-1"
     />
 
@@ -91,8 +91,8 @@ const nextItem = computed(() => surroundings.value?.[1])
     </div>
 
     <!-- Spacer when no next item -->
-    <div 
-      v-else 
+    <div
+      v-else
       class="flex-1"
     />
   </div>

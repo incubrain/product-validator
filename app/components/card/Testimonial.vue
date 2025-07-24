@@ -82,18 +82,20 @@ const testimonial = computed(() => props.items[0] || ({} as TestimonialItem))
                   class="text-secondary font-bold text-xl"
                 >
                   {{
-                    testimonial.initials ||
-                    testimonial.author
-                      ?.split(' ')
-                      .map((n) => n[0])
-                      .join('')
+                    testimonial.initials
+                      || testimonial.author
+                        ?.split(' ')
+                        .map((n) => n[0])
+                        .join('')
                   }}
                 </span>
               </div>
 
               <div class="flex-1">
                 <div class="flex items-center gap-3 mb-1">
-                  <div class="font-bold text-highlighted text-xl">{{ testimonial.author }}</div>
+                  <div class="font-bold text-highlighted text-xl">
+                    {{ testimonial.author }}
+                  </div>
                   <div
                     class="w-5 h-5 bg-secondary/20 rounded-full flex items-center justify-center"
                   >
@@ -103,14 +105,22 @@ const testimonial = computed(() => props.items[0] || ({} as TestimonialItem))
                     />
                   </div>
                 </div>
-                <div class="text-muted text-lg">{{ testimonial.title }}</div>
-                <div class="text-secondary font-medium">{{ testimonial.company }}</div>
+                <div class="text-muted text-lg">
+                  {{ testimonial.title }}
+                </div>
+                <div class="text-secondary font-medium">
+                  {{ testimonial.company }}
+                </div>
               </div>
             </div>
           </div>
 
           <!-- Visual Element -->
-           <UIcon name="i-lucide-quote" class="text-secondary/60 hidden lg:block" size="2xl" />
+          <UIcon
+            name="i-lucide-quote"
+            class="text-secondary/60 hidden lg:block"
+            size="2xl"
+          />
         </div>
       </div>
     </LayoutGradientCard>
@@ -157,19 +167,25 @@ const testimonial = computed(() => props.items[0] || ({} as TestimonialItem))
           class="text-secondary font-semibold"
         >
           {{
-            testimonial.initials ||
-            testimonial.author
-              ?.split(' ')
-              .map((n) => n[0])
-              .join('')
+            testimonial.initials
+              || testimonial.author
+                ?.split(' ')
+                .map((n) => n[0])
+                .join('')
           }}
         </span>
       </div>
 
       <div>
-        <div class="font-semibold text-highlighted">{{ testimonial.author }}</div>
-        <div class="text-sm text-muted">{{ testimonial.title }}</div>
-        <div class="text-sm text-secondary font-medium">{{ testimonial.company }}</div>
+        <div class="font-semibold text-highlighted">
+          {{ testimonial.author }}
+        </div>
+        <div class="text-sm text-muted">
+          {{ testimonial.title }}
+        </div>
+        <div class="text-sm text-secondary font-medium">
+          {{ testimonial.company }}
+        </div>
       </div>
     </div>
   </div>
@@ -185,10 +201,16 @@ const testimonial = computed(() => props.items[0] || ({} as TestimonialItem))
         class="size-6 text-secondary/40 mx-auto"
       />
     </div>
-    <p class="text-highlighted mb-4 italic">{{ testimonial.quote }}</p>
+    <p class="text-highlighted mb-4 italic">
+      {{ testimonial.quote }}
+    </p>
     <div class="text-sm">
-      <div class="font-semibold text-highlighted">{{ testimonial.author }}</div>
-      <div class="text-muted">{{ testimonial.company }}</div>
+      <div class="font-semibold text-highlighted">
+        {{ testimonial.author }}
+      </div>
+      <div class="text-muted">
+        {{ testimonial.company }}
+      </div>
     </div>
   </div>
 </template>

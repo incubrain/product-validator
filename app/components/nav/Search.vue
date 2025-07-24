@@ -83,12 +83,12 @@ const searchGroups = computed(() => {
   const groups = []
 
   // BLOG SECTIONS GROUP (unchanged)
-  const blogSections =
-    searchData.value.blogSections?.filter((section) => {
+  const blogSections
+    = searchData.value.blogSections?.filter((section) => {
       return (
-        section.title?.toLowerCase().includes(searchLower) ||
-        section.content?.toLowerCase().includes(searchLower) ||
-        section.titles?.join(' ').toLowerCase().includes(searchLower)
+        section.title?.toLowerCase().includes(searchLower)
+        || section.content?.toLowerCase().includes(searchLower)
+        || section.titles?.join(' ').toLowerCase().includes(searchLower)
       )
     }) || []
 
@@ -118,11 +118,11 @@ const searchGroups = computed(() => {
   }
 
   // PAGES SECTIONS GROUP - Using hook-injected searchSections
-  const pageSections =
-    searchData.value.pageSections?.filter((section) => {
+  const pageSections
+    = searchData.value.pageSections?.filter((section) => {
       return (
-        section.title?.toLowerCase().includes(searchLower) ||
-        section.content?.toLowerCase().includes(searchLower)
+        section.title?.toLowerCase().includes(searchLower)
+        || section.content?.toLowerCase().includes(searchLower)
       )
     }) || []
 

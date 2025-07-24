@@ -12,18 +12,18 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
   background: 'none',
-  as: 'section'
+  as: 'section',
 })
 
 const styles = computed(() => sectionStyles(props))
 </script>
 
 <template>
-    <LayoutBackground 
-        :as="as"
-        :preset="background"
-        :class="[styles.root(), $attrs.class]"
-    >
-        <slot />
-    </LayoutBackground>
+  <LayoutBackground
+    :as="as"
+    :preset="background"
+    :class="[styles.root(), $attrs.class]"
+  >
+    <slot />
+  </LayoutBackground>
 </template>

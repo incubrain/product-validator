@@ -12,7 +12,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   variant: 'line',
   spacing: 'md',
-  orientation: 'horizontal'
+  orientation: 'horizontal',
 })
 
 const styles = computed(() => dividerStyles(props))

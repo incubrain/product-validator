@@ -12,14 +12,14 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   size: 'md',
   responsive: true,
-  as: 'div'
+  as: 'div',
 })
 
 const styles = computed(() => spacerStyles(props))
 </script>
 
 <template>
-  <component 
+  <component
     :is="as"
     :class="[styles.root(), $attrs.class]"
   />

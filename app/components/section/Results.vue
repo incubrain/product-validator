@@ -20,8 +20,12 @@ defineProps<Props>()
     <UContainer>
       <!-- Header -->
       <div class="text-center mb-component max-w-3xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold text-highlighted mb-4">{{ title }}</h2>
-        <p class="text-xl text-muted">{{ subtitle }}</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-highlighted mb-4">
+          {{ title }}
+        </h2>
+        <p class="text-xl text-muted">
+          {{ subtitle }}
+        </p>
       </div>
 
       <!-- Stats Grid -->

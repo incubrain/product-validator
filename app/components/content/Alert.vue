@@ -10,7 +10,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   title: 'Alert Title Missing',
   type: 'info',
-  variant: 'outline'
+  variant: 'outline',
 })
 
 const alertConfig = {

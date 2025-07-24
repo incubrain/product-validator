@@ -39,7 +39,7 @@ const getComponents = () => {
     <section
       v-for="(child, index) in getComponents()"
       :key="child?.key || index"
-      >
+    >
       <component
         :is="child"
         :class="spacingClasses[spacing]"

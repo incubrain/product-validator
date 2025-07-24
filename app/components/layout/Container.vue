@@ -12,14 +12,14 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   size: 'default',
   align: 'center',
-  as: 'div'
+  as: 'div',
 })
 
 const styles = computed(() => containerStyles(props))
 </script>
 
 <template>
-  <component 
+  <component
     :is="as"
     :class="[styles.root(), $attrs.class]"
   >

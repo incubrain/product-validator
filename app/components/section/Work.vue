@@ -13,7 +13,7 @@ const { data: blogPosts } = await useAsyncData('featured-blog-posts', () =>
     .where('featured', '=', true)
     .order('date', 'DESC')
     .limit(6)
-    .all()
+    .all(),
 )
 </script>
 
@@ -22,8 +22,12 @@ const { data: blogPosts } = await useAsyncData('featured-blog-posts', () =>
     <UContainer>
       <!-- Header -->
       <div class="text-center mb-component max-w-3xl mx-auto">
-        <h2 class="text-3xl md:text-4xl font-bold text-highlighted mb-4">{{ title }}</h2>
-        <p class="text-xl text-muted">{{ subtitle }}</p>
+        <h2 class="text-3xl md:text-4xl font-bold text-highlighted mb-4">
+          {{ title }}
+        </h2>
+        <p class="text-xl text-muted">
+          {{ subtitle }}
+        </p>
       </div>
 
       <!-- Featured Work Grid -->

@@ -1,5 +1,6 @@
 // plugins/mermaid.client.ts
-import mermaid, { type Mermaid } from 'mermaid'
+import mermaid from 'mermaid'
+import type { Mermaid } from 'mermaid'
 
 declare module '#app' {
   interface NuxtApp {

@@ -56,14 +56,13 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'gallery',
 })
 
-
 // Compute UI by merging preset with app.config.ts base styles
 const appConfig = useAppConfig()
 const ui = computed(() => {
-    if (!appConfig.ui.carousel) {
-      return presets[props.variant].ui
-    }
-    console.log('Using app config:', appConfig)
+  if (!appConfig.ui.carousel) {
+    return presets[props.variant].ui
+  }
+  console.log('Using app config:', appConfig)
   const presetUi = presets[props.variant].ui
   const baseSlots = appConfig.ui.carousel?.slots || {}
   return {
@@ -147,7 +146,9 @@ const getComponentName = (item: any): string | null => {
         v-else
         class="flex-1 flex items-center justify-center bg-gray-100 text-gray-500 rounded-lg border-2 border-dashed border-gray-300"
       >
-        <div class="text-center p-4">Unsupported Content: {{ item.type }}</div>
+        <div class="text-center p-4">
+          Unsupported Content: {{ item.type }}
+        </div>
       </div>
     </div>
   </UCarousel>

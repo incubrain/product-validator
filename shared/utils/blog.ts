@@ -12,16 +12,16 @@ export const CATEGORY_DESCRIPTIONS = {
 export const getCategoryName = (category: string | null | undefined): string => {
   if (!category) return 'Uncategorized'
   return (
-    CATEGORY_NAMES[category as keyof typeof CATEGORY_NAMES] ||
-    category.replace('-', ' ').replace(/\b\w/g, (l) => l.toUpperCase())
+    CATEGORY_NAMES[category as keyof typeof CATEGORY_NAMES]
+    || category.replace('-', ' ').replace(/\b\w/g, (l) => l.toUpperCase())
   )
 }
 
 export const getCategoryDescription = (category: string | null | undefined): string => {
   if (!category) return 'Latest posts and updates'
   return (
-    CATEGORY_DESCRIPTIONS[category as keyof typeof CATEGORY_DESCRIPTIONS] ||
-    `Latest posts in ${getCategoryName(category).toLowerCase()}`
+    CATEGORY_DESCRIPTIONS[category as keyof typeof CATEGORY_DESCRIPTIONS]
+    || `Latest posts in ${getCategoryName(category).toLowerCase()}`
   )
 }
 

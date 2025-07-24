@@ -1,0 +1,81 @@
+{
+
+"typescript.tsserver.maxTsServerMemory": 8192,
+  "typescript.tsserver.watchOptions": {
+    "watchFile": "useFsEvents",
+    "watchDirectory": "useFsEvents",
+    "fallbackPolling": "dynamicPriorityPolling",
+    "synchronousWatchDirectory": true
+  },
+  "typescript.preferences.importModuleSpecifier": "project-relative",
+  "typescript.tsdk": "node_modules/typescript/lib",
+  "typescript.enablePromptUseWorkspaceTsdk": true,
+
+
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+
+  
+  "terminal.integrated.profiles.linux": {
+    "Frontend": {
+      "path": "bash",
+      "icon": "browser",
+      "color": "terminal.ansiGreen"
+    },
+    "Backend": {
+      "path": "bash",
+      "icon": "server",
+      "color": "terminal.ansiBlue"
+    }
+  },
+
+  "files.watcherExclude": {
+    "**/.git/objects/**": true,
+    "**/.git/subtree-cache/**": true,
+    "**/dist/**": true,
+    "**/ai-context/**": true,
+    "**/ai-docs/**": true,
+    "**/backups/**": true,
+    "**/debug/**": true,
+    "**/logs/**": true,
+    "**/tmp/**": true,
+    "**/.cli-store/**": true,
+    "**/.output/**": true,
+    "**/.playground/**": true,
+    "**/.nuxt/**": true,
+    "**/coverage/**": true,
+    "**/.cache/**": true,
+    "**/build/**": true
+  },
+
+  "search.exclude": {
+    "**/node_modules": true,
+    "**/dist": true,
+    "**/ai-context": true,
+    "**/ai-docs": true,
+    "**/backups": true,
+    "**/debug": true,
+    "**/logs": true,
+    "**/tmp": true,
+    "**/.output": true,
+    "**/.playground": true,
+    "**/.cli-store": true,
+    "**/.nuxt": true
+  },
+
+  "files.exclude": {
+    "**/.git": true,
+    "**/.DS_Store": true,
+    "**/node_modules": false,
+    "**/dist": false,
+    "**/.cache": true,
+    "**/coverage": true
+  },
+
+  "js/ts.implicitProjectConfig.checkJs": false,
+  "javascript.updateImportsOnFileMove.enabled": "never",
+  "typescript.updateImportsOnFileMove.enabled": "never",
+  "typescript.validate.enable": true,
+  "typescript.tsserver.useSyntaxServer": "auto"
+}

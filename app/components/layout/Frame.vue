@@ -10,14 +10,14 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'video',
-  as: 'div'
+  as: 'div',
 })
 
 const styles = computed(() => frameStyles(props))
 </script>
 
 <template>
-  <component 
+  <component
     :is="as"
     :class="[styles.root(), $attrs.class]"
     v-bind="$attrs"

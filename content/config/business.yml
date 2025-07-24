@@ -5,7 +5,7 @@ data:
     tagline: AI-Native Development Team
     description: We build AI automation that pays for itself
     legal_name: IncuBrain Technologies Limited
-    
+
     # Authority Building
     founder:
       name: Drew MacGibbon
@@ -14,7 +14,7 @@ data:
       credentials:
         - AWS Certified
         - Space Tech Veteran
-      
+
     # Geographic Authority
     location:
       city: Pune
@@ -27,7 +27,7 @@ data:
     email: hello@incubrain.org
     phone: +91-123-456-7890
     business_hours: 9 AM - 6 PM IST, Mon-Fri
-    
+
     # Full URLs for schema.org integration
     social:
       github: https://github.com/incubrain

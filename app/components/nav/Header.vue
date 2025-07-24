@@ -55,7 +55,7 @@ const { public: config } = useRuntimeConfig()
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex relative w-full">
           <UNavigationMenu
-          class="w-full flex justify-center"
+            class="w-full flex justify-center"
             :items="navigationItems"
             color="neutral"
             variant="link"

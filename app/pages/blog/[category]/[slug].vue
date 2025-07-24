@@ -17,7 +17,7 @@ if (!post.value) {
 // SEO Integration
 // useSeoMeta(post.value.seo || {})
 // useHead(post.value.head || {})
-// 
+//
 // // OG Image
 // if (import.meta.server && post.value?.ogImage) {
 //   defineOgImage({
@@ -29,7 +29,7 @@ if (!post.value) {
 //     },
 //   })
 // }
-// 
+//
 // // Schema.org
 // useSchemaOrg([
 //   defineArticle({
@@ -53,7 +53,7 @@ if (!post.value) {
 // ])
 
 const seo = await useSeoDefaults(post.value)
-seo.apply() 
+seo.apply()
 
 // Extract TOC from content (if available)
 const tableOfContents = computed(() => {
@@ -118,25 +118,25 @@ const currentUrl = computed(() => {
             <BlogArticleAuthorBio />
 
             <ContentRelated
+              collection="blog"
+              :current-path="post.path"
+              related-by="category"
+              :related-value="post.category"
+              title="Related Articles"
+              badge="Continue Learning"
+            >
+              <template #default="{ items }">
+                <BlogPostCard
+                  v-for="item in items"
+                  :key="item.path"
+                  :post="item"
+                />
+              </template>
+            </ContentRelated>
+            <div class="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800">
+              <NavSurroundings
                 collection="blog"
                 :current-path="post.path"
-                related-by="category"
-                :related-value="post.category"
-                title="Related Articles"
-                badge="Continue Learning"
-              >
-                <template #default="{ items }">
-                  <BlogPostCard 
-                    v-for="item in items"
-                    :key="item.path"
-                    :post="item" 
-                  />
-                </template>
-              </ContentRelated>
-            <div class="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800">
-              <NavSurroundings 
-                collection="blog"
-                :current-path="post.path" 
               />
             </div>
           </main>

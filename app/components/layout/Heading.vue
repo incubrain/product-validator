@@ -3,8 +3,8 @@
 import headingStyles from '~~/theme/heading'
 
 interface Props {
-  text: string  // Required - the heading text
-  id?: string   // Optional - custom ID, defaults to slugified text
+  text: string // Required - the heading text
+  id?: string // Optional - custom ID, defaults to slugified text
   level?: 1 | 2 | 3 | 4 | 5 | 6
   variant?: 'default' | 'section' | 'hero' | 'hero-subtitle' | 'card' | 'muted' | 'accent'
   align?: 'left' | 'center' | 'right'
@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
   align: 'left',
   anchor: false,
-  anchorIcon: true
+  anchorIcon: true,
 })
 
 const htmlElement = computed(() => `h${props.level}`)
@@ -52,9 +52,9 @@ const headingId = computed(() => {
   >
     {{ text }}
   </NavAnchor>
-  
+
   <!-- Plain heading -->
-  <component 
+  <component
     :is="htmlElement"
     v-else
     :id="headingId"

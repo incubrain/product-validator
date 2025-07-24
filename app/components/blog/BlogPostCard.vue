@@ -121,10 +121,10 @@ const motionPreset = computed(() => {
         <!-- Post Description (p gets automatic animation) -->
         <p class="text-dimmed line-clamp-3">
           {{
-            post?.description ||
-            (featured
-              ? 'No description available for this featured post.'
-              : 'No description available')
+            post?.description
+              || (featured
+                ? 'No description available for this featured post.'
+                : 'No description available')
           }}
         </p>
       </div>

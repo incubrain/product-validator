@@ -7,19 +7,19 @@ interface Props {
   // Video source (from public directory)
   src: string
   poster?: string
-  
+
   // Display
   aspectRatio?: 'square' | 'video' | 'portrait' | 'wide' | 'auto'
-  
+
   // Behavior
   autoplay?: boolean
   muted?: boolean
   loop?: boolean
   controls?: boolean
-  
+
   // Loading
   loading?: 'lazy' | 'eager'
-  
+
   // Theme
   ui?: any
   class?: string
@@ -58,7 +58,7 @@ const {
   waiting,
   muted,
   volume,
-  ended
+  ended,
 } = useMediaControls(videoRef, {
   src: computed(() => shouldLoad.value ? props.src : ''),
 })
@@ -74,8 +74,8 @@ const { stop } = useIntersectionObserver(
   },
   {
     threshold: 0.1,
-    rootMargin: '50px'
-  }
+    rootMargin: '50px',
+  },
 )
 
 // Load immediately if eager
@@ -116,10 +116,10 @@ const togglePlay = () => {
 
 // Responsive autoplay behavior
 const shouldAutoplay = computed(() => {
-  return props.autoplay && 
-         !isMobile.value && 
-         !prefersReducedMotion.value &&
-         props.muted
+  return props.autoplay
+    && !isMobile.value
+    && !prefersReducedMotion.value
+    && props.muted
 })
 
 // Set initial muted state
@@ -140,7 +140,7 @@ watch([videoRef, shouldAutoplay], () => {
 const computedStyles = computed(() => mediaStyles({
   ...props,
   loading: isLoading.value,
-  error: hasError.value
+  error: hasError.value,
 }))
 
 // Format time for display
@@ -158,7 +158,7 @@ const progressPercent = computed(() => {
 </script>
 
 <template>
-  <div 
+  <div
     ref="containerRef"
     :class="computedStyles.root()"
     @click="togglePlay"
@@ -178,39 +178,42 @@ const progressPercent = computed(() => {
       @loadeddata="handleLoadedData"
       @error="handleError"
     >
-      <source :src="src" type="video/mp4">
+      <source
+        :src="src"
+        type="video/mp4"
+      >
       <p>Your browser doesn't support video playback.</p>
     </video>
 
     <!-- Custom Controls Overlay (Mobile) -->
-    <div 
+    <div
       v-if="!controls && !hasError && shouldLoad"
       :class="computedStyles.controls()"
       class="opacity-0 hover:opacity-100"
-      :style="{ 
-        opacity: isMobile && showControls ? 1 : undefined 
+      :style="{
+        opacity: isMobile && showControls ? 1 : undefined,
       }"
     >
       <!-- Play/Pause Button -->
       <div class="flex flex-col items-center gap-2">
-        <UIcon 
+        <UIcon
           :name="playing ? 'i-lucide-pause' : 'i-lucide-play'"
           class="size-12 text-white drop-shadow-lg"
         />
-        
+
         <!-- Progress Bar (Mobile only) -->
-        <div 
+        <div
           v-if="isMobile && duration > 0"
           class="w-32 h-1 bg-white/30 rounded-full overflow-hidden"
         >
-          <div 
+          <div
             class="h-full bg-white transition-all duration-200"
             :style="{ width: `${progressPercent}%` }"
           />
         </div>
-        
+
         <!-- Time Display (Mobile only) -->
-        <div 
+        <div
           v-if="isMobile && duration > 0"
           class="text-xs text-white/80 font-mono"
         >
@@ -220,44 +223,60 @@ const progressPercent = computed(() => {
     </div>
 
     <!-- Loading State -->
-    <div 
+    <div
       v-if="isLoading && shouldLoad"
       :class="computedStyles.overlay()"
     >
       <div :class="computedStyles.loadingState()">
-        <UIcon name="i-lucide-loader" class="size-8 animate-spin" />
+        <UIcon
+          name="i-lucide-loader"
+          class="size-8 animate-spin"
+        />
       </div>
     </div>
 
     <!-- Error State -->
-    <div 
+    <div
       v-if="hasError"
       :class="computedStyles.overlay()"
     >
       <div :class="computedStyles.errorState()">
-        <UIcon name="i-lucide-video-off" class="size-12 mb-2" />
-        <p class="text-sm mb-3">Failed to load video</p>
-        <p class="text-xs opacity-75">{{ src }}</p>
+        <UIcon
+          name="i-lucide-video-off"
+          class="size-12 mb-2"
+        />
+        <p class="text-sm mb-3">
+          Failed to load video
+        </p>
+        <p class="text-xs opacity-75">
+          {{ src }}
+        </p>
       </div>
     </div>
 
     <!-- Lazy Loading Placeholder -->
-    <div 
+    <div
       v-if="!shouldLoad && loading === 'lazy'"
       :class="computedStyles.overlay()"
     >
       <div :class="computedStyles.loadingState()">
-        <UIcon name="i-lucide-video" class="size-8" />
+        <UIcon
+          name="i-lucide-video"
+          class="size-8"
+        />
       </div>
     </div>
 
     <!-- Waiting/Buffering Indicator -->
-    <div 
+    <div
       v-if="waiting && !hasError"
       :class="computedStyles.overlay()"
     >
       <div :class="computedStyles.loadingState()">
-        <UIcon name="i-lucide-loader" class="size-6 animate-spin" />
+        <UIcon
+          name="i-lucide-loader"
+          class="size-6 animate-spin"
+        />
       </div>
     </div>
   </div>

@@ -18,7 +18,7 @@ const props = withDefaults(defineProps<Props>(), {
   intensity: 'medium',
   gradient: 'none',
   motion: false,
-  as: 'div'
+  as: 'div',
 })
 
 const styles = computed(() => backgroundStyles(props))
@@ -28,7 +28,7 @@ const shouldApplyEffects = computed(() => props.preset !== 'none')
 </script>
 
 <template>
-  <component 
+  <component
     :is="as"
     :class="[styles.root(), $attrs.class]"
   >

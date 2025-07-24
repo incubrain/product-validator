@@ -56,14 +56,14 @@ export function loadConfig<T = any>(configName: string): T {
   try {
     // Resolve path relative to project root
     const configPath = resolve(process.cwd(), `content/config/${configName}.yaml`)
-    
+
     // Read and parse YAML
     const yamlContent = readFileSync(configPath, 'utf8')
     const config = parse(yamlContent)
-    
+
     // Cache the result
     configCache.set(configName, config)
-    
+
     return config
   } catch (error) {
     console.error(`Failed to load config: ${configName}`, error)

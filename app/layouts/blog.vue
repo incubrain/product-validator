@@ -2,7 +2,7 @@
 <script setup lang="ts">
 const { data: metadata } = await useFetch('/api/content/metadata', {
   query: { collection: 'blog', category: 'all' },
-  key: 'blog-metadata-all'
+  key: 'blog-metadata-all',
 })
 </script>
 
@@ -16,7 +16,7 @@ const { data: metadata } = await useFetch('/api/content/metadata', {
           <div class="grid grid-cols-1 lg:grid-cols-4 grid-spacing">
             <!-- Safe sidebar -->
             <LayoutSidebar
-            class="lg:col-span-1 order-2 lg:order-1"
+              class="lg:col-span-1 order-2 lg:order-1"
               content-type="blog"
               base-path="/blog"
               :category="$route.params.category?.[0]"
@@ -24,7 +24,11 @@ const { data: metadata } = await useFetch('/api/content/metadata', {
               search-placeholder="Search posts..."
             >
               <template #search="{ placeholder }">
-                <NavSearch :placeholder="placeholder" variant="input" size="md" />
+                <NavSearch
+                  :placeholder="placeholder"
+                  variant="input"
+                  size="md"
+                />
               </template>
             </LayoutSidebar>
 

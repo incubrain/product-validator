@@ -8,18 +8,18 @@ interface PageData {
   image?: string
   tags?: string[]
   path?: string
-  schemas?: any[]     // Content can override schemas
-  ogImage?: any       // Content can override OG image
+  schemas?: any[] // Content can override schemas
+  ogImage?: any // Content can override OG image
   [key: string]: any
 }
 
 export const useSeoDefaults = async (pageData?: PageData) => {
   const route = useRoute()
-  
+
   // Load schemas and config
   const [{ data: schemas }, { data: config }] = await Promise.all([
     useAsyncData('seo-schemas', () => queryCollection('seoSchemas').all()),
-    useAsyncData('seo-config', () => queryCollection('seoConfig').first())
+    useAsyncData('seo-config', () => queryCollection('seoConfig').first()),
   ])
 
   if (!schemas.value || !config.value) {
@@ -29,7 +29,7 @@ export const useSeoDefaults = async (pageData?: PageData) => {
 
   const schemaRegistry = buildRegistry(schemas.value)
   const pageConfig = getPageConfig(route.path, pageData, config.value)
-  
+
   const seoMeta = generateMeta(pageData, config.value, pageConfig)
   const schemaOrg = generateSchemas(pageData, schemaRegistry, pageConfig)
   const ogImage = generateOgImage(pageData, pageConfig)
@@ -43,7 +43,7 @@ export const useSeoDefaults = async (pageData?: PageData) => {
       useSeoMeta(seoMeta)
       if (schemaOrg?.length > 0) useSchemaOrg(schemaOrg)
       if (ogImage) defineOgImage(ogImage)
-    }
+    },
   }
 }
 
@@ -52,7 +52,7 @@ export const useSeoDefaults = async (pageData?: PageData) => {
 // ====================================
 function buildRegistry(schemaFiles: any[]) {
   const registry: Record<string, any> = {}
-  schemaFiles.forEach(file => {
+  schemaFiles.forEach((file) => {
     registry[file.stem] = file
   })
   return registry
@@ -65,27 +65,27 @@ function getPageConfig(path: string, pageData: PageData | undefined, config: any
       type: 'content-driven',
       schemas: pageData.schemas,
       ogImage: pageData.ogImage || config.defaults.ogImage,
-      meta: config.defaults.meta
+      meta: config.defaults.meta,
     }
   }
-  
+
   // Exact path match
   if (config.pages[path]) {
     return { type: 'page', ...config.pages[path] }
   }
-  
+
   // Content type match (blog)
   if (path.includes('/blog/') && path.split('/').length >= 4) {
     return { type: 'blog', ...config.contentTypes.blog }
   }
-  
+
   // Default fallback
   return { type: 'default', ...config.defaults }
 }
 
 function generateSchemas(pageData: PageData | undefined, registry: Record<string, any>, pageConfig: any) {
   const schemas = []
-  
+
   pageConfig.schemas.forEach((schemaItem: any) => {
     if (typeof schemaItem === 'string') {
       // Simple reference: "organization"
@@ -96,7 +96,7 @@ function generateSchemas(pageData: PageData | undefined, registry: Record<string
       // Enhanced schema: "webpage: { name: '...', description: '...' }"
       const schemaType = Object.keys(schemaItem)[0]
       const enhancements = schemaItem[schemaType]
-      
+
       if (registry[schemaType]) {
         // Base schema exists, enhance it
         const enhanced = enhanceSchema(registry[schemaType], enhancements, pageData, registry)
@@ -104,21 +104,21 @@ function generateSchemas(pageData: PageData | undefined, registry: Record<string
       } else {
         // Create new schema with enhancements
         const newSchema = {
-          "@type": getSchemaType(schemaType),
-          ...resolveEnhancements(enhancements, pageData, registry)
+          '@type': getSchemaType(schemaType),
+          ...resolveEnhancements(enhancements, pageData, registry),
         }
         schemas.push(newSchema)
       }
     }
   })
-  
+
   return schemas.filter(Boolean)
 }
 
 function enhanceSchema(baseSchema: any, enhancements: any, pageData: PageData | undefined, registry: Record<string, any>) {
   return {
     ...baseSchema,
-    ...resolveEnhancements(enhancements, pageData, registry)
+    ...resolveEnhancements(enhancements, pageData, registry),
   }
 }
 
@@ -126,7 +126,7 @@ function resolveEnhancements(enhancements: any, pageData: PageData | undefined, 
   if (typeof enhancements === 'string') {
     return resolveValue(enhancements, pageData, registry)
   }
-  
+
   if (typeof enhancements === 'object' && enhancements !== null) {
     const resolved: any = {}
     Object.entries(enhancements).forEach(([key, value]) => {
@@ -134,7 +134,7 @@ function resolveEnhancements(enhancements: any, pageData: PageData | undefined, 
     })
     return resolved
   }
-  
+
   return enhancements
 }
 
@@ -146,22 +146,22 @@ function resolveValue(value: string, pageData: PageData | undefined, registry: R
       return resolved?.toString() || match
     })
   }
-  
+
   // Object path: "organization.name"
   if (value.includes('.')) {
     return getPath(value, { pageData, ...registry })
   }
-  
+
   // Direct reference: "person"
   if (registry[value]) {
     return registry[value]
   }
-  
+
   // Function call: "getCategoryName(pageData.category)"
   if (value.includes('(') && value.includes(')')) {
     return executeFunction(value, pageData)
   }
-  
+
   return value
 }
 
@@ -177,11 +177,11 @@ function executeFunction(funcCall: string, pageData: PageData | undefined): any 
       return getCategoryName(pageData?.category)
     }
   }
-  
+
   if (funcCall.startsWith('estimateWordCount(')) {
     return estimateWordCount(pageData)
   }
-  
+
   return funcCall
 }
 
@@ -191,19 +191,19 @@ function getSchemaType(schemaKey: string): string {
     website: 'WebSite',
     aboutPage: 'AboutPage',
     contactPage: 'ContactPage',
-    blogPost: 'BlogPosting'
+    blogPost: 'BlogPosting',
   }
   return typeMap[schemaKey] || 'Thing'
 }
 
 function generateMeta(pageData: PageData | undefined, config: any, pageConfig: any) {
   const defaults = config.meta
-  
+
   if (!pageData) {
     return {
       title: defaults.siteName,
       titleTemplate: defaults.titleTemplate,
-      description: "Default description",
+      description: 'Default description',
       ogSiteName: defaults.ogSiteName,
       ogImage: defaults.defaultOgImage,
       twitterCard: 'summary_large_image',
@@ -214,14 +214,14 @@ function generateMeta(pageData: PageData | undefined, config: any, pageConfig: a
   return {
     title: pageData.title || 'Untitled',
     titleTemplate: defaults.titleTemplate,
-    description: pageData.description || "Default description",
+    description: pageData.description || 'Default description',
     ogTitle: pageData.title,
     ogDescription: pageData.description,
     ogSiteName: defaults.ogSiteName,
     ogType: pageConfig.type === 'blog' ? 'article' : 'website',
-    ogImage: pageData.image ? 
-      `/images/blog/${pageData.category}/${pageData.image}` : 
-      defaults.defaultOgImage,
+    ogImage: pageData.image
+      ? `/images/blog/${pageData.category}/${pageData.image}`
+      : defaults.defaultOgImage,
     twitterCard: 'summary_large_image',
     twitterSite: defaults.twitterSite,
     twitterCreator: defaults.twitterCreator,
@@ -230,35 +230,35 @@ function generateMeta(pageData: PageData | undefined, config: any, pageConfig: a
     ...(pageConfig.type === 'blog' && {
       articlePublishedTime: pageData.date,
       articleModifiedTime: pageData.date,
-      articleAuthor: pageData.author || "Default Author",
+      articleAuthor: pageData.author || 'Default Author',
       articleSection: getCategoryName(pageData.category),
       articleTag: pageData.tags || [],
-    })
+    }),
   }
 }
 
 function generateOgImage(pageData: PageData | undefined, pageConfig: any) {
   if (!pageData?.title || !pageConfig.ogImage) return null
-  
+
   const ogConfig = pageConfig.ogImage
-  
+
   // Blog category mapping
   if (pageConfig.type === 'blog' && pageData.category && ogConfig.categoryMapping) {
     const component = ogConfig.categoryMapping[pageData.category] || ogConfig.categoryMapping.default
-    
+
     return {
       component,
       props: {
         title: pageData.title,
         category: getCategoryName(pageData.category),
-        author: pageData.author || "Default Author",
+        author: pageData.author || 'Default Author',
         date: pageData.date,
         image: pageData.image,
-        ...(pageData.tags && { tags: pageData.tags.slice(0, 3) })
-      }
+        ...(pageData.tags && { tags: pageData.tags.slice(0, 3) }),
+      },
     }
   }
-  
+
   // Standard page
   return {
     component: ogConfig.component,
@@ -266,8 +266,8 @@ function generateOgImage(pageData: PageData | undefined, pageConfig: any) {
       title: pageData.title,
       description: pageData.description,
       type: pageConfig.type,
-      variant: ogConfig.variant || 'default'
-    }
+      variant: ogConfig.variant || 'default',
+    },
   }
 }
 

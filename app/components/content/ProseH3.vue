@@ -4,7 +4,10 @@ const props = defineProps<{ id?: string }>()
 </script>
 
 <template>
-  <LayoutHeading :id="props.id" :level="3">
+  <LayoutHeading
+    :id="props.id"
+    :level="3"
+  >
     <slot />
   </LayoutHeading>
-  </template>
+</template>

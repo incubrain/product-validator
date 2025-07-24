@@ -7,6 +7,7 @@ export default defineAppConfig({
     //     size: 'sm'
     //   }
     // },
+
     colors: {
       primary: 'emerald',
       secondary: 'sky',
@@ -38,8 +39,10 @@ export default defineAppConfig({
         arrows: '',
         prev: 'absolute start-4 top-1/2 -translate-y-1/2',
         next: 'absolute end-4 top-1/2 -translate-y-1/2',
-        dots: 'absolute inset-x-0 -bottom-7 flex items-center justify-center gap-3',
-        dot: 'cursor-pointer size-3 bg-gray-400 rounded-full transition-colors data-[active=true]:bg-accented',
+        dots:
+          'absolute inset-x-0 -bottom-7 flex items-center justify-center gap-3',
+        dot:
+          'cursor-pointer size-3 bg-gray-400 rounded-full transition-colors data-[active=true]:bg-accented',
       },
       variants: {
         orientation: {
@@ -52,8 +55,10 @@ export default defineAppConfig({
           vertical: {
             container: 'flex-col -mt-4',
             item: 'pt-4',
-            prev: 'top-4 sm:-top-12 left-1/2 -translate-x-1/2 rotate-90 rtl:-rotate-90',
-            next: 'bottom-4 sm:-bottom-12 left-1/2 -translate-x-1/2 rotate-90 rtl:-rotate-90',
+            prev:
+              'top-4 sm:-top-12 left-1/2 -translate-x-1/2 rotate-90 rtl:-rotate-90',
+            next:
+              'bottom-4 sm:-bottom-12 left-1/2 -translate-x-1/2 rotate-90 rtl:-rotate-90',
           },
         },
         active: {
@@ -63,15 +68,18 @@ export default defineAppConfig({
         },
         profile: {
           gallery: {
-            item: 'basis-full md:basis-1/2 lg:basis-1/3 transition-all duration-300 [&:last-child]:mr-[1rem]',
+            item:
+              'basis-full md:basis-1/2 lg:basis-1/3 transition-all duration-300 [&:last-child]:mr-[1rem]',
             container: 'flex items-center gap-4',
           },
           hero: {
-            item: 'basis-full transition-all duration-300 [&:last-child]:mr-[1rem]',
+            item:
+              'basis-full transition-all duration-300 [&:last-child]:mr-[1rem]',
             container: 'flex items-center',
           },
           thumbnail: {
-            item: 'basis-1/4 md:basis-1/6 transition-all duration-300 [&:last-child]:mr-[0.5rem]',
+            item:
+              'basis-1/4 md:basis-1/6 transition-all duration-300 [&:last-child]:mr-[0.5rem]',
             container: 'flex items-center gap-2',
           },
         },

@@ -5,10 +5,13 @@ import Logo from '~/components/Logo.vue'
 
 <template>
   <div class="my-section flex items-center justify-center">
-    <div class="flex-1 border-t border-muted"/>
+    <div class="flex-1 border-t border-muted" />
     <div class="px-6">
-      <Logo size="sm" :show-text="false" />
+      <Logo
+        size="sm"
+        :show-text="false"
+      />
     </div>
-    <div class="flex-1 border-t border-muted"/>
+    <div class="flex-1 border-t border-muted" />
   </div>
 </template>

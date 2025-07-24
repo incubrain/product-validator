@@ -67,16 +67,16 @@ export default defineContentConfig({
     ),
 
     sections: defineCollection({
-      type: 'page', 
+      type: 'page',
       source: 'sections/**/*.md',
       schema: z.object({
         sectionName: z.string(),
         agentSummary: z.string(),
         variants: z.record(z.object({
           intent: z.string(),
-          emotion: z.string()
-        })).optional()
-      })
+          emotion: z.string(),
+        })).optional(),
+      }),
     }),
 
     seoSchemas: defineCollection({
@@ -84,7 +84,7 @@ export default defineContentConfig({
       source: 'seo/schemas/**/*.yml',
       schema: z.object({
         schema: z.record(z.any()),
-      })
+      }),
     }),
 
     faq: defineCollection({
@@ -95,27 +95,27 @@ export default defineContentConfig({
           question: z.string(),
           answer: z.string(),
           keywords: z.array(z.string()).optional(),
-          priority: z.number().optional()
-        }))
-      })
+          priority: z.number().optional(),
+        })),
+      }),
     }),
 
     // NEW: Single unified SEO config
     seoConfig: defineCollection({
-      type: 'data', 
+      type: 'data',
       source: 'seo/config.yml',
       schema: z.object({
         meta: z.record(z.any()),
         defaults: z.record(z.any()),
         pages: z.record(z.any()),
-        contentTypes: z.record(z.any()).optional()
-      })
+        contentTypes: z.record(z.any()).optional(),
+      }),
     }),
 
     config: defineCollection({
       type: 'data',
       source: 'config/**/*.yml',
-      schema: z.object({data: z.record(z.any())}),
+      schema: z.object({ data: z.record(z.any()) }),
     }),
   },
 })

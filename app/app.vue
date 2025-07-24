@@ -1,55 +1,55 @@
 <script setup lang="ts">
 useSchemaOrg([
   defineOrganization({
-    name: "Incubrain ltd.",
+    name: 'Incubrain ltd.',
     description:
-      "AI automation specialists with space tech expertise and global-local execution",
-    url: "https://incubrain.org",
-    logo: "/logo.png", // Add when available
+      'AI automation specialists with space tech expertise and global-local execution',
+    url: 'https://incubrain.org',
+    logo: '/logo.png', // Add when available
 
     // Business details
-    foundingDate: "2025",
+    foundingDate: '2025',
 
     // Contact information
-    email: "hello@incubrain.com",
+    email: 'hello@incubrain.com',
     contactPoint: {
-      "@type": "ContactPoint",
-      contactType: "Customer Service",
-      email: "hello@incubrain.com",
-      areaServed: "IN",
-      availableLanguage: "English",
+      '@type': 'ContactPoint',
+      'contactType': 'Customer Service',
+      'email': 'hello@incubrain.com',
+      'areaServed': 'IN',
+      'availableLanguage': 'English',
     },
 
     // Business location
     address: {
-      "@type": "PostalAddress",
-      addressLocality: "Pune",
-      addressRegion: "Maharashtra",
-      addressCountry: "IN",
+      '@type': 'PostalAddress',
+      'addressLocality': 'Pune',
+      'addressRegion': 'Maharashtra',
+      'addressCountry': 'IN',
     },
 
     // Services offered
     makesOffer: [
       {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "AI Business Process Automation",
-          description: "Custom AI automation solutions for business processes",
+        '@type': 'Offer',
+        'itemOffered': {
+          '@type': 'Service',
+          'name': 'AI Business Process Automation',
+          'description': 'Custom AI automation solutions for business processes',
         },
       },
       {
-        "@type": "Offer",
-        itemOffered: {
-          "@type": "Service",
-          name: "Space Technology Platform Development",
-          description:
-            "Specialized platform development for space technology companies",
+        '@type': 'Offer',
+        'itemOffered': {
+          '@type': 'Service',
+          'name': 'Space Technology Platform Development',
+          'description':
+            'Specialized platform development for space technology companies',
         },
       },
     ],
   }),
-]);
+])
 </script>
 
 <template>

@@ -10,20 +10,20 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
-  as: 'div'
+  as: 'div',
 })
 
 const styles = computed(() => splitStyles(props))
 </script>
 
 <template>
-  <component 
+  <component
     :is="as"
     :class="[styles.root(), $attrs.class]"
     v-bind="$attrs"
   >
-  <div>
-        <slot name="primary" />
+    <div>
+      <slot name="primary" />
     </div>
     <div>
       <slot name="secondary" />

@@ -3,7 +3,7 @@
 import anchorStyles from '~~/theme/anchor'
 
 interface Props {
-  id: string    // Required - the anchor ID
+  id: string // Required - the anchor ID
   as?: string
   showIcon?: boolean
   iconPosition?: 'left' | 'right'
@@ -13,7 +13,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   as: 'div',
   showIcon: true,
-  iconPosition: 'left'
+  iconPosition: 'left',
 })
 
 const route = useRoute()
@@ -33,7 +33,7 @@ const isActive = computed(() => {
     :class="[styles.root(), $attrs.class]"
     v-bind="$attrs"
   >
-    <ULink 
+    <ULink
       :to="`#${id}`"
       :class="styles.link()"
       :aria-label="`Link to ${id} section`"
@@ -43,11 +43,11 @@ const isActive = computed(() => {
       inactive-class="text-inherit"
     >
       <slot />
-      
-      <UIcon 
-        v-if="showIcon && iconPosition === 'left'" 
-        name="i-lucide-hash" 
-        :class="[styles.icon(), isActive && 'opacity-100']" 
+
+      <UIcon
+        v-if="showIcon && iconPosition === 'left'"
+        name="i-lucide-hash"
+        :class="[styles.icon(), isActive && 'opacity-100']"
       />
     </ULink>
   </component>

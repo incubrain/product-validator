@@ -14,12 +14,15 @@ interface Props {
 }
 
 withDefaults(defineProps<Props>(), {
-  cards: () => []
+  cards: () => [],
 })
 </script>
 
 <template>
-  <LayoutBackground pattern="circuit" intensity="light">
+  <LayoutBackground
+    pattern="circuit"
+    intensity="light"
+  >
     <UContainer>
       <div class="text-center mb-component">
         <h2 class="text-3xl md:text-4xl font-bold text-highlighted mb-component">

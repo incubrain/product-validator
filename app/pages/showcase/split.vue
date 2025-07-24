@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useHead({
   title: 'LayoutSplit Showcase - Layout Primitives',
-  meta: [{ name: 'description', content: 'Comprehensive showcase of LayoutSplit variants for two-column layouts' }]
+  meta: [{ name: 'description', content: 'Comprehensive showcase of LayoutSplit variants for two-column layouts' }],
 })
 
 const splitVariants = [
@@ -9,7 +9,7 @@ const splitVariants = [
   { name: 'narrow', description: 'Narrower secondary column (1fr + 0.8fr)' },
   { name: 'wide', description: 'Wider primary column (1.2fr + 1fr)' },
   { name: 'stack-lg', description: 'Stack on tablet, split on XL screens' },
-  { name: 'reverse', description: 'Visual order reversal with flex-col-reverse' }
+  { name: 'reverse', description: 'Visual order reversal with flex-col-reverse' },
 ]
 </script>
 
@@ -17,17 +17,22 @@ const splitVariants = [
   <div class="min-h-screen bg-muted">
     <LayoutCenter variant="full">
       <div class="py-section space-y-component">
-        
         <!-- Page Header -->
         <LayoutStack variant="centered">
-          <LayoutHeading text="LayoutSplit Showcase" variant="hero" />
-          <LayoutText text="Two-column responsive layouts with intelligent breakpoint behavior" variant="subtitle" />
+          <LayoutHeading
+            text="LayoutSplit Showcase"
+            variant="hero"
+          />
+          <LayoutText
+            text="Two-column responsive layouts with intelligent breakpoint behavior"
+            variant="subtitle"
+          />
         </LayoutStack>
 
         <!-- Split Variants -->
         <LayoutStack variant="spacious">
-          <div 
-            v-for="(variant, index) in splitVariants" 
+          <div
+            v-for="(variant, index) in splitVariants"
             :key="variant.name"
             class="space-y-4"
           >
@@ -35,15 +40,25 @@ const splitVariants = [
             <div class="bg-elevated p-6 rounded-lg border border-muted">
               <div class="mb-4">
                 <div class="flex items-center gap-3 mb-2">
-                  <UBadge :label="String(index + 1)" color="primary" variant="solid" />
-                  <LayoutHeading :text="`variant='${variant.name}'`" variant="card" />
+                  <UBadge
+                    :label="String(index + 1)"
+                    color="primary"
+                    variant="solid"
+                  />
+                  <LayoutHeading
+                    :text="`variant='${variant.name}'`"
+                    variant="card"
+                  />
                 </div>
-                <LayoutText :text="variant.description" variant="description" />
+                <LayoutText
+                  :text="variant.description"
+                  variant="description"
+                />
               </div>
 
               <!-- Demo Container -->
               <div class="bg-circuit border-2 border-dashed border-primary/30 p-6 rounded-lg">
-                <component 
+                <component
                   :is="'LayoutSplit'"
                   :variant="variant.name"
                   class="min-h-[300px]"
@@ -56,7 +71,7 @@ const splitVariants = [
                       </div>
                     </div>
                   </template>
-                  
+
                   <template #secondary>
                     <div class="bg-secondary/20 border border-secondary/50 p-6 rounded h-full flex items-center justify-center">
                       <div class="text-center">
@@ -70,7 +85,9 @@ const splitVariants = [
 
               <!-- Code Example -->
               <details class="mt-4">
-                <summary class="cursor-pointer text-sm font-medium text-primary hover:text-primary/80">View Code</summary>
+                <summary class="cursor-pointer text-sm font-medium text-primary hover:text-primary/80">
+                  View Code
+                </summary>
                 <pre class="mt-2 p-3 bg-black/50 rounded text-xs text-green-400 overflow-x-auto"><code>&lt;LayoutSplit variant="${variant.name}"&gt;
   &lt;template #primary&gt;
     Primary content
@@ -83,30 +100,51 @@ const splitVariants = [
             </div>
 
             <!-- Divider -->
-            <LayoutDivider v-if="index < splitVariants.length - 1" variant="gradient" spacing="lg" />
+            <LayoutDivider
+              v-if="index < splitVariants.length - 1"
+              variant="gradient"
+              spacing="lg"
+            />
           </div>
         </LayoutStack>
 
         <!-- Real-World Examples -->
         <div class="bg-elevated p-8 rounded-lg border border-muted">
-          <LayoutHeading text="Real-World Split Examples" variant="section" />
-          
+          <LayoutHeading
+            text="Real-World Split Examples"
+            variant="section"
+          />
+
           <LayoutStack variant="spacious">
             <!-- Hero Section Example -->
             <div class="bg-circuit border-2 border-dashed border-emerald-500/30 p-6 rounded-lg">
-              <h4 class="text-lg font-semibold mb-4 text-emerald-400">Hero Section Layout</h4>
+              <h4 class="text-lg font-semibold mb-4 text-emerald-400">
+                Hero Section Layout
+              </h4>
               <LayoutSplit variant="default">
                 <template #primary>
                   <LayoutStack variant="default">
-                    <LayoutHeading text="Hero Title" variant="hero" />
-                    <LayoutText text="Compelling hero description that converts visitors into customers." variant="description" />
+                    <LayoutHeading
+                      text="Hero Title"
+                      variant="hero"
+                    />
+                    <LayoutText
+                      text="Compelling hero description that converts visitors into customers."
+                      variant="description"
+                    />
                     <LayoutStack variant="horizontal">
-                      <UButton label="Get Started" color="primary" />
-                      <UButton label="Learn More" variant="outline" />
+                      <UButton
+                        label="Get Started"
+                        color="primary"
+                      />
+                      <UButton
+                        label="Learn More"
+                        variant="outline"
+                      />
                     </LayoutStack>
                   </LayoutStack>
                 </template>
-                
+
                 <template #secondary>
                   <div class="bg-gradient-to-br from-primary/10 to-secondary/10 rounded-lg h-64 flex items-center justify-center border border-primary/20">
                     <span class="text-muted">Hero Image/Video</span>
@@ -117,7 +155,9 @@ const splitVariants = [
 
             <!-- Content + Sidebar Example -->
             <div class="bg-circuit border-2 border-dashed border-blue-500/30 p-6 rounded-lg">
-              <h4 class="text-lg font-semibold mb-4 text-blue-400">Content + Sidebar Layout</h4>
+              <h4 class="text-lg font-semibold mb-4 text-blue-400">
+                Content + Sidebar Layout
+              </h4>
               <LayoutSplit variant="wide">
                 <template #primary>
                   <div class="prose prose-sm max-w-none">
@@ -125,10 +165,12 @@ const splitVariants = [
                     <p>This would be your main content like blog posts, product descriptions, or detailed information.</p>
                   </div>
                 </template>
-                
+
                 <template #secondary>
                   <div class="bg-elevated p-4 rounded border border-muted">
-                    <h4 class="font-semibold mb-3">Sidebar Content</h4>
+                    <h4 class="font-semibold mb-3">
+                      Sidebar Content
+                    </h4>
                     <ul class="space-y-2 text-sm text-muted">
                       <li>• Related articles</li>
                       <li>• Call-to-action</li>
@@ -141,7 +183,6 @@ const splitVariants = [
             </div>
           </LayoutStack>
         </div>
-
       </div>
     </LayoutCenter>
   </div>

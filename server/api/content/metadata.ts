@@ -22,11 +22,11 @@ export default defineEventHandler(async (event): Promise<ContentMetadataResponse
   const query = getQuery(event)
   const collection = query.collection as string
   const category = query.category as string
-  
+
   if (!collection) {
     throw createError({
       statusCode: 400,
-      statusMessage: 'Collection parameter is required'
+      statusMessage: 'Collection parameter is required',
     })
   }
 
@@ -41,12 +41,12 @@ export default defineEventHandler(async (event): Promise<ContentMetadataResponse
     }
 
     const items = await baseQuery.all()
-    
+
     // Category counts (for all items)
     const allItemsForCounts = await queryCollection(event, collection as any)
       .select('category')
       .all()
-    
+
     const categories: Record<string, number> = { all: allItemsForCounts.length }
     allItemsForCounts.forEach((item) => {
       const cat = item.category || 'uncategorized'
@@ -66,7 +66,7 @@ export default defineEventHandler(async (event): Promise<ContentMetadataResponse
   } catch (error: any) {
     throw createError({
       statusCode: 500,
-      statusMessage: `Failed to fetch ${collection} metadata: ${error.message}`
+      statusMessage: `Failed to fetch ${collection} metadata: ${error.message}`,
     })
   }
 })

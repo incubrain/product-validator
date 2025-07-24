@@ -10,20 +10,20 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'default',
-  as: 'div'
+  as: 'div',
 })
 
 const styles = computed(() => stackStyles(props))
 
 console.log('🐛 Stack theme debug:', {
-  default: stackStyles({ variant: 'default' }),
-  centered: stackStyles({ variant: 'centered' }),
-  horizontal: stackStyles({ variant: 'horizontal' })
+  default: stackStyles({ variant: 'default' }).root(),
+  centered: stackStyles({ variant: 'centered' }).root(),
+  horizontal: stackStyles({ variant: 'horizontal' }).root(),
 })
 </script>
 
 <template>
-  <component 
+  <component
     :is="as"
     :class="[styles.root(), $attrs.class]"
     v-bind="$attrs"

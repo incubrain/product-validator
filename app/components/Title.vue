@@ -37,11 +37,14 @@ const containerClasses = computed(() => {
 
 <template>
   <div :class="containerClasses">
-    <h2 :class="titleClasses">{{ title }}</h2>
+    <h2 :class="titleClasses">
+      {{ title }}
+    </h2>
     <p
       v-if="description"
       :class="descriptionClasses"
-      >{{ description }}</p
     >
+      {{ description }}
+    </p>
   </div>
 </template>

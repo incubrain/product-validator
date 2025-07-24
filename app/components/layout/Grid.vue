@@ -10,14 +10,14 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'auto',
-  as: 'div'
+  as: 'div',
 })
 
 const styles = computed(() => gridStyles(props))
 </script>
 
 <template>
-  <component 
+  <component
     :is="as"
     :class="[styles.root(), $attrs.class]"
     v-bind="$attrs"

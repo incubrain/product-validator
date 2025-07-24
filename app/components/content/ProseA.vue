@@ -10,16 +10,16 @@ const props = defineProps<Props>()
 // Auto-detect external URLs and set target="_blank"
 const isExternal = computed(() => {
   if (!props.href) return false
-  return props.href.startsWith('http://') || 
-         props.href.startsWith('https://') ||
-         props.href.startsWith('mailto:') ||
-         props.href.startsWith('tel:')
+  return props.href.startsWith('http://')
+    || props.href.startsWith('https://')
+    || props.href.startsWith('mailto:')
+    || props.href.startsWith('tel:')
 })
 
 const linkTarget = computed(() => {
   // If target is explicitly set, use it
   if (props.target !== undefined) return props.target
-  
+
   // Auto-set target="_blank" for external links
   return isExternal.value ? '_blank' : undefined
 })
