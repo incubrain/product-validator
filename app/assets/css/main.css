@@ -1,6 +1,8 @@
 /* assets/css/main.css - CORRECTED TAILWIND V4 SYNTAX */
 @import 'tailwindcss';
 @import '@nuxt/ui';
+@source "../../../theme";
+
 
 @theme {
   /* ========================================
