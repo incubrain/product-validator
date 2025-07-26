@@ -24,6 +24,8 @@ const styles = computed(() => sectionStyles(props))
     :preset="background"
     :class="[styles.root(), $attrs.class]"
   >
-    <slot />
+    <UContainer>
+      <slot />
+    </UContainer>
   </LayoutBackground>
 </template>

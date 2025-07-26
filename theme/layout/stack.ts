@@ -1,7 +1,7 @@
 // theme/layout/stack.ts
 import { createUIComponent } from '../../shared/utils/theme'
 
-export default createUIComponent((config) => ({
+export default createUIComponent(config => ({
   slots: {
     root: [
       'flex', // Base flex class

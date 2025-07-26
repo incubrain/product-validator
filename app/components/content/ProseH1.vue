@@ -1,12 +1,12 @@
 <!-- components/content/ProseH1.vue -->
 <script setup lang="ts">
-const props = defineProps<{ id?: string }>()
+const props = defineProps<{ id: string }>()
 </script>
 
 <template>
   <LayoutHeading
-    :id="props.id"
-    base="h1"
+    :text="props.id"
+    :level="1"
     variant="hero"
   >
     <slot />

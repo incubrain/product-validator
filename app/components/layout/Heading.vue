@@ -7,7 +7,6 @@ interface Props {
   id?: string // Optional - custom ID, defaults to slugified text
   level?: 1 | 2 | 3 | 4 | 5 | 6
   variant?: 'default' | 'section' | 'hero' | 'hero-subtitle' | 'card' | 'muted' | 'accent'
-  align?: 'left' | 'center' | 'right'
   anchor?: boolean
   anchorIcon?: boolean
   ui?: any
@@ -16,7 +15,6 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   level: 2,
   variant: 'default',
-  align: 'left',
   anchor: false,
   anchorIcon: true,
 })

@@ -1,6 +1,74 @@
 import { defineCollection, defineContentConfig, z } from '@nuxt/content'
 import { asSeoCollection } from '@nuxtjs/seo/content'
 
+const emotionalTriggerSchema = z.enum(['trust', 'authority', 'urgency'])
+const websiteGoalSchema = z.enum(['convert', 'credibility', 'awareness', 'engage'])
+
+// Media configuration schema
+const mediaConfigSchema = z.object({
+  type: z.enum(['image', 'video', 'none']),
+  src: z.string().optional(),
+  alt: z.string().optional(),
+  poster: z.string().optional(),
+}).optional()
+
+// Action configuration schema
+const actionConfigSchema = z.object({
+  text: z.string(),
+  link: z.string(),
+  description: z.string().optional(),
+}).optional()
+
+// Base section schema
+const baseSectionSchema = z.object({
+  title: z.string(),
+  subtitle: z.string().optional(),
+  description: z.string().optional(),
+  variant: emotionalTriggerSchema.optional(), // Optional - will auto-assign if not provided
+  goal: websiteGoalSchema.optional(),
+  action: actionConfigSchema,
+  media: mediaConfigSchema,
+  items: z.array(z.any()).optional(),
+})
+
+// Individual section schemas
+const heroSectionSchema = baseSectionSchema.extend({
+  type: z.literal('hero'),
+})
+
+const resultsSectionSchema = baseSectionSchema.extend({
+  type: z.literal('results'),
+})
+
+const workSectionSchema = baseSectionSchema.extend({
+  type: z.literal('work'),
+})
+
+const aboutSectionSchema = baseSectionSchema.extend({
+  type: z.literal('about'),
+  story: z.string(),
+  image: z.string().optional(),
+})
+
+const ctaSectionSchema = baseSectionSchema.extend({
+  type: z.literal('cta'),
+})
+
+const faqSectionSchema = baseSectionSchema.extend({
+  type: z.literal('faq'),
+  categories: z.array(z.string()),
+})
+
+// Union of all section types
+const sectionSchema = z.union([
+  heroSectionSchema,
+  resultsSectionSchema,
+  workSectionSchema,
+  aboutSectionSchema,
+  ctaSectionSchema,
+  faqSectionSchema,
+])
+
 export default defineContentConfig({
   collections: {
     blog: defineCollection(
@@ -41,43 +109,19 @@ export default defineContentConfig({
       asSeoCollection({
         type: 'page',
         source: {
-          include: 'pages/**/*.md',
+          include: 'pages/**.yml',
           prefix: '/',
         },
         schema: z.object({
-          title: z.string(),
-          subtitle: z.string(),
-          description: z.string(),
-          sections: z.array(z.string()).optional(), // Array of section references
-          keywords: z.array(z.string()).optional(),
-          searchSections: z
-            .array(
-              z.object({
-                id: z.string(),
-                title: z.string(),
-                content: z.string(),
-              }),
-            )
-            .optional(),
-          searchContent: z.string().optional(),
-          aiContext: z.string().optional(),
-          componentList: z.array(z.string()).optional(),
+          meta: z.object({
+            title: z.string(),
+            description: z.string(),
+            keywords: z.array(z.string()).optional(),
+          }),
+          sections: z.array(sectionSchema), // Array of typed sections
         }),
       }),
     ),
-
-    sections: defineCollection({
-      type: 'page',
-      source: 'sections/**/*.md',
-      schema: z.object({
-        sectionName: z.string(),
-        agentSummary: z.string(),
-        variants: z.record(z.object({
-          intent: z.string(),
-          emotion: z.string(),
-        })).optional(),
-      }),
-    }),
 
     seoSchemas: defineCollection({
       type: 'data',
@@ -89,7 +133,7 @@ export default defineContentConfig({
 
     faq: defineCollection({
       type: 'data',
-      source: 'faq/**/*.yaml',
+      source: 'faq/**/*.yml',
       schema: z.object({
         faqs: z.array(z.object({
           question: z.string(),
@@ -114,8 +158,8 @@ export default defineContentConfig({
 
     config: defineCollection({
       type: 'data',
-      source: 'config/**/*.yml',
-      schema: z.object({ data: z.record(z.any()) }),
+      source: 'config/**.yml',
+      schema: z.object({ name: z.string(), data: z.record(z.any()) }),
     }),
   },
 })

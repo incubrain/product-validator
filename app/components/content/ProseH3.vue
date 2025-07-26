@@ -1,11 +1,11 @@
 <!-- components/content/ProseH3.vue -->
 <script setup lang="ts">
-const props = defineProps<{ id?: string }>()
+const props = defineProps<{ id: string }>()
 </script>
 
 <template>
   <LayoutHeading
-    :id="props.id"
+    :text="props.id"
     :level="3"
   >
     <slot />

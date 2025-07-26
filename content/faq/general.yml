@@ -1,4 +1,4 @@
-# content/faq/general.yaml
+# content/faq/general.yml
 faqs:
   - question: "How quickly can you deliver results?"
     answer: "Most automation projects show measurable results within 2-4 weeks. Emergency fixes can be deployed within 24-48 hours."

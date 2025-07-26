@@ -203,7 +203,7 @@ export default defineNuxtConfig({
   compatibilityDate: '2025-07-15',
 
   nitro: {
-    debug: true,
+    // debug: true,
     prerender: {
       crawlLinks: true,
       routes: ['/'],
@@ -218,7 +218,7 @@ export default defineNuxtConfig({
   //   ],
   // },
 
-  debug: true,
+  // debug: true,
   // typescript: {
   //   typeCheck: true, // Enable build-time type checking
   //   strict: true, // Keep strict mode

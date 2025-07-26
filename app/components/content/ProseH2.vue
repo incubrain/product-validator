@@ -1,12 +1,12 @@
 <!-- components/content/ProseH2.vue -->
 <script setup lang="ts">
-const props = defineProps<{ id?: string }>()
+const props = defineProps<{ id: string }>()
 </script>
 
 <template>
   <LayoutHeading
-    :id="props.id"
-    base="h2"
+    :text="props.id"
+    :level="2"
     variant="section"
   >
     <slot />

@@ -17,35 +17,16 @@ const searchTerm = ref('')
 
 // UPDATED: Use hook-injected searchSections directly
 const { data: searchData } = await useAsyncData('global-search-direct', async () => {
-  const [blogSections, blogPosts, pages] = await Promise.all([
+  const [blogSections, blogPosts] = await Promise.all([
     queryCollectionSearchSections('blog'),
     queryCollection('blog').select('path', 'title', 'description').all(),
     // GET pages with hook-injected searchSections
-    queryCollection('pages')
-      .select('path', 'title', 'description', 'searchSections', 'searchContent')
-      .all(),
   ])
 
+  const pageSections = []
+  const pages = []
+
   // TRANSFORM hook-injected searchSections into search format
-  const pageSections = pages.flatMap((page) =>
-    (page.searchSections || []).map((section) => ({
-      id: `${page.path}#${section.id}`,
-      title: section.title,
-      content: section.content,
-      path: page.path,
-      pageTitle: page.title,
-    })),
-  )
-
-  console.log('🔍 DIRECT SEARCH DEBUG:')
-  console.log('  Pages found:', pages.length)
-  console.log(
-    '  Pages with searchSections:',
-    pages.filter((p) => p.searchSections?.length > 0),
-  )
-  console.log('  Total page sections generated:', pageSections.length)
-  console.log('  Sample page sections:', pageSections.slice(0, 3))
-
   return { blogSections, pageSections, blogPosts, pages }
 })
 
