@@ -1,29 +1,29 @@
 // theme/layout/center.ts
 import { createUIComponent } from '../../shared/utils/theme'
 
-export default createUIComponent((config) => ({
+export default createUIComponent(config => ({
   slots: {
     root: ['w-full'],
   },
   variants: {
     variant: {
       'default': {
-        root: 'mx-auto px-4 sm:px-6 lg:px-8',
+        root: 'mx-auto',
       },
       'narrow': {
-        root: 'mx-auto px-4 sm:px-6',
+        root: 'mx-auto',
       },
       'prose': {
-        root: 'mx-auto px-4 sm:px-6',
+        root: 'mx-auto',
       },
       'wide': {
-        root: 'mx-auto px-4 sm:px-6 lg:px-8',
+        root: 'mx-auto',
       },
       'full': {
-        root: 'mx-auto px-4 sm:px-6 lg:px-8',
+        root: 'mx-auto',
       },
       'text-only': {
-        root: 'mx-auto px-4 sm:px-6 text-center',
+        root: 'mx-auto text-center',
       },
       'no-padding': {
         root: 'mx-auto',

@@ -30,8 +30,6 @@ schemaOrg:
     timeRequired: "PT6M"
 ---
 
-# Mastering Carousels: A Deep Dive into Interactive Content Display
-
 Carousels are a powerful tool for presenting multiple pieces of content in a compact, interactive format. In this article, we'll explore the various profiles and features of our carousel component, demonstrating how it can enhance user engagement and content presentation.
 
 ## Carousel Profiles
@@ -142,7 +140,7 @@ items:
 For ultimate flexibility, use slot-based carousels to mix different component types.
 
 ::carousel{variant="showcase"}
-  :::layout-testimonial-card{variant="card"}
+  :::card-testimonial{variant="card"}
   ---
   items:
     - quote: "Mixed content works great with slots and compact CTAs."
@@ -153,7 +151,7 @@ For ultimate flexibility, use slot-based carousels to mix different component ty
   ---
   :::
 
-  :::cta{variant="compact" background="circuit"}
+  :::card-cta{variant="compact" background="circuit"}
   ---
   title: "CTA Inside Carousel"
   body: "This demonstrates compact CTA flexibility in carousels."
@@ -163,7 +161,7 @@ For ultimate flexibility, use slot-based carousels to mix different component ty
   ---
   :::
 
-  :::layout-testimonial-card{variant="card"}
+  :::card-testimonial{variant="card"}
   ---
   items:
     - quote: "Slots enable any component combination with proper sizing."

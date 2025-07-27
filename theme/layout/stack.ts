@@ -18,7 +18,7 @@ export default createUIComponent(config => ({
         root: 'flex-col gap-4 items-center justify-center',
       },
       'compact': {
-        root: 'flex-col gap-2 items-stretch justify-start',
+        root: 'flex-col gap-2 items-start justify-start',
       },
       'spacious': {
         root: 'flex-col gap-8 items-stretch justify-start',
