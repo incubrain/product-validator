@@ -26,12 +26,15 @@ const trustConfig: IntentConfig = {
             v-if="image"
             class="relative"
           >
-            <NuxtImg
+            <MediaImage
               :src="image"
               :alt="title"
-              class="w-full aspect-square object-cover rounded-2xl shadow-lg"
+              class="relative w-full shadow-lg border-2 border-success/20"
+              aspect-ratio="square"
+              object-fit="cover"
               loading="lazy"
               format="webp"
+              :ui="{ root: 'rounded-2xl' }"
             />
 
             <!-- Floating stats with trust styling -->

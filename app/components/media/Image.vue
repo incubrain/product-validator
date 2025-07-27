@@ -1,4 +1,3 @@
-<!-- app/components/media/Image.vue -->
 <script setup lang="ts">
 import { useIntersectionObserver, useMediaQuery } from '@vueuse/core'
 import imageStyles from '~~/theme/image'
@@ -45,10 +44,23 @@ const containerRef = ref<HTMLElement>()
 const isLoaded = ref(false)
 const hasError = ref(false)
 const shouldLoad = ref(false)
-
+const isUsingFallback = ref(false)
+const isDev = computed(() => import.meta.dev)
 // Media queries
 const isMobile = useMediaQuery('(max-width: 768px)', { ssrWidth: 768 })
 const isHighDPI = useMediaQuery('(min-resolution: 2dppx)')
+
+// Generate dynamic fallback URL
+const fallbackSrc = computed(() => {
+  const width = props.width || 800
+  const height = props.height || 400
+  return `https://picsum.photos/${width}/${height}?random=1`
+})
+
+// Current image source (original or fallback)
+const currentSrc = computed(() => {
+  return isUsingFallback.value ? fallbackSrc.value : props.src
+})
 
 // Intersection Observer for lazy loading
 const { stop } = useIntersectionObserver(
@@ -75,7 +87,7 @@ watchEffect(() => {
 // Responsive sizing optimization
 const responsiveProps = computed(() => {
   const baseProps: any = {
-    src: props.src,
+    src: currentSrc.value,
     alt: props.alt,
     quality: props.quality,
     format: props.format,
@@ -94,10 +106,7 @@ const responsiveProps = computed(() => {
 
   // Mobile optimizations
   if (isMobile.value) {
-    // Reduce quality slightly on mobile to save bandwidth
     baseProps.quality = Math.max(60, (props.quality || 80) - 10)
-
-    // Add mobile-optimized densities if not specified
     if (!props.densities && isHighDPI.value) {
       baseProps.densities = 'x1 x2'
     }
@@ -113,9 +122,32 @@ const handleLoad = () => {
 }
 
 const handleError = (event: string | Event) => {
-  isLoaded.value = false
-  hasError.value = true
-  console.warn('Failed to load image:', props.src, event)
+  if (!isUsingFallback.value) {
+    // Try fallback image first
+    isUsingFallback.value = true
+    isLoaded.value = false
+    hasError.value = false
+
+    if (isDev.value) {
+      console.warn('🖼️ Image failed, trying fallback:', {
+        original: props.src,
+        fallback: fallbackSrc.value,
+        event,
+      })
+    }
+  } else {
+    // Fallback also failed
+    isLoaded.value = false
+    hasError.value = true
+
+    if (isDev.value) {
+      console.error('🚨 Both original and fallback images failed:', {
+        original: props.src,
+        fallback: fallbackSrc.value,
+        event,
+      })
+    }
+  }
 }
 
 // Computed styles with loading state
@@ -139,21 +171,35 @@ const computedStyles = computed(() => imageStyles({
       @error="handleError"
     />
 
-    <!-- Error State -->
+    <!-- Error State (both original + fallback failed) -->
     <div
       v-if="hasError"
       :class="computedStyles.error()"
     >
-      <UIcon
-        name="i-lucide-image-off"
-        class="size-8 mb-2"
-      />
-      <p class="text-sm font-medium">
-        Failed to load image
-      </p>
-      <p class="text-xs mt-1 opacity-75">
-        {{ src }}
-      </p>
+      <!-- Development: Detailed error -->
+      <template v-if="isDev">
+        <UIcon
+          name="i-lucide-image-off"
+          class="size-8 mb-2 text-red-500"
+        />
+        <p class="text-sm font-medium text-red-600">
+          Image Load Failed
+        </p>
+        <p class="text-xs mt-1 text-red-500 opacity-75 font-mono">
+          Original: {{ src }}
+        </p>
+        <p class="text-xs text-red-500 opacity-75 font-mono">
+          Fallback: {{ fallbackSrc }}
+        </p>
+      </template>
+
+      <!-- Production: Subtle error -->
+      <template v-else>
+        <UIcon
+          name="i-lucide-image"
+          class="size-6 text-muted opacity-50"
+        />
+      </template>
     </div>
 
     <!-- Lazy Loading Placeholder -->

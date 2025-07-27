@@ -18,7 +18,7 @@ const getEmotionalColor = (emotional: string) => {
 </script>
 
 <template>
-  <LayoutCenter variant="prose">
+  <UContainer>
     <LayoutStack variant="compact">
       <div class="flex flex-col items-start gap-3">
         <UBadge
@@ -37,5 +37,5 @@ const getEmotionalColor = (emotional: string) => {
         variant="description"
       />
     </LayoutStack>
-  </LayoutCenter>
+  </UContainer>
 </template>

@@ -27,12 +27,14 @@ const authorityConfig: IntentConfig = {
             v-if="image"
             class="relative"
           >
-            <NuxtImg
+            <MediaImage
               :src="image"
               :alt="title"
-              class="w-full aspect-square object-cover rounded-2xl shadow-lg border-2 border-primary/20"
+              class="w-full shadow-lg border-2 border-primary/20"
+              aspect-ratio="square"
+              object-fit="cover"
               loading="lazy"
-              format="webp"
+              :ui="{ root: 'rounded-2xl' }"
             />
 
             <!-- Professional credentials overlay -->

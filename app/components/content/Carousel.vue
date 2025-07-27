@@ -116,13 +116,15 @@ console.log('🔍 Type Detection:', carouselProps.value)
         class="flex-1"
       />
 
-      <NuxtImg
-        v-else-if="item.detectedType === 'image'"
+      <MediaImage
+        v-if="item.detectedType === 'image'"
         :src="item.src"
         :alt="item.alt || 'Carousel image'"
-        class="flex-1 w-full h-full object-cover rounded-lg"
-        draggable="false"
+        class="flex-1 w-full h-full"
+        aspect-ratio="auto"
+        object-fit="cover"
         loading="lazy"
+        :ui="{ root: 'rounded-lg' }"
       />
 
       <video

@@ -76,21 +76,15 @@ const cardUI = computed(() => ({
       v-if="featured"
       class="relative aspect-video gradient-card-elevated flex items-center justify-center mb-4 rounded-md overflow-hidden flex-shrink-0"
     >
-      <NuxtImg
-        v-if="post?.image"
+      <MediaImage
         :src="`images/blog/${post?.category}/${post?.image}`"
-        width="100%"
-        class="w-full h-full object-cover hover-premium"
+        :alt="post?.title || 'Blog post image'"
+        class="w-full h-full hover-premium"
+        aspect-ratio="video"
+        object-fit="cover"
+        loading="lazy"
+        format="webp"
       />
-      <div
-        v-else
-        class="w-full h-full flex items-center justify-center gradient-tech-subtle"
-      >
-        <UIcon
-          name="i-lucide-image"
-          class="size-16 text-dimmed"
-        />
-      </div>
     </div>
 
     <!-- Main content that grows to fill available space -->

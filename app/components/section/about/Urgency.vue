@@ -29,12 +29,15 @@ const urgencyConfig: IntentConfig = {
           >
             <div class="absolute inset-0 bg-warning/10 animate-pulse rounded-2xl" />
 
-            <NuxtImg
+            <MediaImage
               :src="image"
               :alt="title"
-              class="relative w-full aspect-square object-cover rounded-2xl shadow-lg border-2 border-warning/30"
+              class="relative w-full shadow-lg border-2 border-warning/30"
+              aspect-ratio="square"
+              object-fit="cover"
               loading="lazy"
               format="webp"
+              :ui="{ root: 'rounded-2xl' }"
             />
 
             <!-- Availability indicator -->

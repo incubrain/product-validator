@@ -122,15 +122,17 @@ const formatDate = (dateString: string) => {
           </div>
         </div>
 
-        <!-- Image for smaller screens (single column) -->
+        <!-- Image for smaller screens -->
         <div
           v-if="image"
           class="xl:hidden"
         >
-          <NuxtImg
+          <MediaImage
             :src="`images/blog/${category}/${image}`"
             :alt="title"
-            class="w-full aspect-[3/2] object-cover rounded-lg shadow-lg"
+            class="w-full rounded-lg shadow-lg"
+            aspect-ratio="video"
+            object-fit="cover"
             loading="eager"
             format="webp"
           />
@@ -142,13 +144,14 @@ const formatDate = (dateString: string) => {
         v-if="image"
         class="hidden xl:block w-full col-span-4"
       >
-        <NuxtImg
+        <MediaImage
           :src="`images/blog/${category}/${image}`"
           :alt="title"
-          class="w-full aspect-[3/2] object-cover rounded-lg shadow-lg"
+          class="w-full rounded-lg shadow-lg"
+          aspect-ratio="video"
+          object-fit="cover"
           loading="eager"
           format="webp"
-          width="100%"
         />
       </div>
     </div>

@@ -71,11 +71,15 @@ const testimonial = computed(() => props.items[0] || ({} as TestimonialItem))
               <div
                 class="w-16 h-16 bg-secondary/20 rounded-2xl flex items-center justify-center ring-2 ring-secondary/20"
               >
-                <NuxtImg
+                <MediaImage
                   v-if="showAvatar && testimonial.avatar"
                   :src="testimonial.avatar"
                   :alt="testimonial.author"
-                  class="w-full h-full rounded-xl object-cover"
+                  class="w-full h-full"
+                  aspect-ratio="square"
+                  object-fit="cover"
+                  :width="48"
+                  :height="48"
                 />
                 <span
                   v-else
@@ -156,11 +160,15 @@ const testimonial = computed(() => props.items[0] || ({} as TestimonialItem))
     <!-- Author -->
     <div class="flex items-center gap-4 mt-auto">
       <div class="w-12 h-12 bg-secondary/20 rounded-xl flex items-center justify-center">
-        <NuxtImg
+        <MediaImage
           v-if="showAvatar && testimonial.avatar"
           :src="testimonial.avatar"
           :alt="testimonial.author"
-          class="w-full h-full rounded-xl object-cover"
+          class="w-full h-full rounded-xl"
+          aspect-ratio="square"
+          object-fit="cover"
+          :width="48"
+          :height="48"
         />
         <span
           v-else

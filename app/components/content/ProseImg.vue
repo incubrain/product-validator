@@ -89,10 +89,9 @@ const hasError = ref(false)
     </div>
 
     <!-- Main image (always rendered) -->
-    <NuxtImg
+    <MediaImage
       :src="getImageSrc"
       :alt="enhancedAlt"
-      :title="title"
       :width="width"
       :height="height"
       :class="[
@@ -102,13 +101,12 @@ const hasError = ref(false)
         'hover:shadow-xl hover:scale-[1.02]',
         'max-w-full h-auto',
         'border border-zinc-200 dark:border-zinc-700',
-        { 'opacity-0': !isLoaded && !hasError },
         props.class,
       ]"
       :style="props.style"
       loading="lazy"
-      @load="isLoaded = true"
-      @error="hasError = true"
+      aspect-ratio="auto"
+      object-fit="cover"
     />
 
     <!-- Caption -->
