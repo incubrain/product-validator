@@ -1,16 +1,18 @@
+// This will be powerful for theming
+// theme: {
+//   defaultVariants: {
+//     color: 'neutral',
+//     size: 'sm'
+//   }
+// },
 export default defineAppConfig({
   ui: {
-    // This will be powerful for theming
-    // theme: {
-    //   defaultVariants: {
-    //     color: 'neutral',
-    //     size: 'sm'
-    //   }
-    // },
-    colors: {
-      primary: 'emerald',
-      secondary: 'sky',
-      neutral: 'zinc',
+    theme: {
+      colors: {
+        primary: 'emerald',
+        secondary: 'sky',
+        neutral: 'zinc',
+      },
     },
     link: {
       base: 'focus-visible:outline-secondary-800',
@@ -60,32 +62,28 @@ export default defineAppConfig({
               'bottom-4 sm:-bottom-12 left-1/2 -translate-x-1/2 rotate-90 rtl:-rotate-90',
           },
         },
+        variant: {
+          gallery: {
+            item: 'basis-full md:basis-1/2 lg:basis-1/3 transition-all duration-300 [&:last-child]:mr-4',
+            container: 'flex items-center gap-4',
+          },
+          hero: {
+            item: 'basis-full transition-all duration-300 [&:last-child]:mr-4',
+            container: 'flex items-center',
+          },
+          thumbnail: {
+            item: 'basis-1/4 md:basis-1/6 transition-all duration-300 [&:last-child]:mr-2',
+            container: 'flex items-center gap-2',
+          },
+        },
         active: {
           true: {
             dot: 'data-[state=active]:bg-inverted',
           },
         },
-        profile: {
-          gallery: {
-            item:
-              'basis-full md:basis-1/2 lg:basis-1/3 transition-all duration-300 [&:last-child]:mr-[1rem]',
-            container: 'flex items-center gap-4',
-          },
-          hero: {
-            item:
-              'basis-full transition-all duration-300 [&:last-child]:mr-[1rem]',
-            container: 'flex items-center',
-          },
-          thumbnail: {
-            item:
-              'basis-1/4 md:basis-1/6 transition-all duration-300 [&:last-child]:mr-[0.5rem]',
-            container: 'flex items-center gap-2',
-          },
-        },
       },
       defaultVariants: {
-        orientation: 'horizontal',
-        profile: 'hero',
+        variant: 'gallery',
       },
     },
   },
