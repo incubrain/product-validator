@@ -14,6 +14,8 @@ if (!post.value) {
   })
 }
 
+const { getComponent } = useSectionComponents()
+
 // SEO Integration
 // useSeoMeta(post.value.seo || {})
 // useHead(post.value.head || {})
@@ -109,15 +111,17 @@ const currentUrl = computed(() => {
               </template>
             </Header>
 
-            <LayoutCommunityCTA
-              variant="compact"
-              title="Join The Incubrain Community"
-              subtitle="Get weekly practical AI automation insights."
+            <component
+              :is="getComponent('cta', 'authority', 1)"
+              :section-index="1"
+              title="Never Miss AI Breakthroughs"
+              subtitle="Weekly insights on automation strategies"
+              class="rounded-2xl bg-primary-100/10"
             />
 
             <BlogArticleAuthorBio />
 
-            <ContentRelated
+            <!-- <ContentRelated
               collection="blog"
               :current-path="post.path"
               related-by="category"
@@ -125,14 +129,14 @@ const currentUrl = computed(() => {
               title="Related Articles"
               badge="Continue Learning"
             >
-              <template #default="{ items }">
+              <template #default="{ items = [] }">
                 <BlogPostCard
                   v-for="item in items"
                   :key="item.path"
                   :post="item"
                 />
               </template>
-            </ContentRelated>
+            </ContentRelated> -->
             <div class="mt-12 pt-8 border-t border-zinc-200 dark:border-zinc-800">
               <NavSurroundings
                 collection="blog"
