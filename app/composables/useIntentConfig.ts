@@ -1,5 +1,5 @@
 // composables/useIntentConfig.ts - HARD-CODED & SIMPLE
-import type { WebsiteIntentConfig, EmotionalTrigger, WebsiteGoal } from '#shared/types/website-intention'
+import type { WebsiteIntentConfig, EmotionalTrigger } from '#shared/types/website-intention'
 
 export const useIntentConfig = () => {
   // Hard-coded website intent config

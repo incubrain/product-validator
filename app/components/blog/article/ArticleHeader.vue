@@ -22,7 +22,7 @@ const formatDate = (dateString: string) => {
 </script>
 
 <template>
-  <header class="mb-12">
+  <header class="my-12">
     <!-- Breadcrumb -->
     <nav
       class="mb-6"

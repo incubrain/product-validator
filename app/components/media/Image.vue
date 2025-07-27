@@ -29,7 +29,6 @@ interface Props {
 
   // Theme
   ui?: any
-  class?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -129,7 +128,7 @@ const computedStyles = computed(() => imageStyles({
 <template>
   <div
     ref="containerRef"
-    :class="computedStyles.root()"
+    :class="[computedStyles.root(), $attrs.class]"
   >
     <!-- Actual Image (NuxtImg) -->
     <NuxtImg

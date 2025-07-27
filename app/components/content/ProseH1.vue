@@ -1,14 +1,21 @@
-<!-- components/content/ProseH1.vue -->
+<!-- components/content/ProseH2.vue - PASS TEXT AS PROP -->
 <script setup lang="ts">
 const props = defineProps<{ id: string }>()
+const slots = useSlots()
+
+// Extract text for heading prop
+const headingText = computed(() => {
+  const slotContent = slots.default?.()
+  return (slotContent?.[0]?.children || props.id.replace(/-/g, ' ')) as string
+})
 </script>
 
 <template>
   <LayoutHeading
-    :text="props.id"
+    :id="id"
+    :text="headingText"
     :level="1"
-    variant="hero"
-  >
-    <slot />
-  </LayoutHeading>
+    variant="content"
+    anchor
+  />
 </template>

@@ -1,7 +1,7 @@
 // theme/layout/heading.ts - CLEANED UP
 import { createUIComponent } from '../shared/utils/theme'
 
-export default createUIComponent((config) => ({
+export default createUIComponent(config => ({
   slots: {
     root: [
       'font-heading leading-tight',
@@ -26,6 +26,7 @@ export default createUIComponent((config) => ({
       'card': { root: 'text-highlighted' },
       'muted': { root: 'text-muted' },
       'accent': { root: 'text-primary' },
+      'content': { root: 'text-highlighted pb-4 pt-6' },
     },
 
     align: {

@@ -3,10 +3,10 @@
 import headingStyles from '~~/theme/heading'
 
 interface Props {
-  text: string // Required - the heading text
-  id?: string // Optional - custom ID, defaults to slugified text
+  text?: string
+  id?: string
   level?: 1 | 2 | 3 | 4 | 5 | 6
-  variant?: 'default' | 'section' | 'hero' | 'hero-subtitle' | 'card' | 'muted' | 'accent'
+  variant?: 'default' | 'section' | 'hero' | 'hero-subtitle' | 'card' | 'muted' | 'accent' | 'content'
   anchor?: boolean
   anchorIcon?: boolean
   ui?: any
@@ -33,9 +33,22 @@ const createSlug = (text: string): string => {
     .trim()
 }
 
-// Use provided ID or generate from text
+const slots = useSlots()
+
+const headingText = computed(() => {
+  if (props.text) return props.text
+
+  // Extract text from slot (for Nuxt Content)
+  const slotContent = slots.default?.()?.[0]
+  console.log('slotContent', slotContent)
+  if (typeof slotContent?.children === 'string') {
+    return slotContent.children
+  }
+  return 'Untitled'
+})
+
 const headingId = computed(() => {
-  return props.id || createSlug(props.text)
+  return props.id || createSlug(headingText.value)
 })
 </script>
 
@@ -48,7 +61,7 @@ const headingId = computed(() => {
     :show-icon="anchorIcon"
     :class="styles.root()"
   >
-    {{ text }}
+    {{ headingText }}
   </NavAnchor>
 
   <!-- Plain heading -->
@@ -59,6 +72,6 @@ const headingId = computed(() => {
     :class="[styles.root(), $attrs.class]"
     v-bind="$attrs"
   >
-    {{ text }}
+    {{ headingText }}
   </component>
 </template>

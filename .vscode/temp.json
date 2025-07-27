@@ -12,9 +12,6 @@
   "typescript.enablePromptUseWorkspaceTsdk": true,
 
 
-  "editor.quickSuggestions": {
-    "strings": "on"
-  },
 
   
   "terminal.integrated.profiles.linux": {

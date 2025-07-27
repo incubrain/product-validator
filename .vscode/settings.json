@@ -101,6 +101,10 @@
   "tailwindCSS.codeActions": true,
   "tailwindCSS.validate": true,
 
+  "editor.quickSuggestions": {
+    "strings": "on"
+  },
+
   "files.associations": {
     "*.css": "tailwindcss",
     "*.md": "markdown"

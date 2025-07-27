@@ -27,7 +27,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   relatedBy: 'category',
-  limit: 4,
+  limit: 3,
   orderBy: 'id',
   orderDirection: 'DESC',
   title: 'Related Content',
@@ -41,8 +41,8 @@ const { data: relatedItems, pending } = await useAsyncData(
   `related-${props.collection}-${props.currentPath}-${props.relatedValue}`,
   async () => {
     let query = queryCollection(props.collection)
-      .where('path', '<>', props.currentPath)
-      .order(props.orderBy, props.orderDirection)
+      // .where('path', '<>', props.currentPath)
+      // .order(props.orderBy, props.orderDirection)
       .limit(props.limit)
 
     // Add related field filter if provided
@@ -53,6 +53,8 @@ const { data: relatedItems, pending } = await useAsyncData(
     return await query.all()
   },
 )
+
+console.log('relatedItems', relatedItems.value)
 
 const hasRelatedItems = computed(() => relatedItems.value && relatedItems.value.length > 0)
 </script>

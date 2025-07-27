@@ -6,20 +6,20 @@ interface Props {
   id: string // Required - the anchor ID
   as?: string
   showIcon?: boolean
-  iconPosition?: 'left' | 'right'
   ui?: any
 }
 
 const props = withDefaults(defineProps<Props>(), {
   as: 'div',
   showIcon: true,
-  iconPosition: 'left',
 })
 
 const route = useRoute()
-const styles = computed(() => anchorStyles(props))
+const styles = computed(() => anchorStyles({
+  ...props,
+  element: props.as,
+}))
 
-// Check if this anchor is currently active
 const isActive = computed(() => {
   const currentHash = route.hash.replace('#', '')
   return currentHash === props.id
@@ -37,17 +37,15 @@ const isActive = computed(() => {
       :to="`#${id}`"
       :class="styles.link()"
       :aria-label="`Link to ${id} section`"
-      :aria-current="isActive ? 'location' : undefined"
       raw
-      active-class="text-primary"
-      inactive-class="text-inherit"
+      class="block relative"
     >
       <slot />
 
       <UIcon
-        v-if="showIcon && iconPosition === 'left'"
+        v-if="showIcon"
         name="i-lucide-hash"
-        :class="[styles.icon(), isActive && 'opacity-100']"
+        :class="[styles.icon(), isActive && 'opacity-70']"
       />
     </ULink>
   </component>
