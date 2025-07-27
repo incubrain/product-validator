@@ -168,21 +168,12 @@ const { getComponent } = useSectionComponents()
 <template>
   <LayoutCenter variant="full">
     <LayoutStack variant="spacious">
-      <!-- Page Header -->
-      <LayoutCenter variant="text-only">
-        <LayoutStack variant="default">
-          <LayoutHeading
-            variant="hero"
-            :text="'Results Section Emotional Variants'"
-          />
-          <LayoutText
-            variant="subtitle"
-            :text="'Explore different emotional triggers for results sections: Trust (social proof), Authority (expertise), and Urgency (time-sensitive) variants.'"
-          />
-        </LayoutStack>
-      </LayoutCenter>
 
-      <!-- Emotional Variants -->
+      <ShowcasePageHeader
+        title="Results Section Emotional Variants"
+        subtitle="Explore different emotional triggers for results sections: Trust (social proof), Authority (expertise), and Urgency (time-sensitive) variants."
+      />
+
       <LayoutStack variant="spacious">
         <div
           v-for="(variant, index) in resultsVariants"
@@ -190,26 +181,11 @@ const { getComponent } = useSectionComponents()
           class="space-y-4"
         >
           <!-- Variant Info -->
-          <LayoutCenter variant="prose">
-            <LayoutStack variant="compact">
-              <div class="flex items-center gap-3">
-                <UBadge
-                  :label="variant.emotional.toUpperCase()"
-                  :color="variant.emotional === 'trust' ? 'green' : variant.emotional === 'authority' ? 'blue' : 'orange'"
-                  variant="solid"
-                  size="lg"
-                />
-                <LayoutHeading
-                  :text="variant.name"
-                  variant="card"
-                />
-              </div>
-              <LayoutText
-                :text="variant.description"
-                variant="description"
-              />
-            </LayoutStack>
-          </LayoutCenter>
+          <ShowcaseVariantHeader
+            :name="variant.name"
+            :description="variant.description"
+            :emotional="variant.emotional"
+          />
 
           <!-- Results Section Component -->
           <component

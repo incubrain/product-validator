@@ -150,21 +150,11 @@ const { getComponent } = useSectionComponents()
 <template>
   <LayoutCenter variant="full">
     <LayoutStack variant="spacious">
-      <!-- Page Header -->
-      <LayoutCenter variant="text-only">
-        <LayoutStack variant="default">
-          <LayoutHeading
-            variant="hero"
-            :text="'Hero Emotional Variants Showcase'"
-          />
-          <LayoutText
-            variant="subtitle"
-            :text="'Explore different emotional triggers: Trust, Authority, and Urgency variants using our intent-driven system.'"
-          />
-        </LayoutStack>
-      </LayoutCenter>
+      <ShowcasePageHeader
+        title="Hero Emotional Variants Showcase"
+        subtitle="Explore different emotional triggers: Trust, Authority, and Urgency variants using our intent-driven system."
+      />
 
-      <!-- Emotional Variants -->
       <LayoutStack variant="spacious">
         <div
           v-for="(variant, index) in heroVariants"
@@ -172,26 +162,11 @@ const { getComponent } = useSectionComponents()
           class="space-y-4"
         >
           <!-- Variant Info -->
-          <LayoutCenter variant="prose">
-            <LayoutStack variant="compact">
-              <div class="flex items-center gap-3">
-                <UBadge
-                  :label="variant.emotional.toUpperCase()"
-                  :color="variant.emotional === 'trust' ? 'green' : variant.emotional === 'authority' ? 'blue' : 'orange'"
-                  variant="solid"
-                  size="lg"
-                />
-                <LayoutHeading
-                  :text="variant.name"
-                  variant="card"
-                />
-              </div>
-              <LayoutText
-                :text="variant.description"
-                variant="description"
-              />
-            </LayoutStack>
-          </LayoutCenter>
+          <ShowcaseVariantHeader
+            :name="variant.name"
+            :description="variant.description"
+            :emotional="variant.emotional"
+          />
 
           <!-- Hero Component - UPDATED TO USE getComponent() -->
           <component

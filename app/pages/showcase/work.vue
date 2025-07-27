@@ -159,56 +159,35 @@ const { getComponent } = useSectionComponents()
   <LayoutCenter variant="full">
     <LayoutStack variant="spacious">
       <!-- Page Header -->
-      <LayoutCenter variant="text-only">
-        <LayoutStack variant="default">
-          <LayoutHeading
-            variant="hero"
-            :text="'Work Section Emotional Variants'"
-          />
-          <LayoutText
-            variant="subtitle"
-            :text="'Explore different approaches to showcasing work: Trust (testimonials), Authority (expertise), and Urgency (availability) variants.'"
-          />
-        </LayoutStack>
-      </LayoutCenter>
+      <ShowcasePageHeader
+        title="Work Section Emotional Variants"
+        subtitle="Explore different approaches to showcasing work: Trust (testimonials), Authority (expertise), and Urgency (availability) variants."
+      />
 
       <!-- Emotional Variants -->
-      <LayoutStack variant="spacious">
-        <div
-          v-for="(variant, index) in workVariants"
-          :key="variant.name"
-          class="space-y-4"
-        >
-          <!-- Variant Info -->
-          <LayoutCenter variant="prose">
-            <LayoutStack variant="compact">
-              <div class="flex items-center gap-3">
-                <UBadge
-                  :label="variant.emotional.toUpperCase()"
-                  :color="variant.emotional === 'trust' ? 'green' : variant.emotional === 'authority' ? 'blue' : 'orange'"
-                  variant="solid"
-                  size="lg"
-                />
-                <LayoutHeading
-                  :text="variant.name"
-                  variant="card"
-                />
-              </div>
-              <LayoutText
-                :text="variant.description"
-                variant="description"
-              />
-            </LayoutStack>
-          </LayoutCenter>
+      <UContainer>
+        <LayoutStack variant="spacious">
+          <div
+            v-for="(variant, index) in workVariants"
+            :key="variant.name"
+            class="space-y-4"
+          >
+            <!-- Variant Info -->
+            <ShowcaseVariantHeader
+              :name="variant.name"
+              :description="variant.description"
+              :emotional="variant.emotional"
+            />
 
-          <!-- Work Section Component -->
-          <component
-            :is="getComponent('work', variant.props.variant, index + 2)"
-            v-bind="variant.props"
-            :section-index="index + 2"
-          />
-        </div>
-      </LayoutStack>
+            <!-- Work Section Component -->
+            <component
+              :is="getComponent('work', variant.props.variant, index + 2)"
+              v-bind="variant.props"
+              :section-index="index + 2"
+            />
+          </div>
+        </LayoutStack>
+      </UContainer>
     </LayoutStack>
   </LayoutCenter>
 </template>

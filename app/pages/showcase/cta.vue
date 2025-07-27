@@ -101,18 +101,10 @@ const { getComponent } = useSectionComponents()
   <LayoutCenter variant="full">
     <LayoutStack variant="spacious">
       <!-- Page Header -->
-      <LayoutCenter variant="text-only">
-        <LayoutStack variant="default">
-          <LayoutHeading
-            variant="hero"
-            :text="'CTA Section Emotional Variants'"
-          />
-          <LayoutText
-            variant="subtitle"
-            :text="'Different call-to-action approaches: Trust (risk-free), Authority (expert consultation), and Urgency (limited-time) variants.'"
-          />
-        </LayoutStack>
-      </LayoutCenter>
+      <ShowcasePageHeader
+        title="CTA Section Emotional Variants"
+        subtitle="Different call-to-action approaches: Trust (risk-free), Authority (expert consultation), and Urgency (limited-time) variants."
+      />
 
       <!-- Emotional Variants -->
       <LayoutStack variant="spacious">
@@ -122,26 +114,11 @@ const { getComponent } = useSectionComponents()
           class="space-y-4"
         >
           <!-- Variant Info -->
-          <LayoutCenter variant="prose">
-            <LayoutStack variant="compact">
-              <div class="flex items-center gap-3">
-                <UBadge
-                  :label="variant.emotional.toUpperCase()"
-                  :color="variant.emotional === 'trust' ? 'green' : variant.emotional === 'authority' ? 'blue' : 'orange'"
-                  variant="solid"
-                  size="lg"
-                />
-                <LayoutHeading
-                  :text="variant.name"
-                  variant="card"
-                />
-              </div>
-              <LayoutText
-                :text="variant.description"
-                variant="description"
-              />
-            </LayoutStack>
-          </LayoutCenter>
+          <ShowcaseVariantHeader
+            :name="variant.name"
+            :description="variant.description"
+            :emotional="variant.emotional"
+          />
 
           <!-- CTA Section Component -->
           <component
