@@ -5,7 +5,7 @@ const businessConfig = loadBusinessConfig()
 
 export default defineNuxtConfig({
   modules: [
-    // must come before nuxt/content
+    // @nuxtjs/seo must come before nuxt/content
     '@nuxtjs/seo',
     '@nuxt/content',
     '@nuxt/fonts',
