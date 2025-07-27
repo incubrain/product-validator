@@ -52,7 +52,7 @@ const nextItem = computed(() => surroundings.value?.[1])
       >
         <UIcon
           name="i-lucide-arrow-left"
-          class="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform"
+          class="w-4 h-4 mr-2 group-hover:-translate-x-1 transition-transform shrink-0"
         />
         <div>
           <div class="text-xs text-gray-500 mb-1">{{ previousLabel }}</div>
@@ -64,7 +64,7 @@ const nextItem = computed(() => surroundings.value?.[1])
     <!-- Spacer when no previous item -->
     <div
       v-else
-      class="flex-1"
+      class="flex-0"
     />
 
     <!-- Center spacer -->
@@ -85,7 +85,7 @@ const nextItem = computed(() => surroundings.value?.[1])
         </div>
         <UIcon
           name="i-lucide-arrow-right"
-          class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform"
+          class="w-4 h-4 ml-2 group-hover:translate-x-1 transition-transform shrink-0"
         />
       </ULink>
     </div>
