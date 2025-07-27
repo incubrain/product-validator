@@ -59,7 +59,7 @@ const headingId = computed(() => {
     :id="headingId"
     :as="htmlElement"
     :show-icon="anchorIcon"
-    :class="styles.root()"
+    :class="[styles.root(), $attrs.class]"
   >
     {{ headingText }}
   </NavAnchor>

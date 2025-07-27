@@ -8,7 +8,6 @@ interface Props {
   ctaText: string
   ctaLink: string
   ui?: any
-  class?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
@@ -19,7 +18,7 @@ const styles = computed(() => ctaStyles(props))
 </script>
 
 <template>
-  <div :class="styles.root()">
+  <div :class="[styles.root(), $attrs.class]">
     <div :class="styles.content()">
       <h3 :class="styles.title()">
         {{ title }}
