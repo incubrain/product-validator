@@ -1,16 +1,8 @@
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
+import { CATEGORY_NAMES, getCategoryName, getCategoryDescription } from '#shared/utils/blog'
 
-// Get blog categories for navigation
-const { data: blogCategories } = await useAsyncData('header-blog-categories', () =>
-  queryCollection('blog')
-    .select('category')
-    .all()
-    .then((posts) => {
-      const categories = [...new Set(posts.map((p) => p.category).filter(Boolean))]
-      return categories.sort()
-    }),
-)
+const blogCategories = Object.keys(CATEGORY_NAMES)
 
 const navigationItems = computed<NavigationMenuItem[]>(() => [
   {
@@ -22,20 +14,91 @@ const navigationItems = computed<NavigationMenuItem[]>(() => [
     label: 'Blog',
     icon: 'i-lucide-file-text',
     to: '/blog',
-    children: blogCategories.value
-      ? [
-          {
-            label: 'All Posts',
-            to: '/blog',
-            description: 'View all blog posts',
-          },
-          ...blogCategories.value.map((category) => ({
-            label: getCategoryName(category),
-            to: `/blog/${category}`,
-            description: `${getCategoryName(category).toLowerCase()} articles`,
-          })),
-        ]
-      : [],
+    children: [
+      {
+        label: 'All Posts',
+        to: '/blog',
+        description: 'View all blog posts',
+      },
+      ...blogCategories.map(category => ({
+        label: getCategoryName(category),
+        to: `/blog/${category}`,
+        description: getCategoryDescription(category),
+      })),
+    ],
+  },
+  {
+    label: 'Showcase',
+    icon: 'i-lucide-layout-template',
+    to: '/showcase',
+    children: [
+      {
+        label: 'Overview',
+        to: '/showcase',
+        description: 'Template system overview',
+        icon: 'i-lucide-eye',
+      },
+      {
+        label: 'Hero Sections',
+        to: '/showcase/hero',
+        description: 'Hero section variants',
+        icon: 'i-lucide-zap',
+      },
+      {
+        label: 'About Sections',
+        to: '/showcase/about',
+        description: 'About section layouts',
+        icon: 'i-lucide-user',
+      },
+      {
+        label: 'Work Sections',
+        to: '/showcase/work',
+        description: 'Portfolio and work displays',
+        icon: 'i-lucide-briefcase',
+      },
+      {
+        label: 'Results Sections',
+        to: '/showcase/results',
+        description: 'Achievement showcases',
+        icon: 'i-lucide-trending-up',
+      },
+      {
+        label: 'CTA Sections',
+        to: '/showcase/cta',
+        description: 'Call-to-action variants',
+        icon: 'i-lucide-mouse-pointer-click',
+      },
+      {
+        label: 'FAQ Sections',
+        to: '/showcase/faq',
+        description: 'Frequently asked questions',
+        icon: 'i-lucide-help-circle',
+      },
+      {
+        label: 'Layout Components',
+        to: '/showcase/center',
+        description: 'Layout system demos',
+        icon: 'i-lucide-layout',
+      },
+      {
+        label: 'Grid System',
+        to: '/showcase/grid',
+        description: 'Grid layout examples',
+        icon: 'i-lucide-grid-3x3',
+      },
+      {
+        label: 'Split Layouts',
+        to: '/showcase/split',
+        description: 'Split section demos',
+        icon: 'i-lucide-columns',
+      },
+      {
+        label: 'Stack Layouts',
+        to: '/showcase/stack',
+        description: 'Vertical stacking demos',
+        icon: 'i-lucide-layers',
+      },
+    ],
   },
 ])
 
@@ -55,10 +118,10 @@ const { public: config } = useRuntimeConfig()
         <!-- Desktop Navigation -->
         <nav class="hidden md:flex relative w-full">
           <UNavigationMenu
-            class="w-full flex justify-center"
+            class="flex flex-grow mx-auto max-w-xl justify-center items-center"
             :items="navigationItems"
             color="neutral"
-            variant="link"
+            content-orientation="horizontal"
           />
         </nav>
 
