@@ -19,7 +19,7 @@ const props = withDefaults(defineProps<Props>(), {
 
 // Separate featured and regular posts
 const featuredPosts = computed(() =>
-  props.showFeatured ? props.posts.filter((p) => p.featured).slice(0, 2) : [],
+  props.showFeatured ? props.posts.filter(p => p.featured).slice(0, 2) : [],
 )
 
 const route = useRoute()
@@ -35,14 +35,18 @@ const route = useRoute()
         badge="Curated"
         badge-color="primary"
       />
-      <LayoutGrid variant="cards">
-        <BlogPostCard
+      <LayoutGrid variant="halves">
+        <LayoutMotion
           v-for="post in featuredPosts"
           :key="`featured-${post.path}`"
-          featured
-          :post="post"
-          :loading="loading"
-        />
+          preset="staggered"
+        >
+          <BlogPostCard
+            featured
+            :post="post"
+            :loading="loading"
+          />
+        </LayoutMotion>
       </LayoutGrid>
     </section>
 
@@ -95,19 +99,21 @@ const route = useRoute()
           </LayoutGrid>
 
           <!-- Content State -->
-          <LayoutMotion
+          <LayoutGrid
             v-else-if="hasData && items.length"
-            preset="feature-grid"
-            :stagger="150"
+            variant="cards"
           >
-            <LayoutGrid variant="cards">
+            <LayoutMotion
+              v-for="(item, i) in items"
+              :key="`${item.path}-${i}`"
+              :delay="i * 75"
+              variant="card"
+            >
               <BlogPostCard
-                v-for="(item, i) in items"
-                :key="`${item.path}-${i}`"
                 :post="item"
               />
-            </LayoutGrid>
-          </LayoutMotion>
+            </LayoutMotion>
+          </LayoutGrid>
 
           <!-- Empty State Instead of this -->
           <div

@@ -1,9 +1,6 @@
 <!-- layouts/blog.vue -->
 <script setup lang="ts">
-const { data: metadata } = await useFetch('/api/content/metadata', {
-  query: { collection: 'blog', category: 'all' },
-  key: 'blog-metadata-all',
-})
+const { getComponent } = useSectionComponents()
 </script>
 
 <template>
@@ -14,9 +11,18 @@ const { data: metadata } = await useFetch('/api/content/metadata', {
       <section class="section-spacing">
         <UContainer>
           <div class="grid grid-cols-1 lg:grid-cols-4 grid-spacing">
-            <!-- Safe sidebar -->
+            <!-- Hero: always first -->
+            <component
+              :is="getComponent('hero', 'authority', 0)"
+              title="AI Automation Insights"
+              description="Real-world strategies for building AI automation pipelines"
+              class="rounded-2xl lg:col-span-3 order-1 lg:order-2"
+              :section-index="0"
+            />
+
+            <!-- Sidebar: second on mobile, left column on desktop -->
             <LayoutSidebar
-              class="lg:col-span-1 order-2 lg:order-1"
+              class="col-span-1 order-2 lg:order-1 lg:row-span-3"
               content-type="blog"
               base-path="/blog"
               :category="$route.params.category?.[0]"
@@ -32,31 +38,19 @@ const { data: metadata } = await useFetch('/api/content/metadata', {
               </template>
             </LayoutSidebar>
 
-            <div class="lg:col-span-3 order-1 lg:order-2 space-y-component">
-              <SectionHero
-                title="AI Automation Insights"
-                description="Real-world strategies for building AI automation pipelines"
-                background-preset="neural"
-                background-pattern="neural-network"
-                enable-background-motion
-                class="rounded-2xl"
-              >
-                <template #cta>
-                  <div class="flex justify-center items-center space-x-4 text-sm text-dimmed">
-                    <span>{{ metadata?.totalPosts || 0 }} insights</span>
-                    <span>•</span>
-                    <span>Updated regularly</span>
-                  </div>
-                </template>
-              </SectionHero>
-
+            <!-- Main content: third on mobile, second row right column on desktop -->
+            <div class="lg:col-span-3 order-3 lg:order-2">
               <slot />
-
-              <SectionCTA
-                title="Never Miss AI Breakthroughs"
-                subtitle="Weekly insights on automation strategies, technical deep-dives, and industry analysis."
-              />
             </div>
+
+            <!-- CTA: fourth on mobile, third row right column on desktop -->
+            <component
+              :is="getComponent('cta', 'authority', 1)"
+              :section-index="1"
+              title="Never Miss AI Breakthroughs"
+              subtitle="Weekly insights on automation strategies"
+              class="rounded-2xl bg-primary-100/10 lg:col-span-3 order-4 lg:order-3"
+            />
           </div>
         </UContainer>
       </section>

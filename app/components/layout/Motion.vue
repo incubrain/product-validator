@@ -1,56 +1,85 @@
-<!-- components/motion/MotionGroup.vue -->
+<!-- components/layout/Motion.vue -->
 <script setup lang="ts">
-interface MotionPreset {
+interface MotionVariant {
   container?: {
     initial: Record<string, any>
     visible: Record<string, any>
   }
-  children: Record<
+  children?: Record<
     string,
     {
       initial: Record<string, any>
       visible: Record<string, any>
-      delay?: number
+      delay: number
     }
   >
-  stagger?: number
 }
 
 interface Props {
-  /** Preset configuration name */
-  preset?: 'blog-card' | 'hero-section' | 'feature-grid' | 'none'
+  /** Variant configuration name */
+  variant?: 'simple' | 'staggered' | 'orchestrated' | 'hero' | 'card' | 'section' | 'none'
   /** Disable all motion */
   disabled?: boolean
-  /** Override stagger timing */
-  stagger?: number
+  /** Custom delay in milliseconds */
+  delay?: number
   /** Custom element to render */
   is?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  preset: 'blog-card',
+  variant: 'simple',
   disabled: false,
-  stagger: 50,
+  delay: 0,
   is: 'div',
 })
 
 const container = ref<HTMLElement>()
 
-// Preset configurations
-const presets: Record<string, MotionPreset> = {
-  'blog-card': {
+// Combined variants - generic catch-all + specific animations
+const variants: Record<string, MotionVariant> = {
+  // Generic catch-all variants
+  simple: {
+    container: {
+      initial: { opacity: 0 },
+      visible: { opacity: 1 },
+    },
+    children: {
+      ':scope > *': {
+        initial: { opacity: 0, y: 20, scale: 0.98 },
+        visible: { opacity: 1, y: 0, scale: 1 },
+        delay: 0,
+      },
+    },
+  },
+
+  staggered: {
+    container: {
+      initial: { opacity: 0 },
+      visible: { opacity: 1 },
+    },
+    children: {
+      ':*': {
+        initial: { opacity: 0, y: 15 },
+        visible: { opacity: 1, y: 0 },
+        delay: 0, // Will be staggered by index
+      },
+    },
+  },
+
+  // Specific semantic variants
+  orchestrated: {
     container: {
       initial: { opacity: 0, y: 20 },
-      visible: { opacity: 1, y: 0, transition: { duration: 600, ease: 'easeOut' } },
+      visible: { opacity: 1, y: 0 },
     },
     children: {
       'h1, h2, h3, h4, h5, h6': {
-        initial: { opacity: 0, x: -20 },
+        initial: { opacity: 0, x: -15 },
         visible: { opacity: 1, x: 0 },
         delay: 100,
       },
       'p, span:not(.iconify)': {
-        initial: { opacity: 0, y: 15 },
+        initial: { opacity: 0, y: 10 },
         visible: { opacity: 1, y: 0 },
         delay: 200,
       },
@@ -60,22 +89,22 @@ const presets: Record<string, MotionPreset> = {
         delay: 300,
       },
       'img, picture': {
-        initial: { opacity: 0, scale: 0.9 },
+        initial: { opacity: 0, scale: 0.95 },
         visible: { opacity: 1, scale: 1 },
         delay: 150,
       },
-      '.badge, [class*="badge"]': {
-        initial: { opacity: 0, scale: 0.8 },
+      '[class*="badge"], .badge': {
+        initial: { opacity: 0, scale: 0.9 },
         visible: { opacity: 1, scale: 1 },
         delay: 250,
       },
     },
-    stagger: 75,
   },
-  'hero-section': {
+
+  hero: {
     container: {
       initial: { opacity: 0 },
-      visible: { opacity: 1, transition: { duration: 800 } },
+      visible: { opacity: 1 },
     },
     children: {
       'h1': {
@@ -83,90 +112,95 @@ const presets: Record<string, MotionPreset> = {
         visible: { opacity: 1, y: 0, scale: 1 },
         delay: 200,
       },
-      'p': {
+      'h2, h3, p': {
         initial: { opacity: 0, y: 20 },
         visible: { opacity: 1, y: 0 },
         delay: 400,
       },
-      'button, a[role="button"]': {
+      'button, .button': {
         initial: { opacity: 0, scale: 0.9 },
         visible: { opacity: 1, scale: 1 },
         delay: 600,
       },
-      'img': {
-        initial: { opacity: 0, scale: 0.8, rotateX: -15 },
-        visible: { opacity: 1, scale: 1, rotateX: 0 },
-        delay: 0,
-      },
     },
-    stagger: 100,
   },
-  'feature-grid': {
+
+  // Legacy simple variants for backwards compatibility
+  card: {
     container: {
-      initial: { opacity: 0 },
-      visible: { opacity: 1, transition: { duration: 600 } },
+      initial: { opacity: 0, y: 20, scale: 0.98 },
+      visible: { opacity: 1, y: 0, scale: 1 },
     },
-    children: {
-      ':scope > *': {
-        initial: { opacity: 0, y: 30, scale: 0.95 },
-        visible: { opacity: 1, y: 0, scale: 1 },
-        delay: 0,
-      },
+  },
+
+  section: {
+    container: {
+      initial: { opacity: 0, y: 15 },
+      visible: { opacity: 1, y: 0 },
     },
-    stagger: 150,
   },
-  'none': {
-    children: {},
-  },
+
+  none: {},
 }
 
 // Client-side only motion application
 onMounted(() => {
-  if (props.disabled || !container.value || props.preset === 'none') return
+  if (props.disabled || !container.value || props.variant === 'none') return
 
-  const config = presets[props.preset]
+  const config = variants[props.variant]
   if (!config) return
 
   // Apply container motion if defined
   if (config.container) {
     useMotion(container, {
       initial: config.container.initial,
-      visibleOnce: config.container.visible,
+      visibleOnce: {
+        ...config.container.visible,
+        transition: {
+          duration: 400,
+          ease: 'easeOut',
+          delay: props.delay,
+        },
+      },
     })
   }
 
-  // Apply motion to child elements
-  Object.entries(config.children).forEach(([selector, motionConfig]) => {
-    const elements = container.value!.querySelectorAll(selector)
+  // Apply children motion if defined
+  if (config.children) {
+    Object.entries(config.children).forEach(([selector, motionConfig]) => {
+      const elements = container.value!.querySelectorAll(selector)
 
-    elements.forEach((element, index) => {
-      const staggerDelay = index * (props.stagger || config.stagger || 50)
-      const totalDelay = (motionConfig.delay || 0) + staggerDelay
+      elements.forEach((element, index) => {
+        // For catch-all selectors, use index for staggering
+        const staggerDelay = selector === ':scope > *' && props.variant === 'staggered'
+          ? index * 75
+          : 0
 
-      // Create motion instance for each element
-      useMotion(element as HTMLElement, {
-        initial: motionConfig.initial,
-        visibleOnce: {
-          ...motionConfig.visible,
-          transition: {
-            duration: 600,
-            ease: 'easeOut',
-            delay: totalDelay,
-            ...motionConfig.visible.transition,
+        const totalDelay = props.delay + motionConfig.delay + staggerDelay
+
+        useMotion(element as HTMLElement, {
+          initial: motionConfig.initial,
+          visibleOnce: {
+            ...motionConfig.visible,
+            transition: {
+              duration: 400,
+              ease: 'easeOut',
+              delay: totalDelay,
+            },
           },
-        },
+        })
       })
     })
-  })
+  }
 })
 </script>
 
 <template>
-  <!-- Server-side render without motion, client-side gets motion -->
   <component
     :is="is"
     ref="container"
-    :style="disabled ? {} : { opacity: preset === 'none' ? 1 : 0 }"
+    :class="$attrs.class"
+    :style="disabled ? {} : { opacity: variant === 'none' ? 1 : 0 }"
   >
     <slot />
   </component>
