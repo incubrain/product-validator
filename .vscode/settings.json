@@ -1,12 +1,18 @@
 {
-  // Disable the default formatter, use eslint instead
   "editor.formatOnSave": false,
-  // Auto fix
+  "eslint.format.enable": true,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
   },
-  // Silent the stylistic rules in you IDE, but still auto fix them
+  "[json]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
+  "[jsonc]": {
+    "editor.formatOnSave": true,
+    "editor.defaultFormatter": "vscode.json-language-features"
+  },
   "eslint.rules.customizations": [
     {
       "rule": "style/*",
@@ -59,7 +65,6 @@
       "fixable": true
     }
   ],
-  // Enable eslint for all supported languages
   "eslint.validate": [
     "javascript",
     "javascriptreact",
@@ -88,60 +93,62 @@
     "className",
     "ui"
   ],
-
   "tailwindCSS.experimental.classRegex": [
-    ["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
-    ["slots:\\s*{([^}]*)}",  "(?:'|\"|`)([^'\"]*?)(?:'|\"|`)"],
-    ["variants:\\s*{([^}]*)}", "(?:'|\"|`)([^'\"]*?)(?:'|\"|`)"],
-    ["tv\\([^)]*\\)", "(?:'|\"|`)([^'\"]*?)(?:'|\"|`)"]],
+    [
+      "ui:\\s*{([^)]*)\\s*}",
+      "(?:'|\"|`)([^']*)(?:'|\"|`)"
+    ],
+    [
+      "slots:\\s*{([^}]*)}",
+      "(?:'|\"|`)([^'\"]*?)(?:'|\"|`)"
+    ],
+    [
+      "variants:\\s*{([^}]*)}",
+      "(?:'|\"|`)([^'\"]*?)(?:'|\"|`)"
+    ],
+    [
+      "tv\\([^)]*\\)",
+      "(?:'|\"|`)([^'\"]*?)(?:'|\"|`)"
+    ]
+  ],
   "tailwindCSS.experimental.configFile": "app/assets/css/main.css",
-
   "tailwindCSS.suggestions": true,
   "tailwindCSS.hovers": true,
   "tailwindCSS.codeActions": true,
   "tailwindCSS.validate": true,
-
   "editor.quickSuggestions": {
     "strings": "on"
   },
-
   "files.associations": {
     "*.css": "tailwindcss",
     "*.md": "markdown"
   },
-
   "tailwindCSS.includeLanguages": {
     "vue": "html",
     "typescript": "javascript",
     "javascript": "javascript"
   },
-
   "tailwindCSS.classFunctions": [
     "tv",
     "clsx",
     "cn",
     "createUIComponent"
   ],
-
   "tailwindCSS.files.exclude": [
     "**/.git/**",
     "**/node_modules/**",
     "**/.nuxt/**",
     "**/.output/**"
   ],
-
   "mdc.enableFormatting": true,
   "mdc.debug": true,
   "mdc.enableComponentMetadataCompletions": true,
-    // FORCE WORKSPACE TYPESCRIPT USAGE
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.includePackageJsonAutoImports": "on",
-  
-  // OVERRIDE PROBLEMATIC USER SETTINGS
   "javascript.updateImportsOnFileMove.enabled": "never",
   "typescript.updateImportsOnFileMove.enabled": "never",
   "typescript.validate.enable": true,
   "typescript.tsserver.useSyntaxServer": "auto",
-  "typescript.tsserver.maxTsServerMemory": 4096,
+  "typescript.tsserver.maxTsServerMemory": 4096
 }
