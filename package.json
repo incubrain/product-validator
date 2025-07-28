@@ -30,6 +30,7 @@
   },
   "devDependencies": {
     "@compodium/nuxt": "0.1.0-beta.11",
+    "@iconify/json": "^2.2.363",
     "@iconify-json/lucide": "^1.2.54",
     "@iconify-json/mdi": "^1.2.3",
     "@nuxt/eslint": "1.5.2",

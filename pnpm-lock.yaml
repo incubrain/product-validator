@@ -63,6 +63,9 @@ importers:
       '@iconify-json/mdi':
         specifier: ^1.2.3
         version: 1.2.3
+      '@iconify/json':
+        specifier: ^2.2.363
+        version: 2.2.363
       '@nuxt/eslint':
         specifier: 1.5.2
         version: 1.5.2(@vue/compiler-sfc@3.5.18)(eslint@9.31.0(jiti@2.5.0))(magicast@0.3.5)(typescript@5.8.3)(vite@7.0.6(@types/node@20.19.9)(jiti@2.5.0)(lightningcss@1.30.1)(terser@5.43.1)(yaml@2.8.0))
@@ -721,6 +724,9 @@ packages:
 
   '@iconify/collections@1.0.572':
     resolution: {integrity: sha512-BKZH2AklZmyfnbirQUUPcDHcW7daaGe0U5kxuqzKN/z9m9ByQvVfO+J5gJwFYLkMqzgQUcTfFlefslgPrYdIFw==}
+
+  '@iconify/json@2.2.363':
+    resolution: {integrity: sha512-iSNBti18BhOizJSZCQr/1Mqp9kyqncQfSUElkScsQ0KyLNU2XUNuQ93JAMYtqJbtqtdjjWKidCJu9yfksIQmxA==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -7234,6 +7240,11 @@ snapshots:
   '@iconify/collections@1.0.572':
     dependencies:
       '@iconify/types': 2.0.0
+
+  '@iconify/json@2.2.363':
+    dependencies:
+      '@iconify/types': 2.0.0
+      pathe: 1.1.2
 
   '@iconify/types@2.0.0': {}
 

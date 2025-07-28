@@ -254,6 +254,10 @@ export default defineNuxtConfig({
   },
 
   icon: {
+    serverBundle: {
+      // using full @iconify/json define collections to tree-shake
+      collections: ['lucide', 'mdi'],
+    },
     aliases: {
       'arrow-left': 'i-lucide-arrow-left',
       'arrow-right': 'i-lucide-arrow-right',
