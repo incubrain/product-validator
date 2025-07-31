@@ -8,26 +8,6 @@ image: "component-enhancement-hero.jpg"
 readTime: "5 min"
 featured: true
 tags: ["Web Components", "Content Management", "User Experience", "Design Patterns"]
-ogImage:
-  component: BlogPost
-  props:
-    title: "Test blog article 4"
-    description: "CTAs, background patterns, and more for better web experiences"
-    category: "Tech Breakthroughs"
-sitemap:
-  lastmod: "2025-07-15"
-  changefreq: "monthly"
-  priority: 0.8
-robots: "index, follow"
-schemaOrg:
-  - "@type": "BlogPosting"
-    headline: "Enhancing Content with Advanced Components"
-    author:
-      "@type": "Organization"
-      name: "Incubrain Team"
-    datePublished: "2025-07-15"
-    wordCount: 1800
-    timeRequired: "PT5M"
 ---
 
 # Enhancing Content with Advanced Components

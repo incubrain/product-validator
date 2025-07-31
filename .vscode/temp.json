@@ -11,9 +11,6 @@
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.enablePromptUseWorkspaceTsdk": true,
 
-
-
-  
   "terminal.integrated.profiles.linux": {
     "Frontend": {
       "path": "bash",

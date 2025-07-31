@@ -1,3 +1,7 @@
+import { defaultIntentConfig, getIntentColors } from '#shared/config/intent'
+
+const intentColors = getIntentColors(defaultIntentConfig)
+
 // This will be powerful for theming
 // theme: {
 //   defaultVariants: {
@@ -9,9 +13,9 @@ export default defineAppConfig({
   ui: {
     theme: {
       colors: {
-        primary: 'emerald',
-        secondary: 'sky',
-        neutral: 'zinc',
+        primary: intentColors.primary,
+        secondary: intentColors.secondary,
+        neutral: 'slate',
       },
     },
     link: {

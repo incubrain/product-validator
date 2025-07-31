@@ -1,0 +1,26 @@
+# content/faq/trust.yml
+faqs:
+  - question: "Is my data secure with your automation solutions?"
+    answer: "Absolutely. All data is encrypted in transit and at rest. I follow enterprise security standards and can provide compliance documentation upon request."
+    keywords: ["security", "data protection", "privacy"]
+    priority: 1
+    
+  - question: "What if the automation breaks something?"
+    answer: "Every automation includes comprehensive testing and rollback procedures. I also provide 30-day warranty support to fix any issues at no additional cost."
+    keywords: ["warranty", "support", "risk"]
+    priority: 2
+    
+  - question: "Can I see examples of your previous work?"
+    answer: "Yes! I have detailed case studies showing 90% time savings for clients like TechFlow Solutions and Global Logistics Inc. Happy to share relevant examples."
+    keywords: ["case studies", "proof", "examples"]
+    priority: 3
+    
+  - question: "What if I'm not satisfied with the results?"
+    answer: "I offer a 100% money-back guarantee if the automation doesn't deliver the promised time savings within 30 days of deployment."
+    keywords: ["guarantee", "refund", "satisfaction"]
+    priority: 4
+    
+  - question: "How do I know this will work for my specific business?"
+    answer: "I start every project with a free consultation and proof-of-concept. You'll see exactly how it works with your data before making any commitment."
+    keywords: ["consultation", "proof of concept", "custom"]
+    priority: 5
