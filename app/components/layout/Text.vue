@@ -1,26 +1,26 @@
-<!-- app/components/layout/Text.vue - PROPS-BASED -->
+<!-- app/components/layout/Text.vue -->
 <script setup lang="ts">
 import textStyles from '~~/theme/text'
+import type { TextProps } from '#shared/types/components'
 
-interface Props {
-  text: string
-  variant?: 'default' | 'subtitle' | 'hero-subtitle' | 'description' | 'caption' | 'small' | 'muted' | 'highlighted'
-  as?: string
-  ui?: any
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<TextProps>(), {
   variant: 'default',
+  size: 'base',
   as: 'p',
 })
 
-const styles = computed(() => textStyles(props))
+defineOptions({ inheritAttrs: false })
+
+const ui = computed(() => textStyles({
+  variant: props.variant,
+  size: props.size,
+}))
 </script>
 
 <template>
   <component
     :is="as"
-    :class="[styles.root(), $attrs.class]"
+    :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
     v-bind="$attrs"
   >
     {{ text }}

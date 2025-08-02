@@ -1,5 +1,5 @@
-// shared/utils/theme.ts
-import type { VariantProps } from 'tailwind-variants'
+// shared/utils/theme.ts - SIMPLIFIED & WORKING VERSION
+import type { VariantProps, ClassValue } from 'tailwind-variants'
 import { tv } from 'tailwind-variants'
 
 export interface UIThemeConfig {
@@ -17,7 +17,6 @@ export const UI_THEME_CONFIG: UIThemeConfig = {
   defaultVariants: { color: 'primary', size: 'md' },
 }
 
-// shared/utils/theme.ts
 export function withUIOverrides(baseStyles: any, ui?: any, additionalClass?: string) {
   if (!ui && !additionalClass) return baseStyles
 

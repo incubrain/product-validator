@@ -1,55 +1,71 @@
-// theme/layout/anchor.ts - ELEMENT-BASED POSITIONING
-import { createUIComponent } from '../shared/utils/theme'
+// theme/anchor.ts - MIGRATED TO TV PATTERN
+import { tv } from '../shared/utils/themev2'
+import type { ExtractSlots, ExtractVariants } from '../shared/utils/themev2'
 
-export default createUIComponent(config => ({
+const anchorStyles = tv({
   slots: {
     root: [
-      'group relative scroll-mt-20',
-      config.transitions && 'transition-colors duration-200',
+      'relative group',
+      'transition-colors duration-200',
     ],
     link: [
-      'text-inherit no-underline relative',
-      'focus-visible:outline-secondary focus-visible:outline-2 focus-visible:outline-offset-2',
-      config.transitions && 'transition-colors duration-200',
+      'block relative',
+      'no-underline',
+      'hover:no-underline',
     ],
     icon: [
-      'absolute opacity-0 group-hover:opacity-70 text-secondary',
-      config.transitions && 'transition-opacity duration-200',
+      'absolute -left-6 top-1/2 -translate-y-1/2',
+      'w-4 h-4',
+      'text-gray-400 dark:text-gray-500',
+      'opacity-0',
+      'group-hover:opacity-100',
+      'transition-opacity duration-200',
     ],
   },
   variants: {
     element: {
       h1: {
-        icon: 'w-8 h-8 -left-8 top-2',
+        icon: 'top-3',
       },
       h2: {
-        icon: 'w-6 h-6 -left-7 top-2',
+        icon: 'top-2',
       },
       h3: {
-        icon: 'w-5 h-5 -left-6 top-1.5',
+        icon: 'top-2',
       },
       h4: {
-        icon: 'w-4 h-4 -left-6 top-1',
+        icon: 'top-1.5',
       },
       h5: {
-        icon: 'w-3 h-3 -left-5 top-0',
+        icon: 'top-1',
       },
       h6: {
-        icon: 'w-3 h-3 -left-5 top-0',
+        icon: 'top-1',
       },
       div: {
-        icon: 'w-4 h-4 -left-6 top-0.5', // Default for non-headings
+        icon: 'top-1/2 -translate-y-1/2',
       },
     },
-    active: {
-      true: {
-        link: 'text-secondary',
-        icon: 'opacity-70 text-secondary',
+    showIcon: {
+      true: {},
+      false: {
+        icon: 'hidden',
       },
+    },
+    isActive: {
+      true: {
+        icon: 'opacity-70 text-primary',
+      },
+      false: {},
     },
   },
   defaultVariants: {
-    element: 'h2',
-    active: false,
+    element: 'div',
+    showIcon: true,
+    isActive: false,
   },
-}))
+})
+
+export type AnchorVariants = ExtractVariants<typeof anchorStyles>
+export type AnchorSlots = ExtractSlots<typeof anchorStyles>
+export default anchorStyles

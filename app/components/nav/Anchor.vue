@@ -1,51 +1,53 @@
-<!-- app/components/layout/Anchor.vue - SIMPLIFIED -->
+<!-- app/components/layout/Anchor.vue - MODERN ARCHITECTURE -->
 <script setup lang="ts">
 import anchorStyles from '~~/theme/anchor'
+import type { AnchorProps } from '#shared/types/components'
 
-interface Props {
-  id: string // Required - the anchor ID
-  as?: string
-  showIcon?: boolean
-  ui?: any
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<AnchorProps>(), {
   as: 'div',
   showIcon: true,
 })
 
+defineOptions({ inheritAttrs: false })
+
+defineSlots<{
+  default(props?: object): any
+}>()
+
 const route = useRoute()
-const styles = computed(() => anchorStyles({
-  ...props,
-  element: props.as,
-}))
 
 const isActive = computed(() => {
   const currentHash = route.hash.replace('#', '')
   return currentHash === props.id
 })
+
+// ✅ NUXT UI PATTERN - TV instance with variants
+const ui = computed(() => anchorStyles({
+  element: props.as,
+  showIcon: props.showIcon,
+  isActive: isActive.value,
+}))
 </script>
 
 <template>
   <component
     :is="as"
     :id="id"
-    :class="[styles.root(), $attrs.class]"
+    :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
     v-bind="$attrs"
   >
     <ULink
       :to="`#${id}`"
-      :class="styles.link()"
+      :class="ui.link({ class: props.ui?.link })"
       :aria-label="`Link to ${id} section`"
       raw
-      class="block relative"
     >
       <slot />
 
       <UIcon
         v-if="showIcon"
         name="i-lucide-hash"
-        :class="[styles.icon(), isActive && 'opacity-70']"
+        :class="ui.icon({ class: props.ui?.icon })"
       />
     </ULink>
   </component>

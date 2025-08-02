@@ -104,7 +104,7 @@ const stackVariants = [
             text="Visual exploration of all stack variants with distinct demo content"
             variant="subtitle"
           />
-          <div class="text-sm text-amber-400 bg-amber-500/10 px-4 py-2 rounded border border-amber-500/30">
+          <div class="text-sm text-amber-400 bg-amber-500/10 rounded border border-amber-500/30">
             ⚡ Now with varied content to show real differences between variants
           </div>
         </LayoutStack>

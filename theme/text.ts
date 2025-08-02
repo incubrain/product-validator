@@ -1,25 +1,25 @@
-// theme/text.ts - NEW
-import { createUIComponent } from '../shared/utils/theme'
+// theme/text.ts - MIGRATED TO TV PATTERN
+import { tv } from '../shared/utils/themev2'
+import type { ExtractSlots, ExtractVariants } from '../shared/utils/themev2'
 
-export default createUIComponent((config) => ({
+const textStyles = tv({
   slots: {
     root: [
       'leading-relaxed',
-      config.transitions && 'transition-colors duration-200',
+      'transition-colors duration-200',
     ],
   },
   variants: {
     variant: {
-      'default': { root: 'text-toned' },
-      'subtitle': { root: 'text-muted text-xl lg:text-2xl font-medium' },
-      'hero-subtitle': { root: 'text-muted text-2xl lg:text-3xl font-normal' },
-      'description': { root: 'text-dimmed text-lg' },
-      'caption': { root: 'text-dimmed text-sm' },
-      'small': { root: 'text-dimmed text-sm' },
-      'muted': { root: 'text-muted' },
-      'highlighted': { root: 'text-highlighted font-medium' },
+      default: { root: 'text-toned' },
+      hero: { root: 'text-muted text-xl lg:text-2xl font-medium' },
+      section: { root: 'text-muted text-2xl lg:text-3xl font-normal' },
+      card: { root: 'text-dimmed text-lg' },
+      caption: { root: 'text-dimmed text-sm' },
+      small: { root: 'text-dimmed text-sm' },
+      muted: { root: 'text-muted' },
+      highlighted: { root: 'text-highlighted font-medium' },
     },
-
     size: {
       'xs': { root: 'text-xs' },
       'sm': { root: 'text-sm' },
@@ -28,26 +28,13 @@ export default createUIComponent((config) => ({
       'xl': { root: 'text-xl' },
       '2xl': { root: 'text-2xl' },
     },
-
-    align: {
-      left: { root: 'text-left' },
-      center: { root: 'text-center' },
-      right: { root: 'text-right' },
-      justify: { root: 'text-justify' },
-    },
   },
-
-  compoundVariants: [
-    // Subtitle variants get proper spacing
-    { variant: 'subtitle', class: { root: 'mb-4' } },
-    { variant: 'hero-subtitle', class: { root: 'mb-6' } },
-    { variant: 'description', class: { root: 'mb-4' } },
-    { variant: 'caption', class: { root: 'mb-2' } },
-  ],
-
   defaultVariants: {
     variant: 'default',
     size: 'base',
-    align: 'left',
   },
-}))
+})
+
+export type TextVariants = ExtractVariants<typeof textStyles>
+export type TextSlots = ExtractSlots<typeof textStyles>
+export default textStyles

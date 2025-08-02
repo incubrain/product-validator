@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AccordionItem } from '@nuxt/ui'
+import type { AccordionItem, AccordionProps } from '@nuxt/ui'
 import accordionStyles from '~~/theme/i/accordion'
 
 interface Props {
