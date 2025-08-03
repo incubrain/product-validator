@@ -23,16 +23,16 @@ export default createUIComponent((config) => ({
         root: 'bg-elevated',
       },
       circuit: {
-        root: 'ai-circuit-pattern',
+        root: 'i-pattern-circuit',
       },
       neural: {
-        root: 'neural-network-pattern',
+        root: 'i-pattern-network',
       },
       quantum: {
-        root: 'quantum-dots-pattern',
+        root: 'i-pattern-dots',
       },
       cyber: {
-        root: 'bg-gradient-cyber',
+        root: 'i-gradient-cyber',
       },
     },
     intensity: {
@@ -47,8 +47,8 @@ export default createUIComponent((config) => ({
   },
   compoundVariants: [
     // Circuit intensity variations
-    { preset: 'circuit', intensity: 'light', class: { root: 'ai-circuit-light' } },
-    { preset: 'circuit', intensity: 'strong', class: { root: 'ai-circuit-strong' } },
+    { preset: 'circuit', intensity: 'light', class: { root: 'i-pattern-circuit-light' } },
+    { preset: 'circuit', intensity: 'strong', class: { root: 'i-pattern-circuit-strong' } },
   ],
   defaultVariants: {
     preset: 'none',

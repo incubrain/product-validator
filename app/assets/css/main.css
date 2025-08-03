@@ -1,7 +1,10 @@
-/* assets/css/main.css - CORRECTED TAILWIND V4 SYNTAX */
+/* assets/css/main.css */
 @import 'tailwindcss';
 @import '@nuxt/ui';
 @source "../../../theme";
+@source "../../../shared/config/theme.ts";
+@reference './backgrounds';
+@reference './gradients';
 
 
 @theme {
@@ -290,115 +293,5 @@
 
   .space-y-content > * + * {
     margin-top: var(--ui-spacing-content);
-  }
-
-  .ai-circuit-pattern {
-    background-color: var(--ui-bg);
-    background-image:
-      radial-gradient(circle at 20px 20px, rgba(16, 185, 129, 0.1) 1px, transparent 1px),
-      radial-gradient(circle at 40px 40px, rgba(16, 185, 129, 0.05) 1px, transparent 1px),
-      linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
-    background-size:
-      40px 40px,
-      80px 80px,
-      20px 20px,
-      20px 20px;
-  }
-
-  .ai-circuit-light {
-    background-image:
-      radial-gradient(circle at 20px 20px, rgba(16, 185, 129, 0.05) 1px, transparent 1px),
-      radial-gradient(circle at 40px 40px, rgba(16, 185, 129, 0.025) 1px, transparent 1px),
-      linear-gradient(rgba(16, 185, 129, 0.015) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(16, 185, 129, 0.015) 1px, transparent 1px);
-  }
-
-  .ai-circuit-strong {
-    background-image:
-      radial-gradient(circle at 20px 20px, rgba(16, 185, 129, 0.15) 1px, transparent 1px),
-      radial-gradient(circle at 40px 40px, rgba(16, 185, 129, 0.08) 1px, transparent 1px),
-      linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
-  }
-
-  .ai-dots-pattern {
-    background-image: radial-gradient(circle, rgba(16, 185, 129, 0.1) 1px, transparent 1px);
-    background-size: 15px 15px;
-  }
-
-  .ai-grid-pattern {
-    background-image:
-      linear-gradient(rgba(16, 185, 129, 0.03) 1px, transparent 1px),
-      linear-gradient(90deg, rgba(16, 185, 129, 0.03) 1px, transparent 1px);
-    background-size: 20px 20px;
-  }
-
-  .neural-network-pattern {
-    background-image:
-      radial-gradient(
-        circle at 25% 25%,
-        color-mix(in srgb, var(--ui-primary) 10%, transparent) 2px,
-        transparent 2px
-      ),
-      radial-gradient(
-        circle at 75% 75%,
-        color-mix(in srgb, var(--ui-secondary) 8%, transparent) 2px,
-        transparent 2px
-      ),
-      linear-gradient(
-        45deg,
-        transparent 48%,
-        color-mix(in srgb, var(--ui-primary) 3%, transparent) 50%,
-        transparent 52%
-      );
-    background-size:
-      60px 60px,
-      40px 40px,
-      30px 30px;
-  }
-
-  .quantum-dots-pattern {
-    background-image:
-      radial-gradient(
-        circle at 20% 80%,
-        color-mix(in srgb, var(--ui-primary) 8%, transparent) 1px,
-        transparent 2px
-      ),
-      radial-gradient(
-        circle at 80% 20%,
-        color-mix(in srgb, var(--ui-secondary) 6%, transparent) 1px,
-        transparent 2px
-      );
-    background-size:
-      40px 40px,
-      60px 60px;
-  }
-
-  .bg-gradient-neural {
-    background: linear-gradient(
-      135deg,
-      color-mix(in srgb, var(--gradient-neural-from) 30%, transparent),
-      color-mix(in srgb, var(--gradient-neural-via) 20%, transparent),
-      color-mix(in srgb, var(--gradient-neural-to) 25%, transparent)
-    );
-  }
-
-  .bg-gradient-quantum {
-    background: linear-gradient(
-      45deg,
-      color-mix(in srgb, var(--gradient-quantum-from) 40%, transparent),
-      color-mix(in srgb, var(--gradient-quantum-via) 10%, transparent),
-      color-mix(in srgb, var(--gradient-quantum-to) 30%, transparent)
-    );
-  }
-
-  .bg-gradient-cyber {
-    background: radial-gradient(
-      ellipse at center,
-      color-mix(in srgb, var(--gradient-cyber-center) 10%, transparent),
-      color-mix(in srgb, var(--gradient-cyber-mid) 5%, transparent),
-      transparent 70%
-    );
   }
 }

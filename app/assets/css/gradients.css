@@ -1,0 +1,26 @@
+@utility i-gradient-neural {
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--gradient-neural-from) 30%, transparent),
+    color-mix(in srgb, var(--gradient-neural-via) 20%, transparent),
+    color-mix(in srgb, var(--gradient-neural-to) 25%, transparent)
+  );
+}
+
+@utility i-gradient-quantum {
+  background: linear-gradient(
+    45deg,
+    color-mix(in srgb, var(--gradient-quantum-from) 40%, transparent),
+    color-mix(in srgb, var(--gradient-quantum-via) 10%, transparent),
+    color-mix(in srgb, var(--gradient-quantum-to) 30%, transparent)
+  );
+}
+
+@utility i-gradient-cyber {
+  background: radial-gradient(
+    ellipse at center,
+    color-mix(in srgb, var(--gradient-cyber-center) 10%, transparent),
+    color-mix(in srgb, var(--gradient-cyber-mid) 5%, transparent),
+    transparent 70%
+  );
+}
