@@ -137,7 +137,7 @@ const stackVariants = [
               </div>
 
               <!-- Demo Container with visible boundaries -->
-              <div class="bg-circuit border-2 border-dashed border-primary/30 p-6 rounded-lg min-h-[200px]">
+              <div class="i-pattern-circuit border-2 border-dashed border-primary/30 p-6 rounded-lg min-h-[200px]">
                 <component
                   :is="'LayoutStack'"
                   :variant="variant.name"

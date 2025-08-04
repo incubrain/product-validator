@@ -60,7 +60,7 @@ const gridVariants = [
               </div>
 
               <!-- Demo Container -->
-              <div class="bg-circuit border-2 border-dashed border-primary/30 p-6 rounded-lg">
+              <div class="i-pattern-circuit border-2 border-dashed border-primary/30 p-6 rounded-lg">
                 <component
                   :is="'LayoutGrid'"
                   :variant="variant.name"
@@ -115,7 +115,7 @@ const gridVariants = [
 
           <LayoutStack variant="spacious">
             <!-- Product Grid -->
-            <div class="bg-circuit border-2 border-dashed border-emerald-500/30 p-6 rounded-lg">
+            <div class="i-pattern-circuit border-2 border-dashed border-emerald-500/30 p-6 rounded-lg">
               <h4 class="text-lg font-semibold mb-4 text-emerald-400">
                 Product/Service Grid
               </h4>
@@ -154,7 +154,7 @@ const gridVariants = [
             </div>
 
             <!-- Team Grid -->
-            <div class="bg-circuit border-2 border-dashed border-blue-500/30 p-6 rounded-lg">
+            <div class="i-pattern-circuit border-2 border-dashed border-blue-500/30 p-6 rounded-lg">
               <h4 class="text-lg font-semibold mb-4 text-blue-400">
                 Team Members Grid
               </h4>

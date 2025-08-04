@@ -28,7 +28,7 @@ const centerVariants = [
           />
           <LayoutText
             text="Content centering and width constraints with responsive behavior"
-            variant="subtitle"
+            variant="hero"
           />
         </LayoutStack>
       </LayoutCenter>
@@ -57,12 +57,12 @@ const centerVariants = [
                 </div>
                 <LayoutText
                   :text="variant.description"
-                  variant="description"
+                  variant="card"
                 />
               </div>
 
               <!-- Demo Container with full-width background -->
-              <div class="bg-circuit border-2 border-dashed border-primary/30 p-2 rounded-lg">
+              <div class="i-pattern-circuit border-2 border-dashed border-primary/30 p-2 rounded-lg">
                 <component
                   :is="'LayoutCenter'"
                   :variant="variant.name"
@@ -121,7 +121,7 @@ const centerVariants = [
 
           <LayoutStack variant="spacious">
             <!-- Article Layout -->
-            <div class="bg-circuit border-2 border-dashed border-emerald-500/30 p-6 rounded-lg">
+            <div class="i-pattern-circuit border-2 border-dashed border-emerald-500/30 p-6 rounded-lg">
               <h4 class="text-lg font-semibold mb-4 text-emerald-400">
                 Article Content Layout
               </h4>
@@ -135,7 +135,7 @@ const centerVariants = [
             </div>
 
             <!-- Landing Page Section -->
-            <div class="bg-circuit border-2 border-dashed border-blue-500/30 p-6 rounded-lg">
+            <div class="i-pattern-circuit border-2 border-dashed border-blue-500/30 p-6 rounded-lg">
               <h4 class="text-lg font-semibold mb-4 text-blue-400">
                 Landing Page Section
               </h4>
@@ -147,7 +147,7 @@ const centerVariants = [
                   />
                   <LayoutText
                     text="Supporting text that's wide enough for complex layouts but still maintains good visual hierarchy."
-                    variant="description"
+                    variant="section"
                   />
                   <LayoutStack variant="horizontal">
                     <UButton
@@ -164,7 +164,7 @@ const centerVariants = [
             </div>
 
             <!-- Text-Only Center -->
-            <div class="bg-circuit border-2 border-dashed border-amber-500/30 p-6 rounded-lg">
+            <div class="i-pattern-circuit border-2 border-dashed border-amber-500/30 p-6 rounded-lg">
               <h4 class="text-lg font-semibold mb-4 text-amber-400">
                 Text-Only Centering
               </h4>
@@ -176,7 +176,7 @@ const centerVariants = [
                   />
                   <LayoutText
                     text="Perfect for testimonials, quotes, or simple call-out content that needs to be prominently centered."
-                    variant="description"
+                    variant="card"
                   />
                 </LayoutStack>
               </LayoutCenter>

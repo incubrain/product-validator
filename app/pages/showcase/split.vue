@@ -57,7 +57,7 @@ const splitVariants = [
               </div>
 
               <!-- Demo Container -->
-              <div class="bg-circuit border-2 border-dashed border-primary/30 p-6 rounded-lg">
+              <div class="i-pattern-circuit border-2 border-dashed border-primary/30 p-6 rounded-lg">
                 <component
                   :is="'LayoutSplit'"
                   :variant="variant.name"
@@ -117,7 +117,7 @@ const splitVariants = [
 
           <LayoutStack variant="spacious">
             <!-- Hero Section Example -->
-            <div class="bg-circuit border-2 border-dashed border-emerald-500/30 p-6 rounded-lg">
+            <div class="i-pattern-circuit border-2 border-dashed border-emerald-500/30 p-6 rounded-lg">
               <h4 class="text-lg font-semibold mb-4 text-emerald-400">
                 Hero Section Layout
               </h4>
@@ -154,7 +154,7 @@ const splitVariants = [
             </div>
 
             <!-- Content + Sidebar Example -->
-            <div class="bg-circuit border-2 border-dashed border-blue-500/30 p-6 rounded-lg">
+            <div class="i-pattern-circuit border-2 border-dashed border-blue-500/30 p-6 rounded-lg">
               <h4 class="text-lg font-semibold mb-4 text-blue-400">
                 Content + Sidebar Layout
               </h4>
