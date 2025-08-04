@@ -1,4 +1,4 @@
-// shared/utils/theme.ts - PROPER TV WRAPPER WITH TYPES
+// shared/utils/themev2.ts - SIMPLER PRETTIFY
 import type { TV, VariantProps } from 'tailwind-variants'
 import { tv as tvBase } from 'tailwind-variants'
 
@@ -13,22 +13,22 @@ const twMergeConfig = {
   },
 }
 
-export const tv: TV = (options, config) =>
-  tvBase(options, {
-    ...config,
-    twMerge: config?.twMerge ?? true,
-    twMergeConfig: {
-      ...config?.twMergeConfig,
-      theme: {
-        ...config?.twMergeConfig?.theme,
-        ...twMergeConfig.theme,
-      },
-      classGroups: {
-        ...config?.twMergeConfig?.classGroups,
-        ...twMergeConfig.classGroups,
-      },
+export const tv: TV = (options: any, config?: any) => tvBase(options, {
+  ...config,
+  twMerge: config?.twMerge ?? true,
+  twMergeConfig: {
+    ...config?.twMergeConfig,
+    theme: {
+      ...config?.twMergeConfig?.theme,
+      ...twMergeConfig.theme,
     },
-  })
+
+    classGroups: {
+      ...config?.twMergeConfig?.classGroups,
+      ...twMergeConfig.classGroups,
+    },
+  },
+})
 
 export type ExtractSlots<T extends { slots?: Record<string, any> }> = T extends { slots: infer S }
   ? { [K in keyof S]?: string }

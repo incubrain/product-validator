@@ -10,9 +10,10 @@ const headingStyles = tv({
     ],
   },
   variants: {
+    // IMPROVEMENTS: ADD DECORATIONS - CONSIDER REMOVING LEVEL ADD TO VARIANT
     level: {
       1: { root: 'text-4xl lg:text-5xl font-bold' },
-      2: { root: 'text-3xl lg:text-4xl font-semibold' },
+      2: { root: 'text-3xl lg:text-4xl font-bold' },
       3: { root: 'text-2xl lg:text-3xl font-semibold' },
       4: { root: 'text-xl lg:text-2xl font-semibold' },
       5: { root: 'text-lg lg:text-xl font-semibold' },

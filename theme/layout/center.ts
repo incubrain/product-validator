@@ -1,36 +1,41 @@
-// theme/layout/center.ts
-import { createUIComponent } from '../../shared/utils/theme'
+// theme/layout/center.ts - ENHANCED WITH MODERN TV APPROACH
+import { tv } from '../../shared/utils/themev2'
+import { createPaddingVariants } from '../../shared/config/theme'
+import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
-export default createUIComponent(config => ({
+const centerStyles = tv({
   slots: {
-    root: ['w-full'],
+    root: ['w-full mx-auto'],
   },
   variants: {
+    ...createPaddingVariants('root'),
     variant: {
       'default': {
-        root: 'mx-auto',
+        root: 'max-w-4xl',
       },
       'narrow': {
-        root: 'mx-auto',
+        root: 'max-w-2xl',
       },
       'prose': {
-        root: 'mx-auto',
+        root: 'max-w-prose',
       },
       'wide': {
-        root: 'mx-auto',
+        root: 'max-w-6xl',
       },
       'full': {
-        root: 'mx-auto',
+        root: 'max-w-full',
       },
       'text-only': {
-        root: 'mx-auto text-center',
-      },
-      'no-padding': {
-        root: 'mx-auto',
+        root: 'max-w-2xl text-center',
       },
     },
   },
   defaultVariants: {
     variant: 'default',
+    padding: 'none',
   },
-}))
+})
+
+export type CenterVariants = ExtractVariants<typeof centerStyles>
+export type CenterSlots = ExtractSlots<typeof centerStyles>
+export default centerStyles

@@ -1,4 +1,3 @@
-<!-- app/components/layout/Text.vue -->
 <script setup lang="ts">
 import textStyles from '~~/theme/text'
 import type { TextProps } from '#shared/types/components'
@@ -11,7 +10,7 @@ const props = withDefaults(defineProps<TextProps>(), {
 
 defineOptions({ inheritAttrs: false })
 
-const ui = computed(() => textStyles({
+const ui = tvComputed(() => textStyles({
   variant: props.variant,
   size: props.size,
 }))
@@ -20,9 +19,8 @@ const ui = computed(() => textStyles({
 <template>
   <component
     :is="as"
-    :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
-    v-bind="$attrs"
+    :class="ui.root({ class: [props.ui?.root, $attrs.class] })"
   >
-    {{ text }}
+    <slot>{{ text }}</slot>
   </component>
 </template>

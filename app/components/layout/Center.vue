@@ -1,25 +1,31 @@
-<!-- app/components/layout/Center.vue -->
+<!-- app/components/layout/Center.vue - ENHANCED IMPLEMENTATION -->
 <script setup lang="ts">
 import centerStyles from '~~/theme/layout/center'
+import type { CenterProps } from '#shared/types/components'
 
-interface Props {
-  variant?: 'default' | 'narrow' | 'prose' | 'wide' | 'full' | 'text-only' | 'no-padding'
-  as?: string
-  ui?: any
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<CenterProps>(), {
   variant: 'default',
+  padding: 'none',
   as: 'div',
 })
 
-const styles = computed(() => centerStyles(props))
+defineOptions({ inheritAttrs: false })
+
+defineSlots<{
+  default(props?: object): any
+}>()
+
+// ✅ NUXT UI PATTERN - TV instance with variants
+const ui = tvComputed(() => centerStyles({
+  variant: props.variant,
+  padding: props.padding,
+}))
 </script>
 
 <template>
   <component
     :is="as"
-    :class="[styles.root(), $attrs.class]"
+    :class="ui.root({ class: [props.ui?.root, $attrs.class] })"
     v-bind="$attrs"
   >
     <slot />

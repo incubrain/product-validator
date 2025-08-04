@@ -37,6 +37,9 @@ console.log('📄 Page Config:', pageConfig.value)
 
 <template>
   <div>
+    <SectionTest4 />
+    <SectionTest3 />
+    <SectionTest2 />
     <SectionTest />
     <!-- Hero Section - Direct component resolution -->
     <component

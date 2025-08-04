@@ -1,28 +1,32 @@
 <!-- app/components/layout/Section.vue -->
 <script setup lang="ts">
 import sectionStyles from '~~/theme/layout/section'
+import type { SectionProps } from '#shared/types/components'
 
-interface Props {
-  variant?: 'default' | 'compact' | 'generous' | 'hero' | 'minimal'
-  background?: 'none' | 'circuit' | 'neural' | 'quantum' | 'cyber'
-  as?: string
-  ui?: any
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<SectionProps>(), {
   variant: 'default',
   background: 'none',
   as: 'section',
 })
 
-const styles = computed(() => sectionStyles(props))
+defineOptions({ inheritAttrs: false })
+
+defineSlots<{
+  default(props?: object): any
+}>()
+
+// ✅ NUXT UI PATTERN - TV instance with variants
+const ui = tvComputed(() => sectionStyles({
+  variant: props.variant,
+}))
 </script>
 
 <template>
   <LayoutBackground
     :as="as"
     :preset="background"
-    :class="[styles.root(), $attrs.class]"
+    :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
+    v-bind="$attrs"
   >
     <UContainer>
       <slot />

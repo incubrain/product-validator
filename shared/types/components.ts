@@ -1,6 +1,6 @@
 // shared/types/components.ts
 import type { BadgeProps } from '@nuxt/ui'
-import type { HeadingVariants, HeadingSlots, TextSlots, TextVariants, SectionTitleSlots, SectionTitleVariants, AnchorVariants, AnchorSlots } from '~~/theme/index'
+import type { HeadingVariants, HeadingSlots, TextSlots, TextVariants, SectionTitleSlots, SectionTitleVariants, AnchorVariants, AnchorSlots, GridVariants, GridSlots, RowGridVariants, RowGridSlots, SplitVariants, SplitSlots, CenterVariants, CenterSlots, SectionVariants, SectionSlots, StackVariants, StackSlots, FloatSlots, FloatVariants, TransformVariants, TransformSlots } from '~~/theme/index'
 
 export interface HeadingProps {
   text?: string
@@ -34,4 +34,69 @@ export interface AnchorProps {
   as?: AnchorVariants['element']
   showIcon?: AnchorVariants['showIcon']
   ui?: AnchorSlots
+}
+
+export interface GridProps {
+  variant?: GridVariants['variant']
+  gap?: GridVariants['gap']
+  as?: string
+  ui?: GridSlots
+}
+
+export interface RowGridProps {
+  rows: number[] // [2, 3] = 2 items first row, 3 items second row
+  spacing?: RowGridVariants['spacing']
+  gap?: RowGridVariants['gap']
+  alignRows?: RowGridVariants['alignRows']
+  responsive?: boolean
+  as?: string
+  ui?: RowGridSlots
+}
+
+export interface SplitProps {
+  ratio?: SplitVariants['ratio']
+  gap?: SplitVariants['gap']
+  reverse?: boolean
+  as?: string
+  ui?: SplitSlots
+}
+
+export interface StackProps {
+  variant?: StackVariants['variant']
+  gap?: StackVariants['gap']
+  as?: string
+  ui?: StackSlots
+}
+
+// shared/types/components.ts - ADD CenterProps
+export interface CenterProps {
+  variant?: CenterVariants['variant']
+  padding?: CenterVariants['padding']
+  as?: string
+  ui?: CenterSlots
+}
+
+export interface SectionProps {
+  variant?: SectionVariants['variant']
+  height?: SectionVariants['height'] // ✅ ADDED
+  background?: 'none' | 'circuit' | 'neural' | 'quantum' | 'cyber'
+  as?: string
+  ui?: SectionSlots
+}
+
+export interface FloatProps {
+  variant?: FloatVariants['variant']
+  clear?: FloatVariants['clear']
+  spacing?: FloatVariants['spacing']
+  responsive?: FloatVariants['responsive']
+  as?: string
+  ui?: FloatSlots
+}
+
+export interface TransformProps {
+  variant?: TransformVariants['variant']
+  timing?: TransformVariants['timing']
+  origin?: TransformVariants['origin']
+  as?: string
+  ui?: TransformSlots
 }

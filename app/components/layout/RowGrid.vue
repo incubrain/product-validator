@@ -54,14 +54,13 @@ const getGridColsClass = (size: number) => {
     return `grid-cols-${size}`
   }
 
-  // Smart responsive behavior
+  // Better responsive behavior for the specific use case
   if (size === 1) return 'grid-cols-1'
-  if (size === 2) return 'grid-cols-1 md:grid-cols-2'
-  if (size === 3) return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3'
+  if (size === 2) return 'grid-cols-1 lg:grid-cols-2' // Only split on large screens
+  if (size === 3) return 'grid-cols-1 md:grid-cols-2 lg:grid-cols-3' // Better progression
   if (size === 4) return 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4'
   if (size === 5) return 'grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-5'
 
-  // Fallback for larger sizes
   return `grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-${Math.min(size, 6)}`
 }
 </script>

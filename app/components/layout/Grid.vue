@@ -1,25 +1,30 @@
-<!-- app/components/layout/Grid.vue -->
+<!-- app/components/layout/Grid.vue - ENHANCED IMPLEMENTATION -->
 <script setup lang="ts">
 import gridStyles from '~~/theme/layout/grid'
+import type { GridProps } from '#shared/types/components'
 
-interface Props {
-  variant?: 'auto' | 'thirds' | 'halves' | 'quarters' | 'cards' | 'compact' | 'wide' | 'masonry'
-  as?: string
-  ui?: any
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<GridProps>(), {
   variant: 'auto',
+  gap: 'md',
   as: 'div',
 })
 
-const styles = computed(() => gridStyles(props))
+defineOptions({ inheritAttrs: false })
+
+defineSlots<{
+  default(props?: object): any
+}>()
+
+const ui = tvComputed(() => gridStyles({
+  variant: props.variant,
+  gap: props.gap,
+}))
 </script>
 
 <template>
   <component
     :is="as"
-    :class="[styles.root(), $attrs.class]"
+    :class="ui.root({ class: [props.ui?.root, $attrs.class] })"
     v-bind="$attrs"
   >
     <slot />

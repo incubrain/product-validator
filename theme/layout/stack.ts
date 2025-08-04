@@ -1,50 +1,59 @@
-// theme/layout/stack.ts
-import { createUIComponent } from '../../shared/utils/theme'
+// theme/layout/stack.ts - MODERNIZED
+import { tv } from '../../shared/utils/themev2'
+import { createGapVariants } from '../../shared/config/theme'
+import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
-export default createUIComponent(config => ({
+const stackStyles = tv({
   slots: {
-    root: [
-      'flex', // Base flex class
-      config.transitions && 'transition-all duration-200',
-    ],
+    root: ['flex'],
   },
   variants: {
+    ...createGapVariants('root'),
+
     variant: {
-      // Common vertical stacking patterns
+      // Vertical stacking patterns
       'default': {
-        root: 'flex-col gap-4 items-stretch justify-start',
+        root: 'flex-col items-stretch justify-start',
       },
       'centered': {
-        root: 'flex-col gap-4 items-center justify-center',
+        root: 'flex-col items-center justify-center',
       },
       'compact': {
-        root: 'flex-col gap-2 items-start justify-start',
+        root: 'flex-col items-start justify-start gap-2',
       },
       'spacious': {
-        root: 'flex-col gap-8 items-stretch justify-start',
+        root: 'flex-col items-stretch justify-start gap-8',
+      },
+      'between': { // 🔥 NEW - For the reference image layout
+        root: 'flex-col items-stretch justify-between h-full',
       },
 
       // Horizontal patterns
       'horizontal': {
-        root: 'flex-row gap-4 items-center justify-start flex-wrap',
+        root: 'flex-row items-center justify-start flex-wrap',
       },
       'horizontal-between': {
-        root: 'flex-row gap-4 items-center justify-between flex-wrap',
+        root: 'flex-row items-center justify-between flex-wrap',
       },
       'horizontal-center': {
-        root: 'flex-row gap-4 items-center justify-center flex-wrap',
+        root: 'flex-row items-center justify-center flex-wrap',
       },
 
       // Responsive patterns
       'stack-to-row': {
-        root: 'flex-col gap-4 items-stretch md:flex-row md:items-center',
+        root: 'flex-col items-stretch md:flex-row md:items-center',
       },
       'center-to-between': {
-        root: 'flex-col gap-4 items-center justify-center md:flex-row md:justify-between',
+        root: 'flex-col items-center justify-center md:flex-row md:justify-between',
       },
     },
   },
   defaultVariants: {
     variant: 'default',
+    gap: 'md',
   },
-}))
+})
+
+export type StackVariants = ExtractVariants<typeof stackStyles>
+export type StackSlots = ExtractSlots<typeof stackStyles>
+export default stackStyles

@@ -1,11 +1,15 @@
 // theme/layout/section.ts
-import { createUIComponent } from '../../shared/utils/theme'
+import { tv } from '../../shared/utils/themev2'
+import { createHeightVariants } from '../../shared/config/theme'
+import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
-export default createUIComponent((config) => ({
+const sectionStyles = tv({
   slots: {
-    root: ['w-full relative'],
+    root: ['w-full', 'relative'],
   },
   variants: {
+    ...createHeightVariants('root'),
+
     variant: {
       default: {
         root: 'py-16 lg:py-20',
@@ -26,5 +30,10 @@ export default createUIComponent((config) => ({
   },
   defaultVariants: {
     variant: 'default',
+    height: 'auto',
   },
-}))
+})
+
+export type SectionVariants = ExtractVariants<typeof sectionStyles>
+export type SectionSlots = ExtractSlots<typeof sectionStyles>
+export default sectionStyles

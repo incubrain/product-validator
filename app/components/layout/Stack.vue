@@ -1,31 +1,30 @@
-<!-- app/components/layout/Stack.vue -->
+<!-- app/components/layout/Stack.vue - MODERNIZED -->
 <script setup lang="ts">
 import stackStyles from '~~/theme/layout/stack'
+import type { StackProps } from '#shared/types/components'
 
-interface Props {
-  variant?: 'default' | 'centered' | 'compact' | 'spacious' | 'horizontal' | 'horizontal-between' | 'horizontal-center' | 'stack-to-row' | 'center-to-between'
-  as?: string
-  ui?: any
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<StackProps>(), {
   variant: 'default',
+  gap: 'md',
   as: 'div',
 })
 
-const styles = computed(() => stackStyles(props))
+defineOptions({ inheritAttrs: false })
 
-console.log('🐛 Stack theme debug:', {
-  default: stackStyles({ variant: 'default' }).root(),
-  centered: stackStyles({ variant: 'centered' }).root(),
-  horizontal: stackStyles({ variant: 'horizontal' }).root(),
-})
+defineSlots<{
+  default(props?: object): any
+}>()
+
+const ui = tvComputed(() => stackStyles({
+  variant: props.variant,
+  gap: props.gap,
+}))
 </script>
 
 <template>
   <component
     :is="as"
-    :class="[styles.root(), $attrs.class]"
+    :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
     v-bind="$attrs"
   >
     <slot />

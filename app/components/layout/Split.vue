@@ -1,32 +1,41 @@
 <!-- app/components/layout/Split.vue -->
 <script setup lang="ts">
 import splitStyles from '~~/theme/layout/split'
+import type { SplitProps } from '#shared/types/components'
 
-interface Props {
-  variant?: 'default' | 'narrow' | 'wide' | 'stack-lg' | 'reverse'
-  as?: string
-  ui?: any
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  variant: 'default',
+const props = withDefaults(defineProps<SplitProps>(), {
+  ratio: '50-50',
+  gap: 'none',
+  reverse: false,
   as: 'div',
 })
 
-const styles = computed(() => splitStyles(props))
+defineOptions({ inheritAttrs: false })
+
+defineSlots<{
+  first(props?: object): any
+  second(props?: object): any
+}>()
+
+const ui = tvComputed(() => splitStyles({
+  ratio: props.ratio,
+  gap: props.gap,
+  reverse: props.reverse,
+}))
 </script>
 
 <template>
   <component
     :is="as"
-    :class="[styles.root(), $attrs.class]"
+    :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
     v-bind="$attrs"
   >
-    <div>
-      <slot name="primary" />
+    <div :class="ui.first({ class: props.ui?.first })">
+      <slot name="first" />
     </div>
-    <div>
-      <slot name="secondary" />
+
+    <div :class="ui.second({ class: props.ui?.second })">
+      <slot name="second" />
     </div>
   </component>
 </template>
