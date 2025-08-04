@@ -1,6 +1,8 @@
 {
   "editor.formatOnSave": false,
   "eslint.format.enable": true,
+  "editor.wordWrap": "on",
+  "editor.wordWrapColumn": 120,
   "editor.codeActionsOnSave": {
     "source.fixAll.eslint": "explicit",
     "source.organizeImports": "never"
