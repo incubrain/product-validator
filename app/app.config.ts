@@ -11,12 +11,14 @@ const intentColors = getIntentColors(defaultIntentConfig)
 // },
 export default defineAppConfig({
   ui: {
-    theme: {
-      colors: {
-        primary: intentColors.primary,
-        secondary: intentColors.secondary,
-        neutral: 'slate',
-      },
+    colors: {
+      primary: intentColors.primary,
+      secondary: intentColors.secondary,
+      success: 'teal',
+      error: 'rose',
+      warning: 'amber',
+      info: 'teal',
+      neutral: 'slate',
     },
     link: {
       base: 'focus-visible:outline-secondary-800',
