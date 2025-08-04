@@ -3,6 +3,8 @@
 @import '@nuxt/ui';
 @source "../../../theme";
 @source "../../../shared/config/theme.ts";
+
+@reference './keyframes';
 @reference './backgrounds';
 @reference './gradients';
 
@@ -61,6 +63,28 @@
   --breakpoint-lg: 1024px;
   --breakpoint-xl: 1280px;
   --breakpoint-2xl: 1536px;
+
+
+/* ========================================
+     GRADIENT DEFAULTS
+     ======================================== */
+   --gradient-opacity: 0.2;
+  --gradient-direction: 135deg;
+  --gradient-position: ellipse at center;
+  --gradient-from-stop: 30%;
+  --gradient-to-stop: 25%;
+  --gradient-via-stop: 20%;
+  --gradient-angle: 0deg;
+  --gradient-x: 50%;
+  --gradient-y: 50%;
+  
+  /* Default intensity sets */
+  --gradient-subtle-from: 15%;
+  --gradient-subtle-to: 10%;
+  --gradient-medium-from: 30%;
+  --gradient-medium-to: 25%;
+  --gradient-strong-from: 50%;
+  --gradient-strong-to: 40%;
 }
 
 /* ========================================
