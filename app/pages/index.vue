@@ -37,50 +37,46 @@ console.log('📄 Page Config:', pageConfig.value)
 
 <template>
   <div>
-    <SectionTest4 />
-    <SectionTest3 />
-    <SectionTest2 />
     <SectionTest />
+    <!-- <SectionTest4 /> -->
+    <!--
+    <SectionTest3 />
+    <SectionTest2 /> -->
     <!-- Hero Section - Direct component resolution -->
-    <component
+    <!-- <component
       :is="getComponent('hero', sections.hero.variant, sections.hero.sectionIndex)"
       v-if="sections.hero"
       v-bind="sections.hero"
     />
 
-    <!-- Results Section - Direct component resolution -->
     <component
       :is="getComponent('results', sections.results.variant, sections.results.sectionIndex)"
       v-if="sections.results"
       v-bind="sections.results"
     />
 
-    <!-- Work Section -->
     <component
       :is="getComponent('work', sections.work.variant, sections.work.sectionIndex)"
       v-if="sections.work"
       v-bind="sections.work"
     />
 
-    <!-- About Section -->
     <component
       :is="getComponent('about', sections.about.variant, sections.about.sectionIndex)"
       v-if="sections.about"
       v-bind="sections.about"
     />
 
-    <!-- CTA Section -->
     <component
       :is="getComponent('cta', sections.cta.variant, sections.cta.sectionIndex)"
       v-if="sections.cta"
       v-bind="sections.cta"
     />
 
-    <!-- FAQ Section -->
     <component
       :is="getComponent('faq', sections.faq.variant, sections.faq.sectionIndex)"
       v-if="sections.faq"
       v-bind="sections.faq"
-    />
+    /> -->
   </div>
 </template>

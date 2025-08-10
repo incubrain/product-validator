@@ -1,0 +1,45 @@
+/* i18n-base.css - Essential i18n styles */
+
+/* Language switching loading state */
+.language-switching {
+  pointer-events: none;
+  opacity: 0.7;
+  transition: opacity 0.2s ease;
+}
+
+/* RTL support */
+[dir="rtl"] {
+  direction: rtl;
+  text-align: right;
+}
+
+[dir="ltr"] {
+  direction: ltr;
+  text-align: left;
+}
+
+/* Language transition animations */
+.language-transition-enter-active,
+.language-transition-leave-active {
+  transition: opacity 0.3s ease;
+}
+
+.language-transition-enter-from,
+.language-transition-leave-to {
+  opacity: 0;
+}
+
+/* Missing translation indicator */
+.i18n-missing {
+  background-color: rgba(239, 68, 68, 0.1);
+  border: 1px dashed rgb(239, 68, 68);
+  padding: 0.125rem 0.25rem;
+  border-radius: 0.25rem;
+  font-size: 0.75rem;
+}
+
+/* Loading state for language content */
+.i18n-loading {
+  opacity: 0.6;
+  pointer-events: none;
+}

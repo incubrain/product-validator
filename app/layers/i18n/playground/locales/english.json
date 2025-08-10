@@ -1,0 +1,16 @@
+{
+    "nav": {
+        "home": "Home",
+        "about": "About",
+        "contact": "Contact"
+    },
+    "common": {
+        "loading": "Loading...",
+        "error": "Error",
+        "retry": "Try Again"
+    },
+    "test": {
+        "welcome": "Welcome to the playground!",
+        "description": "This is a test of our i18n layer."
+    }
+}

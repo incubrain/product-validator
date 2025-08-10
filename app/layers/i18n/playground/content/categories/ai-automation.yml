@@ -1,0 +1,11 @@
+icon: "brain"
+color: "blue"
+slugs:
+  en: "ai-automation"
+  mr: "ai-svayamchalan"
+title:
+  en: "AI & Automation"
+  mr: "AI आणि स्वयंचालन"
+description:
+  en: "Exploring artificial intelligence and automation technologies that are reshaping industries and transforming how we work."
+  mr: "कृत्रिम बुद्धिमत्ता आणि स्वयंचालन तंत्रज्ञानाचा शोध जे उद्योगांना नवा आकार देत आहेत आणि आपल्या कामाच्या पद्धती बदलत आहेत."
