@@ -1,0 +1,14 @@
+{
+    "extends": "../../../.nuxt/tsconfig.json",
+    "compilerOptions": {
+        "baseUrl": ".",
+        "paths": {
+            "#shared/*": [
+                "../../../shared/*"
+            ],
+            "#theme/*": [
+                "../../../theme/*"
+            ]
+        }
+    }
+}

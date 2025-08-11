@@ -5,41 +5,43 @@ import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 export const languageSwitcherStyles = tv({
   slots: {
     root: [
-      'inline-flex items-center',
-      '[&[data-switching="true"]]:opacity-50 [&[data-switching="true"]]:pointer-events-none',
+      'inline-flex items-center transition-opacity duration-200',
+      // ✅ Data attribute approach for switching state
+      '[&[data-switching="true"]]:opacity-50',
+      '[&[data-switching="true"]]:pointer-events-none',
     ],
-    buttonGroup: 'flex gap-1',
-    minimalGroup: 'flex gap-0.5',
+    group: 'flex',
   },
   variants: {
     variant: {
       buttons: {
-        root: 'gap-1',
+        root: '',
       },
       dropdown: {
         root: 'relative',
       },
       minimal: {
-        root: 'gap-0.5',
-        minimalGroup: 'flex gap-0.5',
+        root: '',
+      },
+      custom: {
+        root: '',
       },
     },
     size: {
       xs: {
-        buttonGroup: 'gap-0.5',
-        minimalGroup: 'gap-0.5',
+        group: 'gap-0.5',
       },
       sm: {
-        buttonGroup: 'gap-1',
-        minimalGroup: 'gap-0.5',
+        group: 'gap-1',
       },
       md: {
-        buttonGroup: 'gap-1',
-        minimalGroup: 'gap-1',
+        group: 'gap-1',
       },
       lg: {
-        buttonGroup: 'gap-2',
-        minimalGroup: 'gap-1',
+        group: 'gap-2',
+      },
+      xl: {
+        group: 'gap-2',
       },
     },
   },
@@ -51,3 +53,4 @@ export const languageSwitcherStyles = tv({
 
 export type LanguageSwitcherVariants = ExtractVariants<typeof languageSwitcherStyles>
 export type LanguageSwitcherSlots = ExtractSlots<typeof languageSwitcherStyles>
+export default languageSwitcherStyles

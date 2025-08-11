@@ -1,6 +1,7 @@
 // playground/nuxt.config.ts
 
 import { createResolver } from '@nuxt/kit'
+import { fileURLToPath } from 'node:url'
 
 const resolver = createResolver(import.meta.url)
 
@@ -13,6 +14,11 @@ export default defineNuxtConfig({
   css: [
     resolver.resolve('./assets/main.css'),
   ],
+
+  alias: {
+    '#shared': fileURLToPath(new URL('../../../shared', import.meta.url)),
+    '#theme': fileURLToPath(new URL('../../../theme', import.meta.url)),
+  },
 
   compatibilityDate: '2025-08-09',
 
@@ -27,6 +33,8 @@ export default defineNuxtConfig({
         name: 'English',
         language: 'en-US',
         iso: 'en-US',
+        icon: 'i-circle-flags-us',
+
       },
       {
         code: 'mr',
@@ -34,6 +42,7 @@ export default defineNuxtConfig({
         name: 'मराठी',
         language: 'mr-IN',
         iso: 'mr-IN',
+        icon: 'i-circle-flags-in',
       },
     ],
     langDir: 'locales/',
@@ -45,5 +54,12 @@ export default defineNuxtConfig({
     skipSettingLocaleOnNavigate: false,
     debug: true,
     baseUrl: 'http://localhost:3000',
+  },
+
+  icon: {
+    serverBundle: {
+      // using full @iconify/json define collections to tree-shake
+      collections: ['lucide', 'circle-flags'],
+    },
   },
 })

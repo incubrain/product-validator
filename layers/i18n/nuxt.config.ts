@@ -1,5 +1,6 @@
 // @incubrain/i18n-layer/nuxt.config.ts
 import { createResolver } from '@nuxt/kit'
+import { fileURLToPath } from 'node:url'
 
 const resolver = createResolver(import.meta.url)
 
@@ -50,37 +51,41 @@ export default defineNuxtConfig({
     resolver.resolve('./app/assets/css/i18n-base.css'),
   ],
 
+  alias: {
+    '@theme': fileURLToPath(new URL('../../theme', import.meta.url)),
+  },
+
   // ✅ Type generation
   typescript: {
     includeWorkspace: true,
   },
 
   // ✅ Default i18n configuration (can be overridden)
-  i18n: {
-    strategy: 'prefix_except_default',
-    restructureDir: '.',
-    langDir: 'locales',
-    locales: [
-      {
-        code: 'en',
-        file: 'english.json',
-        name: 'English',
-        language: 'en-UK',
-      },
-      {
-        code: 'mr',
-        file: 'marathi.json',
-        name: 'मराठी',
-        language: 'mr-IN',
-      },
-    ],
-    detectBrowserLanguage: {
-      useCookie: true,
-      cookieKey: 'locale',
-      redirectOn: 'root',
-      alwaysRedirect: false,
-    },
-    skipSettingLocaleOnNavigate: true,
-    baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
-  },
+  // i18n: {
+  //   strategy: 'prefix_except_default',
+  //   restructureDir: '.',
+  //   langDir: 'locales',
+  //   locales: [
+  //     {
+  //       code: 'en',
+  //       file: 'english.json',
+  //       name: 'English',
+  //       language: 'en-UK',
+  //     },
+  //     {
+  //       code: 'mr',
+  //       file: 'marathi.json',
+  //       name: 'मराठी',
+  //       language: 'mr-IN',
+  //     },
+  //   ],
+  //   detectBrowserLanguage: {
+  //     useCookie: true,
+  //     cookieKey: 'locale',
+  //     redirectOn: 'root',
+  //     alwaysRedirect: false,
+  //   },
+  //   skipSettingLocaleOnNavigate: true,
+  //   baseUrl: process.env.NUXT_PUBLIC_SITE_URL || 'http://localhost:3000',
+  // },
 })

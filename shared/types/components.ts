@@ -1,6 +1,7 @@
 // shared/types/components.ts
-import type { BadgeProps } from '@nuxt/ui'
-import type { HeadingVariants, HeadingSlots, TextSlots, TextVariants, SectionTitleSlots, SectionTitleVariants, AnchorVariants, AnchorSlots, GridVariants, GridSlots, RowGridVariants, RowGridSlots, SplitVariants, SplitSlots, CenterVariants, CenterSlots, SectionVariants, SectionSlots, StackVariants, StackSlots, FloatSlots, FloatVariants, TransformVariants, TransformSlots } from '~~/theme/index'
+import type { BadgeProps, ButtonProps, ButtonGroupProps, SelectProps } from '@nuxt/ui'
+import type { HeadingVariants, HeadingSlots, TextSlots, TextVariants, SectionTitleSlots, SectionTitleVariants, AnchorVariants, AnchorSlots, GridVariants, GridSlots, RowGridVariants, RowGridSlots, SplitVariants, SplitSlots, CenterVariants, CenterSlots, SectionVariants, SectionSlots, StackVariants, StackSlots, FloatSlots, FloatVariants, TransformVariants, TransformSlots, LanguageSwitcherVariants,
+  LanguageSwitcherSlots } from '~~/theme/index'
 
 export interface HeadingProps {
   text?: string
@@ -99,4 +100,19 @@ export interface TransformProps {
   origin?: TransformVariants['origin']
   as?: string
   ui?: TransformSlots
+}
+
+export interface LanguageSwitcherProps {
+  variant?: LanguageSwitcherVariants['variant']
+  size?: LanguageSwitcherVariants['size']
+  showFlags?: boolean
+  autoDetect?: boolean
+  preserveRoute?: boolean
+  storeChoice?: boolean
+  trackAnalytics?: boolean
+  preserveScroll?: boolean
+  ubutton?: ButtonProps
+  ubuttonGroup?: ButtonGroupProps
+  uselect?: SelectProps
+  ui?: LanguageSwitcherSlots
 }

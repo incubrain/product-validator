@@ -1,8 +1,9 @@
 {
     "nav": {
         "home": "Home",
-        "about": "About",
-        "contact": "Contact"
+        "blog": "Blog",
+        "category": "Category",
+        "page": "Page"
     },
     "common": {
         "loading": "Loading...",
