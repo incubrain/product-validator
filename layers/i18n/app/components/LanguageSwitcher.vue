@@ -8,11 +8,8 @@ const props = withDefaults(defineProps<LanguageSwitcherProps>(), {
   variant: 'buttons',
   size: 'md',
   showFlags: false,
-  autoDetect: false,
   preserveRoute: true,
-  storeChoice: false,
-  trackAnalytics: false,
-  preserveScroll: true,
+  smart: false,
   ubutton: () => ({}),
   ubuttonGroup: () => ({}),
   uselect: () => ({}),
@@ -32,7 +29,6 @@ defineSlots<{
 
 // ✅ Core composables
 const { locale, locales } = useI18n()
-const { switchLocaleWithAnalytics } = useI18nEnhanced()
 const switchLocalePath = useSwitchLocalePath()
 
 const switching = ref(false)
@@ -77,9 +73,9 @@ function detectBrowserLanguage(): string | null {
   return null
 }
 
-// ✅ Auto-detect on mount (if enabled)
+// ✅ Auto-detect on mount (if enabled or smart mode)
 onMounted(() => {
-  if (props.autoDetect) {
+  if (props.smart) {
     // Check stored preference first
     const stored = preferredLanguage.value
     if (stored && locales.value.some((l) => l.code === stored)) {
@@ -103,25 +99,25 @@ async function handleLocaleSwitch(newLocale: string) {
 
   switching.value = true
 
-  // ✅ ALWAYS store preference when user actively switches (good UX)
-  preferredLanguage.value = newLocale
+  // ✅ Store preference when user actively switches or smart mode enabled
+  if (props.smart) {
+    preferredLanguage.value = newLocale
+  }
 
-  // Store scroll position
+  // Store scroll position (smart mode enables this by default)
   let scrollPosition = { x: 0, y: 0 }
-  if (props.preserveScroll && import.meta.client) {
+  if (props.smart && import.meta.client) {
     scrollPosition = { x: window.scrollX, y: window.scrollY }
   }
 
   try {
-    if (props.trackAnalytics) {
-      await switchLocaleWithAnalytics(newLocale)
-    } else if (props.preserveRoute) {
+    if (props.preserveRoute) {
       const targetPath = switchLocalePath(newLocale)
       if (targetPath) {
         await navigateTo(targetPath, { replace: false, external: false })
 
-        // Restore scroll position
-        if (props.preserveScroll && import.meta.client) {
+        // Restore scroll position (smart mode enables this by default)
+        if (props.smart && import.meta.client) {
           await nextTick()
           window.scrollTo(scrollPosition.x, scrollPosition.y)
         }
@@ -238,13 +234,16 @@ const buttonPropsForLocale = useMergeProps(props.ubutton, (loc: any) => ({
     </div>
 
     <!-- Custom Slot Variant -->
-    <slot
+    <div
       v-else-if="variant === 'custom'"
-      :locales="locales"
-      :current-locale="currentLocale"
-      :available-locales="availableLocales"
-      :switching="switching"
-      :switch-locale="handleLocaleSwitch"
-    />
+    >
+      <slot
+        :locales="locales"
+        :current-locale="currentLocale"
+        :available-locales="availableLocales"
+        :switching="switching"
+        :switch-locale="handleLocaleSwitch"
+      />
+    </div>
   </div>
 </template>

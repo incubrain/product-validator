@@ -1,2 +1,82 @@
 @import 'tailwindcss';
 @import '@nuxt/ui';
+
+/* Minimal prose-like content styling */
+.prose {
+  max-width: 100ch;
+  margin: 0 auto;
+  padding: 1rem;
+  line-height: 1.7;
+  font-size: 1rem;
+  color: hsl(var(--p-text, 0 0% 90%));
+}
+
+.prose h1,
+.prose h2,
+.prose h3,
+.prose h4 {
+  font-weight: 600;
+  line-height: 1.25;
+  margin-top: 2em;
+  margin-bottom: 0.6em;
+}
+
+.prose h1 { font-size: 2rem; }
+.prose h2 { font-size: 1.6rem; }
+.prose h3 { font-size: 1.3rem; }
+.prose h4 { font-size: 1.1rem; }
+
+.prose p {
+  margin: 1em 0;
+}
+
+.prose ul,
+.prose ol {
+  margin: 1em 0;
+  padding-left: 1.5rem;
+}
+
+.prose li {
+  margin: 0.25em 0;
+}
+
+.prose code {
+  background-color: hsl(var(--p-muted-bg, 0 0% 15%));
+  padding: 0.15em 0.35em;
+  border-radius: 0.25rem;
+  font-size: 0.95em;
+}
+
+.prose pre {
+  background-color: hsl(var(--p-code-bg, 0 0% 10%));
+  padding: 1rem;
+  border-radius: 0.5rem;
+  overflow-x: auto;
+  font-size: 0.9rem;
+  line-height: 1.5;
+}
+
+.prose pre code {
+  background: none;
+  padding: 0;
+  font-size: inherit;
+  color: inherit;
+}
+
+.prose blockquote {
+  border-left: 4px solid hsl(var(--p-accent, 220 90% 60%));
+  padding-left: 1rem;
+  font-style: italic;
+  color: hsl(var(--p-text-muted, 0 0% 70%));
+}
+
+.prose img {
+  max-width: 100%;
+  border-radius: 0.5rem;
+  margin: 1em 0;
+}
+
+.prose a {
+  color: hsl(var(--p-link, 220 90% 65%));
+  text-decoration: underline;
+}

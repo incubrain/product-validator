@@ -2,15 +2,15 @@
 import { defineCollection, defineContentConfig, z } from '@nuxt/content'
 import { asSeoCollection } from '@nuxtjs/seo/content'
 
-const slugsSchema = z.object({ en: z.string(), mr: z.string() })
+const baseSchema = z.object({
+  slug: z.string(),
+  isPublic: z.boolean().optional(),
+})
 
 // ✅ Blog schema (unchanged)
-const blogSchema = z.object({
+const blogSchema = baseSchema.extend({
   title: z.string(),
-  testing: z.string(),
-  slugs: z.object({ en: z.string(), mr: z.string() }),
-  subtitle: z.string().optional(),
-  excerpt: z.string().optional(),
+  description: z.string().optional(),
   category: z.string().optional(),
   author: z.string().optional(),
   publishedAt: z.string().optional(),
@@ -19,9 +19,7 @@ const blogSchema = z.object({
 })
 
 // ✅ Category schema (unchanged)
-const categorySchema = z.object({
-  slug: z.string(),
-  slugs: slugsSchema,
+const categorySchema = baseSchema.extend({
   icon: z.string().optional(),
   color: z.string().optional(),
   title: z.record(z.string(), z.string()),
@@ -29,11 +27,9 @@ const categorySchema = z.object({
 })
 
 // ✅ Traditional page schema (unchanged)
-const pageSchema = z.object({
+const pageSchema = baseSchema.extend({
   title: z.string(),
   subtitle: z.string().optional(),
-  slug: z.string(),
-  slugs: slugsSchema,
   description: z.string().optional(),
   layout: z.string().optional(),
   content: z.object({}),
@@ -67,9 +63,15 @@ export default defineContentConfig({
     })),
 
     // ✅ CATEGORIES (unchanged)
-    categories: defineCollection({
+    categories_en: defineCollection({
       type: 'data',
-      source: { include: 'categories/**', prefix: '/categories' },
+      source: { include: 'en/categories/**', prefix: '' },
+      schema: categorySchema,
+    }),
+
+    categories_mr: defineCollection({
+      type: 'data',
+      source: { include: 'mr/categories/**', prefix: '' },
       schema: categorySchema,
     }),
   },

@@ -1,9 +1,7 @@
 title: "About Us"
 subtitle: "Building the future with innovative technology"
 slug: "about"
-slugs:
-  en: "about"
-  mr: "aamchyabaddal"
+isPublic: true
 description: "Learn about our mission to create cutting-edge solutions."
 layout: "default"
 content:

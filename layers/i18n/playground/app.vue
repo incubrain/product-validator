@@ -1,13 +1,12 @@
 <!-- playground/app.vue - Updated with Dark Theme Layout -->
 <script setup lang="ts">
-const { t } = useI18n()
 const format = useI18nFormatters()
 
 // Navigation items
 const navigation = computed(() => [
   { name: 'nav.home', to: '/' },
-  { name: 'nav.blog', to: '/blog/ai-revolution' },
-  { name: 'nav.category', to: '/categories/ai-automation' },
+  { name: 'nav.blog', to: '/blog/ai-automation/ai-revolution' },
+  { name: 'nav.category', to: '/categories' },
   { name: 'nav.page', to: '/pages/about' },
 ])
 </script>

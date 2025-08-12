@@ -1,5 +1,6 @@
-// app/composables/useI18nContent.ts - PURE DATA FETCHING
+// app/composables/useI18nContent.ts - FINAL OPTIMIZED VERSION
 import type { Collections } from '@nuxt/content'
+import { useI18nContentParams } from './useI18nContentParams'
 
 interface I18nContentOptions {
   collection: string
@@ -10,174 +11,123 @@ interface I18nContentOptions {
 
 interface I18nContentReturn {
   content: Ref<any>
+  translations: Ref<Record<string, any>>
   pending: Ref<boolean>
   error: Ref<any>
   refresh: () => Promise<void>
+  hasTranslation: (locale: string) => boolean
+  getTranslationSlug: (locale: string) => string | undefined
+  missingTranslations: ComputedRef<string[]>
 }
 
 /**
- * Pure data fetching composable for i18n content
- * Follows your composable patterns - no rendering logic
+ * Optimized i18n content composable using built-in Nuxt Content ID fields
+ * Uses background translation caching for instant language switching
+ * Automatically manages i18n params and SEO when enabled
  */
 export function useI18nContent(options: I18nContentOptions): I18nContentReturn {
-  const {
-    collection,
-    autoI18nParams = true,
-    autoSEO = true,
-    key,
-  } = options
+  const { collection, autoI18nParams = true, autoSEO = true, key } = options
 
   const route = useRoute()
-  const { locale } = useI18n()
+  const { locale, locales } = useI18n()
 
-  const slug = computed(() => route.params.slug as string ?? null)
-  const category = computed(() => route.params.category as string ?? null)
+  const slug = computed<string | null>(() => {
+    const raw = route.params.slug as string | string[] | undefined
+    if (!raw) return null
+    return Array.isArray(raw) ? raw.join('/') : raw
+  })
 
-  // ✅ Simple collection naming - no complex resolution
-  const collectionName = computed(() =>
-    `${collection}_${locale.value}` as keyof Collections,
-  )
+  const contentKey = () =>
+    key || `i18n:${collection}:${locale.value}:${slug.value ?? '∅'}`
 
-  // ✅ Data fetching with cross-language support (restored from original)
-  const {
-    data: content,
-    pending,
-    error,
-    refresh,
-  } = useLazyAsyncData(
-    key || `i18n-content-${collectionName.value}-${slug.value}`,
+  const { data: content, pending, error, refresh } = useAsyncData(
+    contentKey,
     async () => {
-      if (!slug.value) {
-        console.warn('useI18nContent: No slug found - use inside [slug].vue page')
-        return null
-      }
-
+      if (!slug.value) return null
       try {
-        // ✅ Try cross-language lookup first (original behavior)
-        const crossLangResult = await queryCollection(collectionName.value)
-          .where('slugs', 'LIKE', `%"${locale.value}":"${slug.value}"%`)
-          .first()
-
-        if (crossLangResult) {
-          return crossLangResult
-        }
-
-        // ✅ Fallback to simple slug match (new behavior)
-        const simpleResult = await queryCollection(collectionName.value)
+        // Fetch the current-locale post by slug; must be public
+        return await queryCollection(`${collection}_${locale.value}` as keyof Collections)
           .where('slug', '=', slug.value)
+          .where('isPublic', '=', true)
           .first()
-
-        return simpleResult
       } catch (err) {
-        console.error(`useI18nContent: Failed to fetch ${collectionName.value}:`, err)
+        console.error(`useI18nContent: query failed ${collection}_${locale.value}:`, err)
         return null
       }
     },
-    {
-      watch: [locale, collectionName, slug],
-    },
+    { watch: [locale, slug] },
   )
 
-  // ✅ Optional i18n params setup (only if content has cross-language refs)
-  if (autoI18nParams) {
-    const setI18nParams = useSetI18nParams({
-      canonicalQueries: [],
-    })
+  // ---- Background translations (public only) ----
+  type TransMeta = { slug: string, title?: string, id: string, isPublic?: boolean }
 
-    watch([content, locale], () => {
-      if (content.value?.slugs) {
-        const params: Record<string, any> = {}
+  const translations = ref<Record<string, TransMeta>>({})
 
-        Object.entries(content.value.slugs).forEach(([lang, slug]) => {
-          params[lang] = { slug: slug as string }
-          if (category.value) {
-            params[lang].category = category.value
+  const fileStem = computed(() => {
+    const id = content.value?.id as string | undefined
+    if (!id) return null
+    const pA = `${collection}_${locale.value}/`
+    const pB = `${collection}/${locale.value}/`
+    const stripped = id.startsWith(pA)
+      ? id.slice(pA.length)
+      : id.startsWith(pB)
+        ? id.slice(pB.length)
+        : id.split('/').pop() || id
+    return stripped // e.g. "ai-revolution.md"
+  })
+
+  watchEffect(async () => {
+    if (!fileStem.value) {
+      translations.value = {}
+      return
+    }
+
+    const settled = await Promise.allSettled(
+      locales.value
+        .filter((l) => l.code !== locale.value)
+        .map(async (l) => {
+          const targetId = `${collection}_${l.code}/${fileStem.value}`
+          try {
+            const doc = await queryCollection(`${collection}_${l.code}` as keyof Collections)
+              .where('id', '=', targetId)
+              .where('isPublic', '=', true)
+              .select('slug', 'title', 'id')
+              .first()
+            return [l.code, doc] as const
+          } catch (err) {
+            console.error(`useI18nContent: query failed ${targetId}:`, err)
           }
-        })
+          return null
+        }),
+    )
 
-        setI18nParams(params)
-      }
-    }, { immediate: true })
-  }
+    const entries = settled
+      .map((r) => (r.status === 'fulfilled' ? r.value : null))
+      .filter(Boolean) as ReadonlyArray<readonly [string, TransMeta]>
 
-  // ✅ Optional SEO handling (your pattern)
-  if (autoSEO) {
-    const i18nHead = useLocaleHead({
-      seo: true,
-      lang: true,
-      dir: true,
-    })
+    translations.value = Object.fromEntries(entries)
+  })
 
-    useHead(() => ({
-      htmlAttrs: {
-        lang: i18nHead.value.htmlAttrs?.lang,
-        dir: i18nHead.value.htmlAttrs?.dir,
-      },
-      link: [...(i18nHead.value.link || [])],
-      meta: [
-        ...(i18nHead.value.meta || []),
-        ...(content.value
-          ? [
-              {
-                name: 'description',
-                content: content.value.description || content.value.excerpt,
-              },
-              {
-                property: 'og:title',
-                content: content.value.title,
-              },
-            ]
-          : []),
-      ],
-    }))
-  }
+  if (autoI18nParams) useI18nContentParams({ content, translations })
+  if (autoSEO) useI18nContentSEO({ content })
+
+  const hasTranslation = (code: string) => Boolean(translations.value[code])
+  const getTranslationSlug = (code: string) => translations.value[code]?.slug
+
+  const missingTranslations = computed(() =>
+    locales.value
+      .filter((l) => l.code !== locale.value && !hasTranslation(l.code))
+      .map((l) => l.code),
+  )
 
   return {
     content: readonly(content),
+    translations: readonly(translations),
     pending: readonly(pending),
     error: readonly(error),
     refresh,
+    hasTranslation,
+    getTranslationSlug,
+    missingTranslations,
   }
-}
-
-/**
- * Simple text resolution utility - follows your utility pattern
- */
-export function useI18nText(textMap: Record<string, string>, fallback = 'en') {
-  const { locale } = useI18n()
-
-  return computed(() =>
-    textMap[locale.value] || textMap[fallback] || Object.values(textMap)[0] || '',
-  )
-}
-
-/**
- * Format utilities that match your formatter patterns
- */
-export function useI18nFormatters() {
-  const { locale } = useI18n()
-
-  return computed(() => ({
-    currency: (amount: number, currency = 'USD') =>
-      new Intl.NumberFormat(locale.value, {
-        style: 'currency',
-        currency,
-      }).format(amount),
-
-    date: (date: Date | string, options?: Intl.DateTimeFormatOptions) => {
-      const d = typeof date === 'string' ? new Date(date) : date
-      return new Intl.DateTimeFormat(locale.value, options).format(d)
-    },
-
-    number: (num: number) =>
-      new Intl.NumberFormat(locale.value).format(num),
-
-    relativeTime: (value: number, unit: Intl.RelativeTimeFormatUnit) =>
-      new Intl.RelativeTimeFormat(locale.value, {
-        numeric: 'auto',
-      }).format(value, unit),
-
-    list: (items: string[], options?: Intl.ListFormatOptions) =>
-      new Intl.ListFormat(locale.value, options).format(items),
-  }))
 }

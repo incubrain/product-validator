@@ -1,7 +1,6 @@
 <!-- playground/pages/index.vue - Clean Documentation -->
 <script setup lang="ts">
 const formatters = useI18nFormatters()
-const { switchLocaleWithAnalytics } = useI18nEnhanced()
 
 // Props documentation
 const languageSwitcherProps = [
@@ -42,10 +41,10 @@ const languageSwitcherProps = [
     description: 'Remember language choice in cookie',
   },
   {
-    name: 'trackAnalytics',
+    name: 'smart',
     type: 'boolean',
     default: 'false',
-    description: 'Log language switches to console',
+    description: 'Enable smart features: auto-detect  store choice  preserve scroll',
   },
   {
     name: 'preserveScroll',
@@ -80,8 +79,8 @@ const benefits = [
   },
   {
     icon: 'i-lucide-archive',
-    title: 'Remember Choice',
-    description: 'Persist user language preference across sessions',
+    title: 'Smart Mode',
+    description: 'Auto-detect browser language and remember user choice',
   },
   {
     icon: 'i-lucide-pointer',
@@ -134,22 +133,20 @@ const allVariants = [
     description: 'Small flag icons only',
   },
   {
-    name: 'Auto-Detect + Store',
+    name: 'Smart Mode',
     variant: 'buttons',
-    props: { variant: 'buttons', autoDetect: true, storeChoice: true },
-    description: 'Smart detection with persistence',
+    props: { variant: 'buttons', smart: true },
+    description: 'Auto-detect  storage  scroll preservation',
   },
   {
-    name: 'All Features',
+    name: 'Smart with Flags',
     variant: 'dropdown',
     props: {
       variant: 'dropdown',
       showFlags: true,
-      autoDetect: true,
-      storeChoice: true,
-      trackAnalytics: true,
+      smart: true,
     },
-    description: 'Every feature enabled',
+    description: 'Smart mode with beautiful flags',
   },
 ]
 
@@ -200,14 +197,6 @@ const testData = {
   fruits: ['Apple', 'Banana', 'Orange'],
 }
 
-async function testLanguageSwitch(locale: string) {
-  try {
-    await switchLocaleWithAnalytics(locale)
-  } catch (error) {
-    console.error('Language switch failed:', error)
-  }
-}
-
 useHead({
   title: 'i18n Layer Documentation | Features & Examples',
 })
@@ -233,6 +222,41 @@ useHead({
         </p>
       </div>
 
+      <UCard>
+        <template #header>
+          <h2 class="text-2xl font-bold text-white">
+            How This i18n  Content Layer Works
+          </h2>
+          <p class="text-gray-400 mt-1">
+            No magic. A few clear rules.
+          </p>
+        </template>
+        <div class="grid md:grid-cols-2 gap-6 text-sm text-gray-300">
+          <div class="space-y-2">
+            <h3 class="font-semibold text-white">
+              Mental Model
+            </h3>
+            <ol class="list-decimal list-inside space-y-1">
+              <li><strong>URL →</strong> we read <code>[slug]</code> (and optional <code>[category]</code>).</li>
+              <li><strong>Fetch →</strong> <code>useI18nContent({ collection })</code> loads <em>this-locale</em> doc by <code>slug</code>, only if <code>isPublic</code>.</li>
+              <li><strong>Translations →</strong> same filename is looked up across locales in background.</li>
+              <li><strong>SEO/Params →</strong> hreflang & cross-locale slugs are auto-wired.</li>
+            </ol>
+          </div>
+          <div class="space-y-2">
+            <h3 class="font-semibold text-white">
+              Invariants
+            </h3>
+            <ul class="list-disc list-inside space-y-1">
+              <li>Filenames are identical across locales: <code>blog_en/ai-revolution.md</code>, <code>blog_mr/ai-revolution.md</code>.</li>
+              <li>Public docs must set <code>isPublic: true</code>.</li>
+              <li>Only <em>slug</em>  <em>locale</em> determine the fetch; <em>category</em> is a URL concern (validated & canonicalized).</li>
+              <li>Build-time slug maps are not required; runtime is resilient and portable.</li>
+            </ul>
+          </div>
+        </div>
+      </UCard>
+
       <!-- Quick Demo -->
       <div class="flex justify-center">
         <ILanguageSwitcher
@@ -242,15 +266,99 @@ useHead({
       </div>
     </div>
 
-    <!-- Benefits Section -->
+    <!-- Quick Start Section -->
     <UCard>
       <template #header>
         <h2 class="text-2xl font-bold text-white">
-          Key Benefits
+          🚀 Quick Start
         </h2>
         <p class="text-gray-400 mt-1">
-          Why choose this i18n layer for your project
+          Copy-paste ready examples to get started in 30 seconds
         </p>
+      </template>
+
+      <div class="space-y-8">
+        <!-- Basic Example -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <UBadge
+              variant="soft"
+              color="primary"
+              size="sm"
+            >
+              Recommended
+            </UBadge>
+            <h3 class="font-medium text-white">
+              Basic Language Switcher
+            </h3>
+          </div>
+          <div class="flex justify-center p-6 bg-gray-900/50 rounded border border-gray-700">
+            <ILanguageSwitcher />
+          </div>
+          <div class="bg-gray-900 p-4 rounded">
+            <pre class="text-sm text-gray-300 overflow-x-auto"><code>&lt;ILanguageSwitcher /&gt;</code></pre>
+          </div>
+        </div>
+
+        <!-- Smart Example -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <UBadge
+              variant="soft"
+              color="success"
+              size="sm"
+            >
+              Smart
+            </UBadge>
+            <h3 class="font-medium text-white">
+              Auto-detect with Flags
+            </h3>
+          </div>
+          <div class="flex justify-center p-6 bg-gray-900/50 rounded border border-gray-700">
+            <ILanguageSwitcher
+              smart
+              show-flags
+            />
+          </div>
+          <div class="bg-gray-900 p-4 rounded">
+            <pre class="text-sm text-gray-300 overflow-x-auto"><code>&lt;ILanguageSwitcher smart show-flags /&gt;</code></pre>
+          </div>
+        </div>
+
+        <!-- Dropdown Example -->
+        <div class="space-y-4">
+          <div class="flex items-center gap-3">
+            <UBadge
+              variant="soft"
+              color="warning"
+              size="sm"
+            >
+              Space-saving
+            </UBadge>
+            <h3 class="font-medium text-white">
+              Dropdown Variant
+            </h3>
+          </div>
+          <div class="flex justify-center p-6 bg-gray-900/50 rounded border border-gray-700">
+            <ILanguageSwitcher
+              variant="dropdown"
+              smart
+              show-flags
+            />
+          </div>
+          <div class="bg-gray-900 p-4 rounded">
+            <pre class="text-sm text-gray-300 overflow-x-auto"><code>&lt;ILanguageSwitcher variant="dropdown" smart show-flags /&gt;</code></pre>
+          </div>
+        </div>
+      </div>
+    </UCard>
+
+    <!-- Key Benefits -->
+    <UCard>
+      <template #header>
+        <h2 class="text-2xl font-bold text-white">
+          Why Use This Layer?
+        </h2>
       </template>
 
       <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
@@ -398,10 +506,8 @@ useHead({
         <ILanguageSwitcher
           v-slot="{ currentLocale, locales, switchLocale, switching }"
           variant="custom"
+          smart
           show-flags
-          auto-detect
-          store-choice
-          track-analytics
         >
           <USelect
             :items="[locales.map(l => ({
@@ -453,25 +559,23 @@ useHead({
           </div>
         </div>
 
-        <!-- Advanced Usage -->
+        <!-- Smart Mode -->
         <div>
           <h3 class="font-medium text-white mb-2">
-            Advanced Features
+            Smart Mode (Recommended)
           </h3>
           <div class="bg-gray-900 p-4 rounded">
-            <pre class="text-sm text-gray-300 overflow-x-auto"><code>&lt;!-- Smart detection + persistence --&gt;
-&lt;ILanguageSwitcher
-  auto-detect
-  store-choice
-/&gt;
+            <pre class="text-sm text-gray-300 overflow-x-auto"><code>&lt;!-- Smart mode enables: auto-detect  store choice  preserve scroll --&gt;
+&lt;ILanguageSwitcher smart /&gt;
 
-&lt;!-- All features enabled --&gt;
+&lt;!-- Smart mode with flags --&gt;
+&lt;ILanguageSwitcher smart show-flags /&gt;
+
+&lt;!-- Individual control (if needed) --&gt;
 &lt;ILanguageSwitcher
-  variant="dropdown"
-  show-flags
   auto-detect
   store-choice
-  track-analytics
+  preserve-scroll
 /&gt;</code></pre>
           </div>
         </div>
@@ -589,6 +693,154 @@ formatters.list(['A', 'B', 'C'])</code></pre>
       </div>
     </UCard>
 
+    <!-- Composables Guide -->
+    <UCard>
+      <template #header>
+        <h2 class="text-2xl font-bold text-white">
+          🔧 Composables Guide
+        </h2>
+        <p class="text-gray-400 mt-1">
+          Powerful utilities for advanced i18n workflows
+        </p>
+      </template>
+
+      <div class="space-y-8">
+        <!-- Content Fetching -->
+        <div>
+          <h3 class="font-semibold text-white mb-3">
+            Content Fetching
+          </h3>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="space-y-3">
+              <h4 class="text-sm font-medium text-gray-300">
+                useI18nContent
+              </h4>
+              <p class="text-sm text-gray-400">
+                Fetch cross-language content from collections
+              </p>
+              <div class="bg-gray-900 p-3 rounded">
+                <pre class="text-xs text-gray-300 overflow-x-auto"><code>// In [slug].vue page
+const { content, pending } = useI18nContent({
+  collection: 'blog'
+})
+
+// Auto-handles cross-language slugs
+// Sets up SEO automatically</code></pre>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <h4 class="text-sm font-medium text-gray-300">
+                useI18nText
+              </h4>
+              <p class="text-sm text-gray-400">
+                Resolve locale-specific text from objects
+              </p>
+              <div class="bg-gray-900 p-3 rounded">
+                <pre class="text-xs text-gray-300 overflow-x-auto"><code>const title = useI18nText({
+  en: 'Welcome',
+  mr: 'स्वागत'
+})
+
+// Automatically picks current locale</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Formatters -->
+        <div>
+          <h3 class="font-semibold text-white mb-3">
+            Locale-Aware Formatters
+          </h3>
+          <div class="grid md:grid-cols-2 gap-6">
+            <div class="space-y-3">
+              <h4 class="text-sm font-medium text-gray-300">
+                Live Examples
+              </h4>
+              <div class="space-y-2 text-sm">
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-400">Currency:</span>
+                  <code class="px-2 py-1 bg-gray-800 rounded text-primary-400">
+                    {{ formatters.currency(testData.price, 'INR') }}
+                  </code>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-400">Number:</span>
+                  <code class="px-2 py-1 bg-gray-800 rounded text-primary-400">
+                    {{ formatters.number(testData.largeNumber) }}
+                  </code>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-400">Date:</span>
+                  <code class="px-2 py-1 bg-gray-800 rounded text-primary-400">
+                    {{ formatters.date(testData.currentDate, { dateStyle: 'short' }) }}
+                  </code>
+                </div>
+                <div class="flex justify-between items-center">
+                  <span class="text-gray-400">List:</span>
+                  <code class="px-2 py-1 bg-gray-800 rounded text-primary-400">
+                    {{ formatters.list(testData.fruits) }}
+                  </code>
+                </div>
+              </div>
+            </div>
+            <div class="space-y-3">
+              <h4 class="text-sm font-medium text-gray-300">
+                Usage
+              </h4>
+              <div class="bg-gray-900 p-3 rounded">
+                <pre class="text-xs text-gray-300 overflow-x-auto"><code>const formatters = useI18nFormatters()
+
+// Currency with auto-locale
+formatters.currency(2999.99, 'INR')
+
+// Numbers with locale-specific separators
+formatters.number(12345.67)
+
+// Dates with locale formatting
+formatters.date(new Date(), {
+  dateStyle: 'short'
+})
+
+// Lists with locale conjunctions
+formatters.list(['A', 'B', 'C'])</code></pre>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Real Content Integration -->
+        <div>
+          <h3 class="font-semibold text-white mb-3">
+            Real Content Integration
+          </h3>
+          <div class="grid md:grid-cols-3 gap-4">
+            <div
+              v-for="example in contentExamples"
+              :key="example.name"
+              class="p-4 bg-gray-800/30 rounded-lg"
+            >
+              <h4 class="font-medium text-white mb-2">
+                {{ example.name }}
+              </h4>
+              <p class="text-sm text-gray-400 mb-3">
+                {{ example.complexity }}
+              </p>
+              <NuxtLinkLocale :to="example.path">
+                <UButton
+                  variant="soft"
+                  size="sm"
+                  block
+                >
+                  Test {{ example.name.split(' ')[0] }} →
+                </UButton>
+              </NuxtLinkLocale>
+            </div>
+          </div>
+        </div>
+      </div>
+    </UCard>
+
     <!-- Content Examples -->
     <UCard>
       <template #header>
@@ -622,38 +874,6 @@ formatters.list(['A', 'B', 'C'])</code></pre>
             </UButton>
           </NuxtLinkLocale>
         </div>
-      </div>
-    </UCard>
-
-    <!-- Architecture Decisions -->
-    <UCard>
-      <template #header>
-        <h2 class="text-2xl font-bold text-white">
-          Architecture Decisions
-        </h2>
-        <p class="text-gray-400 mt-1">
-          Key decisions made during development and their rationale
-        </p>
-      </template>
-
-      <div class="space-y-4">
-        <UCard
-          v-for="decision in architectureDecisions"
-          :key="decision.decision"
-          class="bg-gray-800/30 border-gray-700"
-        >
-          <div class="space-y-2">
-            <h3 class="font-medium text-white">
-              {{ decision.decision }}
-            </h3>
-            <p class="text-sm text-gray-400">
-              {{ decision.rationale }}
-            </p>
-            <p class="text-sm text-green-400">
-              Impact: {{ decision.impact }}
-            </p>
-          </div>
-        </UCard>
       </div>
     </UCard>
 
@@ -701,36 +921,38 @@ formatters.list(['A', 'B', 'C'])</code></pre>
           </div>
         </div>
       </UCard>
-
-      <!-- Quick Actions -->
-      <UCard>
-        <template #header>
-          <h3 class="font-semibold text-white">
-            Quick Test
-          </h3>
-        </template>
-        <div class="space-y-3">
-          <UButton
-            variant="outline"
-            size="sm"
-            block
-            @click="testLanguageSwitch('mr')"
-          >
-            Switch to मराठी
-          </UButton>
-          <UButton
-            variant="outline"
-            size="sm"
-            block
-            @click="testLanguageSwitch('en')"
-          >
-            Switch to English
-          </UButton>
-          <p class="text-xs text-gray-500">
-            Check console for analytics events
-          </p>
-        </div>
-      </UCard>
     </div>
+
+    <!-- Architecture Decisions (Advanced) -->
+    <UCard>
+      <template #header>
+        <h2 class="text-2xl font-bold text-white">
+          🔧 Architecture Decisions
+        </h2>
+        <p class="text-gray-400 mt-1">
+          Technical decisions and rationale (for developers)
+        </p>
+      </template>
+
+      <div class="space-y-4">
+        <UCard
+          v-for="decision in architectureDecisions"
+          :key="decision.decision"
+          class="bg-gray-800/30 border-gray-700"
+        >
+          <div class="space-y-2">
+            <h3 class="font-medium text-white">
+              {{ decision.decision }}
+            </h3>
+            <p class="text-sm text-gray-400">
+              {{ decision.rationale }}
+            </p>
+            <p class="text-sm text-green-400">
+              Impact: {{ decision.impact }}
+            </p>
+          </div>
+        </UCard>
+      </div>
+    </UCard>
   </div>
 </template>

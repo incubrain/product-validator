@@ -3,14 +3,12 @@ title: "AI क्रांती आली आहे"
 subtitle: "कृत्रिम बुद्धिमत्ता आपले जग कसे बदलत आहे"
 excerpt: "कृत्रिम बुद्धिमत्तेतील नवीनतम घडामोडी आणि समाज, व्यवसाय आणि दैनंदिन जीवनावर त्यांचा प्रभाव जाणून घ्या."
 category: "ai-automation"
+isPublic: true
 author: "तंत्रज्ञान लेखक"
 publishedAt: "2024-01-15"
 featured: true
 tags: ["AI", "तंत्रज्ञान", "नावीन्य", "भविष्य"]
-testing: "ai-kranti"
-slugs:
-    en: "ai-revolution"
-    mr: "ai-kranti"
+slug: "ai-kranti"
 ---
 
 # AI क्रांती आली आहे
