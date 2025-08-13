@@ -1,7 +1,5 @@
 // app/composables/useI18nFormatters.ts - Enhanced locale-aware formatting utilities
 
-import type { I18nFormatterOptions } from '~~/i18n-content'
-
 /**
  * Comprehensive locale-aware formatting utilities using Intl API
  * Automatically adapts to current language with extensive formatting options
@@ -12,40 +10,8 @@ export function useI18nFormatters() {
   // Get the full ISO locale with fallback testing
   const getFullLocale = () => {
     const currentLocaleInfo = locales.value.find((l: any) => l.code === locale.value)
-    let fullLocale = String(currentLocaleInfo?.iso || locale.value)
 
-    // Debug: Check what locales are actually supported
-    if (import.meta.dev) {
-      // Test different Marathi locale variations
-      const marathiVariants = ['mr-IN', 'mr', 'hi-IN']
-      const supported = Intl.NumberFormat.supportedLocalesOf(marathiVariants)
-      console.log(`Marathi variants supported:`, supported)
-
-      const testFormatter = new Intl.NumberFormat(fullLocale)
-      const resolved = testFormatter.resolvedOptions()
-      console.log(`Requested: ${fullLocale} → Resolved: ${resolved.locale}, numberingSystem: ${resolved.numberingSystem}`)
-
-      // Test Indian grouping specifically
-      const testNumber = 123456.789
-      console.log(`Test with en-IN:`, new Intl.NumberFormat('en-IN').format(testNumber))
-      console.log(`Test with hi-IN:`, new Intl.NumberFormat('hi-IN').format(testNumber))
-      console.log(`Test with mr-IN:`, new Intl.NumberFormat('mr-IN').format(testNumber))
-      console.log(`Test with mr:`, new Intl.NumberFormat('mr').format(testNumber))
-    }
-
-    // If mr-IN is not supported, try fallbacks for Marathi users who want Indian grouping
-    if (locale.value === 'mr') {
-      const marathiFallbacks = ['mr-IN', 'hi-IN', 'en-IN']
-      const supported = Intl.NumberFormat.supportedLocalesOf(marathiFallbacks)
-      if (supported.length > 0) {
-        fullLocale = supported[0]!
-        if (import.meta.dev) {
-          console.log(`Using fallback locale for Marathi: ${fullLocale}`)
-        }
-      }
-    }
-
-    return fullLocale
+    return String(currentLocaleInfo?.iso || locale.value)
   }
 
   return computed(() => ({
@@ -60,11 +26,6 @@ export function useI18nFormatters() {
         currency,
         ...options,
       }).format(amount)
-
-      // Debug the actual currency formatting call
-      if (import.meta.dev) {
-        console.log(`currency(${amount}, "${currency}") with locale "${formatLocale}" → ${result}`)
-      }
 
       return result
     },
