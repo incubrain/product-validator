@@ -106,11 +106,9 @@ export interface LanguageSwitcherProps {
   variant?: LanguageSwitcherVariants['variant']
   size?: LanguageSwitcherVariants['size']
   showFlags?: boolean
-  autoDetect?: boolean
+  smart?: boolean
   preserveRoute?: boolean
-  storeChoice?: boolean
   trackAnalytics?: boolean
-  preserveScroll?: boolean
   ubutton?: ButtonProps
   ubuttonGroup?: ButtonGroupProps
   uselect?: SelectProps

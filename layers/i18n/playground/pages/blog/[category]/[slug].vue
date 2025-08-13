@@ -12,47 +12,23 @@ const slugParam = computed(() => {
 })
 
 // Fetch current-locale post by slug (public only), discover translations by filename
-const {
-  content,
-  translations,
-  pending,
-  error,
-  refresh,
-} = useI18nContent({
+const { content, pending, error, refresh } = useI18nContent({
   collection: 'blog',
   autoSEO: true,
   autoI18nParams: true,
-})
-
-// Fallback: derive categorySlug from "category" if the document doesn’t provide one
-const deriveSlug = (s?: string) =>
-  (s ?? '')
-    .toLowerCase()
-    .trim()
-    .replace(/[^a-z0-9]+/g, '-')
-    .replace(/^-+|-+$/g, '')
-
-const effectiveCategorySlug = computed(() =>
-  content.value?.categorySlug || deriveSlug(content.value?.category),
-)
-
-// Canonicalize: if URL category != content’s effective category slug → redirect
-watchEffect(async () => {
-  const c = content.value
-  if (!c || !effectiveCategorySlug.value) return
-  if (categoryParam.value && categoryParam.value !== effectiveCategorySlug.value) {
-    await navigateTo(`/blog/${effectiveCategorySlug.value}/${c.slug}`)
-  }
+  paramMap: {
+    slug: 'slug',
+    category: { field: 'categoryStem', collection: 'categories', targetField: 'slug' },
+  },
 })
 
 useHead(() => ({
   title: content.value?.title
-    ? `${content.value.title} | ${effectiveCategorySlug.value || 'Blog'}`
+    ? `${content.value.title} | ${categoryParam.value || 'Blog'}`
     : `Blog: ${slugParam.value}`,
 }))
 
 // Show debug only in dev or with ?debug
-const showDebug = computed(() => import.meta.dev || route.query.debug !== undefined)
 const fmt = useI18nFormatters()
 </script>
 
@@ -69,49 +45,134 @@ const fmt = useI18nFormatters()
             Blog
           </UBadge>
           <h1 class="text-xl font-semibold text-white">
-            Category + Slug Example
+            i18n Content System Demo
           </h1>
         </div>
       </template>
 
-      <div class="text-sm text-gray-300 space-y-3">
-        <p>
-          This page fetches a blog post by <code>slug</code> for the current locale, discovers translations
-          by <strong>filename (STEM)</strong>, and canonicalizes the URL category using the document’s
-          <code>categorySlug</code> (or a derived slug from <code>category</code>).
+      <div class="text-sm text-gray-300 space-y-4">
+        <p class="text-base font-medium text-white">
+          This page demonstrates our intelligent i18n content system with automatic URL localization and SEO optimization.
+        </p>
+
+        <div class="grid md:grid-cols-3 gap-4">
+          <div class="space-y-2">
+            <h3 class="font-medium text-emerald-400">
+              useI18nContent
+            </h3>
+            <ul class="text-xs space-y-1 text-gray-400">
+              <li>• Fetches content by slug for current locale</li>
+              <li>• Auto-discovers translations via filename STEM</li>
+              <li>• Handles collection-backed params (categories)</li>
+              <li>• Canonicalizes URLs based on content metadata</li>
+            </ul>
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="font-medium text-blue-400">
+              useI18nContentParams
+            </h3>
+            <ul class="text-xs space-y-1 text-gray-400">
+              <li>• Maps route params to localized equivalents</li>
+              <li>• Resolves category slugs from linked collections</li>
+              <li>• Enables seamless language switching</li>
+              <li>• Maintains URL structure across locales</li>
+            </ul>
+          </div>
+
+          <div class="space-y-2">
+            <h3 class="font-medium text-purple-400">
+              useI18nContentSEO
+            </h3>
+            <ul class="text-xs space-y-1 text-gray-400">
+              <li>• Auto-generates hreflang tags</li>
+              <li>• Sets proper HTML lang/dir attributes</li>
+              <li>• Injects meta descriptions from content</li>
+              <li>• Creates OpenGraph tags for sharing</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="bg-gray-900 p-3 rounded-lg">
+          <h4 class="font-medium text-white mb-2">
+            Language Switching Flow:
+          </h4>
+          <p class="text-xs text-gray-300">
+            When you switch from English → Marathi: <br>
+            <code class="text-emerald-300">/blog/technology/post</code> →
+            <code class="text-emerald-300">/mr/blooga/tantrajnaana/poosta</code>
+          </p>
+          <p class="text-xs text-gray-400 mt-1">
+            System automatically resolves category "technology" → "tantrajantra" and post slug via STEM matching
+          </p>
+        </div>
+      </div>
+    </UCard>
+
+    <!-- Canonicalization Demo -->
+    <UCard class="bg-gradient-to-r from-emerald-900/20 to-blue-900/20 border-emerald-700/30">
+      <template #header>
+        <div class="flex items-center gap-2">
+          <span class="text-lg font-semibold text-white">✨ Auto-Canonicalization Demo</span>
+          <UBadge
+            variant="soft"
+            size="xs"
+            color="success"
+          >
+            Live Feature
+          </UBadge>
+        </div>
+      </template>
+
+      <div class="space-y-4">
+        <p class="text-sm text-gray-300">
+          Our system automatically redirects malformed URLs to canonical ones. Try the wrong category below:
         </p>
 
         <div class="grid md:grid-cols-2 gap-4">
           <div class="space-y-2">
-            <h3 class="font-medium text-white">
-              Fetch & translations
-            </h3>
-            <pre class="text-xs bg-gray-900 p-3 rounded overflow-x-auto text-gray-200"><code>const { content, translations } = useI18nContent({
-  collection: 'blog',
-  autoSEO: true,
-  autoI18nParams: true
-})</code></pre>
+            <h4 class="font-medium text-emerald-400">
+              Wrong Category URL
+            </h4>
+            <div class="bg-gray-900 p-3 rounded text-xs font-mono">
+              <span class="text-red-300">/blog/wrong-category/{{ slugParam }}</span>
+            </div>
+            <NuxtLinkLocale
+              :to="`/blog/wrong-category/${slugParam}`"
+              class="inline-block"
+            >
+              <UButton
+                size="xs"
+                variant="outline"
+                color="error"
+              >
+                Test Wrong URL →
+              </UButton>
+            </NuxtLinkLocale>
           </div>
 
           <div class="space-y-2">
-            <h3 class="font-medium text-white">
-              Canonicalization
-            </h3>
-            <pre class="text-xs bg-gray-900 p-3 rounded overflow-x-auto text-gray-200"><code>const effectiveCategorySlug =
-  content.categorySlug || slugify(content.category)
-
-if (route.params.category !== effectiveCategorySlug) {
-  navigateTo(`/blog/${effectiveCategorySlug}/${content.slug}`)
-}</code></pre>
+            <h4 class="font-medium text-blue-400">
+              Canonical Result
+            </h4>
+            <div class="bg-gray-900 p-3 rounded text-xs font-mono">
+              <span class="text-emerald-300">/blog/{{ categoryParam }}/{{ slugParam }}</span>
+            </div>
+            <p class="text-xs text-gray-400">
+              System auto-redirects via 301 redirect for SEO compliance
+            </p>
           </div>
         </div>
 
-        <ul class="list-disc list-inside text-gray-300 text-sm space-y-1">
-          <li>Filenames must match across locales (STEM) → reliable translation lookup.</li>
-          <li><code>isPublic</code> gates visibility; drafts stay hidden.</li>
-          <li>Fetch keys vary by <code>(collection, locale, slug)</code> to avoid stale cache.</li>
-          <li>Category is a URL concern; content remains keyed by <code>slug + locale</code>.</li>
-        </ul>
+        <div class="bg-emerald-900/20 border border-emerald-700/30 rounded p-3">
+          <div class="flex items-start gap-2">
+            <span class="text-emerald-400">🔍</span>
+            <div class="text-xs text-emerald-200">
+              <strong>SEO Benefit:</strong> Search engines consolidate all link equity to the canonical URL,
+              preventing duplicate content penalties while maintaining user accessibility.
+            </div>
+          </div>
+        </div>
       </div>
     </UCard>
 
@@ -175,7 +236,7 @@ if (route.params.category !== effectiveCategorySlug) {
             variant="soft"
             size="xs"
           >
-            {{ effectiveCategorySlug || 'uncategorised' }}
+            {{ categoryParam || 'uncategorised' }}
           </UBadge>
         </div>
         <h2 class="text-3xl font-bold text-white">
@@ -209,29 +270,6 @@ if (route.params.category !== effectiveCategorySlug) {
           class="text-gray-400"
         >
           <p>{{ content.excerpt || 'No content available' }}</p>
-        </div>
-      </UCard>
-
-      <!-- Clean Debug (optional) -->
-      <UCard
-        v-if="showDebug"
-        class="bg-gray-950/60 border-gray-800"
-      >
-        <template #header>
-          <div class="flex items-center gap-2">
-            <span class="text-sm text-gray-400">Debug</span>
-            <UBadge
-              size="xs"
-              variant="soft"
-            >
-              {{ Object.keys(translations || {}).length }} translations
-            </UBadge>
-          </div>
-        </template>
-        <div class="grid md:grid-cols-3 gap-3 text-xs text-gray-400">
-          <div><strong>URL category:</strong> {{ categoryParam }}</div>
-          <div><strong>Derived categorySlug:</strong> {{ effectiveCategorySlug || 'N/A' }}</div>
-          <div><strong>Canonical:</strong> {{ categoryParam === effectiveCategorySlug ? 'OK' : 'Will redirect' }}</div>
         </div>
       </UCard>
     </article>

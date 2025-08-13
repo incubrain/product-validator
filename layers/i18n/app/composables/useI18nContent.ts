@@ -1,124 +1,179 @@
-// app/composables/useI18nContent.ts - FINAL OPTIMIZED VERSION
+// app/composables/useI18nContent.ts - Refactored with helper utilities
+
 import type { Collections } from '@nuxt/content'
+import type { LocaleInfo } from '@nuxtjs/i18n'
+import type { I18nContentOptions, I18nContentReturn, ParamMap } from '~~/i18n-content'
 import { useI18nContentParams } from './useI18nContentParams'
 
-interface I18nContentOptions {
-  collection: string
-  autoI18nParams?: boolean
-  autoSEO?: boolean
-  key?: string
-}
-
-interface I18nContentReturn {
-  content: Ref<any>
-  translations: Ref<Record<string, any>>
-  pending: Ref<boolean>
-  error: Ref<any>
-  refresh: () => Promise<void>
-  hasTranslation: (locale: string) => boolean
-  getTranslationSlug: (locale: string) => string | undefined
-  missingTranslations: ComputedRef<string[]>
-}
-
 /**
- * Optimized i18n content composable using built-in Nuxt Content ID fields
- * Uses background translation caching for instant language switching
- * Automatically manages i18n params and SEO when enabled
+ * i18n-aware content loader with background translation hydration.
+ * - URL params declared via paramMap
+ * - Fetches only required fields
+ * - Wires i18n params + SEO
+ * - Uses helper utilities for cleaner, more maintainable code
  */
 export function useI18nContent(options: I18nContentOptions): I18nContentReturn {
-  const { collection, autoI18nParams = true, autoSEO = true, key } = options
+  const {
+    collection,
+    autoI18nParams = true,
+    autoSEO = true,
+    key,
+    paramMap,
+    selectFields,
+  } = options
 
   const route = useRoute()
+  const env = useRuntimeConfig().public
   const { locale, locales } = useI18n()
 
-  const slug = computed<string | null>(() => {
-    const raw = route.params.slug as string | string[] | undefined
-    if (!raw) return null
-    return Array.isArray(raw) ? raw.join('/') : raw
+  // Use helper utilities
+  const {
+    buildCollectionName,
+    extractRouteParam,
+    buildCacheKey,
+    buildSelectFields,
+    extractContentMetadata,
+    resolveTranslations,
+    buildPageKey,
+    LOCALE_SELECT,
+  } = useI18nContentHelpers()
+
+  // Always include slug. If user omitted paramMap, we'll start with { slug: 'slug' }
+  const resolvedParamMap = ref<ParamMap>({ slug: 'slug', ...(paramMap || {}) })
+
+  // Extract route slug using helper
+  const routeSlug = computed<string | null>(() => {
+    return extractRouteParam(route.params, 'slug')
   })
 
+  // Generate cache key using helper
   const contentKey = () =>
-    key || `i18n:${collection}:${locale.value}:${slug.value ?? '∅'}`
+    key || buildCacheKey(collection, locale.value, routeSlug.value || '')
 
+  // Main content query
   const { data: content, pending, error, refresh } = useAsyncData(
     contentKey,
     async () => {
-      if (!slug.value) return null
+      if (!routeSlug.value) return null
+
       try {
-        // Fetch the current-locale post by slug; must be public
-        return await queryCollection(`${collection}_${locale.value}` as keyof Collections)
-          .where('slug', '=', slug.value)
-          .where('isPublic', '=', true)
+        const collectionName = buildCollectionName(locale.value, collection)
+        return await queryCollection(collectionName as keyof Collections)
+          .where('slug', '=', routeSlug.value)
+          .where('status', '=', 'published')
           .first()
       } catch (err) {
-        console.error(`useI18nContent: query failed ${collection}_${locale.value}:`, err)
+        const collectionName = buildCollectionName(locale.value, collection)
+        console.error(`useI18nContent: query failed ${collectionName}:`, err)
         return null
       }
     },
-    { watch: [locale, slug] },
+    { watch: [locale, routeSlug] },
   )
 
-  // ---- Background translations (public only) ----
-  type TransMeta = { slug: string, title?: string, id: string, isPublic?: boolean }
+  // Auto-detect route parameters if not provided
+  watch(content, (doc) => {
+    if (!doc || paramMap) return
 
-  const translations = ref<Record<string, TransMeta>>({})
+    const current = { ...resolvedParamMap.value }
+    for (const [paramName] of Object.entries(route.params)) {
+      if (paramName === 'slug') continue
+      const candidates = [String(paramName), `${paramName}Id`, `${paramName}Stem`]
+      const match = candidates.find((f) => f in doc)
+      if (match) current[paramName] = match
+    }
+    resolvedParamMap.value = current
+  }, { immediate: true })
 
-  const fileStem = computed(() => {
-    const id = content.value?.id as string | undefined
-    if (!id) return null
-    const pA = `${collection}_${locale.value}/`
-    const pB = `${collection}/${locale.value}/`
-    const stripped = id.startsWith(pA)
-      ? id.slice(pA.length)
-      : id.startsWith(pB)
-        ? id.slice(pB.length)
-        : id.split('/').pop() || id
-    return stripped // e.g. "ai-revolution.md"
+  // Build select fields using helper
+  const resolvedSelect = computed<string[]>(() => {
+    return buildSelectFields(LOCALE_SELECT, resolvedParamMap.value, selectFields)
   })
 
+  // Translation storage
+  const translations = ref<Record<string, any>>({})
+
+  // Extract content metadata using helper
+  const contentMetadata = computed(() => {
+    return content.value ? extractContentMetadata(content.value, collection) : null
+  })
+
+  // Background translation fetching using helper
   watchEffect(async () => {
-    if (!fileStem.value) {
+    const metadata = contentMetadata.value
+    if (!metadata?.stem) {
       translations.value = {}
       return
     }
 
-    const settled = await Promise.allSettled(
-      locales.value
-        .filter((l) => l.code !== locale.value)
-        .map(async (l) => {
-          const targetId = `${collection}_${l.code}/${fileStem.value}`
-          try {
-            const doc = await queryCollection(`${collection}_${l.code}` as keyof Collections)
-              .where('id', '=', targetId)
-              .where('isPublic', '=', true)
-              .select('slug', 'title', 'id')
-              .first()
-            return [l.code, doc] as const
-          } catch (err) {
-            console.error(`useI18nContent: query failed ${targetId}:`, err)
-          }
-          return null
-        }),
-    )
+    try {
+      const translationData = await resolveTranslations(
+        collection,
+        metadata.stem,
+        resolvedSelect.value,
+        true, // exclude current locale
+      )
 
-    const entries = settled
-      .map((r) => (r.status === 'fulfilled' ? r.value : null))
-      .filter(Boolean) as ReadonlyArray<readonly [string, TransMeta]>
-
-    translations.value = Object.fromEntries(entries)
+      translations.value = translationData
+    } catch (err) {
+      console.error('useI18nContent: batch translation fetch failed:', err)
+      translations.value = {}
+    }
   })
 
-  if (autoI18nParams) useI18nContentParams({ content, translations })
-  if (autoSEO) useI18nContentSEO({ content })
+  // Wire i18n route params + SEO
+  if (autoI18nParams) {
+    useI18nContentParams({
+      content,
+      translations,
+      paramMap: resolvedParamMap,
+    })
+  }
 
+  if (autoSEO) {
+    useI18nContentSEO({ content })
+  }
+
+  // Debug integration
+  if (env.i18n?.debug || route.query.debug !== undefined) {
+    const pageKey = buildPageKey(String(route.name), route.path)
+
+    useI18nContentDebug({
+      content,
+      translations,
+      pending,
+      error,
+      pageKey,
+      collection,
+      paramMap: resolvedParamMap.value,
+      autoSEO,
+      autoI18nParams,
+      selectFields: resolvedSelect.value,
+    })
+  }
+
+  // Helper functions for external use
   const hasTranslation = (code: string) => Boolean(translations.value[code])
-  const getTranslationSlug = (code: string) => translations.value[code]?.slug
 
-  const missingTranslations = computed(() =>
-    locales.value
-      .filter((l) => l.code !== locale.value && !hasTranslation(l.code))
-      .map((l) => l.code),
-  )
+  const getTranslationParam = (code: string, paramName: string) => {
+    const entry = resolvedParamMap.value[paramName]
+    const doc = translations.value[code]
+    if (!doc || !entry) return undefined
+
+    if (typeof entry === 'string') return doc?.[entry]
+    // For collection-backed params, this getter does not resolve external collections.
+    // (params are already applied by useI18nContentParams)
+    return undefined
+  }
+
+  const getTranslationSlug = (code: string) => getTranslationParam(code, 'slug')
+
+  const missingTranslations = computed(() => {
+    const availableTranslations = Object.keys(translations.value)
+    return locales.value
+      .filter((l) => l.code !== locale.value && !availableTranslations.includes(l.code))
+      .map((l) => l.code)
+  })
 
   return {
     content: readonly(content),
@@ -127,6 +182,7 @@ export function useI18nContent(options: I18nContentOptions): I18nContentReturn {
     error: readonly(error),
     refresh,
     hasTranslation,
+    getTranslationParam,
     getTranslationSlug,
     missingTranslations,
   }

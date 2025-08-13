@@ -1,14 +1,27 @@
 ---
-title: "AI क्रांती आली आहे"
-subtitle: "कृत्रिम बुद्धिमत्ता आपले जग कसे बदलत आहे"
-excerpt: "कृत्रिम बुद्धिमत्तेतील नवीनतम घडामोडी आणि समाज, व्यवसाय आणि दैनंदिन जीवनावर त्यांचा प्रभाव जाणून घ्या."
-category: "ai-automation"
-isPublic: true
-author: "तंत्रज्ञान लेखक"
-publishedAt: "2024-01-15"
-featured: true
-tags: ["AI", "तंत्रज्ञान", "नावीन्य", "भविष्य"]
-slug: "ai-kranti"
+slug: "poosta"
+categoryStem: "technology"
+status: "published"
+createdAt: "2024-01-15"
+updatedAt: "2024-01-15"
+audience: "beginner"
+layout: "article"
+authors:
+  - name: "drew-macgibbon"
+    role: "creator"
+tags:
+  - "technology"
+  - "innovation"
+  - "future"
+  - "guide"
+version: "1.0.0"
+duration: 6
+image:
+  src: "example.jpg"
+  alt: "स्थानीकृत सामग्री आणि STEM आधारित राउटिंग दर्शवणारे चित्र"
+title: "स्थानीकृत मार्कडाउन ब्लॉगसारखी सामग्रीचे उदाहरण"
+excerpt: "आमच्या i18n सामग्री लेयरचे व्यावहारिक मार्गदर्शन — फेचिंग, भाषांतर, पॅराम्स, आणि फॉरमॅटर्स, उत्कृष्ट DX साठी फाइलनेम STEMs वापरून."
+description: "Nuxt मध्ये STEM-आधारित राउटिंग आणि सुलभ वर्कफ्लो वापरून बहुभाषिक सामग्री कशी तयार करावी आणि स्थानिक करावी ते शिका."
 ---
 
 # AI क्रांती आली आहे

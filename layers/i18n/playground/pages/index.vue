@@ -1,957 +1,962 @@
-<!-- playground/pages/index.vue - Clean Documentation -->
+<!-- playground/pages/index.vue -->
 <script setup lang="ts">
-const formatters = useI18nFormatters()
+useHead({ title: 'i18n Layer – Overview' })
 
-// Props documentation
-const languageSwitcherProps = [
-  {
-    name: 'variant',
-    type: '\'buttons\' | \'dropdown\' | \'minimal\'',
-    default: '\'buttons\'',
-    description: 'Visual style of the language switcher',
-  },
-  {
-    name: 'size',
-    type: '\'xs\' | \'sm\' | \'md\' | \'lg\' | \'xl\'',
-    default: '\'md\'',
-    description: 'Size of buttons and icons',
-  },
-  {
-    name: 'showFlags',
-    type: 'boolean',
-    default: 'false',
-    description: 'Display flag icons (requires icon in locale config)',
-  },
-  {
-    name: 'autoDetect',
-    type: 'boolean',
-    default: 'false',
-    description: 'Auto-detect browser language on first visit',
-  },
-  {
-    name: 'preserveRoute',
-    type: 'boolean',
-    default: 'true',
-    description: 'Keep current page when switching languages',
-  },
-  {
-    name: 'storeChoice',
-    type: 'boolean',
-    default: 'false',
-    description: 'Remember language choice in cookie',
-  },
-  {
-    name: 'smart',
-    type: 'boolean',
-    default: 'false',
-    description: 'Enable smart features: auto-detect  store choice  preserve scroll',
-  },
-  {
-    name: 'preserveScroll',
-    type: 'boolean',
-    default: 'true',
-    description: 'Maintain scroll position when switching',
-  },
-  {
-    name: 'ui',
-    type: 'object',
-    default: '{}',
-    description: 'Override component styling',
-  },
-]
-
-// Benefits data
-const benefits = [
+/** Features: why this layer exists, and what to use */
+const features = [
   {
     icon: 'i-lucide-rocket',
-    title: 'Zero Setup',
-    description: 'Works out of the box with no configuration required',
-  },
-  {
-    icon: 'i-lucide-flag',
-    title: 'Flag Support',
-    description: 'Beautiful flag icons with circle-flags integration',
+    title: 'Zero-guess DX',
+    points: [
+      'One composable for data + translations',
+      'Filename STEM drives lookups',
+      'Standards over config',
+    ],
   },
   {
     icon: 'i-lucide-globe',
-    title: 'Smart Detection',
-    description: 'Auto-detect user language from browser preferences',
+    title: 'i18n-first routing',
+    points: [
+      'Cross-locale params via paramMap',
+      'Fetch only current-page translations',
+      'Slug & category stay locale-correct',
+    ],
   },
   {
-    icon: 'i-lucide-archive',
-    title: 'Smart Mode',
-    description: 'Auto-detect browser language and remember user choice',
-  },
-  {
-    icon: 'i-lucide-pointer',
-    title: 'Mobile Ready',
-    description: 'Touch-friendly with multiple size variants',
-  },
-  {
-    icon: 'i-lucide-paintbrush',
-    title: 'Fully Customizable',
-    description: 'Override any styling with UI props system',
+    icon: 'i-lucide-shield-check',
+    title: 'Safe by default',
+    points: [
+      'Status: "published" gates visibility',
+      'Canonical category paths',
+      'Lean queries with minimal fields',
+    ],
   },
 ]
 
-// Enhanced variants with all options
-const allVariants = [
-  {
-    name: 'Buttons (Basic)',
-    variant: 'buttons',
-    props: { variant: 'buttons' },
-    description: 'Classic button group layout',
-  },
-  {
-    name: 'Buttons with Flags',
-    variant: 'buttons',
-    props: { variant: 'buttons', showFlags: true },
-    description: 'Buttons with flag icons',
-  },
-  {
-    name: 'Dropdown',
-    variant: 'dropdown',
-    props: { variant: 'dropdown' },
-    description: 'Space-saving dropdown selector',
-  },
-  {
-    name: 'Dropdown with Flags',
-    variant: 'dropdown',
-    props: { variant: 'dropdown', showFlags: true },
-    description: 'Dropdown with flag in trigger',
-  },
-  {
-    name: 'Minimal',
-    variant: 'minimal',
-    props: { variant: 'minimal' },
-    description: 'Compact language codes only',
-  },
-  {
-    name: 'Minimal with Flags',
-    variant: 'minimal',
-    props: { variant: 'minimal', showFlags: true },
-    description: 'Small flag icons only',
-  },
-  {
-    name: 'Smart Mode',
-    variant: 'buttons',
-    props: { variant: 'buttons', smart: true },
-    description: 'Auto-detect  storage  scroll preservation',
-  },
-  {
-    name: 'Smart with Flags',
-    variant: 'dropdown',
-    props: {
-      variant: 'dropdown',
-      showFlags: true,
-      smart: true,
-    },
-    description: 'Smart mode with beautiful flags',
-  },
+const buildingBlocks = [
+  // Primary - Essential components everyone uses
+  { kind: 'Component', name: 'ILanguageSwitcher', tier: 'primary' },
+  { kind: 'Composable', name: 'useI18nContent', tier: 'primary' },
+
+  // Secondary - Use when needed
+  { kind: 'Composable', name: 'useI18nContentParams', tier: 'secondary' },
+  { kind: 'Composable', name: 'useI18nContentSEO', tier: 'secondary' },
+  { kind: 'Utility', name: 'useI18nFormatters', tier: 'secondary' },
+
+  // Debug - Development tools
+  { kind: 'Component', name: 'IDebugModal', tier: 'debug' },
+  { kind: 'Composable', name: 'useI18nContentDebug', tier: 'debug' },
 ]
 
-// Content examples
-const contentExamples = [
-  { name: 'Blog Posts', path: '/blog/ai-revolution', complexity: 'Complex (cross-language slugs)' },
-  { name: 'Categories', path: '/categories/ai-automation', complexity: 'Medium (i18n fields)' },
-  { name: 'Pages', path: '/pages/about', complexity: 'Simple (structured content)' },
-]
-
-// Architecture decisions
-const architectureDecisions = [
-  {
-    decision: 'Self-contained components over theme integration',
-    rationale: 'Portability and zero-dependency approach',
-    impact: 'Works in any project structure',
-  },
-  {
-    decision: 'Composable-first data fetching',
-    rationale: 'Separation of concerns and reusability',
-    impact: 'More flexible than component-based approach',
-  },
-  {
-    decision: 'Dual content strategy support',
-    rationale: 'Handle both simple and complex content needs',
-    impact: 'Backward compatible with existing patterns',
-  },
-  {
-    decision: 'Build-time slug mapping rejected',
-    rationale: 'Single point of failure and edge case complexity',
-    impact: 'Runtime approach preferred for reliability',
-  },
-]
-
-// Quick stats
-const stats = {
-  components: 1,
-  composables: 3,
-  variants: 3,
-  languages: 2,
+const getTierColor = (tier: string) => {
+  const colors = {
+    primary: 'success',
+    secondary: 'secondary',
+    debug: 'warning',
+  }
+  return colors[tier] || 'neutral'
 }
 
-// Test data for formatters
-const testData = {
-  price: 2999.99,
-  currentDate: new Date(),
-  largeNumber: 12345.67,
-  fruits: ['Apple', 'Banana', 'Orange'],
+const getTierLabel = (tier: string) => {
+  const labels = {
+    primary: 'Essential',
+    secondary: 'Optional',
+    debug: 'Debug',
+  }
+  return labels[tier] || tier
 }
 
-useHead({
-  title: 'i18n Layer Documentation | Features & Examples',
-})
+const standardsGroups = [
+  {
+    title: 'Content Resolution',
+    bullets: [
+      'Lookups resolve by STEM (filename), must be same across locales',
+      'Root content/locale directories contain collections (content/en/blog)',
+      'Locale-suffixed collections (blog_en, blog_mr)',
+      '{singularItem}Id|Stem for collection linking (article.categoryStem)',
+    ],
+  },
+  {
+    title: 'Visibility',
+    bullets: [
+      'Set status: "published" for public docs',
+    ],
+  },
+  {
+    title: 'Localised Paths',
+    bullets: [
+      '{paramMap} for cross-locale param resolution',
+      'Unique per-locale ASCII slug field used for routing',
+    ],
+  },
+]
+
+/** Language switcher demos */
+const demoConfigs = [
+  { label: 'Buttons (default)', code: '<ILanguageSwitcher />', props: { variant: 'buttons' } },
+  { label: 'Dropdown + Flags', code: '<ILanguageSwitcher variant="dropdown" show-flags />', props: { variant: 'dropdown', showFlags: true } },
+  { label: 'Minimal', code: '<ILanguageSwitcher variant="minimal" />', props: { variant: 'minimal' } },
+]
+
+/** Core props table (short, keyword-level content only) */
+const propsCore = [
+  { name: 'variant', type: `'buttons' | 'dropdown' | 'minimal'`, def: `'buttons'`, desc: 'Choose layout' },
+  { name: 'size', type: `'xs' | 'sm' | 'md' | 'lg' | 'xl'`, def: `'md'`, desc: 'Control footprint' },
+  { name: 'showFlags', type: 'boolean', def: 'false', desc: 'Show flag icons' },
+  { name: 'smart', type: 'boolean', def: 'false', desc: 'Auto-detect + remember' },
+  { name: 'preserveRoute', type: 'boolean', def: 'true', desc: 'Stay on page when switching' },
+  { name: 'ui', type: 'object', def: '{}', desc: 'Styling overrides' },
+]
+
+// Debug panel info
+const debugFeatures = [
+  'Real-time i18n system monitoring',
+  'Content & translation status tracking',
+  'Parameter resolution debugging',
+  'SEO metadata inspection',
+  'Performance metrics',
+]
+
+// Add to index.vue script section
+const directoryStructure = [
+  {
+    label: 'content/',
+    value: 'content',
+    icon: 'i-lucide-folder',
+    defaultExpanded: true,
+    children: [
+      {
+        label: 'en/',
+        value: 'en',
+        icon: 'i-lucide-folder',
+        defaultExpanded: true,
+        children: [
+          {
+            label: 'blog/',
+            value: 'blog-en',
+            icon: 'i-lucide-folder',
+            defaultExpanded: true,
+            children: [
+              {
+                label: 'post.md',
+                icon: 'i-lucide-file-text',
+                class: 'text-emerald-300',
+              },
+            ],
+          },
+          {
+            label: 'categories/',
+            value: 'categories-en',
+            icon: 'i-lucide-folder',
+            defaultExpanded: true,
+            children: [
+              {
+                label: 'technology.yml',
+                icon: 'i-lucide-database',
+                class: 'text-blue-300',
+              },
+            ],
+          },
+          {
+            label: 'pages/',
+            value: 'pages-en',
+            icon: 'i-lucide-folder',
+            children: [
+              {
+                label: 'about.yml',
+                icon: 'i-lucide-file',
+                class: 'text-purple-300',
+              },
+            ],
+          },
+        ],
+      },
+      {
+        label: 'mr/',
+        value: 'mr',
+        icon: 'i-lucide-folder',
+        defaultExpanded: true,
+        children: [
+          {
+            label: 'blog/',
+            value: 'blog-mr',
+            icon: 'i-lucide-folder',
+            defaultExpanded: true,
+            children: [
+              {
+                label: 'post.md',
+                icon: 'i-lucide-file-text',
+                class: 'text-emerald-300',
+              },
+            ],
+          },
+          {
+            label: 'categories/',
+            value: 'categories-mr',
+            icon: 'i-lucide-folder',
+            defaultExpanded: true,
+            children: [
+              {
+                label: 'technology.yml',
+                icon: 'i-lucide-database',
+                class: 'text-blue-300',
+              },
+            ],
+          },
+          {
+            label: 'pages/',
+            value: 'pages-mr',
+            icon: 'i-lucide-folder',
+            children: [
+              {
+                label: 'about.yml',
+                icon: 'i-lucide-file',
+                class: 'text-purple-300',
+              },
+            ],
+          },
+        ],
+      },
+    ],
+  },
+]
 </script>
 
 <template>
-  <div class="space-y-12">
-    <!-- Hero Section -->
-    <div class="text-center space-y-6">
-      <div class="space-y-3">
-        <UBadge
-          variant="soft"
-          color="primary"
-          size="lg"
-        >
-          Enterprise i18n Layer
-        </UBadge>
-        <h1 class="text-4xl font-bold text-white">
-          {{ $t('layer.name') }}
-        </h1>
-        <p class="text-xl text-gray-300 max-w-2xl mx-auto">
-          Production-ready internationalization for Nuxt applications with smart content handling
-        </p>
-      </div>
+  <div class="space-y-10">
+    <!-- Hero -->
+    <section class="text-center space-y-2">
+      <h1 class="text-4xl font-bold text-white">
+        i18n Layer
+      </h1>
+      <p class="text-gray-300">
+        Production-ready i18n for Nuxt. Clear rules, fast DX.
+      </p>
+    </section>
 
-      <UCard>
-        <template #header>
-          <h2 class="text-2xl font-bold text-white">
-            How This i18n  Content Layer Works
-          </h2>
-          <p class="text-gray-400 mt-1">
-            No magic. A few clear rules.
-          </p>
-        </template>
-        <div class="grid md:grid-cols-2 gap-6 text-sm text-gray-300">
-          <div class="space-y-2">
-            <h3 class="font-semibold text-white">
-              Mental Model
-            </h3>
-            <ol class="list-decimal list-inside space-y-1">
-              <li><strong>URL →</strong> we read <code>[slug]</code> (and optional <code>[category]</code>).</li>
-              <li><strong>Fetch →</strong> <code>useI18nContent({ collection })</code> loads <em>this-locale</em> doc by <code>slug</code>, only if <code>isPublic</code>.</li>
-              <li><strong>Translations →</strong> same filename is looked up across locales in background.</li>
-              <li><strong>SEO/Params →</strong> hreflang & cross-locale slugs are auto-wired.</li>
-            </ol>
-          </div>
-          <div class="space-y-2">
-            <h3 class="font-semibold text-white">
-              Invariants
-            </h3>
-            <ul class="list-disc list-inside space-y-1">
-              <li>Filenames are identical across locales: <code>blog_en/ai-revolution.md</code>, <code>blog_mr/ai-revolution.md</code>.</li>
-              <li>Public docs must set <code>isPublic: true</code>.</li>
-              <li>Only <em>slug</em>  <em>locale</em> determine the fetch; <em>category</em> is a URL concern (validated & canonicalized).</li>
-              <li>Build-time slug maps are not required; runtime is resilient and portable.</li>
-            </ul>
-          </div>
-        </div>
-      </UCard>
-
-      <!-- Quick Demo -->
-      <div class="flex justify-center">
-        <ILanguageSwitcher
-          variant="buttons"
-          show-flags
-        />
-      </div>
-    </div>
-
-    <!-- Quick Start Section -->
+    <!-- Features -->
     <UCard>
       <template #header>
-        <h2 class="text-2xl font-bold text-white">
-          🚀 Quick Start
+        <h2 class="text-xl font-semibold text-white">
+          Features
         </h2>
-        <p class="text-gray-400 mt-1">
-          Copy-paste ready examples to get started in 30 seconds
+        <p class="text-gray-400 text-sm">
+          Why this exists and what you'll use
         </p>
       </template>
 
-      <div class="space-y-8">
-        <!-- Basic Example -->
-        <div class="space-y-4">
-          <div class="flex items-center gap-3">
-            <UBadge
-              variant="soft"
-              color="primary"
-              size="sm"
-            >
-              Recommended
-            </UBadge>
-            <h3 class="font-medium text-white">
-              Basic Language Switcher
-            </h3>
-          </div>
-          <div class="flex justify-center p-6 bg-gray-900/50 rounded border border-gray-700">
-            <ILanguageSwitcher />
-          </div>
-          <div class="bg-gray-900 p-4 rounded">
-            <pre class="text-sm text-gray-300 overflow-x-auto"><code>&lt;ILanguageSwitcher /&gt;</code></pre>
-          </div>
-        </div>
-
-        <!-- Smart Example -->
-        <div class="space-y-4">
-          <div class="flex items-center gap-3">
-            <UBadge
-              variant="soft"
-              color="success"
-              size="sm"
-            >
-              Smart
-            </UBadge>
-            <h3 class="font-medium text-white">
-              Auto-detect with Flags
-            </h3>
-          </div>
-          <div class="flex justify-center p-6 bg-gray-900/50 rounded border border-gray-700">
-            <ILanguageSwitcher
-              smart
-              show-flags
+      <div class="grid md:grid-cols-3 gap-6">
+        <div
+          v-for="f in features"
+          :key="f.title"
+          class="space-y-3"
+        >
+          <div class="flex items-center gap-2">
+            <UIcon
+              :name="f.icon"
+              class="w-5 h-5 text-primary-400"
             />
-          </div>
-          <div class="bg-gray-900 p-4 rounded">
-            <pre class="text-sm text-gray-300 overflow-x-auto"><code>&lt;ILanguageSwitcher smart show-flags /&gt;</code></pre>
-          </div>
-        </div>
-
-        <!-- Dropdown Example -->
-        <div class="space-y-4">
-          <div class="flex items-center gap-3">
-            <UBadge
-              variant="soft"
-              color="warning"
-              size="sm"
-            >
-              Space-saving
-            </UBadge>
             <h3 class="font-medium text-white">
-              Dropdown Variant
+              {{ f.title }}
             </h3>
           </div>
-          <div class="flex justify-center p-6 bg-gray-900/50 rounded border border-gray-700">
-            <ILanguageSwitcher
-              variant="dropdown"
-              smart
-              show-flags
-            />
-          </div>
-          <div class="bg-gray-900 p-4 rounded">
-            <pre class="text-sm text-gray-300 overflow-x-auto"><code>&lt;ILanguageSwitcher variant="dropdown" smart show-flags /&gt;</code></pre>
+          <ul class="list-disc list-inside text-sm text-gray-300 space-y-1">
+            <li
+              v-for="p in f.points"
+              :key="p"
+            >
+              {{ p }}
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="mt-6 border-t border-gray-800 pt-6">
+        <h3 class="text-sm font-semibold text-white mb-4">
+          Building Blocks
+        </h3>
+
+        <!-- Grouped by tier -->
+        <div class="space-y-4">
+          <div
+            v-for="tier in ['primary', 'secondary', 'debug']"
+            :key="tier"
+          >
+            <div class="flex items-center gap-2 mb-3">
+              <UBadge
+                :color="getTierColor(tier)"
+                size="xs"
+                variant="soft"
+              >
+                {{ getTierLabel(tier) }}
+              </UBadge>
+              <span class="text-xs text-gray-500">
+                {{ tier === 'primary' ? 'Core components used in every project'
+                  : tier === 'secondary' ? 'Optional utilities for specific needs'
+                    : 'Development and debugging tools' }}
+              </span>
+            </div>
+
+            <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-3">
+              <div
+                v-for="b in buildingBlocks.filter(block => block.tier === tier)"
+                :key="b.name"
+                class="text-sm text-gray-300 flex items-center gap-2"
+              >
+                <UBadge
+                  variant="soft"
+                  size="xs"
+                  :color="getTierColor(b.tier)"
+                >
+                  {{ b.kind }}
+                </UBadge>
+                <span class="text-white">{{ b.name }}</span>
+              </div>
+            </div>
           </div>
         </div>
       </div>
     </UCard>
 
-    <!-- Key Benefits -->
-    <UCard>
+    <!-- Debug Panel Feature -->
+    <UCard class="bg-gradient-to-br from-purple-900/30 to-indigo-900/30 border-purple-700/50">
       <template #header>
-        <h2 class="text-2xl font-bold text-white">
-          Why Use This Layer?
-        </h2>
-      </template>
-
-      <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-6">
-        <div
-          v-for="benefit in benefits"
-          :key="benefit.title"
-          class="flex items-start gap-3"
-        >
-          <div class="p-2 bg-primary-500/10 rounded-lg flex">
+        <div class="flex items-center gap-3">
+          <div class="p-2 bg-purple-500/20 rounded-lg">
             <UIcon
-              :name="benefit.icon"
-              class="w-5 h-5 text-primary-400"
+              name="i-lucide-bug"
+              class="w-5 h-5 text-purple-400"
             />
           </div>
           <div>
-            <h3 class="font-medium text-white">
-              {{ benefit.title }}
+            <h3 class="font-semibold text-white">
+              Real-time Debug Panel
             </h3>
-            <p class="text-sm text-gray-400 mt-1">
-              {{ benefit.description }}
+            <p class="text-sm text-gray-400">
+              Professional i18n debugging tools for developers
             </p>
           </div>
         </div>
-      </div>
-    </UCard>
-
-    <!-- Props Documentation -->
-    <UCard>
-      <template #header>
-        <h2 class="text-2xl font-bold text-white">
-          Component Props
-        </h2>
-        <p class="text-gray-400 mt-1">
-          ILanguageSwitcher configuration options
-        </p>
       </template>
 
-      <div class="overflow-x-auto">
-        <table class="w-full text-sm">
-          <thead>
-            <tr class="border-b border-gray-800">
-              <th class="text-left py-2 font-medium text-white">
-                Prop
-              </th>
-              <th class="text-left py-2 font-medium text-white">
-                Type
-              </th>
-              <th class="text-left py-2 font-medium text-white">
-                Default
-              </th>
-              <th class="text-left py-2 font-medium text-white">
-                Description
-              </th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr
-              v-for="prop in languageSwitcherProps"
-              :key="prop.name"
-              class="border-b border-gray-800/50"
-            >
-              <td class="py-2">
-                <code class="text-primary-400 bg-gray-800 px-2 py-1 rounded text-xs">
-                  {{ prop.name }}
-                </code>
-              </td>
-              <td class="py-2">
-                <code class="text-green-400 text-xs">{{ prop.type }}</code>
-              </td>
-              <td class="py-2">
-                <code class="text-gray-400 text-xs">{{ prop.default }}</code>
-              </td>
-              <td class="py-2 text-gray-300">
-                {{ prop.description }}
-              </td>
-            </tr>
-          </tbody>
-        </table>
-      </div>
-    </UCard>
+      <div class="space-y-4">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="space-y-4">
+            <h4 class="font-medium text-purple-300">
+              Features
+            </h4>
+            <ul class="text-sm space-y-2">
+              <li
+                v-for="feature in debugFeatures"
+                :key="feature"
+                class="flex items-center gap-2"
+              >
+                <UIcon
+                  name="i-lucide-check-circle"
+                  class="w-4 h-4 text-purple-400 flex-shrink-0"
+                />
+                <span class="text-gray-300">{{ feature }}</span>
+              </li>
+            </ul>
+          </div>
 
-    <!-- All Variants Demo -->
-    <UCard>
-      <template #header>
-        <h2 class="text-2xl font-bold text-white">
-          All Variants & Examples
-        </h2>
-        <p class="text-gray-400 mt-1">
-          Every configuration option in action
-        </p>
-      </template>
-
-      <div class="grid lg:grid-cols-2 gap-6">
-        <div
-          v-for="example in allVariants"
-          :key="example.name"
-          class="p-4 bg-gray-800/30 rounded-lg"
-        >
-          <div class="space-y-3">
-            <div>
-              <h3 class="font-medium text-white">
-                {{ example.name }}
-              </h3>
-              <p class="text-sm text-gray-400">
-                {{ example.description }}
-              </p>
+          <div class="space-y-4">
+            <h4 class="font-medium text-purple-300">
+              How to Access
+            </h4>
+            <div class="bg-gray-900/50 p-4 rounded-lg space-y-2">
+              <div class="flex items-center gap-2 text-sm">
+                <UKbd size="xs">
+                  ⌘
+                </UKbd>
+                <UKbd size="xs">
+                  ⇧
+                </UKbd>
+                <UKbd size="xs">
+                  D
+                </UKbd>
+                <span class="text-gray-300">Toggle debug modal</span>
+              </div>
+              <div class="flex items-center gap-2 text-sm">
+                <UKbd size="xs">
+                  ⌘
+                </UKbd>
+                <UKbd size="xs">
+                  ⇧
+                </UKbd>
+                <UKbd size="xs">
+                  L
+                </UKbd>
+                <span class="text-gray-300">Cycle languages</span>
+              </div>
+              <div class="flex items-center gap-2 text-sm">
+                <UKbd size="xs">
+                  Esc
+                </UKbd>
+                <span class="text-gray-300">Close modal</span>
+              </div>
             </div>
 
-            <!-- Live Component -->
-            <div class="flex justify-center p-4 bg-gray-900/50 rounded border border-default">
-              <ILanguageSwitcher
-                v-bind="example.props"
-                size="sm"
-                preserve-scroll
-              />
+            <div class="text-xs text-purple-200">
+              <strong>Dev Mode:</strong> Debug button appears in navigation automatically
             </div>
-
-            <!-- Code Example -->
-            <details class="group">
-              <summary class="cursor-pointer text-xs text-primary-400 hover:text-primary-300">
-                Show Code
-              </summary>
-              <pre class="mt-2 text-xs bg-gray-900 p-3 rounded overflow-x-auto text-gray-300">{{ `<ILanguageSwitcher${Object.entries(example.props).map(([key, value]) =>
-                typeof value === 'boolean' && value ? ` ${key}`
-                : typeof value === 'string' ? ` ${key}="${value}"` : '',
-              ).join('')} />` }}</pre>
-            </details>
           </div>
         </div>
       </div>
     </UCard>
 
-    <!-- Custom Variant Demo -->
-    <UCard>
+    <!-- Smart URL Canonicalization Feature - Enhanced Layout -->
+    <UCard class="bg-gradient-to-br from-emerald-900/30 to-blue-900/30 border-emerald-700/50">
       <template #header>
-        <h2 class="text-2xl font-bold text-white">
-          Custom Variant (Slot)
-        </h2>
-        <p class="text-gray-400 mt-1">
-          Shows a dropdown that expands to content width (no truncation)
-        </p>
-      </template>
-
-      <div class="flex justify-center">
-        <ILanguageSwitcher
-          v-slot="{ currentLocale, locales, switchLocale, switching }"
-          variant="custom"
-          smart
-          show-flags
-        >
-          <USelect
-            :items="[locales.map(l => ({
-              label: l.name,
-              icon: l.icon,
-              onSelect: () => switchLocale(l.code),
-            }))]"
-            :ui="{ content: 'min-w-max w-auto', item: { label: 'whitespace-nowrap' } }"
-          >
-            <UButton
-              :disabled="switching"
-              variant="soft"
-              class="min-w-[168px] justify-between"
-              :trailing-icon="currentLocale?.icon"
-            >
-              {{ currentLocale?.name || 'Select language' }}
-            </UButton>
-          </USelect>
-        </ILanguageSwitcher>
-      </div>
-    </UCard>
-
-    <!-- Usage Examples -->
-    <UCard>
-      <template #header>
-        <h2 class="text-2xl font-bold text-white">
-          Usage Examples
-        </h2>
-        <p class="text-gray-400 mt-1">
-          Common implementation patterns
-        </p>
+        <div class="flex items-center gap-3">
+          <div class="p-2 bg-emerald-500/20 rounded-lg">
+            <UIcon
+              name="i-lucide-link"
+              class="w-5 h-5 text-emerald-400"
+            />
+          </div>
+          <div>
+            <h3 class="font-semibold text-white">
+              Smart URL Canonicalization
+            </h3>
+            <p class="text-sm text-gray-400">
+              SEO-optimized automatic URL correction
+            </p>
+          </div>
+        </div>
       </template>
 
       <div class="space-y-6">
-        <!-- Basic Usage -->
-        <div>
-          <h3 class="font-medium text-white mb-2">
-            Basic Usage
-          </h3>
-          <div class="bg-gray-900 p-4 rounded">
-            <pre class="text-sm text-gray-300 overflow-x-auto"><code>&lt;!-- Simple language switcher --&gt;
-&lt;ILanguageSwitcher /&gt;
-
-&lt;!-- With specific variant --&gt;
-&lt;ILanguageSwitcher variant="dropdown" /&gt;
-
-&lt;!-- With flags (requires icon in nuxt.config) --&gt;
-&lt;ILanguageSwitcher show-flags /&gt;</code></pre>
-          </div>
-        </div>
-
-        <!-- Smart Mode -->
-        <div>
-          <h3 class="font-medium text-white mb-2">
-            Smart Mode (Recommended)
-          </h3>
-          <div class="bg-gray-900 p-4 rounded">
-            <pre class="text-sm text-gray-300 overflow-x-auto"><code>&lt;!-- Smart mode enables: auto-detect  store choice  preserve scroll --&gt;
-&lt;ILanguageSwitcher smart /&gt;
-
-&lt;!-- Smart mode with flags --&gt;
-&lt;ILanguageSwitcher smart show-flags /&gt;
-
-&lt;!-- Individual control (if needed) --&gt;
-&lt;ILanguageSwitcher
-  auto-detect
-  store-choice
-  preserve-scroll
-/&gt;</code></pre>
-          </div>
-        </div>
-
-        <!-- Custom Styling -->
-        <div>
-          <h3 class="font-medium text-white mb-2">
-            Custom Styling
-          </h3>
-          <div class="bg-gray-900 p-4 rounded">
-            <pre class="text-sm text-gray-300 overflow-x-auto"><code>&lt;!-- Custom UI overrides --&gt;
-&lt;ILanguageSwitcher
-  :ui="{
-    root: 'bg-blue-500/10 backdrop-blur rounded-lg p-1',
-    button: { root: 'hover:bg-blue-500/20' }
-  }"
-/&gt;</code></pre>
-          </div>
-        </div>
-
-        <!-- Nuxt Config -->
-        <div>
-          <h3 class="font-medium text-white mb-2">
-            Nuxt Configuration (with Icons)
-          </h3>
-          <div class="bg-gray-900 p-4 rounded">
-            <pre class="text-sm text-gray-300 overflow-x-auto"><code>// nuxt.config.ts
-export default defineNuxtConfig({
-  i18n: {
-    locales: [
-      {
-        code: 'en',
-        name: 'English',
-        icon: 'i-circle-flags-us'  // Flag icon
-      },
-      {
-        code: 'mr',
-        name: 'मराठी',
-        icon: 'i-circle-flags-in'  // India flag
-      }
-    ]
-  }
-})</code></pre>
-          </div>
-        </div>
-      </div>
-    </UCard>
-
-    <!-- Live Formatter Demo -->
-    <UCard>
-      <template #header>
-        <h2 class="text-2xl font-bold text-white">
-          Locale-Aware Formatters
-        </h2>
-        <p class="text-gray-400 mt-1">
-          Automatic formatting that adapts to current language
-        </p>
-      </template>
-
-      <div class="grid md:grid-cols-2 gap-8">
-        <div class="space-y-4">
-          <h3 class="font-medium text-white">
-            Live Formatting Examples
-          </h3>
-          <div class="space-y-3 text-sm">
-            <div class="flex justify-between items-center">
-              <span class="text-gray-400">Currency (INR):</span>
-              <code class="px-2 py-1 bg-gray-800 rounded text-primary-400">
-                {{ formatters.currency(testData.price, 'INR') }}
-              </code>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-gray-400">Number:</span>
-              <code class="px-2 py-1 bg-gray-800 rounded text-primary-400">
-                {{ formatters.number(testData.largeNumber) }}
-              </code>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-gray-400">Date:</span>
-              <code class="px-2 py-1 bg-gray-800 rounded text-primary-400">
-                {{ formatters.date(testData.currentDate, { dateStyle: 'short' }) }}
-              </code>
-            </div>
-            <div class="flex justify-between items-center">
-              <span class="text-gray-400">List:</span>
-              <code class="px-2 py-1 bg-gray-800 rounded text-primary-400">
-                {{ formatters.list(testData.fruits) }}
-              </code>
-            </div>
-          </div>
-        </div>
-
-        <div class="space-y-4">
-          <h3 class="font-medium text-white">
-            Usage
-          </h3>
-          <div class="bg-gray-900 p-4 rounded">
-            <pre class="text-xs text-gray-300 overflow-x-auto"><code>const formatters = useI18nFormatters()
-
-// Format currency
-formatters.currency(2999.99, 'INR')
-
-// Format numbers
-formatters.number(12345.67)
-
-// Format dates
-formatters.date(new Date(), {
-  dateStyle: 'short'
-})
-
-// Format lists
-formatters.list(['A', 'B', 'C'])</code></pre>
-          </div>
-        </div>
-      </div>
-    </UCard>
-
-    <!-- Composables Guide -->
-    <UCard>
-      <template #header>
-        <h2 class="text-2xl font-bold text-white">
-          🔧 Composables Guide
-        </h2>
-        <p class="text-gray-400 mt-1">
-          Powerful utilities for advanced i18n workflows
-        </p>
-      </template>
-
-      <div class="space-y-8">
-        <!-- Content Fetching -->
-        <div>
-          <h3 class="font-semibold text-white mb-3">
-            Content Fetching
-          </h3>
-          <div class="grid md:grid-cols-2 gap-6">
+        <!-- Flow Demonstration -->
+        <div class="flex md:flex-row gap-4">
+          <div class="bg-gray-900/50 p-4 rounded-lg">
             <div class="space-y-3">
-              <h4 class="text-sm font-medium text-gray-300">
-                useI18nContent
-              </h4>
-              <p class="text-sm text-gray-400">
-                Fetch cross-language content from collections
-              </p>
-              <div class="bg-gray-900 p-3 rounded">
-                <pre class="text-xs text-gray-300 overflow-x-auto"><code>// In [slug].vue page
-const { content, pending } = useI18nContent({
-  collection: 'blog'
-})
-
-// Auto-handles cross-language slugs
-// Sets up SEO automatically</code></pre>
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-red-400 rounded-full" />
+                <span class="text-xs text-gray-400 font-medium">User visits wrong URL</span>
               </div>
+              <code class="text-red-300 text-sm block">/blog/wrong-category/post</code>
             </div>
-            <div class="space-y-3">
-              <h4 class="text-sm font-medium text-gray-300">
-                useI18nText
-              </h4>
-              <p class="text-sm text-gray-400">
-                Resolve locale-specific text from objects
-              </p>
-              <div class="bg-gray-900 p-3 rounded">
-                <pre class="text-xs text-gray-300 overflow-x-auto"><code>const title = useI18nText({
-  en: 'Welcome',
-  mr: 'स्वागत'
-})
+          </div>
 
-// Automatically picks current locale</code></pre>
+          <div class="flex items-center justify-center">
+            <div class="flex items-center gap-2 text-emerald-400">
+              <UIcon
+                name="i-lucide-arrow-right"
+                class="w-4 h-4"
+              />
+              <span class="text-xs font-medium">301 Redirect</span>
+              <UIcon
+                name="i-lucide-arrow-right"
+                class="w-4 h-4"
+              />
+            </div>
+          </div>
+
+          <div class="bg-gray-900/50 p-4 rounded-lg">
+            <div class="space-y-3">
+              <div class="flex items-center gap-2">
+                <div class="w-2 h-2 bg-emerald-400 rounded-full" />
+                <span class="text-xs text-gray-400 font-medium">Canonical URL</span>
               </div>
+              <code class="text-emerald-300 text-sm block">/blog/technology/post</code>
             </div>
           </div>
         </div>
 
-        <!-- Formatters -->
-        <div>
-          <h3 class="font-semibold text-white mb-3">
-            Locale-Aware Formatters
-          </h3>
-          <div class="grid md:grid-cols-2 gap-6">
-            <div class="space-y-3">
-              <h4 class="text-sm font-medium text-gray-300">
-                Live Examples
-              </h4>
-              <div class="space-y-2 text-sm">
-                <div class="flex justify-between items-center">
-                  <span class="text-gray-400">Currency:</span>
-                  <code class="px-2 py-1 bg-gray-800 rounded text-primary-400">
-                    {{ formatters.currency(testData.price, 'INR') }}
-                  </code>
-                </div>
-                <div class="flex justify-between items-center">
-                  <span class="text-gray-400">Number:</span>
-                  <code class="px-2 py-1 bg-gray-800 rounded text-primary-400">
-                    {{ formatters.number(testData.largeNumber) }}
-                  </code>
-                </div>
-                <div class="flex justify-between items-center">
-                  <span class="text-gray-400">Date:</span>
-                  <code class="px-2 py-1 bg-gray-800 rounded text-primary-400">
-                    {{ formatters.date(testData.currentDate, { dateStyle: 'short' }) }}
-                  </code>
-                </div>
-                <div class="flex justify-between items-center">
-                  <span class="text-gray-400">List:</span>
-                  <code class="px-2 py-1 bg-gray-800 rounded text-primary-400">
-                    {{ formatters.list(testData.fruits) }}
-                  </code>
-                </div>
-              </div>
-            </div>
-            <div class="space-y-3">
-              <h4 class="text-sm font-medium text-gray-300">
-                Usage
-              </h4>
-              <div class="bg-gray-900 p-3 rounded">
-                <pre class="text-xs text-gray-300 overflow-x-auto"><code>const formatters = useI18nFormatters()
+        <!-- Benefits -->
+        <div class="grid md:grid-cols-2 gap-6">
+          <div>
+            <h4 class="font-medium text-emerald-300 mb-3">
+              SEO Benefits
+            </h4>
+            <ul class="text-sm space-y-2">
+              <li class="flex items-center gap-2">
+                <UIcon
+                  name="i-lucide-check-circle"
+                  class="w-4 h-4 text-emerald-400 flex-shrink-0"
+                />
+                <span class="text-gray-300">Prevents duplicate content SEO penalties</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <UIcon
+                  name="i-lucide-check-circle"
+                  class="w-4 h-4 text-emerald-400 flex-shrink-0"
+                />
+                <span class="text-gray-300">Consolidates link equity to canonical URLs</span>
+              </li>
+              <li class="flex items-center gap-2">
+                <UIcon
+                  name="i-lucide-check-circle"
+                  class="w-4 h-4 text-emerald-400 flex-shrink-0"
+                />
+                <span class="text-gray-300">Works automatically across all content types</span>
+              </li>
+            </ul>
+          </div>
 
-// Currency with auto-locale
-formatters.currency(2999.99, 'INR')
-
-// Numbers with locale-specific separators
-formatters.number(12345.67)
-
-// Dates with locale formatting
-formatters.date(new Date(), {
-  dateStyle: 'short'
-})
-
-// Lists with locale conjunctions
-formatters.list(['A', 'B', 'C'])</code></pre>
-              </div>
-            </div>
+          <div>
+            <h4 class="font-medium text-blue-300 mb-3">
+              How It Works
+            </h4>
+            <ul class="text-sm space-y-2 text-gray-300">
+              <li>• System analyzes content metadata</li>
+              <li>• Compares with current URL structure</li>
+              <li>• Issues 301 redirect if mismatch found</li>
+              <li>• Preserves query parameters and fragments</li>
+            </ul>
           </div>
         </div>
 
-        <!-- Real Content Integration -->
-        <div>
-          <h3 class="font-semibold text-white mb-3">
-            Real Content Integration
-          </h3>
-          <div class="grid md:grid-cols-3 gap-4">
-            <div
-              v-for="example in contentExamples"
-              :key="example.name"
-              class="p-4 bg-gray-800/30 rounded-lg"
-            >
-              <h4 class="font-medium text-white mb-2">
-                {{ example.name }}
-              </h4>
-              <p class="text-sm text-gray-400 mb-3">
-                {{ example.complexity }}
-              </p>
-              <NuxtLinkLocale :to="example.path">
-                <UButton
-                  variant="soft"
-                  size="sm"
-                  block
-                >
-                  Test {{ example.name.split(' ')[0] }} →
-                </UButton>
-              </NuxtLinkLocale>
-            </div>
-          </div>
-        </div>
-      </div>
-    </UCard>
-
-    <!-- Content Examples -->
-    <UCard>
-      <template #header>
-        <h2 class="text-2xl font-bold text-white">
-          Content Integration Examples
-        </h2>
-        <p class="text-gray-400 mt-1">
-          Test different content types with cross-language support
-        </p>
-      </template>
-
-      <div class="grid md:grid-cols-3 gap-4">
-        <div
-          v-for="example in contentExamples"
-          :key="example.name"
-          class="p-4 bg-gray-800/30 rounded-lg"
-        >
-          <h3 class="font-medium text-white mb-2">
-            {{ example.name }}
-          </h3>
-          <p class="text-sm text-gray-400 mb-3">
-            {{ example.complexity }}
-          </p>
-          <NuxtLinkLocale :to="example.path">
+        <div class="pt-2">
+          <NuxtLinkLocale :to="`/blog/wrong-category/${$i18n.locale === 'en' ? 'post' : 'poosta'}`">
             <UButton
-              variant="soft"
               size="sm"
-              block
+              variant="outline"
+              color="emerald"
             >
-              Test {{ example.name.split(' ')[0] }} →
+              Try Demo →
             </UButton>
           </NuxtLinkLocale>
         </div>
       </div>
     </UCard>
 
-    <!-- Quick Stats & Info -->
-    <div class="grid md:grid-cols-2 gap-6">
-      <!-- Stats -->
-      <UCard>
-        <template #header>
-          <h3 class="font-semibold text-white">
-            Layer Stats
-          </h3>
-        </template>
-        <div class="grid grid-cols-2 gap-4 text-center">
-          <div>
-            <div class="text-2xl font-bold text-primary-400">
-              {{ stats.components }}
-            </div>
-            <div class="text-sm text-gray-400">
-              Component
-            </div>
-          </div>
-          <div>
-            <div class="text-2xl font-bold text-primary-400">
-              {{ stats.composables }}
-            </div>
-            <div class="text-sm text-gray-400">
-              Composables
-            </div>
-          </div>
-          <div>
-            <div class="text-2xl font-bold text-primary-400">
-              {{ stats.variants }}
-            </div>
-            <div class="text-sm text-gray-400">
-              UI Variants
-            </div>
-          </div>
-          <div>
-            <div class="text-2xl font-bold text-primary-400">
-              {{ stats.languages }}
-            </div>
-            <div class="text-sm text-gray-400">
-              Languages
-            </div>
-          </div>
-        </div>
-      </UCard>
-    </div>
-
-    <!-- Architecture Decisions (Advanced) -->
+    <!-- Replace the Standards section in index.vue -->
     <UCard>
       <template #header>
-        <h2 class="text-2xl font-bold text-white">
-          🔧 Architecture Decisions
+        <h2 class="text-xl font-semibold text-white">
+          Standards & Best Practices
         </h2>
-        <p class="text-gray-400 mt-1">
-          Technical decisions and rationale (for developers)
+        <p class="text-gray-400 text-sm">
+          Essential rules for reliable i18n content management
         </p>
       </template>
 
-      <div class="space-y-4">
-        <UCard
-          v-for="decision in architectureDecisions"
-          :key="decision.decision"
-          class="bg-gray-800/30 border-gray-700"
-        >
-          <div class="space-y-2">
-            <h3 class="font-medium text-white">
-              {{ decision.decision }}
+      <div class="space-y-8">
+        <!-- File Structure -->
+        <!-- Replace the File Structure section in index.vue -->
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <UIcon
+              name="i-lucide-folder-tree"
+              class="w-5 h-5 text-blue-400"
+            />
+            <h3 class="font-medium text-white text-lg">
+              File Structure
             </h3>
-            <p class="text-sm text-gray-400">
-              {{ decision.rationale }}
-            </p>
-            <p class="text-sm text-green-400">
-              Impact: {{ decision.impact }}
-            </p>
           </div>
-        </UCard>
+
+          <div class="grid lg:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <h4 class="font-medium text-blue-300">
+                Required Directory Structure
+              </h4>
+              <UTree
+                :items="directoryStructure"
+                :default-expanded="['content', 'en', 'mr', 'blog-en', 'blog-mr', 'categories-en', 'categories-mr']"
+                size="sm"
+                color="neutral"
+              />
+            </div>
+
+            <div class="space-y-4">
+              <h4 class="font-medium text-emerald-300">
+                Collection Naming Rules
+              </h4>
+              <ul class="space-y-3 text-sm">
+                <li class="flex items-start gap-3">
+                  <UIcon
+                    name="i-lucide-check-circle"
+                    class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"
+                  />
+                  <div>
+                    <div class="text-white font-medium">
+                      Collections: locale_collection
+                    </div>
+                    <div class="text-gray-400">
+                      en_blog, mr_blog, en_categories
+                    </div>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3">
+                  <UIcon
+                    name="i-lucide-check-circle"
+                    class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"
+                  />
+                  <div>
+                    <div class="text-white font-medium">
+                      Identical filenames = STEM matching
+                    </div>
+                    <div class="text-gray-400">
+                      post.md in both en/blog/ and mr/blog/
+                    </div>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3">
+                  <UIcon
+                    name="i-lucide-check-circle"
+                    class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"
+                  />
+                  <div>
+                    <div class="text-white font-medium">
+                      Directory mirrors locale structure
+                    </div>
+                    <div class="text-gray-400">
+                      content/en/blog/ → en_blog collection
+                    </div>
+                  </div>
+                </li>
+                <li class="flex items-start gap-3">
+                  <UIcon
+                    name="i-lucide-check-circle"
+                    class="w-4 h-4 text-emerald-400 mt-0.5 flex-shrink-0"
+                  />
+                  <div>
+                    <div class="text-white font-medium">
+                      File extensions indicate type
+                    </div>
+                    <div class="text-gray-400">
+                      .md = pages, .yml = data collections
+                    </div>
+                  </div>
+                </li>
+              </ul>
+            </div>
+          </div>
+        </div>
+
+        <!-- Content Schema -->
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <UIcon
+              name="i-lucide-database"
+              class="w-5 h-5 text-purple-400"
+            />
+            <h3 class="font-medium text-white text-lg">
+              Content Schema
+            </h3>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <h4 class="font-medium text-purple-300">
+                Required Fields
+              </h4>
+              <div class="space-y-3">
+                <div class="bg-gray-900/50 p-3 rounded border-l-4 border-red-500">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="text-red-300 text-sm">status</code>
+                    <UBadge
+                      color="error"
+                      size="xs"
+                    >
+                      Required
+                    </UBadge>
+                  </div>
+                  <div class="text-xs text-gray-400">
+                    Must be "published" for public content
+                  </div>
+                </div>
+
+                <div class="bg-gray-900/50 p-3 rounded border-l-4 border-blue-500">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="text-blue-300 text-sm">slug</code>
+                    <UBadge
+                      color="primary"
+                      size="xs"
+                    >
+                      Required
+                    </UBadge>
+                  </div>
+                  <div class="text-xs text-gray-400">
+                    Unique ASCII identifier for URL routing
+                  </div>
+                </div>
+
+                <div class="bg-gray-900/50 p-3 rounded border-l-4 border-emerald-500">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="text-emerald-300 text-sm">title</code>
+                    <UBadge
+                      color="success"
+                      size="xs"
+                    >
+                      Required
+                    </UBadge>
+                  </div>
+                  <div class="text-xs text-gray-400">
+                    Content title for display and SEO
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <h4 class="font-medium text-amber-300">
+                Linking Fields
+              </h4>
+              <div class="space-y-3">
+                <div class="bg-gray-900/50 p-3 rounded border-l-4 border-amber-500">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="text-amber-300 text-sm">categoryStem</code>
+                    <UBadge
+                      color="warning"
+                      size="xs"
+                    >
+                      Linking
+                    </UBadge>
+                  </div>
+                  <div class="text-xs text-gray-400">
+                    Links to categories collection via STEM
+                  </div>
+                </div>
+
+                <div class="bg-gray-900/50 p-3 rounded border-l-4 border-cyan-500">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="text-cyan-300 text-sm">authorId</code>
+                    <UBadge
+                      color="info"
+                      size="xs"
+                    >
+                      Optional
+                    </UBadge>
+                  </div>
+                  <div class="text-xs text-gray-400">
+                    Links to authors collection
+                  </div>
+                </div>
+
+                <div class="bg-gray-900/50 p-3 rounded border-l-4 border-gray-500">
+                  <div class="flex items-center gap-2 mb-1">
+                    <code class="text-gray-300 text-sm">tags</code>
+                    <UBadge
+                      color="neutral"
+                      size="xs"
+                    >
+                      Optional
+                    </UBadge>
+                  </div>
+                  <div class="text-xs text-gray-400">
+                    Array of tag STEMs for categorization
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- URL Mapping -->
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <UIcon
+              name="i-lucide-route"
+              class="w-5 h-5 text-emerald-400"
+            />
+            <h3 class="font-medium text-white text-lg">
+              URL Mapping & Parameters
+            </h3>
+          </div>
+
+          <div class="grid lg:grid-cols-2 gap-6">
+            <div class="space-y-4">
+              <h4 class="font-medium text-emerald-300">
+                Parameter Resolution
+              </h4>
+              <div class="bg-gray-900 p-4 rounded-lg">
+                <div class="text-xs text-gray-500 mb-2">
+                  Example paramMap configuration:
+                </div>
+                <pre class="text-sm text-gray-300"><code>{
+  slug: 'slug',
+  category: {
+    field: 'categoryStem',
+    collection: 'categories',
+    targetField: 'slug'
+  }
+}</code></pre>
+              </div>
+
+              <div class="space-y-2 text-sm">
+                <div class="flex items-center gap-2">
+                  <UIcon
+                    name="i-lucide-arrow-right"
+                    class="w-3 h-3 text-emerald-400"
+                  />
+                  <span class="text-gray-300">Resolves category STEM to localized slug</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <UIcon
+                    name="i-lucide-arrow-right"
+                    class="w-3 h-3 text-emerald-400"
+                  />
+                  <span class="text-gray-300">Enables seamless language switching</span>
+                </div>
+                <div class="flex items-center gap-2">
+                  <UIcon
+                    name="i-lucide-arrow-right"
+                    class="w-3 h-3 text-emerald-400"
+                  />
+                  <span class="text-gray-300">Maintains URL structure across locales</span>
+                </div>
+              </div>
+            </div>
+
+            <div class="space-y-4">
+              <h4 class="font-medium text-cyan-300">
+                Cross-Locale URL Examples
+              </h4>
+              <div class="space-y-3">
+                <div class="bg-gray-900/50 p-3 rounded">
+                  <div class="text-xs text-gray-500 mb-1">
+                    English:
+                  </div>
+                  <code class="text-emerald-300 text-sm">/blog/technology/ai-guide</code>
+                </div>
+                <div class="flex justify-center">
+                  <UIcon
+                    name="i-lucide-arrow-down"
+                    class="w-4 h-4 text-gray-500"
+                  />
+                </div>
+                <div class="bg-gray-900/50 p-3 rounded">
+                  <div class="text-xs text-gray-500 mb-1">
+                    Marathi:
+                  </div>
+                  <code class="text-cyan-300 text-sm">/mr/blooga/tantrajnaana/ai-margadarshak</code>
+                </div>
+              </div>
+
+              <div class="text-xs text-gray-400 bg-cyan-900/20 p-2 rounded">
+                <strong>Note:</strong> Same STEM "ai-guide" resolves to different slugs per locale
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Common Pitfalls -->
+        <div>
+          <div class="flex items-center gap-3 mb-4">
+            <UIcon
+              name="i-lucide-alert-triangle"
+              class="w-5 h-5 text-red-400"
+            />
+            <h3 class="font-medium text-white text-lg">
+              Common Pitfalls
+            </h3>
+          </div>
+
+          <div class="grid md:grid-cols-2 gap-4">
+            <div class="bg-red-900/20 border border-red-700/30 rounded-lg p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <UIcon
+                  name="i-lucide-x-circle"
+                  class="w-4 h-4 text-red-400"
+                />
+                <span class="font-medium text-red-300">Don't Do</span>
+              </div>
+              <ul class="text-sm space-y-1 text-red-200">
+                <li>• Different filenames across locales</li>
+                <li>• Missing status: "published" field</li>
+                <li>• Non-ASCII characters in slugs</li>
+                <li>• Inconsistent collection naming</li>
+              </ul>
+            </div>
+
+            <div class="bg-emerald-900/20 border border-emerald-700/30 rounded-lg p-4">
+              <div class="flex items-center gap-2 mb-2">
+                <UIcon
+                  name="i-lucide-check-circle"
+                  class="w-4 h-4 text-emerald-400"
+                />
+                <span class="font-medium text-emerald-300">Best Practice</span>
+              </div>
+              <ul class="text-sm space-y-1 text-emerald-200">
+                <li>• Use identical STEMs across locales</li>
+                <li>• Always set status: "published"</li>
+                <li>• Use kebab-case for slugs</li>
+                <li>• Follow locale_collection naming</li>
+              </ul>
+            </div>
+          </div>
+        </div>
+      </div>
+    </UCard>
+
+    <!-- Demos -->
+    <UCard>
+      <template #header>
+        <h2 class="text-xl font-semibold text-white">
+          Language Switcher
+        </h2>
+        <p class="text-gray-400 text-sm">
+          Three common configurations
+        </p>
+      </template>
+
+      <div class="grid md:grid-cols-3 gap-6">
+        <div
+          v-for="d in demoConfigs"
+          :key="d.label"
+          class="space-y-3"
+        >
+          <h3 class="font-medium text-white">
+            {{ d.label }}
+          </h3>
+          <div class="flex justify-center p-4 bg-gray-900/50 rounded border border-gray-800">
+            <ILanguageSwitcher v-bind="d.props" />
+          </div>
+          <pre class="bg-gray-900 p-3 rounded text-xs text-gray-300 overflow-x-auto"><code>{{ d.code }}</code></pre>
+        </div>
+      </div>
+    </UCard>
+
+    <!-- Props -->
+    <UCard>
+      <template #header>
+        <h2 class="text-xl font-semibold text-white">
+          Core Props
+        </h2>
+      </template>
+
+      <div class="overflow-x-auto">
+        <table class="w-full text-sm">
+          <thead>
+            <tr class="border-b border-gray-800">
+              <th class="py-2 text-left text-white">
+                Prop
+              </th>
+              <th class="py-2 text-left text-white">
+                Type
+              </th>
+              <th class="py-2 text-left text-white">
+                Default
+              </th>
+              <th class="py-2 text-left text-white">
+                Notes
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr
+              v-for="p in propsCore"
+              :key="p.name"
+              class="border-b border-gray-800/50"
+            >
+              <td class="py-2">
+                <code class="bg-gray-800 px-2 py-0.5 rounded text-primary-400">{{ p.name }}</code>
+              </td>
+              <td class="py-2">
+                <code class="text-green-400">{{ p.type }}</code>
+              </td>
+              <td class="py-2">
+                <code class="text-gray-400">{{ p.def }}</code>
+              </td>
+              <td class="py-2 text-gray-300">
+                {{ p.desc }}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </UCard>
   </div>

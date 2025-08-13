@@ -1,14 +1,39 @@
 <!-- playground/app.vue - Updated with Dark Theme Layout -->
 <script setup lang="ts">
+import { useDebugModal } from '#imports'
+
 const format = useI18nFormatters()
+const { locale, locales, setLocale } = useI18n()
+const env = useRuntimeConfig().public
+
+const toMap = {
+  about: {
+    en: '/pages/about',
+    mr: '/mr/paane/baddala',
+  },
+  blog: {
+    en: '/blog/technology/post',
+    mr: '/mr/blooga/tantrajnaana/poosta',
+  },
+  data: {
+    en: '/data',
+    mr: '/mr/mahiti',
+  },
+}
 
 // Navigation items
 const navigation = computed(() => [
   { name: 'nav.home', to: '/' },
-  { name: 'nav.blog', to: '/blog/ai-automation/ai-revolution' },
-  { name: 'nav.category', to: '/categories' },
-  { name: 'nav.page', to: '/pages/about' },
+  { name: 'nav.blog', to: toMap.blog[locale.value] },
+  { name: 'nav.data', to: toMap.data[locale.value] },
+  { name: 'nav.page', to: toMap.about[locale.value] },
 ])
+
+// DEBUG MODAL CONTROLS
+const {
+  isDebugMode,
+  toggleDebugModal,
+} = useDebugModal()
 </script>
 
 <template>
@@ -19,7 +44,7 @@ const navigation = computed(() => [
         <nav class="flex items-center justify-between py-4">
           <!-- Logo/Brand -->
           <NuxtLinkLocale
-            to="/"
+            to="home"
             class="text-xl font-bold text-white hover:text-primary-400 transition-colors"
           >
             i18n Layer
@@ -39,7 +64,16 @@ const navigation = computed(() => [
           </div>
 
           <!-- Language Switcher -->
-          <div class="flex items-center">
+          <div class="flex items-center gap-2">
+            <UButton
+              v-if="isDebugMode"
+              icon="i-lucide-bug"
+              label="Debug"
+              size="xs"
+              variant="ghost"
+              color="error"
+              @click="() => toggleDebugModal()"
+            />
             <ILanguageSwitcher
               variant="minimal"
               size="sm"

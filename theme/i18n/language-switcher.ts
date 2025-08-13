@@ -6,7 +6,6 @@ export const languageSwitcherStyles = tv({
   slots: {
     root: [
       'inline-flex items-center transition-opacity duration-200',
-      // ✅ Data attribute approach for switching state
       '[&[data-switching="true"]]:opacity-50',
       '[&[data-switching="true"]]:pointer-events-none',
     ],

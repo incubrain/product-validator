@@ -1,6 +1,6 @@
 icon: "brain"
 color: "blue"
-slug: "ai-automation"
-isPublic: true
+slug: "technology"
+status: 'published'
 title: "AI & Automation"
 description: "Exploring artificial intelligence and automation technologies that are reshaping industries and transforming how we work."
