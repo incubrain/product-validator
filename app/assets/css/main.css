@@ -5,7 +5,7 @@
 @source "../../../shared/config/theme.ts";
 
 @reference './keyframes';
-@reference './backgrounds';
+@reference './patterns';
 @reference './gradients';
 
 
@@ -85,6 +85,23 @@
   --gradient-medium-to: 25%;
   --gradient-strong-from: 50%;
   --gradient-strong-to: 40%;
+
+
+  
+    /* ========================================
+       PATTERN DEFAULTS
+       ======================================== */
+  --pattern-opacity: 20%;
+  --pattern-size: 60px;
+  --pattern-spacing: 24px;
+  --pattern-from: var(--color-primary-500);
+  --pattern-to: var(--color-secondary-500);
+  --pattern-direction: 45deg;
+  --pattern-stroke: 1px;
+  --pattern-dot-size: 1px;
+  --pattern-position: center;
+  --pattern-x: 50%;
+  --pattern-y: 50%;
 }
 
 /* ========================================

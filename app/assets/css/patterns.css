@@ -1,0 +1,118 @@
+@source inline("i-pattern-{dots,grid,diagonal-lines,noise,triangles,circuit,hexagon,pyramids,plus}");
+
+/* 1. DOTS - Refined for better control */
+@utility i-pattern-dots {
+  /* FIX: Uses a CSS variable for dot size and proper spacing. */
+  background-image: radial-gradient(circle, color-mix(in srgb, var(--pattern-from) var(--pattern-opacity), transparent) var(--pattern-dot-size, 1px), transparent var(--pattern-dot-size, 1px));
+  background-size: var(--pattern-size) var(--pattern-size);
+}
+
+/* 2. GRID - Refined for simplicity and stroke control */
+@utility i-pattern-grid {
+  /* FIX: Removed unnecessary opacity multiplier. Uses a variable for line thickness. */
+  background-image:
+    linear-gradient(color-mix(in srgb, var(--pattern-from) var(--pattern-opacity), transparent) var(--pattern-stroke, 1px), transparent var(--pattern-stroke, 1px)),
+    linear-gradient(90deg, color-mix(in srgb, var(--pattern-from) var(--pattern-opacity), transparent) var(--pattern-stroke, 1px), transparent var(--pattern-stroke, 1px));
+  background-size: var(--pattern-size) var(--pattern-size);
+}
+
+/* 4. DIAGONAL LINES - Refined with repeating-linear-gradient for cleaner code */
+@utility i-pattern-diagonal-lines {
+  /* FIX: `repeating-linear-gradient` is more efficient and easier to read. */
+  background-image: repeating-linear-gradient(
+    var(--pattern-direction, 45deg),
+    color-mix(in srgb, var(--pattern-from) var(--pattern-opacity), transparent),
+    color-mix(in srgb, var(--pattern-from) var(--pattern-opacity), transparent) var(--pattern-stroke, 1px),
+    transparent var(--pattern-stroke, 1px),
+    transparent var(--pattern-spacing)
+  );
+}
+
+/* 7. PYRAMIDS (NEW) - The 3D/studded pattern from your screenshot. */
+@utility i-pattern-pyramids {
+  /* NEW: This is likely the pattern you intended for 'triangles'. */
+  background-image:
+    linear-gradient(45deg, color-mix(in srgb, var(--pattern-from) calc(var(--pattern-opacity) * 0.5), transparent) 25%, transparent 25%),
+    linear-gradient(-45deg, color-mix(in srgb, var(--pattern-from) calc(var(--pattern-opacity) * 0.5), transparent) 25%, transparent 25%),
+    linear-gradient(45deg, transparent 75%, color-mix(in srgb, var(--pattern-from) calc(var(--pattern-opacity) * 1), transparent) 75%),
+    linear-gradient(-45deg, transparent 75%, color-mix(in srgb, var(--pattern-from) calc(var(--pattern-opacity) * 1), transparent) 75%);
+  background-size: var(--pattern-size) var(--pattern-size);
+}
+
+
+/* 8. CIRCUIT - MASSIVE REVAMP: A more structured and intentional circuit board design. */
+/* ================================================================== */
+/* === DROP-IN FIXES FOR BROKEN PATTERNS (V2) === */
+/* ================================================================== */
+
+/* 7. CIRCUIT - Fixed dot rendering */
+@utility i-pattern-circuit {
+  /* FIX: Provide a separate background-size for each layer. The dots now tile independently from the lines. */
+  --circuit-line: color-mix(in srgb, var(--pattern-from) calc(var(--pattern-opacity) * 0.5), transparent);
+  --circuit-dot: color-mix(in srgb, var(--pattern-from) var(--pattern-opacity), transparent);
+  background-image:
+    /* Dots at intersections */
+    radial-gradient(circle at center, var(--circuit-dot) var(--pattern-dot-size, 1.5px), transparent var(--pattern-dot-size, 1.5px)),
+    /* Horizontal and Vertical lines */
+    linear-gradient(var(--circuit-line) var(--pattern-stroke, 1px), transparent var(--pattern-stroke, 1px)),
+    linear-gradient(90deg, var(--circuit-line) var(--pattern-stroke, 1px), transparent var(--pattern-stroke, 1px));
+  /* CAUSE OF FIX: The dots now have their own repeating size, while the lines have theirs. */
+  background-size:
+    calc(var(--pattern-size) / 2) calc(var(--pattern-size) / 2),
+    var(--pattern-size) var(--pattern-size),
+    var(--pattern-size) var(--pattern-size);
+}
+
+/* 3. PLUS - Fixed positioning */
+@utility i-pattern-plus {
+  background-image:
+    /* Center dot */
+    radial-gradient(circle, color-mix(in srgb, var(--pattern-from) var(--pattern-opacity), transparent) var(--pattern-stroke, 1px), transparent var(--pattern-stroke, 1px)),
+    /* Vertical line */
+    linear-gradient(color-mix(in srgb, var(--pattern-from) var(--pattern-opacity), transparent) var(--pattern-stroke, 1px), transparent var(--pattern-stroke, 1px)),
+    /* Horizontal line */
+    linear-gradient(90deg, color-mix(in srgb, var(--pattern-from) var(--pattern-opacity), transparent) var(--pattern-stroke, 1px), transparent var(--pattern-stroke, 1px));
+  background-size: var(--pattern-size) var(--pattern-size);
+  /* FIX & CAUSE: Each layer must be explicitly centered. */
+  background-position: center, center, center;
+  background-repeat: no-repeat, repeat-y, repeat-x;
+}
+
+
+/* 6. TRIANGLES - Made robust with --pattern-stroke */
+@utility i-pattern-triangles {
+  /* FIX: Re-engineered to use --pattern-stroke for robust, visible lines instead of the fragile percentage-based method. */
+  --triangle-color: color-mix(in srgb, var(--pattern-from) var(--pattern-opacity), transparent);
+  --triangle-size: var(--pattern-size);
+  --triangle-height: calc(var(--triangle-size) * 0.866); /* sin(60deg) */
+
+  background-image:
+    repeating-linear-gradient(30deg, transparent, transparent calc(50% - var(--pattern-stroke, 1px)), var(--triangle-color) calc(50% - var(--pattern-stroke, 1px)), var(--triangle-color) calc(50% + var(--pattern-stroke, 1px)), transparent calc(50% + var(--pattern-stroke, 1px))),
+    repeating-linear-gradient(150deg, transparent, transparent calc(50% - var(--pattern-stroke, 1px)), var(--triangle-color) calc(50% - var(--pattern-stroke, 1px)), var(--triangle-color) calc(50% + var(--pattern-stroke, 1px)), transparent calc(50% + var(--pattern-stroke, 1px))),
+    repeating-linear-gradient(270deg, transparent, transparent calc(50% - var(--pattern-stroke, 1px)), var(--triangle-color) calc(50% - var(--pattern-stroke, 1px)), var(--triangle-color) calc(50% + var(--pattern-stroke, 1px)), transparent calc(50% + var(--pattern-stroke, 1px)));
+  background-size: var(--triangle-size) var(--triangle-height);
+}
+
+/* 9. HEXAGON - Made robust with --pattern-stroke */
+@utility i-pattern-hexagon {
+  /* FIX: Also re-engineered to use --pattern-stroke for robust lines. */
+  --hex-color: color-mix(in srgb, var(--pattern-from) var(--pattern-opacity), transparent);
+  --hex-size: var(--pattern-size);
+  --hex-height: calc(var(--hex-size) * 0.866025);
+
+  background-image:
+    repeating-linear-gradient(60deg,  var(--hex-color), var(--hex-color) var(--pattern-stroke, 1px), transparent var(--pattern-stroke, 1px), transparent 50%),
+    repeating-linear-gradient(-60deg, var(--hex-color), var(--hex-color) var(--pattern-stroke, 1px), transparent var(--pattern-stroke, 1px), transparent 50%),
+    linear-gradient(to right, var(--hex-color), var(--hex-color) var(--pattern-stroke, 1px), transparent var(--pattern-stroke, 1px));
+  background-size: calc(var(--hex-size) * 0.5) var(--hex-height);
+}
+
+/* 5. NOISE - Retuned SVG for better texture */
+@utility i-pattern-noise {
+  /* FIX: Using a more robust SVG filter configuration with 'currentColor' for better compatibility. */
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 250 250' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' fill='currentColor'/%3E%3C/svg%3E");
+  background-size: auto;
+  color: var(--pattern-from);
+  opacity: var(--pattern-opacity);
+}
+
