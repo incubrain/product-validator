@@ -14,6 +14,7 @@ const ui = tvComputed(() => textStyles({
   variant: props.variant,
   size: props.size,
 }))
+
 </script>
 
 <template>

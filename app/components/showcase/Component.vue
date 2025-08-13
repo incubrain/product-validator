@@ -75,7 +75,7 @@ const copyCode = () => copy(generatedCode.value)
               :key="variant.name"
             >
               <!-- Select Dropdown -->
-              <UDropdownMenu
+              <USelect
                 v-if="variant.type === 'select'"
                 :items="variant.options?.map(opt => ({
                   label: opt,
@@ -94,7 +94,7 @@ const copyCode = () => copy(generatedCode.value)
                     class="w-3 h-3 ml-1"
                   />
                 </UButton>
-              </UDropdownMenu>
+              </USelect>
 
               <!-- Boolean Toggle -->
               <UButton

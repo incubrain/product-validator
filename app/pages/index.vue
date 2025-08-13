@@ -37,11 +37,6 @@ console.log('📄 Page Config:', pageConfig.value)
 
 <template>
   <div>
-    <SectionTest />
-    <!-- <SectionTest4 /> -->
-    <!--
-    <SectionTest3 />
-    <SectionTest2 /> -->
     <!-- Hero Section - Direct component resolution -->
     <!-- <component
       :is="getComponent('hero', sections.hero.variant, sections.hero.sectionIndex)"
