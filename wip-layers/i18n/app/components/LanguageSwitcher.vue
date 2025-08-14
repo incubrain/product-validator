@@ -1,4 +1,3 @@
-<!-- app/components/ib/LanguageSwitcher.vue - FINAL VERSION -->
 <script setup lang="ts">
 import { useMergeProps } from '#shared/utils/props'
 import type { LanguageSwitcherProps } from '#shared/types/components'

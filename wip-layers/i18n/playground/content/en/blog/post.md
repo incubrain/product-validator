@@ -274,8 +274,8 @@ description: "SEO description"
 ```
 
 ### Collection Naming Convention
-- Collections: `blog_en`, `blog_mr`, `pages_en`, `pages_mr`
-- Query by: `queryCollection('blog_en').where('slug', '=', slug)`
+- Collections: `en_blog`, `mr_blog`, `en_pages`, `mr_pages`
+- Query by: `queryCollection('en_blog').where('slug', '=', slug)`
 - Status filter: Always include `.where('status', '=', 'published')`
 
 ---

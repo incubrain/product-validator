@@ -72,7 +72,7 @@ const standardsGroups = [
     bullets: [
       'Lookups resolve by STEM (filename), must be same across locales',
       'Root content/locale directories contain collections (content/en/blog)',
-      'Locale-suffixed collections (blog_en, blog_mr)',
+      'Locale-suffixed collections (en_blog, mr_blog)',
       '{singularItem}Id|Stem for collection linking (article.categoryStem)',
     ],
   },
