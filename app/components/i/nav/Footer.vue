@@ -1,32 +1,25 @@
+<!-- app/components/i/nav/Footer.vue -->
 <script setup lang="ts">
-const { public: config } = useRuntimeConfig()
+import { getSocialLinks, getQuickLinks, getCTAButtons } from '#shared/config/navigation'
+import { businessConfig } from '#shared/config/business'
 
 const currentYear = new Date().getFullYear()
 
-const quickLinks = [
-  { label: 'Blog', to: '/blog' },
-]
+const socialLinks = getSocialLinks()
+const quickLinks = getQuickLinks()
+const ctaButtons = getCTAButtons()
 
-const socialLinks = [
-  {
-    label: 'LinkedIn',
-    icon: 'i-lucide-linkedin',
-    to: 'https://linkedin.com/company/incubrain',
-    target: '_blank',
-  },
-  {
-    label: 'GitHub',
-    icon: 'i-lucide-github',
-    to: 'https://github.com/incubrain',
-    target: '_blank',
-  },
-  {
-    label: 'Twitter',
-    icon: 'i-lucide-twitter',
-    to: 'https://twitter.com/incubrain',
-    target: '_blank',
-  },
-]
+// Generate CTA URL based on action type
+const getCTAUrl = (action: string) => {
+  switch (action) {
+    case 'whatsapp_consultation':
+      return `${businessConfig.contact.primary}?text=Hi! I'm interested in AI automation consultation.`
+    case 'template_download':
+      return businessConfig.contact.secondary
+    default:
+      return businessConfig.contact.primary
+  }
+}
 </script>
 
 <template>
@@ -41,8 +34,7 @@ const socialLinks = [
               <ILogo size="md" />
             </div>
             <p class="text-muted max-w-md leading-relaxed">
-              AI automation specialists with space tech expertise. Stop losing money to manual
-              processes.
+              {{ businessConfig.business.description }}. {{ businessConfig.business.tagline }}.
             </p>
             <div class="flex space-x-3 pt-2">
               <UButton
@@ -89,31 +81,31 @@ const socialLinks = [
             </h3>
             <div class="space-y-4">
               <UButton
-                label="WhatsApp"
+                :label="ctaButtons.primary.label"
                 color="primary"
                 variant="outline"
                 size="sm"
-                leading-icon="i-lucide-message-circle"
-                :to="`https://wa.me/${config.whatsappNumber}?text=Hi! I'm interested in AI automation consultation.`"
+                :leading-icon="ctaButtons.primary.icon"
+                :to="getCTAUrl(ctaButtons.primary.action)"
                 target="_blank"
                 class="w-full sm:w-auto"
               />
               <div class="text-sm text-muted space-y-2">
                 <p>
                   <a
-                    :href="`mailto:${config.contactEmail}`"
+                    :href="`mailto:${businessConfig.contact.email}`"
                     class="hover:text-primary transition-colors"
                   >
-                    {{ config.contactEmail }}
+                    {{ businessConfig.contact.email }}
                   </a>
                 </p>
                 <p>
                   <a
-                    href="https://maps.google.com/?q=Pune,Maharashtra,India"
+                    :href="`https://maps.google.com/?q=${businessConfig.business.location.city},${businessConfig.business.location.state},${businessConfig.business.location.country}`"
                     target="_blank"
                     class="hover:text-primary transition-colors"
                   >
-                    Pune, Maharashtra, India
+                    {{ businessConfig.business.location.city }}, {{ businessConfig.business.location.state }}, {{ businessConfig.business.location.country }}
                   </a>
                 </p>
               </div>
@@ -127,8 +119,7 @@ const socialLinks = [
             class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0"
           >
             <p class="text-sm text-muted text-center sm:text-left">
-              © 2023-{{ currentYear }} {{ config.companyName || 'Incubrain ltd.' }} All rights
-              reserved.
+              © 2023-{{ currentYear }} {{ businessConfig.business.legal_name }} All rights reserved.
             </p>
             <p class="text-sm text-muted text-center sm:text-right font-medium">
               Build the future or be left behind.

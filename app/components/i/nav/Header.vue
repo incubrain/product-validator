@@ -1,53 +1,24 @@
+<!-- app/components/i/nav/Header.vue -->
 <script setup lang="ts">
-import type { NavigationMenuItem } from '@nuxt/ui'
+import { getMainNavigation, getCTAButtons } from '#shared/config/navigation'
+import { businessConfig } from '#shared/config/business'
 
-const navigationItems = computed<NavigationMenuItem[]>(() => [
-  {
-    label: 'Home',
-    to: '/',
-    icon: 'i-lucide-home',
-  },
-  {
-    label: 'Showcase',
-    icon: 'i-lucide-layout-template',
-    to: '/showcase',
-    children: [
-      {
-        label: 'Overview',
-        to: '/showcase',
-        description: 'Template system overview',
-        icon: 'i-lucide-eye',
-      },
-      {
-        label: 'Layout Components',
-        to: '/showcase/center',
-        description: 'Layout system demos',
-        icon: 'i-lucide-layout',
-      },
-      {
-        label: 'Grid System',
-        to: '/showcase/grid',
-        description: 'Grid layout examples',
-        icon: 'i-lucide-grid-3x3',
-      },
-      {
-        label: 'Split Layouts',
-        to: '/showcase/split',
-        description: 'Split section demos',
-        icon: 'i-lucide-columns',
-      },
-      {
-        label: 'Stack Layouts',
-        to: '/showcase/stack',
-        description: 'Vertical stacking demos',
-        icon: 'i-lucide-layers',
-      },
-    ],
-  },
-])
+const navigationItems = getMainNavigation()
+const ctaButtons = getCTAButtons()
 
 const isMobileMenuOpen = ref(false)
-const { public: config } = useRuntimeConfig()
+
+// Generate CTA URL based on action type
+const getCTAUrl = (action: string) => {
+  switch (action) {
+    case 'whatsapp_consultation':
+      return `${businessConfig.contact.primary}?text=Hi! I'm interested in AI automation consultation.`
+    case 'template_download':
+      return businessConfig.contact.secondary
+    default:
+      return businessConfig.contact.primary
+  }
+}
 </script>
 
 <template>
@@ -78,14 +49,14 @@ const { public: config } = useRuntimeConfig()
             class="hidden sm:block"
           />
           <UButton
-            label="Free Consultation"
+            :label="ctaButtons.primary.label"
             color="primary"
             variant="solid"
             size="sm"
             class="hidden md:inline-flex"
-            :to="`https://wa.me/${config.whatsappNumber}?text=Hi! I'm interested in AI automation consultation.`"
+            :to="getCTAUrl(ctaButtons.primary.action)"
             target="_blank"
-            trailing-icon="i-lucide-external-link"
+            :trailing-icon="ctaButtons.primary.icon"
           />
 
           <div class="flex items-center space-x-2 sm:hidden">

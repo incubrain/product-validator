@@ -1,18 +1,32 @@
+<!-- app/components/i/nav/Mobile.vue -->
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui'
+import { getCTAButtons } from '#shared/config/navigation'
+import { businessConfig } from '#shared/config/business'
 
 interface Props {
   navigationItems: NavigationMenuItem[]
-  blogCategories?: string[]
 }
 
 defineProps<Props>()
 
 const isOpen = defineModel<boolean>('open', { default: false })
-const { public: config } = useRuntimeConfig()
+const ctaButtons = getCTAButtons()
 
 const closeMenu = () => {
   isOpen.value = false
+}
+
+// Generate CTA URL based on action type
+const getCTAUrl = (action: string) => {
+  switch (action) {
+    case 'whatsapp_consultation':
+      return `${businessConfig.contact.primary}?text=Hi! I'm interested in AI automation consultation.`
+    case 'template_download':
+      return businessConfig.contact.secondary
+    default:
+      return businessConfig.contact.primary
+  }
 }
 </script>
 
@@ -43,77 +57,63 @@ const closeMenu = () => {
     <template #body>
       <nav class="flex flex-col space-y-1">
         <!-- Main Navigation Items -->
-        <ULink
+        <template
           v-for="item in navigationItems"
           :key="item.label"
-          :to="item.to"
-          class="flex items-center space-x-3 px-3 py-3 rounded-lg text-toned hover:text-primary hover:bg-elevated transition-colors"
-          @click="closeMenu"
         >
-          <UIcon
-            :name="item.icon"
-            class="size-4"
-          />
-          <span class="font-medium">{{ item.label }}</span>
-        </ULink>
-
-        <!-- Blog Categories Section -->
-        <div
-          v-if="blogCategories?.length"
-          class="pt-4 border-t border-default"
-        >
-          <p class="px-3 text-xs font-semibold text-dimmed uppercase tracking-wider mb-3">
-            Blog Categories
-          </p>
-
-          <!-- All Posts - Same styling as categories -->
+          <!-- Parent Item -->
           <ULink
-            to="/blog"
-            class="flex items-center space-x-3 px-3 py-2 rounded-lg text-muted hover:text-primary hover:bg-elevated transition-colors"
+            :to="item.to"
+            class="flex items-center space-x-3 px-3 py-3 rounded-lg text-toned hover:text-primary hover:bg-elevated transition-colors"
             @click="closeMenu"
           >
             <UIcon
-              name="i-lucide-list"
+              :name="item.icon"
               class="size-4"
             />
-            <span class="text-sm">All Posts</span>
+            <span class="font-medium">{{ item.label }}</span>
           </ULink>
 
-          <!-- Category Links -->
-          <ULink
-            v-for="category in blogCategories"
-            :key="category"
-            :to="`/blog/${category}`"
-            class="flex items-center space-x-3 px-3 py-2 rounded-lg text-muted hover:text-primary hover:bg-elevated transition-colors"
-            @click="closeMenu"
+          <!-- Child Items -->
+          <div
+            v-if="item.children"
+            class="pl-4 space-y-1"
           >
-            <UIcon
-              name="i-lucide-folder"
-              class="size-4"
-            />
-            <span class="text-sm">{{ getCategoryName(category) }}</span>
-          </ULink>
-        </div>
+            <ULink
+              v-for="child in item.children"
+              :key="child.label"
+              :to="child.to"
+              class="flex items-center space-x-3 px-3 py-2 rounded-lg text-muted hover:text-primary hover:bg-elevated transition-colors"
+              @click="closeMenu"
+            >
+              <UIcon
+                :name="child.icon || 'i-lucide-circle'"
+                class="size-3"
+              />
+              <span class="text-sm">{{ child.label }}</span>
+            </ULink>
+          </div>
+        </template>
       </nav>
     </template>
 
     <template #footer>
       <div class="space-y-4 text-center">
         <UButton
-          label="Free Consultation"
+          :label="ctaButtons.primary.label"
           color="primary"
           variant="solid"
           size="lg"
           block
-          :to="`https://wa.me/${config.whatsappNumber}?text=Hi! I'm interested in AI automation consultation.`"
+          :to="getCTAUrl(ctaButtons.primary.action)"
           target="_blank"
-          trailing-icon="i-lucide-external-link"
+          :trailing-icon="ctaButtons.primary.icon"
           @click="closeMenu"
         />
 
         <div class="text-sm text-dimmed space-y-1">
-          <p>Pune, Maharashtra</p>
-          <p>{{ config.contactEmail }}</p>
+          <p>{{ businessConfig.business.location.city }}, {{ businessConfig.business.location.state }}</p>
+          <p>{{ businessConfig.contact.email }}</p>
         </div>
       </div>
     </template>

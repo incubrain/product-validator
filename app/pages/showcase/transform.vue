@@ -1,7 +1,7 @@
 <!-- app/pages/showcase/layout/transform.vue -->
 <script setup lang="ts">
 // Import the actual component
-import ITransform from '~/components/layout/Transform.vue'
+import ITransform from '~/components/i/Transform.vue'
 import type { TransformVariants } from '~~/theme/index'
 
 const headerContent = {

@@ -1,6 +1,6 @@
 <script setup lang="ts">
 // Import the actual component
-import ILayoutFloat from '~/components/layout/Float.vue'
+import ILayoutFloat from '~/components/i/layout/Float.vue'
 import type { FloatVariants } from '~~/theme/index'
 
 // Page header content
