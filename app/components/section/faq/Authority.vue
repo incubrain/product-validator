@@ -14,23 +14,23 @@ const authorityConfig: IntentConfig = {
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="authorityConfig.sectionVariant"
     :background="authorityConfig.background"
     class="authority-faq"
   >
-    <LayoutCenter variant="prose">
-      <LayoutStack variant="spacious">
+    <ILayoutCenter variant="prose">
+      <ILayoutStack variant="spacious">
         <!-- Authority-focused header -->
-        <LayoutCenter variant="text-only">
-          <LayoutStack variant="default">
-            <LayoutHeading
+        <ILayoutCenter variant="text-only">
+          <ILayoutStack variant="default">
+            <IHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <LayoutText
+            <IText
               v-if="description"
               :text="description"
               variant="subtitle"
@@ -50,8 +50,8 @@ const authorityConfig: IntentConfig = {
                 Expert Knowledge Base
               </UBadge>
             </div>
-          </LayoutStack>
-        </LayoutCenter>
+          </ILayoutStack>
+        </ILayoutCenter>
 
         <IAccordion
           intent="authority"
@@ -69,7 +69,7 @@ const authorityConfig: IntentConfig = {
               name="i-lucide-award"
               class="size-6 text-primary-600"
             />
-            <LayoutText
+            <IText
               text="Technical expertise backed by 10+ years of industry experience"
               variant="caption"
               class="text-primary-700 font-medium"
@@ -88,9 +88,9 @@ const authorityConfig: IntentConfig = {
             </UBadge>
           </div>
         </div>
-      </LayoutStack>
-    </LayoutCenter>
-  </LayoutSection>
+      </ILayoutStack>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

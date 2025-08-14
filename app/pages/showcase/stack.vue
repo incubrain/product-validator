@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useHead({
-  title: 'LayoutStack Showcase - Layout Primitives',
-  meta: [{ name: 'description', content: 'Comprehensive showcase of LayoutStack variants and usage patterns' }],
+  title: 'ILayoutStack Showcase - Layout Primitives',
+  meta: [{ name: 'description', content: 'Comprehensive showcase of ILayoutStack variants and usage patterns' }],
 })
 
 const stackVariants = [
@@ -92,25 +92,22 @@ const stackVariants = [
 
 <template>
   <div class="min-h-screen bg-muted">
-    <LayoutCenter variant="full">
+    <ILayoutCenter variant="full">
       <div class="py-section space-y-component">
         <!-- Page Header -->
-        <LayoutStack variant="centered">
-          <LayoutHeading
-            text="LayoutStack Showcase (FIXED)"
+        <ILayoutStack variant="centered">
+          <IHeading
+            text="ILayoutStack Showcase"
             variant="hero"
           />
-          <LayoutText
+          <IText
             text="Visual exploration of all stack variants with distinct demo content"
             variant="subtitle"
           />
-          <div class="text-sm text-amber-400 bg-amber-500/10 rounded border border-amber-500/30">
-            ⚡ Now with varied content to show real differences between variants
-          </div>
-        </LayoutStack>
+        </ILayoutStack>
 
         <!-- Stack Variants -->
-        <LayoutStack variant="spacious">
+        <ILayoutStack variant="spacious">
           <div
             v-for="(variant, index) in stackVariants"
             :key="variant.name"
@@ -125,12 +122,12 @@ const stackVariants = [
                     color="primary"
                     variant="solid"
                   />
-                  <LayoutHeading
+                  <IHeading
                     :text="`variant='${variant.name}'`"
                     variant="card"
                   />
                 </div>
-                <LayoutText
+                <IText
                   :text="variant.description"
                   variant="description"
                 />
@@ -139,7 +136,7 @@ const stackVariants = [
               <!-- Demo Container with visible boundaries -->
               <div class="i-pattern-circuit border-2 border-dashed border-primary/30 p-6 rounded-lg min-h-[200px]">
                 <component
-                  :is="'LayoutStack'"
+                  :is="'ILayoutStack'"
                   :variant="variant.name"
                   class="h-full"
                 >
@@ -200,31 +197,31 @@ const stackVariants = [
                 <summary class="cursor-pointer text-sm font-medium text-primary hover:text-primary/80">
                   View Code
                 </summary>
-                <pre class="mt-2 p-3 bg-black/50 rounded text-xs text-green-400 overflow-x-auto"><code>&lt;LayoutStack variant="${variant.name}"&gt;
+                <pre class="mt-2 p-3 bg-black/50 rounded text-xs text-green-400 overflow-x-auto"><code>&lt;ILayoutStack variant="${variant.name}"&gt;
   &lt;div&gt;Item 1&lt;/div&gt;
   &lt;div&gt;Item 2&lt;/div&gt;
   &lt;div&gt;Item 3&lt;/div&gt;
-&lt;/LayoutStack&gt;</code></pre>
+&lt;/ILayoutStack&gt;</code></pre>
               </details>
             </div>
 
             <!-- Divider -->
-            <LayoutDivider
+            <ILayoutDivider
               v-if="index < stackVariants.length - 1"
               variant="gradient"
               spacing="lg"
             />
           </div>
-        </LayoutStack>
+        </ILayoutStack>
 
         <!-- Responsive Testing Guide -->
         <div class="bg-elevated p-8 rounded-lg border border-muted">
-          <LayoutHeading
+          <IHeading
             text="How to Test Responsive Variants"
             variant="section"
           />
           <div class="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg mt-4">
-            <LayoutStack variant="compact">
+            <ILayoutStack variant="compact">
               <p class="text-blue-400 font-medium">
                 🖥️ Responsive Testing Guide:
               </p>
@@ -236,10 +233,10 @@ const stackVariants = [
               <p class="text-xs text-dimmed mt-3">
                 💡 <strong>Tip:</strong> Resize your browser window to see responsive changes in action!
               </p>
-            </LayoutStack>
+            </ILayoutStack>
           </div>
         </div>
       </div>
-    </LayoutCenter>
+    </ILayoutCenter>
   </div>
 </template>

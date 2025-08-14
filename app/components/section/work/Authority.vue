@@ -12,58 +12,35 @@ const authorityConfig: IntentConfig = {
   emphasis: 'expertise',
   colorScheme: 'primary',
 }
-
-// Get featured blog posts for authority building
-const { data: blogPosts } = await useAsyncData('featured-blog-posts', () =>
-  queryCollection('blog')
-    .where('featured', '=', true)
-    .order('date', 'DESC')
-    .limit(6)
-    .all(),
-)
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="authorityConfig.sectionVariant"
     :background="authorityConfig.background"
     class="authority-work"
   >
-    <LayoutCenter variant="prose">
-      <LayoutStack variant="spacious">
+    <ILayoutCenter variant="prose">
+      <ILayoutStack variant="spacious">
         <!-- Authority-focused header -->
-        <LayoutCenter variant="text-only">
-          <LayoutStack variant="default">
-            <LayoutHeading
+        <ILayoutCenter variant="text-only">
+          <ILayoutStack variant="default">
+            <IHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <LayoutText
+            <IText
               v-if="subtitle"
               :text="subtitle"
               variant="subtitle"
             />
-          </LayoutStack>
-        </LayoutCenter>
-
-        <!-- Featured Work Grid - Expertise showcase -->
-        <LayoutGrid
-          v-if="blogPosts?.length"
-          variant="thirds"
-        >
-          <BlogPostCard
-            v-for="post in blogPosts.slice(0, 6)"
-            :key="post.path"
-            :post="post"
-            :featured="false"
-            class="authority-card"
-          />
-        </LayoutGrid>
-      </LayoutStack>
-    </LayoutCenter>
-  </LayoutSection>
+          </ILayoutStack>
+        </ILayoutCenter>
+      </ILayoutStack>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

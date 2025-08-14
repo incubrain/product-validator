@@ -13,6 +13,7 @@ export default createUIComponent((config) => ({
       narrow: { root: 'max-w-2xl' },
       default: { root: 'max-w-4xl' },
       wide: { root: 'max-w-6xl' },
+      prose: { root: 'max-w-prose' },
       full: { root: 'max-w-none' },
     },
     align: {

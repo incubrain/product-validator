@@ -36,7 +36,7 @@ const getBadgeClasses = (variant: FeatureBadge['variant'] = 'blue') => {
 <template>
   <div class="text-left space-y-4">
     <!-- Main Title -->
-    <LayoutHeading
+    <IHeading
       variant="hero"
       :level="1"
       :text="title"
@@ -44,7 +44,7 @@ const getBadgeClasses = (variant: FeatureBadge['variant'] = 'blue') => {
     />
 
     <!-- Subtitle -->
-    <LayoutText
+    <IText
       variant="subtitle"
       :text="subtitle"
       class="text-xl text-gray-600 dark:text-gray-300 max-w-3xl"

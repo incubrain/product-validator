@@ -14,17 +14,17 @@ const urgencyConfig: IntentConfig = {
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="urgencyConfig.sectionVariant"
     :background="urgencyConfig.background"
     class="urgency-faq"
   >
-    <LayoutCenter variant="prose">
-      <LayoutStack variant="compact">
+    <ILayoutCenter variant="prose">
+      <ILayoutStack variant="compact">
         <!-- Urgency-focused header -->
-        <LayoutCenter variant="text-only">
-          <LayoutStack variant="compact">
-            <LayoutCenter>
+        <ILayoutCenter variant="text-only">
+          <ILayoutStack variant="compact">
+            <ILayoutCenter>
               <UBadge
                 color="warning"
                 variant="solid"
@@ -37,21 +37,21 @@ const urgencyConfig: IntentConfig = {
                 />
                 Fast Answers
               </UBadge>
-            </LayoutCenter>
+            </ILayoutCenter>
 
-            <LayoutHeading
+            <IHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <LayoutText
+            <IText
               v-if="description"
               :text="description"
               variant="subtitle"
             />
-          </LayoutStack>
-        </LayoutCenter>
+          </ILayoutStack>
+        </ILayoutCenter>
 
         <IAccordion
           intent="urgency"
@@ -63,14 +63,14 @@ const urgencyConfig: IntentConfig = {
         />
 
         <!-- Urgency CTA -->
-        <LayoutCenter class="mt-8">
+        <ILayoutCenter class="mt-8">
           <div class="bg-warning/10 border border-warning/30 rounded-lg p-6 text-center">
             <div class="flex justify-center items-center gap-3 mb-4">
               <UIcon
                 name="i-lucide-phone"
                 class="size-5 text-warning-600"
               />
-              <LayoutText
+              <IText
                 text="Need immediate answers? Get instant response within 24 hours"
                 variant="card"
                 class="text-warning-700 font-medium"
@@ -86,10 +86,10 @@ const urgencyConfig: IntentConfig = {
               class="animate-pulse"
             />
           </div>
-        </LayoutCenter>
-      </LayoutStack>
-    </LayoutCenter>
-  </LayoutSection>
+        </ILayoutCenter>
+      </ILayoutStack>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

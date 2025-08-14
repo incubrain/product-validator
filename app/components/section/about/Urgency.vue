@@ -14,13 +14,13 @@ const urgencyConfig: IntentConfig = {
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="urgencyConfig.sectionVariant"
     :background="urgencyConfig.background"
     class="urgency-about"
   >
-    <LayoutCenter variant="prose">
-      <LayoutSplit variant="default">
+    <ILayoutCenter variant="prose">
+      <ILayoutSplit variant="default">
         <!-- Image with availability emphasis -->
         <template #secondary>
           <div
@@ -29,7 +29,7 @@ const urgencyConfig: IntentConfig = {
           >
             <div class="absolute inset-0 bg-warning/10 animate-pulse rounded-2xl" />
 
-            <MediaImage
+            <IImage
               :src="image"
               :alt="title"
               class="relative w-full shadow-lg border-2 border-warning/30"
@@ -81,21 +81,21 @@ const urgencyConfig: IntentConfig = {
 
         <!-- Availability-focused content -->
         <template #primary>
-          <LayoutStack variant="compact">
-            <LayoutStack variant="compact">
-              <LayoutHeading
+          <ILayoutStack variant="compact">
+            <ILayoutStack variant="compact">
+              <IHeading
                 :text="title"
                 variant="section"
                 anchor
               />
 
               <!-- Availability subtitle -->
-              <LayoutText
+              <IText
                 text="Ready to Start Your Project Today"
                 variant="subtitle"
                 class="text-warning-600"
               />
-            </LayoutStack>
+            </ILayoutStack>
 
             <div
               class="prose prose-lg prose-zinc dark:prose-invert max-w-none"
@@ -109,7 +109,7 @@ const urgencyConfig: IntentConfig = {
                   name="i-lucide-clock"
                   class="size-6 text-warning-600"
                 />
-                <LayoutHeading
+                <IHeading
                   text="Current Availability"
                   variant="card"
                   class="text-warning-700"
@@ -154,11 +154,11 @@ const urgencyConfig: IntentConfig = {
                 </div>
               </div>
             </div>
-          </LayoutStack>
+          </ILayoutStack>
         </template>
-      </LayoutSplit>
-    </LayoutCenter>
-  </LayoutSection>
+      </ILayoutSplit>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

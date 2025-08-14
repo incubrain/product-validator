@@ -10,28 +10,12 @@ const centerStyles = tv({
   variants: {
     ...createPaddingVariants('root'),
     variant: {
-      'default': {
-        root: 'max-w-4xl',
-      },
-      'narrow': {
-        root: 'max-w-2xl',
-      },
-      'prose': {
-        root: 'max-w-prose',
-      },
-      'wide': {
-        root: 'max-w-6xl',
-      },
-      'full': {
-        root: 'max-w-full',
-      },
       'text-only': {
-        root: 'max-w-2xl text-center',
+        root: 'text-center',
       },
     },
   },
   defaultVariants: {
-    variant: 'default',
     padding: 'none',
   },
 })

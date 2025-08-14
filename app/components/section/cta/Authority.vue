@@ -14,42 +14,42 @@ const authorityConfig: IntentConfig = {
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="authorityConfig.sectionVariant"
     :background="authorityConfig.background"
     class="authority-cta"
   >
-    <LayoutCenter variant="prose">
-      <LayoutStack variant="spacious">
+    <ILayoutCenter variant="prose">
+      <ILayoutStack variant="spacious">
         <!-- Authority-focused header -->
-        <LayoutCenter variant="text-only">
-          <LayoutStack variant="default">
-            <LayoutHeading
+        <ILayoutCenter variant="text-only">
+          <ILayoutStack variant="default">
+            <IHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <LayoutText
+            <IText
               v-if="subtitle"
               :text="subtitle"
               variant="subtitle"
             />
-          </LayoutStack>
-        </LayoutCenter>
+          </ILayoutStack>
+        </ILayoutCenter>
 
         <!-- Expert consultation offers -->
         <div
           v-if="items?.length"
           class="max-w-4xl mx-auto"
         >
-          <LayoutGrid variant="halves">
+          <ILayoutGrid variant="halves">
             <UCard
               v-for="card in items"
               :key="card.title"
               class="bg-primary/5 border-primary/20 hover:border-primary/40 transition-all duration-200"
             >
-              <LayoutStack variant="default">
+              <ILayoutStack variant="default">
                 <!-- Authority indicator -->
                 <div class="flex items-center gap-3 mb-4">
                   <div class="w-12 h-12 rounded-lg bg-primary/10 flex items-center justify-center">
@@ -67,13 +67,13 @@ const authorityConfig: IntentConfig = {
                   </UBadge>
                 </div>
 
-                <LayoutStack variant="default">
-                  <LayoutHeading
+                <ILayoutStack variant="default">
+                  <IHeading
                     :text="card.title"
                     variant="card"
                   />
 
-                  <LayoutText
+                  <IText
                     v-if="card.subtitle"
                     :text="card.subtitle"
                     variant="description"
@@ -114,14 +114,14 @@ const authorityConfig: IntentConfig = {
                     trailing-icon="i-lucide-award"
                     class="mt-6"
                   />
-                </LayoutStack>
-              </LayoutStack>
+                </ILayoutStack>
+              </ILayoutStack>
             </UCard>
-          </LayoutGrid>
+          </ILayoutGrid>
         </div>
-      </LayoutStack>
-    </LayoutCenter>
-  </LayoutSection>
+      </ILayoutStack>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

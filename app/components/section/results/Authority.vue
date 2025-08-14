@@ -14,38 +14,38 @@ const authorityConfig: IntentConfig = {
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="authorityConfig.sectionVariant"
     :background="authorityConfig.background"
     class="authority-results"
   >
-    <LayoutCenter variant="prose">
-      <LayoutStack variant="spacious">
+    <ILayoutCenter variant="prose">
+      <ILayoutStack variant="spacious">
         <!-- Authority-focused header -->
-        <LayoutCenter variant="text-only">
-          <LayoutStack variant="default">
-            <LayoutHeading
+        <ILayoutCenter variant="text-only">
+          <ILayoutStack variant="default">
+            <IHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <LayoutText
+            <IText
               v-if="subtitle"
               :text="subtitle"
               variant="subtitle"
             />
 
-            <LayoutText
+            <IText
               v-if="description"
               :text="description"
               variant="description"
             />
-          </LayoutStack>
-        </LayoutCenter>
+          </ILayoutStack>
+        </ILayoutCenter>
 
         <!-- Authority-focused metrics with expertise emphasis -->
-        <LayoutGrid
+        <ILayoutGrid
           v-if="items?.length"
           variant="thirds"
         >
@@ -54,7 +54,7 @@ const authorityConfig: IntentConfig = {
             :key="item.title"
             class="bg-primary/5 border-primary/20 hover:border-primary/40 transition-all duration-200"
           >
-            <LayoutStack variant="centered">
+            <ILayoutStack variant="centered">
               <!-- Authority/expertise indicator -->
               <div class="w-14 h-14 rounded-lg bg-primary/10 flex items-center justify-center">
                 <UIcon
@@ -63,27 +63,27 @@ const authorityConfig: IntentConfig = {
                 />
               </div>
 
-              <LayoutStack variant="centered">
+              <ILayoutStack variant="centered">
                 <!-- Professional metric display -->
-                <LayoutHeading
+                <IHeading
                   :text="item.value || item.title"
                   variant="metric"
                   class="text-primary-700 font-bold"
                 />
 
-                <LayoutText
+                <IText
                   :text="item.title"
                   variant="card"
                   class="font-semibold"
                 />
 
-                <LayoutText
+                <IText
                   v-if="item.description"
                   :text="item.description"
                   variant="small"
                   class="text-muted text-center"
                 />
-              </LayoutStack>
+              </ILayoutStack>
 
               <!-- Authority badge -->
               <UBadge
@@ -93,14 +93,14 @@ const authorityConfig: IntentConfig = {
               >
                 Expert Level
               </UBadge>
-            </LayoutStack>
+            </ILayoutStack>
           </UCard>
-        </LayoutGrid>
+        </ILayoutGrid>
 
         <!-- Authority-focused CTA -->
-        <LayoutCenter v-if="action">
-          <LayoutStack variant="compact">
-            <LayoutText
+        <ILayoutCenter v-if="action">
+          <ILayoutStack variant="compact">
+            <IText
               v-if="action.description"
               :text="action.description"
               variant="caption"
@@ -114,11 +114,11 @@ const authorityConfig: IntentConfig = {
               :to="action.link"
               trailing-icon="i-lucide-award"
             />
-          </LayoutStack>
-        </LayoutCenter>
-      </LayoutStack>
-    </LayoutCenter>
-  </LayoutSection>
+          </ILayoutStack>
+        </ILayoutCenter>
+      </ILayoutStack>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

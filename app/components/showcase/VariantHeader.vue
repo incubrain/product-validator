@@ -19,7 +19,7 @@ const getEmotionalColor = (emotional: string) => {
 
 <template>
   <UContainer>
-    <LayoutStack variant="compact">
+    <ILayoutStack variant="compact">
       <div class="flex flex-col items-start gap-3">
         <UBadge
           :label="emotional.toUpperCase()"
@@ -27,15 +27,15 @@ const getEmotionalColor = (emotional: string) => {
           variant="soft"
           size="lg"
         />
-        <LayoutHeading
+        <IHeading
           :text="name"
           variant="card"
         />
       </div>
-      <LayoutText
+      <IText
         :text="description"
         variant="description"
       />
-    </LayoutStack>
+    </ILayoutStack>
   </UContainer>
 </template>

@@ -15,38 +15,38 @@ const trustConfig: IntentConfig = {
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="trustConfig.sectionVariant"
     :background="trustConfig.background"
     class="trust-hero"
   >
-    <LayoutCenter variant="prose">
-      <LayoutStack variant="spacious">
+    <ILayoutCenter variant="prose">
+      <ILayoutStack variant="spacious">
         <!-- Trust-focused content layout -->
-        <LayoutCenter variant="text-only">
-          <LayoutStack variant="default">
-            <LayoutHeading
+        <ILayoutCenter variant="text-only">
+          <ILayoutStack variant="default">
+            <IHeading
               :text="title"
               variant="hero"
               anchor
             />
 
-            <LayoutText
+            <IText
               v-if="subtitle"
               :text="subtitle"
               variant="hero-subtitle"
             />
 
-            <LayoutText
+            <IText
               v-if="description"
               :text="description"
               variant="description"
             />
-          </LayoutStack>
-        </LayoutCenter>
+          </ILayoutStack>
+        </ILayoutCenter>
 
         <!-- Trust indicators - testimonials/social proof -->
-        <LayoutGrid
+        <ILayoutGrid
           v-if="items?.length"
           variant="thirds"
         >
@@ -55,7 +55,7 @@ const trustConfig: IntentConfig = {
             :key="item.title"
             class="bg-elevated/30 border-muted hover:border-default transition-all duration-200"
           >
-            <LayoutStack variant="centered">
+            <ILayoutStack variant="centered">
               <!-- Trust icon with soft styling -->
               <div class="w-10 h-10 rounded-lg bg-success/10 flex items-center justify-center">
                 <UIcon
@@ -64,32 +64,32 @@ const trustConfig: IntentConfig = {
                 />
               </div>
 
-              <LayoutStack variant="centered">
-                <LayoutHeading
+              <ILayoutStack variant="centered">
+                <IHeading
                   :text="item.title"
                   variant="card"
                 />
-                <LayoutText
+                <IText
                   :text="item.description"
                   variant="small"
                   class="text-muted text-center"
                 />
-              </LayoutStack>
-            </LayoutStack>
+              </ILayoutStack>
+            </ILayoutStack>
           </UCard>
-        </LayoutGrid>
+        </ILayoutGrid>
 
         <!-- Trust-focused CTA -->
-        <LayoutCenter v-if="action">
-          <LayoutStack variant="centered">
-            <LayoutText
+        <ILayoutCenter v-if="action">
+          <ILayoutStack variant="centered">
+            <IText
               v-if="action.description"
               variant="caption"
               :text="action.description"
               class="text-muted"
             />
 
-            <LayoutCluster variant="centered">
+            <ILayoutCluster variant="centered">
               <UButton
                 :label="action.text"
                 color="primary"
@@ -97,12 +97,12 @@ const trustConfig: IntentConfig = {
                 :to="action.link"
                 trailing-icon="i-lucide-shield-check"
               />
-            </LayoutCluster>
-          </LayoutStack>
-        </LayoutCenter>
-      </LayoutStack>
-    </LayoutCenter>
-  </LayoutSection>
+            </ILayoutCluster>
+          </ILayoutStack>
+        </ILayoutCenter>
+      </ILayoutStack>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

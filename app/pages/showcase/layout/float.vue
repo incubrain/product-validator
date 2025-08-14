@@ -1,11 +1,11 @@
 <script setup lang="ts">
 // Import the actual component
-import LayoutFloat from '~/components/layout/Float.vue'
+import ILayoutFloat from '~/components/layout/Float.vue'
 import type { FloatVariants } from '~~/theme/index'
 
 // Page header content
 const headerContent = {
-  title: 'LayoutFloat Showcase',
+  title: 'ILayoutFloat Showcase',
   subtitle: 'CSS float utilities for flowing content layouts, quotes, and responsive design',
   badges: [
     { text: '5 Core Variants', variant: 'blue' },
@@ -24,7 +24,7 @@ interface ShowcaseOption<K extends keyof FloatVariants> {
 
 // Interactive demo configuration
 const floatConfig = {
-  componentName: 'LayoutFloat',
+  componentName: 'ILayoutFloat',
   variants: [
     {
       name: 'variant',
@@ -129,8 +129,8 @@ const useCases = [
 
 <template>
   <UContainer class="section-spacing">
-    <LayoutCenter variant="full">
-      <LayoutStack variant="spacious">
+    <ILayoutCenter variant="full">
+      <ILayoutStack variant="spacious">
         <!-- Page Header -->
         <ShowcasePageHeader
           :title="headerContent.title"
@@ -141,11 +141,11 @@ const useCases = [
         <!-- Manual Testing -->
 
         <div>
-          <LayoutFloat variant="text-left">
+          <ILayoutFloat variant="text-left">
             <div class="w-32 h-24 border-warning-700 border rounded-md flex items-center justify-center text-sm">
               Floated Box
             </div>
-          </LayoutFloat>
+          </ILayoutFloat>
           <p class="mt-4 text-sm">
             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
           </p>
@@ -166,25 +166,25 @@ const useCases = [
             :description="item.description"
             :config="item.componentProps"
           >
-            <LayoutFloat v-bind="item.componentProps">
+            <ILayoutFloat v-bind="item.componentProps">
               <ShowcaseDemoContent :content="item.content" />
-            </LayoutFloat>
+            </ILayoutFloat>
           </ShowcaseDemoCard>
         </ShowcaseDemo>
 
         <!-- Interactive Demo -->
         <ShowcaseDemo
           title="Interactive Playground"
-          description="Experiment with LayoutFloat options in real-time"
+          description="Experiment with ILayoutFloat options in real-time"
           category="interactive"
         >
           <ShowcaseComponent :config="floatConfig">
             <template #default="{ props: reactiveProps }">
-              <LayoutFloat v-bind="reactiveProps">
+              <ILayoutFloat v-bind="reactiveProps">
                 <div class="w-32 h-24 border-warning-700 border rounded-md flex items-center justify-center text-sm">
                   Floated Box
                 </div>
-              </LayoutFloat>
+              </ILayoutFloat>
               <p class="mt-4 text-sm">
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris.
               </p>
@@ -201,7 +201,7 @@ const useCases = [
         />
 
         <ShowcaseUseCases :items="useCases" />
-      </LayoutStack>
-    </LayoutCenter>
+      </ILayoutStack>
+    </ILayoutCenter>
   </UContainer>
 </template>

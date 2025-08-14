@@ -1,6 +1,6 @@
 // shared/types/components.ts
 import type { BadgeProps, ButtonProps, ButtonGroupProps, SelectProps } from '@nuxt/ui'
-import type { HeadingVariants, HeadingSlots, TextSlots, TextVariants, SectionTitleSlots, SectionTitleVariants, AnchorVariants, AnchorSlots, GridVariants, GridSlots, RowGridVariants, RowGridSlots, SplitVariants, SplitSlots, CenterVariants, CenterSlots, SectionVariants, SectionSlots, StackVariants, StackSlots, FloatSlots, FloatVariants, TransformVariants, TransformSlots, LanguageSwitcherVariants,
+import type { HeadingVariants, HeadingSlots, TextSlots, TextVariants, SectionTitleSlots, SectionTitleVariants, AnchorVariants, AnchorSlots, GridVariants, GridSlots, GridRowVariants, GridRowSlots, SplitVariants, SplitSlots, CenterVariants, CenterSlots, SectionVariants, SectionSlots, StackVariants, StackSlots, FloatSlots, FloatVariants, TransformVariants, TransformSlots, LanguageSwitcherVariants,
   LanguageSwitcherSlots } from '~~/theme/index'
 
 export interface HeadingProps {
@@ -44,14 +44,14 @@ export interface GridProps {
   ui?: GridSlots
 }
 
-export interface RowGridProps {
+export interface GridRowProps {
   rows: number[] // [2, 3] = 2 items first row, 3 items second row
-  spacing?: RowGridVariants['spacing']
-  gap?: RowGridVariants['gap']
-  alignRows?: RowGridVariants['alignRows']
+  spacing?: GridRowVariants['spacing']
+  gap?: GridRowVariants['gap']
+  alignRows?: GridRowVariants['alignRows']
   responsive?: boolean
   as?: string
-  ui?: RowGridSlots
+  ui?: GridRowSlots
 }
 
 export interface SplitProps {

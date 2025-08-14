@@ -15,17 +15,17 @@ const urgencyConfig: IntentConfig = {
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="urgencyConfig.sectionVariant"
     :background="urgencyConfig.background"
     class="urgency-cta"
   >
-    <LayoutCenter variant="prose">
-      <LayoutStack variant="compact">
+    <ILayoutCenter variant="prose">
+      <ILayoutStack variant="compact">
         <!-- Urgency-focused header -->
-        <LayoutCenter variant="text-only">
-          <LayoutStack variant="compact">
-            <LayoutCenter>
+        <ILayoutCenter variant="text-only">
+          <ILayoutStack variant="compact">
+            <ILayoutCenter>
               <UBadge
                 color="warning"
                 variant="solid"
@@ -38,28 +38,28 @@ const urgencyConfig: IntentConfig = {
                 />
                 Limited Time Offer
               </UBadge>
-            </LayoutCenter>
+            </ILayoutCenter>
 
-            <LayoutHeading
+            <IHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <LayoutText
+            <IText
               v-if="subtitle"
               :text="subtitle"
               variant="subtitle"
             />
-          </LayoutStack>
-        </LayoutCenter>
+          </ILayoutStack>
+        </ILayoutCenter>
 
         <!-- Time-sensitive offers -->
         <div
           v-if="items?.length"
           class="max-w-4xl mx-auto"
         >
-          <LayoutGrid variant="halves">
+          <ILayoutGrid variant="halves">
             <UCard
               v-for="card in items"
               :key="card.title"
@@ -67,7 +67,7 @@ const urgencyConfig: IntentConfig = {
             >
               <div class="absolute inset-0 bg-warning/5 animate-pulse" />
 
-              <LayoutStack
+              <ILayoutStack
                 variant="default"
                 class="relative z-10"
               >
@@ -89,13 +89,13 @@ const urgencyConfig: IntentConfig = {
                   </UBadge>
                 </div>
 
-                <LayoutStack variant="default">
-                  <LayoutHeading
+                <ILayoutStack variant="default">
+                  <IHeading
                     :text="card.title"
                     variant="card"
                   />
 
-                  <LayoutText
+                  <IText
                     v-if="card.subtitle"
                     :text="card.subtitle"
                     variant="description"
@@ -136,14 +136,14 @@ const urgencyConfig: IntentConfig = {
                     trailing-icon="i-lucide-timer"
                     class="mt-6 animate-pulse"
                   />
-                </LayoutStack>
-              </LayoutStack>
+                </ILayoutStack>
+              </ILayoutStack>
             </UCard>
-          </LayoutGrid>
+          </ILayoutGrid>
         </div>
-      </LayoutStack>
-    </LayoutCenter>
-  </LayoutSection>
+      </ILayoutStack>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

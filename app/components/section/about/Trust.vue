@@ -13,20 +13,20 @@ const trustConfig: IntentConfig = {
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="trustConfig.sectionVariant"
     :background="trustConfig.background"
     class="trust-about"
   >
-    <LayoutCenter variant="prose">
-      <LayoutSplit variant="default">
+    <ILayoutCenter variant="prose">
+      <ILayoutSplit variant="default">
         <!-- Image with trust indicators -->
         <template #secondary>
           <div
             v-if="image"
             class="relative"
           >
-            <MediaImage
+            <IImage
               :src="image"
               :alt="title"
               class="relative w-full shadow-lg border-2 border-success/20"
@@ -62,8 +62,8 @@ const trustConfig: IntentConfig = {
 
         <!-- Content with trust focus -->
         <template #primary>
-          <LayoutStack variant="spacious">
-            <LayoutHeading
+          <ILayoutStack variant="spacious">
+            <IHeading
               :text="title"
               variant="section"
               anchor
@@ -92,11 +92,11 @@ const trustConfig: IntentConfig = {
                 </div>
               </div>
             </div>
-          </LayoutStack>
+          </ILayoutStack>
         </template>
-      </LayoutSplit>
-    </LayoutCenter>
-  </LayoutSection>
+      </ILayoutSplit>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useHead({
-  title: 'LayoutSplit Showcase - Layout Primitives',
-  meta: [{ name: 'description', content: 'Comprehensive showcase of LayoutSplit variants for two-column layouts' }],
+  title: 'ILayoutSplit Showcase - Layout Primitives',
+  meta: [{ name: 'description', content: 'Comprehensive showcase of ILayoutSplit variants for two-column layouts' }],
 })
 
 const splitVariants = [
@@ -15,22 +15,22 @@ const splitVariants = [
 
 <template>
   <div class="min-h-screen bg-muted">
-    <LayoutCenter variant="full">
+    <ILayoutCenter variant="full">
       <div class="py-section space-y-component">
         <!-- Page Header -->
-        <LayoutStack variant="centered">
-          <LayoutHeading
-            text="LayoutSplit Showcase"
+        <ILayoutStack variant="centered">
+          <IHeading
+            text="ILayoutSplit Showcase"
             variant="hero"
           />
-          <LayoutText
+          <IText
             text="Two-column responsive layouts with intelligent breakpoint behavior"
             variant="subtitle"
           />
-        </LayoutStack>
+        </ILayoutStack>
 
         <!-- Split Variants -->
-        <LayoutStack variant="spacious">
+        <ILayoutStack variant="spacious">
           <div
             v-for="(variant, index) in splitVariants"
             :key="variant.name"
@@ -45,12 +45,12 @@ const splitVariants = [
                     color="primary"
                     variant="solid"
                   />
-                  <LayoutHeading
+                  <IHeading
                     :text="`variant='${variant.name}'`"
                     variant="card"
                   />
                 </div>
-                <LayoutText
+                <IText
                   :text="variant.description"
                   variant="description"
                 />
@@ -59,7 +59,7 @@ const splitVariants = [
               <!-- Demo Container -->
               <div class="i-pattern-circuit border-2 border-dashed border-primary/30 p-6 rounded-lg">
                 <component
-                  :is="'LayoutSplit'"
+                  :is="'ILayoutSplit'"
                   :variant="variant.name"
                   class="min-h-[300px]"
                 >
@@ -88,51 +88,51 @@ const splitVariants = [
                 <summary class="cursor-pointer text-sm font-medium text-primary hover:text-primary/80">
                   View Code
                 </summary>
-                <pre class="mt-2 p-3 bg-black/50 rounded text-xs text-green-400 overflow-x-auto"><code>&lt;LayoutSplit variant="${variant.name}"&gt;
+                <pre class="mt-2 p-3 bg-black/50 rounded text-xs text-green-400 overflow-x-auto"><code>&lt;ILayoutSplit variant="${variant.name}"&gt;
   &lt;template #primary&gt;
     Primary content
   &lt;/template&gt;
   &lt;template #secondary&gt;
     Secondary content
   &lt;/template&gt;
-&lt;/LayoutSplit&gt;</code></pre>
+&lt;/ILayoutSplit&gt;</code></pre>
               </details>
             </div>
 
             <!-- Divider -->
-            <LayoutDivider
+            <ILayoutDivider
               v-if="index < splitVariants.length - 1"
               variant="gradient"
               spacing="lg"
             />
           </div>
-        </LayoutStack>
+        </ILayoutStack>
 
         <!-- Real-World Examples -->
         <div class="bg-elevated p-8 rounded-lg border border-muted">
-          <LayoutHeading
+          <IHeading
             text="Real-World Split Examples"
             variant="section"
           />
 
-          <LayoutStack variant="spacious">
+          <ILayoutStack variant="spacious">
             <!-- Hero Section Example -->
             <div class="i-pattern-circuit border-2 border-dashed border-emerald-500/30 p-6 rounded-lg">
               <h4 class="text-lg font-semibold mb-4 text-emerald-400">
                 Hero Section Layout
               </h4>
-              <LayoutSplit variant="default">
+              <ILayoutSplit variant="default">
                 <template #primary>
-                  <LayoutStack variant="default">
-                    <LayoutHeading
+                  <ILayoutStack variant="default">
+                    <IHeading
                       text="Hero Title"
                       variant="hero"
                     />
-                    <LayoutText
+                    <IText
                       text="Compelling hero description that converts visitors into customers."
                       variant="description"
                     />
-                    <LayoutStack variant="horizontal">
+                    <ILayoutStack variant="horizontal">
                       <UButton
                         label="Get Started"
                         color="primary"
@@ -141,8 +141,8 @@ const splitVariants = [
                         label="Learn More"
                         variant="outline"
                       />
-                    </LayoutStack>
-                  </LayoutStack>
+                    </ILayoutStack>
+                  </ILayoutStack>
                 </template>
 
                 <template #secondary>
@@ -150,7 +150,7 @@ const splitVariants = [
                     <span class="text-muted">Hero Image/Video</span>
                   </div>
                 </template>
-              </LayoutSplit>
+              </ILayoutSplit>
             </div>
 
             <!-- Content + Sidebar Example -->
@@ -158,7 +158,7 @@ const splitVariants = [
               <h4 class="text-lg font-semibold mb-4 text-blue-400">
                 Content + Sidebar Layout
               </h4>
-              <LayoutSplit variant="wide">
+              <ILayoutSplit variant="wide">
                 <template #primary>
                   <div class="prose prose-sm max-w-none">
                     <h3>Main Content Area</h3>
@@ -179,11 +179,11 @@ const splitVariants = [
                     </ul>
                   </div>
                 </template>
-              </LayoutSplit>
+              </ILayoutSplit>
             </div>
-          </LayoutStack>
+          </ILayoutStack>
         </div>
       </div>
-    </LayoutCenter>
+    </ILayoutCenter>
   </div>
 </template>

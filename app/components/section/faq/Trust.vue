@@ -14,15 +14,15 @@ const trustConfig: IntentConfig = {
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="trustConfig.sectionVariant"
     :background="trustConfig.background"
     class="trust-faq"
   >
-    <LayoutCenter variant="prose">
-      <LayoutStack variant="spacious">
+    <ILayoutCenter variant="prose">
+      <ILayoutStack variant="spacious">
         <!-- Trust-focused header -->
-        <LayoutStack variant="centered">
+        <ILayoutStack variant="centered">
           <UBadge
             color="success"
             variant="soft"
@@ -35,17 +35,17 @@ const trustConfig: IntentConfig = {
             Transparent & Honest
           </UBadge>
 
-          <LayoutHeading
+          <IHeading
             :text="title"
             variant="section"
           />
 
-          <LayoutText
+          <IText
             v-if="description"
             :text="description"
             variant="subtitle"
           />
-        </LayoutStack>
+        </ILayoutStack>
 
         <IAccordion
           intent="trust"
@@ -55,9 +55,9 @@ const trustConfig: IntentConfig = {
           :categories="['trust', 'general']"
           :show-category-filter="true"
         />
-      </LayoutStack>
-    </LayoutCenter>
-  </LayoutSection>
+      </ILayoutStack>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

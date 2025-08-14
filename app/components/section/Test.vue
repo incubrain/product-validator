@@ -73,11 +73,11 @@ const getIconColorClasses = (color: Feature['iconColor']) => {
 </script>
 
 <template>
-  <LayoutSection variant="default">
-    <LayoutStack>
+  <ISection variant="default">
+    <ILayoutStack>
       <!-- ✅ TEST 1: Default Configuration -->
       <!-- ✅ TEST 1: Basic Center Layout -->
-      <LayoutSectionTitle
+      <ISectionTitle
         variant="center"
         :heading="{
           text: 'Revolutionary AI Platform',
@@ -98,7 +98,7 @@ const getIconColorClasses = (color: Feature['iconColor']) => {
       />
 
       <!-- ✅ TEST 2: Left Aligned with Custom Styling -->
-      <LayoutSectionTitle
+      <ISectionTitle
         variant="left"
         :heading="{
           text: 'Feature Showcase',
@@ -118,7 +118,7 @@ const getIconColorClasses = (color: Feature['iconColor']) => {
       />
 
       <!-- ✅ TEST 3: No Badge, Different Heading Level -->
-      <LayoutSectionTitle
+      <ISectionTitle
         variant="center"
         :heading="{
           text: 'Pricing Plans',
@@ -133,7 +133,7 @@ const getIconColorClasses = (color: Feature['iconColor']) => {
       />
 
       <!-- ✅ TEST 4: Custom UI Overrides -->
-      <LayoutSectionTitle
+      <ISectionTitle
         variant="left"
         :heading="{
           text: 'Custom Styled Section',
@@ -157,7 +157,7 @@ const getIconColorClasses = (color: Feature['iconColor']) => {
       />
 
       <!-- ✅ TEST 5: Minimal Configuration -->
-      <LayoutSectionTitle
+      <ISectionTitle
         :heading="{
           text: 'Simple Header',
           level: 4,
@@ -165,7 +165,7 @@ const getIconColorClasses = (color: Feature['iconColor']) => {
       />
 
       <!-- ✅ TEST 6: With Slots -->
-      <LayoutSectionTitle
+      <ISectionTitle
         variant="center"
         :heading="{
           text: 'Section with Custom Content',
@@ -199,10 +199,10 @@ const getIconColorClasses = (color: Feature['iconColor']) => {
             </UButton>
           </div>
         </template>
-      </LayoutSectionTitle>
+      </ISectionTitle>
 
       <!-- ✅ TEST 7: Edge Case - No Subtitle -->
-      <LayoutSectionTitle
+      <ISectionTitle
         variant="left"
         :heading="{
           text: 'Title Only Section',
@@ -217,7 +217,7 @@ const getIconColorClasses = (color: Feature['iconColor']) => {
       />
 
       <!-- Features Grid -->
-      <LayoutGrid
+      <ILayoutGrid
         variant="quarters"
         class="mt-12"
       >
@@ -243,7 +243,7 @@ const getIconColorClasses = (color: Feature['iconColor']) => {
           </div>
 
           <!-- Title -->
-          <LayoutHeading
+          <IHeading
             :text="feature.title"
             :level="3"
             variant="card"
@@ -251,13 +251,13 @@ const getIconColorClasses = (color: Feature['iconColor']) => {
           />
 
           <!-- Description -->
-          <LayoutText
+          <IText
             :text="feature.description"
             variant="description"
             class="text-gray-600 dark:text-gray-400"
           />
         </UCard>
-      </LayoutGrid>
-    </LayoutStack>
-  </LayoutSection>
+      </ILayoutGrid>
+    </ILayoutStack>
+  </ISection>
 </template>

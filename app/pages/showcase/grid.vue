@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useHead({
-  title: 'LayoutGrid Showcase - Layout Primitives',
-  meta: [{ name: 'description', content: 'Comprehensive showcase of LayoutGrid variants for multi-column layouts' }],
+  title: 'ILayoutGrid Showcase - Layout Primitives',
+  meta: [{ name: 'description', content: 'Comprehensive showcase of ILayoutGrid variants for multi-column layouts' }],
 })
 
 const gridVariants = [
@@ -18,22 +18,22 @@ const gridVariants = [
 
 <template>
   <div class="min-h-screen bg-muted">
-    <LayoutCenter variant="full">
+    <ILayoutCenter variant="full">
       <div class="py-section space-y-component">
         <!-- Page Header -->
-        <LayoutStack variant="centered">
-          <LayoutHeading
-            text="LayoutGrid Showcase"
+        <ILayoutStack variant="centered">
+          <IHeading
+            text="ILayoutGrid Showcase"
             variant="hero"
           />
-          <LayoutText
+          <IText
             text="Multi-column grid systems with responsive breakpoint behavior"
             variant="subtitle"
           />
-        </LayoutStack>
+        </ILayoutStack>
 
         <!-- Grid Variants -->
-        <LayoutStack variant="spacious">
+        <ILayoutStack variant="spacious">
           <div
             v-for="(variant, index) in gridVariants"
             :key="variant.name"
@@ -48,12 +48,12 @@ const gridVariants = [
                     color="primary"
                     variant="solid"
                   />
-                  <LayoutHeading
+                  <IHeading
                     :text="`variant='${variant.name}'`"
                     variant="card"
                   />
                 </div>
-                <LayoutText
+                <IText
                   :text="variant.description"
                   variant="description"
                 />
@@ -62,7 +62,7 @@ const gridVariants = [
               <!-- Demo Container -->
               <div class="i-pattern-circuit border-2 border-dashed border-primary/30 p-6 rounded-lg">
                 <component
-                  :is="'LayoutGrid'"
+                  :is="'ILayoutGrid'"
                   :variant="variant.name"
                 >
                   <div
@@ -88,38 +88,38 @@ const gridVariants = [
                 <summary class="cursor-pointer text-sm font-medium text-primary hover:text-primary/80">
                   View Code
                 </summary>
-                <pre class="mt-2 p-3 bg-black/50 rounded text-xs text-green-400 overflow-x-auto"><code>&lt;LayoutGrid variant="${variant.name}"&gt;
+                <pre class="mt-2 p-3 bg-black/50 rounded text-xs text-green-400 overflow-x-auto"><code>&lt;ILayoutGrid variant="${variant.name}"&gt;
   &lt;div&gt;Grid Item 1&lt;/div&gt;
   &lt;div&gt;Grid Item 2&lt;/div&gt;
   &lt;div&gt;Grid Item 3&lt;/div&gt;
   &lt;!-- More items... --&gt;
-&lt;/LayoutGrid&gt;</code></pre>
+&lt;/ILayoutGrid&gt;</code></pre>
               </details>
             </div>
 
             <!-- Divider -->
-            <LayoutDivider
+            <ILayoutDivider
               v-if="index < gridVariants.length - 1"
               variant="gradient"
               spacing="lg"
             />
           </div>
-        </LayoutStack>
+        </ILayoutStack>
 
         <!-- Real-World Examples -->
         <div class="bg-elevated p-8 rounded-lg border border-muted">
-          <LayoutHeading
+          <IHeading
             text="Real-World Grid Examples"
             variant="section"
           />
 
-          <LayoutStack variant="spacious">
+          <ILayoutStack variant="spacious">
             <!-- Product Grid -->
             <div class="i-pattern-circuit border-2 border-dashed border-emerald-500/30 p-6 rounded-lg">
               <h4 class="text-lg font-semibold mb-4 text-emerald-400">
                 Product/Service Grid
               </h4>
-              <LayoutGrid variant="cards">
+              <ILayoutGrid variant="cards">
                 <UCard
                   v-for="i in 3"
                   :key="i"
@@ -133,14 +133,14 @@ const gridVariants = [
                       />
                     </div>
                   </template>
-                  <LayoutStack variant="compact">
+                  <ILayoutStack variant="compact">
                     <h4 class="font-semibold">
                       Product {{ i }}
                     </h4>
                     <p class="text-sm text-muted">
                       Brief product description with key benefits.
                     </p>
-                  </LayoutStack>
+                  </ILayoutStack>
                   <template #footer>
                     <UButton
                       label="Learn More"
@@ -150,7 +150,7 @@ const gridVariants = [
                     />
                   </template>
                 </UCard>
-              </LayoutGrid>
+              </ILayoutGrid>
             </div>
 
             <!-- Team Grid -->
@@ -158,7 +158,7 @@ const gridVariants = [
               <h4 class="text-lg font-semibold mb-4 text-blue-400">
                 Team Members Grid
               </h4>
-              <LayoutGrid variant="thirds">
+              <ILayoutGrid variant="thirds">
                 <div
                   v-for="i in 3"
                   :key="i"
@@ -177,11 +177,11 @@ const gridVariants = [
                     Role & Expertise
                   </p>
                 </div>
-              </LayoutGrid>
+              </ILayoutGrid>
             </div>
-          </LayoutStack>
+          </ILayoutStack>
         </div>
       </div>
-    </LayoutCenter>
+    </ILayoutCenter>
   </div>
 </template>

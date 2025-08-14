@@ -9,23 +9,23 @@ const urgencyConfig: IntentConfig = {
   background: 'cyber',
   sectionVariant: 'hero',
   emphasis: 'action',
-  colorScheme: 'warning'
+  colorScheme: 'warning',
 }
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="urgencyConfig.sectionVariant"
     :background="urgencyConfig.background"
     class="urgency-hero"
   >
-    <LayoutCenter variant="prose">
-      <LayoutStack variant="compact">
+    <ILayoutCenter variant="prose">
+      <ILayoutStack variant="compact">
         <!-- Urgency-focused content layout -->
-        <LayoutCenter variant="text-only">
-          <LayoutStack variant="compact">
+        <ILayoutCenter variant="text-only">
+          <ILayoutStack variant="compact">
             <!-- Urgency badge/indicator -->
-            <LayoutCenter>
+            <ILayoutCenter>
               <UBadge
                 color="warning"
                 variant="solid"
@@ -38,36 +38,36 @@ const urgencyConfig: IntentConfig = {
                 />
                 Limited Time
               </UBadge>
-            </LayoutCenter>
+            </ILayoutCenter>
 
-            <LayoutHeading
+            <IHeading
               :text="title"
               variant="hero"
               anchor
               class="text-center"
             />
 
-            <LayoutText
+            <IText
               v-if="subtitle"
               :text="subtitle"
               variant="hero-subtitle"
               class="text-center"
             />
 
-            <LayoutText
+            <IText
               v-if="description"
               :text="description"
               variant="description"
               class="text-center"
             />
-          </LayoutStack>
-        </LayoutCenter>
+          </ILayoutStack>
+        </ILayoutCenter>
 
         <!-- Urgency indicators -->
-        <LayoutGrid
+        <ILayoutGrid
           v-if="items?.length"
           variant="auto"
-          class="max-w-2xl mx-auto"
+          class="mx-auto"
         >
           <div
             v-for="(item, index) in items"
@@ -78,30 +78,30 @@ const urgencyConfig: IntentConfig = {
               :name="item.icon || 'i-lucide-clock'"
               class="size-8 text-amber-500 mx-auto mb-2"
             />
-            <LayoutHeading
+            <IHeading
               :text="item.title"
               variant="small"
               class="text-amber-600"
             />
-            <LayoutText
+            <IText
               :text="item.description"
               variant="small"
               class="text-muted"
             />
           </div>
-        </LayoutGrid>
+        </ILayoutGrid>
 
         <!-- Urgent CTA -->
-        <LayoutCenter v-if="action">
-          <LayoutStack variant="centered">
-            <LayoutText
+        <ILayoutCenter v-if="action">
+          <ILayoutStack variant="centered">
+            <IText
               v-if="action.description"
               variant="caption"
               :text="action.description"
               class="text-center text-muted"
             />
 
-            <LayoutCluster variant="centered">
+            <ILayoutCluster variant="centered">
               <UButton
                 :label="action.text"
                 color="warning"
@@ -110,12 +110,12 @@ const urgencyConfig: IntentConfig = {
                 trailing-icon="i-lucide-arrow-right"
                 class="animate-pulse hover:animate-none"
               />
-            </LayoutCluster>
-          </LayoutStack>
-        </LayoutCenter>
-      </LayoutStack>
-    </LayoutCenter>
-  </LayoutSection>
+            </ILayoutCluster>
+          </ILayoutStack>
+        </ILayoutCenter>
+      </ILayoutStack>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

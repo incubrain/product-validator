@@ -30,6 +30,6 @@ const rowGridStyles = tv({
   },
 })
 
-export type RowGridVariants = ExtractVariants<typeof rowGridStyles>
-export type RowGridSlots = ExtractSlots<typeof rowGridStyles>
+export type GridRowVariants = ExtractVariants<typeof rowGridStyles>
+export type GridRowSlots = ExtractSlots<typeof rowGridStyles>
 export default rowGridStyles

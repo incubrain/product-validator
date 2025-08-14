@@ -14,38 +14,38 @@ const trustConfig: IntentConfig = {
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="trustConfig.sectionVariant"
     :background="trustConfig.background"
     class="trust-results"
   >
-    <LayoutCenter variant="prose">
-      <LayoutStack variant="spacious">
+    <ILayoutCenter variant="prose">
+      <ILayoutStack variant="spacious">
         <!-- Trust-focused header -->
-        <LayoutCenter variant="text-only">
-          <LayoutStack variant="default">
-            <LayoutHeading
+        <ILayoutCenter variant="text-only">
+          <ILayoutStack variant="default">
+            <IHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <LayoutText
+            <IText
               v-if="subtitle"
               :text="subtitle"
               variant="subtitle"
             />
 
-            <LayoutText
+            <IText
               v-if="description"
               :text="description"
               variant="description"
             />
-          </LayoutStack>
-        </LayoutCenter>
+          </ILayoutStack>
+        </ILayoutCenter>
 
         <!-- Trust-focused metrics with social proof emphasis -->
-        <LayoutGrid
+        <ILayoutGrid
           v-if="items?.length"
           variant="quarters"
         >
@@ -54,7 +54,7 @@ const trustConfig: IntentConfig = {
             :key="item.title"
             class="bg-success/5 border-success/20 hover:border-success/40 transition-all duration-200"
           >
-            <LayoutStack variant="centered">
+            <ILayoutStack variant="centered">
               <!-- Success/trust indicator -->
               <div class="w-12 h-12 rounded-full bg-success/10 flex items-center justify-center">
                 <UIcon
@@ -63,27 +63,27 @@ const trustConfig: IntentConfig = {
                 />
               </div>
 
-              <LayoutStack variant="centered">
+              <ILayoutStack variant="centered">
                 <!-- Large metric with trust styling -->
-                <LayoutHeading
+                <IHeading
                   :text="item.value || item.title"
                   variant="metric"
                   class="text-success-700 font-bold"
                 />
 
-                <LayoutText
+                <IText
                   :text="item.title"
                   variant="card"
                   class="font-medium"
                 />
 
-                <LayoutText
+                <IText
                   v-if="item.description"
                   :text="item.description"
                   variant="small"
                   class="text-muted text-center"
                 />
-              </LayoutStack>
+              </ILayoutStack>
 
               <!-- Trust badge -->
               <UBadge
@@ -93,14 +93,14 @@ const trustConfig: IntentConfig = {
               >
                 Verified Results
               </UBadge>
-            </LayoutStack>
+            </ILayoutStack>
           </UCard>
-        </LayoutGrid>
+        </ILayoutGrid>
 
         <!-- Trust-focused CTA -->
-        <LayoutCenter v-if="action">
-          <LayoutStack variant="compact">
-            <LayoutText
+        <ILayoutCenter v-if="action">
+          <ILayoutStack variant="compact">
+            <IText
               v-if="action.description"
               :text="action.description"
               variant="caption"
@@ -114,11 +114,11 @@ const trustConfig: IntentConfig = {
               :to="action.link"
               trailing-icon="i-lucide-shield-check"
             />
-          </LayoutStack>
-        </LayoutCenter>
-      </LayoutStack>
-    </LayoutCenter>
-  </LayoutSection>
+          </ILayoutStack>
+        </ILayoutCenter>
+      </ILayoutStack>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

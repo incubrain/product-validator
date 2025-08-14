@@ -14,20 +14,20 @@ const authorityConfig: IntentConfig = {
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="authorityConfig.sectionVariant"
     :background="authorityConfig.background"
     class="authority-about"
   >
-    <LayoutCenter variant="prose">
-      <LayoutSplit variant="default">
+    <ILayoutCenter variant="prose">
+      <ILayoutSplit variant="default">
         <!-- Professional image with credentials -->
         <template #secondary>
           <div
             v-if="image"
             class="relative"
           >
-            <MediaImage
+            <IImage
               :src="image"
               :alt="title"
               class="w-full shadow-lg border-2 border-primary/20"
@@ -77,21 +77,21 @@ const authorityConfig: IntentConfig = {
 
         <!-- Professional content -->
         <template #primary>
-          <LayoutStack variant="spacious">
-            <LayoutStack variant="compact">
-              <LayoutHeading
+          <ILayoutStack variant="spacious">
+            <ILayoutStack variant="compact">
+              <IHeading
                 :text="title"
                 variant="section"
                 anchor
               />
 
               <!-- Professional subtitle -->
-              <LayoutText
+              <IText
                 text="Technical Leader & Innovation Expert"
                 variant="subtitle"
                 class="text-primary-600"
               />
-            </LayoutStack>
+            </ILayoutStack>
 
             <div
               class="prose prose-lg prose-zinc dark:prose-invert max-w-none"
@@ -137,11 +137,11 @@ const authorityConfig: IntentConfig = {
                 {{ cert }}
               </UBadge>
             </div>
-          </LayoutStack>
+          </ILayoutStack>
         </template>
-      </LayoutSplit>
-    </LayoutCenter>
-  </LayoutSection>
+      </ILayoutSplit>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

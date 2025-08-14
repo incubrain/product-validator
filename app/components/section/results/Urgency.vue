@@ -14,18 +14,18 @@ const urgencyConfig: IntentConfig = {
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="urgencyConfig.sectionVariant"
     :background="urgencyConfig.background"
     class="urgency-results"
   >
-    <LayoutCenter variant="prose">
-      <LayoutStack variant="compact">
+    <ILayoutCenter variant="prose">
+      <ILayoutStack variant="compact">
         <!-- Urgency-focused header -->
-        <LayoutCenter variant="text-only">
-          <LayoutStack variant="compact">
+        <ILayoutCenter variant="text-only">
+          <ILayoutStack variant="compact">
             <!-- Urgency indicator -->
-            <LayoutCenter>
+            <ILayoutCenter>
               <UBadge
                 color="warning"
                 variant="solid"
@@ -38,30 +38,30 @@ const urgencyConfig: IntentConfig = {
                 />
                 Time-Sensitive Results
               </UBadge>
-            </LayoutCenter>
+            </ILayoutCenter>
 
-            <LayoutHeading
+            <IHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <LayoutText
+            <IText
               v-if="subtitle"
               :text="subtitle"
               variant="subtitle"
             />
 
-            <LayoutText
+            <IText
               v-if="description"
               :text="description"
               variant="description"
             />
-          </LayoutStack>
-        </LayoutCenter>
+          </ILayoutStack>
+        </ILayoutCenter>
 
         <!-- Urgency-focused metrics with action emphasis -->
-        <LayoutGrid
+        <ILayoutGrid
           v-if="items?.length"
           variant="halves"
         >
@@ -73,7 +73,7 @@ const urgencyConfig: IntentConfig = {
             <!-- Urgency pulse animation -->
             <div class="absolute inset-0 bg-warning/5 animate-pulse" />
 
-            <LayoutStack
+            <ILayoutStack
               variant="centered"
               class="relative z-10"
             >
@@ -85,27 +85,27 @@ const urgencyConfig: IntentConfig = {
                 />
               </div>
 
-              <LayoutStack variant="centered">
+              <ILayoutStack variant="centered">
                 <!-- Urgent metric display -->
-                <LayoutHeading
+                <IHeading
                   :text="item.value || item.title"
                   variant="metric"
                   class="text-warning-700 font-bold"
                 />
 
-                <LayoutText
+                <IText
                   :text="item.title"
                   variant="card"
                   class="font-medium"
                 />
 
-                <LayoutText
+                <IText
                   v-if="item.description"
                   :text="item.description"
                   variant="small"
                   class="text-muted text-center"
                 />
-              </LayoutStack>
+              </ILayoutStack>
 
               <!-- Urgency badge -->
               <UBadge
@@ -115,14 +115,14 @@ const urgencyConfig: IntentConfig = {
               >
                 Act Now
               </UBadge>
-            </LayoutStack>
+            </ILayoutStack>
           </UCard>
-        </LayoutGrid>
+        </ILayoutGrid>
 
         <!-- Urgency-focused CTA -->
-        <LayoutCenter v-if="action">
-          <LayoutStack variant="compact">
-            <LayoutText
+        <ILayoutCenter v-if="action">
+          <ILayoutStack variant="compact">
+            <IText
               v-if="action.description"
               :text="action.description"
               variant="caption"
@@ -137,11 +137,11 @@ const urgencyConfig: IntentConfig = {
               trailing-icon="i-lucide-timer"
               class="animate-pulse"
             />
-          </LayoutStack>
-        </LayoutCenter>
-      </LayoutStack>
-    </LayoutCenter>
-  </LayoutSection>
+          </ILayoutStack>
+        </ILayoutCenter>
+      </ILayoutStack>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

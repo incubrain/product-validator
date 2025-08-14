@@ -1,7 +1,7 @@
 <script setup lang="ts">
 useHead({
-  title: 'LayoutCenter Showcase - Layout Primitives',
-  meta: [{ name: 'description', content: 'Comprehensive showcase of LayoutCenter variants for content centering and constraints' }],
+  title: 'ILayoutCenter Showcase - Layout Primitives',
+  meta: [{ name: 'description', content: 'Comprehensive showcase of ILayoutCenter variants for content centering and constraints' }],
 })
 
 const centerVariants = [
@@ -20,28 +20,28 @@ const centerVariants = [
     <!-- Full width background to show centering -->
     <div class="py-section space-y-component">
       <!-- Page Header -->
-      <LayoutCenter variant="full">
-        <LayoutStack variant="centered">
-          <LayoutHeading
-            text="LayoutCenter Showcase"
+      <ILayoutCenter variant="full">
+        <ILayoutStack variant="centered">
+          <IHeading
+            text="ILayoutCenter Showcase"
             variant="hero"
           />
-          <LayoutText
+          <IText
             text="Content centering and width constraints with responsive behavior"
             variant="hero"
           />
-        </LayoutStack>
-      </LayoutCenter>
+        </ILayoutStack>
+      </ILayoutCenter>
 
       <!-- Center Variants -->
-      <LayoutStack variant="spacious">
+      <ILayoutStack variant="spacious">
         <div
           v-for="(variant, index) in centerVariants"
           :key="variant.name"
           class="space-y-4"
         >
           <!-- Variant Info -->
-          <LayoutCenter variant="full">
+          <ILayoutCenter variant="full">
             <div class="bg-elevated p-6 rounded-lg border border-muted">
               <div class="mb-4">
                 <div class="flex items-center gap-3 mb-2">
@@ -50,12 +50,12 @@ const centerVariants = [
                     color="primary"
                     variant="solid"
                   />
-                  <LayoutHeading
+                  <IHeading
                     :text="`variant='${variant.name}'`"
                     variant="card"
                   />
                 </div>
-                <LayoutText
+                <IText
                   :text="variant.description"
                   variant="card"
                 />
@@ -64,7 +64,7 @@ const centerVariants = [
               <!-- Demo Container with full-width background -->
               <div class="i-pattern-circuit border-2 border-dashed border-primary/30 p-2 rounded-lg">
                 <component
-                  :is="'LayoutCenter'"
+                  :is="'ILayoutCenter'"
                   :variant="variant.name"
                 >
                   <div class="bg-primary/20 border border-primary/50 p-6 rounded">
@@ -95,43 +95,43 @@ const centerVariants = [
                 <summary class="cursor-pointer text-sm font-medium text-primary hover:text-primary/80">
                   View Code
                 </summary>
-                <pre class="mt-2 p-3 bg-black/50 rounded text-xs text-green-400 overflow-x-auto"><code>&lt;LayoutCenter variant="${variant.name}"&gt;
+                <pre class="mt-2 p-3 bg-black/50 rounded text-xs text-green-400 overflow-x-auto"><code>&lt;ILayoutCenter variant="${variant.name}"&gt;
   &lt;div&gt;Your content here&lt;/div&gt;
-&lt;/LayoutCenter&gt;</code></pre>
+&lt;/ILayoutCenter&gt;</code></pre>
               </details>
             </div>
-          </LayoutCenter>
+          </ILayoutCenter>
 
           <!-- Divider -->
-          <LayoutDivider
+          <ILayoutDivider
             v-if="index < centerVariants.length - 1"
             variant="gradient"
             spacing="lg"
           />
         </div>
-      </LayoutStack>
+      </ILayoutStack>
 
       <!-- Real-World Examples -->
-      <LayoutCenter variant="full">
+      <ILayoutCenter variant="full">
         <div class="bg-elevated p-8 rounded-lg border border-muted">
-          <LayoutHeading
+          <IHeading
             text="Real-World Center Examples"
             variant="section"
           />
 
-          <LayoutStack variant="spacious">
+          <ILayoutStack variant="spacious">
             <!-- Article Layout -->
             <div class="i-pattern-circuit border-2 border-dashed border-emerald-500/30 p-6 rounded-lg">
               <h4 class="text-lg font-semibold mb-4 text-emerald-400">
                 Article Content Layout
               </h4>
-              <LayoutCenter variant="prose">
+              <ILayoutCenter variant="prose">
                 <div class="prose prose-sm">
                   <h3>Article Title</h3>
                   <p>This is how article content would look when properly centered and constrained for optimal reading. The prose variant provides the perfect line length for comfortable reading.</p>
                   <p>Multiple paragraphs maintain their readability even on very wide screens because the content is constrained to an appropriate measure.</p>
                 </div>
-              </LayoutCenter>
+              </ILayoutCenter>
             </div>
 
             <!-- Landing Page Section -->
@@ -139,17 +139,17 @@ const centerVariants = [
               <h4 class="text-lg font-semibold mb-4 text-blue-400">
                 Landing Page Section
               </h4>
-              <LayoutCenter variant="wide">
-                <LayoutStack variant="centered">
-                  <LayoutHeading
+              <ILayoutCenter variant="wide">
+                <ILayoutStack variant="centered">
+                  <IHeading
                     text="Compelling Headline"
                     variant="section"
                   />
-                  <LayoutText
+                  <IText
                     text="Supporting text that's wide enough for complex layouts but still maintains good visual hierarchy."
                     variant="section"
                   />
-                  <LayoutStack variant="horizontal">
+                  <ILayoutStack variant="horizontal">
                     <UButton
                       label="Primary CTA"
                       color="primary"
@@ -158,9 +158,9 @@ const centerVariants = [
                       label="Secondary CTA"
                       variant="outline"
                     />
-                  </LayoutStack>
-                </LayoutStack>
-              </LayoutCenter>
+                  </ILayoutStack>
+                </ILayoutStack>
+              </ILayoutCenter>
             </div>
 
             <!-- Text-Only Center -->
@@ -168,22 +168,22 @@ const centerVariants = [
               <h4 class="text-lg font-semibold mb-4 text-amber-400">
                 Text-Only Centering
               </h4>
-              <LayoutCenter variant="text-only">
-                <LayoutStack variant="compact">
-                  <LayoutHeading
+              <ILayoutCenter variant="text-only">
+                <ILayoutStack variant="compact">
+                  <IHeading
                     text="Centered Text Block"
                     variant="card"
                   />
-                  <LayoutText
+                  <IText
                     text="Perfect for testimonials, quotes, or simple call-out content that needs to be prominently centered."
                     variant="card"
                   />
-                </LayoutStack>
-              </LayoutCenter>
+                </ILayoutStack>
+              </ILayoutCenter>
             </div>
-          </LayoutStack>
+          </ILayoutStack>
         </div>
-      </LayoutCenter>
+      </ILayoutCenter>
     </div>
   </div>
 </template>

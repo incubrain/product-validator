@@ -1,13 +1,11 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { loadBusinessConfig } from './shared/utils/load-config'
+import { getBusinessRuntimeConfig, getBusinessInfo } from './shared/config/business'
 
-const businessConfig = loadBusinessConfig()
+const business = getBusinessInfo()
 
 export default defineNuxtConfig({
   modules: [
     // @nuxtjs/seo must come before nuxt/content
-    '@nuxtjs/seo',
-    '@nuxt/content',
     '@nuxt/fonts',
     '@nuxt/image',
     '@nuxt/ui',
@@ -39,9 +37,9 @@ export default defineNuxtConfig({
   css: ['~/assets/css/main.css', '~/assets/css/motion.css'],
 
   site: {
-    url: `https://${businessConfig.business.name.toLowerCase()}.org`,
-    name: businessConfig.business.name,
-    description: businessConfig.business.description,
+    url: `https://${business.name.toLowerCase()}.org`,
+    name: business.name,
+    description: business.description,
   },
 
   content: {
@@ -126,9 +124,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      business: businessConfig.business,
-      contact: businessConfig.contact,
-      services: businessConfig.services,
+      ...getBusinessRuntimeConfig(),
       motion: {
         directives: {
           // SMB-focused: Smooth, trustworthy animations

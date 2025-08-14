@@ -18,7 +18,7 @@ export default createUIComponent((config) => ({
 
     // Media/Data section slots
     mediaSection: 'flex items-center justify-center',
-    imageContainer: 'relative overflow-hidden aspect-video w-full max-w-2xl mx-auto',
+    imageContainer: 'relative overflow-hidden aspect-video w-full mx-auto',
 
     // CTA section
     ctaSection: 'space-y-4',

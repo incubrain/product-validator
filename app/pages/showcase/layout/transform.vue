@@ -1,11 +1,11 @@
 <!-- app/pages/showcase/layout/transform.vue -->
 <script setup lang="ts">
 // Import the actual component
-import LayoutTransform from '~/components/layout/Transform.vue'
+import ITransform from '~/components/layout/Transform.vue'
 import type { TransformVariants } from '~~/theme/index'
 
 const headerContent = {
-  title: 'LayoutTransform Showcase',
+  title: 'ITransform Showcase',
   subtitle: 'Essential transform utilities for modern web interfaces with real-time controls',
   badges: [
     { text: '7 Core Variants', variant: 'blue' },
@@ -24,7 +24,7 @@ interface ShowcaseOption<K extends keyof TransformVariants> {
 
 // Component configuration for interactive demo
 const transformConfig = {
-  componentName: 'LayoutTransform',
+  componentName: 'ITransform',
   variants: [
     {
       name: 'variant',
@@ -194,8 +194,8 @@ const usageGuidelines = {
 
 <template>
   <UContainer class="section-spacing">
-    <LayoutCenter variant="full">
-      <LayoutStack variant="spacious">
+    <ILayoutCenter variant="full">
+      <ILayoutStack variant="spacious">
         <!-- Page Header -->
         <ShowcasePageHeader
           :title="headerContent.title"
@@ -218,16 +218,16 @@ const usageGuidelines = {
             :description="item.description"
             :config="item.componentProps"
           >
-            <LayoutTransform v-bind="item.componentProps">
+            <ITransform v-bind="item.componentProps">
               <ShowcaseDemoContent :content="item.content" />
-            </LayoutTransform>
+            </ITransform>
           </ShowcaseDemoCard>
         </ShowcaseDemo>
 
         <!-- Interactive Demo Section -->
         <ShowcaseDemo
           title="Interactive Playground"
-          description="Experiment with all LayoutTransform options in real-time"
+          description="Experiment with all ITransform options in real-time"
           category="interactive"
         >
           <ShowcaseComponent
@@ -236,9 +236,9 @@ const usageGuidelines = {
           >
             <!-- SLOT: Actual component with reactive props -->
             <template #default="{ props: reactiveProps }">
-              <LayoutTransform v-bind="reactiveProps">
+              <ITransform v-bind="reactiveProps">
                 <ShowcaseDemoContent />
-              </LayoutTransform>
+              </ITransform>
             </template>
           </ShowcaseComponent>
         </ShowcaseDemo>
@@ -250,7 +250,7 @@ const usageGuidelines = {
           :common-patterns="usageGuidelines.commonPatterns"
           :future-enhancements="usageGuidelines.futureEnhancements"
         />
-      </LayoutStack>
-    </LayoutCenter>
+      </ILayoutStack>
+    </ILayoutCenter>
   </UContainer>
 </template>

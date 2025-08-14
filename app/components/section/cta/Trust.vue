@@ -14,42 +14,42 @@ const trustConfig: IntentConfig = {
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="trustConfig.sectionVariant"
     :background="trustConfig.background"
     class="trust-cta"
   >
-    <LayoutCenter variant="prose">
-      <LayoutStack variant="spacious">
+    <ILayoutCenter variant="prose">
+      <ILayoutStack variant="spacious">
         <!-- Trust-focused header -->
-        <LayoutCenter variant="text-only">
-          <LayoutStack variant="default">
-            <LayoutHeading
+        <ILayoutCenter variant="text-only">
+          <ILayoutStack variant="default">
+            <IHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <LayoutText
+            <IText
               v-if="subtitle"
               :text="subtitle"
               variant="subtitle"
             />
-          </LayoutStack>
-        </LayoutCenter>
+          </ILayoutStack>
+        </ILayoutCenter>
 
         <!-- Risk-free offers with trust emphasis -->
         <div
           v-if="items?.length"
           class="max-w-4xl mx-auto"
         >
-          <LayoutGrid variant="halves">
+          <ILayoutGrid variant="halves">
             <UCard
               v-for="card in items"
               :key="card.title"
               class="bg-success/5 border-success/20 hover:border-success/40 transition-all duration-200"
             >
-              <LayoutStack variant="default">
+              <ILayoutStack variant="default">
                 <!-- Trust indicator -->
                 <div class="flex items-center gap-3 mb-4">
                   <div class="w-12 h-12 rounded-lg bg-success/10 flex items-center justify-center">
@@ -67,13 +67,13 @@ const trustConfig: IntentConfig = {
                   </UBadge>
                 </div>
 
-                <LayoutStack variant="default">
-                  <LayoutHeading
+                <ILayoutStack variant="default">
+                  <IHeading
                     :text="card.title"
                     variant="card"
                   />
 
-                  <LayoutText
+                  <IText
                     v-if="card.subtitle"
                     :text="card.subtitle"
                     variant="description"
@@ -114,14 +114,14 @@ const trustConfig: IntentConfig = {
                     trailing-icon="i-lucide-shield-check"
                     class="mt-6"
                   />
-                </LayoutStack>
-              </LayoutStack>
+                </ILayoutStack>
+              </ILayoutStack>
             </UCard>
-          </LayoutGrid>
+          </ILayoutGrid>
         </div>
-      </LayoutStack>
-    </LayoutCenter>
-  </LayoutSection>
+      </ILayoutStack>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>

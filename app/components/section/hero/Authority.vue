@@ -8,54 +8,54 @@ defineProps<Omit<HeroSection, 'type'>>()
 const authorityConfig: IntentConfig = {
   background: 'circuit',
   sectionVariant: 'hero',
-  emphasis: 'expertise', 
-  colorScheme: 'primary'
+  emphasis: 'expertise',
+  colorScheme: 'primary',
 }
 </script>
 
 <template>
-  <LayoutSection
+  <ISection
     :variant="authorityConfig.sectionVariant"
     :background="authorityConfig.background"
     class="authority-hero"
   >
-    <LayoutCenter variant="full">
-      <LayoutSplit variant="default">
+    <ILayoutCenter variant="full">
+      <ILayoutSplit variant="default">
         <template #primary>
-          <LayoutStack variant="spacious">
+          <ILayoutStack variant="spacious">
             <!-- Authority-focused headlines -->
-            <LayoutStack variant="default">
-              <LayoutHeading
+            <ILayoutStack variant="default">
+              <IHeading
                 :text="title"
                 variant="hero"
                 anchor
               />
 
-              <LayoutText
+              <IText
                 v-if="subtitle"
                 :text="subtitle"
                 variant="hero-subtitle"
               />
 
-              <LayoutText
+              <IText
                 v-if="description"
                 :text="description"
                 variant="description"
               />
-            </LayoutStack>
+            </ILayoutStack>
 
             <!-- Authority CTA -->
-            <LayoutStack
+            <ILayoutStack
               v-if="action"
               variant="compact"
             >
-              <LayoutText
+              <IText
                 v-if="action.description"
                 variant="caption"
                 :text="action.description"
               />
 
-              <LayoutCluster variant="default">
+              <ILayoutCluster variant="default">
                 <UButton
                   :label="action.text"
                   color="primary"
@@ -63,25 +63,25 @@ const authorityConfig: IntentConfig = {
                   :to="action.link"
                   trailing-icon="i-lucide-award"
                 />
-              </LayoutCluster>
-            </LayoutStack>
-          </LayoutStack>
+              </ILayoutCluster>
+            </ILayoutStack>
+          </ILayoutStack>
         </template>
 
         <template #secondary>
           <!-- Authority indicators - credentials/achievements -->
-          <LayoutStack
+          <ILayoutStack
             v-if="items?.length"
             variant="default"
           >
-            <LayoutCenter variant="narrow">
-              <LayoutStack variant="compact">
+            <ILayoutCenter variant="narrow">
+              <ILayoutStack variant="compact">
                 <UCard
                   v-for="(item, index) in items"
                   :key="item.title"
                   class="bg-elevated/70 backdrop-blur-sm border-primary/20 hover:border-primary/40 transition-all duration-200"
                 >
-                  <LayoutCluster variant="no-wrap">
+                  <ILayoutCluster variant="no-wrap">
                     <!-- Authority icon with bold styling -->
                     <div class="w-12 h-12 rounded-lg bg-primary/20 flex items-center justify-center flex-shrink-0">
                       <UIcon
@@ -90,25 +90,25 @@ const authorityConfig: IntentConfig = {
                       />
                     </div>
 
-                    <LayoutStack variant="compact">
-                      <LayoutHeading
+                    <ILayoutStack variant="compact">
+                      <IHeading
                         :text="item.title"
                         variant="card"
                       />
-                      <LayoutText
+                      <IText
                         :text="item.description"
                         variant="small"
                       />
-                    </LayoutStack>
-                  </LayoutCluster>
+                    </ILayoutStack>
+                  </ILayoutCluster>
                 </UCard>
-              </LayoutStack>
-            </LayoutCenter>
-          </LayoutStack>
+              </ILayoutStack>
+            </ILayoutCenter>
+          </ILayoutStack>
         </template>
-      </LayoutSplit>
-    </LayoutCenter>
-  </LayoutSection>
+      </ILayoutSplit>
+    </ILayoutCenter>
+  </ISection>
 </template>
 
 <style scoped>
