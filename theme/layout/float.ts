@@ -1,5 +1,5 @@
 // theme/layout/float.ts
-import { tv } from '../../shared/utils/themev2'
+import { tv, extractTV } from '../../shared/utils/themev3'
 import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
 const floatStyles = tv({
@@ -104,6 +104,7 @@ const floatStyles = tv({
   },
 })
 
+export const floatData = extractTV(floatStyles)
 export type FloatVariants = ExtractVariants<typeof floatStyles>
 export type FloatSlots = ExtractSlots<typeof floatStyles>
 export default floatStyles

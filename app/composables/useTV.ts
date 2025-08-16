@@ -38,6 +38,16 @@ type FlattenVariants<T> = Prettify<{
  * A reactive wrapper for `tv` that returns a flattened and developer-friendly
  * type for IntelliSense.
  */
-export function tvComputed<T>(fn: () => T): ComputedRef<FlattenVariants<T>> {
-  return computed(fn) as any
+export function tvComputed<T>(fn: () => T, trackingId?: string): ComputedRef<FlattenVariants<T>> {
+  return computed(() => {
+    const result = fn()
+
+    if (import.meta.dev && useRuntimeConfig().public.incubrain.debug && trackingId) {
+      const { captureComponentCSS } = useComponentDebug()
+      const instance = getCurrentInstance()
+      captureComponentCSS(trackingId, result, instance)
+    }
+
+    return result as FlattenVariants<T>
+  })
 }

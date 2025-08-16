@@ -1,12 +1,15 @@
-<!-- app/components/showcase/Demo.vue -->
+<!-- app/components/showcase/Demo.vue - ENHANCED WITH COLUMN CONTROL -->
 <script setup lang="ts">
 interface Props {
   title: string
   description: string
   category?: string
+  maxCols?: 1 | 2 | 3 | 4 // 🔥 NEW: Maximum columns control
 }
 
-defineProps<Props>()
+const props = withDefaults(defineProps<Props>(), {
+  maxCols: 4, // Default to original 4-column behavior
+})
 
 defineSlots<{
   default(props: object): any
@@ -30,6 +33,18 @@ const getCategoryBadgeClasses = (category?: string) => {
 
   return variants[category as keyof typeof variants] || variants.advanced
 }
+
+// 🔥 RESPONSIVE GRID CLASSES BASED ON MAX COLUMNS
+const gridClasses = computed(() => {
+  const columnConfigs = {
+    1: 'grid-cols-1', // Always 1 column
+    2: 'grid-cols-1 lg:grid-cols-2', // 1 mobile, 2 desktop
+    3: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-3', // 1 mobile, 2 tablet, 3 desktop
+    4: 'grid-cols-1 sm:grid-cols-2 lg:grid-cols-4', // 1 mobile, 2 tablet, 4 desktop (original)
+  }
+
+  return `grid ${columnConfigs[props.maxCols]} gap-6 h-full`
+})
 </script>
 
 <template>
@@ -53,8 +68,8 @@ const getCategoryBadgeClasses = (category?: string) => {
       </span>
     </div>
 
-    <!-- 4 Column Grid Layout (4/2/1 responsive) -->
-    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 h-full">
+    <!-- 🔥 RESPONSIVE GRID WITH COLUMN CONTROL -->
+    <div :class="gridClasses">
       <slot />
     </div>
   </div>

@@ -1,3 +1,4 @@
+<!-- app/components/showcase/Guidelines.vue -->
 <script setup lang="ts">
 interface GuidelineItem {
   icon?: string

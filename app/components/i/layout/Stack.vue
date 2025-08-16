@@ -18,13 +18,14 @@ defineSlots<{
 const ui = tvComputed(() => stackStyles({
   variant: props.variant,
   gap: props.gap,
-}))
+}), props.trackingId)
 </script>
 
 <template>
   <component
     :is="as"
     :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
+    :data-tracking-id="trackingId"
     v-bind="$attrs"
   >
     <slot />

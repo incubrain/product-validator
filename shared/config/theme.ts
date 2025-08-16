@@ -1,4 +1,4 @@
-// theme/shared/spacing.ts
+// shared/config/theme.ts
 
 // **IMPORTANT** - Restart dev server if you make changes to this file
 export const THEME = {

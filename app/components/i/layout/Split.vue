@@ -21,7 +21,7 @@ const ui = tvComputed(() => splitStyles({
   ratio: props.ratio,
   gap: props.gap,
   reverse: props.reverse,
-}))
+}), props.trackingId)
 </script>
 
 <template>

@@ -13,6 +13,7 @@ export default defineNuxtConfig({
     '@vueuse/motion/nuxt',
     '@nuxt/eslint',
     '@compodium/nuxt',
+    'nuxt-shiki',
   ],
 
   imports: {
@@ -122,9 +123,26 @@ export default defineNuxtConfig({
     },
   },
 
+  ui: {
+    theme: {
+      colors: [
+        'primary',
+        'secondary',
+        'neutral',
+        'info',
+        'success',
+        'warning',
+        'error',
+      ],
+    },
+  },
+
   runtimeConfig: {
     public: {
       ...getBusinessRuntimeConfig(),
+      incubrain: {
+        debug: true,
+      },
       motion: {
         directives: {
           // SMB-focused: Smooth, trustworthy animations
@@ -304,6 +322,13 @@ export default defineNuxtConfig({
       colorScheme: 'dark light',
       applicationName: 'Incubrain',
     },
+  },
+
+  shiki: {
+    defaultTheme: 'vitesse-dark',
+    defaultLang: 'typescript',
+    bundledLangs: ['typescript', 'javascript', 'vue', 'vue-html', 'yaml', 'typespec'],
+    bundledThemes: ['vitesse-dark', 'vitesse-light'],
   },
 
   sitemap: {

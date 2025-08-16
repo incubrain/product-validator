@@ -55,14 +55,16 @@ export interface GridRowProps {
 }
 
 export interface SplitProps {
+  trackingId?: string
   ratio?: SplitVariants['ratio']
   gap?: SplitVariants['gap']
-  reverse?: boolean
+  responsiveReverse?: boolean
   as?: string
   ui?: SplitSlots
 }
 
 export interface StackProps {
+  trackingId?: string 
   variant?: StackVariants['variant']
   gap?: StackVariants['gap']
   as?: string

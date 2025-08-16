@@ -1,242 +1,331 @@
-<script setup lang="ts">
-useHead({
-  title: 'ILayoutStack Showcase - Layout Primitives',
-  meta: [{ name: 'description', content: 'Comprehensive showcase of ILayoutStack variants and usage patterns' }],
+<!-- pages/showcase/stack.vue -->
+<script setup>
+import { ILayoutStack } from '#components'
+import { stackData } from '~~/theme/layout/stack'
+
+definePageMeta({
+  layout: false,
 })
 
-const stackVariants = [
-  {
-    name: 'default',
-    description: 'Standard vertical stacking with medium gaps (gap-4)',
-    demoContent: [
-      { text: 'Standard Item 1', size: 'p-4', width: 'w-full' },
-      { text: 'Standard Item 2', size: 'p-6', width: 'w-full' },
-      { text: 'Standard Item 3', size: 'p-4', width: 'w-full' },
+// ✅ Complete stack showcase configuration
+const stackConfig = {
+  componentName: 'ILayoutStack',
+  title: 'Interactive Stack Playground',
+  description: 'Experiment with stacking patterns, alignment, and gaps - or try proven layout presets',
+  componentData: stackData,
+  variants: [
+    {
+      name: 'variant',
+      type: 'select',
+      options: ['default', 'centered', 'compact', 'spacious', 'between', 'horizontal', 'horizontal-between', 'horizontal-center', 'stack-to-row', 'center-to-between'],
+      default: 'default',
+      description: 'Stacking behavior and alignment pattern',
+    },
+    {
+      name: 'gap',
+      type: 'select',
+      options: ['none', 'xs', 'sm', 'md', 'lg', 'xl', '2xl'],
+      default: 'md',
+      description: 'Space between stacked items',
+    },
+  ],
+  presets: [
+    {
+      name: 'Form Layout',
+      description: 'Vertical form with consistent field spacing for optimal UX',
+      preset: { variant: 'default', gap: 'md' },
+      content: {
+        type: 'form',
+        items: [
+          { text: 'Email Field', color: 'primary', description: 'Input field with proper spacing' },
+          { text: 'Password Field', color: 'secondary', description: 'Secure input with validation' },
+          { text: 'Submit Button', color: 'success', description: 'Call-to-action with visual weight' },
+        ],
+        title: 'Form Fields',
+        subtitle: 'Vertical stacking',
+        details: 'Standard vertical layout perfect for forms with medium gaps for readability',
+      },
+    },
+    {
+      name: 'Navigation Header',
+      description: 'Horizontal navigation with space-between for brand, menu, and actions',
+      preset: { variant: 'horizontal-between', gap: 'none' },
+      content: {
+        type: 'navigation',
+        items: [
+          { text: 'Brand Logo', color: 'primary', description: 'Company branding' },
+          { text: 'Navigation Menu', color: 'secondary', description: 'Main site navigation' },
+          { text: 'User Actions', color: 'success', description: 'Login/signup/profile' },
+        ],
+        title: 'Header Navigation',
+        subtitle: 'Space-between layout',
+        details: 'Perfect for headers: brand on left, navigation center, actions on right',
+      },
+    },
+    {
+      name: 'Action Buttons',
+      description: 'Centered button group for forms, modals, and call-to-action sections',
+      preset: { variant: 'horizontal-center', gap: 'md' },
+      content: {
+        type: 'actions',
+        items: [
+          { text: 'Cancel', color: 'neutral', description: 'Secondary action' },
+          { text: 'Save', color: 'primary', description: 'Primary action' },
+          { text: 'Save & Continue', color: 'success', description: 'Progress action' },
+        ],
+        title: 'Action Buttons',
+        subtitle: 'Centered horizontally',
+        details: 'Ideal for button groups in modals, forms, and decision points',
+      },
+    },
+    {
+      name: 'Tag List',
+      description: 'Horizontal tags with wrapping for categories, filters, and labels',
+      preset: { variant: 'horizontal', gap: 'sm' },
+      content: {
+        type: 'tags',
+        items: [
+          { text: 'Vue.js', color: 'success', description: 'Frontend framework' },
+          { text: 'TypeScript', color: 'info', description: 'Type safety' },
+          { text: 'Nuxt', color: 'primary', description: 'Full-stack framework' },
+          { text: 'TailwindCSS', color: 'secondary', description: 'Utility-first CSS' },
+        ],
+        title: 'Technology Tags',
+        subtitle: 'Horizontal wrapping',
+        details: 'Perfect for tag lists, categories, and filter chips with natural wrapping',
+      },
+    },
+    {
+      name: 'Responsive Cards',
+      description: 'Stack on mobile, row on desktop for adaptive card layouts',
+      preset: { variant: 'stack-to-row', gap: 'lg' },
+      content: {
+        type: 'cards',
+        items: [
+          { text: 'Feature 1', color: 'primary', description: 'Primary feature highlight' },
+          { text: 'Feature 2', color: 'secondary', description: 'Secondary benefit' },
+          { text: 'Feature 3', color: 'success', description: 'Additional value' },
+        ],
+        title: 'Feature Cards',
+        subtitle: 'Responsive layout',
+        details: 'Mobile-first: stacked on small screens, horizontal row on desktop',
+      },
+    },
+    {
+      name: 'Dense Content',
+      description: 'Compact spacing for information-dense interfaces and dashboards',
+      preset: { variant: 'compact', gap: 'xs' },
+      content: {
+        type: 'data',
+        items: [
+          { text: 'Metric 1', color: 'info', description: '↗ +12.5% this month' },
+          { text: 'Metric 2', color: 'warning', description: '→ No change' },
+          { text: 'Metric 3', color: 'success', description: '↗ +8.2% this week' },
+          { text: 'Metric 4', color: 'primary', description: '↗ +15.7% this quarter' },
+        ],
+        title: 'Dashboard Metrics',
+        subtitle: 'Compact spacing',
+        details: 'Tight spacing for dashboards and information-dense layouts',
+      },
+    },
+  ],
+  useCases: [
+    {
+      icon: '📋',
+      title: 'Form Layouts',
+      description: 'Stack form fields with consistent spacing using default or compact variants',
+    },
+    {
+      icon: '🧭',
+      title: 'Navigation',
+      description: 'Use horizontal variants for headers, menus, and navigation bars',
+    },
+    {
+      icon: '🎯',
+      title: 'Action Groups',
+      description: 'Button groups and call-to-action sections with centered or spaced alignment',
+    },
+    {
+      icon: '📱',
+      title: 'Responsive Layouts',
+      description: 'Adaptive layouts that stack on mobile and flow horizontally on desktop',
+    },
+  ],
+  guidelines: {
+    bestPractices: [
+      {
+        text: 'Use default for most vertical stacking needs with medium gaps',
+        codes: ['default', 'gap-md'],
+      },
+      {
+        text: 'Choose horizontal-between for navigation with brand, menu, and actions',
+        codes: ['horizontal-between'],
+      },
+      {
+        text: 'Use horizontal-center for button groups and centered actions',
+        codes: ['horizontal-center', 'gap-md'],
+      },
+      {
+        text: 'Choose responsive variants for mobile-first adaptive layouts',
+        codes: ['stack-to-row', 'center-to-between'],
+      },
     ],
-  },
-  {
-    name: 'centered',
-    description: 'Center-aligned items with consistent gaps (items-center)',
-    demoContent: [
-      { text: 'Centered Short', size: 'p-3', width: 'w-32' },
-      { text: 'Centered Medium Length', size: 'p-4', width: 'w-48' },
-      { text: 'Centered', size: 'p-3', width: 'w-24' },
+    commonPatterns: [
+      {
+        text: 'Form sections benefit from default stacking with medium gaps',
+        codes: ['default', 'gap-md'],
+      },
+      {
+        text: 'Tag lists work well with horizontal flow and wrapping behavior',
+        codes: ['horizontal', 'gap-sm'],
+      },
+      {
+        text: 'Hero sections often use centered alignment for visual impact',
+        codes: ['centered', 'gap-lg'],
+      },
+      {
+        text: 'Dashboard layouts benefit from compact spacing for density',
+        codes: ['compact', 'gap-xs'],
+      },
     ],
+    futureEnhancements: {
+      description: 'Planned enhancements include custom breakpoint control and animation presets.',
+      codes: ['custom-breakpoints', 'animations'],
+    },
   },
-  {
-    name: 'compact',
-    description: 'Tight spacing for dense content (gap-2)',
-    demoContent: [
-      { text: 'Compact 1', size: 'p-2', width: 'w-full' },
-      { text: 'Compact 2', size: 'p-2', width: 'w-full' },
-      { text: 'Compact 3', size: 'p-2', width: 'w-full' },
-      { text: 'Compact 4', size: 'p-2', width: 'w-full' },
-    ],
-  },
-  {
-    name: 'spacious',
-    description: 'Generous spacing for breathing room (gap-8)',
-    demoContent: [
-      { text: 'Spacious Item 1', size: 'p-6', width: 'w-full' },
-      { text: 'Spacious Item 2', size: 'p-6', width: 'w-full' },
-    ],
-  },
-  {
-    name: 'horizontal',
-    description: 'Horizontal flow with wrapping (flex-row flex-wrap)',
-    demoContent: [
-      { text: 'Horiz 1', size: 'p-3', width: 'w-auto' },
-      { text: 'Horizontal 2', size: 'p-3', width: 'w-auto' },
-      { text: 'H3', size: 'p-3', width: 'w-auto' },
-      { text: 'Horizontal Item 4', size: 'p-3', width: 'w-auto' },
-    ],
-  },
-  {
-    name: 'horizontal-between',
-    description: 'Space-between horizontal layout (justify-between)',
-    demoContent: [
-      { text: 'Left', size: 'p-3', width: 'w-auto' },
-      { text: 'Center', size: 'p-3', width: 'w-auto' },
-      { text: 'Right', size: 'p-3', width: 'w-auto' },
-    ],
-  },
-  {
-    name: 'horizontal-center',
-    description: 'Center-aligned horizontal (justify-center)',
-    demoContent: [
-      { text: 'Center 1', size: 'p-3', width: 'w-auto' },
-      { text: 'Center 2', size: 'p-3', width: 'w-auto' },
-      { text: 'Center 3', size: 'p-3', width: 'w-auto' },
-    ],
-  },
-  {
-    name: 'stack-to-row',
-    description: 'Responsive: vertical mobile, horizontal desktop (md:flex-row)',
-    demoContent: [
-      { text: 'Responsive 1', size: 'p-4', width: 'md:w-auto w-full' },
-      { text: 'Responsive 2', size: 'p-4', width: 'md:w-auto w-full' },
-      { text: 'Responsive 3', size: 'p-4', width: 'md:w-auto w-full' },
-    ],
-  },
-  {
-    name: 'center-to-between',
-    description: 'Responsive: centered mobile, space-between desktop',
-    demoContent: [
-      { text: 'Resp Left', size: 'p-3', width: 'w-auto' },
-      { text: 'Resp Center', size: 'p-3', width: 'w-auto' },
-      { text: 'Resp Right', size: 'p-3', width: 'w-auto' },
-    ],
-  },
-]
+}
 </script>
 
 <template>
-  <div class="min-h-screen bg-muted">
-    <ILayoutCenter variant="full">
-      <div class="py-section space-y-component">
-        <!-- Page Header -->
-        <ILayoutStack variant="centered">
-          <IHeading
-            text="ILayoutStack Showcase"
-            variant="hero"
-          />
-          <IText
-            text="Visual exploration of all stack variants with distinct demo content"
-            variant="subtitle"
-          />
-        </ILayoutStack>
-
-        <!-- Stack Variants -->
-        <ILayoutStack variant="spacious">
-          <div
-            v-for="(variant, index) in stackVariants"
-            :key="variant.name"
-            class="space-y-4"
-          >
-            <!-- Variant Info -->
-            <div class="bg-elevated p-6 rounded-lg border border-muted">
-              <div class="mb-4">
+  <NuxtLayout
+    name="showcase"
+    title="ILayoutStack"
+    subtitle="Flexible stacking component for vertical and horizontal layouts with intelligent spacing"
+    :config="stackConfig"
+  >
+    <template #default="{ getTrackingId, config }">
+      <ShowcaseDemo
+        title="Interactive Playground"
+        description="Experiment with stacking variants and spacing - or explore proven layout presets"
+        :max-cols="1"
+      >
+        <ShowcaseDynamic
+          :component-name="config.componentName"
+          :title="config.title"
+          :description="config.description"
+          :variants="config.variants"
+          :presets="config.presets"
+          :badge-number="1"
+          :tracking-id="getTrackingId('playground')"
+        >
+          <template #default="{ selectedProps, currentPreset }">
+            <div class="space-y-4">
+              <!-- Stack Pattern Info -->
+              <div
+                v-if="currentPreset"
+                class="p-4 bg-elevated rounded-lg border border-muted"
+              >
                 <div class="flex items-center gap-3 mb-2">
+                  <h4 class="font-semibold text-sm text-primary">
+                    {{ currentPreset.content.title }}
+                  </h4>
                   <UBadge
-                    :label="String(index + 1)"
-                    color="primary"
-                    variant="solid"
-                  />
-                  <IHeading
-                    :text="`variant='${variant.name}'`"
-                    variant="card"
-                  />
-                </div>
-                <IText
-                  :text="variant.description"
-                  variant="description"
-                />
-              </div>
-
-              <!-- Demo Container with visible boundaries -->
-              <div class="i-pattern-circuit border-2 border-dashed border-primary/30 p-6 rounded-lg min-h-[200px]">
-                <component
-                  :is="'ILayoutStack'"
-                  :variant="variant.name"
-                  class="h-full"
-                >
-                  <!-- Varied Demo Items -->
-                  <div
-                    v-for="(item, i) in variant.demoContent"
-                    :key="i"
-                    :class="[
-                      'border rounded text-center',
-                      item.size,
-                      item.width,
-                      i === 0 ? 'bg-primary/20 border-primary/50 text-primary'
-                      : i === 1 ? 'bg-secondary/20 border-secondary/50 text-secondary'
-                        : i === 2 ? 'bg-amber-500/20 border-amber-500/50 text-amber-600'
-                          : 'bg-emerald-500/20 border-emerald-500/50 text-emerald-600',
-                    ]"
+                    variant="soft"
+                    color="secondary"
+                    size="sm"
                   >
-                    <span class="font-medium">{{ item.text }}</span>
-                  </div>
-                </component>
-              </div>
-
-              <!-- Behavior Notes -->
-              <div class="mt-3 p-3 bg-muted/50 rounded text-sm">
-                <div class="flex items-start gap-2">
-                  <UIcon
-                    name="i-lucide-info"
-                    class="size-4 text-blue-400 mt-0.5 flex-shrink-0"
-                  />
-                  <div>
-                    <strong class="text-blue-400">Visual Clues:</strong>
-                    <ul class="mt-1 space-y-1 text-dimmed">
-                      <li v-if="variant.name.includes('horizontal')">
-                        • Items flow horizontally instead of vertically
-                      </li>
-                      <li v-if="variant.name === 'centered'">
-                        • Items center-align (different widths show this)
-                      </li>
-                      <li v-if="variant.name === 'compact'">
-                        • Tighter gaps between items
-                      </li>
-                      <li v-if="variant.name === 'spacious'">
-                        • Larger gaps between items
-                      </li>
-                      <li v-if="variant.name.includes('between')">
-                        • Items spread to container edges
-                      </li>
-                      <li v-if="variant.name.includes('responsive')">
-                        • Layout changes at md: breakpoint (768px)
-                      </li>
-                    </ul>
-                  </div>
+                    {{ currentPreset.content.subtitle }}
+                  </UBadge>
                 </div>
+                <p class="text-xs text-muted-foreground">
+                  {{ currentPreset.content.details }}
+                </p>
               </div>
 
-              <!-- Code Example -->
-              <details class="mt-4">
-                <summary class="cursor-pointer text-sm font-medium text-primary hover:text-primary/80">
-                  View Code
-                </summary>
-                <pre class="mt-2 p-3 bg-black/50 rounded text-xs text-green-400 overflow-x-auto"><code>&lt;ILayoutStack variant="${variant.name}"&gt;
-  &lt;div&gt;Item 1&lt;/div&gt;
-  &lt;div&gt;Item 2&lt;/div&gt;
-  &lt;div&gt;Item 3&lt;/div&gt;
-&lt;/ILayoutStack&gt;</code></pre>
-              </details>
+              <!-- Live Stack Demo -->
+              <div class="i-pattern-circuit border-2 border-dashed border-primary/30 p-6 rounded-lg">
+                <ILayoutStack
+                  v-bind="selectedProps"
+                  class="w-full h-full"
+                  :class="selectedProps.variant === 'between' ? 'min-h-[250px]' : ''"
+                >
+                  <!-- Dynamic content based on preset or default -->
+                  <template v-if="currentPreset">
+                    <ShowcaseDemoBox
+                      v-for="(item, index) in currentPreset.content.items"
+                      :key="index"
+                      :color="item.color"
+                      :label="item.text"
+                      label-position="top"
+                      :min-height="selectedProps.variant.includes('horizontal') ? '60px' : '80px'"
+                      padding="md"
+                      :class="[
+                        'transition-all duration-200',
+                        selectedProps.variant.includes('horizontal') ? 'flex-shrink-0' : 'w-full',
+                      ]"
+                    >
+                      <div class="text-center space-y-1">
+                        <span class="font-medium text-sm">{{ item.text }}</span>
+                        <p class="text-xs opacity-70">
+                          {{ item.description }}
+                        </p>
+                      </div>
+                    </ShowcaseDemoBox>
+                  </template>
+
+                  <!-- Default content for custom mode -->
+                  <template v-else>
+                    <ShowcaseDemoBox
+                      v-for="i in (selectedProps.variant === 'horizontal' ? 4 : 3)"
+                      :key="i"
+                      :color="['primary', 'secondary', 'success', 'warning'][i - 1]"
+                      :label="`Item ${i}`"
+                      label-position="top"
+                      :min-height="selectedProps.variant.includes('horizontal') ? '60px' : '80px'"
+                      padding="md"
+                      :class="[
+                        'transition-all duration-200',
+                        selectedProps.variant.includes('horizontal') ? 'flex-shrink-0' : 'w-full',
+                      ]"
+                    >
+                      <div class="text-center">
+                        <span class="font-medium">Item {{ i }}</span>
+                        <p class="text-xs opacity-70 mt-1">
+                          {{ selectedProps.variant }}
+                        </p>
+                      </div>
+                    </ShowcaseDemoBox>
+                  </template>
+                </ILayoutStack>
+              </div>
+
+              <!-- Layout Behavior Description -->
+              <div class="p-3 bg-muted/50 rounded text-sm text-muted-foreground">
+                <strong>Layout Behavior:</strong>
+                {{ selectedProps.variant === 'default' ? 'Standard vertical stacking with medium gaps'
+                  : selectedProps.variant === 'centered' ? 'Center-aligned items with consistent gaps'
+                    : selectedProps.variant === 'compact' ? 'Tight spacing for dense content'
+                      : selectedProps.variant === 'spacious' ? 'Generous spacing for breathing room'
+                        : selectedProps.variant === 'between' ? 'Vertical stack with space-between distribution'
+                          : selectedProps.variant === 'horizontal' ? 'Horizontal flow with wrapping'
+                            : selectedProps.variant === 'horizontal-between' ? 'Space-between horizontal layout'
+                              : selectedProps.variant === 'horizontal-center' ? 'Horizontally centered items with gap spacing'
+                                : selectedProps.variant === 'stack-to-row' ? 'Responsive: stack on mobile, horizontal on desktop'
+                                  : selectedProps.variant === 'center-to-between' ? 'Responsive: centered on mobile, space-between on desktop'
+                                    : 'Custom stacking behavior' }}
+                <br>
+                <em>
+                  {{ selectedProps.variant.includes('responsive') || selectedProps.variant.includes('stack-to') || selectedProps.variant.includes('center-to')
+                    ? 'Resize your browser to see responsive behavior'
+                    : selectedProps.variant.includes('horizontal')
+                      ? 'Items flow horizontally and wrap when needed'
+                      : 'Items stack vertically with consistent spacing' }}
+                </em>
+              </div>
             </div>
-
-            <!-- Divider -->
-            <ILayoutDivider
-              v-if="index < stackVariants.length - 1"
-              variant="gradient"
-              spacing="lg"
-            />
-          </div>
-        </ILayoutStack>
-
-        <!-- Responsive Testing Guide -->
-        <div class="bg-elevated p-8 rounded-lg border border-muted">
-          <IHeading
-            text="How to Test Responsive Variants"
-            variant="section"
-          />
-          <div class="bg-blue-500/10 border border-blue-500/30 p-4 rounded-lg mt-4">
-            <ILayoutStack variant="compact">
-              <p class="text-blue-400 font-medium">
-                🖥️ Responsive Testing Guide:
-              </p>
-              <ol class="text-sm text-dimmed space-y-2 list-decimal list-inside">
-                <li><strong>stack-to-row:</strong> Items stack vertically on mobile, flow horizontally on desktop (768px+)</li>
-                <li><strong>center-to-between:</strong> Items center on mobile, space-between on desktop</li>
-                <li><strong>All horizontal variants:</strong> Will wrap to new lines if container is too narrow</li>
-              </ol>
-              <p class="text-xs text-dimmed mt-3">
-                💡 <strong>Tip:</strong> Resize your browser window to see responsive changes in action!
-              </p>
-            </ILayoutStack>
-          </div>
-        </div>
-      </div>
-    </ILayoutCenter>
-  </div>
+          </template>
+        </ShowcaseDynamic>
+      </ShowcaseDemo>
+    </template>
+  </NuxtLayout>
 </template>

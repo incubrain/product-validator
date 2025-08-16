@@ -57,16 +57,16 @@ export const navigationConfig: NavigationConfig = {
           icon: 'i-lucide-eye',
         },
         {
-          label: 'Layout Components',
-          to: '/showcase/center',
-          description: 'Layout system demos',
-          icon: 'i-lucide-layout',
-        },
-        {
           label: 'Grid System',
           to: '/showcase/grid',
           description: 'Grid layout examples',
           icon: 'i-lucide-grid-3x3',
+        },
+        {
+          label: 'Float',
+          to: '/showcase/float',
+          description: 'Float layout examples',
+          icon: 'i-lucide-layout',
         },
         {
           label: 'Split Layouts',

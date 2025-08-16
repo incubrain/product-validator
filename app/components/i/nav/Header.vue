@@ -42,12 +42,6 @@ const getCTAUrl = (action: string) => {
 
         <!-- Desktop CTA + Mobile Menu Button -->
         <div class="flex items-center space-x-4 relative">
-          <INavSearch
-            variant="button"
-            size="sm"
-            placeholder="Search..."
-            class="hidden sm:block"
-          />
           <UButton
             :label="ctaButtons.primary.label"
             color="primary"
@@ -60,11 +54,6 @@ const getCTAUrl = (action: string) => {
           />
 
           <div class="flex items-center space-x-2 sm:hidden">
-            <INavSearch
-              variant="button"
-              size="sm"
-              placeholder=""
-            />
             <UButton
               variant="ghost"
               color="neutral"

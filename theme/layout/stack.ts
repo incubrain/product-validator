@@ -1,9 +1,9 @@
 // theme/layout/stack.ts - MODERNIZED
-import { tv } from '../../shared/utils/themev2'
+import { tv, extractTV } from '../../shared/utils/themev3'
 import { createGapVariants } from '../../shared/config/theme'
 import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
-const stackStyles = tv({
+export const stackStyles = tv({
   slots: {
     root: ['flex'],
   },
@@ -53,7 +53,7 @@ const stackStyles = tv({
     gap: 'md',
   },
 })
-
+export const stackData = extractTV(stackStyles)
 export type StackVariants = ExtractVariants<typeof stackStyles>
 export type StackSlots = ExtractSlots<typeof stackStyles>
 export default stackStyles

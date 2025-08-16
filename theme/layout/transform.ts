@@ -1,5 +1,5 @@
 // theme/layout/transform.ts
-import { tv } from '../../shared/utils/themev2'
+import { tv, extractTV } from '../../shared/utils/themev3'
 import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
 const transformStyles = tv({
@@ -77,6 +77,7 @@ const transformStyles = tv({
   },
 })
 
+export const transformData = extractTV(transformStyles)
 export type TransformVariants = ExtractVariants<typeof transformStyles>
 export type TransformSlots = ExtractSlots<typeof transformStyles>
 export default transformStyles

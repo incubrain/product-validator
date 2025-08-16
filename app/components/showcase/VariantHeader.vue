@@ -1,41 +1,33 @@
+<!-- app/components/showcase/VariantHeader.vue -->
 <script setup lang="ts">
 interface Props {
   name: string
   description: string
-  emotional: 'trust' | 'authority' | 'urgency'
+  badgeNumber?: number
 }
 
 defineProps<Props>()
-
-const getEmotionalColor = (emotional: string) => {
-  switch (emotional) {
-    case 'trust': return 'primary'
-    case 'authority': return 'secondary'
-    case 'urgency': return 'warning'
-    default: return 'secondary'
-  }
-}
 </script>
 
 <template>
-  <UContainer>
-    <ILayoutStack variant="compact">
-      <div class="flex flex-col items-start gap-3">
-        <UBadge
-          :label="emotional.toUpperCase()"
-          :color="getEmotionalColor(emotional)"
-          variant="soft"
-          size="lg"
-        />
-        <IHeading
-          :text="name"
-          variant="card"
-        />
-      </div>
-      <IText
-        :text="description"
-        variant="description"
+  <ILayoutStack variant="compact">
+    <div class="flex items-center gap-3">
+      <UBadge
+        v-if="badgeNumber"
+        :label="String(badgeNumber)"
+        color="primary"
+        variant="solid"
       />
-    </ILayoutStack>
-  </UContainer>
+
+      <IHeading
+        :text="name"
+        :level="3"
+        variant="card"
+      />
+    </div>
+    <IText
+      :text="description"
+      variant="description"
+    />
+  </ILayoutStack>
 </template>

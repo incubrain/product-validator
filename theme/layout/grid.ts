@@ -1,5 +1,5 @@
 // theme/layout/grid.ts - ENHANCED WITH SELECTIVE SPACING
-import { tv } from '../../shared/utils/themev2'
+import { tv, extractTV } from '../../shared/utils/themev3'
 import { createGapVariants } from '../../shared/config/theme'
 import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
@@ -42,6 +42,7 @@ const gridStyles = tv({
   },
 })
 
+export const gridData = extractTV(gridStyles)
 export type GridVariants = ExtractVariants<typeof gridStyles>
 export type GridSlots = ExtractSlots<typeof gridStyles>
 export default gridStyles

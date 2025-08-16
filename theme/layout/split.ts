@@ -1,27 +1,30 @@
 // theme/layout/split.ts
-import { tv } from '../../shared/utils/themev2'
+import { tv, extractTV } from '../../shared/utils/themev3'
 import { createGapVariants } from '../../shared/config/theme'
 import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
 const splitStyles = tv({
   slots: {
-    root: ['grid', 'grid-cols-'],
+    root: ['grid', 'grid-cols-1'],
     first: [''],
     second: [''],
   },
   variants: {
     ...createGapVariants('root'),
     ratio: {
-      '50-50': { root: 'lg:grid-cols-[50fr_50fr]' },
-      '60-40': { root: 'lg:grid-cols-[60fr_40fr]' },
-      '70-30': { root: 'lg:grid-cols-[70fr_30fr]' },
-      '80-20': { root: 'lg:grid-cols-[80fr_20fr]' },
-      '40-60': { root: 'lg:grid-cols-[40fr_60fr]' },
-      '30-70': { root: 'lg:grid-cols-[30fr_70fr]' },
-      '20-80': { root: 'lg:grid-cols-[20fr_80fr]' },
+      '50-50': { root: 'lg:grid-cols-[1fr_1fr]' },
+      '60-40': { root: 'lg:grid-cols-[3fr_2fr]' },
+      '70-30': { root: 'lg:grid-cols-[7fr_3fr]' },
+      '80-20': { root: 'lg:grid-cols-[4fr_1fr]' },
+      '40-60': { root: 'lg:grid-cols-[2fr_3fr]' },
+      '30-70': { root: 'lg:grid-cols-[3fr_7fr]' },
+      '20-80': { root: 'lg:grid-cols-[1fr_4fr]' },
     },
     reverse: {
-      true: { root: '[&>:nth-child(2)]:order-first lg:[&>:nth-child(2)]:order-none' },
+      true: {
+        first: 'order-2 lg:order-1',
+        second: 'order-1 lg:order-2',
+      },
       false: {},
     },
   },
@@ -33,6 +36,7 @@ const splitStyles = tv({
   },
 })
 
+export const splitData = extractTV(splitStyles)
 export type SplitVariants = ExtractVariants<typeof splitStyles>
 export type SplitSlots = ExtractSlots<typeof splitStyles>
 export default splitStyles
