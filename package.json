@@ -33,7 +33,7 @@
     "@iconify-json/lucide": "^1.2.54",
     "@iconify-json/mdi": "^1.2.3",
     "@iconify/json": "^2.2.363",
-    "@nuxt/eslint": "1.5.2",
+    "@nuxt/eslint": "1.8.0",
     "@types/node": "^20.19.8",
     "@vueuse/motion": "^3.0.3",
     "@vueuse/nuxt": "13.4.0",
