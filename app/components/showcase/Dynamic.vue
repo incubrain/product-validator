@@ -20,6 +20,7 @@ interface PresetOption {
 
 interface Props {
   componentName: string
+  componentData?: any
   title: string
   description: string
   variants: VariantOption[]
@@ -35,7 +36,11 @@ const props = withDefaults(defineProps<Props>(), {
 })
 
 defineSlots<{
-  default(props: { selectedProps: Record<string, any> }): any
+  default(props: {
+    selectedProps: Record<string, any>
+    relevantSelectedProps: Record<string, any>
+    currentPreset: PresetOption | null
+  }): any
 }>()
 
 // ✅ Preset management
@@ -50,7 +55,7 @@ const availablePresets = computed(() => {
 
 const currentPreset = computed(() => {
   if (selectedPreset.value === 'custom') return null
-  return props.presets?.find((p) => p.name === selectedPreset.value)
+  return props.presets?.find((p) => p.name === selectedPreset.value) ?? null
 })
 
 // Build reactive state from variant options or selected preset
@@ -72,10 +77,36 @@ watch(currentPreset, (preset) => {
   }
 }, { immediate: true })
 
+const relevantSelectedProps = computed(() => {
+  const mappings = props.componentData?.coreData.propMappings?.[selectedProps.variant]
+  if (!mappings) return selectedProps
+
+  return {
+    variant: selectedProps.variant, // ✅ Always include variant
+    ...Object.fromEntries(
+      Object.entries(selectedProps).filter(([key]) =>
+        mappings.includes(key) || ['ui', 'trackingId'].includes(key),
+      ),
+    ),
+  }
+})
+
+const relevantVariants = computed(() => {
+  const mappings = props.componentData?.coreData.propMappings?.[selectedProps.variant]
+  if (!mappings) return props.variants
+
+  return props.variants.filter((variant) =>
+    variant.name === 'variant' // ✅ Always show variant selector
+    || mappings.includes(variant.name),
+  )
+})
+
 // Generated code string
 const generatedCode = computed(() => {
-  const propsString = Object.entries(selectedProps)
+  const propsToShow = relevantSelectedProps.value // ✅ USE FILTERED PROPS
+  const propsString = Object.entries(propsToShow)
     .filter(([key, value]) => {
+      if (['ui', 'trackingId'].includes(key)) return false
       const variant = props.variants.find((opt) => opt.name === key)
       return variant && value !== variant.default
     })
@@ -87,7 +118,7 @@ const generatedCode = computed(() => {
     .join(' ')
 
   return `<${props.componentName}${propsString ? ' ' + propsString : ''}>
-  // Content
+  <!-- Content -->
 </${props.componentName}>`
 })
 
@@ -97,8 +128,11 @@ const copyCode = () => copy(generatedCode.value)
 
 // Generate current props description
 const currentPropsDesc = computed(() => {
-  const activeProps = Object.entries(selectedProps)
+  const propsToShow = relevantSelectedProps.value // ✅ USE FILTERED PROPS
+
+  const activeProps = Object.entries(propsToShow)
     .filter(([key, value]) => {
+      if (['ui', 'trackingId'].includes(key)) return false
       const variant = props.variants.find((opt) => opt.name === key)
       return variant && value !== variant.default
     })
@@ -182,12 +216,14 @@ const variantValue = computed(() => String(selectedProps.variant || 'default'))
                 {{ availablePresets.find(p => p.name === selectedPreset)?.label }}
               </UButton>
             </UDropdownMenu>
+
+            <!-- ✅ SMART CONTROLS - Only show relevant variants -->
             <div
               v-if="!presets || selectedPreset === 'custom'"
               class="flex flex-wrap gap-3"
             >
               <div
-                v-for="variant in variants"
+                v-for="variant in relevantVariants"
                 :key="variant.name"
                 class="flex items-center gap-2"
               >
@@ -235,14 +271,26 @@ const variantValue = computed(() => String(selectedProps.variant || 'default'))
                 />
               </div>
             </div>
+
             <UAlert
               v-if="currentPreset?.behavior"
               variant="soft"
               :description="currentPreset.behavior"
-              :ui="{
-                root: 'px-2 py-1 w-auto',
-              }"
+              :ui="{ root: 'px-2 py-1 w-auto' }"
             />
+          </div>
+
+          <!-- ✅ ENHANCED VARIANT HELP -->
+          <div
+            v-if="componentData?.coreData.propMappings"
+            class="p-3 bg-info/5 rounded-lg border border-info/20"
+          >
+            <div class="text-xs text-info font-medium mb-1">
+              💡 {{ selectedProps.variant.charAt(0).toUpperCase() + selectedProps.variant.slice(1) }} Controls
+            </div>
+            <div class="text-xs text-muted-foreground">
+              Uses: {{ ['variant', ...(componentData.coreData.propMappings[selectedProps.variant] || [])].join(', ') }}
+            </div>
           </div>
 
           <!-- Description shows preset info or current state -->
@@ -252,10 +300,11 @@ const variantValue = computed(() => String(selectedProps.variant || 'default'))
         </div>
       </template>
 
-      <!-- Live Preview Slot -->
+      <!-- ✅ ENHANCED LIVE PREVIEW SLOT - Pass both selectedProps and relevantSelectedProps -->
       <template v-if="!!$slots.default">
         <slot
           :selected-props="selectedProps"
+          :relevant-selected-props="relevantSelectedProps"
           :current-preset="currentPreset"
         />
       </template>

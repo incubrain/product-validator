@@ -1,5 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { getBusinessRuntimeConfig, getBusinessInfo } from './shared/config/business'
+import { getBusinessRuntimeConfig } from './shared/config/business'
 import { fileURLToPath } from 'node:url'
 
 export default defineNuxtConfig({

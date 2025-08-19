@@ -50,7 +50,30 @@ export function tvComputed<T>(fn: () => T, trackingId?: string): ComputedRef<Fla
         captureComponentCSS(trackingId, result, instance)
       }
     }
-    
+
     return result as FlattenVariants<T>
   })
+}
+
+export function validateProps<T extends Record<string, any>>(
+  props: T,
+  variant: string,
+  propMappings: Record<string, string[]>,
+) {
+  const relevantProps = propMappings[variant] || []
+
+  // ✅ FILTER: Only props that are set and not default values
+  const setProps = Object.keys(props).filter((key) => {
+    if (['ui', 'trackingId'].includes(key)) return false
+    return props[key] !== undefined
+  })
+
+  // ✅ DETECT: Unused props for current variant
+  const unused = setProps.filter((prop) => !relevantProps.includes(prop))
+
+  return {
+    relevantProps, // Props that work with current variant
+    unused, // Props that don't work with current variant
+    hasIssues: unused.length > 0,
+  }
 }

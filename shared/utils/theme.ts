@@ -44,6 +44,8 @@ type CoreData = {
   title?: string
   description?: string
   category?: string
+  propMappings?: Record<string, string[]>
+
 }
 
 export interface TVData {
