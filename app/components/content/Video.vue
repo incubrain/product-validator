@@ -1,7 +1,7 @@
 <!-- app/components/media/Video.vue -->
 <script setup lang="ts">
 import { useIntersectionObserver, useMediaQuery, useMediaControls } from '@vueuse/core'
-import mediaStyles from '#theme/video'
+import mediaStyles from '#theme/content/video'
 
 interface Props {
   // Video source (from public directory)

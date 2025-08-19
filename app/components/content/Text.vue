@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import textStyles from '#theme/text'
+import textStyles from '#theme/content/text'
 import type { TextProps } from '#shared/types/components'
 
 const props = withDefaults(defineProps<TextProps>(), {

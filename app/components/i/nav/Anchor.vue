@@ -1,6 +1,6 @@
 <!-- app/components/layout/Anchor.vue - MODERN ARCHITECTURE -->
 <script setup lang="ts">
-import anchorStyles from '#theme/anchor'
+import anchorStyles from '#theme/content/anchor'
 import type { AnchorProps } from '#shared/types/components'
 
 const props = withDefaults(defineProps<AnchorProps>(), {

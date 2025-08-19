@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import headingStyles from '#theme/heading'
+import headingStyles from '#theme/content/heading'
 import type { HeadingProps } from '#shared/types/components'
 
 const props = withDefaults(defineProps<HeadingProps>(), {
