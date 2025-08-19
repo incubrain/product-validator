@@ -24,7 +24,6 @@ interface Props {
   description: string
   variants: VariantOption[]
   presets?: PresetOption[]
-  badgeNumber?: number
   language?: string
   center?: boolean
   trackingId?: string
@@ -130,7 +129,6 @@ const variantValue = computed(() => String(selectedProps.variant || 'default'))
   <ILayoutContainer class="space-y-6">
     <!-- Variant Header -->
     <ShowcaseVariantHeader
-      :badge-number="badgeNumber"
       :name="title"
       :description="description"
     />

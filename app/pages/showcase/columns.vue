@@ -72,7 +72,6 @@ setShowcaseData(generateShowcaseData(columnsConfig))
     >
       <ShowcaseDynamic
         v-bind="columnsConfig"
-        :badge-number="1"
       >
         <template #default="{ selectedProps }">
           <div :class="demoStyles.container">

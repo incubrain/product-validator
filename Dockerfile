@@ -20,8 +20,7 @@ ENV NUXT_PUBLIC_SITE_NAME=$NUXT_PUBLIC_SITE_NAME
 WORKDIR /app
 
 # Copy package files and workspace configuration
-COPY package.json pnpm-lock.yaml .npmrc tsconfig.json ./
-COPY turbo.json* ./
+COPY package.json pnpm-lock.yaml .npmrc tsconfig.json nuxt.config.ts .gitignore ./
 
 # Copy the main app directory
 COPY app ./app
@@ -29,7 +28,7 @@ COPY shared ./shared
 COPY theme ./theme
 COPY wip-layers ./wip-layers
 
-# Copy other workspace directories if they exist
+# Copy other workspace directories 11111if they exist
 COPY public ./public
 COPY server ./server
 

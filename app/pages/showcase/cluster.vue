@@ -61,7 +61,6 @@ setShowcaseData(generateShowcaseData(clusterConfig))
     >
       <ShowcaseDynamic
         v-bind="clusterConfig"
-        :badge-number="1"
       >
         <template #default="{ selectedProps }">
           <div :class="demoStyles.container">

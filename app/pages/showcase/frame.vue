@@ -65,7 +65,6 @@ setShowcaseData(generateShowcaseData(frameConfig))
     >
       <ShowcaseDynamic
         v-bind="frameConfig"
-        :badge-number="1"
       >
         <template #default="{ selectedProps }">
           <div class="max-w-md mx-auto">

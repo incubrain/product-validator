@@ -57,12 +57,7 @@ setShowcaseData(generateShowcaseData(floatConfig))
         :max-cols="1"
       >
         <ShowcaseDynamic
-          :component-name="floatConfig.componentName"
-          :title="floatConfig.title"
-          :description="floatConfig.description"
-          :variants="floatConfig.variants"
-          :presets="floatConfig.presets"
-          :badge-number="1"
+          v-bind="floatConfig"
         >
           <template #default="{ selectedProps, currentPreset }">
             <div class="space-y-4">

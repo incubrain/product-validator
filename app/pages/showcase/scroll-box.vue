@@ -148,7 +148,6 @@ setShowcaseData(generateShowcaseData(scrollBoxConfig))
     >
       <ShowcaseDynamic
         v-bind="scrollBoxConfig"
-        :badge-number="1"
       >
         <template #default="{ selectedProps, currentPreset }">
           <ILayoutScrollBox

@@ -62,12 +62,12 @@ setShowcaseData(generateShowcaseData(gridConfig))
 <template>
   <NuxtLayout name="showcase">
     <ShowcaseDemo
+      :description="gridConfig.description"
       title="Grid Positioning"
       :max-cols="1"
     >
       <ShowcaseDynamic
         v-bind="gridConfig"
-        :badge-number="1"
       >
         <template #default="{ selectedProps }">
           <div :class="demoStyles.container">

@@ -37,12 +37,12 @@ setShowcaseData(generateShowcaseData(splitConfig))
 <template>
   <NuxtLayout name="showcase">
     <ShowcaseDemo
+      :description="splitConfig.description"
       title="Split Positioning"
       :max-cols="1"
     >
       <ShowcaseDynamic
         v-bind="splitConfig"
-        :badge-number="1"
       >
         <template #default="{ selectedProps }">
           <ILayoutSplit

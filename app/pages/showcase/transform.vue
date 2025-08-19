@@ -1,291 +1,218 @@
-<script setup>
+<!-- pages/showcase/transform.vue -->
+<script setup lang="ts">
 import { ITransform } from '#components'
 import { transformData } from '#theme/layout/transform'
 
-definePageMeta({
-  layout: false,
-})
+const { createShowcaseConfig, generateShowcaseData, setShowcaseData } = useShowcase()
 
-// ✅ Complete transform showcase configuration
-const transformConfig = {
-  componentName: 'ITransform',
-  title: 'Interactive Transform Playground',
-  description: 'Experiment with transform effects, timing, and origin points - or try optimized presets',
-  componentData: transformData,
-  variants: [
-    {
-      name: 'variant',
-      type: 'select',
-      options: ['none', 'hover-lift', 'hover-scale', 'center-absolute', 'spin', 'pulse', 'press', 'custom'],
-      default: 'hover-lift',
-      description: 'Transform effect type',
-    },
-    {
-      name: 'timing',
-      type: 'select',
-      options: ['fast', 'normal', 'slow'],
-      default: 'normal',
-      description: 'Animation duration',
-    },
-    {
-      name: 'origin',
-      type: 'select',
-      options: ['center', 'top', 'bottom', 'left', 'right'],
-      default: 'center',
-      description: 'Transform origin point',
-    },
-  ],
+const demoStyles = {
+  container: 'i-pattern-circuit border-2 border-dashed border-primary/30 p-12 rounded-lg flex items-center justify-center min-h-[300px]',
+}
+
+const transformConfig = createShowcaseConfig(ITransform, transformData, {
+  variantDescriptions: {
+    variant: 'Transform effect type',
+    timing: 'Animation duration',
+    origin: 'Transform origin point',
+  },
+
   presets: [
     {
       name: 'Card Hover',
       description: 'Standard card interaction with subtle lift effect',
-      behavior: 'Lifts card slightly on hover with scale and translate for depth perception. Normal timing provides smooth interaction.',
       preset: { variant: 'hover-lift', timing: 'normal', origin: 'center' },
-      content: {
-        type: 'card',
-        element: 'Product Card',
-        elementClass: 'bg-white dark:bg-gray-900 p-4 rounded-lg shadow border dark:border-gray-700 max-w-xs cursor-pointer',
-        title: 'Card Hover',
-        subtitle: 'Interactive element',
-        details: 'Perfect for cards, buttons, and clickable elements requiring hover feedback',
-      },
+      content: { type: 'card', title: 'Card Hover', subtitle: 'Interactive element' },
     },
     {
       name: 'Image Scale',
       description: 'Media hover effect with smooth scaling',
-      behavior: 'Scales image on hover for zoom effect. Slow timing creates smooth, elegant transition ideal for galleries.',
       preset: { variant: 'hover-scale', timing: 'slow', origin: 'center' },
-      content: {
-        type: 'image',
-        element: 'Image',
-        elementClass: 'w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg overflow-hidden cursor-pointer flex items-center justify-center text-white text-xs font-medium',
-        title: 'Image Scale',
-        subtitle: 'Media effect',
-        details: 'Ideal for image galleries, thumbnails, and media previews',
-      },
+      content: { type: 'image', title: 'Image Scale', subtitle: 'Media effect' },
     },
     {
       name: 'Loading Spinner',
       description: 'Continuous rotation for loading states',
-      behavior: 'Continuous spin animation with slow timing. Perfect for loading indicators and progress spinners.',
       preset: { variant: 'spin', timing: 'slow', origin: 'center' },
-      content: {
-        type: 'spinner',
-        element: '',
-        elementClass: 'w-8 h-8 border-2 border-dashed border-blue-500 dark:border-blue-400 border-t-transparent rounded-full',
-        title: 'Loading Spinner',
-        subtitle: 'Progress indicator',
-        details: 'Essential for loading states and progress indication',
-      },
+      content: { type: 'spinner', title: 'Loading Spinner', subtitle: 'Progress indicator' },
     },
     {
       name: 'Skeleton Pulse',
       description: 'Breathing animation for content placeholders',
-      behavior: 'Pulse animation creates breathing effect for skeleton loading states. Draws attention while content loads.',
       preset: { variant: 'pulse', timing: 'normal', origin: 'center' },
-      content: {
-        type: 'skeleton',
-        element: 'Loading Content',
-        elementClass: 'w-full space-y-2 p-4',
-        title: 'Skeleton Pulse',
-        subtitle: 'Loading placeholder',
-        details: 'Perfect for skeleton screens and content loading states',
-      },
+      content: { type: 'skeleton', title: 'Skeleton Pulse', subtitle: 'Loading placeholder' },
     },
     {
       name: 'Button Press',
       description: 'Tactile feedback for button interactions',
-      behavior: 'Quick scale-down on press with fast timing. Provides immediate tactile feedback for button interactions.',
       preset: { variant: 'press', timing: 'fast', origin: 'center' },
-      content: {
-        type: 'button',
-        element: 'Click Me',
-        elementClass: 'bg-primary text-primary-foreground px-4 py-2 rounded cursor-pointer font-medium',
-        title: 'Button Press',
-        subtitle: 'Interactive feedback',
-        details: 'Essential for buttons and clickable elements requiring immediate feedback',
-      },
+      content: { type: 'button', title: 'Button Press', subtitle: 'Interactive feedback' },
     },
   ],
-  useCases: [
-    {
-      icon: '🎯',
-      title: 'Interactive Elements',
-      description: 'Cards, buttons, and clickable components that need hover and press feedback',
-    },
-    {
-      icon: '🖼️',
-      title: 'Media Effects',
-      description: 'Images, thumbnails, and media previews with scaling and zoom interactions',
-    },
-    {
-      icon: '⏳',
-      title: 'Loading States',
-      description: 'Spinners, skeleton screens, and progress indicators with continuous animations',
-    },
-    {
-      icon: '📱',
-      title: 'Modal & Overlays',
-      description: 'Centered positioning for modals, tooltips, and overlay content',
-    },
-  ],
-  guidelines: {
-    bestPractices: [
-      {
-        text: 'Use hover-lift for cards and interactive elements',
-        codes: ['hover-lift', 'normal'],
-      },
-      {
-        text: 'Use hover-scale for images and media with slow timing',
-        codes: ['hover-scale', 'slow'],
-      },
-      {
-        text: 'Use fast timing for button press feedback',
-        codes: ['press', 'fast'],
-      },
-      {
-        text: 'Use center-absolute for modal and overlay positioning',
-        codes: ['center-absolute'],
-      },
-    ],
-    commonPatterns: [
-      {
-        text: 'Cards work best with hover-lift and normal timing',
-        codes: ['hover-lift', 'normal'],
-      },
-      {
-        text: 'Images benefit from hover-scale with slow transitions',
-        codes: ['hover-scale', 'slow'],
-      },
-      {
-        text: 'Loading spinners use spin with slow timing',
-        codes: ['spin', 'slow'],
-      },
-      {
-        text: 'Buttons need press feedback with fast timing',
-        codes: ['press', 'fast'],
-      },
-    ],
-    futureEnhancements: {
-      description: 'Planned enhancements include 3D transforms, flip effects, and advanced rotation controls.',
-      codes: ['3d-lift', 'flip-x', 'hover-rotate'],
-    },
-  },
-}
+})
 
-// ✅ Generate content for different preset types
-const generateTransformContent = (content) => {
-  return {
-    ...content,
+// ✅ Content generator for different types
+const getContentElement = (preset, selectedProps) => {
+  if (!preset) return { class: 'w-32 h-24 bg-secondary/20 border border-secondary/50 rounded flex items-center justify-center text-secondary text-sm font-medium cursor-pointer', text: 'Transform Box' }
+
+  const { content } = preset
+
+  switch (content.type) {
+    case 'card':
+      return {
+        class: 'bg-white dark:bg-gray-900 p-4 rounded-lg shadow border dark:border-gray-700 max-w-xs cursor-pointer',
+        text: content.title,
+        subtitle: 'Hover to see the effect',
+      }
+    case 'image':
+      return {
+        class: 'w-24 h-24 bg-gradient-to-br from-blue-400 to-purple-500 rounded-lg overflow-hidden cursor-pointer flex items-center justify-center text-white text-xs font-medium',
+        text: 'IMG',
+      }
+    case 'spinner':
+      return {
+        class: 'w-8 h-8 border-2 border-dashed border-blue-500 dark:border-blue-400 border-t-transparent rounded-full',
+        text: '',
+      }
+    case 'skeleton':
+      return {
+        class: 'w-full space-y-2 p-4 max-w-xs',
+        text: '',
+        skeleton: true,
+      }
+    case 'button':
+      return {
+        class: 'bg-primary text-primary-foreground px-4 py-2 rounded cursor-pointer font-medium',
+        text: 'Click Me',
+      }
+    default:
+      return {
+        class: 'w-32 h-24 bg-primary/10 border border-primary/30 rounded flex items-center justify-center text-primary text-sm font-medium cursor-pointer',
+        text: selectedProps.variant,
+      }
   }
 }
+
+// ✅ Interaction hints
+const getInteractionHint = (variant) => {
+  switch (variant) {
+    case 'hover-lift':
+    case 'hover-scale':
+      return '💡 Hover over the element to see the effect'
+    case 'press':
+      return '💡 Click and hold the element to see the press effect'
+    case 'spin':
+    case 'pulse':
+      return '✨ Animation runs continuously'
+    case 'center-absolute':
+      return '📍 Element is absolutely centered'
+    default:
+      return `🎯 Transform effect: ${variant}`
+  }
+}
+
+setShowcaseData(generateShowcaseData(transformConfig))
 </script>
 
 <template>
-  <NuxtLayout
-    name="showcase"
-    title="ITransform"
-    subtitle="Essential transform utilities for modern web interfaces with real-time controls"
-    :config="transformConfig"
-  >
-    <template #default="{ config }">
-      <ShowcaseDemo
-        title="Interactive Playground"
-        description="Experiment with transform effects, timing, and origin points - see real-time changes"
-        :max-cols="1"
+  <NuxtLayout name="showcase">
+    <ShowcaseDemo
+      :description="transformConfig.description"
+      title="Transform Effects"
+      :max-cols="1"
+    >
+      <ShowcaseDynamic
+        v-bind="transformConfig"
       >
-        <ShowcaseDynamic
-          :component-name="config.componentName"
-          :title="config.title"
-          :description="config.description"
-          :variants="config.variants"
-          :presets="config.presets"
-          :badge-number="1"
-          center
-        >
-          <template #default="{ selectedProps, currentPreset }">
-            <div class="space-y-4">
-              <!-- Transform Pattern Info -->
-              <div
-                v-if="currentPreset"
-                class="p-4 bg-elevated rounded-lg border border-muted"
-              >
-                <div class="flex items-center gap-3 mb-2">
-                  <h4 class="font-semibold text-sm text-primary">
-                    {{ currentPreset.content.title }}
-                  </h4>
-                  <UBadge
-                    variant="soft"
-                    color="secondary"
-                    size="sm"
-                  >
-                    {{ currentPreset.content.subtitle }}
-                  </UBadge>
-                </div>
-                <p class="text-xs text-muted-foreground">
-                  {{ currentPreset.content.details }}
-                </p>
-              </div>
-
-              <!-- Live Transform Demo -->
-              <div class="i-pattern-circuit border-2 border-dashed border-primary/30 p-12 rounded-lg flex items-center justify-center min-h-[300px]">
-                <ITransform
-                  v-bind="selectedProps"
-                  class="relative"
+        <template #default="{ selectedProps, currentPreset }">
+          <div class="space-y-4">
+            <!-- Transform Pattern Info -->
+            <div
+              v-if="currentPreset"
+              class="p-4 bg-elevated rounded-lg border border-muted"
+            >
+              <div class="flex items-center gap-3 mb-2">
+                <h4 class="font-semibold text-sm text-primary">
+                  {{ currentPreset.content.title }}
+                </h4>
+                <UBadge
+                  variant="soft"
+                  color="secondary"
+                  size="sm"
                 >
-                  <!-- Dynamic content based on preset or default -->
+                  {{ currentPreset.content.subtitle }}
+                </UBadge>
+              </div>
+              <p class="text-xs text-muted-foreground">
+                {{ currentPreset.description }}
+              </p>
+            </div>
+
+            <!-- Live Transform Demo -->
+            <div :class="demoStyles.container">
+              <ILayoutTransform
+                v-bind="selectedProps"
+                class="relative"
+              >
+                <!-- Dynamic content based on preset -->
+                <template v-if="currentPreset">
                   <div
-                    v-if="currentPreset"
-                    :class="currentPreset.content.elementClass"
+                    v-if="currentPreset.content.type === 'skeleton'"
+                    :class="getContentElement(currentPreset, selectedProps).class"
                   >
-                    <template v-if="currentPreset.content.type === 'skeleton'">
-                      <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-3/4 mb-2" />
-                      <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-1/2 mb-2" />
-                      <div class="h-3 bg-gray-300 dark:bg-gray-600 rounded w-2/3" />
-                    </template>
-                    <template v-else-if="currentPreset.content.type === 'card'">
-                      <h4 class="font-medium text-sm text-gray-900 dark:text-white">
-                        {{ currentPreset.content.element }}
-                      </h4>
-                      <p class="text-xs text-gray-600 dark:text-gray-300 mt-1">
-                        Hover to see the effect
-                      </p>
-                    </template>
-                    <template v-else>
-                      {{ currentPreset.content.element }}
-                    </template>
+                    <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-3/4 mb-2" />
+                    <div class="h-4 bg-gray-300 dark:bg-gray-600 rounded w-1/2 mb-2" />
+                    <div class="h-3 bg-gray-300 dark:bg-gray-600 rounded w-2/3" />
+                  </div>
+                  <div
+                    v-else-if="currentPreset.content.type === 'card'"
+                    :class="getContentElement(currentPreset, selectedProps).class"
+                  >
+                    <h4 class="font-medium text-sm text-gray-900 dark:text-white">
+                      {{ getContentElement(currentPreset, selectedProps).text }}
+                    </h4>
+                    <p class="text-xs text-gray-600 dark:text-gray-300 mt-1">
+                      {{ getContentElement(currentPreset, selectedProps).subtitle }}
+                    </p>
                   </div>
                   <div
                     v-else
-                    class="w-32 h-24 bg-secondary/20 border border-secondary/50 rounded flex items-center justify-center text-secondary text-sm font-medium cursor-pointer"
+                    :class="getContentElement(currentPreset, selectedProps).class"
                   >
-                    Transform Box
+                    {{ getContentElement(currentPreset, selectedProps).text }}
                   </div>
-                </ITransform>
-              </div>
+                </template>
 
-              <!-- Interaction Hint -->
-              <div class="text-center text-sm text-muted-foreground">
-                <template v-if="selectedProps.variant === 'hover-lift' || selectedProps.variant === 'hover-scale'">
-                  💡 <strong>Hover</strong> over the element to see the effect
-                </template>
-                <template v-else-if="selectedProps.variant === 'press'">
-                  💡 <strong>Click and hold</strong> the element to see the press effect
-                </template>
-                <template v-else-if="selectedProps.variant === 'spin' || selectedProps.variant === 'pulse'">
-                  ✨ Animation runs <strong>continuously</strong>
-                </template>
-                <template v-else-if="selectedProps.variant === 'center-absolute'">
-                  📍 Element is <strong>absolutely centered</strong>
-                </template>
-                <template v-else>
-                  🎯 Transform effect: <strong>{{ selectedProps.variant }}</strong>
-                </template>
-              </div>
+                <!-- Default content -->
+                <div
+                  v-else
+                  :class="getContentElement(null, selectedProps).class"
+                >
+                  {{ getContentElement(null, selectedProps).text }}
+                </div>
+              </ILayoutTransform>
             </div>
-          </template>
-        </ShowcaseDynamic>
-      </ShowcaseDemo>
+
+            <!-- Interaction Hint -->
+            <div class="text-center text-sm text-muted-foreground">
+              {{ getInteractionHint(selectedProps.variant) }}
+            </div>
+          </div>
+        </template>
+      </ShowcaseDynamic>
+    </ShowcaseDemo>
+
+    <!-- ✅ DEBUG TEMPLATE -->
+    <template #debug="{ variantProps, variant }">
+      <div :class="demoStyles.container">
+        <ILayoutTransform
+          v-bind="variantProps"
+          class="relative"
+        >
+          <div class="w-24 h-24 bg-secondary/10 border border-secondary/30 rounded flex items-center justify-center text-secondary text-sm font-medium cursor-pointer">
+            {{ variant.name }}
+          </div>
+        </ILayoutTransform>
+      </div>
     </template>
   </NuxtLayout>
 </template>

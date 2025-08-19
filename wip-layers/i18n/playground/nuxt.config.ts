@@ -2,7 +2,9 @@
 
 import { createResolver } from '@nuxt/kit'
 import { fileURLToPath } from 'node:url'
+import { getBusinessInfo } from '#shared/config/business'
 
+const business = getBusinessInfo()
 const resolver = createResolver(import.meta.url)
 
 export default defineNuxtConfig({
@@ -14,6 +16,46 @@ export default defineNuxtConfig({
   css: [
     resolver.resolve('./assets/main.css'),
   ],
+
+  site: {
+    url: `https://${business.name.toLowerCase()}.org`,
+    name: business.name,
+    description: business.description,
+  },
+
+  content: {
+    build: {
+      markdown: {
+        toc: {
+          depth: 4,
+          searchDepth: 4,
+        },
+        highlight: {
+          theme: {
+            default: 'github-dark',
+            dark: 'github-dark',
+            light: 'github-light',
+          },
+          langs: [
+            'json', 'js', 'ts', 'html', 'css', 'vue', 'shell', 'mdc', 'md', 'yaml',
+            'python', 'sql', 'bash', 'dockerfile', 'nginx', 'apache', 'r', 'toml',
+            'mermaid', 'javascript', 'typescript',
+          ],
+        },
+      },
+    },
+    renderer: {
+      anchorLinks: {
+        h1: false, h2: true, h3: true, h4: true, h5: false, h6: false,
+      },
+      alias: {
+        callout: 'Callout', alert: 'Alert', h1: 'ProseH1', h2: 'ProseH2',
+        h3: 'ProseH3', h4: 'ProseH4', p: 'ProseP', a: 'ProseA',
+        strong: 'ProseStrong', ul: 'ProseUl', ol: 'ProseOl', li: 'ProseLi',
+        code: 'ProseCode', em: 'ProseEm', blockquote: 'ProseBlockquote',
+      },
+    },
+  },
 
   runtimeConfig: {
     public: {
@@ -100,5 +142,44 @@ export default defineNuxtConfig({
       // using full @iconify/json define collections to tree-shake
       collections: ['lucide', 'circle-flags'],
     },
+  },
+
+  ogImage: {
+    defaults: {
+      component: 'Nuxt',
+      renderer: 'satori',
+      extension: 'png',
+      width: 1200,
+      height: 630,
+      emojis: 'twemoji',
+    },
+  },
+
+  robots: {
+    disallow: process.env.NODE_ENV === 'development' ? ['/'] : [],
+    sitemap: ['/sitemap.xml'],
+    blockNonSeoBots: true,
+    blockAiBots: false,
+  },
+
+  seo: {
+    fallbackTitle: true,
+    canonicalLowercase: true,
+    canonicalQueryWhitelist: ['page', 'sort', 'filter', 'search', 'q'],
+    meta: {
+      author: 'Incubrain Team',
+      themeColor: [
+        { content: '#18181B', media: '(prefers-color-scheme: dark)' },
+        { content: '#10B981', media: '(prefers-color-scheme: light)' },
+      ],
+      colorScheme: 'dark light',
+      applicationName: 'Incubrain',
+    },
+  },
+
+  sitemap: {
+    sources: ['/api/__sitemap__/urls'],
+    excludeAppSources: ['nuxt:route-rules'],
+    cacheMaxAgeSeconds: 3600,
   },
 })

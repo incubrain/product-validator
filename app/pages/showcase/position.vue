@@ -151,7 +151,6 @@ setShowcaseData(generateShowcaseData(layoutPositionConfig))
     >
       <ShowcaseDynamic
         v-bind="layoutPositionConfig"
-        :badge-number="1"
       >
         <template #default="{ selectedProps, currentPreset }">
           <div

@@ -55,12 +55,12 @@ setShowcaseData(generateShowcaseData(stackConfig))
 <template>
   <NuxtLayout name="showcase">
     <ShowcaseDemo
+      :description="stackConfig.description"
       title="Stack Positioning"
       :max-cols="1"
     >
       <ShowcaseDynamic
         v-bind="stackConfig"
-        :badge-number="1"
       >
         <template #default="{ selectedProps }">
           <div :class="demoStyles.container">

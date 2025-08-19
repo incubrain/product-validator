@@ -66,7 +66,6 @@ setShowcaseData(generateShowcaseData(dividerConfig))
     >
       <ShowcaseDynamic
         v-bind="dividerConfig"
-        :badge-number="1"
       >
         <template #default="{ selectedProps }">
           <div :class="demoStyles.container">

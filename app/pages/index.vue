@@ -149,10 +149,6 @@ useSeoMeta({
   description: pageConfig.meta.description,
   keywords: pageConfig.meta.keywords?.join(', '),
 })
-
-console.log('🔍 Sections Available:', Object.keys(sections.value))
-console.log('📄 Page Config:', pageConfig)
-console.log('📄 Business Config:', businessConfig)
 </script>
 
 <template>
