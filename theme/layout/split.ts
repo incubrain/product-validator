@@ -1,7 +1,7 @@
 // theme/layout/split.ts
-import { tv, extractTV } from '../../shared/utils/themev3'
-import { createGapVariants } from '../../shared/config/theme'
-import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
+import { tv, extractTV } from '#shared/utils/theme'
+import { createGapVariants } from '#shared/config/theme'
+import type { ExtractSlots, ExtractVariants } from '#shared/utils/theme'
 
 const splitStyles = tv({
   slots: {

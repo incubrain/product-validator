@@ -1,6 +1,6 @@
 // theme/anchor.ts - MIGRATED TO TV PATTERN
-import { tv } from '../shared/utils/themev2'
-import type { ExtractSlots, ExtractVariants } from '../shared/utils/themev2'
+import { tv } from '#shared/utils/theme'
+import type { ExtractSlots, ExtractVariants } from '#shared/utils/theme'
 
 const anchorStyles = tv({
   slots: {

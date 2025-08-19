@@ -1,6 +1,6 @@
 // theme/i/title.ts - MIGRATED TO THEMEV3
-import { tv, extractTV } from '../../shared/utils/themev3'
-import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
+import { tv, extractTV } from '#shared/utils/theme'
+import type { ExtractSlots, ExtractVariants } from '#shared/utils/theme'
 
 const sectionTitleStyles = tv({
   slots: {

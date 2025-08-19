@@ -1,6 +1,6 @@
-import { tv, extractTV } from '../../shared/utils/themev3'
-import { createHeightVariants } from '../../shared/config/theme'
-import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
+import { tv, extractTV } from '#shared/utils/theme'
+import { createHeightVariants } from '#shared/config/theme'
+import type { ExtractSlots, ExtractVariants } from '#shared/utils/theme'
 
 export const sectionStyles = tv({
   slots: {
