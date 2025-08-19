@@ -1,5 +1,5 @@
-// theme/i18n/language-switcher.ts - FOLLOWS YOUR THEME PATTERN
-import { tv } from '../../shared/utils/themev2'
+// theme/i18n/language-switcher.ts - MIGRATED TO THEMEV3
+import { tv, extractTV } from '../../shared/utils/themev3'
 import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
 export const languageSwitcherStyles = tv({
@@ -13,35 +13,17 @@ export const languageSwitcherStyles = tv({
   },
   variants: {
     variant: {
-      buttons: {
-        root: '',
-      },
-      dropdown: {
-        root: 'relative',
-      },
-      minimal: {
-        root: '',
-      },
-      custom: {
-        root: '',
-      },
+      buttons: { root: '' },
+      dropdown: { root: 'relative' },
+      minimal: { root: '' },
+      custom: { root: '' },
     },
     size: {
-      xs: {
-        group: 'gap-0.5',
-      },
-      sm: {
-        group: 'gap-1',
-      },
-      md: {
-        group: 'gap-1',
-      },
-      lg: {
-        group: 'gap-2',
-      },
-      xl: {
-        group: 'gap-2',
-      },
+      xs: { group: 'gap-0.5' },
+      sm: { group: 'gap-1' },
+      md: { group: 'gap-1' },
+      lg: { group: 'gap-2' },
+      xl: { group: 'gap-2' },
     },
   },
   defaultVariants: {
@@ -50,6 +32,7 @@ export const languageSwitcherStyles = tv({
   },
 })
 
+export const languageSwitcherData = extractTV(languageSwitcherStyles)
 export type LanguageSwitcherVariants = ExtractVariants<typeof languageSwitcherStyles>
 export type LanguageSwitcherSlots = ExtractSlots<typeof languageSwitcherStyles>
 export default languageSwitcherStyles

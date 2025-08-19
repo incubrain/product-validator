@@ -55,6 +55,7 @@ const currentPreset = computed(() => {
 })
 
 // Build reactive state from variant options or selected preset
+const { generateTrackingId } = useComponentDebug()
 const selectedProps = reactive(
   Object.fromEntries(
     props.variants.map((variant) => [variant.name, variant.default]),
@@ -87,12 +88,7 @@ const generatedCode = computed(() => {
     .join(' ')
 
   return `<${props.componentName}${propsString ? ' ' + propsString : ''}>
-  <template #first>
-    First content
-  </template>
-  <template #second>
-    Second content
-  </template>
+  // Content
 </${props.componentName}>`
 })
 
@@ -126,16 +122,20 @@ const codePreview = computed(() => {
 const shouldShowExpand = computed(() => {
   return generatedCode.value.split('\n').length > 3
 })
+
+const variantValue = computed(() => String(selectedProps.variant || 'default'))
 </script>
 
 <template>
-  <div class="space-y-6">
+  <ILayoutContainer class="space-y-6">
     <!-- Variant Header -->
     <ShowcaseVariantHeader
       :badge-number="badgeNumber"
       :name="title"
       :description="description"
     />
+
+    <ShowcaseTVOutput :tracking-id="generateTrackingId(trackingId!, variantValue, selectedProps)" />
 
     <UCard
       variant="outline"
@@ -179,79 +179,78 @@ const shouldShowExpand = computed(() => {
                 color="neutral"
                 size="sm"
                 :trailing-icon="'i-lucide-chevron-down'"
+                class="whitespace-nowrap"
               >
                 {{ availablePresets.find(p => p.name === selectedPreset)?.label }}
               </UButton>
             </UDropdownMenu>
-          </div>
-
-          <!-- Dynamic Variant Controls (only for custom mode) -->
-          <div
-            v-if="!presets || selectedPreset === 'custom'"
-            class="flex flex-wrap gap-3"
-          >
             <div
-              v-for="variant in variants"
-              :key="variant.name"
-              class="flex items-center gap-2"
+              v-if="!presets || selectedPreset === 'custom'"
+              class="flex flex-wrap gap-3"
             >
-              <span class="text-xs text-muted-foreground">
-                {{ variant.name }}:
-              </span>
-
-              <!-- Select Dropdown -->
-              <UDropdownMenu
-                v-if="variant.type === 'select' && variant.options"
-                :items="variant.options.map(option => ({
-                  label: option,
-                  onSelect: () => selectedProps[variant.name] = option,
-                  checked: selectedProps[variant.name] === option,
-                }))"
+              <div
+                v-for="variant in variants"
+                :key="variant.name"
+                class="flex items-center gap-2"
               >
+                <span class="text-xs text-muted-foreground">
+                  {{ variant.name }}:
+                </span>
+
+                <!-- Select Dropdown -->
+                <UDropdownMenu
+                  v-if="variant.type === 'select' && variant.options"
+                  :items="variant.options.map(option => ({
+                    label: option,
+                    onSelect: () => selectedProps[variant.name] = option,
+                    checked: selectedProps[variant.name] === option,
+                  }))"
+                >
+                  <UButton
+                    variant="outline"
+                    color="neutral"
+                    size="sm"
+                    :trailing-icon="'i-lucide-chevron-down'"
+                  >
+                    {{ selectedProps[variant.name] }}
+                  </UButton>
+                </UDropdownMenu>
+
+                <!-- Boolean Toggle -->
                 <UButton
-                  variant="outline"
-                  color="neutral"
+                  v-else-if="variant.type === 'boolean'"
+                  :variant="selectedProps[variant.name] ? 'solid' : 'outline'"
+                  :color="selectedProps[variant.name] ? 'primary' : 'neutral'"
                   size="sm"
-                  :trailing-icon="'i-lucide-chevron-down'"
+                  @click="selectedProps[variant.name] = !selectedProps[variant.name]"
                 >
                   {{ selectedProps[variant.name] }}
                 </UButton>
-              </UDropdownMenu>
 
-              <!-- Boolean Toggle -->
-              <UButton
-                v-else-if="variant.type === 'boolean'"
-                :variant="selectedProps[variant.name] ? 'solid' : 'outline'"
-                :color="selectedProps[variant.name] ? 'primary' : 'neutral'"
-                size="sm"
-                @click="selectedProps[variant.name] = !selectedProps[variant.name]"
-              >
-                {{ selectedProps[variant.name] }}
-              </UButton>
-
-              <!-- String/Number Input -->
-              <UInput
-                v-else
-                v-model="selectedProps[variant.name]"
-                size="sm"
-                class="w-20"
-                :type="variant.type === 'number' ? 'number' : 'text'"
-              />
+                <!-- String/Number Input -->
+                <UInput
+                  v-else
+                  v-model="selectedProps[variant.name]"
+                  size="sm"
+                  class="w-20"
+                  :type="variant.type === 'number' ? 'number' : 'text'"
+                />
+              </div>
             </div>
+            <UAlert
+              v-if="currentPreset?.behavior"
+              variant="soft"
+              :description="currentPreset.behavior"
+              :ui="{
+                root: 'px-2 py-1 w-auto',
+              }"
+            />
           </div>
 
           <!-- Description shows preset info or current state -->
           <p class="text-sm text-muted-foreground">
             {{ currentPreset?.description || description }}
           </p>
-
-          <!-- ✅ Behavior Description (NEW) -->
-          <div
-            v-if="currentPreset?.behavior"
-            class="p-3 bg-muted/50 rounded text-sm text-muted-foreground"
-          >
-            <strong>Behavior:</strong> {{ currentPreset.behavior }}
-          </div>
         </div>
       </template>
 
@@ -260,8 +259,6 @@ const shouldShowExpand = computed(() => {
         <slot
           :selected-props="selectedProps"
           :current-preset="currentPreset"
-          :first-content="currentPreset?.firstContent"
-          :second-content="currentPreset?.secondContent"
         />
       </template>
 
@@ -309,5 +306,5 @@ const shouldShowExpand = computed(() => {
         </div>
       </template>
     </UCard>
-  </div>
+  </ILayoutContainer>
 </template>

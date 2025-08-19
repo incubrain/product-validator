@@ -83,14 +83,14 @@ const urgencyConfig: IntentConfig = {
         <template #primary>
           <ILayoutStack variant="compact">
             <ILayoutStack variant="compact">
-              <IHeading
+              <ContentHeading
                 :text="title"
                 variant="section"
                 anchor
               />
 
               <!-- Availability subtitle -->
-              <IText
+              <ContentText
                 text="Ready to Start Your Project Today"
                 variant="subtitle"
                 class="text-warning-600"
@@ -109,7 +109,7 @@ const urgencyConfig: IntentConfig = {
                   name="i-lucide-clock"
                   class="size-6 text-warning-600"
                 />
-                <IHeading
+                <ContentHeading
                   text="Current Availability"
                   variant="card"
                   class="text-warning-700"

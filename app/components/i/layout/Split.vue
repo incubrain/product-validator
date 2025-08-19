@@ -1,6 +1,6 @@
 <!-- app/components/layout/Split.vue -->
 <script setup lang="ts">
-import splitStyles from '~~/theme/layout/split'
+import splitStyles from '#theme/layout/split'
 import type { SplitProps } from '#shared/types/components'
 
 const props = withDefaults(defineProps<SplitProps>(), {

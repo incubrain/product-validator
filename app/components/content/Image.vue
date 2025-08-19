@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { useIntersectionObserver, useMediaQuery } from '@vueuse/core'
-import imageStyles from '~~/theme/image'
+import imageStyles from '#theme/image'
 
 interface Props {
   // Image source

@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useClipboard } from '@vueuse/core'
-import prosePreStyles from '~~/theme/content/prose-pre'
-import type { ProsePreVariants } from '~~/theme/content/prose-pre'
+import prosePreStyles from '#theme/content/prose-pre'
+import type { ProsePreVariants } from '#theme/content/prose-pre'
 
 interface Props {
   variant?: ProsePreVariants['variant']

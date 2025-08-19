@@ -1,25 +1,28 @@
-<!-- app/components/layout/Frame.vue -->
 <script setup lang="ts">
-import frameStyles from '~~/theme/layout/frame'
+import frameStyles from '#theme/layout/frame'
+import type { FrameProps } from '#shared/types/components'
 
-interface Props {
-  variant?: 'video' | 'square' | 'portrait' | 'wide' | 'golden' | 'tall' | 'cinema' | 'card'
-  as?: string
-  ui?: any
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<FrameProps>(), {
   variant: 'video',
   as: 'div',
 })
 
-const styles = computed(() => frameStyles(props))
+defineOptions({ inheritAttrs: false })
+
+defineSlots<{
+  default(props?: object): any
+}>()
+
+// ✅ NUXT UI PATTERN - TV instance with variants
+const ui = tvComputed(() => frameStyles({
+  variant: props.variant,
+}))
 </script>
 
 <template>
   <component
     :is="as"
-    :class="[styles.root(), $attrs.class]"
+    :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
     v-bind="$attrs"
   >
     <slot />

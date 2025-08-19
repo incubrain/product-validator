@@ -1,27 +1,29 @@
 <!-- app/components/layout/Container.vue -->
 <script setup lang="ts">
-import containerStyles from '~~/theme/layout/container'
+import containerStyles from '#theme/layout/container'
+import type { ContainerProps } from '#shared/types/components'
 
-interface Props {
-  size?: 'narrow' | 'default' | 'wide' | 'full'
-  align?: 'left' | 'center' | 'right'
-  as?: string
-  ui?: any
-}
-
-const props = withDefaults(defineProps<Props>(), {
-  size: 'default',
-  align: 'center',
+const props = withDefaults(defineProps<ContainerProps>(), {
+  variant: 'default',
   as: 'div',
 })
 
-const styles = computed(() => containerStyles(props))
+defineOptions({ inheritAttrs: false })
+
+defineSlots<{
+  default(props?: object): any
+}>()
+
+const ui = tvComputed(() => containerStyles({
+  variant: props.variant,
+}), props.trackingId)
 </script>
 
 <template>
   <component
     :is="as"
-    :class="[styles.root(), $attrs.class]"
+    :class="ui.root({ class: [props.ui?.root, $attrs.class] })"
+    v-bind="$attrs"
   >
     <slot />
   </component>

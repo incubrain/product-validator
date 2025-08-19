@@ -24,13 +24,13 @@ const authorityConfig: IntentConfig = {
         <!-- Authority-focused header -->
         <ILayoutCenter variant="text-only">
           <ILayoutStack variant="default">
-            <IHeading
+            <ContentHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <IText
+            <ContentText
               v-if="description"
               :text="description"
               variant="subtitle"
@@ -69,7 +69,7 @@ const authorityConfig: IntentConfig = {
               name="i-lucide-award"
               class="size-6 text-primary-600"
             />
-            <IText
+            <ContentText
               text="Technical expertise backed by 10+ years of industry experience"
               variant="caption"
               class="text-primary-700 font-medium"

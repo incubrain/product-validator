@@ -1,11 +1,12 @@
-// theme/image.ts
-import { createUIComponent } from '../shared/utils/theme'
+// theme/image.ts - MIGRATED TO THEMEV3
+import { tv, extractTV } from '../shared/utils/themev3'
+import type { ExtractSlots, ExtractVariants } from '../shared/utils/themev2'
 
-export default createUIComponent((config) => ({
+const imageStyles = tv({
   slots: {
     root: [
       'relative overflow-hidden',
-      config.transitions && 'transition-all duration-300',
+      'transition-all duration-300',
     ],
     image: 'w-full h-full object-cover',
     placeholder: 'absolute inset-0 flex items-center justify-center bg-muted',
@@ -35,4 +36,9 @@ export default createUIComponent((config) => ({
     objectFit: 'cover',
     loading: false,
   },
-}))
+})
+
+export const imageData = extractTV(imageStyles)
+export type ImageVariants = ExtractVariants<typeof imageStyles>
+export type ImageSlots = ExtractSlots<typeof imageStyles>
+export default imageStyles

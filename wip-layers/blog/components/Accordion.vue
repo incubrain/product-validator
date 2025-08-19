@@ -214,12 +214,12 @@ const intentButtonColors = computed(() => {
         name="i-lucide-help-circle"
         class="mx-auto size-12 text-muted mb-4"
       />
-      <IHeading
+      <ContentHeading
         text="No FAQs available"
         variant="card"
         class="mb-2"
       />
-      <IText
+      <ContentText
         text="Check back later for more information."
         variant="description"
       />

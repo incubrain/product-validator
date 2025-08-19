@@ -40,79 +40,35 @@ export const tv: TV = (options: any, config?: any) => tvBase(options, {
   },
 })
 
-export interface TVData {
-  sourceCode: string
-  variants: Record<string, string[]>
-  slots: Array<{ name: string, classes: string }>
-  defaults: Record<string, any>
+type CoreData = {
+  title?: string
+  description?: string
+  category?: string
 }
 
-export function extractTV(tvInstance: any): TVData {
-  // Extract all the data in one pass
-  const data: TVData = {
-    sourceCode: '',
-    variants: {},
-    slots: [],
-    defaults: {},
+export interface TVData {
+  slots: Record<string, any>
+  variants: Record<string, any>
+  defaultVariants: Record<string, any>
+  compoundVariants: Array<{ [key: string]: any }>
+  compoundSlots: Array<{ [key: string]: any }>
+  variantKeys: Array<string>
+  coreData: CoreData
+}
+
+// shared/utils/themev3.ts
+export function extractTV(tvInstance: any, coreData?: CoreData): TVData {
+  return {
+    slots: tvInstance.slots || {},
+    variants: tvInstance.variants || {},
+    defaultVariants: tvInstance.defaultVariants || {},
+    compoundVariants: tvInstance.compoundVariants || [],
+    compoundSlots: tvInstance.compoundSlots || [],
+    variantKeys: tvInstance.variantKeys || [],
+
+    // ✅ EXPLICIT CORE DATA STORED WITH COMPONENT
+    coreData: coreData || {},
   }
-
-  try {
-    // 1. Build source code representation
-    const lines: string[] = []
-    lines.push('export const componentStyles = tv({')
-
-    if (tvInstance.slots) {
-      lines.push('  slots: {')
-      Object.entries(tvInstance.slots).forEach(([name, classes]) => {
-        if (name !== 'base') {
-          lines.push(`    ${name}: '${classes}',`)
-          // Also populate slots array for API docs
-          data.slots.push({ name, classes: classes as string })
-        }
-      })
-      lines.push('  },')
-    }
-
-    if (tvInstance.variants) {
-      lines.push('  variants: {')
-      Object.entries(tvInstance.variants).forEach(([variantName, options]) => {
-        lines.push(`    ${variantName}: {`)
-        // Populate variants for API docs
-        data.variants[variantName] = Object.keys(options as Record<string, any>)
-
-        Object.entries(options as Record<string, any>).forEach(([optionName, value]) => {
-          if (typeof value === 'object') {
-            lines.push(`      '${optionName}': {`)
-            Object.entries(value).forEach(([slotName, classes]) => {
-              lines.push(`        ${slotName}: '${classes}',`)
-            })
-            lines.push('      },')
-          } else {
-            lines.push(`      '${optionName}': '${value}',`)
-          }
-        })
-        lines.push('    },')
-      })
-      lines.push('  },')
-    }
-
-    if (tvInstance.defaultVariants) {
-      lines.push('  defaultVariants: {')
-      Object.entries(tvInstance.defaultVariants).forEach(([key, value]) => {
-        lines.push(`    ${key}: '${value}',`)
-      })
-      lines.push('  },')
-      data.defaults = { ...tvInstance.defaultVariants }
-    }
-
-    lines.push('})')
-    data.sourceCode = lines.join('\n')
-  } catch (error) {
-    console.warn('Could not extract TV data:', error)
-    data.sourceCode = '// Error extracting source code'
-  }
-
-  return data
 }
 
 export type ExtractSlots<T extends { slots?: Record<string, any> }> = T extends { slots: infer S }

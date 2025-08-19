@@ -31,7 +31,7 @@ const getCTAUrl = (action: string) => {
           <!-- Brand & Description -->
           <div class="space-y-4 sm:col-span-2 lg:col-span-1">
             <div class="flex items-center space-x-2">
-              <ILogo size="md" />
+              <ContentLogo size="md" />
             </div>
             <p class="text-muted max-w-md leading-relaxed">
               {{ businessConfig.business.description }}. {{ businessConfig.business.tagline }}.

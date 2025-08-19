@@ -24,13 +24,13 @@ const trustConfig: IntentConfig = {
         <!-- Trust-focused header -->
         <ILayoutCenter variant="text-only">
           <ILayoutStack variant="default">
-            <IHeading
+            <ContentHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <IText
+            <ContentText
               v-if="subtitle"
               :text="subtitle"
               variant="subtitle"
@@ -68,12 +68,12 @@ const trustConfig: IntentConfig = {
                 </div>
 
                 <ILayoutStack variant="default">
-                  <IHeading
+                  <ContentHeading
                     :text="card.title"
                     variant="card"
                   />
 
-                  <IText
+                  <ContentText
                     v-if="card.subtitle"
                     :text="card.subtitle"
                     variant="description"

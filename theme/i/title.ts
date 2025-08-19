@@ -1,5 +1,5 @@
-// theme/layout/section-title.ts
-import { tv } from '../../shared/utils/themev2'
+// theme/i/title.ts - MIGRATED TO THEMEV3
+import { tv, extractTV } from '../../shared/utils/themev3'
 import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
 const sectionTitleStyles = tv({
@@ -29,6 +29,7 @@ const sectionTitleStyles = tv({
   },
 })
 
-export type SectionTitleVariants = ExtractVariants<typeof sectionTitleStyles>
-export type SectionTitleSlots = ExtractSlots<typeof sectionTitleStyles>
+export const titleData = extractTV(sectionTitleStyles)
+export type TitleVariants = ExtractVariants<typeof sectionTitleStyles>
+export type TitleSlots = ExtractSlots<typeof sectionTitleStyles>
 export default sectionTitleStyles

@@ -1,12 +1,9 @@
-// theme/background.ts - UPDATED
-import { createUIComponent } from '../../shared/utils/theme'
+import { tv, extractTV } from '../../shared/utils/themev3'
+import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
-export default createUIComponent((config) => ({
+const backgroundStyles = tv({
   slots: {
-    root: [
-      'relative',
-      config.transitions && 'transition-all duration-300',
-    ],
+    root: ['relative'],
   },
   variants: {
     preset: {
@@ -35,10 +32,24 @@ export default createUIComponent((config) => ({
         root: 'i-gradient-cyber',
       },
     },
+    pattern: {
+      'none': {},
+      'circuit': { root: 'i-pattern-circuit' },
+      'dots': { root: 'i-pattern-dots' },
+      'grid': { root: 'i-pattern-grid' },
+      'neural-network': { root: 'i-pattern-neural-network' },
+      'quantum-dots': { root: 'i-pattern-dots-quantum' },
+    },
     intensity: {
       light: {},
       medium: {},
       strong: {},
+    },
+    gradient: {
+      none: {},
+      neural: { root: 'i-gradient-neural' },
+      quantum: { root: 'i-gradient-quantum' },
+      cyber: { root: 'i-gradient-cyber' },
     },
     motion: {
       true: { root: 'animate-pulse' },
@@ -49,10 +60,20 @@ export default createUIComponent((config) => ({
     // Circuit intensity variations
     { preset: 'circuit', intensity: 'light', class: { root: 'i-pattern-circuit-light' } },
     { preset: 'circuit', intensity: 'strong', class: { root: 'i-pattern-circuit-strong' } },
+    // Pattern intensity variations
+    { pattern: 'circuit', intensity: 'light', class: { root: 'i-pattern-circuit-light' } },
+    { pattern: 'circuit', intensity: 'strong', class: { root: 'i-pattern-circuit-strong' } },
   ],
   defaultVariants: {
     preset: 'none',
+    pattern: 'none',
     intensity: 'medium',
+    gradient: 'none',
     motion: false,
   },
-}))
+})
+
+export const backgroundData = extractTV(backgroundStyles)
+export type BackgroundVariants = ExtractVariants<typeof backgroundStyles>
+export type BackgroundSlots = ExtractSlots<typeof backgroundStyles>
+export default backgroundStyles

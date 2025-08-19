@@ -1,5 +1,5 @@
 // composables/useComponentDefinitions.ts
-import stackStyles from '~~/theme/layout/stack'
+import stackStyles from '#theme/layout/stack'
 
 export interface ComponentDefinition {
   name: string

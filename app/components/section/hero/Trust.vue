@@ -25,19 +25,19 @@ const trustConfig: IntentConfig = {
         <!-- Trust-focused content layout -->
         <ILayoutCenter variant="text-only">
           <ILayoutStack variant="default">
-            <IHeading
+            <ContentHeading
               :text="title"
               variant="hero"
               anchor
             />
 
-            <IText
+            <ContentText
               v-if="subtitle"
               :text="subtitle"
               variant="hero-subtitle"
             />
 
-            <IText
+            <ContentText
               v-if="description"
               :text="description"
               variant="description"
@@ -65,11 +65,11 @@ const trustConfig: IntentConfig = {
               </div>
 
               <ILayoutStack variant="centered">
-                <IHeading
+                <ContentHeading
                   :text="item.title"
                   variant="card"
                 />
-                <IText
+                <ContentText
                   :text="item.description"
                   variant="small"
                   class="text-muted text-center"
@@ -82,7 +82,7 @@ const trustConfig: IntentConfig = {
         <!-- Trust-focused CTA -->
         <ILayoutCenter v-if="action">
           <ILayoutStack variant="centered">
-            <IText
+            <ContentText
               v-if="action.description"
               variant="caption"
               :text="action.description"

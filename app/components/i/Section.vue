@@ -1,10 +1,10 @@
-<!-- app/components/layout/Section.vue -->
 <script setup lang="ts">
-import sectionStyles from '~~/theme/layout/section'
+import { sectionStyles } from '#theme/layout/section'
 import type { SectionProps } from '#shared/types/components'
 
 const props = withDefaults(defineProps<SectionProps>(), {
   variant: 'default',
+  height: 'auto',
   background: 'none',
   as: 'section',
 })
@@ -18,18 +18,19 @@ defineSlots<{
 // ✅ NUXT UI PATTERN - TV instance with variants
 const ui = tvComputed(() => sectionStyles({
   variant: props.variant,
-}))
+  height: props.height,
+}), props.trackingId)
 </script>
 
 <template>
   <IBackground
-    :as="as"
     :preset="background"
-    :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
-    v-bind="$attrs"
   >
-    <UContainer>
+    <ILayoutContainer
+      :as="as"
+      :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
+    >
       <slot />
-    </UContainer>
+    </ILayoutContainer>
   </IBackground>
 </template>

@@ -63,7 +63,7 @@ const trustConfig: IntentConfig = {
         <!-- Content with trust focus -->
         <template #primary>
           <ILayoutStack variant="spacious">
-            <IHeading
+            <ContentHeading
               :text="title"
               variant="section"
               anchor

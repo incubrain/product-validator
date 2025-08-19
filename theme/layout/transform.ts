@@ -77,7 +77,11 @@ const transformStyles = tv({
   },
 })
 
-export const transformData = extractTV(transformStyles)
+export const transformData = extractTV(transformStyles, {
+  title: 'Transform Utilities',
+  description: 'Transform effects for hover states, loading animations, and interactive feedback',
+  category: 'layout',
+})
 export type TransformVariants = ExtractVariants<typeof transformStyles>
 export type TransformSlots = ExtractSlots<typeof transformStyles>
 export default transformStyles

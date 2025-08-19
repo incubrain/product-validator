@@ -2,16 +2,71 @@
 interface Props {
   title: string
   description?: string
-  data: any[]
+  tvData: any // Raw TV data
   type: 'props' | 'slots' | 'emits'
   componentName?: string
-  variantCount?: number
-  slotCount?: number
   showHeader?: boolean
 }
 
 const props = withDefaults(defineProps<Props>(), {
   showHeader: false,
+})
+
+// ✅ Process TV data directly in component
+const processedData = computed(() => {
+  if (!props.tvData) return []
+
+  if (props.type === 'props') {
+    const propsData = []
+
+    // Add variant props
+    if (props.tvData.variants) {
+      Object.entries(props.tvData.variants).forEach(([variantName, options]) => {
+        if (typeof options === 'object' && options !== null) {
+          const optionKeys = Object.keys(options)
+          propsData.push({
+            name: variantName,
+            type: `'${optionKeys.join('\' | \'')}'`,
+            default: props.tvData.defaultVariants?.[variantName] || '—',
+            required: false,
+          })
+        }
+      })
+    }
+
+    // Add standard props
+    propsData.push(
+      { name: 'as', type: 'string', default: 'div', required: false },
+      { name: 'trackingId', type: 'string | undefined', default: '—', required: false },
+      { name: 'ui', type: 'object | undefined', default: '—', required: false },
+    )
+
+    return propsData
+  }
+
+  if (props.type === 'slots') {
+    if (!props.tvData.slots) return [{ name: '#default', defaultClasses: '—' }]
+
+    return Object.entries(props.tvData.slots).map(([name, classes]) => ({
+      name: `#${name}`,
+      defaultClasses: Array.isArray(classes) ? classes.join(' ') : classes || '—',
+    }))
+  }
+
+  return []
+})
+
+// ✅ Generate stats directly
+const variantCount = computed(() => {
+  if (!props.tvData?.variants) return 0
+  return Object.keys(props.tvData.variants).reduce((count, key) => {
+    const variants = props.tvData.variants[key]
+    return count + (typeof variants === 'object' ? Object.keys(variants).length : 0)
+  }, 0)
+})
+
+const slotCount = computed(() => {
+  return props.tvData?.slots ? Object.keys(props.tvData.slots).length : 1
 })
 
 // ✅ SIMPLE: No h() functions, no computed reactivity hell
@@ -157,7 +212,7 @@ const columns = (() => {
           variant="soft"
           size="sm"
         >
-          {{ data.length }}
+          {{ processedData.length }}
         </UBadge>
       </div>
 
@@ -170,7 +225,7 @@ const columns = (() => {
 
       <div class="border border-default rounded-lg overflow-hidden">
         <UTable
-          :data="data"
+          :data="processedData"
           :columns="columns"
           :ui="{
             root: 'w-full',

@@ -34,6 +34,26 @@ function inferComponentName(instance: any): string {
     || 'Unknown'
 }
 
+function hashProps(props: Record<string, any>): string {
+  const sortedEntries = Object.entries(props)
+    .filter(([_, value]) => value !== undefined && value !== null)
+    .sort(([a], [b]) => a.localeCompare(b)) // Consistent ordering
+
+  const propsString = sortedEntries
+    .map(([key, value]) => `${key}:${value}`)
+    .join('|')
+
+  // Simple hash function (or use crypto.subtle.digest for real hash)
+  let hash = 0
+  for (let i = 0; i < propsString.length; i++) {
+    const char = propsString.charCodeAt(i)
+    hash = ((hash << 5) - hash) + char
+    hash = hash & hash // Convert to 32-bit integer
+  }
+
+  return Math.abs(hash).toString(36) // Base36 for shorter string
+}
+
 function extractAppliedClasses(tvResult: any, instance: any): Record<string, string> {
   const classes: Record<string, string> = {}
 
@@ -152,10 +172,23 @@ function captureA11yData(instance: any): ComponentDebugOutput['a11yData'] {
 
 const componentDebugMap = ref<Map<string, ComponentDebugOutput>>(new Map())
 const rerenderCounts = ref<Map<string, number>>(new Map())
+const showcaseDebugExpanded = ref(false)
 
 export function useComponentDebug() {
-  const captureComponentCSS = (trackingId: string, tvResult: any, instance: any) => {
-    if (!import.meta.dev || !useRuntimeConfig().public.incubrain.debug) return
+  const toggleShowcaseDebug = () => {
+    showcaseDebugExpanded.value = !showcaseDebugExpanded.value
+  }
+
+  const generateTrackingId = (baseId: string, componentName: string, props: Record<string, any>) => {
+    const propHash = hashProps(props)
+    return `${baseId}-${componentName}-${propHash}`
+  }
+
+  const captureComponentCSS = (baseId: string, tvResult: any, instance: any) => {
+    if (!import.meta.dev || !useRuntimeConfig().public.incubrain.debug) {
+      console.log('🔴 captureComponentCSS: debug disabled')
+      return
+    }
 
     const startTime = performance.now()
 
@@ -163,6 +196,7 @@ export function useComponentDebug() {
     const componentName = inferComponentName(instance)
     const appliedClasses = extractAppliedClasses(tvResult, instance)
     const variants = inferVariants(instance.props)
+    const fullTrackingId = generateTrackingId(baseId, variants.variant, variants)
 
     // Enhanced capture
     const allProps = { ...instance.props }
@@ -172,8 +206,8 @@ export function useComponentDebug() {
     const a11yData = captureA11yData(instance)
 
     // Track rerenders
-    const currentCount = rerenderCounts.value.get(trackingId) || 0
-    rerenderCounts.value.set(trackingId, currentCount + 1)
+    const currentCount = rerenderCounts.value.get(fullTrackingId) || 0
+    rerenderCounts.value.set(fullTrackingId, currentCount + 1)
 
     const renderTime = performance.now() - startTime
 
@@ -187,11 +221,11 @@ export function useComponentDebug() {
       contextData,
       responsiveData,
       renderTime,
-      rerenderCount: rerenderCounts.value.get(trackingId) || 1,
+      rerenderCount: rerenderCounts.value.get(fullTrackingId) || 1,
       a11yData,
     }
 
-    componentDebugMap.value.set(trackingId, debugOutput)
+    componentDebugMap.value.set(fullTrackingId, debugOutput)
   }
 
   const getComponentCSS = (trackingId: string) => {
@@ -207,6 +241,9 @@ export function useComponentDebug() {
   return {
     captureComponentCSS,
     getComponentCSS,
+    generateTrackingId,
     clearDebugData,
+    showcaseDebugExpanded: readonly(showcaseDebugExpanded),
+    toggleShowcaseDebug,
   }
 }

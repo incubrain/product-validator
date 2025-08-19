@@ -1,25 +1,32 @@
-<!-- app/components/layout/Divider.vue -->
 <script setup lang="ts">
-import dividerStyles from '~~/theme/layout/divider'
+import dividerStyles from '#theme/layout/divider'
+import type { DividerProps } from '#shared/types/components'
 
-interface Props {
-  variant?: 'line' | 'gradient' | 'dotted' | 'branded'
-  spacing?: 'sm' | 'md' | 'lg' | 'xl'
-  orientation?: 'horizontal' | 'vertical'
-  ui?: any
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<DividerProps>(), {
   variant: 'line',
   spacing: 'md',
   orientation: 'horizontal',
 })
 
-const styles = computed(() => dividerStyles(props))
+defineOptions({ inheritAttrs: false })
+
+defineSlots<{
+  default(props?: object): any
+}>()
+
+// ✅ NUXT UI PATTERN - TV instance with variants
+const ui = tvComputed(() => dividerStyles({
+  variant: props.variant,
+  spacing: props.spacing,
+  orientation: props.orientation,
+}), props.trackingId)
 </script>
 
 <template>
-  <div :class="[styles.root(), $attrs.class]">
-    <div :class="styles.line()" />
+  <div
+    :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
+    v-bind="$attrs"
+  >
+    <div :class="ui.line({ class: props.ui?.line })" />
   </div>
 </template>

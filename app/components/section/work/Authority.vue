@@ -25,13 +25,13 @@ const authorityConfig: IntentConfig = {
         <!-- Authority-focused header -->
         <ILayoutCenter variant="text-only">
           <ILayoutStack variant="default">
-            <IHeading
+            <ContentHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <IText
+            <ContentText
               v-if="subtitle"
               :text="subtitle"
               variant="subtitle"

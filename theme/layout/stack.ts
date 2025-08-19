@@ -8,7 +8,7 @@ export const stackStyles = tv({
     root: ['flex'],
   },
   variants: {
-    ...createGapVariants('root'),
+    gap: createGapVariants('root'),
 
     variant: {
       // Vertical stacking patterns
@@ -53,7 +53,11 @@ export const stackStyles = tv({
     gap: 'md',
   },
 })
-export const stackData = extractTV(stackStyles)
+export const stackData = extractTV(stackStyles, {
+  title: 'Flexible Stack Layouts',
+  description: 'Vertical and horizontal stacking with intelligent spacing and responsive behavior',
+  category: 'layout',
+})
 export type StackVariants = ExtractVariants<typeof stackStyles>
 export type StackSlots = ExtractSlots<typeof stackStyles>
 export default stackStyles

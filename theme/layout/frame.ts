@@ -1,9 +1,9 @@
-// theme/layout/frame.ts
-import { createUIComponent } from '../../shared/utils/theme'
+import { tv, extractTV } from '../../shared/utils/themev3'
+import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
-export default createUIComponent((config) => ({
+const frameStyles = tv({
   slots: {
-    root: ['relative overflow-hidden'],
+    root: ['relative', 'overflow-hidden'],
   },
   variants: {
     variant: {
@@ -36,4 +36,13 @@ export default createUIComponent((config) => ({
   defaultVariants: {
     variant: 'video',
   },
-}))
+})
+
+export const frameData = extractTV(frameStyles, {
+  title: 'Aspect Ratio Frames',
+  description: 'Responsive aspect ratio containers for media, images, and content frames',
+  category: 'layout',
+})
+export type FrameVariants = ExtractVariants<typeof frameStyles>
+export type FrameSlots = ExtractSlots<typeof frameStyles>
+export default frameStyles

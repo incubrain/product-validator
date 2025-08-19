@@ -1,11 +1,12 @@
-// theme/layout/accordion.ts
-import { createUIComponent } from '../../shared/utils/theme'
+// theme/i/accordion.ts - MIGRATED TO THEMEV3
+import { tv, extractTV } from '../../shared/utils/themev3'
+import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
-export default createUIComponent(config => ({
+const accordionStyles = tv({
   slots: {
     root: [
       'w-full',
-      config.transitions && 'transition-all duration-200',
+      'transition-all duration-200',
     ],
     grid: [
       'grid gap-8',
@@ -46,4 +47,9 @@ export default createUIComponent(config => ({
     intent: 'neutral',
     variant: 'double',
   },
-}))
+})
+
+export const accordionData = extractTV(accordionStyles)
+export type AccordionVariants = ExtractVariants<typeof accordionStyles>
+export type AccordionSlots = ExtractSlots<typeof accordionStyles>
+export default accordionStyles

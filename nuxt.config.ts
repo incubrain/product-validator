@@ -1,5 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { getBusinessRuntimeConfig, getBusinessInfo } from './shared/config/business'
+import { fileURLToPath } from 'node:url'
 
 const business = getBusinessInfo()
 
@@ -185,6 +186,10 @@ export default defineNuxtConfig({
         },
       },
     },
+  },
+
+  alias: {
+    '#theme': fileURLToPath(new URL('./theme', import.meta.url)),
   },
 
   routeRules: {

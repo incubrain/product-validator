@@ -1,5 +1,5 @@
-// theme/heading.ts - MIGRATED TO TV PATTERN
-import { tv } from '../shared/utils/themev2'
+// theme/heading.ts - MIGRATED TO THEMEV3
+import { tv, extractTV } from '../shared/utils/themev3'
 import type { ExtractSlots, ExtractVariants } from '../shared/utils/themev2'
 
 const headingStyles = tv({
@@ -10,7 +10,6 @@ const headingStyles = tv({
     ],
   },
   variants: {
-    // IMPROVEMENTS: ADD DECORATIONS - CONSIDER REMOVING LEVEL ADD TO VARIANT
     level: {
       1: { root: 'text-4xl lg:text-5xl font-bold' },
       2: { root: 'text-3xl lg:text-4xl font-bold' },
@@ -36,10 +35,10 @@ const headingStyles = tv({
   defaultVariants: {
     level: 2,
     variant: 'default',
-    align: 'left',
   },
 })
 
+export const headingData = extractTV(headingStyles)
 export type HeadingVariants = ExtractVariants<typeof headingStyles>
 export type HeadingSlots = ExtractSlots<typeof headingStyles>
 export default headingStyles

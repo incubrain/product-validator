@@ -79,14 +79,14 @@ const authorityConfig: IntentConfig = {
         <template #primary>
           <ILayoutStack variant="spacious">
             <ILayoutStack variant="compact">
-              <IHeading
+              <ContentHeading
                 :text="title"
                 variant="section"
                 anchor
               />
 
               <!-- Professional subtitle -->
-              <IText
+              <ContentText
                 text="Technical Leader & Innovation Expert"
                 variant="subtitle"
                 class="text-primary-600"

@@ -1,4 +1,5 @@
-import { tv } from '../shared/utils/themev2'
+// theme/text.ts - MIGRATED TO THEMEV3
+import { tv, extractTV } from '../shared/utils/themev3'
 import type { ExtractSlots, ExtractVariants } from '../shared/utils/themev2'
 
 const textStyles = tv({
@@ -18,6 +19,9 @@ const textStyles = tv({
       'small': { root: 'text-dimmed text-sm' },
       'muted': { root: 'text-muted' },
       'highlighted': { root: 'text-highlighted font-medium' },
+      'justified': {
+        root: 'text-foreground text-justify hyphens-auto',
+      },
     },
     size: {
       'xs': { root: 'text-xs' },
@@ -34,6 +38,7 @@ const textStyles = tv({
   },
 } as const)
 
+export const textData = extractTV(textStyles)
 export type TextVariants = ExtractVariants<typeof textStyles>
 export type TextSlots = ExtractSlots<typeof textStyles>
 export default textStyles

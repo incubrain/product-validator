@@ -1,7 +1,7 @@
-// theme/layout/cluster.ts
-import { createUIComponent } from '../../shared/utils/theme'
+import { tv, extractTV } from '../../shared/utils/themev3'
+import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
-export default createUIComponent((config) => ({
+const clusterStyles = tv({
   slots: {
     root: ['flex'],
   },
@@ -39,4 +39,13 @@ export default createUIComponent((config) => ({
   defaultVariants: {
     variant: 'default',
   },
-}))
+})
+
+export const clusterData = extractTV(clusterStyles, {
+  title: 'Flexible Cluster Layouts',
+  description: 'Grouping layouts for navigation items, tags, buttons, and inline elements with smart wrapping',
+  category: 'layout',
+})
+export type ClusterVariants = ExtractVariants<typeof clusterStyles>
+export type ClusterSlots = ExtractSlots<typeof clusterStyles>
+export default clusterStyles

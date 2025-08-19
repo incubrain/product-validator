@@ -1,12 +1,11 @@
 <!-- app/components/layout/Float.vue -->
 <script setup lang="ts">
-import floatStyles from '~~/theme/layout/float'
+import floatStyles from '#theme/layout/float'
 import type { FloatProps } from '#shared/types/components'
 
 const props = withDefaults(defineProps<FloatProps>(), {
   variant: 'left',
   clear: 'none',
-  spacing: 'none',
   responsive: 'default',
   as: 'div',
 })
@@ -21,9 +20,8 @@ defineSlots<{
 const ui = tvComputed(() => floatStyles({
   variant: props.variant,
   clear: props.clear,
-  spacing: props.spacing,
   responsive: props.responsive,
-}))
+}), props.trackingId)
 </script>
 
 <template>

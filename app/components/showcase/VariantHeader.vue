@@ -19,13 +19,13 @@ defineProps<Props>()
         variant="solid"
       />
 
-      <IHeading
+      <ContentHeading
         :text="name"
         :level="3"
         variant="card"
       />
     </div>
-    <IText
+    <ContentText
       :text="description"
       variant="description"
     />

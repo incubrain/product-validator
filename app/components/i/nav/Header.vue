@@ -27,7 +27,7 @@ const getCTAUrl = (action: string) => {
       <div class="flex items-center justify-between h-16">
         <!-- Logo/Brand -->
         <div class="flex-shrink-0">
-          <ILogo size="md" />
+          <ContentLogo size="md" />
         </div>
 
         <!-- Desktop Navigation -->

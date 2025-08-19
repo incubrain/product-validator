@@ -35,12 +35,12 @@ const trustConfig: IntentConfig = {
             Transparent & Honest
           </UBadge>
 
-          <IHeading
+          <ContentHeading
             :text="title"
             variant="section"
           />
 
-          <IText
+          <ContentText
             v-if="description"
             :text="description"
             variant="subtitle"

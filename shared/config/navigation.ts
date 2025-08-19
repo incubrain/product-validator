@@ -1,4 +1,4 @@
-// shared/config/navigation.ts
+// shared/config/navigation.ts - UPDATED WITH ALL SHOWCASE PAGES
 import type { NavigationMenuItem } from '@nuxt/ui'
 
 export interface SocialLink {
@@ -51,34 +51,76 @@ export const navigationConfig: NavigationConfig = {
       to: '/showcase',
       children: [
         {
-          label: 'Overview',
-          to: '/showcase',
-          description: 'Template system overview',
-          icon: 'i-lucide-eye',
+          label: 'Container',
+          to: '/showcase/container',
+          description: 'Responsive content containers with width control',
+          icon: 'i-lucide-square',
         },
         {
-          label: 'Grid System',
+          label: 'Stack',
+          to: '/showcase/stack',
+          description: 'Vertical and horizontal stacking layouts',
+          icon: 'i-lucide-layers',
+        },
+        {
+          label: 'Split',
+          to: '/showcase/split',
+          description: 'Two-column layouts with ratio control',
+          icon: 'i-lucide-columns',
+        },
+        {
+          label: 'Grid',
           to: '/showcase/grid',
-          description: 'Grid layout examples',
+          description: 'CSS Grid with auto-fit and responsive patterns',
           icon: 'i-lucide-grid-3x3',
+        },
+        {
+          label: 'Cluster',
+          to: '/showcase/cluster',
+          description: 'Flexible grouping for navigation and tags',
+          icon: 'i-lucide-group',
+        },
+        {
+          label: 'Columns',
+          to: '/showcase/columns',
+          description: 'CSS Columns for masonry and magazine layouts',
+          icon: 'i-lucide-columns-3',
+        },
+        {
+          label: 'Frame',
+          to: '/showcase/frame',
+          description: 'Aspect ratio containers for media content',
+          icon: 'i-lucide-frame',
         },
         {
           label: 'Float',
           to: '/showcase/float',
-          description: 'Float layout examples',
-          icon: 'i-lucide-layout',
+          description: 'CSS float utilities for text wrapping',
+          icon: 'i-lucide-move',
         },
         {
-          label: 'Split Layouts',
-          to: '/showcase/split',
-          description: 'Split section demos',
-          icon: 'i-lucide-columns',
+          label: 'Position',
+          to: '/showcase/position',
+          description: 'CSS position utilities for element positioning',
+          icon: 'i-lucide-move',
         },
         {
-          label: 'Stack Layouts',
-          to: '/showcase/stack',
-          description: 'Vertical stacking demos',
-          icon: 'i-lucide-layers',
+          label: 'ScrollBox',
+          to: '/showcase/scroll-box',
+          description: 'Scroll containers with overflow control',
+          icon: 'i-lucide-scroll',
+        },
+        {
+          label: 'Transform',
+          to: '/showcase/transform',
+          description: 'Transform effects and animations',
+          icon: 'i-lucide-rotate-3d',
+        },
+        {
+          label: 'Divider',
+          to: '/showcase/divider',
+          description: 'Content separators and visual breaks',
+          icon: 'i-lucide-minus',
         },
       ],
     },
@@ -120,6 +162,12 @@ export const navigationConfig: NavigationConfig = {
       description: 'Component examples and demos',
       icon: 'i-lucide-layout-template',
     },
+    {
+      label: 'Layout System',
+      to: '/showcase/stack',
+      description: 'Layout component documentation',
+      icon: 'i-lucide-layers',
+    },
   ],
 
   // Organized footer links
@@ -136,6 +184,11 @@ export const navigationConfig: NavigationConfig = {
         label: 'Showcase',
         to: '/showcase',
         description: 'Component examples',
+      },
+      {
+        label: 'Layout Components',
+        to: '/showcase/stack',
+        description: 'Layout system documentation',
       },
     ],
   },
@@ -205,6 +258,22 @@ export const getBreadcrumbTrail = (path: string): NavigationMenuItem[] => {
 
   findTrail(navigationConfig.mainNavigation)
   return trail
+}
+
+// ✅ NEW: Get all showcase routes for dynamic rendering
+export const getShowcaseRoutes = () => {
+  const showcaseItem = navigationConfig.mainNavigation.find((item) => item.to === '/showcase')
+  if (!showcaseItem?.children) return []
+
+  return showcaseItem.children
+    .filter((child) => child.to && child.to !== '/showcase' && child.type !== 'label')
+    .map((child) => ({
+      path: child.to!,
+      title: child.label || '',
+      description: child.description || '',
+      icon: child.icon || 'i-lucide-component',
+      category: 'components', // All are layout components for now
+    }))
 }
 
 export default navigationConfig

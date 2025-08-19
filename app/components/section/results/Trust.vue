@@ -24,19 +24,19 @@ const trustConfig: IntentConfig = {
         <!-- Trust-focused header -->
         <ILayoutCenter variant="text-only">
           <ILayoutStack variant="default">
-            <IHeading
+            <ContentHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <IText
+            <ContentText
               v-if="subtitle"
               :text="subtitle"
               variant="subtitle"
             />
 
-            <IText
+            <ContentText
               v-if="description"
               :text="description"
               variant="description"
@@ -65,19 +65,19 @@ const trustConfig: IntentConfig = {
 
               <ILayoutStack variant="centered">
                 <!-- Large metric with trust styling -->
-                <IHeading
+                <ContentHeading
                   :text="item.value || item.title"
                   variant="metric"
                   class="text-success-700 font-bold"
                 />
 
-                <IText
+                <ContentText
                   :text="item.title"
                   variant="card"
                   class="font-medium"
                 />
 
-                <IText
+                <ContentText
                   v-if="item.description"
                   :text="item.description"
                   variant="small"
@@ -100,7 +100,7 @@ const trustConfig: IntentConfig = {
         <!-- Trust-focused CTA -->
         <ILayoutCenter v-if="action">
           <ILayoutStack variant="compact">
-            <IText
+            <ContentText
               v-if="action.description"
               :text="action.description"
               variant="caption"

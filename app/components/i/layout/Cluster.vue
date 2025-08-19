@@ -1,25 +1,28 @@
-<!-- app/components/layout/Cluster.vue -->
 <script setup lang="ts">
-import clusterStyles from '~~/theme/layout/cluster'
+import clusterStyles from '#theme/layout/cluster'
+import type { ClusterProps } from '#shared/types/components'
 
-interface Props {
-  variant?: 'default' | 'centered' | 'between' | 'end' | 'tight' | 'loose' | 'no-wrap' | 'vertical' | 'inline'
-  as?: string
-  ui?: any
-}
-
-const props = withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<ClusterProps>(), {
   variant: 'default',
   as: 'div',
 })
 
-const styles = computed(() => clusterStyles(props))
+defineOptions({ inheritAttrs: false })
+
+defineSlots<{
+  default(props?: object): any
+}>()
+
+// ✅ NUXT UI PATTERN - TV instance with variants
+const ui = tvComputed(() => clusterStyles({
+  variant: props.variant,
+}), props.trackingId)
 </script>
 
 <template>
   <component
     :is="as"
-    :class="[styles.root(), $attrs.class]"
+    :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
     v-bind="$attrs"
   >
     <slot />

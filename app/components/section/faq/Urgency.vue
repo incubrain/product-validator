@@ -39,13 +39,13 @@ const urgencyConfig: IntentConfig = {
               </UBadge>
             </ILayoutCenter>
 
-            <IHeading
+            <ContentHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <IText
+            <ContentText
               v-if="description"
               :text="description"
               variant="subtitle"
@@ -70,7 +70,7 @@ const urgencyConfig: IntentConfig = {
                 name="i-lucide-phone"
                 class="size-5 text-warning-600"
               />
-              <IText
+              <ContentText
                 text="Need immediate answers? Get instant response within 24 hours"
                 variant="card"
                 class="text-warning-700 font-medium"

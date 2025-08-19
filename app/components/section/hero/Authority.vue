@@ -25,19 +25,19 @@ const authorityConfig: IntentConfig = {
           <ILayoutStack variant="spacious">
             <!-- Authority-focused headlines -->
             <ILayoutStack variant="default">
-              <IHeading
+              <ContentHeading
                 :text="title"
                 variant="hero"
                 anchor
               />
 
-              <IText
+              <ContentText
                 v-if="subtitle"
                 :text="subtitle"
                 variant="hero-subtitle"
               />
 
-              <IText
+              <ContentText
                 v-if="description"
                 :text="description"
                 variant="description"
@@ -49,7 +49,7 @@ const authorityConfig: IntentConfig = {
               v-if="action"
               variant="compact"
             >
-              <IText
+              <ContentText
                 v-if="action.description"
                 variant="caption"
                 :text="action.description"
@@ -91,11 +91,11 @@ const authorityConfig: IntentConfig = {
                     </div>
 
                     <ILayoutStack variant="compact">
-                      <IHeading
+                      <ContentHeading
                         :text="item.title"
                         variant="card"
                       />
-                      <IText
+                      <ContentText
                         :text="item.description"
                         variant="small"
                       />

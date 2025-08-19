@@ -42,12 +42,15 @@ export function tvComputed<T>(fn: () => T, trackingId?: string): ComputedRef<Fla
   return computed(() => {
     const result = fn()
 
-    if (import.meta.dev && useRuntimeConfig().public.incubrain.debug && trackingId) {
+    if (import.meta.dev && useRuntimeConfig().public.incubrain.debug) {
       const { captureComponentCSS } = useComponentDebug()
       const instance = getCurrentInstance()
-      captureComponentCSS(trackingId, result, instance)
-    }
 
+      if (trackingId && instance) {
+        captureComponentCSS(trackingId, result, instance)
+      }
+    }
+    
     return result as FlattenVariants<T>
   })
 }

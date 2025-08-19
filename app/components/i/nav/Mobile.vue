@@ -37,7 +37,7 @@ const getCTAUrl = (action: string) => {
   >
     <template #header>
       <div class="flex items-center justify-between w-full">
-        <ILogo size="sm" />
+        <ContentLogo size="sm" />
         <UButton
           variant="ghost"
           color="neutral"

@@ -1,10 +1,10 @@
-// theme/divider.ts
-import { createUIComponent } from '../../shared/utils/theme'
+import { tv, extractTV } from '../../shared/utils/themev3'
+import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
-export default createUIComponent((config) => ({
+const dividerStyles = tv({
   slots: {
-    root: 'flex items-center justify-center',
-    line: 'border-default',
+    root: ['flex', 'items-center', 'justify-center'],
+    line: ['border-default'],
   },
   variants: {
     variant: {
@@ -35,4 +35,13 @@ export default createUIComponent((config) => ({
     spacing: 'md',
     orientation: 'horizontal',
   },
-}))
+})
+
+export const dividerData = extractTV(dividerStyles, {
+  title: 'Content Dividers',
+  description: 'Visual separators with gradient, dotted, and branded styling options',
+  category: 'layout',
+})
+export type DividerVariants = ExtractVariants<typeof dividerStyles>
+export type DividerSlots = ExtractSlots<typeof dividerStyles>
+export default dividerStyles

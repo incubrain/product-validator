@@ -1,15 +1,13 @@
-// theme/layout/section.ts
-import { tv } from '../../shared/utils/themev2'
+import { tv, extractTV } from '../../shared/utils/themev3'
 import { createHeightVariants } from '../../shared/config/theme'
 import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
-const sectionStyles = tv({
+export const sectionStyles = tv({
   slots: {
     root: ['w-full', 'relative'],
   },
   variants: {
-    ...createHeightVariants('root'),
-
+    height: createHeightVariants('root'),
     variant: {
       default: {
         root: 'py-16 lg:py-20',
@@ -34,6 +32,7 @@ const sectionStyles = tv({
   },
 })
 
+export const sectionData = extractTV(sectionStyles)
 export type SectionVariants = ExtractVariants<typeof sectionStyles>
 export type SectionSlots = ExtractSlots<typeof sectionStyles>
 export default sectionStyles

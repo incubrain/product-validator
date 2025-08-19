@@ -36,7 +36,11 @@ const splitStyles = tv({
   },
 })
 
-export const splitData = extractTV(splitStyles)
+export const splitData = extractTV(splitStyles, {
+  title: 'Two-Column Split Layouts',
+  description: 'Responsive two-column layouts with intelligent ratio control and mobile-first stacking',
+  category: 'layout',
+})
 export type SplitVariants = ExtractVariants<typeof splitStyles>
 export type SplitSlots = ExtractSlots<typeof splitStyles>
 export default splitStyles

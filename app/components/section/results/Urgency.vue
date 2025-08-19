@@ -40,19 +40,19 @@ const urgencyConfig: IntentConfig = {
               </UBadge>
             </ILayoutCenter>
 
-            <IHeading
+            <ContentHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <IText
+            <ContentText
               v-if="subtitle"
               :text="subtitle"
               variant="subtitle"
             />
 
-            <IText
+            <ContentText
               v-if="description"
               :text="description"
               variant="description"
@@ -87,19 +87,19 @@ const urgencyConfig: IntentConfig = {
 
               <ILayoutStack variant="centered">
                 <!-- Urgent metric display -->
-                <IHeading
+                <ContentHeading
                   :text="item.value || item.title"
                   variant="metric"
                   class="text-warning-700 font-bold"
                 />
 
-                <IText
+                <ContentText
                   :text="item.title"
                   variant="card"
                   class="font-medium"
                 />
 
-                <IText
+                <ContentText
                   v-if="item.description"
                   :text="item.description"
                   variant="small"
@@ -122,7 +122,7 @@ const urgencyConfig: IntentConfig = {
         <!-- Urgency-focused CTA -->
         <ILayoutCenter v-if="action">
           <ILayoutStack variant="compact">
-            <IText
+            <ContentText
               v-if="action.description"
               :text="action.description"
               variant="caption"

@@ -1,6 +1,6 @@
 <!-- app/components/layout/Stack.vue - MODERNIZED -->
 <script setup lang="ts">
-import stackStyles from '~~/theme/layout/stack'
+import stackStyles from '#theme/layout/stack'
 import type { StackProps } from '#shared/types/components'
 
 const props = withDefaults(defineProps<StackProps>(), {

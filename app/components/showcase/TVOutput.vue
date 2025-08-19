@@ -1,23 +1,28 @@
 <script setup lang="ts">
+const { showcaseDebugExpanded } = useComponentDebug()
+
 interface Props {
-  trackingId: string
-  isExpanded: boolean
+  trackingId?: string
 }
 
 const props = defineProps<Props>()
 const { getComponentCSS } = useComponentDebug()
 
-const cssData = computed(() => getComponentCSS(props.trackingId))
+const cssData = computed(() => {
+  return props.trackingId ? getComponentCSS(props.trackingId) : null
+})
 
 // Define color coding for different class origins
 const originColors = {
-  inherited: { bg: 'bg-warning-600', text: 'text-warning-400', badge: 'warning' },
-  variant: { bg: 'bg-primary-600', text: 'text-primary-400', badge: 'primary' },
-  gap: { bg: 'bg-secondary-600', text: 'text-secondary-400', badge: 'secondary' },
-  size: { bg: 'bg-success-600', text: 'text-success-400', badge: 'success' },
-  color: { bg: 'bg-error-600', text: 'text-error-400', badge: 'error' },
-  responsive: { bg: 'bg-info-600', text: 'text-info-400', badge: 'info' },
-  base: { bg: 'bg-neutral-600', text: 'text-neutral-400', badge: 'neutral' },
+  inherited: { bg: 'bg-amber-800', text: 'text-amber-400', border: 'border-amber-600' },
+  variant: { bg: 'bg-blue-800', text: 'text-blue-400', border: 'border-blue-600' },
+  gap: { bg: 'bg-emerald-800', text: 'text-emerald-400', border: 'border-emerald-600' },
+  size: { bg: 'bg-purple-800', text: 'text-purple-400', border: 'border-purple-600' },
+  spacing: { bg: 'bg-teal-800', text: 'text-teal-400', border: 'border-teal-600' },
+  color: { bg: 'bg-rose-800', text: 'text-rose-400', border: 'border-rose-600' },
+  responsive: { bg: 'bg-cyan-800', text: 'text-cyan-400', border: 'border-cyan-600' },
+  padding: { bg: 'bg-indigo-800', text: 'text-indigo-400', border: 'border-indigo-600' },
+  base: { bg: 'bg-slate-800', text: 'text-slate-400', border: 'border-slate-600' },
 }
 
 // Get current breakpoint
@@ -85,6 +90,9 @@ const parseClassesWithColors = (classes: string) => {
     } else if (cls.includes('gap-')) {
       origin = 'gap'
       color = originColors.gap
+    } else if (cls.includes('gap-')) {
+      origin = 'gap'
+      color = originColors.gap
     } else if (cls.match(/^(text-|bg-|border-)/)) {
       origin = 'color'
       color = originColors.color
@@ -118,7 +126,7 @@ const componentName = computed(() => cssData.value?.componentName || 'Unknown')
 <template>
   <div class="mt-3">
     <UCollapsible
-      :open="isExpanded"
+      :open="showcaseDebugExpanded"
       :unmount-on-hide="false"
       :ui="{
         root: 'border border-default rounded-md overflow-hidden bg-muted/10',
@@ -163,14 +171,13 @@ const componentName = computed(() => cssData.value?.componentName || 'Unknown')
             v-if="classOrigins.length > 0"
             class="flex flex-wrap gap-1"
           >
-            <UBadge
+            <span
               v-for="origin in classOrigins"
               :key="origin.key"
-              :label="origin.display"
-              :color="origin.color.badge"
-              variant="outline"
-              size="sm"
-            />
+              :class="`border ${origin.color.border} rounded-xl px-3 py-0.5 flex text-xs`"
+            >
+              {{ origin.display }}
+            </span>
           </div>
 
           <!-- Applied Classes by Slot -->

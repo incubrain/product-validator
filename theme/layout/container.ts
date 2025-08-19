@@ -1,29 +1,36 @@
-// theme/container.ts
-import { createUIComponent } from '../../shared/utils/theme'
+// theme/layout/container.ts
+import { tv, extractTV } from '../../shared/utils/themev3'
+import type { ExtractSlots, ExtractVariants } from '../../shared/utils/themev2'
 
-export default createUIComponent((config) => ({
+const containerStyles = tv({
   slots: {
     root: [
       'w-full',
-      config.transitions && 'transition-all duration-200',
+      'mx-auto',
+      'box-border',
+      'px-4 sm:px-6 lg:px-8',
     ],
   },
   variants: {
-    size: {
-      narrow: { root: 'max-w-2xl' },
-      default: { root: 'max-w-4xl' },
-      wide: { root: 'max-w-6xl' },
-      prose: { root: 'max-w-prose' },
-      full: { root: 'max-w-none' },
-    },
-    align: {
-      left: { root: 'mr-auto' },
-      center: { root: 'mx-auto' },
-      right: { root: 'ml-auto' },
+    variant: {
+      prose: { root: 'max-w-prose' }, // ~65ch - Reading width
+      narrow: { root: 'max-w-4xl' }, // ~896px - Forms, articles
+      default: { root: 'max-w-(--ui-container)' }, // ~1280px
+      wide: { root: 'max-w-[calc(var(--ui-container)+200px)]' }, // 100% - Wide layouts
+      full: { root: 'max-w-screen' }, // 100% - Full width (alias)
+      screen: { root: 'max-w-screen px-0 sm:px-0 lg:px-0' }, // 100vw - True full width
     },
   },
   defaultVariants: {
-    size: 'default',
-    align: 'center',
+    variant: 'default',
   },
-}))
+})
+
+export const containerData = extractTV(containerStyles, {
+  title: 'Responsive Containers',
+  description: 'Content containers with reading widths, form layouts, and full-width experiences',
+  category: 'layout',
+})
+export type ContainerVariants = ExtractVariants<typeof containerStyles>
+export type ContainerSlots = ExtractSlots<typeof containerStyles>
+export default containerStyles

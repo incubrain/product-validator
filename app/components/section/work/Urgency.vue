@@ -39,13 +39,13 @@ const urgencyConfig: IntentConfig = {
               </UBadge>
             </ILayoutCenter>
 
-            <IHeading
+            <ContentHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <IText
+            <ContentText
               v-if="subtitle"
               :text="subtitle"
               variant="subtitle"
@@ -56,7 +56,7 @@ const urgencyConfig: IntentConfig = {
         <!-- Urgency-focused CTA -->
         <ILayoutCenter v-if="action">
           <ILayoutStack variant="compact">
-            <IText
+            <ContentText
               v-if="action.description"
               :text="action.description"
               variant="caption"

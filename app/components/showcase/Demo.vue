@@ -50,23 +50,25 @@ const gridClasses = computed(() => {
 <template>
   <div class="space-y-6">
     <!-- Section Header -->
-    <div class="border-b border-gray-200 dark:border-gray-700 pb-4">
-      <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">
-        {{ title }}
-      </h2>
-      <p class="text-gray-600 dark:text-gray-300 mt-2">
-        {{ description }}
-      </p>
-      <span
-        v-if="category"
-        :class="[
-          getCategoryBadgeClasses(category),
-          'inline-block mt-2 px-2 py-1 text-xs rounded-full',
-        ]"
-      >
-        {{ category }}
-      </span>
-    </div>
+    <ILayoutContainer>
+      <div class="border-b border-gray-200 dark:border-gray-700 pb-4">
+        <h2 class="text-2xl font-semibold text-gray-900 dark:text-white">
+          {{ title }}
+        </h2>
+        <p class="text-gray-600 dark:text-gray-300 mt-2">
+          {{ description }}
+        </p>
+        <span
+          v-if="category"
+          :class="[
+            getCategoryBadgeClasses(category),
+            'inline-block mt-2 px-2 py-1 text-xs rounded-full',
+          ]"
+        >
+          {{ category }}
+        </span>
+      </div>
+    </ILayoutContainer>
 
     <!-- 🔥 RESPONSIVE GRID WITH COLUMN CONTROL -->
     <div :class="gridClasses">

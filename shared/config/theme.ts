@@ -42,6 +42,7 @@ export const THEME = {
 
   height: {
     'none': '',
+    'auto': 'h-auto',
     'xs': 'h-full max-h-[200px]',
     'sm': 'h-full max-h-[300px]',
     'md': 'h-full max-h-[400px]',
@@ -54,40 +55,46 @@ export const THEME = {
   },
 } as const
 
+export const createVariant = <T extends Record<string, string>>(
+  variantName: string,
+  values: T,
+  slots: string | string[] = 'root',
+) => {
+  const slotArray = Array.isArray(slots) ? slots : [slots]
+
+  return Object.fromEntries(
+    Object.entries(values).map(([key, value]) => [
+      key,
+      Object.fromEntries(
+        slotArray.map((slot) => [slot, value]),
+      ),
+    ]),
+  )
+}
+
 // ✅ HELPER FUNCTIONS - Map to specific slots
-export const createSpacingVariants = (slot: 'root' | 'row' = 'root') => ({
-  spacing: Object.entries(THEME.spacing).reduce((acc, [key, value]) => {
-    acc[key] = { [slot]: value }
-    return acc
-  }, {} as Record<string, any>),
-})
+// Refactor existing helpers to use createVariant
+export const createSpacingVariants = (slot = 'root') =>
+  createVariant('spacing', THEME.spacing, slot)
 
-export const createGapVariants = (slot: 'root' | 'row' = 'root') => ({
-  gap: Object.entries(THEME.gap).reduce((acc, [key, value]) => {
-    acc[key] = { [slot]: value }
-    return acc
-  }, {} as Record<string, any>),
-})
+export const createGapVariants = (slot = 'root') =>
+  createVariant('gap', THEME.gap, slot)
 
-export const createPaddingVariants = (slot: 'root' | 'row' = 'root') => ({
-  padding: Object.entries(THEME.padding).reduce((acc, [key, value]) => {
-    acc[key] = { [slot]: value }
-    return acc
-  }, {} as Record<string, any>),
-})
+export const createPaddingVariants = (slot = 'root') =>
+  createVariant('padding', THEME.padding, slot)
 
-export const createHeightVariants = (slot: 'root' | 'row' = 'root') => ({
-  height: Object.entries(THEME.height).reduce((acc, [key, value]) => {
-    acc[key] = { [slot]: value }
-    return acc
-  }, {} as Record<string, any>),
-})
+export const createHeightVariants = (slot = 'root') =>
+  createVariant('height', THEME.height, slot)
+
+// Keep gapVariant for backwards compatibility
+export const gapVariant = (slots: string | string[] = 'root') =>
+  createVariant('gap', THEME.gap, slots)
 
 // Export for easy component usage
 export const SPACING_VARIANTS = {
-  ...createSpacingVariants('root'),
-  ...createGapVariants('root'),
-  ...createPaddingVariants('root'),
+  spacing: createSpacingVariants('root'),
+  gap: createGapVariants('root'),
+  padding: createPaddingVariants('root'),
 }
 
 // Type helpers

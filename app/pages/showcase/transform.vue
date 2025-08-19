@@ -1,6 +1,6 @@
 <script setup>
 import { ITransform } from '#components'
-import { transformData } from '~~/theme/layout/transform'
+import { transformData } from '#theme/layout/transform'
 
 definePageMeta({
   layout: false,
@@ -188,7 +188,7 @@ const generateTransformContent = (content) => {
     subtitle="Essential transform utilities for modern web interfaces with real-time controls"
     :config="transformConfig"
   >
-    <template #default="{ getTrackingId, config }">
+    <template #default="{ config }">
       <ShowcaseDemo
         title="Interactive Playground"
         description="Experiment with transform effects, timing, and origin points - see real-time changes"
@@ -201,7 +201,6 @@ const generateTransformContent = (content) => {
           :variants="config.variants"
           :presets="config.presets"
           :badge-number="1"
-          :tracking-id="getTrackingId('playground')"
           center
         >
           <template #default="{ selectedProps, currentPreset }">

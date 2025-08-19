@@ -11,7 +11,7 @@ const headingText = computed(() => {
 </script>
 
 <template>
-  <IHeading
+  <ContentHeading
     :id="id"
     :text="headingText"
     :level="3"

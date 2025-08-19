@@ -1,18 +1,19 @@
-// theme/media.ts - SIMPLIFIED
-import { createUIComponent } from '../shared/utils/theme'
+// theme/video.ts - MIGRATED TO THEMEV3
+import { tv, extractTV } from '../shared/utils/themev3'
+import type { ExtractSlots, ExtractVariants } from '../shared/utils/themev2'
 
-export default createUIComponent((config) => ({
+const videoStyles = tv({
   slots: {
     root: [
       'relative overflow-hidden bg-black',
-      config.transitions && 'transition-all duration-300',
+      'transition-all duration-300',
     ],
     video: 'w-full h-full object-cover',
     overlay: 'absolute inset-0 flex items-center justify-center',
     controls: [
       'absolute inset-0 flex items-center justify-center',
       'bg-black/20 hover:bg-black/40 cursor-pointer',
-      config.transitions && 'transition-colors duration-200',
+      'transition-colors duration-200',
     ],
     loadingState: 'flex items-center justify-center text-white',
     errorState: 'flex flex-col items-center justify-center text-center p-6 text-white',
@@ -39,4 +40,9 @@ export default createUIComponent((config) => ({
     loading: false,
     error: false,
   },
-}))
+})
+
+export const videoData = extractTV(videoStyles)
+export type VideoVariants = ExtractVariants<typeof videoStyles>
+export type VideoSlots = ExtractSlots<typeof videoStyles>
+export default videoStyles

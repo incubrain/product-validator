@@ -40,21 +40,21 @@ const urgencyConfig: IntentConfig = {
               </UBadge>
             </ILayoutCenter>
 
-            <IHeading
+            <ContentHeading
               :text="title"
               variant="hero"
               anchor
               class="text-center"
             />
 
-            <IText
+            <ContentText
               v-if="subtitle"
               :text="subtitle"
               variant="hero-subtitle"
               class="text-center"
             />
 
-            <IText
+            <ContentText
               v-if="description"
               :text="description"
               variant="description"
@@ -78,12 +78,12 @@ const urgencyConfig: IntentConfig = {
               :name="item.icon || 'i-lucide-clock'"
               class="size-8 text-amber-500 mx-auto mb-2"
             />
-            <IHeading
+            <ContentHeading
               :text="item.title"
               variant="small"
               class="text-amber-600"
             />
-            <IText
+            <ContentText
               :text="item.description"
               variant="small"
               class="text-muted"
@@ -94,7 +94,7 @@ const urgencyConfig: IntentConfig = {
         <!-- Urgent CTA -->
         <ILayoutCenter v-if="action">
           <ILayoutStack variant="centered">
-            <IText
+            <ContentText
               v-if="action.description"
               variant="caption"
               :text="action.description"

@@ -3,7 +3,7 @@ interface Props {
   variantName: string
   description: string
   badgeNumber?: number
-  code?: string
+  code?: string | object // ✅ Accept both string and object
   language?: string
   fileName?: string
   fileLink?: string
@@ -14,40 +14,18 @@ const props = withDefaults(defineProps<Props>(), {
   language: 'vue-html',
 })
 
-const isCodeExpanded = ref(false)
-
-// Manual toggle function
-const toggleExpanded = () => {
-  isCodeExpanded.value = !isCodeExpanded.value
-}
-
-const fileContent = ref<string>('')
-const isLoadingFile = ref(false)
-
-const loadFileContent = async () => {
-  if (!props.filePath) return
-
-  try {
-    isLoadingFile.value = true
-    const content = await $fetch(`/api/read-file?path=${encodeURIComponent(props.filePath)}`)
-    fileContent.value = String(content)
-  } catch (error) {
-    console.error('Failed to load file:', error)
-    fileContent.value = `// Error loading file: ${props.filePath}`
-  } finally {
-    isLoadingFile.value = false
-  }
-}
-
-watch(() => props.filePath, loadFileContent, { immediate: true })
-
-// ENHANCE EXISTING COMPUTED (Replace these 2 computeds)
 const displayCode = computed(() => {
-  if (fileContent.value) return fileContent.value
-  return props.code ?? 'No code provided'
+  if (!props.code) return 'No code provided'
+
+  if (typeof props.code === 'object') {
+    const jsonString = JSON.stringify(props.code, null, 2)
+    return `const tvComponent = tv(${jsonString})`
+  }
+
+  // ✅ Otherwise return as string
+  return String(props.code)
 })
 
-// Truncate code for preview (first 3 lines)
 const codePreview = computed(() => {
   const lines = displayCode.value.split('\n')
   return lines.slice(0, 3).join('\n')
@@ -56,6 +34,11 @@ const codePreview = computed(() => {
 const shouldShowExpand = computed(() => {
   return displayCode.value.split('\n').length > 3
 })
+
+const isCodeExpanded = ref(false)
+const toggleExpanded = () => {
+  isCodeExpanded.value = !isCodeExpanded.value
+}
 </script>
 
 <template>

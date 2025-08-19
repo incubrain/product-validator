@@ -40,13 +40,13 @@ const urgencyConfig: IntentConfig = {
               </UBadge>
             </ILayoutCenter>
 
-            <IHeading
+            <ContentHeading
               :text="title"
               variant="section"
               anchor
             />
 
-            <IText
+            <ContentText
               v-if="subtitle"
               :text="subtitle"
               variant="subtitle"
@@ -90,12 +90,12 @@ const urgencyConfig: IntentConfig = {
                 </div>
 
                 <ILayoutStack variant="default">
-                  <IHeading
+                  <ContentHeading
                     :text="card.title"
                     variant="card"
                   />
 
-                  <IText
+                  <ContentText
                     v-if="card.subtitle"
                     :text="card.subtitle"
                     variant="description"

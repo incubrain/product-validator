@@ -1,6 +1,6 @@
 <!-- app/components/layout/Transform.vue -->
 <script setup lang="ts">
-import transformStyles from '~~/theme/layout/transform'
+import transformStyles from '#theme/layout/transform'
 import type { TransformProps } from '#shared/types/components'
 
 const props = withDefaults(defineProps<TransformProps>(), {
