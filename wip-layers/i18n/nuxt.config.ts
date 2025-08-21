@@ -54,7 +54,7 @@ export default defineNuxtConfig({
 
   alias: {
     '#theme': fileURLToPath(new URL('../../theme', import.meta.url)),
-    '#shared': fileURLToPath(new URL('#shared', import.meta.url)),
+    '#shared': fileURLToPath(new URL('../../shared', import.meta.url)),
   },
 
   experimental: {
