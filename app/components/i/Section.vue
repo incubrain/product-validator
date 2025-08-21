@@ -23,7 +23,7 @@ const ui = tvComputed(() => sectionStyles({
 </script>
 
 <template>
-  <IBackground
+  <WipBackground
     :preset="background"
   >
     <ILayoutContainer
@@ -32,5 +32,5 @@ const ui = tvComputed(() => sectionStyles({
     >
       <slot />
     </ILayoutContainer>
-  </IBackground>
+  </WipBackground>
 </template>

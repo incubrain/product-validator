@@ -22,6 +22,15 @@ export default defineNuxtConfig({
     description: business.description,
   },
 
+  // Dev-specific content config
+  // content: {
+  //   watch: {
+  //     enabled: true,
+  //     port: 4000,
+  //     showURL: false,
+  //   },
+  // },
+
   content: {
     build: {
       markdown: {

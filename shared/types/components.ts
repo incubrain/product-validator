@@ -132,10 +132,11 @@ export interface DividerProps extends BaseProps {
 }
 
 export interface ScrollBoxProps extends BaseProps {
-  variant?: ScrollBoxVariants['variant']
-  behavior?: ScrollBoxVariants['behavior']
-  overscroll?: ScrollBoxVariants['overscroll']
+  direction?: ScrollBoxVariants['direction']
+  snap?: ScrollBoxVariants['snap']
   height?: ScrollBoxVariants['height']
+  gap?: ScrollBoxVariants['gap']
+  padding?: ScrollBoxVariants['padding']
   as?: string
   ui?: ScrollBoxSlots
 }

@@ -6,7 +6,7 @@ const props = withDefaults(defineProps<GridProps>(), {
   variant: 'auto-fit',
   flow: 'row',
   gap: 'md',
-  align: 'start',
+  align: 'stretch',
   as: 'div',
 })
 

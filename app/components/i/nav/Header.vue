@@ -47,7 +47,7 @@ const getCTAUrl = (action: string) => {
             color="primary"
             variant="solid"
             size="sm"
-            class="hidden md:inline-flex"
+            class="hidden md:inline-flex font-bold"
             :to="getCTAUrl(ctaButtons.primary.action)"
             target="_blank"
             :trailing-icon="ctaButtons.primary.icon"

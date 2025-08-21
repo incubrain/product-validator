@@ -21,15 +21,6 @@ export default defineNuxtConfig({
 
     devtools: { enabled: true },
 
-    // Dev-specific content config
-    // content: {
-    //   watch: {
-    //     enabled: true,
-    //     port: 4000,
-    //     showURL: false,
-    //   },
-    // },
-
     // Dev runtime config
     runtimeConfig: {
       public: {
@@ -71,11 +62,10 @@ export default defineNuxtConfig({
 
   // ✅ PRODUCTION ONLY: Performance optimizations
   $production: {
-
     runtimeConfig: {
       public: {
         incubrain: {
-          debug: false, // No debug in production
+          debug: false,
         },
       },
     },
@@ -94,10 +84,10 @@ export default defineNuxtConfig({
     },
   },
 
-  // ✅ SHARED CONFIG: Everything that applies to both environments
   imports: {
     dirs: [
       '~~/theme/*.ts',
+      '~/providers/*.ts',
     ],
   },
 
@@ -192,6 +182,13 @@ export default defineNuxtConfig({
       'check': 'i-lucide-check',
       'close': 'i-lucide-x',
       'search': 'i-lucide-search',
+    },
+  },
+
+  image: {
+    domains: ['picsum.photos'],
+    alias: {
+      picsum: 'https://picsum.photos',
     },
   },
 

@@ -1,4 +1,4 @@
-// theme/layout/stack.ts - MODERNIZED
+// theme/layout/stack.ts
 import { tv, extractTV } from '#shared/utils/theme'
 import { createGapVariants } from '#shared/config/theme'
 import type { ExtractSlots, ExtractVariants } from '#shared/utils/theme'

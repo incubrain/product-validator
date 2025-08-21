@@ -162,12 +162,6 @@ export const navigationConfig: NavigationConfig = {
       description: 'Component examples and demos',
       icon: 'i-lucide-layout-template',
     },
-    {
-      label: 'Layout System',
-      to: '/showcase/stack',
-      description: 'Layout component documentation',
-      icon: 'i-lucide-layers',
-    },
   ],
 
   // Organized footer links
@@ -196,8 +190,8 @@ export const navigationConfig: NavigationConfig = {
   // Call-to-action buttons
   ctaButtons: {
     primary: {
-      label: 'Free Consultation',
-      action: 'whatsapp_consultation',
+      label: 'Nuxt Community',
+      action: 'join_community',
       icon: 'i-lucide-message-circle',
     },
     secondary: {

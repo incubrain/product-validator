@@ -40,7 +40,7 @@ export interface BusinessConfig {
       github: string
       linkedin: string
       twitter: string
-      discord: string
+      community: string
     }
   }
 
@@ -52,10 +52,10 @@ export interface BusinessConfig {
 
   // Repetitive Content/Stats
   stats: {
-    deploy_time: string
-    projects_count: string
-    dev_time_saved: string
-    seo_ready: string
+    setup_time: string
+    launch_ready: string
+    components_included: string
+    time_saved: string
   }
 
   // Goals/Conversion
@@ -67,22 +67,18 @@ export interface BusinessConfig {
 
 export const businessConfig: BusinessConfig = {
   business: {
-    name: 'Incubrain',
+    name: 'Nuxt Launch Kit',
     url: import.meta.dev ? 'localhost:3000' : 'incubrain.org',
-    tagline: 'AI-Native Development Team',
-    description: 'We build AI automation that pays for itself',
+    tagline: 'From Idea to Launch in Days, Not Months',
+    description: 'Ship faster with our proven Nuxt Launch Kit and community',
     legal_name: 'Incubrain Private Limited',
 
-    // Authority Building
     founder: {
       name: 'Drew MacGibbon',
-      title: 'AI Automation Expert',
-      bio: '13 years business building, 6 years SaaS development',
-      experience: '6 years SaaS development',
-      credentials: [
-        'AWS Certified',
-        'Space Tech Veteran',
-      ],
+      title: 'Full-Stack Developer & Launch Expert',
+      bio: 'Helped 70+ developers ship faster with proven patterns',
+      experience: '6 years building production SaaS applications',
+      credentials: [],
     },
 
     // Geographic Authority
@@ -96,49 +92,49 @@ export const businessConfig: BusinessConfig = {
 
   // Contact Information
   contact: {
-    email: 'hello@incubrain.org',
-    phone: '+91-123-456-7890',
-    business_hours: '9 AM - 6 PM IST, Mon-Fri',
+    email: 'mac@incubrain.org',
+    phone: '+91-8421399956',
+    business_hours: '24/7 Community Support',
 
     // Primary/Secondary Contact Methods
-    primary: 'https://wa.me/1234567890',
+    primary: 'https://whop.com/c/incubrain-community/launch-kit',
     secondary: 'https://github.com/incubrain/nuxt-launch-kit',
 
     // Full URLs for schema.org integration
     social: {
-      github: 'https://github.com/incubrain',
+      github: 'https://github.com/incubrain/nuxt-launch-kit',
       linkedin: 'https://www.linkedin.com/company/incubrain',
       twitter: 'https://twitter.com/incubrain',
-      discord: 'https://discord.gg/zSGHvNZXAa',
+      community: 'https://whop.com/experiences/exp_3irNegyjJ8ahwA',
     },
   },
 
   // Service Authority
   services: {
     categories: [
-      'AI Automation',
-      'Custom Development',
-      'Business Consultation',
+      'Launch Kit Components',
+      'Developer Community',
+      'Production Templates',
     ],
     specialties: [
-      'Process Automation',
-      'Space Tech Integration',
-      'Global-Local Execution',
+      'Rapid Prototyping',
+      'SEO-Ready Templates',
+      'Developer Experience',
     ],
   },
 
   // Repetitive Content/Stats
   stats: {
-    deploy_time: '24 hours',
-    projects_count: '50+',
-    dev_time_saved: '90%',
-    seo_ready: '100%',
+    setup_time: '5 minutes',
+    launch_ready: '24 hours',
+    components_included: '10+',
+    time_saved: '90%',
   },
 
   // Goals/Conversion
   goals: {
-    primary: 'template_download',
-    secondary: 'consultation_booking',
+    primary: 'join_community',
+    secondary: 'github_star',
   },
 } as const
 

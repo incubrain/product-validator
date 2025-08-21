@@ -1,4 +1,4 @@
-<!-- app/components/layout/Stack.vue - MODERNIZED -->
+<!-- app/components/layout/Stack.vue -->
 <script setup lang="ts">
 import stackStyles from '#theme/layout/stack'
 import type { StackProps } from '#shared/types/components'

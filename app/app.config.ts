@@ -14,7 +14,7 @@ export default defineAppConfig({
     colors: {
       primary: intentColors.primary,
       secondary: intentColors.secondary,
-      success: 'teal',
+      success: 'emerald',
       error: 'rose',
       warning: 'amber',
       info: 'teal',

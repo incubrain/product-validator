@@ -23,10 +23,10 @@ const currentSize = computed(() => sizes[props.size])
     to="/"
     class="flex items-center space-x-2 font-bold underline underline-offset-4 decoration-secondary-600"
   >
-    <UIcon
-      name="i-lucide-rocket"
-      :size="currentSize.image"
-      class="text-white"
+    <NuxtImg
+      src="/images/nuxt-icon.png"
+      width="36px"
+      height="auto"
     />
     <h6
       v-if="showText"

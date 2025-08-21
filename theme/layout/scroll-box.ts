@@ -4,124 +4,73 @@ import type { ExtractSlots, ExtractVariants } from '#shared/utils/theme'
 
 const scrollBoxStyles = tv({
   slots: {
-    root: ['relative', 'w-full'],
+    root: ['relative'],
+    content: ['flex', 'flex-nowrap'],
   },
   variants: {
-    height: {
-      'auto': { root: 'h-auto' },
-      'xs': { root: 'h-[200px]' },
-      'sm': { root: 'h-[300px]' },
-      'md': { root: 'h-[400px]' },
-      'lg': { root: 'h-[500px]' },
-      'xl': { root: 'h-[600px]' },
-      '2xl': { root: 'h-[700px]' },
-      'screen': { root: 'h-screen' },
-      'half': { root: 'h-[50vh]' },
-      'section': { root: 'h-[60vh]' },
-    },
-
-    variant: {
-      // Basic overflow patterns
-      'auto': {
+    direction: {
+      both: {
         root: 'overflow-auto',
+        content: 'flex-wrap',
       },
-      'hidden': {
-        root: 'overflow-hidden',
-      },
-      'scroll': {
-        root: 'overflow-scroll',
-      },
-
-      // Directional patterns
-      'x-auto': {
+      x: {
         root: 'overflow-x-auto overflow-y-hidden',
       },
-      'y-auto': {
+      y: {
         root: 'overflow-y-auto overflow-x-hidden',
-      },
-      'x-scroll': {
-        root: 'overflow-x-scroll overflow-y-hidden',
-      },
-      'y-scroll': {
-        root: 'overflow-y-scroll overflow-x-hidden',
-      },
-
-      // Common use-case patterns
-      'carousel': {
-        root: 'overflow-x-auto overflow-y-hidden snap-x snap-proximity scroll-px-4',
-      },
-      'gallery': {
-        root: 'overflow-x-auto overflow-y-hidden snap-x snap-mandatory scroll-px-6',
-      },
-      'chat': {
-        root: 'overflow-y-auto overflow-x-hidden',
-      },
-      'table': {
-        root: 'overflow-x-auto overflow-y-hidden',
-      },
-      'modal': {
-        root: 'overflow-y-auto overflow-x-hidden',
-      },
-      'sections': {
-        root: 'overflow-y-auto overflow-x-hidden snap-y snap-proximity scroll-py-4',
-      },
-
-      // ✅ FIXED: Advanced snap patterns - allows vertical scrolling
-      'snap-x': {
-        root: 'overflow-x-auto snap-x snap-proximity',
-      },
-      'snap-y': {
-        root: 'overflow-y-auto snap-y snap-proximity',
-      },
-      'snap-x-mandatory': {
-        root: 'overflow-x-auto snap-x snap-mandatory',
-      },
-      'snap-y-mandatory': {
-        root: 'overflow-y-auto snap-y snap-mandatory',
+        content: 'flex-col',
       },
     },
-
-    // Scroll animation behavior
-    behavior: {
-      auto: {
-        root: 'scroll-auto',
+    height: {
+      auto: { root: 'h-auto' },
+      sm: { root: 'h-[300px]' },
+      md: { root: 'h-[400px]' },
+      lg: { root: 'h-[500px]' },
+      xl: { root: 'h-[600px]' },
+    },
+    snap: {
+      'none': { root: '' },
+      'x-proximity': { root: 'snap-x snap-proximity' },
+      'x-mandatory': { root: 'snap-x snap-mandatory' },
+      'y-proximity': { root: 'snap-y snap-proximity' },
+      'y-mandatory': { root: 'snap-y snap-mandatory' },
+    },
+    padding: {
+      none: {
+        root: 'p-0',
+        content: 'pr-0',
       },
-      smooth: {
-        root: 'scroll-smooth',
+      xs: {
+        root: 'px-2',
+        content: 'pr-2',
+      },
+      sm: {
+        root: 'px-4',
+        content: 'pr-4',
+      },
+      md: {
+        root: 'px-6',
+        content: 'pr-6',
+      },
+      lg: {
+        root: 'px-8',
+        content: 'after:content-[""] after:w-8 after:flex-shrink-0',
       },
     },
-
-    // Overscroll boundary behavior
-    overscroll: {
-      'auto': {
-        root: 'overscroll-auto',
-      },
-      'contain': {
-        root: 'overscroll-contain',
-      },
-      'none': {
-        root: 'overscroll-none',
-      },
-      'x-contain': {
-        root: 'overscroll-x-contain',
-      },
-      'y-contain': {
-        root: 'overscroll-y-contain',
-      },
-      'x-none': {
-        root: 'overscroll-x-none',
-      },
-      'y-none': {
-        root: 'overscroll-y-none',
-      },
+    gap: {
+      none: { content: 'gap-0' },
+      xs: { content: 'gap-2' },
+      sm: { content: 'gap-3' },
+      md: { content: 'gap-6' },
+      lg: { content: 'gap-8' },
     },
   },
-
   defaultVariants: {
-    variant: 'auto',
-    behavior: 'auto',
-    overscroll: 'auto',
+    direction: 'both',
     height: 'md',
+    snap: 'none',
+    padding: 'md',
+    gap: 'md',
   },
 })
 

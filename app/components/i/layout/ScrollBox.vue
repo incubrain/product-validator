@@ -4,33 +4,31 @@ import scrollBoxStyles from '#theme/layout/scroll-box'
 import type { ScrollBoxProps } from '#shared/types/components'
 
 const props = withDefaults(defineProps<ScrollBoxProps>(), {
-  variant: 'auto',
-  behavior: 'auto',
-  overscroll: 'auto',
-  height: 'xl',
+  direction: 'x',
+  height: 'md',
+  snap: 'none',
+  gap: 'md',
+  padding: 'md',
   as: 'div',
 })
 
-defineOptions({ inheritAttrs: false })
-
-defineSlots<{
-  default(props?: object): any
-}>()
-
 const ui = tvComputed(() => scrollBoxStyles({
-  variant: props.variant,
-  behavior: props.behavior,
-  overscroll: props.overscroll,
+  direction: props.direction,
   height: props.height,
-}), props.trackingId)
+  snap: props.snap,
+  gap: props.gap,
+  padding: props.padding,
+}))
 </script>
 
 <template>
   <component
     :is="as"
-    :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
+    :class="ui.root({ class: [props.ui?.root, $attrs.class] })"
     v-bind="$attrs"
   >
-    <slot />
+    <div :class="ui.content({ class: props.ui?.content })">
+      <slot />
+    </div>
   </component>
 </template>
