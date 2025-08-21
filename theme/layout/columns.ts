@@ -15,7 +15,7 @@ const columnsStyles = tv({
       balanced: { root: 'columns-md' },
       wide: { root: 'columns-lg' },
       split: { root: 'columns-2' },
-      auto: { root: 'columns-3xs' },
+      auto: { root: 'columns-[160px]' },
     },
     gap: {
       'none': { root: 'gap-0' },

@@ -373,29 +373,31 @@ useSeoMeta({
         </div>
 
         <!-- Masonry layout demo -->
-        <ILayoutColumns
-          variant="auto"
-          gap="sm"
-          spacing="sm"
-        >
-          <div
-            v-for="(item, index) in content.demos.masonry.items"
-            :key="index"
-            class="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-lg transition-all duration-200 cursor-pointer  bg-white"
+        <WipResize>
+          <ILayoutColumns
+            variant="auto"
+            gap="sm"
+            spacing="sm"
           >
-            <ContentImage
-              :src="item.image.src"
-              :alt="item.image.alt"
-              :width="item.image.width"
-              :height="item.image.height"
-              class="w-full h-auto group-hover:scale-105 transition-transform duration-200 rounded-xl"
-              loading="lazy"
-            />
+            <div
+              v-for="(item, index) in content.demos.masonry.items"
+              :key="index"
+              class="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-lg transition-all duration-200 cursor-pointer "
+            >
+              <ContentImage
+                :src="item.image.src"
+                :alt="item.image.alt"
+                :width="item.image.width"
+                :height="item.image.height"
+                class="w-full h-auto group-hover:scale-105 transition-transform duration-200 rounded-xl overflow-hidden"
+                loading="lazy"
+              />
 
-            <!-- Pinterest-style overlay on hover -->
-            <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-200" />
-          </div>
-        </ILayoutColumns>
+              <!-- Pinterest-style overlay on hover -->
+              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-200" />
+            </div>
+          </ILayoutColumns>
+        </WipResize>
       </ILayoutStack>
     </ISection>
 

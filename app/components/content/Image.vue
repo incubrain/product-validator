@@ -47,18 +47,16 @@ const computedStyles = computed(() => imageStyles({
 </script>
 
 <template>
-  <div :class="computedStyles.root({ class: [props.ui?.root, $attrs.class] })">
-    <NuxtImg
-      :src="imgSrc"
-      :alt="props.alt"
-      :width="props.width"
-      :height="props.height"
-      :quality="props.quality"
-      :format="props.format"
-      :loading="props.loading"
-      :class="computedStyles.image({ class: props.ui?.image })"
-      @load="handleLoad"
-      @error="handleError"
-    />
-  </div>
+  <NuxtImg
+    :src="imgSrc"
+    :alt="props.alt"
+    :width="props.width"
+    :height="props.height"
+    :quality="props.quality"
+    :format="props.format"
+    :loading="props.loading"
+    :class="computedStyles.root({ class: [props.ui?.root, $attrs.class] })"
+    @load="handleLoad"
+    @error="handleError"
+  />
 </template>
