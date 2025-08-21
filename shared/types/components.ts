@@ -89,7 +89,7 @@ export interface TransformProps {
   ui?: TransformSlots
 }
 
-export interface LanguageSwitcherProps {
+export interface LanguageSwitcherProps extends BaseProps {
   variant?: LanguageSwitcherVariants['variant']
   size?: LanguageSwitcherVariants['size']
   showFlags?: boolean

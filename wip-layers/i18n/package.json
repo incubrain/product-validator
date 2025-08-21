@@ -28,9 +28,10 @@
         "release": "npm run lint && npm run test && npm publish"
     },
     "dependencies": {
-        "@nuxtjs/i18n": "^10.0.4",
+        "@nuxtjs/i18n": "^10.0.6",
         "@nuxtjs/seo": "^3.1.0",
-        "@vueuse/core": "^13.6.0"
+        "@nuxt/content": "^3.6.3",
+        "@vueuse/core": "^13.7.0"
     },
     "peerDependencies": {
         "nuxt": ">=3.12.0"

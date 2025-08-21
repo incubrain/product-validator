@@ -8,10 +8,10 @@
         "preview": "nuxt preview"
     },
     "dependencies": {
-        "@nuxt/ui": "^3.3.0",
-        "@nuxtjs/i18n": "^10.0.4",
+        "@nuxt/ui": "^3.3.2",
+        "@nuxtjs/i18n": "^10.0.6",
         "@nuxtjs/seo": "^3.1.0",
         "@nuxt/content": "^3.6.3",
-        "nuxt": "^4.0.2"
+        "nuxt": "^4.0.3"
     }
 }
