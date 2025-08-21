@@ -9,7 +9,7 @@ export default defineNuxtConfig({
   modules: [
     '@nuxtjs/i18n',
     '@nuxtjs/seo',
-    '@nuxtjs/content',
+    '@nuxt/content',
   ],
 
   // ✅ Plugin registration
