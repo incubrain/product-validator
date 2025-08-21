@@ -1,8 +1,7 @@
 // playground/nuxt.config.ts
-
 import { createResolver } from '@nuxt/kit'
 import { fileURLToPath } from 'node:url'
-import { getBusinessInfo } from '#shared/config/business'
+import { getBusinessInfo } from '../../../shared/config/business'
 
 const business = getBusinessInfo()
 const resolver = createResolver(import.meta.url)

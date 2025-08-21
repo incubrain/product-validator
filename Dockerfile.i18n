@@ -1,0 +1,30 @@
+FROM node:20.19-bookworm AS base
+
+RUN corepack enable && corepack prepare pnpm@9.15.2 --activate
+
+# Build args for Railway
+ARG RAILWAY_DOCKERFILE_PATH
+ARG BUILD_TARGET=main
+ARG NUXT_PUBLIC_SITE_URL
+ARG NUXT_PUBLIC_SITE_NAME
+
+ENV RAILWAY_DOCKERFILE_PATH=$RAILWAY_DOCKERFILE_PATH
+ENV NUXT_PUBLIC_SITE_URL=$NUXT_PUBLIC_SITE_URL
+ENV NUXT_PUBLIC_SITE_NAME=$NUXT_PUBLIC_SITE_NAME
+
+WORKDIR /app
+
+# Copy workspace files
+COPY package.json pnpm-lock.yaml .npmrc tsconfig.json ./
+COPY shared ./shared
+COPY theme ./theme
+
+COPY wip-layers/i18n ./wip-layers/i18n
+RUN pnpm install --frozen-lockfile
+WORKDIR /app/wip-layers/i18n/playground
+RUN pnpm run build
+RUN pnpm prune --production
+WORKDIR /app/wip-layers/i18n/playground/.output
+
+EXPOSE 3000
+CMD ["node", "server/index.mjs"]
