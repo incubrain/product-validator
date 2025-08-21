@@ -1,75 +1,57 @@
-# Nuxt Minimal Starter
+# Nuxt Launch Kit
 
-Look at the [Nuxt documentation](https://nuxt.com/docs/getting-started/introduction) to learn more.
+> **⚠️ Work in Progress** - This template is under active development
 
-## Setup
+A production-ready Nuxt template with layout components and modern tooling to help you ship faster.
 
-Make sure to install dependencies:
+## 🌐 Live Demo
+
+Check out the live showcase at [https://launch-kit.incubrain.org](https://launch-kit.incubrain.org)
+
+## ✨ What's Included
+
+- **Layout Components** - Stack, Grid, Container, ScrollBox, Float, and more
+- **Nuxt 4** - Latest framework features and performance
+- **Tailwind v4** - Cutting-edge CSS engine with Tailwind Variants
+- **Nuxt UI** - Professional component library
+- **TypeScript** - Full type safety throughout
+- **Content Components** - Image optimization, typography, and content blocks
+
+## 🚀 Quick Start
 
 ```bash
-# npm
-npm install
+# Clone the repository
+git clone https://github.com/your-repo/nuxt-launch-kit
+cd nuxt-launch-kit
 
-# pnpm
+# Install dependencies
 pnpm install
 
-# yarn
-yarn install
-
-# bun
-bun install
+# Start development server
+pnpm dev
 ```
 
-## Development Server
+## 📖 Documentation
 
-Start the development server on `http://localhost:3000`:
+Visit [https://launch-kit.incubrain.org](https://launch-kit.incubrain.org) to see component demos and usage examples.
+
+## 🛠 Development
 
 ```bash
-# npm
-npm run dev
-
-# pnpm
+# Development server
 pnpm dev
 
-# yarn
-yarn dev
-
-# bun
-bun run dev
-```
-
-## Production
-
-Build the application for production:
-
-```bash
-# npm
-npm run build
-
-# pnpm
+# Build for production
 pnpm build
 
-# yarn
-yarn build
-
-# bun
-bun run build
-```
-
-Locally preview production build:
-
-```bash
-# npm
-npm run preview
-
-# pnpm
+# Preview production build
 pnpm preview
-
-# yarn
-yarn preview
-
-# bun
-bun run preview
 ```
 
-Check out the [deployment documentation](https://nuxt.com/docs/getting-started/deployment) for more information.
+## 📄 License
+
+MIT License - see [LICENSE](LICENSE) file for details.
+
+---
+
+**Note**: This is a work-in-progress template. Components and APIs may change as we iterate toward a stable release.
