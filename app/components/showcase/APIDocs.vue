@@ -45,12 +45,14 @@ const processedData = computed(() => {
   }
 
   if (props.type === 'slots') {
-    if (!props.tvData.slots) return [{ name: '#default', defaultClasses: '—' }]
+    if (!props.tvData.slots) return [{ name: '#root', defaultClasses: '—' }]
 
-    return Object.entries(props.tvData.slots).map(([name, classes]) => ({
-      name: `#${name}`,
-      defaultClasses: Array.isArray(classes) ? classes.join(' ') : classes || '—',
-    }))
+    return Object.entries(props.tvData.slots)
+      .filter(([name]) => name !== 'base')
+      .map(([name, classes]) => ({
+        name: `#${name}`,
+        defaultClasses: Array.isArray(classes) ? classes.join(' ') : classes || '—',
+      }))
   }
 
   return []

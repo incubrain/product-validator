@@ -34,7 +34,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
       public: {
         incubrain: {
-          debug: true, // Only debug in development
+          debug: process.env.NUXT_PUBLIC_DEBUG === 'true',
         },
       },
     },

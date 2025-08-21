@@ -22,7 +22,7 @@ const originColors = {
   color: { bg: 'bg-rose-800', text: 'text-rose-400', border: 'border-rose-600' },
   responsive: { bg: 'bg-cyan-800', text: 'text-cyan-400', border: 'border-cyan-600' },
   padding: { bg: 'bg-indigo-800', text: 'text-indigo-400', border: 'border-indigo-600' },
-  base: { bg: 'bg-slate-800', text: 'text-slate-400', border: 'border-slate-600' },
+  root: { bg: 'bg-slate-800', text: 'text-slate-400', border: 'border-slate-600' },
 }
 
 // Get current breakpoint
@@ -56,7 +56,7 @@ const classOrigins = computed(() => {
         key,
         value,
         display: `${key}:${value}`,
-        color: originColors[key as keyof typeof originColors] || originColors.base,
+        color: originColors[key as keyof typeof originColors] || originColors.root,
       })
     })
 
@@ -80,8 +80,8 @@ const parseClassesWithColors = (classes: string) => {
   const classArray = classes.split(' ').filter(Boolean)
 
   return classArray.map((cls) => {
-    let origin = 'base'
-    let color = originColors.base
+    let origin = 'root'
+    let color = originColors.root
 
     // Determine origin by class patterns
     if (cls.match(/^(sm|md|lg|xl|2xl):/)) {
@@ -90,9 +90,9 @@ const parseClassesWithColors = (classes: string) => {
     } else if (cls.includes('gap-')) {
       origin = 'gap'
       color = originColors.gap
-    } else if (cls.includes('gap-')) {
-      origin = 'gap'
-      color = originColors.gap
+    } else if (cls.includes('space-')) {
+      origin = 'spacing'
+      color = originColors.spacing
     } else if (cls.match(/^(text-|bg-|border-)/)) {
       origin = 'color'
       color = originColors.color

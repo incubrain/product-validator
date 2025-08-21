@@ -157,6 +157,7 @@ const shouldShowExpand = computed(() => {
 })
 
 const variantValue = computed(() => String(selectedProps.variant || 'default'))
+const { debugEnabled } = useShowcase()
 </script>
 
 <template>
@@ -167,7 +168,10 @@ const variantValue = computed(() => String(selectedProps.variant || 'default'))
       :description="description"
     />
 
-    <ShowcaseTVOutput :tracking-id="generateTrackingId(trackingId!, variantValue, selectedProps)" />
+    <ShowcaseTVOutput
+      v-if="debugEnabled"
+      :tracking-id="generateTrackingId(trackingId!, variantValue, selectedProps)"
+    />
 
     <UCard
       variant="outline"

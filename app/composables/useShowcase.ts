@@ -116,7 +116,8 @@ export const useShowcase = () => {
   const subtitle = computed(() => showcaseData.value.subtitle)
   const description = computed(() => showcaseData.value.description)
   const config = computed(() => showcaseData.value.config)
-  const debugEnabled = computed(() => showcaseData.value.debugEnabled ?? true)
+  const debugEnabled = computed(() => useRuntimeConfig().public.incubrain.debug)
+
   const showDebugVariants = computed(() => showcaseData.value.showDebugVariants ?? false)
 
   return {

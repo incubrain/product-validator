@@ -14,6 +14,7 @@ const {
   subtitle: composableSubtitle,
   config: composableConfig,
   showDebugVariants,
+  debugEnabled,
   toggleDebugVariants,
 } = useShowcase()
 
@@ -48,7 +49,10 @@ useHead({
     <INavHeader />
 
     <!-- ✅ SIMPLE DEBUG TOGGLE -->
-    <div class="fixed bottom-4 right-4 z-50 space-y-2">
+    <div
+      v-if="debugEnabled"
+      class="fixed bottom-4 right-4 z-50 space-y-2"
+    >
       <UButton
         :variant="showDebugVariants ? 'solid' : 'outline'"
         :color="showDebugVariants ? 'primary' : 'neutral'"
@@ -126,7 +130,7 @@ useHead({
       />
 
       <ShowcaseVariantCard
-        :variant-name="componentSlug"
+        variant-name="Tailwind Variant Config"
         language="typescript"
         :description="`${title} component configuration`"
         :code="config.componentData"
