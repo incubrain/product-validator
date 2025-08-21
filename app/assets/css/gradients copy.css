@@ -1,0 +1,101 @@
+@source inline("i-gradient-{flow,radial,vertical,horizontal,conic,mesh,spotlight,shimmer}-{primary,secondary,success,warning,error,info,neutral}");
+@source inline("ig-opacity-{0.18,0.32,0.64,0.8}");
+
+
+@utility ig-x-* {
+  --gradient-x: --value(percentage);
+}
+
+@utility ig-y-* {
+  --gradient-y: --value(percentage);
+}
+
+  @utility ig-opacity-* {
+    --gradient-opacity: --value(number);
+  }
+
+@utility ig-angle-* {
+  --gradient-angle: calc(--value(number) * 1deg);
+}
+
+@utility ig-pos-* {
+  --gradient-position: --value(
+    "center",
+    "top", 
+    "bottom",
+    "left",
+    "right",
+    "top-left",
+    "top-right", 
+    "bottom-left",
+    "bottom-right",
+    [*]
+  );
+}
+
+@utility i-gradient-linear-* {
+  --gradient-from: --value(--color-*);
+  --gradient-to: --value(--color-neutral-700);
+  
+  background: linear-gradient(
+    var(--gradient-angle),
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * var(--gradient-from-stop)), transparent),
+    color-mix(in srgb, var(--gradient-to) calc(var(--gradient-opacity) * var(--gradient-to-stop)), transparent)
+  );
+}
+
+@utility i-gradient-radial-* {
+  --gradient-from: --value(--color-*);
+  
+  background: radial-gradient(
+    var(--gradient-position),
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * var(--gradient-from-stop)), transparent),
+    transparent 70%
+  );
+}
+
+@utility i-gradient-conic-* {
+  --gradient-from: --value(--color-*);
+  --gradient-to: --value(--color-*-700);
+  
+  background: conic-gradient(
+    from var(--gradient-angle) at 50%,
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * var(--gradient-from-stop)), transparent),
+    color-mix(in srgb, var(--gradient-to) calc(var(--gradient-opacity) * var(--gradient-to-stop)), transparent),
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * var(--gradient-from-stop)), transparent)
+  );
+}
+
+@utility i-gradient-mesh-* {
+  --gradient-from: --value(--color-*);
+  --gradient-to: --value(--color-*-700);
+  
+  background: 
+    radial-gradient(at 20% 30%, color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * var(--gradient-from-stop)), transparent) 0px, transparent 60%),
+    radial-gradient(at 80% 70%, color-mix(in srgb, var(--gradient-to) calc(var(--gradient-opacity) * var(--gradient-to-stop)), transparent) 0px, transparent 60%),
+    radial-gradient(at 40% 90%, color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * var(--gradient-from-stop)), transparent) 0px, transparent 60%);
+}
+
+@utility i-gradient-spotlight-* {
+  --gradient-from: --value(--color-*);
+  
+  background: radial-gradient(
+    600px circle at var(--gradient-x) var(--gradient-y),
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * var(--gradient-from-stop)), transparent),
+    transparent 70%
+  );
+}
+
+@utility i-gradient-shimmer-* {
+  --gradient-from: --value(--color-*);
+  
+  background: linear-gradient(
+    90deg,
+    transparent,
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * var(--gradient-from-stop)), transparent),
+    transparent
+  );
+  background-size: 200% 100%;
+  animation: var(--animate-shimmer);
+}
+

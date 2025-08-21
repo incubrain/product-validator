@@ -8,7 +8,7 @@ const backgroundStyles = tv({
   variants: {
     preset: {
       none: {
-        root: '', // No styling when none
+        root: '',
       },
       subtle: {
         root: 'bg-muted/20',

@@ -12,6 +12,8 @@
    NUXT UI GITHUB DARK THEME INTEGRATION
    ======================================== */
 
+   
+
 @theme {
   /* ========================================
      GITHUB DARK THEME COLORS
@@ -149,7 +151,7 @@
 /* ========================================
      GRADIENT DEFAULTS
      ======================================== */
-   --gradient-opacity: 0.2;
+  --gradient-opacity: 0.2;
   --gradient-direction: 135deg;
   --gradient-position: ellipse at center;
   --gradient-from-stop: 30%;
@@ -184,6 +186,8 @@
   --pattern-x: 50%;
   --pattern-y: 50%;
 }
+
+
 
 
 
