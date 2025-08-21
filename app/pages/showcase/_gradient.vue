@@ -1,7 +1,7 @@
 <!-- pages/showcase/gradient.vue -->
 <script setup lang="ts">
-import { ILayoutGradient } from '#components'
-import { gradientData } from '#theme/layout/gradient'
+import { WipGradient } from '#components'
+import { gradientData } from '#theme/wip/gradient'
 
 const { createShowcaseConfig, generateShowcaseData, setShowcaseData } = useShowcase()
 
@@ -9,7 +9,7 @@ const demoStyles = {
   container: 'h-80 rounded-lg overflow-hidden relative',
 }
 
-const gradientConfig = createShowcaseConfig(ILayoutGradient, gradientData, {
+const gradientConfig = createShowcaseConfig(WipGradient, gradientData, {
   variantDescriptions: {
     variant: 'Gradient pattern type',
     intensity: 'Visual intensity level',
@@ -239,7 +239,7 @@ setShowcaseData(generateShowcaseData(gradientConfig))
 
             <!-- ✅ GRADIENT PREVIEW -->
             <div :class="demoStyles.container">
-              <ILayoutGradient
+              <WipGradient
                 v-bind="selectedProps"
                 class="w-full h-full flex items-center justify-center"
               >
@@ -254,7 +254,7 @@ setShowcaseData(generateShowcaseData(gradientConfig))
                     {{ selectedProps.variant }} • {{ selectedProps.intensity }}
                   </div>
                 </div>
-              </ILayoutGradient>
+              </WipGradient>
             </div>
 
             <!-- ✅ VARIANT GUIDANCE -->
@@ -287,7 +287,7 @@ setShowcaseData(generateShowcaseData(gradientConfig))
           </span>
         </div>
         <div :class="demoStyles.container">
-          <ILayoutGradient
+          <WipGradient
             v-bind="variantProps"
             class="w-full h-full flex items-center justify-center opacity-75 hover:opacity-100 transition-opacity"
           >
@@ -302,7 +302,7 @@ setShowcaseData(generateShowcaseData(gradientConfig))
                 {{ variantProps.intensity }}
               </div>
             </div>
-          </ILayoutGradient>
+          </WipGradient>
         </div>
       </div>
     </template>

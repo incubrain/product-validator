@@ -66,8 +66,6 @@ const categoryConfig = {
   },
 }
 
-console.log('🔍 Showcase Routes from Navigation:', showcaseRoutes.value)
-console.log('📁 Grouped Routes:', groupedRoutes.value)
 </script>
 
 <template>

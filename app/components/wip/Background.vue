@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import backgroundStyles from '#theme/layout/background'
+import backgroundStyles from '#theme/wip/background'
 import type { BackgroundProps } from '#shared/types/components'
 
 const props = withDefaults(defineProps<BackgroundProps>(), {
