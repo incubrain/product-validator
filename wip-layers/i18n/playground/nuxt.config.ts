@@ -17,7 +17,7 @@ export default defineNuxtConfig({
   ],
 
   site: {
-    url: `https://${business.name.toLowerCase()}.org`,
+    url: import.meta.dev ? `http://${business.url}` : `https://i18n.${business.url}`,
     name: business.name,
     description: business.description,
   },
@@ -133,7 +133,7 @@ export default defineNuxtConfig({
     },
     skipSettingLocaleOnNavigate: false,
     debug: true,
-    baseUrl: 'http://localhost:3000',
+    baseUrl: import.meta.dev ? `http://${business.url}` : `https://i18n.${business.url}`,
   },
 
   icon: {

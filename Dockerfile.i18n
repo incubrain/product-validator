@@ -17,7 +17,7 @@ COPY wip-layers/i18n ./wip-layers/i18n
 RUN pnpm install --frozen-lockfile
 
 WORKDIR /app/wip-layers/i18n
-RUN pnpm install --frozen-lockfile
+RUN pnpm install --frozen-lockfile && pnpm nuxt prepare
 WORKDIR /app/wip-layers/i18n/playground
 RUN pnpm install --frozen-lockfile
 RUN pnpm run build

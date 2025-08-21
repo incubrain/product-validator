@@ -2,6 +2,7 @@
 export interface BusinessConfig {
   business: {
     name: string
+    url: string
     tagline: string
     description: string
     legal_name: string
@@ -67,6 +68,7 @@ export interface BusinessConfig {
 export const businessConfig: BusinessConfig = {
   business: {
     name: 'Incubrain',
+    url: import.meta.dev ? 'localhost:3000' : 'incubrain.org',
     tagline: 'AI-Native Development Team',
     description: 'We build AI automation that pays for itself',
     legal_name: 'Incubrain Private Limited',
