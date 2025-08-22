@@ -73,35 +73,19 @@ const content = {
         {
           image: { src: '/images/demo/demo-9.jpg', alt: 'Tall image', width: 200, height: 380 },
         },
-      ],
-    },
-    scrollBox: {
-      title: 'Scroll Box Demo',
-      components: ['ILayoutScrollBox', 'ILayoutCluster'],
-      description: 'Horizontal scrolling with snap behavior for image galleries',
-      content: Array.from({ length: 8 }, (_, i) => ({
-        id: i + 1,
-        title: `Gallery ${i + 1}`,
-        image: { src: `/images/demo/demo-${i + 1}.jpg`, alt: `Gallery ${i + 1} preview` },
-      })),
-    },
-
-    float: {
-      title: 'Float Layout Demo',
-      components: ['ILayoutFloat', 'ContentText'],
-      description: 'Text wrapping around floated elements with responsive behavior',
-      content: {
-        text: 'lorem_300',
-        floatedElement: {
-          title: 'Floated Content',
-          image: { src: '/images/demo/demo-1.jpg', alt: 'Float demo' },
+        {
+          image: { src: '/images/demo/demo-10.jpg', alt: 'Tall image', width: 200, height: 160 },
         },
-      },
-    },
-    codeExample: {
-      title: 'Real Implementation Code',
-      components: ['ContentProsePre', 'ILayoutStack'],
-      description: 'See how easy it is to build the masonry layout above',
+        {
+          image: { src: '/images/demo/demo-11.jpg', alt: 'Tall image', width: 200, height: 320 },
+        },
+        {
+          image: { src: '/images/demo/demo-12.jpg', alt: 'Tall image', width: 200, height: 440 },
+        },
+        {
+          image: { src: '/images/demo/demo-13.jpg', alt: 'Tall image', width: 200, height: 480 },
+        },
+      ],
       code: `<template>
   <ILayoutColumns variant="masonry" gap="md" spacing="md">
     <div
@@ -118,6 +102,40 @@ const content = {
   </ILayoutColumns>
 </template>
 `,
+    },
+    float: {
+      title: 'Float Layout Demo',
+      components: ['ILayoutFloat', 'ContentText'],
+      description: 'Text wrapping around floated elements with responsive behavior',
+      code: `<template>
+  <div class="p-4">
+    <ILayoutFloat
+      variant="right"
+      clear="none"
+      responsive="stack-mobile"
+    >
+      <ContentImage
+        src="/images/demo/demo-1.jpg"
+        alt="Float demo"
+        variant="video"
+        :width="320"
+        class="rounded shadow-sm"
+      />
+    </ILayoutFloat>
+
+    <ContentText
+      variant="justified"
+      text="lorem_300"
+    />
+  </div>
+</template>`,
+      content: {
+        text: 'lorem_300',
+        floatedElement: {
+          title: 'Floated Content',
+          image: { src: '/images/demo/demo-1.jpg', alt: 'Float demo', width: 300, height: 400 },
+        },
+      },
     },
   },
 
@@ -343,61 +361,66 @@ useSeoMeta({
       </ILayoutStack>
     </ISection>
 
-    <!-- Masonry Demo Section -->
+    <!-- Replace both the Masonry Demo Section and the Code Example Section with this single section -->
     <ISection variant="default">
       <ILayoutStack gap="xl">
         <!-- Section header with component badges -->
         <div class="relative">
-          <div class="absolute top-0 right-0 flex gap-2">
-            <UBadge
-              variant="soft"
-              color="info"
-              size="xs"
-            >
-              ILayoutColumns
-            </UBadge>
-            <UBadge
-              variant="soft"
-              color="info"
-              size="xs"
-            >
-              ILayoutStack
-            </UBadge>
-          </div>
-
           <ContentTitle
-            variant="center"
+            variant="left"
             :heading="{ text: content.demos.masonry.title, level: 2 }"
             :subtitle="{ text: content.demos.masonry.description }"
-          />
+          >
+            <template #before>
+              <div class="flex gap-2 text-xs">
+                <span>COMPONENT: </span>
+                <UBadge
+                  variant="soft"
+                  color="info"
+                  size="xs"
+                >
+                  ILayoutColumns
+                </UBadge>
+              </div>
+            </template>
+          </ContentTitle>
         </div>
 
-        <!-- Masonry layout demo -->
-        <WipResize>
-          <ILayoutColumns
-            variant="auto"
-            gap="sm"
-            spacing="sm"
-          >
-            <div
-              v-for="(item, index) in content.demos.masonry.items"
-              :key="index"
-              class="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-lg transition-all duration-200 cursor-pointer "
+        <!-- Combined Resizable Demo + Code -->
+        <WipResizeCode
+          :code="content.demos.masonry.code"
+          language="vue"
+          filename="ILayoutColumns.vue"
+          theme="mac"
+          :preview-height="500"
+          :min-width="300"
+        >
+          <template #preview>
+            <ILayoutColumns
+              variant="auto"
+              gap="sm"
+              spacing="sm"
             >
-              <ContentImage
-                :src="item.image.src"
-                :alt="item.image.alt"
-                :width="item.image.width"
-                :height="item.image.height"
-                class="w-full h-auto group-hover:scale-105 transition-transform duration-200 rounded-xl overflow-hidden"
-                loading="lazy"
-              />
+              <div
+                v-for="(item, index) in content.demos.masonry.items"
+                :key="index"
+                class="group relative overflow-hidden rounded-xl shadow-sm hover:shadow-lg transition-all duration-200 cursor-pointer"
+              >
+                <ContentImage
+                  :src="item.image.src"
+                  :alt="item.image.alt"
+                  :width="item.image.width"
+                  :height="item.image.height"
+                  class="w-full h-auto group-hover:scale-105 transition-transform duration-200 rounded-xl overflow-hidden"
+                  loading="lazy"
+                />
 
-              <!-- Pinterest-style overlay on hover -->
-              <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-200" />
-            </div>
-          </ILayoutColumns>
-        </WipResize>
+                <!-- Pinterest-style overlay on hover -->
+                <div class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors duration-200" />
+              </div>
+            </ILayoutColumns>
+          </template>
+        </WipResizeCode>
       </ILayoutStack>
     </ISection>
 
@@ -405,161 +428,59 @@ useSeoMeta({
       <ILayoutStack gap="xl">
         <!-- Section header with component badges -->
         <div class="relative">
-          <div class="absolute top-0 right-0 flex gap-2">
-            <UBadge
-              variant="soft"
-              color="secondary"
-              size="xs"
-            >
-              ContentProsePre
-            </UBadge>
-            <UBadge
-              variant="soft"
-              color="secondary"
-              size="xs"
-            >
-              ILayoutStack
-            </UBadge>
-          </div>
-
           <ContentTitle
-            variant="center"
-            :heading="{ text: content.demos.codeExample.title, level: 2 }"
-            :subtitle="{ text: content.demos.codeExample.description }"
-          />
-        </div>
-
-        <!-- Code example -->
-        <ContentProsePre
-          :code="content.demos.codeExample.code"
-          language="vue"
-          filename="MasonryLayout.vue"
-          theme="mac"
-        />
-      </ILayoutStack>
-    </ISection>
-
-    <!-- ScrollBox Demo Section -->
-    <ISection variant="default">
-      <ILayoutStack gap="xl">
-        <!-- Section header -->
-        <div class="relative">
-          <div class="absolute top-0 right-0 flex gap-2">
-            <UBadge
-              variant="soft"
-              color="warning"
-              size="xs"
-            >
-              ILayoutScrollBox
-            </UBadge>
-            <UBadge
-              variant="soft"
-              color="warning"
-              size="xs"
-            >
-              ILayoutCluster
-            </UBadge>
-          </div>
-
-          <ContentTitle
-            variant="center"
-            :heading="{ text: content.demos.scrollBox.title, level: 2 }"
-            :subtitle="{ text: content.demos.scrollBox.description }"
-          />
-        </div>
-
-        <!-- Horizontal carousel -->
-        <ILayoutScrollBox
-          direction="x"
-          height="auto"
-          snap="x-proximity"
-          padding="lg"
-          gap="sm"
-        >
-          <div
-            v-for="item in content.demos.scrollBox.content"
-            :key="item.id"
-            class="flex-shrink-0 w-80 snap-center p-4 bg-elevated/50 rounded-lg border border-default"
-          >
-            <ILayoutStack gap="sm">
-              <ContentImage
-                :src="item.image.src"
-                :alt="item.image.alt"
-                aspect-ratio="square"
-                :height="200"
-                :width="200"
-                class="rounded"
-              />
-              <ContentHeading
-                :level="4"
-                :text="item.title"
-              />
-            </ILayoutStack>
-          </div>
-        </ILayoutScrollBox>
-      </ILayoutStack>
-    </ISection>
-
-    <!-- Add Float Demo Section -->
-    <ISection variant="default">
-      <ILayoutStack gap="xl">
-        <!-- Section header -->
-        <div class="relative">
-          <div class="absolute top-0 right-0 flex gap-2">
-            <UBadge
-              variant="soft"
-              color="info"
-              size="xs"
-            >
-              ILayoutFloat
-            </UBadge>
-            <UBadge
-              variant="soft"
-              color="info"
-              size="xs"
-            >
-              ContentText
-            </UBadge>
-          </div>
-
-          <ContentTitle
-            variant="center"
+            variant="left"
             :heading="{ text: content.demos.float.title, level: 2 }"
             :subtitle="{ text: content.demos.float.description }"
-          />
-        </div>
-
-        <!-- Float demo -->
-        <div class="relative min-h-[400px] p-6 bg-elevated/50 rounded-lg border border-default">
-          <ILayoutFloat
-            variant="right"
-            clear="none"
-            responsive="stack-mobile"
-            class="relative z-10"
           >
-            <ILayoutStack
-              gap="sm"
-              class="w-84 aspect-video p-4 bg-secondary/10 border border-secondary/20 rounded-lg"
-            >
-              <ContentImage
-                :src="content.demos.float.content.floatedElement.image.src"
-                :alt="content.demos.float.content.floatedElement.image.alt"
-                aspect-ratio="video"
-                class="rounded"
-              />
-              <ContentHeading
-                class="text-center"
-                :level="5"
-                :text="content.demos.float.content.floatedElement.title"
-              />
-            </ILayoutStack>
-          </ILayoutFloat>
-
-          <ContentText
-            variant="justified"
-            :text="content.demos.float.content.text"
-          />
+            <template #before>
+              <div class="flex gap-2 text-xs">
+                <span>COMPONENT: </span>
+                <UBadge
+                  variant="soft"
+                  color="info"
+                  size="xs"
+                >
+                  ILayoutFloat
+                </UBadge>
+              </div>
+            </template>
+          </ContentTitle>
         </div>
+
+        <!-- Combined Resizable Demo + Code -->
+        <WipResizeCode
+          :code="content.demos.float.code"
+          language="vue"
+          filename="ILayoutFloat.vue"
+          theme="mac"
+          :preview-height="400"
+          :min-width="300"
+        >
+          <template #preview>
+            <div class="p-4 bg-background min-h-[350px]">
+              <ILayoutFloat
+                variant="right"
+                clear="none"
+                in-container
+                responsive="stack-mobile"
+              >
+                <ContentImage
+                  :src="content.demos.float.content.floatedElement.image.src"
+                  :alt="content.demos.float.content.floatedElement.image.alt"
+                  variant="video"
+                  :width="320"
+                  class="rounded shadow-sm"
+                />
+              </ILayoutFloat>
+
+              <ContentText
+                variant="justified"
+                :text="content.demos.float.content.text"
+              />
+            </div>
+          </template>
+        </WipResizeCode>
       </ILayoutStack>
     </ISection>
 

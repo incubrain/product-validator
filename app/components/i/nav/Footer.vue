@@ -119,10 +119,10 @@ const getCTAUrl = (action: string) => {
             class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0"
           >
             <p class="text-sm text-muted text-center sm:text-left">
-              © 2023-{{ currentYear }} {{ businessConfig.business.legal_name }} All rights reserved.
+              © 2023-{{ currentYear }} {{ businessConfig.business.legal_name.toUpperCase() }}.
             </p>
             <p class="text-sm text-muted text-center sm:text-right font-medium">
-              Build the future or be left behind.
+              Let's build the future together.
             </p>
           </div>
         </div>

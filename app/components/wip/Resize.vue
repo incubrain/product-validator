@@ -72,23 +72,22 @@ const handleMouseUp = () => {
 <template>
   <div
     ref="wrapperRef"
-    class="relative w-full bg-elevated border border-default rounded-lg p-2 flex"
+    class="relative w-full flex"
   >
     <div
       ref="containerRef"
-      class="relative flex justify-between rounded-l-lg bg-muted @container py-6 pl-6 max-h-[640px] overflow-hidden"
-      :class="{ 'border-primary/50': isDragging }"
+      class="relative flex justify-between  bg-muted @container py-3 pl-3 rounded-l-lg"
     >
       <div class="w-full">
         <slot />
       </div>
       <!-- Drag handle -->
     </div>
-    <div class="pointer-events-none flex min-h-full w-10 bg-muted justify-center items-center rounded-r-lg">
+    <div class="pointer-events-none flex min-h-full w-6 bg-muted justify-center items-center rounded-r-lg">
       <div
         title="Drag to resize"
-        class="pointer-events-auto h-15 w-3 cursor-ew-resize rounded-full bg-secondary/20 hover:bg-secondary/40 transition-colors"
-        :class="{ 'bg-primary/40': isDragging }"
+        class="pointer-events-auto h-12 w-2.5 cursor-ew-resize rounded-full bg-neutral-200/20 hover:bg-primary/20 hover:h-18 transition-colors"
+        :class="{ 'bg-primary/40 h-18': isDragging }"
         @mousedown="handleMouseDown"
       />
     </div>
