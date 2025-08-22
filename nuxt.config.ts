@@ -185,13 +185,6 @@ export default defineNuxtConfig({
     },
   },
 
-  image: {
-    domains: ['picsum.photos'],
-    alias: {
-      picsum: 'https://picsum.photos',
-    },
-  },
-
   shiki: {
     defaultTheme: 'vitesse-dark',
     defaultLang: 'typescript',

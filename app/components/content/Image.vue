@@ -33,9 +33,7 @@ const handleLoad = () => {
 
 const handleError = () => {
   if (!hasError.value) {
-    const width = props.width || 800
-    const height = props.height || 400
-    imgSrc.value = `/picsum/seed/fallback-${width}x${height}/${width}/${height}.webp`
+    imgSrc.value = `/images/demo/demo-1.jpg`
     hasError.value = true
   }
 }

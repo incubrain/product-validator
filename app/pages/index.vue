@@ -47,31 +47,31 @@ const content = {
       description: 'Pinterest-style masonry layout with varied image heights',
       items: [
         {
-          image: { src: '/picsum/seed/masonry-1/200/400.webp', alt: 'Tall image', width: 200, height: 400 },
+          image: { src: '/images/demo/demo-1.jpg', alt: 'Tall image', width: 200, height: 400 },
         },
         {
-          image: { src: '/picsum/seed/masonry-2/200/200.webp', alt: 'Short image', width: 200, height: 200 },
+          image: { src: '/images/demo/demo-2.jpg', alt: 'Short image', width: 200, height: 200 },
         },
         {
-          image: { src: '/picsum/seed/masonry-3/200/500.webp', alt: 'Very tall image', width: 200, height: 500 },
+          image: { src: '/images/demo/demo-3.jpg', alt: 'Very tall image', width: 200, height: 500 },
         },
         {
-          image: { src: '/picsum/seed/masonry-4/200/200.webp', alt: 'Medium image', width: 200, height: 250 },
+          image: { src: '/images/demo/demo-4.jpg', alt: 'Medium image', width: 200, height: 250 },
         },
         {
-          image: { src: '/picsum/seed/masonry-5/200/300.webp', alt: 'Tall image', width: 200, height: 350 },
+          image: { src: '/images/demo/demo-5.jpg', alt: 'Tall image', width: 200, height: 350 },
         },
         {
-          image: { src: '/picsum/seed/masonry-6/200/200.webp', alt: 'Short image', width: 200, height: 180 },
+          image: { src: '/images/demo/demo-6.jpg', alt: 'Short image', width: 200, height: 180 },
         },
         {
-          image: { src: '/picsum/seed/masonry-7/200/400.webp', alt: 'Very tall image', width: 200, height: 450 },
+          image: { src: '/images/demo/demo-7.jpg', alt: 'Very tall image', width: 200, height: 450 },
         },
         {
-          image: { src: '/picsum/seed/masonry-8/200/200.webp', alt: 'Short image', width: 200, height: 220 },
+          image: { src: '/images/demo/demo-8.jpg', alt: 'Short image', width: 200, height: 220 },
         },
         {
-          image: { src: '/picsum/seed/masonry-9/200/400.webp', alt: 'Tall image', width: 200, height: 380 },
+          image: { src: '/images/demo/demo-9.jpg', alt: 'Tall image', width: 200, height: 380 },
         },
       ],
     },
@@ -82,7 +82,7 @@ const content = {
       content: Array.from({ length: 8 }, (_, i) => ({
         id: i + 1,
         title: `Gallery ${i + 1}`,
-        image: { src: `/picsum/seed/carousel-${i + 1}/400/300`, alt: `Gallery ${i + 1} preview` },
+        image: { src: `/images/demo/demo-${i + 1}.jpg`, alt: `Gallery ${i + 1} preview` },
       })),
     },
 
@@ -94,7 +94,7 @@ const content = {
         text: 'lorem_300',
         floatedElement: {
           title: 'Floated Content',
-          image: { src: '/picsum/seed/float-demo/300/200', alt: 'Float demo' },
+          image: { src: '/images/demo/demo-1.jpg', alt: 'Float demo' },
         },
       },
     },
