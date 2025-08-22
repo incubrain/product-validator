@@ -1,132 +1,96 @@
 <script setup lang="ts">
+import { patternStyles, patternData } from '#theme/wip/pattern'
+import type { PatternVariants } from '#theme/wip/pattern'
+
 type ColorShade = '50' | '100' | '200' | '300' | '400' | '500' | '600' | '700' | '800' | '900' | '950'
 type ColorName = 'primary' | 'secondary' | 'success' | 'warning' | 'error' | 'info' | 'neutral'
 type FullColor = `${ColorName}-${ColorShade}` | ColorName
 
 interface Props {
-  // SIMPLIFIED: Only 8 core patterns
-  variant?: 'dots' | 'grid' | 'plus' | 'diagonal-lines' | 'noise' | 'triangles' | 'pyramids' | 'circuit' | 'hexagon'
-
-  // Enhanced color control (like gradients)
+  variant?: PatternVariants['variant']
+  intensity?: PatternVariants['intensity']
+  direction?: PatternVariants['direction']
+  size?: PatternVariants['size']
+  spacing?: PatternVariants['spacing']
+  stroke?: PatternVariants['stroke']
+  dotSize?: PatternVariants['dotSize']
+  x?: PatternVariants['x']
+  y?: PatternVariants['y']
   from?: FullColor
   to?: FullColor
-
-  // Essential positioning and direction
-  direction?: string | number // For diagonal patterns
-  x?: string | number // X positioning for positioned patterns
-  y?: string | number // Y positioning for positioned patterns
-
-  // Size/spacing control
-  size?: number | string
-  spacing?: number | string
-  stroke?: number | string
-  dotSize?: number | string
-
-  // Intensity presets (for quick styling)
-  intensity?: 'subtle' | 'medium' | 'strong'
-  opacity?: number | string
+  ui?: { root?: string }
+  trackingId?: string
 }
 
 const props = withDefaults(defineProps<Props>(), {
   variant: 'dots',
-  from: 'primary',
-  to: 'secondary',
   intensity: 'medium',
+  direction: 'ne',
+  size: 'md',
+  spacing: 'normal',
+  stroke: 'normal',
+  dotSize: 'sm',
+  x: 'center',
+  y: 'center',
+  from: 'primary-500',
+  to: undefined,
 })
 
-// Parse color to CSS variable
-const parseColor = (color: FullColor) => {
-  return color.includes('-') ? `var(--ui-color-${color})` : `var(--ui-color-${color}-500)`
-}
+// Dev feedback using validateProps
+const { $development } = useNuxtApp()
+const isDev = computed(() => $development || import.meta.dev)
 
-// Generate smart secondary color default
-const generateSmartSecondary = (fromColor: FullColor): string => {
-  const baseColor = fromColor.includes('-') ? fromColor.split('-')[0] : fromColor
-  const fromShade = fromColor.includes('-') ? parseInt(fromColor.split('-')[1]) : 500
+const propValidation = computed(() => {
+  if (!isDev.value) return { unused: [], hasIssues: false, relevantProps: [] }
 
-  // Intensity-based secondary generation
-  const intensityOffset = {
-    subtle: 100,
-    medium: 200,
-    strong: 300,
-  }
-
-  const targetShade = Math.min(950, fromShade + intensityOffset[props.intensity])
-  return `var(--ui-color-${baseColor}-${targetShade})`
-}
-
-// Intensity-based opacity mapping
-const getIntensityOpacity = () => {
-  if (typeof props.opacity === 'number') return `${props.opacity}%`
-  if (typeof props.opacity === 'string') return props.opacity
-
-  const intensityMap = {
-    subtle: '10%',
-    medium: '20%',
-    strong: '35%',
-  }
-  return intensityMap[props.intensity]
-}
-
-// Format direction value
-const formatDirection = (direction: string | number | undefined): string => {
-  if (direction === undefined || direction === null) return '45deg'
-  if (typeof direction === 'number') return `${direction}deg`
-  return direction
-}
-
-// Format position values
-const formatPosition = (pos: string | number | undefined, fallback: string): string => {
-  if (pos === undefined || pos === null) return fallback
-  if (typeof pos === 'number') return `${pos}%`
-  return pos
-}
-
-// Computed CSS variables for dynamic control (consistent with gradients)
-const patternFrom = computed(() => parseColor(props.from))
-const patternTo = computed(() => props.to ? parseColor(props.to) : generateSmartSecondary(props.from))
-const patternOpacity = computed(() => getIntensityOpacity())
-const patternSize = computed(() =>
-  typeof props.size === 'number' ? `${props.size}px` : (props.size || '60px'),
-)
-const patternSpacing = computed(() =>
-  typeof props.spacing === 'number' ? `${props.spacing}px` : (props.spacing || '24px'),
-)
-const patternDirection = computed(() => formatDirection(props.direction))
-const patternX = computed(() => formatPosition(props.x, '50%'))
-const patternY = computed(() => formatPosition(props.y, '50%'))
-const patternStroke = computed(() =>
-  typeof props.stroke === 'number' ? `${props.stroke}px` : props.stroke,
-)
-const patternDotSize = computed(() =>
-  typeof props.dotSize === 'number' ? `${props.dotSize}px` : props.dotSize,
-)
-
-// Generate base CSS class
-const baseClass = computed(() => {
-  const classes = [`i-pattern-${props.variant} w-full h-80 flex justify-center items-center`]
-  return classes.join(' ')
+  return validateProps(
+    props,
+    props.variant,
+    patternData.coreData.propMappings || {},
+  )
 })
+
+// TV with all variants
+const ui = tvComputed(() => patternStyles({
+  variant: props.variant,
+  intensity: props.intensity,
+  direction: props.direction,
+  size: props.size,
+  spacing: props.spacing,
+  stroke: props.stroke,
+  dotSize: props.dotSize,
+  x: props.x,
+  y: props.y,
+}), props.trackingId)
+
+const toCssToken = (c: FullColor) =>
+  c.includes('-') ? `var(--ui-color-${c})` : `var(--ui-color-${c}-500)`
+
+const fromColor = computed(() => toCssToken(props.from as FullColor))
+
+const toColor = computed(() => {
+  if (props.to) return toCssToken(props.to as FullColor)
+  const base = props.from.includes('-') ? props.from.split('-')[0] : props.from
+  const fromShade = props.from.includes('-') ? parseInt(props.from.split('-')[1] ?? '500') : 500
+  const targetShade = Math.min(950, fromShade + 200)
+  return `var(--ui-color-${base}-${targetShade})`
+})
+
+const rootElement = ref<HTMLElement>()
 </script>
 
 <template>
-  <div :class="[baseClass, $attrs.class]">
+  <div
+    ref="rootElement"
+    :class="ui.root({ class: [props.ui?.root, $attrs.class as string] })"
+  >
     <slot />
   </div>
 </template>
 
 <style scoped>
-/* Override pattern variables with component props - consistent naming */
 div[class*="i-pattern-"] {
-  --pattern-from: v-bind(patternFrom);
-  --pattern-to: v-bind(patternTo);
-  --pattern-opacity: v-bind(patternOpacity);
-  --pattern-size: v-bind(patternSize);
-  --pattern-spacing: v-bind(patternSpacing);
-  --pattern-direction: v-bind(patternDirection);
-  --pattern-x: v-bind(patternX);
-  --pattern-y: v-bind(patternY);
-  --pattern-stroke: v-bind(patternStroke);
-  --pattern-dot-size: v-bind(patternDotSize);
+  --pattern-from: v-bind(fromColor);
+  --pattern-to: v-bind(toColor);
 }
 </style>

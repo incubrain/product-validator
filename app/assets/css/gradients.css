@@ -1,66 +1,18 @@
 /* Remove old individual utilities, replace with base + specific pattern */
 @source inline("i-gradient-{linear,radial,conic,mesh,spotlight,shimmer}-{primary,secondary,success,warning,error,info,neutral}");
 
-/* Base gradient utility with all variants */
-@utility i-gradient {
-  /* Default fallbacks */
-  --gradient-opacity: 0.32;
-  --gradient-angle: 135deg;
-  --gradient-x: 50%;
-  --gradient-y: 50%;
-  --gradient-position: center;
-  
-  /* Intensity variants */
-  @variant data-[intensity="subtle"] { --gradient-opacity: 0.18; }
-  @variant data-[intensity="medium"] { --gradient-opacity: 0.32; }
-  @variant data-[intensity="strong"] { --gradient-opacity: 0.64; }
-  @variant data-[intensity="intense"] { --gradient-opacity: 0.8; }
-  
-  /* Angle variants */
-  @variant data-[angle="0"] { --gradient-angle: 0deg; }
-  @variant data-[angle="45"] { --gradient-angle: 45deg; }
-  @variant data-[angle="90"] { --gradient-angle: 90deg; }
-  @variant data-[angle="135"] { --gradient-angle: 135deg; }
-  @variant data-[angle="180"] { --gradient-angle: 180deg; }
-  @variant data-[angle="225"] { --gradient-angle: 225deg; }
-  @variant data-[angle="270"] { --gradient-angle: 270deg; }
-  @variant data-[angle="315"] { --gradient-angle: 315deg; }
-  
-  /* Position variants */
-  @variant data-[position="center"] { --gradient-position: center; }
-  @variant data-[position="top"] { --gradient-position: top; }
-  @variant data-[position="bottom"] { --gradient-position: bottom; }
-  @variant data-[position="left"] { --gradient-position: left; }
-  @variant data-[position="right"] { --gradient-position: right; }
-  @variant data-[position="top-left"] { --gradient-position: top left; }
-  @variant data-[position="top-right"] { --gradient-position: top right; }
-  @variant data-[position="bottom-left"] { --gradient-position: bottom left; }
-  @variant data-[position="bottom-right"] { --gradient-position: bottom right; }
-  
-  /* X positioning */
-  @variant data-[x="0"] { --gradient-x: 0%; }
-  @variant data-[x="25"] { --gradient-x: 25%; }
-  @variant data-[x="50"] { --gradient-x: 50%; }
-  @variant data-[x="75"] { --gradient-x: 75%; }
-  @variant data-[x="100"] { --gradient-x: 100%; }
-  
-  /* Y positioning */
-  @variant data-[y="0"] { --gradient-y: 0%; }
-  @variant data-[y="25"] { --gradient-y: 25%; }
-  @variant data-[y="50"] { --gradient-y: 50%; }
-  @variant data-[y="75"] { --gradient-y: 75%; }
-  @variant data-[y="100"] { --gradient-y: 100%; }
-}
+/* Remove old individual utilities, replace with base + specific pattern */
+@source inline("i-gradient-{linear,radial,conic,mesh,spotlight,shimmer}-{primary,secondary,success,warning,error,info,neutral}");
 
-/* Specific gradient types */
+/* 🔥 IMPROVED: Better color mixing and smoother transitions */
+
 @utility i-gradient-linear-* {
   --gradient-from: --value(--color-*);
-  --gradient-to: --value(--color-*-700);
   
   background: linear-gradient(
-    var(--gradient-angle),
-    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * 100%), transparent),
-    color-mix(in srgb, var(--gradient-to) calc(var(--gradient-opacity) * 100%), transparent)
+    var(--gradient-angle, 135deg),
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity, 0.2) * 100%), transparent) 0%,
+    color-mix(in srgb, var(--gradient-to, var(--gradient-from)) calc(var(--gradient-opacity, 0.2) * 80%), transparent) 100%
   );
 }
 
@@ -68,40 +20,58 @@
   --gradient-from: --value(--color-*);
   
   background: radial-gradient(
-    circle at var(--gradient-position),
-    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * 100%), transparent),
-    transparent 70%
+    ellipse 800px 600px at var(--gradient-position, center),
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity, 0.2) * 100%), transparent) 0%,
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity, 0.2) * 40%), transparent) 50%,
+    transparent 80%
   );
 }
 
 @utility i-gradient-conic-* {
   --gradient-from: --value(--color-*);
-  --gradient-to: --value(--color-*-700);
   
   background: conic-gradient(
-    from var(--gradient-angle) at 50%,
-    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * 100%), transparent),
-    color-mix(in srgb, var(--gradient-to) calc(var(--gradient-opacity) * 100%), transparent),
-    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * 100%), transparent)
+    from var(--gradient-angle, 0deg) at var(--gradient-x, 50%) var(--gradient-y, 50%),
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity, 0.2) * 100%), transparent) 0deg,
+    color-mix(in srgb, var(--gradient-to, var(--gradient-from)) calc(var(--gradient-opacity, 0.2) * 80%), transparent) 120deg,
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity, 0.2) * 60%), transparent) 240deg,
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity, 0.2) * 100%), transparent) 360deg
   );
 }
 
 @utility i-gradient-mesh-* {
   --gradient-from: --value(--color-*);
-  --gradient-to: --value(--color-*-700);
   
   background: 
-    radial-gradient(at 20% 30%, color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * 100%), transparent) 0px, transparent 60%),
-    radial-gradient(at 80% 70%, color-mix(in srgb, var(--gradient-to) calc(var(--gradient-opacity) * 100%), transparent) 0px, transparent 60%),
-    radial-gradient(at 40% 90%, color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * 100%), transparent) 0px, transparent 60%);
+    radial-gradient(
+      circle at 15% 25%, 
+      color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity, 0.2) * 100%), transparent) 0%, 
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 85% 75%, 
+      color-mix(in srgb, var(--gradient-to, var(--gradient-from)) calc(var(--gradient-opacity, 0.2) * 90%), transparent) 0%, 
+      transparent 50%
+    ),
+    radial-gradient(
+      circle at 45% 85%, 
+      color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity, 0.2) * 70%), transparent) 0%, 
+      transparent 40%
+    ),
+    radial-gradient(
+      circle at 75% 15%, 
+      color-mix(in srgb, var(--gradient-to, var(--gradient-from)) calc(var(--gradient-opacity, 0.2) * 60%), transparent) 0%, 
+      transparent 45%
+    );
 }
 
 @utility i-gradient-spotlight-* {
   --gradient-from: --value(--color-*);
   
   background: radial-gradient(
-    600px circle at var(--gradient-x) var(--gradient-y),
-    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * 100%), transparent),
+    circle 1000px at var(--gradient-x, 50%) var(--gradient-y, 50%),
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity, 0.2) * 100%), transparent) 0%,
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity, 0.2) * 30%), transparent) 40%,
     transparent 70%
   );
 }
@@ -111,9 +81,11 @@
   
   background: linear-gradient(
     90deg,
-    transparent,
-    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity) * 100%), transparent),
-    transparent
+    transparent 0%,
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity, 0.2) * 60%), transparent) 30%,
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity, 0.2) * 100%), transparent) 50%,
+    color-mix(in srgb, var(--gradient-from) calc(var(--gradient-opacity, 0.2) * 60%), transparent) 70%,
+    transparent 100%
   );
   background-size: 200% 100%;
   animation: var(--animate-shimmer);

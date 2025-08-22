@@ -4,9 +4,9 @@
 @source "../../../theme";
 @source "../../../shared/config/theme.ts";
 
-@reference './keyframes';
-@reference './patterns';
-@reference './gradients';
+@reference './keyframes.css';
+@reference './patterns.css';
+@reference './gradients.css';
 
 /* ========================================
    NUXT UI GITHUB DARK THEME INTEGRATION
@@ -121,18 +121,6 @@
 
   /* Legend styling */
   --vis-legend-label-color: var(--ui-text-toned) !important;
-  /* ADDED FROM ROOT */
-
-  --gradient-neural-from: var(--color-emerald-950);
-  --gradient-neural-via: var(--color-blue-950);
-  --gradient-neural-to: var(--color-purple-950);
-
-  --gradient-quantum-from: var(--color-emerald-900);
-  --gradient-quantum-via: var(--ui-bg-elevated);
-  --gradient-quantum-to: var(--color-blue-950);
-
-  --gradient-cyber-center: var(--color-emerald-500);
-  --gradient-cyber-mid: var(--color-blue-500);
 
   /* Custom typography (can't reproduce in Nuxt UI) */
   --font-heading: 'Orbitron', sans-serif;
@@ -156,18 +144,13 @@
   --gradient-position: ellipse at center;
   --gradient-from-stop: 30%;
   --gradient-to-stop: 25%;
+  --gradient-from: 'primary-500';
+  --gradient-to: 'info-800';
   --gradient-via-stop: 20%;
   --gradient-angle: 0deg;
   --gradient-x: 50%;
   --gradient-y: 50%;
   
-  /* Default intensity sets */
-  --gradient-subtle-from: 15%;
-  --gradient-subtle-to: 10%;
-  --gradient-medium-from: 30%;
-  --gradient-medium-to: 25%;
-  --gradient-strong-from: 50%;
-  --gradient-strong-to: 40%;
 
 
   
