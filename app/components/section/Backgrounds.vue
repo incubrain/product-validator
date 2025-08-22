@@ -20,32 +20,20 @@ const patternConfig = {
 <template>
   <div class="max-w-7xl mx-auto p-8 space-y-12">
     <!-- Header -->
-    <div class="text-center space-y-4">
-      <h2 class="text-3xl font-bold text-foreground">
-        Layered Visual Effects
-      </h2>
-      <p class="text-lg text-muted-foreground max-w-2xl mx-auto">
-        Combine gradients and patterns to create rich, sophisticated backgrounds that enhance your interface design.
-      </p>
-    </div>
+    <ContentTitle
+      variant="left"
+      :heading="{ text: 'Layered Visual Effects' }"
+      :subtitle="{ text: 'Combine gradients and patterns to create rich, sophisticated backgrounds that enhance your interface design.' }"
+    />
 
     <!-- Two Row Layout: Components then Hero -->
     <div class="space-y-12">
       <!-- Top Row: Component Breakdown in horizontal flow -->
-      <div class="space-y-8">
-        <div class="text-center space-y-4">
-          <h3 class="text-2xl font-semibold text-foreground">
-            Component Breakdown
-          </h3>
-          <p class="text-muted-foreground">
-            100+ gradient variants × 20+ patterns = unlimited backgrounds
-          </p>
-        </div>
-
-        <div class="flex flex-col lg:flex-row items-center justify-center gap-8 lg:gap-12">
+      <div class="flex">
+        <div class="flex flex-col lg:flex-row gap-8 lg:gap-12 items-center justify-between w-full">
           <!-- Gradient Component -->
           <div class="flex-1 max-w-sm space-y-4">
-            <h4 class="text-lg font-medium text-foreground text-center flex items-center justify-center gap-3">
+            <h4 class="text-lg font-medium text-foreground text-center flex items-center gap-3">
               <div class="w-8 h-8 rounded-full bg-primary/10 border border-primary/20 text-primary text-sm flex items-center justify-center font-semibold">
                 1
               </div>
@@ -58,13 +46,14 @@ const patternConfig = {
 
           <!-- Plus Symbol -->
           <UIcon
+            class="flex"
             name="i-lucide-plus"
-            size="34"
+            size="30"
           />
 
           <!-- Pattern Component -->
           <div class="flex-1 max-w-sm space-y-4">
-            <h4 class="text-lg font-medium text-foreground text-center flex items-center justify-center gap-3">
+            <h4 class="text-lg font-medium text-foreground text-center flex items-center gap-3">
               <div class="w-8 h-8 rounded-full bg-secondary/10 border border-secondary/20 text-secondary text-sm flex items-center justify-center font-semibold">
                 2
               </div>
@@ -78,12 +67,12 @@ const patternConfig = {
           <!-- Equals Symbol -->
           <UIcon
             name="i-lucide-equal"
-            size="34"
+            size="30"
           />
 
           <!-- Combined Result -->
           <div class="flex-1 max-w-sm space-y-4">
-            <h4 class="text-lg font-medium text-foreground text-center flex items-center justify-center gap-3">
+            <h4 class="text-lg font-medium text-foreground text-center flex items-center  gap-3">
               <div class="w-8 h-8 rounded-full bg-accent/10 border border-accent/20 text-accent text-sm flex items-center justify-center font-semibold">
                 3
               </div>

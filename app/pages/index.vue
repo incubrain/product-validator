@@ -286,20 +286,7 @@ useSeoMeta({
             variant="left"
             :heading="{ text: content.demos.masonry.title, level: 2 }"
             :subtitle="{ text: content.demos.masonry.description }"
-          >
-            <template #before>
-              <div class="flex gap-2 text-xs">
-                <span>COMPONENT: </span>
-                <UBadge
-                  variant="soft"
-                  color="info"
-                  size="xs"
-                >
-                  ILayoutColumns
-                </UBadge>
-              </div>
-            </template>
-          </ContentTitle>
+          />
         </div>
 
         <!-- Combined Resizable Demo + Code -->
@@ -348,20 +335,7 @@ useSeoMeta({
             variant="left"
             :heading="{ text: content.demos.float.title, level: 2 }"
             :subtitle="{ text: content.demos.float.description }"
-          >
-            <template #before>
-              <div class="flex gap-2 text-xs">
-                <span>COMPONENT: </span>
-                <UBadge
-                  variant="soft"
-                  color="info"
-                  size="xs"
-                >
-                  ILayoutFloat
-                </UBadge>
-              </div>
-            </template>
-          </ContentTitle>
+          />
         </div>
 
         <!-- Combined Resizable Demo + Code -->
