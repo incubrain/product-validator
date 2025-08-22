@@ -53,7 +53,7 @@ const content = {
           image: { src: '/images/demo/demo-2.jpg', alt: 'Short image', width: 200, height: 200 },
         },
         {
-          image: { src: '/images/demo/demo-3.jpg', alt: 'Very tall image', width: 200, height: 500 },
+          image: { src: '/images/demo/demo-3.jpg', alt: 'Very tall image', width: 200, height: 800 },
         },
         {
           image: { src: '/images/demo/demo-4.jpg', alt: 'Medium image', width: 200, height: 250 },
@@ -125,15 +125,15 @@ const content = {
 
     <ContentText
       variant="justified"
-      text="lorem_300"
+      text="lorem_600"
     />
   </div>
 </template>`,
       content: {
-        text: 'lorem_300',
+        text: 'lorem_600',
         floatedElement: {
           title: 'Floated Content',
-          image: { src: '/images/demo/demo-1.jpg', alt: 'Float demo', width: 300, height: 400 },
+          image: { src: '/images/demo/demo-1.jpg', alt: 'Float demo', width: 600, height: 400 },
         },
       },
     },
@@ -277,90 +277,6 @@ useSeoMeta({
       </ILayoutStack>
     </ISection>
 
-    <!-- Component Showcase -->
-    <ISection variant="default">
-      <ILayoutStack gap="xl">
-        <!-- Section header with component badges -->
-        <div class="relative">
-          <div class="absolute top-0 right-0 flex gap-2">
-            <UBadge
-              variant="soft"
-              color="success"
-              size="xs"
-            />
-            <UBadge
-              variant="soft"
-              color="success"
-              size="xs"
-            >
-              ILayoutStack
-            </UBadge>
-          </div>
-
-          <ContentTitle
-            variant="center"
-            :heading="{ text: content.components.title, level: 2 }"
-            :subtitle="{ text: content.components.subtitle }"
-          />
-        </div>
-
-        <!-- Component grid -->
-        <ILayoutGrid
-          variant="thirds"
-          gap="lg"
-        >
-          <div
-            v-for="component in content.components.items"
-            :key="component.name"
-            class="group p-6 bg-elevated/50 rounded-lg border border-default hover:border-success/50 transition-colors"
-          >
-            <ILayoutStack gap="md">
-              <!-- Mini visual demo -->
-              <div class="h-24 bg-muted/30 rounded border-2 border-dashed border-muted/50 flex items-center justify-center">
-                <div class="text-xs text-muted font-mono">
-                  {{ component.demo }} demo
-                </div>
-              </div>
-
-              <ILayoutStack gap="xs">
-                <ContentHeading
-                  :level="3"
-                  :text="component.name"
-                />
-                <ContentText
-                  variant="description"
-                  :text="component.description"
-                />
-              </ILayoutStack>
-
-              <NuxtLink
-                :to="`/showcase/${component.demo}`"
-                class="inline-flex items-center gap-1 text-sm text-success hover:text-success/80 transition-colors"
-              >
-                View demo
-                <UIcon
-                  name="i-lucide-arrow-right"
-                  class="w-3 h-3"
-                />
-              </NuxtLink>
-            </ILayoutStack>
-          </div>
-        </ILayoutGrid>
-
-        <!-- View all components link -->
-        <div class="text-center">
-          <UButton
-            variant="outline"
-            color="success"
-            to="/showcase"
-            trailing-icon="i-lucide-layout-template"
-          >
-            {{ content.components.viewAllText }}
-          </UButton>
-        </div>
-      </ILayoutStack>
-    </ISection>
-
     <!-- Replace both the Masonry Demo Section and the Code Example Section with this single section -->
     <ISection variant="default">
       <ILayoutStack gap="xl">
@@ -392,8 +308,8 @@ useSeoMeta({
           language="vue"
           filename="ILayoutColumns.vue"
           theme="mac"
-          :preview-height="500"
-          :min-width="300"
+          :preview-height="800"
+          :min-width="600"
         >
           <template #preview>
             <ILayoutColumns
@@ -455,7 +371,7 @@ useSeoMeta({
           filename="ILayoutFloat.vue"
           theme="mac"
           :preview-height="400"
-          :min-width="300"
+          :min-width="600"
         >
           <template #preview>
             <div class="p-4 bg-background min-h-[350px]">
@@ -483,6 +399,8 @@ useSeoMeta({
         </WipResizeCode>
       </ILayoutStack>
     </ISection>
+
+    <SectionBackgrounds />
 
     <!-- Getting Started -->
     <ISection variant="default">
