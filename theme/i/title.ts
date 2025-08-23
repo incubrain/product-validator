@@ -1,4 +1,3 @@
-// theme/i/title.ts - MIGRATED TO THEMEV3
 import { tv, extractTV } from '#shared/utils/theme'
 import type { ExtractSlots, ExtractVariants } from '#shared/utils/theme'
 
@@ -15,6 +14,7 @@ const sectionTitleStyles = tv({
         root: 'text-left',
         heading: '',
         subtitle: '',
+        badge: '',
       },
       center: {
         root: 'text-center',

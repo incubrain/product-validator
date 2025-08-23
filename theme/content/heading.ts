@@ -1,4 +1,4 @@
-// theme/heading.ts - MIGRATED TO THEMEV3
+// theme/content/heading.ts
 import { tv, extractTV } from '#shared/utils/theme'
 import type { ExtractSlots, ExtractVariants } from '#shared/utils/theme'
 
@@ -6,7 +6,7 @@ const headingStyles = tv({
   slots: {
     root: [
       'font-heading leading-tight',
-      'transition-colors duration-200',
+      'transition-colors duration-200 text-balance',
     ],
   },
   variants: {
@@ -22,6 +22,7 @@ const headingStyles = tv({
       default: { root: 'text-highlighted' },
       section: { root: 'text-highlighted' },
       hero: { root: 'text-highlighted' },
+      display: { root: 'text-highlighted' }, // New display variant for hero text
       card: { root: 'text-highlighted' },
       muted: { root: 'text-muted' },
       accent: { root: 'text-primary' },
@@ -29,7 +30,9 @@ const headingStyles = tv({
     },
   },
   compoundVariants: [
+    // Hero sizing
     { level: 1, variant: 'hero', class: { root: 'text-5xl lg:text-6xl xl:text-7xl' } },
+    { level: 1, variant: 'display', class: { root: 'text-6xl lg:text-7xl xl:text-8xl 2xl:text-9xl' } },
     { level: 3, variant: 'section', class: { root: 'text-2xl lg:text-4xl' } },
   ],
   defaultVariants: {
@@ -38,7 +41,11 @@ const headingStyles = tv({
   },
 })
 
-export const headingData = extractTV(headingStyles)
+export const headingData = extractTV(headingStyles, {
+  title: 'Enhanced Content Headings',
+  description: 'Semantic headings with sizing and color variants',
+  category: 'content',
+})
 export type HeadingVariants = ExtractVariants<typeof headingStyles>
 export type HeadingSlots = ExtractSlots<typeof headingStyles>
 export default headingStyles

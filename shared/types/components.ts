@@ -29,7 +29,7 @@ export interface TextProps extends BaseProps {
 export interface TitleProps extends BaseProps {
   variant?: TitleVariants['variant']
   ui?: TitleSlots
-  heading: HeadingProps
+  heading?: HeadingProps
   subtitle?: TextProps
   badge?: BadgeProps
 }
@@ -67,8 +67,9 @@ export interface StackProps extends BaseProps {
 
 export interface SectionProps extends BaseProps {
   variant?: SectionVariants['variant']
-  height?: SectionVariants['height'] // ✅ ADDED
+  height?: SectionVariants['height']
   background?: 'none' | 'circuit' | 'neural' | 'quantum' | 'cyber'
+  containerVariant?: ContainerVariants['variant']
   as?: string
   ui?: SectionSlots
 }

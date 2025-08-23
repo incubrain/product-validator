@@ -3,15 +3,23 @@ import titleStyles from '#theme/i/title'
 import type { TitleProps } from '#shared/types/components'
 
 const props = withDefaults(defineProps<TitleProps>(), {
-  variant: 'center',
+  variant: 'left',
+  badge: () => ({
+    variant: 'subtle',
+    ui: {
+      base: 'uppercase',
+    },
+  }),
 })
 
 defineSlots<{
+  default(props?: object): any // Default slot for heading content
+  badge(props?: object): any // Slot for badge content
+  subtitle(props?: object): any // Slot for subtitle content
   before(props?: object): any
   after(props?: object): any
 }>()
 
-// ✅ NUXT UI PATTERN - TV instance with variants using tvComputed
 const ui = tvComputed(() => titleStyles({
   variant: props.variant,
 }), props.trackingId)
@@ -22,22 +30,34 @@ const ui = tvComputed(() => titleStyles({
     <slot name="before" />
 
     <UBadge
-      v-if="badge?.label"
+      v-if="$slots.badge || badge?.label"
       v-bind="badge"
       :class="ui.badge({ class: props.ui?.badge })"
-    />
+    >
+      <slot
+        v-if="$slots.badge"
+        name="badge"
+      />
+    </UBadge>
 
     <ContentHeading
-      v-if="heading?.text"
+      v-if="$slots.default || heading?.text"
       v-bind="heading"
       :class="ui.heading({ class: props.ui?.heading })"
-    />
+    >
+      <slot v-if="$slots.default" />
+    </ContentHeading>
 
     <ContentText
-      v-if="subtitle?.text"
+      v-if="$slots.subtitle || subtitle?.text"
       v-bind="subtitle"
       :class="ui.subtitle({ class: props.ui?.subtitle })"
-    />
+    >
+      <slot
+        v-if="$slots.subtitle"
+        name="subtitle"
+      />
+    </ContentText>
 
     <slot name="after" />
   </div>
