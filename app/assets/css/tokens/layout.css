@@ -1,0 +1,38 @@
+/* assets/css/tokens/layout.css */
+@import 'tailwindcss';
+
+@theme {
+  /* Base spacing unit */
+  --spacing: 0.25rem;
+  --ui-radius: 0.25rem;
+  --ui-header-height: --spacing(16);
+  --ui-nav-height: --spacing(16);
+
+  /* Configurable base multipliers - for showcase controls */
+  --ui-spacing-section-base: 16;
+  --ui-spacing-component-base: 6;
+  --ui-spacing-content-base: 4;
+
+  /* Simple computed values using --spacing() function */
+  --ui-spacing-section: --spacing(var(--ui-spacing-section-base));
+  --ui-spacing-component: --spacing(var(--ui-spacing-component-base));
+  --ui-spacing-content: --spacing(var(--ui-spacing-content-base));
+
+  /* Container system */
+  --container-3xs: 16rem;
+  --container-2xs: 18rem;
+  --container-xs: 20rem;
+  --container-sm: 24rem;
+  --container-md: 28rem;
+  --container-lg: 32rem;
+  --container-xl: 36rem;
+  --container-2xl: 42rem;
+  --container-3xl: 48rem;
+  --container-4xl: 56rem;
+  --container-5xl: 64rem;
+  --container-6xl: 72rem;
+  --container-7xl: 80rem;
+
+  /* UI integration */
+  --ui-container: var(--container-7xl);
+}

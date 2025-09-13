@@ -41,88 +41,14 @@ export const navigationConfig: NavigationConfig = {
   // Main header navigation
   mainNavigation: [
     {
-      label: 'Home',
-      to: '/',
-      icon: 'i-lucide-home',
+      label: 'Changelog',
+      to: '/changelog',
+      icon: 'i-lucide-file-text',
     },
     {
       label: 'Showcase',
-      icon: 'i-lucide-layout-template',
       to: '/showcase',
-      children: [
-        {
-          label: 'Container',
-          to: '/showcase/container',
-          description: 'Responsive content containers with width control',
-          icon: 'i-lucide-square',
-        },
-        {
-          label: 'Stack',
-          to: '/showcase/stack',
-          description: 'Vertical and horizontal stacking layouts',
-          icon: 'i-lucide-layers',
-        },
-        {
-          label: 'Split',
-          to: '/showcase/split',
-          description: 'Two-column layouts with ratio control',
-          icon: 'i-lucide-columns',
-        },
-        {
-          label: 'Grid',
-          to: '/showcase/grid',
-          description: 'CSS Grid with auto-fit and responsive patterns',
-          icon: 'i-lucide-grid-3x3',
-        },
-        {
-          label: 'Cluster',
-          to: '/showcase/cluster',
-          description: 'Flexible grouping for navigation and tags',
-          icon: 'i-lucide-group',
-        },
-        {
-          label: 'Columns',
-          to: '/showcase/columns',
-          description: 'CSS Columns for masonry and magazine layouts',
-          icon: 'i-lucide-columns-3',
-        },
-        {
-          label: 'Frame',
-          to: '/showcase/frame',
-          description: 'Aspect ratio containers for media content',
-          icon: 'i-lucide-frame',
-        },
-        {
-          label: 'Float',
-          to: '/showcase/float',
-          description: 'CSS float utilities for text wrapping',
-          icon: 'i-lucide-move',
-        },
-        {
-          label: 'Position',
-          to: '/showcase/position',
-          description: 'CSS position utilities for element positioning',
-          icon: 'i-lucide-move',
-        },
-        {
-          label: 'ScrollBox',
-          to: '/showcase/scroll-box',
-          description: 'Scroll containers with overflow control',
-          icon: 'i-lucide-scroll',
-        },
-        {
-          label: 'Transform',
-          to: '/showcase/transform',
-          description: 'Transform effects and animations',
-          icon: 'i-lucide-rotate-3d',
-        },
-        {
-          label: 'Divider',
-          to: '/showcase/divider',
-          description: 'Content separators and visual breaks',
-          icon: 'i-lucide-minus',
-        },
-      ],
+      icon: 'i-lucide-file-text',
     },
   ],
 
@@ -144,12 +70,6 @@ export const navigationConfig: NavigationConfig = {
       label: 'Twitter',
       icon: 'i-lucide-twitter',
       to: 'https://twitter.com/incubrain',
-      target: '_blank',
-    },
-    {
-      label: 'Discord',
-      icon: 'i-lucide-message-circle',
-      to: 'https://discord.gg/zSGHvNZXAa',
       target: '_blank',
     },
   ],
@@ -190,9 +110,9 @@ export const navigationConfig: NavigationConfig = {
   // Call-to-action buttons
   ctaButtons: {
     primary: {
-      label: 'Nuxt Community',
-      action: 'join_community',
-      icon: 'i-lucide-message-circle',
+      label: 'Hire Me',
+      action: 'hire_me',
+      icon: 'i-lucide-briefcase',
     },
     secondary: {
       label: 'Download Template',

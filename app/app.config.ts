@@ -1,30 +1,11 @@
-import { defaultIntentConfig, getIntentColors } from '#shared/config/intent'
-
-const intentColors = getIntentColors(defaultIntentConfig)
-
-// This will be powerful for theming
-// theme: {
-//   defaultVariants: {
-//     color: 'neutral',
-//     size: 'sm'
-//   }
-// },
 export default defineAppConfig({
   ui: {
-    colors: {
-      primary: intentColors.primary,
-      secondary: intentColors.secondary,
-      success: 'emerald',
-      error: 'red',
-      warning: 'amber',
-      info: 'teal',
-      neutral: 'slate',
-    },
+    // NEEDS REVIEW
     link: {
       base: 'focus-visible:outline-secondary-800',
       variants: {
         active: {
-          true: 'text-secondary',
+          true: 'text-primary',
           false: 'text-muted',
         },
       },
@@ -32,7 +13,7 @@ export default defineAppConfig({
         {
           active: false,
           disabled: false,
-          class: ['hover:text-secondary-800', 'transition-colors'],
+          class: ' hover:text-primary-500 transition-colors underline underline-offset-4',
         },
       ],
     },

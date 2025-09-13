@@ -1,8 +1,6 @@
 // theme/video.ts - MIGRATED TO THEMEV3
-import { tv, extractTV } from '#shared/utils/theme'
-import type { ExtractSlots, ExtractVariants } from '#shared/utils/theme'
 
-const videoStyles = tv({
+export const videoStyles = {
   slots: {
     root: [
       'relative overflow-hidden bg-black',
@@ -40,9 +38,8 @@ const videoStyles = tv({
     loading: false,
     error: false,
   },
-})
+}
 
-export const videoData = extractTV(videoStyles)
-export type VideoVariants = ExtractVariants<typeof videoStyles>
-export type VideoSlots = ExtractSlots<typeof videoStyles>
+export type VideoVariants = ExtractVariants<typeof videoStyles.variants>
+export type VideoSlots = ExtractSlots<typeof videoStyles.slots>
 export default videoStyles

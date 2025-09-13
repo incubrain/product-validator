@@ -1,8 +1,5 @@
 // theme/content/text-effect.ts
-import { tv, extractTV } from '#shared/utils/theme'
-import type { ExtractSlots, ExtractVariants } from '#shared/utils/theme'
-
-const textEffectStyles = tv({
+const textEffectStyles = {
   slots: {
     root: ['inline'],
   },
@@ -446,14 +443,8 @@ const textEffectStyles = tv({
     intensity: 'medium',
     color: 'primary',
   },
-})
+}
 
-export const textEffectData = extractTV(textEffectStyles, {
-  title: 'Text Visual Effects',
-  description: 'Inline text effects for gradients, glows, and visual emphasis',
-  category: 'content',
-})
-
-export type TextEffectVariants = ExtractVariants<typeof textEffectStyles>
-export type TextEffectSlots = ExtractSlots<typeof textEffectStyles>
+export type TextEffectVariants = ExtractVariants<typeof textEffectStyles.variants>
+export type TextEffectSlots = ExtractSlots<typeof textEffectStyles.slots>
 export default textEffectStyles

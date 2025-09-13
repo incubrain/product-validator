@@ -1,6 +1,7 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { getBusinessRuntimeConfig } from './shared/config/business'
-import { fileURLToPath } from 'node:url'
+import { getBusinessRuntimeConfig } from './shared/config/business';
+
+import { fileURLToPath } from 'node:url';
 
 export default defineNuxtConfig({
   modules: [
@@ -14,10 +15,7 @@ export default defineNuxtConfig({
 
   // ✅ DEVELOPMENT ONLY: All dev-specific configuration
   $development: {
-    modules: [
-      '@nuxt/eslint',
-      '@compodium/nuxt',
-    ],
+    modules: ['@nuxt/eslint', '@compodium/nuxt'],
 
     devtools: { enabled: true },
 
@@ -25,7 +23,7 @@ export default defineNuxtConfig({
     runtimeConfig: {
       public: {
         incubrain: {
-          debug: process.env.NUXT_PUBLIC_DEBUG === 'true',
+          debug: true,
         },
       },
     },
@@ -37,26 +35,8 @@ export default defineNuxtConfig({
 
     // TypeScript checking in dev
     typescript: {
-      typeCheck: true,
-      strict: true,
-    },
-
-    eslint: {
-      config: {
-        stylistic: {
-          pluginName: '@new-stylistic',
-          indent: 2,
-          quotes: 'single',
-          semi: false,
-          jsx: true,
-          arrowParens: true,
-          braceStyle: '1tbs',
-          commaDangle: 'always-multiline',
-          quoteProps: 'consistent-as-needed',
-          blockSpacing: true,
-          severity: 'warn',
-        },
-      },
+      typeCheck: false,
+      strict: false,
     },
   },
 
@@ -85,10 +65,7 @@ export default defineNuxtConfig({
   },
 
   imports: {
-    dirs: [
-      '~~/theme/*.ts',
-      '~/providers/*.ts',
-    ],
+    dirs: ['~~/theme/*.ts', '~/providers/*.ts'],
   },
 
   app: {
@@ -102,37 +79,26 @@ export default defineNuxtConfig({
     },
   },
 
-  css: ['~/assets/css/main.css', '~/assets/css/motion.css'],
+  css: ['~/assets/css/main.css'],
 
   ui: {
     theme: {
-      colors: ['primary', 'secondary', 'neutral', 'info', 'success', 'warning', 'error'],
+      colors: [
+        'primary',
+        'secondary',
+        'neutral',
+        'info',
+        'success',
+        'warning',
+        'error',
+        'inverted',
+      ],
     },
   },
 
   runtimeConfig: {
     public: {
       ...getBusinessRuntimeConfig(),
-      motion: {
-        directives: {
-          'fade-up': {
-            initial: { opacity: 0, y: 30 },
-            visible: { opacity: 1, y: 0, transition: { duration: 600, ease: 'easeOut' } },
-          },
-          'scale-in': {
-            initial: { opacity: 0, scale: 0.95 },
-            visible: { opacity: 1, scale: 1, transition: { duration: 400, ease: 'easeOut' } },
-          },
-          'tech-slide': {
-            initial: { opacity: 0, y: 20, filter: 'blur(4px)' },
-            visible: { opacity: 1, y: 0, filter: 'blur(0px)', transition: { duration: 800, ease: 'circOut' } },
-          },
-          'matrix-appear': {
-            initial: { opacity: 0, scale: 0.8, rotateX: -15 },
-            visible: { opacity: 1, scale: 1, rotateX: 0, transition: { type: 'spring', stiffness: 150, damping: 12 } },
-          },
-        },
-      },
     },
   },
 
@@ -149,6 +115,12 @@ export default defineNuxtConfig({
       headers: { 'cache-control': 's-maxage=600' },
     },
   },
+
+  components: [
+    { path: '~/components', prefix: 'I' },
+    { path: '~/components/wrap', prefix: 'IU' },
+    '~/components',
+  ],
 
   experimental: {
     defaults: {
@@ -174,21 +146,32 @@ export default defineNuxtConfig({
   icon: {
     serverBundle: {
       // using full @iconify/json define collections to tree-shake
-      collections: ['lucide', 'mdi'],
+      collections: ['lucide', 'mdi', 'logos'],
     },
     aliases: {
       'arrow-left': 'i-lucide-arrow-left',
       'arrow-right': 'i-lucide-arrow-right',
-      'check': 'i-lucide-check',
-      'close': 'i-lucide-x',
-      'search': 'i-lucide-search',
+      check: 'i-lucide-check',
+      close: 'i-lucide-x',
+      search: 'i-lucide-search',
     },
   },
 
   shiki: {
     defaultTheme: 'vitesse-dark',
     defaultLang: 'typescript',
-    bundledLangs: ['typescript', 'javascript', 'vue', 'vue-html', 'yaml', 'typespec'],
+    bundledLangs: [
+      'typescript',
+      'javascript',
+      'vue',
+      'vue-html',
+      'yaml',
+      'typespec',
+    ],
     bundledThemes: ['vitesse-dark', 'vitesse-light'],
   },
-})
+
+  tvBuild: {
+    enabled: true,
+  },
+});

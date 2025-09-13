@@ -133,7 +133,7 @@ export const businessConfig: BusinessConfig = {
 
   // Goals/Conversion
   goals: {
-    primary: 'join_community',
+    primary: 'hire_me',
     secondary: 'github_star',
   },
 } as const

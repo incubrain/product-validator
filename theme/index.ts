@@ -1,25 +1,8 @@
-export type { GridVariants, GridSlots } from './layout/grid'
-export type { SplitSlots, SplitVariants } from './layout/split'
-export type { TransformSlots, TransformVariants } from './layout/transform'
-export type { StackSlots, StackVariants } from './layout/stack'
-export type { FloatSlots, FloatVariants } from './layout/float'
-export type { SectionVariants, SectionSlots } from './layout/section'
-export type { FrameVariants, FrameSlots } from './layout/frame'
-export type { BackgroundVariants, BackgroundSlots } from './layout/background'
-export type { ClusterSlots, ClusterVariants } from './layout/cluster'
-export type { DividerVariants, DividerSlots } from './layout/divider'
-export type { ColumnsVariants, ColumnsSlots } from './layout/columns'
-export type { ContainerVariants, ContainerSlots } from './layout/container'
-export type { ScrollBoxVariants, ScrollBoxSlots } from './layout/scroll-box'
-
-// COMPOUND COMPONENTS
-export type { TitleVariants, TitleSlots } from './i/title'
-export type { AccordionVariants, AccordionSlots } from './i/accordion'
-export type { LanguageSwitcherVariants, LanguageSwitcherSlots } from './i18n/language-switcher'
+// NUXT UI WRAPPERS
+export type {
+  PageColumnsWrapperSlots,
+  PageColumnsWrapperVariants,
+} from './wrap/columns';
 
 // CONTENT RELATED
-export type { TextSlots, TextVariants } from './content/text'
-export type { HeadingSlots, HeadingVariants } from './content/heading'
-export type { AnchorSlots, AnchorVariants } from './content/anchor'
-export type { VideoVariants, VideoSlots } from './content/video'
-export type { ImageVariants, ImageSlots } from './content/image'
+export type { VideoVariants, VideoSlots } from './content/video';

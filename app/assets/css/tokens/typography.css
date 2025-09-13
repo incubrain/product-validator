@@ -1,0 +1,50 @@
+/* assets/css/tokens/typography.css */
+@import "tailwindcss";
+
+@theme static {
+  /* Dynamic base configuration */
+  --text-size-base: 1rem;
+  --text-size-scale: 1.25;
+  --line-height-base: 1.5;
+  --line-height-scale: 0.1;
+  --letter-spacing-base: 0.02em;
+  --letter-spacing-scale: 0.025em;
+  
+  /* Spacing for leading-<number> utilities */
+  --spacing: 0.25rem;
+  
+  /* Font families */
+  --font-sans: ui-sans-serif, system-ui, sans-serif;
+  --font-serif: ui-serif, Georgia, Cambria, "Times New Roman", Times, serif;
+  --font-mono: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas;
+  
+  --font-heading: "Orbitron", sans-serif;
+  --font-body: "Georgia", serif;
+  --font-handwriting: "Georgia", serif;
+  --font-code: "JetBrains Mono", sans-serif;
+
+  /* Calculated text sizes using powers */
+  --text-xs: calc(var(--text-size-base) * pow(var(--text-size-scale), -2));
+  --text-sm: calc(var(--text-size-base) * pow(var(--text-size-scale), -1));
+  --text-base: var(--text-size-base);
+  --text-lg: calc(var(--text-size-base) * pow(var(--text-size-scale), 1));
+  --text-xl: calc(var(--text-size-base) * pow(var(--text-size-scale), 2));
+  --text-2xl: calc(var(--text-size-base) * pow(var(--text-size-scale), 3));
+  --text-3xl: calc(var(--text-size-base) * pow(var(--text-size-scale), 4));
+  --text-4xl: calc(var(--text-size-base) * pow(var(--text-size-scale), 5));
+  --text-5xl: calc(var(--text-size-base) * pow(var(--text-size-scale), 6));
+  --text-6xl: calc(var(--text-size-base) * pow(var(--text-size-scale), 7));
+  --text-7xl: calc(var(--text-size-base) * pow(var(--text-size-scale), 8));
+  --text-8xl: calc(var(--text-size-base) * pow(var(--text-size-scale), 9));
+  --text-9xl: calc(var(--text-size-base) * pow(var(--text-size-scale), 10));
+
+  /* Calculated line heights - tighter for larger text */
+  --text-xs--line-height: calc(var(--line-height-base) + (var(--line-height-scale) * 2));
+  --text-sm--line-height: calc(var(--line-height-base) + var(--line-height-scale));
+  --text-base--line-height: var(--line-height-base);
+  --text-lg--line-height: calc(var(--line-height-base) - var(--line-height-scale));
+  --text-xl--line-height: calc(var(--line-height-base) - (var(--line-height-scale) * 2));
+  --text-2xl--line-height: calc(var(--line-height-base) - (var(--line-height-scale) * 3));
+  --text-3xl--line-height: calc(var(--line-height-base) - (var(--line-height-scale) * 4));
+  --text-4xl--line-height: calc(var(--line-height-base) - (var(--line-height-scale) * 5));
+}

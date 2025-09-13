@@ -6,10 +6,10 @@
 //       'AI automation specialists with space tech expertise and global-local execution',
 //     url: 'https://incubrain.org',
 //     logo: '/logo.png', // Add when available
-// 
+//
 //     // Business details
 //     foundingDate: '2025',
-// 
+//
 //     // Contact information
 //     email: 'hello@incubrain.com',
 //     contactPoint: {
@@ -19,7 +19,7 @@
 //       'areaServed': 'IN',
 //       'availableLanguage': 'English',
 //     },
-// 
+//
 //     // Business location
 //     address: {
 //       '@type': 'PostalAddress',
@@ -27,7 +27,7 @@
 //       'addressRegion': 'Maharashtra',
 //       'addressCountry': 'IN',
 //     },
-// 
+//
 //     // Services offered
 //     makesOffer: [
 //       {
