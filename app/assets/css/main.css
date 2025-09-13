@@ -1,15 +1,13 @@
 /* assets/css/main.css */
 @import 'tailwindcss';
 
-@import "./tokens/colors.css";
+@import './tokens/colors.css';
+
 @import "./tokens/typography.css";
-@import "./tokens/layout.css";
+/* @import "./tokens/layout.css"; */
 
 @source "../../../theme";
 @source "../../../shared/config/theme.ts";
 /* @source "../../../content"; PICKUP CSS CLASSES IN nuxt/content */
 
 @import '@nuxt/ui';
-
-
-

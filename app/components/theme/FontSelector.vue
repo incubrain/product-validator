@@ -1,116 +1,47 @@
 <script setup lang="ts">
-const FONT_WEIGHTS = '300;400;500;600;700';
 const PREVIEW_TEXT = 'The quick brown fox jumps';
 
-const fontPairings = {
-  Classic: [
-    { heading: 'Playfair Display', body: 'Source Sans Pro' },
-    { heading: 'Quattrocento', body: 'Quattrocento Sans' },
-    { heading: 'Quattrocento', body: 'Fanwood Text' },
-    { heading: 'Oswald', body: 'Quattrocento' },
-    { heading: 'Fjalla One', body: 'Libre Baskerville' },
-    { heading: 'Lustria', body: 'Lato' },
-    { heading: 'Cormorant Garamond', body: 'Proza Libre' },
-    { heading: 'Oswald', body: 'EB Garamond' },
-    { heading: 'Libre Baskerville', body: 'Source Sans Pro' },
-  ],
-  Elegant: [
-    { heading: 'Cinzel', body: 'Fauna One' },
-    { heading: 'Sacramento', body: 'Alice' },
-    { heading: 'Yeseva One', body: 'Josefin Sans' },
-    { heading: 'Libre Baskerville', body: 'Montserrat' },
-    { heading: 'Cardo', body: 'Josefin Sans' },
-    { heading: 'Lora', body: 'Roboto' },
-    { heading: 'Spectral', body: 'Karla' },
-    { heading: 'Halant', body: 'Nunito Sans' },
-    { heading: 'Karla', body: 'Karla' },
-    { heading: 'Lora', body: 'Merriweather' },
-  ],
-  Modern: [
-    { heading: 'Roboto', body: 'Nunito' },
-    { heading: 'Quicksand', body: 'Quicksand' },
-    { heading: 'Ubuntu', body: 'Open Sans' },
-    { heading: 'Montserrat', body: 'Hind' },
-    { heading: 'Nunito', body: 'Pt Sans' },
-    { heading: 'Oswald', body: 'Merriweather' },
-    { heading: 'Montserrat', body: 'Cardo' },
-    { heading: 'Montserrat', body: 'Crimson Text' },
-    { heading: 'Open Sans', body: 'Open Sans Condensed' },
-    { heading: 'Nunito', body: 'Nunito' },
-  ],
-  Creative: [
-    { heading: 'Arvo', body: 'Lato' },
-    { heading: 'Abril Fatface', body: 'Poppins' },
-    { heading: 'Playfair Display', body: 'Source Sans Pro' },
-    { heading: 'Karla', body: 'Inconsolata' },
-    { heading: 'Ultra', body: 'Slabo 27px' },
-    { heading: 'Nixie One', body: 'Ledger' },
-    { heading: 'Stint Ultra Expanded', body: 'Pontano Sans' },
-    { heading: 'Amatic SC', body: 'Andika' },
-    { heading: 'Unica One', body: 'Crimson Text' },
-    { heading: 'Philosopher', body: 'Muli' },
-  ],
-  Minimalist: [
-    { heading: 'Source Sans Pro', body: 'Source Serif Pro' },
-    { heading: 'Fjalla One', body: 'Cantarell' },
-    { heading: 'Work Sans', body: 'Open Sans' },
-    { heading: 'Hind', body: 'Open Sans' },
-    { heading: 'Nunito', body: 'Open Sans' },
-    { heading: 'Oxygen', body: 'Source Sans Pro' },
-    { heading: 'PT Sans', body: 'Cabin' },
-    { heading: 'Roboto Condensed', body: 'Cabin' },
-    { heading: 'Raleway', body: 'Open Sans' },
-    { heading: 'Roboto', body: 'Lora' },
-  ],
-} as const;
+const {
+  fontPairings,
+  categories,
+  selectedCategory,
+  fontString,
+  formatWeightRange,
+  selectPairing,
+  isPairingSelected,
+  // optional if you want live weights in the list:
+  fetchGoogleFontWeights,
+} = useThemeFonts();
 
-const bodyFont = ref('Open Sans');
-const headingFont = ref('Playfair Display');
-
-const selectedCategory = ref('Classic');
-const categories = Object.keys(fontPairings);
-
-const loadedFonts = new Set<string>();
-
-function loadFont(font: string) {
-  if (!font || !import.meta.client || loadedFonts.has(font)) return;
-
-  const link = document.createElement('link');
-  link.rel = 'stylesheet';
-  link.href = `https://fonts.googleapis.com/css2?family=${encodeURIComponent(
-    font,
-  )}:wght@${FONT_WEIGHTS}&display=swap`;
-  document.head.appendChild(link);
-  loadedFonts.add(font);
-}
-
-// Select pairing
-function selectPairing(pairing: { heading: string; body: string }) {
-  headingFont.value = pairing.heading;
-  bodyFont.value = pairing.body;
-
-  // Load fonts immediately
-  loadFont(pairing.heading);
-  loadFont(pairing.body);
-}
-
-// Check if pairing is currently selected
-function isPairingSelected(pairing: { heading: string; body: string }) {
-  return (
-    pairing.heading === headingFont.value && pairing.body === bodyFont.value
+// Preload visible weights (optional, keeps your UX snappy)
+watchEffect(async () => {
+  const group = fontPairings[selectedCategory.value] || [];
+  await Promise.all(
+    group.flatMap(async ({ heading, body }) => {
+      await Promise.all([
+        fetchGoogleFontWeights(heading.name),
+        fetchGoogleFontWeights(body.name),
+      ]);
+    }),
   );
-}
-
-// Preload fonts for visible category
-watchEffect(() => {
-  const pairings = fontPairings[selectedCategory.value] || [];
-  pairings.forEach(({ heading, body }) => {
-    loadFont(heading);
-    loadFont(body);
-  });
 });
 
-const fontString = (font: string) => `"${font}", sans-serif`;
+const weightsByFont = ref<Record<string, number[]>>({});
+
+// Preload weights for the visible group to keep UI snappy
+watchEffect(async () => {
+  const group = fontPairings[selectedCategory.value] || [];
+  const names = Array.from(
+    new Set(group.flatMap((p) => [p.heading.name, p.body.name])),
+  );
+  const pairs = await Promise.all(
+    names.map(async (n) => [n, await fetchGoogleFontWeights(n)] as const),
+  );
+  for (const [n, w] of pairs) weightsByFont.value[n] = w;
+});
+
+const weightText = (name: string) =>
+  formatWeightRange(weightsByFont.value[name] || []);
 </script>
 
 <template>
@@ -152,18 +83,35 @@ const fontString = (font: string) => `"${font}", sans-serif`;
       >
         <!-- Heading Preview -->
         <div
-          class="text-lg font-semibold mb-1 truncate"
-          :style="{ fontFamily: fontString(pairing.heading) }"
+          class="text-lg font-semibold mb-1"
+          :style="{ fontFamily: fontString(pairing.heading.name) }"
         >
-          {{ pairing.heading }}
+          <div class="truncate">
+            {{ pairing.heading.name }}
+            <em class="text-xs text-info-500 font-mono">
+              {{ weightText(pairing.heading.name) || 'Loading...' }}
+            </em>
+            <span class="text-xs font-normal text-dimmed ml-2">
+              {{ pairing.heading.feel }}
+            </span>
+          </div>
         </div>
 
         <!-- Body Preview -->
         <div
-          class="text-sm text-neutral-600 dark:text-neutral-400 truncate"
-          :style="{ fontFamily: fontString(pairing.body) }"
+          class="text-sm text-neutral-600 dark:text-neutral-400"
+          :style="{ fontFamily: fontString(pairing.body.name) }"
         >
-          {{ pairing.body }} • {{ PREVIEW_TEXT }}
+          <div class="truncate">
+            {{ pairing.body.name }}
+
+            <em class="text-xs text-info-500 font-mono">
+              {{ weightText(pairing.body.name) || 'Loading...' }}
+            </em>
+            <span class="text-xs font-normal text-dimmed ml-2">
+              {{ pairing.body.feel }}
+            </span>
+          </div>
         </div>
       </button>
     </div>

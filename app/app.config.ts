@@ -1,22 +1,13 @@
 export default defineAppConfig({
   ui: {
-    // NEEDS REVIEW
-    link: {
-      base: 'focus-visible:outline-secondary-800',
-      variants: {
-        active: {
-          true: 'text-primary',
-          false: 'text-muted',
-        },
+    button: {
+      defaultVariants: {
+        color: 'secondary',
+        variant: 'solid',
+        size: 'md',
       },
-      compoundVariants: [
-        {
-          active: false,
-          disabled: false,
-          class: ' hover:text-primary-500 transition-colors underline underline-offset-4',
-        },
-      ],
     },
+    // NEEDS REVIEW
     carousel: {
       slots: {
         root: 'relative focus:outline-none',
@@ -27,10 +18,8 @@ export default defineAppConfig({
         arrows: '',
         prev: 'absolute start-4 top-1/2 -translate-y-1/2',
         next: 'absolute end-4 top-1/2 -translate-y-1/2',
-        dots:
-          'absolute inset-x-0 -bottom-7 flex items-center justify-center gap-3',
-        dot:
-          'cursor-pointer size-3 bg-gray-400 rounded-full transition-colors data-[active=true]:bg-accented',
+        dots: 'absolute inset-x-0 -bottom-7 flex items-center justify-center gap-3',
+        dot: 'cursor-pointer size-3 bg-gray-400 rounded-full transition-colors data-[active=true]:bg-accented',
       },
       variants: {
         orientation: {
@@ -43,10 +32,8 @@ export default defineAppConfig({
           vertical: {
             container: 'flex-col -mt-4',
             item: 'pt-4',
-            prev:
-              'top-4 sm:-top-12 left-1/2 -translate-x-1/2 rotate-90 rtl:-rotate-90',
-            next:
-              'bottom-4 sm:-bottom-12 left-1/2 -translate-x-1/2 rotate-90 rtl:-rotate-90',
+            prev: 'top-4 sm:-top-12 left-1/2 -translate-x-1/2 rotate-90 rtl:-rotate-90',
+            next: 'bottom-4 sm:-bottom-12 left-1/2 -translate-x-1/2 rotate-90 rtl:-rotate-90',
           },
         },
         variant: {
@@ -74,4 +61,4 @@ export default defineAppConfig({
       },
     },
   },
-})
+});

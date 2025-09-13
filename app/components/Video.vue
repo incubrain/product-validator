@@ -1,15 +1,9 @@
-<!-- app/components/media/Video.vue -->
 <script setup lang="ts">
-import {
-  useIntersectionObserver,
-  useMediaQuery,
-  useMediaControls,
-} from '@vueuse/core';
-import { videoStyles } from '#theme/content/video';
+import { useIntersectionObserver, useMediaControls } from '@vueuse/core';
+import { videoStyles } from '#theme/video';
+import type { VideoVariants, VideoSlots } from '#theme/video';
 
-import type { VideoVariants, VideoSlots } from '#theme/content/video';
-
-export interface VideoProps extends BaseProps {
+export interface VideoProps {
   src?: string;
   poster?: string;
   aspectRatio?: VideoVariants['aspectRatio'];
@@ -17,10 +11,7 @@ export interface VideoProps extends BaseProps {
   loop?: boolean;
   muted?: boolean;
   controls?: boolean;
-  loading?: VideoVariants['loading'];
-  error?: VideoVariants['error'];
-  as?: string;
-  ui?: VideoSlots;
+  loading?: 'eager' | 'lazy';
 }
 
 const props = withDefaults(defineProps<VideoProps>(), {
@@ -28,10 +19,9 @@ const props = withDefaults(defineProps<VideoProps>(), {
   autoplay: false,
   muted: true,
   loop: false,
-  controls: false, // We'll handle custom controls
+  controls: false,
+  loading: 'lazy',
 });
-
-const styles = useTV(videoStyles, props);
 
 // Refs
 const containerRef = ref<HTMLElement>();
@@ -40,54 +30,28 @@ const videoRef = ref<HTMLVideoElement>();
 // State
 const isLoading = ref(true);
 const hasError = ref(false);
-const shouldLoad = ref(false);
+const shouldLoad = ref(props.loading === 'eager');
 const showControls = ref(false);
 
-// Media queries for responsive behavior
-const isMobile = useMediaQuery('(max-width: 768px)', { ssrWidth: 768 });
-const prefersReducedMotion = useMediaQuery('(prefers-reduced-motion: reduce)');
-
 // VueUse Media Controls
-const { playing, currentTime, duration, waiting, muted, volume, ended } =
-  useMediaControls(videoRef, {
-    src: computed(() => (shouldLoad.value ? props.src : '')),
-  });
-
-// Intersection Observer for lazy loading
-const { stop } = useIntersectionObserver(
-  containerRef,
-  ([{ isIntersecting }]) => {
-    if (isIntersecting && props.loading === 'lazy' && !shouldLoad.value) {
-      shouldLoad.value = true;
-      stop(); // Stop observing once loaded
-    }
-  },
-  {
-    threshold: 0.1,
-    rootMargin: '50px',
-  },
-);
-
-// Load immediately if eager
-watchEffect(() => {
-  if (props.loading === 'eager') {
-    shouldLoad.value = true;
-  }
+const { playing, waiting, muted, volume } = useMediaControls(videoRef, {
+  src: computed(() => (shouldLoad.value ? props.src : '')),
 });
 
-// Auto-hide controls on mobile after interaction
-let controlsTimeout: ReturnType<typeof setTimeout>;
-const handleInteraction = () => {
-  if (isMobile.value) {
-    showControls.value = true;
-    clearTimeout(controlsTimeout);
-    controlsTimeout = setTimeout(() => {
-      showControls.value = false;
-    }, 3000);
-  }
-};
+// Intersection Observer for lazy loading
+if (props.loading === 'lazy') {
+  useIntersectionObserver(
+    containerRef,
+    ([{ isIntersecting }]) => {
+      if (isIntersecting && !shouldLoad.value) {
+        shouldLoad.value = true;
+      }
+    },
+    { threshold: 0.1 },
+  );
+}
 
-// Video event handlers
+// Event handlers
 const handleLoadedData = () => {
   isLoading.value = false;
   hasError.value = false;
@@ -98,56 +62,48 @@ const handleError = () => {
   hasError.value = true;
 };
 
-// Play/pause toggle
 const togglePlay = () => {
   playing.value = !playing.value;
-  handleInteraction();
 };
 
-// Responsive autoplay behavior
-const shouldAutoplay = computed(() => {
-  return (
-    props.autoplay &&
-    !isMobile.value &&
-    !prefersReducedMotion.value &&
-    props.muted
-  );
-});
+const toggleMute = () => {
+  muted.value = !muted.value;
+};
 
-// Set initial muted state
+// Autoplay logic
 watchEffect(() => {
-  if (videoRef.value && props.muted !== undefined) {
-    muted.value = props.muted;
-  }
-});
-
-// Auto-play when video is ready (respecting user preferences)
-watch([videoRef, shouldAutoplay], () => {
-  if (videoRef.value && shouldAutoplay.value && !playing.value) {
+  if (
+    videoRef.value &&
+    props.autoplay &&
+    props.muted &&
+    shouldLoad.value &&
+    !hasError.value
+  ) {
     playing.value = true;
   }
 });
 
-// Computed styles with state
-const computedStyles = computed(() =>
-  mediaStyles({
-    ...props,
-    loading: isLoading.value,
-    error: hasError.value,
-  }),
-);
+// Set initial muted state
+watchEffect(() => {
+  if (videoRef.value) {
+    muted.value = props.muted;
+  }
+});
 
-// Format time for display
-const formatTime = (seconds: number) => {
-  const mins = Math.floor(seconds / 60);
-  const secs = Math.floor(seconds % 60);
-  return `${mins}:${secs.toString().padStart(2, '0')}`;
+// Show/hide controls on hover
+const handleMouseEnter = () => {
+  showControls.value = true;
 };
 
-// Progress percentage
-const progressPercent = computed(() => {
-  if (!duration.value) return 0;
-  return (currentTime.value / duration.value) * 100;
+const handleMouseLeave = () => {
+  showControls.value = false;
+};
+
+// Computed styles - fix the loading state issue
+const computedStyles = useTV(videoStyles, {
+  ...props,
+  loading: isLoading.value && shouldLoad.value, // Only show loading when actually loading
+  error: hasError.value,
 });
 </script>
 
@@ -155,8 +111,8 @@ const progressPercent = computed(() => {
   <div
     ref="containerRef"
     :class="computedStyles.root()"
-    @click="togglePlay"
-    @touchstart="handleInteraction"
+    @mouseenter="handleMouseEnter"
+    @mouseleave="handleMouseLeave"
   >
     <!-- Video Element -->
     <video
@@ -166,7 +122,7 @@ const progressPercent = computed(() => {
       :poster="poster"
       :muted="muted"
       :loop="loop"
-      :controls="controls && !isMobile"
+      :controls="controls"
       preload="metadata"
       playsinline
       @loadeddata="handleLoadedData"
@@ -176,47 +132,41 @@ const progressPercent = computed(() => {
       <p>Your browser doesn't support video playback.</p>
     </video>
 
-    <!-- Custom Controls Overlay (Mobile) -->
+    <!-- Custom Controls Overlay (only show on hover) -->
     <div
-      v-if="!controls && !hasError && shouldLoad"
+      v-if="!controls && !hasError && shouldLoad && showControls"
       :class="computedStyles.controls()"
-      class="opacity-0 hover:opacity-100"
-      :style="{
-        opacity: isMobile && showControls ? 1 : undefined,
-      }"
+      class="opacity-100 transition-opacity duration-200"
     >
-      <!-- Play/Pause Button -->
-      <div class="flex flex-col items-center gap-2">
-        <UIcon
-          :name="playing ? 'i-lucide-pause' : 'i-lucide-play'"
-          class="size-12 text-white drop-shadow-lg"
-        />
-
-        <!-- Progress Bar (Mobile only) -->
-        <div
-          v-if="isMobile && duration > 0"
-          class="w-32 h-1 bg-white/30 rounded-full overflow-hidden"
+      <div class="flex items-center gap-4">
+        <!-- Play/Pause Button -->
+        <button
+          @click="togglePlay"
+          class="p-2 rounded-full bg-black/20 hover:bg-black/40 transition-colors"
         >
-          <div
-            class="h-full bg-white transition-all duration-200"
-            :style="{ width: `${progressPercent}%` }"
+          <UIcon
+            :name="playing ? 'i-lucide-pause' : 'i-lucide-play'"
+            class="size-8 text-white"
           />
-        </div>
+        </button>
 
-        <!-- Time Display (Mobile only) -->
-        <div
-          v-if="isMobile && duration > 0"
-          class="text-xs text-white/80 font-mono"
+        <!-- Volume Control -->
+        <button
+          @click="toggleMute"
+          class="p-2 rounded-full bg-black/20 hover:bg-black/40 transition-colors"
         >
-          {{ formatTime(currentTime) }} / {{ formatTime(duration) }}
-        </div>
+          <UIcon
+            :name="muted ? 'i-lucide-volume-x' : 'i-lucide-volume-2'"
+            class="size-6 text-white"
+          />
+        </button>
       </div>
     </div>
 
-    <!-- Loading State -->
+    <!-- Loading State (only when actually loading) -->
     <div v-if="isLoading && shouldLoad" :class="computedStyles.overlay()">
       <div :class="computedStyles.loadingState()">
-        <UIcon name="i-lucide-loader" class="size-8 animate-spin" />
+        <UIcon name="i-lucide-loader" class="size-8 animate-spin text-white" />
       </div>
     </div>
 
@@ -225,26 +175,24 @@ const progressPercent = computed(() => {
       <div :class="computedStyles.errorState()">
         <UIcon name="i-lucide-video-off" class="size-12 mb-2" />
         <p class="text-sm mb-3">Failed to load video</p>
-        <p class="text-xs opacity-75">
-          {{ src }}
-        </p>
+        <p class="text-xs opacity-75">{{ src }}</p>
       </div>
     </div>
 
     <!-- Lazy Loading Placeholder -->
-    <div
-      v-if="!shouldLoad && loading === 'lazy'"
-      :class="computedStyles.overlay()"
-    >
+    <div v-if="!shouldLoad" :class="computedStyles.overlay()">
       <div :class="computedStyles.loadingState()">
-        <UIcon name="i-lucide-video" class="size-8" />
+        <UIcon name="i-lucide-video" class="size-8 text-white" />
       </div>
     </div>
 
-    <!-- Waiting/Buffering Indicator -->
-    <div v-if="waiting && !hasError" :class="computedStyles.overlay()">
+    <!-- Buffering Indicator -->
+    <div
+      v-if="waiting && !hasError && !isLoading"
+      :class="computedStyles.overlay()"
+    >
       <div :class="computedStyles.loadingState()">
-        <UIcon name="i-lucide-loader" class="size-6 animate-spin" />
+        <UIcon name="i-lucide-loader" class="size-6 animate-spin text-white" />
       </div>
     </div>
   </div>

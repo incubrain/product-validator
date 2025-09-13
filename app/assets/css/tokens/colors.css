@@ -129,7 +129,7 @@
   --ui-text-muted: var(--color-neutral-400);
   --ui-text-toned: var(--color-neutral-300);
   --ui-text: var(--color-neutral-200);
-  --ui-text-highlighted: var(--color-primary-200); /* brand-emphasis on dark */
+  --ui-text-highlighted: var(--color-primary-100); /* brand-emphasis on dark */
   --ui-text-inverted: var(--color-neutral-900);    /* text on inverted/light */
 
   /* Links (brand-led; accessible on dark) */

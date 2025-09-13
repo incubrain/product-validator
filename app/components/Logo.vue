@@ -4,30 +4,17 @@ interface Props {
   showText?: boolean;
 }
 
-const props = withDefaults(defineProps<Props>(), {
+withDefaults(defineProps<Props>(), {
   size: 'md',
   showText: true,
 });
-
-const sizes = {
-  sm: { image: '20px', text: 'text-sm' },
-  md: { image: '24px', text: 'text-lg' },
-  lg: { image: '28px', text: 'text-xl' },
-};
-
-const currentSize = computed(() => sizes[props.size]);
 </script>
 
 <template>
-  <ULink
-    to="/"
-    class="flex items-center space-x-2 font-bold underline underline-offset-4 decoration-primary"
-  >
+  <ULink to="/" class="flex items-center space-x-2">
     <NuxtImg src="/favicon-96x96.png" width="36px" height="auto" />
     <h6
-      v-if="showText"
-      class="font-semibold uppercase tracking-wide"
-      :class="currentSize.text"
+      class="font-bold underline text-base underline-offset-4 decoration-primary text-default m-0 leading-0"
     >
       NUXT LAUNCH KIT
     </h6>

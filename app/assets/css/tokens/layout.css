@@ -6,17 +6,6 @@
   --spacing: 0.25rem;
   --ui-radius: 0.25rem;
   --ui-header-height: --spacing(16);
-  --ui-nav-height: --spacing(16);
-
-  /* Configurable base multipliers - for showcase controls */
-  --ui-spacing-section-base: 16;
-  --ui-spacing-component-base: 6;
-  --ui-spacing-content-base: 4;
-
-  /* Simple computed values using --spacing() function */
-  --ui-spacing-section: --spacing(var(--ui-spacing-section-base));
-  --ui-spacing-component: --spacing(var(--ui-spacing-component-base));
-  --ui-spacing-content: --spacing(var(--ui-spacing-content-base));
 
   /* Container system */
   --container-3xs: 16rem;

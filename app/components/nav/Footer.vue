@@ -1,48 +1,50 @@
 <!-- app/components/i/nav/Footer.vue -->
 <script setup lang="ts">
-import { getSocialLinks, getQuickLinks, getCTAButtons } from '#shared/config/navigation'
-import { businessConfig } from '#shared/config/business'
+import {
+  getSocialLinks,
+  getQuickLinks,
+  getCTAButtons,
+} from '#shared/config/navigation';
+import { businessConfig } from '#shared/config/business';
 
-const currentYear = new Date().getFullYear()
+const currentYear = new Date().getFullYear();
 
-const socialLinks = getSocialLinks()
-const quickLinks = getQuickLinks()
-const ctaButtons = getCTAButtons()
+const socialLinks = getSocialLinks();
+const quickLinks = getQuickLinks();
+const ctaButtons = getCTAButtons();
 
 // Generate CTA URL based on action type
 const getCTAUrl = (action: string) => {
   switch (action) {
     case 'whatsapp_consultation':
-      return `${businessConfig.contact.primary}?text=Hi! I'm interested in AI automation consultation.`
+      return `${businessConfig.contact.primary}?text=Hi! I'm interested in AI automation consultation.`;
     case 'template_download':
-      return businessConfig.contact.secondary
+      return businessConfig.contact.secondary;
     default:
-      return businessConfig.contact.primary
+      return businessConfig.contact.primary;
   }
-}
+};
 </script>
 
 <template>
   <UFooter
     :ui="{
       root: 'bg-default',
-      top: 'py-0 lg:py-0',
-      container: 'py-6 lg:py-4 grid grid-cols-1 lg:grid-cols-3 gap-8 border border-default border-b-0',
-      left: 'lg:order-1',
-      center: 'lg:order-2',
-      right: 'lg:order-3',
+      top: 'py-0 lg:py-0 border-t border-default',
+      container: 'py-6 lg:py-4 grid grid-cols-1 lg:grid-cols-3 gap-8',
       bottom: 'bg-muted border-t border-default py-6',
     }"
   >
     <template #top>
-      <UContainer class="border-x border-t border-default py-8 lg:py-12 rounded-t-lg">
+      <UContainer class="py-8 lg:py-12 rounded-t-lg">
         <!-- Brand Section -->
         <div class="space-y-4">
           <div class="flex items-center space-x-2">
             <ILogo size="md" />
           </div>
           <p class="text-muted max-w-md leading-relaxed">
-            {{ businessConfig.business.description }}. {{ businessConfig.business.tagline }}.
+            {{ businessConfig.business.description }}.
+            {{ businessConfig.business.tagline }}.
           </p>
           <div class="flex space-x-3 pt-2">
             <UButton
@@ -57,12 +59,18 @@ const getCTAUrl = (action: string) => {
               :aria-label="social.label"
               class="hover:text-primary transition-colors"
             >
-              <UIcon
-                :name="social.icon"
-                class="size-4"
-              />
+              <UIcon :name="social.icon" class="size-4" />
             </UButton>
           </div>
+          <UButton
+            :label="`${ctaButtons.primary.label}`"
+            color="secondary"
+            variant="outline"
+            size="sm"
+            :leading-icon="ctaButtons.primary.icon"
+            :to="getCTAUrl(ctaButtons.primary.action)"
+            target="_blank"
+          />
         </div>
       </UContainer>
     </template>
@@ -70,9 +78,7 @@ const getCTAUrl = (action: string) => {
     <template #left>
       <!-- Quick Links -->
       <div class="space-y-4">
-        <h3 class="font-semibold">
-          Quick Links
-        </h3>
+        <h3 class="font-semibold">Quick Links</h3>
         <nav class="flex flex-col space-y-3">
           <ULink
             v-for="link in quickLinks"
@@ -87,28 +93,12 @@ const getCTAUrl = (action: string) => {
     </template>
 
     <!-- Center slot (default) -->
-    <div class="space-y-4">
-      <h3 class="text-sm font-semibold">
-        I'm available to customize this theme for your project. Let's connect!
-      </h3>
-      <UButton
-        :label="ctaButtons.primary.label"
-        color="primary"
-        variant="outline"
-        size="sm"
-        :leading-icon="ctaButtons.primary.icon"
-        :to="getCTAUrl(ctaButtons.primary.action)"
-        target="_blank"
-        class="w-full"
-      />
-    </div>
+    <div class="flex gap-4 w-full flex-grow justify-center items-center"></div>
 
     <template #right>
       <!-- Contact Info -->
       <div class="space-y-4">
-        <h3 class="font-semibold">
-          Contact
-        </h3>
+        <h3 class="font-semibold">Contact</h3>
         <div class="text-sm text-muted space-y-2">
           <p>
             <a
@@ -124,7 +114,8 @@ const getCTAUrl = (action: string) => {
               target="_blank"
               class="hover:text-primary transition-colors"
             >
-              {{ businessConfig.business.location.city }}, {{ businessConfig.business.location.state }}
+              {{ businessConfig.business.location.city }},
+              {{ businessConfig.business.location.state }}
             </a>
           </p>
         </div>
@@ -137,7 +128,8 @@ const getCTAUrl = (action: string) => {
           class="flex flex-col sm:flex-row justify-between items-center space-y-4 sm:space-y-0"
         >
           <p class="text-sm text-muted text-center sm:text-left">
-            © 2023-{{ currentYear }} {{ businessConfig.business.legal_name.toUpperCase() }}.
+            © 2023-{{ currentYear }}
+            {{ businessConfig.business.legal_name.toUpperCase() }}.
           </p>
           <p class="text-sm text-muted text-center sm:text-right font-medium">
             Let's build the future together.

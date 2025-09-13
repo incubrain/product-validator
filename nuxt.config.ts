@@ -135,14 +135,6 @@ export default defineNuxtConfig({
 
   compatibilityDate: '2025-07-15',
 
-  fonts: {
-    families: [
-      { name: 'Outfit', provider: 'google' },
-      { name: 'IBM Plex Sans', provider: 'google' },
-      { name: 'JetBrains Mono', provider: 'google' },
-    ],
-  },
-
   icon: {
     serverBundle: {
       // using full @iconify/json define collections to tree-shake

@@ -1,16 +1,26 @@
 // composables/useThemeColor.ts
-const colorFamilies = ['primary', 'secondary', 'success', 'warning', 'error', 'info', 'neutral'] as const
-const allSteps = [50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950] as const
+const colorFamilies = [
+  'primary',
+  'secondary',
+  'success',
+  'warning',
+  'error',
+  'info',
+  'neutral',
+] as const;
+const allSteps = [
+  50, 100, 200, 300, 400, 500, 600, 700, 800, 900, 950,
+] as const;
 
-export type ColorFamily = typeof colorFamilies[number]
-export type ColorSteps = typeof allSteps[number]
+export type ColorFamily = (typeof colorFamilies)[number];
+export type ColorSteps = (typeof allSteps)[number];
 
 interface ThemeDefinition {
-  id: string
-  name: string
-  description: string
-  mood: string
-  colors: Record<ColorFamily, Record<ColorSteps, string>>
+  id: string;
+  name: string;
+  description: string;
+  mood: string;
+  colors: Record<ColorFamily, Record<ColorSteps, string>>;
 }
 
 // TAILWIND-COMPATIBLE THEME DEFINITIONS
@@ -229,112 +239,6 @@ const coreThemes: ThemeDefinition[] = [
     },
   },
   {
-    id: 'corporate-trust',
-    name: 'Corporate Trust',
-    description: 'Professional, reliable, authoritative',
-    mood: 'Enterprise & Trustworthy',
-    colors: {
-      // Professional blue
-      primary: {
-        50: 'oklch(96% 0.008 220)',
-        100: 'oklch(92% 0.018 220)',
-        200: 'oklch(84% 0.035 220)',
-        300: 'oklch(76% 0.055 220)',
-        400: 'oklch(68% 0.075 220)',
-        500: 'oklch(60% 0.100 220)', // anchor
-        600: 'oklch(52% 0.090 220)',
-        700: 'oklch(44% 0.080 220)',
-        800: 'oklch(36% 0.070 220)',
-        900: 'oklch(28% 0.060 220)',
-        950: 'oklch(22% 0.045 220)',
-      },
-      // Supporting teal-blue
-      secondary: {
-        50: 'oklch(96% 0.008 200)',
-        100: 'oklch(92% 0.018 200)',
-        200: 'oklch(84% 0.035 200)',
-        300: 'oklch(76% 0.055 200)',
-        400: 'oklch(68% 0.075 200)',
-        500: 'oklch(60% 0.095 200)',
-        600: 'oklch(52% 0.085 200)',
-        700: 'oklch(44% 0.075 200)',
-        800: 'oklch(36% 0.065 200)',
-        900: 'oklch(28% 0.055 200)',
-        950: 'oklch(22% 0.042 200)',
-      },
-      // Conservative green
-      success: {
-        50: 'oklch(96% 0.010 145)',
-        100: 'oklch(90% 0.022 145)',
-        200: 'oklch(80% 0.050 145)',
-        300: 'oklch(72% 0.080 145)',
-        400: 'oklch(64% 0.105 145)',
-        500: 'oklch(56% 0.120 145)',
-        600: 'oklch(48% 0.110 145)',
-        700: 'oklch(40% 0.095 145)',
-        800: 'oklch(32% 0.080 145)',
-        900: 'oklch(26% 0.062 145)',
-        950: 'oklch(22% 0.048 145)',
-      },
-      // Business amber (lower chroma than Tech)
-      warning: {
-        50: 'oklch(96% 0.010 85)',
-        100: 'oklch(92% 0.022 85)',
-        200: 'oklch(84% 0.050 85)',
-        300: 'oklch(76% 0.090 85)',
-        400: 'oklch(68% 0.125 85)',
-        500: 'oklch(60% 0.150 85)',
-        600: 'oklch(52% 0.135 85)',
-        700: 'oklch(44% 0.120 85)',
-        800: 'oklch(36% 0.105 85)',
-        900: 'oklch(28% 0.085 85)',
-        950: 'oklch(22% 0.065 85)',
-      },
-      // Conservative red
-      error: {
-        50: 'oklch(96% 0.010 15)',
-        100: 'oklch(90% 0.022 15)',
-        200: 'oklch(80% 0.050 15)',
-        300: 'oklch(72% 0.080 15)',
-        400: 'oklch(64% 0.105 15)',
-        500: 'oklch(56% 0.120 15)',
-        600: 'oklch(48% 0.110 15)',
-        700: 'oklch(40% 0.095 15)',
-        800: 'oklch(32% 0.080 15)',
-        900: 'oklch(26% 0.062 15)',
-        950: 'oklch(22% 0.048 15)',
-      },
-      // Information blue
-      info: {
-        50: 'oklch(96% 0.008 240)',
-        100: 'oklch(92% 0.018 240)',
-        200: 'oklch(84% 0.035 240)',
-        300: 'oklch(76% 0.055 240)',
-        400: 'oklch(68% 0.075 240)',
-        500: 'oklch(60% 0.095 240)',
-        600: 'oklch(52% 0.085 240)',
-        700: 'oklch(44% 0.075 240)',
-        800: 'oklch(36% 0.065 240)',
-        900: 'oklch(28% 0.055 240)',
-        950: 'oklch(22% 0.042 240)',
-      },
-      // Cool neutral gray (fine as-is)
-      neutral: {
-        50: 'oklch(96% 0.002 200)',
-        100: 'oklch(92% 0.003 200)',
-        200: 'oklch(84% 0.005 200)',
-        300: 'oklch(72% 0.007 200)',
-        400: 'oklch(60% 0.009 200)',
-        500: 'oklch(48% 0.011 200)',
-        600: 'oklch(37% 0.009 200)',
-        700: 'oklch(30% 0.007 200)',
-        800: 'oklch(24% 0.005 200)',
-        900: 'oklch(19% 0.003 200)',
-        950: 'oklch(14% 0.001 200)',
-      },
-    },
-  },
-  {
     id: 'luxury-premium',
     name: 'Luxury Premium',
     description: 'Sophisticated, exclusive, refined',
@@ -440,13 +344,13 @@ const coreThemes: ThemeDefinition[] = [
       },
     },
   },
-]
+];
 
 export interface ColorPreset {
-  id: string
-  name: string
-  description: string
-  mood: string
+  id: string;
+  name: string;
+  description: string;
+  mood: string;
 }
 
 // Generate presets from core themes
@@ -455,94 +359,103 @@ export const colorPresets: ColorPreset[] = coreThemes.map((theme) => ({
   name: theme.name,
   description: theme.description,
   mood: theme.mood,
-}))
+}));
 
 export const useThemeColor = () => {
   // Global UI state
-  const themeSlideoverOpen = useState<boolean>('theme-slideover-open', () => false)
-  const currentPreset = useState<string>('theme-current-preset', () => 'default')
+  const themeSlideoverOpen = useState<boolean>(
+    'theme-slideover-open',
+    () => false,
+  );
+  const currentPreset = useState<string>(
+    'theme-current-preset',
+    () => 'default',
+  );
 
   // Get current theme definition
-  const currentTheme = computed<ThemeDefinition>(() =>
-    coreThemes.find((theme) => theme.id === currentPreset.value) ?? coreThemes[0],
-  )
+  const currentTheme = computed<ThemeDefinition>(
+    () =>
+      coreThemes.find((theme) => theme.id === currentPreset.value) ??
+      coreThemes[0],
+  );
 
-  const activePreset = computed(() =>
-    colorPresets.find((p) => p.id === currentPreset.value) || colorPresets[0],
-  )
+  const activePreset = computed(
+    () =>
+      colorPresets.find((p) => p.id === currentPreset.value) || colorPresets[0],
+  );
 
   // All colors are directly from theme definitions
-  const allColors = computed(() => currentTheme.value.colors)
+  const allColors = computed(() => currentTheme.value.colors);
 
   // Apply preset function
   const applyPreset = (presetId: string) => {
-    const preset = coreThemes.find((theme) => theme.id === presetId)
-    if (!preset) return
+    const preset = coreThemes.find((theme) => theme.id === presetId);
+    if (!preset) return;
 
-    currentPreset.value = presetId
+    currentPreset.value = presetId;
 
     // Apply CSS variables immediately
     if (import.meta.client) {
       colorFamilies.forEach((family) => {
         allSteps.forEach((step) => {
-          const varName = `--color-${family}-${step}`
-          const color = preset.colors[family][step]
-          document.documentElement.style.setProperty(varName, color)
-        })
-      })
+          const varName = `--color-${family}-${step}`;
+          const color = preset.colors[family][step];
+          document.documentElement.style.setProperty(varName, color);
+        });
+      });
     }
-  }
+  };
 
   // Generate CSS for export
   const generatedCSS = computed(() => {
-    const theme = currentTheme.value
-    let css = `/* ${theme.name} - ${theme.mood} */\n\n`
-    css += '@theme {\n'
+    const theme = currentTheme.value;
+    let css = `/* ${theme.name} - ${theme.mood} */\n\n`;
+    css += '@theme {\n';
 
     colorFamilies.forEach((family) => {
-      css += `\n  /* ${family.toUpperCase()} */\n`
+      css += `\n  /* ${family.toUpperCase()} */\n`;
       allSteps.forEach((step) => {
-        css += `  --ui-color-${family}-${step}: ${theme.colors[family][step]};\n`
-      })
-    })
+        css += `  --ui-color-${family}-${step}: ${theme.colors[family][step]};\n`;
+      });
+    });
 
-    css += '\n  /* Semantic mappings */\n'
+    css += '\n  /* Semantic mappings */\n';
     colorFamilies.forEach((family) => {
-      css += `  --ui-${family}: var(--ui-color-${family}-600);\n`
-    })
-    css += '}'
-    return css
-  })
+      css += `  --ui-${family}: var(--ui-color-${family}-600);\n`;
+    });
+    css += '}';
+    return css;
+  });
 
   // Initialize CSS variables on mount
   onMounted(() => {
     if (import.meta.client) {
-      const theme = currentTheme.value
+      const theme = currentTheme.value;
       colorFamilies.forEach((family) => {
         allSteps.forEach((step) => {
-          const varName = `--color-${family}-${step}`
-          const color = theme.colors[family][step]
-          document.documentElement.style.setProperty(varName, color)
-        })
-      })
+          const varName = `--color-${family}-${step}`;
+          const color = theme.colors[family][step];
+          document.documentElement.style.setProperty(varName, color);
+        });
+      });
     }
-  })
+  });
 
   // Watch for preset changes
   watch(currentPreset, (newPreset) => {
     if (import.meta.client) {
-      const theme = coreThemes.find((t) => t.id === newPreset)
+      const theme = coreThemes.find((t) => t.id === newPreset);
       if (theme) {
         colorFamilies.forEach((family) => {
           allSteps.forEach((step) => {
-            const varName = `--color-${family}-${step}`
-            const color = theme.colors[family][step]
-            document.documentElement.style.setProperty(varName, color)
-          })
-        })
+            const varName = `--color-${family}-${step}`;
+            const color = theme.colors[family][step];
+            document.documentElement.style.setProperty(varName, color);
+          });
+        });
       }
     }
-  })
+  });
 
   return {
     // Global UI
@@ -565,5 +478,5 @@ export const useThemeColor = () => {
     colorFamilies,
     allSteps,
     coreThemes, // Export for comparison view
-  }
-}
+  };
+};

@@ -1,53 +1,53 @@
 // shared/config/navigation.ts - UPDATED WITH ALL SHOWCASE PAGES
-import type { NavigationMenuItem } from '@nuxt/ui'
+import type { NavigationMenuItem } from '@nuxt/ui';
 
 export interface SocialLink {
-  label: string
-  icon: string
-  to: string
-  target?: string
+  label: string;
+  icon: string;
+  to: string;
+  target?: string;
 }
 
 export interface QuickLink {
-  label: string
-  to: string
-  description?: string
-  icon?: string
+  label: string;
+  to: string;
+  description?: string;
+  icon?: string;
 }
 
 export interface NavigationConfig {
-  mainNavigation: NavigationMenuItem[]
-  socialLinks: SocialLink[]
-  quickLinks: QuickLink[]
+  mainNavigation: NavigationMenuItem[];
+  socialLinks: SocialLink[];
+  quickLinks: QuickLink[];
   footerLinks: {
-    company: QuickLink[]
-    resources: QuickLink[]
-  }
+    company: QuickLink[];
+    resources: QuickLink[];
+  };
   ctaButtons: {
     primary: {
-      label: string
-      action: string
-      icon?: string
-    }
+      label: string;
+      action: string;
+      icon?: string;
+    };
     secondary: {
-      label: string
-      action: string
-      icon?: string
-    }
-  }
+      label: string;
+      action: string;
+      icon?: string;
+    };
+  };
 }
 
 export const navigationConfig: NavigationConfig = {
   // Main header navigation
   mainNavigation: [
     {
-      label: 'Changelog',
-      to: '/changelog',
+      label: 'Showcase',
+      to: '/showcase',
       icon: 'i-lucide-file-text',
     },
     {
-      label: 'Showcase',
-      to: '/showcase',
+      label: 'Changelog',
+      to: '/changelog',
       icon: 'i-lucide-file-text',
     },
   ],
@@ -79,8 +79,12 @@ export const navigationConfig: NavigationConfig = {
     {
       label: 'Showcase',
       to: '/showcase',
-      description: 'Component examples and demos',
       icon: 'i-lucide-layout-template',
+    },
+    {
+      label: 'Changelog',
+      to: '/changelog',
+      icon: 'i-lucide-file-text',
     },
   ],
 
@@ -99,11 +103,6 @@ export const navigationConfig: NavigationConfig = {
         to: '/showcase',
         description: 'Component examples',
       },
-      {
-        label: 'Layout Components',
-        to: '/showcase/stack',
-        description: 'Layout system documentation',
-      },
     ],
   },
 
@@ -120,74 +119,87 @@ export const navigationConfig: NavigationConfig = {
       icon: 'i-lucide-download',
     },
   },
-} as const
+} as const;
 
 // Helper functions for navigation
-export const getMainNavigation = () => navigationConfig.mainNavigation
-export const getSocialLinks = () => navigationConfig.socialLinks
-export const getQuickLinks = () => navigationConfig.quickLinks
-export const getFooterLinks = () => navigationConfig.footerLinks
-export const getCTAButtons = () => navigationConfig.ctaButtons
+export const getMainNavigation = () => navigationConfig.mainNavigation;
+export const getSocialLinks = () => navigationConfig.socialLinks;
+export const getQuickLinks = () => navigationConfig.quickLinks;
+export const getFooterLinks = () => navigationConfig.footerLinks;
+export const getCTAButtons = () => navigationConfig.ctaButtons;
 
 // Helper to get navigation items by section
-export const getNavigationBySection = (section: keyof typeof navigationConfig) => {
-  return navigationConfig[section]
-}
+export const getNavigationBySection = (
+  section: keyof typeof navigationConfig,
+) => {
+  return navigationConfig[section];
+};
 
 // Helper to find navigation item by path
-export const findNavigationItem = (path: string): NavigationMenuItem | undefined => {
-  const findInItems = (items: NavigationMenuItem[]): NavigationMenuItem | undefined => {
+export const findNavigationItem = (
+  path: string,
+): NavigationMenuItem | undefined => {
+  const findInItems = (
+    items: NavigationMenuItem[],
+  ): NavigationMenuItem | undefined => {
     for (const item of items) {
-      if (item.to === path) return item
+      if (item.to === path) return item;
       if (item.children) {
-        const found = findInItems(item.children)
-        if (found) return found
+        const found = findInItems(item.children);
+        if (found) return found;
       }
     }
-    return undefined
-  }
+    return undefined;
+  };
 
-  return findInItems(navigationConfig.mainNavigation)
-}
+  return findInItems(navigationConfig.mainNavigation);
+};
 
 // Helper to get breadcrumb trail for a path
 export const getBreadcrumbTrail = (path: string): NavigationMenuItem[] => {
-  const trail: NavigationMenuItem[] = []
+  const trail: NavigationMenuItem[] = [];
 
-  const findTrail = (items: NavigationMenuItem[], currentTrail: NavigationMenuItem[] = []): boolean => {
+  const findTrail = (
+    items: NavigationMenuItem[],
+    currentTrail: NavigationMenuItem[] = [],
+  ): boolean => {
     for (const item of items) {
-      const newTrail = [...currentTrail, item]
+      const newTrail = [...currentTrail, item];
 
       if (item.to === path) {
-        trail.push(...newTrail)
-        return true
+        trail.push(...newTrail);
+        return true;
       }
 
       if (item.children && findTrail(item.children, newTrail)) {
-        return true
+        return true;
       }
     }
-    return false
-  }
+    return false;
+  };
 
-  findTrail(navigationConfig.mainNavigation)
-  return trail
-}
+  findTrail(navigationConfig.mainNavigation);
+  return trail;
+};
 
 // ✅ NEW: Get all showcase routes for dynamic rendering
 export const getShowcaseRoutes = () => {
-  const showcaseItem = navigationConfig.mainNavigation.find((item) => item.to === '/showcase')
-  if (!showcaseItem?.children) return []
+  const showcaseItem = navigationConfig.mainNavigation.find(
+    (item) => item.to === '/showcase',
+  );
+  if (!showcaseItem?.children) return [];
 
   return showcaseItem.children
-    .filter((child) => child.to && child.to !== '/showcase' && child.type !== 'label')
+    .filter(
+      (child) => child.to && child.to !== '/showcase' && child.type !== 'label',
+    )
     .map((child) => ({
       path: child.to!,
       title: child.label || '',
       description: child.description || '',
       icon: child.icon || 'i-lucide-component',
       category: 'components', // All are layout components for now
-    }))
-}
+    }));
+};
 
-export default navigationConfig
+export default navigationConfig;

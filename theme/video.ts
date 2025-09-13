@@ -1,11 +1,9 @@
 // theme/video.ts - MIGRATED TO THEMEV3
+import type { ExtractVariants, ExtractSlots } from '#shared/utils/theme';
 
 export const videoStyles = {
   slots: {
-    root: [
-      'relative overflow-hidden bg-black',
-      'transition-all duration-300',
-    ],
+    root: ['relative overflow-hidden bg-black', 'transition-all duration-300'],
     video: 'w-full h-full object-cover',
     overlay: 'absolute inset-0 flex items-center justify-center',
     controls: [
@@ -14,7 +12,8 @@ export const videoStyles = {
       'transition-colors duration-200',
     ],
     loadingState: 'flex items-center justify-center text-white',
-    errorState: 'flex flex-col items-center justify-center text-center p-6 text-white',
+    errorState:
+      'flex flex-col items-center justify-center text-center p-6 text-white',
   },
   variants: {
     aspectRatio: {
@@ -38,8 +37,8 @@ export const videoStyles = {
     loading: false,
     error: false,
   },
-}
+};
 
-export type VideoVariants = ExtractVariants<typeof videoStyles.variants>
-export type VideoSlots = ExtractSlots<typeof videoStyles.slots>
-export default videoStyles
+export type VideoVariants = ExtractVariants<typeof videoStyles.variants>;
+export type VideoSlots = ExtractSlots<typeof videoStyles.slots>;
+export default videoStyles;

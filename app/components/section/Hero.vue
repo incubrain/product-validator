@@ -1,125 +1,150 @@
-<!-- components/sections/HeroSection.vue -->
 <script setup lang="ts">
-const content = {
-  hero: {
-    badge: {
-      icon: 'i-lucide-sparkles',
-      text: 'Open-source Nuxt template · WIP',
-    },
-    headlineLeadIn: 'Sick of Building',
-    headlineProduct: 'GHOST PRODUCTS?',
-    subheadline: 'Validate your idea with Nuxt Launch Kit BEFORE you build it!',
-    primaryCta: { text: 'Get Started', subtitle: 'pnpm dev in minutes' },
-    secondaryCta: 'Star on GitHub',
-  },
+interface Props {
+  content: {
+    badge: { icon: string; text: string };
+    headline: string;
+    subheadline: string;
+    primaryCta: { text: string; icon: string };
+    secondaryCta: { text: string; icon: string };
+    technologies: Array<{ name: string; icon: string; version: string }>;
+  };
 }
 
-/**
- * Icon placements are anchored inside the hero section (relative container).
- * For right-side anchors ('tr' | 'br'), x is measured from the RIGHT edge.
- */
-const floatingIcons = [
-  { name: 'vue', icon: 'i-logos-vue', anchor: 'tl', x: 96, y: 140, lg: { x: 160, y: 120 }, size: 'w-16 h-16' },
-  { name: 'ts', icon: 'i-logos-typescript-icon', anchor: 'tl', x: 32, y: 320, lg: { x: 64, y: 280 }, size: 'w-16 h-16' },
-  { name: 'vueuse', icon: 'i-logos-vueuse', anchor: 'bl', x: 120, y: 180, lg: { x: 180, y: 220 }, size: 'w-16 h-16' },
-  { name: 'nuxt', icon: 'i-logos-nuxt-icon', anchor: 'tr', x: 160, y: 120, lg: { x: 220, y: 96 }, size: 'w-16 h-16' },
-  { name: 'tailwind', icon: 'i-logos-tailwindcss-icon', anchor: 'tr', x: 32, y: 320, lg: { x: 64, y: 280 }, size: 'w-16 h-16' },
-  { name: 'vercel', icon: 'i-logos-vercel-icon', anchor: 'br', x: 140, y: 120, lg: { x: 180, y: 140 }, size: 'w-16 h-16' },
-]
+const { content } = defineProps<Props>();
 
-function styleFor(fi: (typeof floatingIcons)[number], bp: 'base' | 'lg') {
-  const x = bp === 'lg' ? fi.lg.x : fi.x
-  const y = bp === 'lg' ? fi.lg.y : fi.y
-  // map anchor -> css inset props
-  const base: Record<string, string> = { top: 'auto', right: 'auto', bottom: 'auto', left: 'auto' }
-  const set = (k: 'top' | 'right' | 'bottom' | 'left', v: string) => (base[k] = v)
-  if (fi.anchor === 'tl') { set('top', `${y}px`); set('left', `${x}px`) }
-  if (fi.anchor === 'tr') { set('top', `${y}px`); set('right', `${x}px`) }
-  if (fi.anchor === 'bl') { set('bottom', `${y}px`); set('left', `${x}px`) }
-  if (fi.anchor === 'br') { set('bottom', `${y}px`); set('right', `${x}px`) }
-  return base
-}
 </script>
 
 <template>
   <UPageHero
-    :headline="content.hero.badge.text"
-    :title="`${content.hero.headlineLeadIn} ${content.hero.headlineProduct}`"
-    :description="content.hero.subheadline"
     orientation="vertical"
+    class="bg-gradient-to-b from-default via-muted to-default text-white relative overflow-hidden min-h-screen flex items-center"
   >
-    <!-- Badge replaces headline text via slot -->
+    <!-- Badge -->
     <template #headline>
       <UButton
         variant="outline"
         color="neutral"
         size="sm"
-        :leading-icon="content.hero.badge.icon"
-        class="border-default bg-white/10 text-white backdrop-blur-sm hover:bg-white/20"
+        :leading-icon="content.badge.icon"
+        class="border-white/20 bg-white/5 text-white backdrop-blur-sm hover:bg-white/10 mb-6"
       >
-        {{ content.hero.badge.text }}
+        {{ content.badge.text }}
       </UButton>
     </template>
 
-    <!-- Fancy 2-line title with gradient emphasis -->
+    <!-- Main Title -->
     <template #title>
-      <h1 class="text-5xl sm:text-7xl font-bold tracking-tight leading-none text-center">
-        {{ content.hero.headlineLeadIn }}
-        <span
-          class="block bg-clip-text text-transparent bg-gradient-to-r from-primary-400 to-primary-600"
-        >
-          {{ content.hero.headlineProduct }}
-        </span>
+      <h1
+        class="text-4xl sm:text-6xl lg:text-8xl text-balance font-bold tracking-tight leading-tight text-center"
+      >
+        {{ content.headline }}
       </h1>
     </template>
 
-    <!-- Description already comes from prop; override if you want custom markup -->
-    <!-- <template #description> ... </template> -->
+    <!-- Description -->
+    <template #description>
+      <p
+        class="text-lg sm:text-xl text-gray-300 text-center max-w-4xl mx-auto leading-relaxed"
+      >
+        {{ content.subheadline }}
+      </p>
+    </template>
 
-    <!-- CTA buttons with subtitle on primary -->
+    <!-- CTA Buttons -->
     <template #links>
-      <div class="flex flex-wrap justify-center gap-3">
+      <div class="flex flex-col sm:flex-row justify-center gap-4">
         <UButton
           size="xl"
           color="neutral"
           variant="solid"
-          class="px-8 py-4 text-lg font-semibold text-gray-900 bg-white shadow-xl transition-all duration-300 hover:bg-gray-100 hover:shadow-2xl"
+          :trailing-icon="content.primaryCta.icon"
+          class="px-8 py-4 text-lg font-semibold text-gray-900 bg-white shadow-xl hover:bg-gray-100"
         >
-          {{ content.hero.primaryCta.text }}
-          <span class="ml-2 text-sm font-normal opacity-70">— {{ content.hero.primaryCta.subtitle }}</span>
+          {{ content.primaryCta.text }}
         </UButton>
 
         <UButton
           size="xl"
           color="neutral"
           variant="outline"
-          class="px-8 py-4 text-lg font-semibold text-white border-default backdrop-blur-sm transition-all duration-300 hover:bg-white/10"
+          :leading-icon="content.secondaryCta.icon"
+          class="px-8 py-4 text-lg font-semibold text-white border-white/20 hover:bg-white/10"
         >
-          {{ content.hero.secondaryCta }}
+          {{ content.secondaryCta.text }}
         </UButton>
       </div>
     </template>
 
-    <!-- Floating tech icons (decorative) -->
-    <template #top>
-      <div class="pointer-events-none absolute inset-0">
-        <!-- mobile/tablet positions -->
-        <UIcon
-          v-for="fi in floatingIcons"
-          :key="fi.name + '-base'"
-          :name="fi.icon"
-          :class="['absolute opacity-70', fi.size, 'lg:hidden']"
-          :style="styleFor(fi, 'base')"
-        />
-        <!-- lg+ positions -->
-        <UIcon
-          v-for="fi in floatingIcons"
-          :key="fi.name + '-lg'"
-          :name="fi.icon"
-          :class="['absolute opacity-70 hidden lg:block', fi.size]"
-          :style="styleFor(fi, 'lg')"
-        />
+    <!-- Main Content: Video Showcase -->
+    <div class="relative w-full max-w-6xl mx-auto z-10 space-y-4">
+      <!-- Video Component -->
+      <IVideo
+        src="/videos/demo.mp4"
+        poster="/images/demo/demo-1.jpg"
+        :autoplay="true"
+        :muted="true"
+        :loop="true"
+        aspect-ratio="video"
+        class="rounded-2xl shadow-2xl border border-white/10"
+      />
+
+      <div class="flex gap-4">
+        <UBadge variant="subtle" color="warning" class="whitespace-nowrap px-3">
+          Powered By
+        </UBadge>
+        <UMarquee
+          pause-on-hover
+          :ui="{
+            root: '[--gap:--spacing(4)] [--duration:60s]',
+            content: 'w-auto',
+          }"
+        >
+          <div
+            v-for="tech in content.technologies"
+            :key="tech.name"
+            class="flex items-center gap-3 px-4 py-2 bg-default backdrop-blur-sm rounded-lg border border-white/10"
+          >
+            <UIcon
+              :name="tech.icon"
+              class="size-6 text-primary flex-shrink-0"
+            />
+            <span class="font-medium text-sm">{{ tech.name }}</span>
+            <span
+              class="text-xs font-mono text-gray-400 bg-black/20 px-2 py-1 rounded"
+            >
+              {{ tech.version }}
+            </span>
+          </div>
+        </UMarquee>
       </div>
+    </div>
+
+    <!-- Background Effects -->
+    <template #bottom>
+      <!-- Subtle grid pattern -->
+      <div
+        class="absolute top-0 inset-0 bg-grid-white/[0.02] pointer-events-none"
+      ></div>
+
+      <!-- Gradient orbs -->
+      <div
+        class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl pointer-events-none"
+      ></div>
+      <div
+        class="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl pointer-events-none"
+      ></div>
     </template>
   </UPageHero>
 </template>
+
+<style scoped>
+.bg-grid-white\/\[0\.02\] {
+  z-index: 0;
+  background-image: linear-gradient(
+      rgba(255, 255, 255, 0.02) 1px,
+      transparent 1px
+    ),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+  background-size: 50px 50px;
+}
+</style>

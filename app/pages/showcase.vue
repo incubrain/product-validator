@@ -1,5 +1,13 @@
 <script setup lang="ts">
 const { colorPresets, currentPreset, themeSlideoverOpen } = useThemeColor();
+const {
+  headingFont,
+  bodyFont,
+  headingWeights,
+  bodyWeights,
+  headingWeightSummary,
+  bodyWeightSummary,
+} = useThemeFonts();
 
 // Sample data for components
 const avatarItems = [
@@ -24,6 +32,30 @@ const formState = reactive({
 function onFormSubmit(event: any) {
   console.log('Form submitted:', event.data);
 }
+
+const buttonVariants = ['solid', 'outline', 'subtle', 'soft', 'ghost', 'link'];
+
+const buttonColors = [
+  'primary',
+  'secondary',
+  'neutral',
+  'success',
+  'info',
+  'warning',
+  'error',
+];
+
+const badgeColors = [
+  'primary',
+  'secondary',
+  'neutral',
+  'success',
+  'info',
+  'warning',
+  'error',
+];
+
+const buttonSizes = ['xs', 'sm', 'md', 'lg', 'xl'];
 
 const commandPaletteOpen = ref(false);
 const treeValue = ref({ label: 'index.vue' });
@@ -103,29 +135,58 @@ onMounted(() => {
           <template #header>
             <h3 class="font-semibold">Buttons & Badges</h3>
           </template>
-          <div class="space-y-4">
-            <div class="flex flex-wrap gap-2">
-              <UButton color="primary" size="sm"> Primary </UButton>
-              <UButton color="secondary" size="sm"> Secondary </UButton>
-              <UButton color="success" size="sm"> Success </UButton>
-              <UButton color="warning" size="sm"> Warning </UButton>
-              <UButton color="error" size="sm"> Error </UButton>
+          <div class="space-y-6">
+            <!-- All Button Colors with their variants -->
+            <div
+              v-for="buttonColor in buttonColors"
+              :key="buttonColor"
+              class="space-y-2"
+            >
+              <h4 class="text-sm font-medium capitalize">
+                {{ buttonColor }} Buttons
+              </h4>
+              <div class="flex flex-wrap gap-2">
+                <UButton
+                  v-for="variant in buttonVariants"
+                  :key="`${buttonColor}-${variant}`"
+                  :variant="variant"
+                  :color="buttonColor"
+                  size="sm"
+                >
+                  {{ variant }}
+                </UButton>
+              </div>
             </div>
-            <div class="flex flex-wrap gap-2">
-              <UButton variant="outline" color="primary" size="sm">
-                Outline
-              </UButton>
-              <UButton variant="ghost" color="secondary" size="sm">
-                Ghost
-              </UButton>
-              <UButton variant="soft" color="success" size="sm"> Soft </UButton>
+
+            <!-- Button Sizes (single color/variant) -->
+            <div class="border-t border-default pt-4 space-y-2">
+              <h4 class="text-sm font-medium">Button Sizes</h4>
+              <div class="flex flex-wrap items-end gap-2">
+                <UButton
+                  v-for="size in buttonSizes"
+                  :key="`size-${size}`"
+                  variant="solid"
+                  color="primary"
+                  :size="size"
+                >
+                  {{ size }}
+                </UButton>
+              </div>
             </div>
-            <div class="flex flex-wrap gap-2">
-              <UBadge color="primary" size="sm"> Primary </UBadge>
-              <UBadge color="secondary" size="sm"> Secondary </UBadge>
-              <UBadge color="success" size="sm"> Success </UBadge>
-              <UBadge color="warning" size="sm"> Warning </UBadge>
-              <UBadge color="error" size="sm"> Error </UBadge>
+
+            <!-- All Badge Colors -->
+            <div class="border-t border-default pt-4 space-y-2">
+              <h4 class="text-sm font-medium">Badges</h4>
+              <div class="flex flex-wrap gap-2">
+                <UBadge
+                  v-for="badgeColor in badgeColors"
+                  :key="`badge-${badgeColor}`"
+                  :color="badgeColor"
+                  size="sm"
+                >
+                  {{ badgeColor }}
+                </UBadge>
+              </div>
             </div>
           </div>
         </UCard>
@@ -434,13 +495,6 @@ onMounted(() => {
             <h3 class="font-semibold">Command Palette</h3>
           </template>
           <div class="text-center p-4">
-            <UButton
-              variant="outline"
-              color="neutral"
-              @click="commandPaletteOpen = true"
-            >
-              Open Command Palette
-            </UButton>
             <UCommandPalette
               v-model:open="commandPaletteOpen"
               :groups="[
@@ -898,37 +952,75 @@ onMounted(() => {
             </div>
           </div>
         </UCard>
-        <!-- Font Weights -->
         <UCard>
           <template #header>
             <h3 class="font-semibold">Font Weights</h3>
           </template>
+
           <div class="space-y-3">
+            <!-- Heading -->
             <div class="space-y-2">
-              <h4 class="text-sm font-medium mb-2">Heading Font Weights</h4>
-              <div class="space-y-1" style="font-family: var(--font-heading)">
-                <div class="font-light text-lg">font-light (300)</div>
-                <div class="font-normal text-lg">font-normal (400)</div>
-                <div class="font-medium text-lg">font-medium (500)</div>
-                <div class="font-semibold text-lg">font-semibold (600)</div>
-                <div class="font-bold text-lg">font-bold (700)</div>
-                <div class="font-extrabold text-lg">font-extrabold (800)</div>
-                <div class="font-black text-lg">font-black (900)</div>
+              <h4 class="text-sm font-medium mb-2">
+                {{ headingFont || 'Loading...' }} (Heading)
+              </h4>
+
+              <div class="text-xs text-info-500 font-mono mb-2">
+                Available: {{ headingWeightSummary || 'Loading...' }}
+              </div>
+
+              <div
+                class="space-y-1"
+                :style="{ fontFamily: `'${headingFont}', sans-serif` }"
+              >
+                <div
+                  v-for="weight in headingWeights"
+                  :key="`heading-${weight}`"
+                  :style="{ fontWeight: weight }"
+                  class="text-sm"
+                >
+                  Font-weight {{ weight }}
+                </div>
+
+                <div
+                  v-if="headingWeights.length === 0"
+                  class="text-sm text-neutral-400"
+                >
+                  Loading font weights...
+                </div>
               </div>
             </div>
 
+            <!-- Body -->
             <div
-              class="border-t border-neutral-200 dark:border-neutral-700 pt-3"
+              class="border-t border-neutral-200 dark:border-neutral-700 pt-3 space-y-2"
             >
-              <h4 class="text-sm font-medium mb-2">Body Font Weights</h4>
-              <div class="space-y-1" style="font-family: var(--font-sans)">
-                <div class="font-light">font-light (300)</div>
-                <div class="font-normal">font-normal (400)</div>
-                <div class="font-medium">font-medium (500)</div>
-                <div class="font-semibold">font-semibold (600)</div>
-                <div class="font-bold">font-bold (700)</div>
-                <div class="font-extrabold">font-extrabold (800)</div>
-                <div class="font-black">font-black (900)</div>
+              <h4 class="text-sm font-medium mb-2">
+                {{ bodyFont || 'Loading...' }} (Body)
+              </h4>
+
+              <div class="text-xs text-info-500 font-mono mb-2">
+                Available: {{ bodyWeightSummary || 'Loading...' }}
+              </div>
+
+              <div
+                class="space-y-1"
+                :style="{ fontFamily: `'${bodyFont}', serif` }"
+              >
+                <div
+                  v-for="weight in bodyWeights"
+                  :key="`body-${weight}`"
+                  :style="{ fontWeight: weight }"
+                  class="text-sm"
+                >
+                  Font-weight {{ weight }}
+                </div>
+
+                <div
+                  v-if="bodyWeights.length === 0"
+                  class="text-sm text-neutral-400"
+                >
+                  Loading font weights...
+                </div>
               </div>
             </div>
           </div>
@@ -1083,20 +1175,4 @@ onMounted(() => {
   </div>
 </template>
 
-<style scoped>
-body,
-p,
-span,
-div {
-  font-family: var(--font-sans);
-}
-
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-  font-family: var(--font-heading);
-}
-</style>
+<style scoped></style>
