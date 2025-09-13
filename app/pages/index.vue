@@ -4,119 +4,125 @@ import { businessConfig } from '#shared/config/business';
 // 🎯 ALL SECTION CONTENT DATA CONSOLIDATED HERE
 
 // Hero Section Data
+// Updated Hero Section Data
 const heroContent = {
   badge: {
-    icon: 'i-lucide-zap',
-    text: 'Open-source Nuxt template',
+    icon: 'i-lucide-rocket',
+    text: 'Production-ready Nuxt template',
   },
-  headline: 'The ultimate Nuxt and Vue UI library',
+  headline: 'Ship your startup idea faster',
   subheadline:
-    'Nuxt UI Pro is a collection of premium Vue components built on top of Nuxt UI to create beautiful & responsive Nuxt applications in minutes. It includes all primitives to build landing pages, documentations, blogs, dashboards or entire SaaS products.',
-  primaryCta: { text: 'Get Started', icon: 'i-lucide-arrow-right' },
-  secondaryCta: { text: 'Use this template', icon: 'i-lucide-github' },
+    'A production-ready Nuxt template designed for founders and businesses who want to validate ideas quickly. Focus on what matters—your product and customers—while we handle the website foundation with modern theming, extensible components, and integrated content management.',
+  primaryCta: { text: 'Get Template', icon: 'i-lucide-download' },
+  secondaryCta: { text: 'View on GitHub', icon: 'i-lucide-github' },
   technologies: [
-    { name: 'Nuxt', icon: 'i-logos-nuxt-icon', version: 'v4+' },
+    { name: 'Nuxt', icon: 'i-logos-nuxt-icon', version: 'v4' },
     { name: 'Nuxt UI', icon: 'i-logos-nuxt-icon', version: 'v4' },
     { name: 'Tailwind', icon: 'i-logos-tailwindcss-icon', version: 'v4' },
     {
       name: 'Tailwind Variants',
       icon: 'i-lucide-trending-up-down',
-      version: 'v4',
+      version: 'Latest',
     },
     { name: 'TypeScript', icon: 'i-logos-typescript-icon', version: 'v5.8+' },
-    { name: 'VueUse', icon: 'i-logos-vueuse', version: 'v13.7+' },
+    { name: 'Nuxt Content', icon: 'i-lucide-file-text', version: 'v3+' },
   ],
 };
 
-// Features Section Data
+// Updated Features Section Data
 const featuresContent = {
-  headline: 'Components',
-  title: 'Packed with features',
+  headline: 'Features',
+  title: 'Everything you need to ship fast',
   description:
-    "Explore our wide range of components, each designed to enhance your application's functionality and visual appeal.",
+    'Pre-configured with best practices so you can focus on building your business, not configuring tools.',
   features: [
     {
-      title: 'Color Palette',
+      title: 'Instant Theming',
       description:
-        'Choose a primary and a gray color from your Tailwind CSS color palette. Components will be styled accordingly.',
+        '20 curated font pairings and 3 distinct color palettes. Switch themes with a single config change.',
       icon: 'i-lucide-palette',
       class: 'lg:row-span-1',
+      component: 'theme-palette', // Custom component identifier
     },
     {
-      title: 'Fully Customizable',
+      title: 'Extensible Components',
       description:
-        'Change the style of any component in your App Config or customize them specifically through the ui prop.',
-      icon: 'i-lucide-settings',
+        'Built on Nuxt UI v4 with Tailwind Variants. Extend or wrap components using the same API patterns.',
+      icon: 'i-lucide-puzzle',
       class: 'lg:col-span-2 lg:row-span-1',
       orientation: 'horizontal',
+      component: 'code-example', // Show code snippet
     },
     {
-      title: 'Light & Dark',
+      title: 'Layered Design System',
       description:
-        'Every component is designed with dark mode in mind. Works out of the box with @nuxtjs/color-mode.',
-      icon: 'i-lucide-moon',
+        'Four-layer background hierarchy (default, muted, elevated, accented) with pattern support coming soon.',
+      icon: 'i-lucide-layers',
       class: 'lg:row-span-2',
+      component: 'layer-stack', // Keep existing layer visualization
     },
     {
-      title: 'Icons',
+      title: 'Content Management',
       description:
-        'Choose any of the 100k+ icons from the most popular icon libraries with the Icon component or the icon prop.',
-      icon: 'i-lucide-smile',
+        'Integrated blog system with Nuxt Content v3+ for markdown-based publishing.',
+      icon: 'i-lucide-file-text',
       class: 'lg:col-span-2 lg:row-span-1',
       orientation: 'horizontal',
       reverse: true,
+      component: 'content-demo', // Show blog preview
     },
     {
-      title: 'Layer Stack Visualization',
-      description: 'Background hierarchy using current theme',
-      icon: 'i-lucide-layers',
-      slot: 'layer-stack',
+      title: 'Analytics Ready',
+      description:
+        'Event system for tracking, funnels, and analytics integration (coming soon).',
+      icon: 'i-lucide-bar-chart',
       class: 'lg:col-span-1 lg:row-span-1',
+      component: 'analytics-chart', // Show mini chart/dashboard
     },
   ],
 };
 
-// Feature Highlight Data
+// Updated Feature Highlight Data
 const featureHighlightContent = [
   {
-    headline: 'Features',
-    title: 'Kickstart with Nuxt UI in seconds',
+    headline: 'Theming',
+    title: 'Theme your brand in minutes, not hours',
     description:
-      'Nuxt UI is designed to be used with Nuxt and Vue. It comes with a set of components that are fully styled and accessible out of the box.',
+      'Choose from 20 expertly paired fonts and 3 color palettes. More themes added regularly. Background patterns, gradients, and textures system in development.',
     features: [
       {
-        title: 'Integrations',
+        title: '20 Font Pairings',
         description:
-          'Nuxt UI is designed to be used with Nuxt and Vue. It comes with a set of components that are fully styled and accessible out of the box.',
-        icon: 'i-lucide-plug',
+          'Professionally curated typography combinations that work beautifully together across all devices.',
+        icon: 'i-lucide-type',
       },
       {
-        title: 'Components',
+        title: '3 Color Systems',
         description:
-          'Nuxt UI is designed to be used with Nuxt and Vue. It comes with a set of components that are fully styled and accessible out of the box.',
-        icon: 'i-lucide-box',
+          'Carefully designed color palettes with proper contrast ratios and accessibility considerations.',
+        icon: 'i-lucide-palette',
       },
     ],
     image: 'https://picsum.photos/600/400?random=1',
     orientation: 'horizontal',
   },
   {
-    headline: 'Features',
-    title: 'Explore our wide range of components',
+    headline: 'Development',
+    title: 'Built for extensibility and performance',
     description:
-      "Explore our wide range of components, each designed to enhance your application's functionality and visual appeal.",
+      'Native Nuxt UI v4 integration with Tailwind Variants API. Extend components or build your own component library using familiar patterns.',
     features: [
       {
-        title: 'Integrations',
+        title: 'Nuxt UI v4 Native',
         description:
-          'Nuxt UI is designed to be used with Nuxt and Vue. It comes with a set of components that are fully styled and accessible out of the box.',
-        icon: 'i-lucide-plug',
+          'Latest version with full TypeScript support and modern Vue 3 composition patterns.',
+        icon: 'i-logos-nuxt-icon',
       },
       {
-        title: 'Components',
+        title: 'Component Wrapping',
         description:
-          'Nuxt UI is designed to be used with Nuxt and Vue. It comes with a set of components that are fully styled and accessible out of the box.',
-        icon: 'i-lucide-box',
+          'Extend Nuxt UI components with custom variants while maintaining API compatibility.',
+        icon: 'i-lucide-layers',
       },
     ],
     image: 'https://picsum.photos/600/400?random=2',
@@ -125,69 +131,124 @@ const featureHighlightContent = [
   },
 ];
 
-// Business Features Data
+// Updated Business Features Data
 const businessFeaturesContent = {
-  title: 'Build a business website, blog or documentation',
-  description: 'Everything you need to get started quickly and easily.',
+  title: 'Focus on your business, not your website',
+  description:
+    'Everything pre-configured so you can validate ideas and serve customers from day one.',
   features: [
     {
-      title: 'File-based CMS',
+      title: 'Instant Setup',
       description:
-        'Write your content in Markdown, YML, CSV or JSON and query it in your components.',
-      icon: 'i-lucide-file-text',
+        'Clone, install, and deploy in under 5 minutes. No complex configuration required.',
+      icon: 'i-lucide-zap',
+      status: 'available', // available | coming-soon
     },
     {
-      title: 'Query Builder',
+      title: 'Blog System',
       description:
-        'Query your content with a MongoDB-like API to fetch the right data at the right time.',
-      icon: 'i-lucide-filter',
+        'Nuxt Content v3+ integration for markdown-based blog posts with full theming support.',
+      icon: 'i-lucide-edit',
+      status: 'coming-soon',
     },
     {
-      title: 'SQLite powered',
+      title: 'Modern Stack',
       description:
-        'Add custom fields to your content, making it suitable for various types of projects.',
-      icon: 'i-lucide-database',
-    },
-    {
-      title: 'Markdown with Vue',
-      description:
-        'Use Vue components in Markdown files, with props, slots and nested components.',
+        'Nuxt v4, TypeScript, Tailwind v4, and Tailwind Variants for maintainable, scalable code.',
       icon: 'i-lucide-code',
+      status: 'available',
     },
     {
-      title: 'Code highlighting',
+      title: 'Theme Flexibility',
       description:
-        'Display beautiful code blocks on your website with the Shiki integration supporting VS Code themes.',
-      icon: 'i-lucide-code-2',
+        'Switch between font pairs and color schemes instantly. More options added regularly.',
+      icon: 'i-lucide-paintbrush',
+      status: 'available',
     },
     {
-      title: 'Visual Editor',
+      title: 'Component Library',
       description:
-        'Let your team edit your Nuxt Content project with Nuxt Studio, our visual editor.',
-      icon: 'i-lucide-sparkles',
+        'Extend Nuxt UI components or build your own using the same Tailwind Variants API.',
+      icon: 'i-lucide-box',
+      status: 'available',
     },
     {
-      title: 'Navigation Generation',
+      title: 'Analytics Ready',
       description:
-        'Generate a structured object from your content files and display a navigation menu in minutes.',
-      icon: 'i-lucide-navigation',
+        'Built-in event system for easy integration with analytics, tracking, and funnel tools.',
+      icon: 'i-lucide-trending-up',
+      status: 'coming-soon',
     },
     {
-      title: 'Prose Components',
+      title: 'SEO Optimized',
       description:
-        'Customize HTML typography tags with Vue components to give your content a consistent style.',
-      icon: 'i-lucide-type',
+        'Meta tags, structured data, and performance optimizations built-in for better search rankings.',
+      icon: 'i-lucide-search',
+      status: 'available',
     },
     {
-      title: 'Deploy everywhere',
+      title: 'Mobile First',
       description:
-        'Nuxt Content works on all hosting providers, static, server, serverless & edge.',
+        'Responsive design with touch-optimized interactions and fast loading on all devices.',
+      icon: 'i-lucide-smartphone',
+      status: 'available',
+    },
+    {
+      title: 'Deploy Anywhere',
+      description:
+        'Works with Vercel, Netlify, Railway, and any platform that supports Nuxt applications.',
       icon: 'i-lucide-globe',
+      status: 'available',
     },
   ],
 };
 
-// Testimonials Data
+// Updated Founder Testimonial Data
+const founderTestimonialContent = {
+  headline: 'Founder Story',
+  quote:
+    'As founders, we waste too much time building websites instead of building businesses. This template gives you a professional foundation so you can focus on the work that actually moves the needle—talking to customers and iterating on your product.',
+  user: {
+    name: 'Drew MacGibbon',
+    description: 'Founder & Developer',
+    avatar: {
+      src: 'https://avatars.githubusercontent.com/u/739984?v=4',
+      alt: 'Drew MacGibbon',
+    },
+  },
+};
+
+// Updated Getting Started Data
+const gettingStartedContent = {
+  title: 'Ready to validate your idea?',
+  subtitle:
+    'Get a professional website running in minutes, not weeks. Focus on your customers, not CSS.',
+  codeLabel: 'Quick start:',
+  codeSnippet: `git clone ${businessConfig.contact.secondary}
+cd your-startup-website
+pnpm install
+pnpm dev`,
+  links: [
+    {
+      label: 'Get Template',
+      size: 'lg',
+      color: 'secondary',
+      trailingIcon: 'i-lucide-users',
+      to: businessConfig.contact.primary,
+      target: '_blank',
+    },
+    {
+      label: 'View Documentation',
+      size: 'lg',
+      variant: 'ghost',
+      color: 'neutral',
+      trailingIcon: 'i-lucide-star',
+      to: businessConfig.contact.secondary,
+      target: '_blank',
+    },
+  ],
+};
+
 const testimonialsContent = {
   headline: 'Testimonials',
   title: 'What our users say',
@@ -220,20 +281,6 @@ const testimonialsContent = {
     },
     // ... (include all other testimonials from original)
   ],
-};
-
-// Founder Testimonial Data
-const founderTestimonialContent = {
-  quote:
-    'Nuxt UI, born from a desire to improve Vue component development, is the go-to library for building modern web interfaces. We aim to provide you with a comprehensive set of tools to create and customize your next UI while maintaining the best developer experience.',
-  user: {
-    name: 'Benjamin Canac',
-    description: 'Author of Nuxt UI',
-    avatar: {
-      src: 'https://avatars.githubusercontent.com/u/739984?v=4',
-      alt: 'Benjamin Canac',
-    },
-  },
 };
 
 // FAQ Data
@@ -274,20 +321,6 @@ const faqContent = {
   ],
 };
 
-// Getting Started Data
-const gettingStartedContent = {
-  title: 'Ready to Ship Faster?',
-  subtitle:
-    'Get started in minutes with our proven template and join our growing community of developers.',
-  codeLabel: 'Quick start:',
-  codeSnippet: `git clone ${businessConfig.contact.secondary}
-cd nuxt-launch-kit
-pnpm install
-pnpm dev`,
-  primaryCta: 'Join Our Community',
-  secondaryCta: 'Star on GitHub',
-};
-
 // SEO setup
 useSeoMeta({
   title: `${businessConfig.business.name} - Ship faster with proven components`,
@@ -306,7 +339,8 @@ useSeoMeta({
   <UPageBody>
     <ISectionHero :content="heroContent" />
     <ISectionOverview :content="businessFeaturesContent" />
-    <ISectionFeaturesPrimary :content="featuresContent" />
+
+    <ISectionFeatureGrid :content="featuresContent" />
 
     <ISectionFeature :content="featureHighlightContent" />
 
@@ -314,25 +348,7 @@ useSeoMeta({
     <UPageSection
       :title="gettingStartedContent.title"
       :description="gettingStartedContent.subtitle"
-      :links="[
-        {
-          label: gettingStartedContent.primaryCta,
-          size: 'lg',
-          color: 'secondary',
-          trailingIcon: 'i-lucide-users',
-          to: businessConfig.contact.primary,
-          target: '_blank',
-        },
-        {
-          label: gettingStartedContent.secondaryCta,
-          size: 'lg',
-          variant: 'ghost',
-          color: 'neutral',
-          trailingIcon: 'i-lucide-star',
-          to: businessConfig.contact.secondary,
-          target: '_blank',
-        },
-      ]"
+      :links="gettingStartedContent.links"
     >
       <template #body>
         <UCard variant="subtle" class="bg-elevated/50">

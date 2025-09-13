@@ -3,7 +3,12 @@ interface Props {
   content: {
     title: string;
     description: string;
-    features: Array<{ title: string; description: string; icon: string }>;
+    features: Array<{
+      title: string;
+      description: string;
+      icon: string;
+      status?: 'available' | 'coming-soon';
+    }>;
   };
 }
 
@@ -14,11 +19,40 @@ const { content } = defineProps<Props>();
   <UPageSection
     :title="content.title"
     :description="content.description"
-    :features="content.features"
     orientation="vertical"
     :ui="{
-      features: 'sm:grid-cols-2 lg:grid-cols-3 gap-8',
       container: 'py-16 sm:py-24 lg:py-32',
     }"
-  />
+  >
+    <!-- Custom features slot to add status indicators -->
+    <template #features>
+      <div
+        v-for="(feature, index) in content.features"
+        :key="index"
+        class="relative"
+      >
+        <!-- Feature Card -->
+        <UPageFeature
+          :description="feature.description"
+          :icon="feature.icon"
+          :class="{
+            'opacity-75': feature.status === 'coming-soon',
+          }"
+        >
+          <template #title>
+            {{ feature.title }}
+            <UBadge
+              v-if="feature.status === 'coming-soon'"
+              variant="soft"
+              color="warning"
+              size="sm"
+              class="ml-2"
+            >
+              Coming Soon
+            </UBadge>
+          </template>
+        </UPageFeature>
+      </div>
+    </template>
+  </UPageSection>
 </template>
