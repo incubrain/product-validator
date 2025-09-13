@@ -26,7 +26,6 @@ COPY package.json pnpm-lock.yaml .npmrc tsconfig.json nuxt.config.ts .gitignore 
 COPY app ./app
 COPY shared ./shared  
 COPY theme ./theme
-COPY wip-layers ./wip-layers
 
 # Copy other workspace directories 11111if they exist
 COPY public ./public

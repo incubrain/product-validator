@@ -8,11 +8,11 @@ import { businessConfig } from '#shared/config/business';
 const heroContent = {
   badge: {
     icon: 'i-lucide-rocket',
-    text: 'Production-ready Nuxt template',
+    text: 'Zero friction, maximum focus',
   },
-  headline: 'Ship your startup idea faster',
+  headline: 'Ship your startup, skip the busywork',
   subheadline:
-    'A production-ready Nuxt template designed for founders and businesses who want to validate ideas quickly. Focus on what matters—your product and customers—while we handle the website foundation with modern theming, extensible components, and integrated content management.',
+    'A ruthlessly focused template that cuts developer friction and business overhead. Spend your time on customers and revenue, not configuration and maintenance.',
   primaryCta: { text: 'Get Template', icon: 'i-lucide-download' },
   secondaryCta: { text: 'View on GitHub', icon: 'i-lucide-github' },
   technologies: [
@@ -203,6 +203,40 @@ const businessFeaturesContent = {
   ],
 };
 
+// Add new philosophy section data
+const philosophyContent = {
+  headline: 'Philosophy',
+  title: 'Cut the fat, focus on revenue',
+  description:
+    'Every decision removes friction so you can spend time on what actually grows your business.',
+  principles: [
+    {
+      title: 'No Contact Forms',
+      description:
+        'Direct links to calendars, email, and messaging apps. Skip validation, storage, and spam management.',
+      icon: 'i-lucide-link',
+    },
+    {
+      title: 'External Integrations',
+      description:
+        'Connect to existing tools instead of building custom solutions. Reduce maintenance overhead.',
+      icon: 'i-lucide-puzzle',
+    },
+    {
+      title: 'Essential Only',
+      description:
+        'Every feature included has a clear business purpose. No bloat, no "might need someday" code.',
+      icon: 'i-lucide-target',
+    },
+    {
+      title: 'Zero Lock-in',
+      description:
+        'Use standard technologies and external services. Switch providers without rebuilding.',
+      icon: 'i-lucide-unlock',
+    },
+  ],
+};
+
 // Updated Founder Testimonial Data
 const founderTestimonialContent = {
   headline: 'Founder Story',
@@ -338,6 +372,8 @@ useSeoMeta({
 <template>
   <UPageBody>
     <ISectionHero :content="heroContent" />
+    <ISectionPhilosophy :content="philosophyContent" />
+
     <ISectionOverview :content="businessFeaturesContent" />
 
     <ISectionFeatureGrid :content="featuresContent" />

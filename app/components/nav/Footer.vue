@@ -39,38 +39,45 @@ const getCTAUrl = (action: string) => {
       <UContainer class="py-8 lg:py-12 rounded-t-lg">
         <!-- Brand Section -->
         <div class="space-y-4">
-          <div class="flex items-center space-x-2">
-            <ILogo size="md" />
+          <div
+            class="flex gap-2 border border-dashed items-center rounded-md border-secondary p-4"
+          >
+            <div class="space-y-4">
+              <ILogo size="md" />
+              <div
+                class="text-toned max-w-md leading-relaxed font-family-written text-lg"
+              >
+                {{ businessConfig.business.description }}.
+                {{ businessConfig.business.tagline }}.
+              </div>
+            </div>
+            <div class="flex flex-col space-x-3">
+              <div>
+                <UButton
+                  v-for="social in socialLinks"
+                  :key="social.label"
+                  variant="ghost"
+                  color="neutral"
+                  size="sm"
+                  square
+                  :to="social.to"
+                  :target="social.target"
+                  :aria-label="social.label"
+                  class="hover:text-primary transition-colors"
+                >
+                  <UIcon :name="social.icon" class="size-4" />
+                </UButton>
+              </div>
+              <UButton
+                :label="`${ctaButtons.primary.label}`"
+                color="secondary"
+                variant="link"
+                :leading-icon="ctaButtons.primary.icon"
+                :to="getCTAUrl(ctaButtons.primary.action)"
+                target="_blank"
+              />
+            </div>
           </div>
-          <p class="text-muted max-w-md leading-relaxed">
-            {{ businessConfig.business.description }}.
-            {{ businessConfig.business.tagline }}.
-          </p>
-          <div class="flex space-x-3 pt-2">
-            <UButton
-              v-for="social in socialLinks"
-              :key="social.label"
-              variant="ghost"
-              color="neutral"
-              size="sm"
-              square
-              :to="social.to"
-              :target="social.target"
-              :aria-label="social.label"
-              class="hover:text-primary transition-colors"
-            >
-              <UIcon :name="social.icon" class="size-4" />
-            </UButton>
-          </div>
-          <UButton
-            :label="`${ctaButtons.primary.label}`"
-            color="secondary"
-            variant="outline"
-            size="sm"
-            :leading-icon="ctaButtons.primary.icon"
-            :to="getCTAUrl(ctaButtons.primary.action)"
-            target="_blank"
-          />
         </div>
       </UContainer>
     </template>
