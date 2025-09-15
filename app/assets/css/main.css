@@ -3,8 +3,14 @@
 
 @import './tokens/colors.css';
 
-@import "./tokens/typography.css";
+@import './tokens/typography.css';
 /* @import "./tokens/layout.css"; */
+
+@layer base {
+  * {
+    border-color: var(--ui-border);
+  }
+}
 
 @source "../../../theme";
 @source "../../../shared/config/theme.ts";

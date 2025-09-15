@@ -42,31 +42,36 @@
   --font-weight-black: 900;
 }
 
-h1,
-h2,
-h3,
-h4,
-h5,
-h6,
-.heading {
-  font-family: var(--font-family-heading);
+@layer base {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6 {
+    font-family: var(--font-family-heading);
+  }
+
+  body {
+    font-family: var(--font-family-body);
+  }
+
+  code,
+  pre {
+    font-family: var(--font-family-code);
+  }
 }
 
-body,
-p,
-span,
-a,
-li,
-td,
-th,
-input,
-button,
-textarea {
-  font-family: var(--font-family-body);
-}
+@layer utilities {
+  .font-written {
+    font-family: var(--font-family-written) !important;
+  }
 
-code,
-pre,
-.code {
-  font-family: var(--font-family-code);
+  .font-heading {
+    font-family: var(--font-family-heading) !important;
+  }
+
+  .font-code {
+    font-family: var(--font-family-code) !important;
+  }
 }
