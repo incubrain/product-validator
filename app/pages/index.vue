@@ -1,20 +1,20 @@
 <script setup lang="ts">
 import { businessConfig } from '#shared/config/business';
 
-// 🎯 ALL SECTION CONTENT DATA CONSOLIDATED HERE
-
-// Hero Section Data
-// Updated Hero Section Data
+// ===============================
+// HERO
+// ===============================
 const heroContent = {
-  badge: {
-    icon: 'i-lucide-rocket',
-    text: 'Zero friction, maximum focus',
-  },
-  headline: 'Ship your startup, skip the busywork',
+  badge: { icon: 'i-lucide-bolt', text: 'Open-source template' },
+  headline: 'Clone · Configure · Validate — Today',
   subheadline:
-    'A ruthlessly focused template that cuts developer friction and business overhead. Spend your time on customers and revenue, not configuration and maintenance.',
-  primaryCta: { text: 'Get Template', icon: 'i-lucide-download' },
-  secondaryCta: { text: 'View on GitHub', icon: 'i-lucide-github' },
+    'A Nuxt template laser-focused on one question: “Should we build it?” Ship a high-signal landing page fast, share it widely, and learn from A/B tests + analytics without vendor lock-in.',
+  primaryCta: { text: 'Validator Course', icon: 'i-lucide-play' },
+  secondaryCta: { text: 'Template (Free)', icon: 'i-lucide-download' },
+  tertiaryCta: {
+    text: 'Submit for Public Critique',
+    icon: 'i-lucide-message-square',
+  },
   technologies: [
     { name: 'Nuxt', icon: 'i-logos-nuxt-icon', version: 'v4' },
     { name: 'Nuxt UI', icon: 'i-logos-nuxt-icon', version: 'v4' },
@@ -25,223 +25,191 @@ const heroContent = {
       version: 'Latest',
     },
     { name: 'TypeScript', icon: 'i-logos-typescript-icon', version: 'v5.8+' },
-    { name: 'Nuxt Content', icon: 'i-lucide-file-text', version: 'v3+' },
   ],
 };
 
-// Updated Features Section Data
-const featuresContent = {
-  headline: 'Features',
-  title: 'Everything you need to ship fast',
+// ===============================
+// PHILOSOPHY (Validation-first)
+// ===============================
+const philosophyContent = {
+  headline: 'Validation-first',
+  title: 'Cut scope. Save time. Get evidence.',
   description:
-    'Pre-configured with best practices so you can focus on building your business, not configuring tools.',
+    'Validation is a learning problem, not a features problem. This template removes drag so you can publish a high-signal page today and get real feedback tomorrow.',
+  principles: [
+    {
+      title: 'Focused speed',
+      description:
+        'Ship only what produces signal: clear headline, value prop, and CTA.',
+      icon: 'i-lucide-flag-triangle-right',
+    },
+    {
+      title: 'Social-first distribution',
+      description:
+        'SEO is minimal by design; real validation comes from sharing to people and communities now.',
+      icon: 'i-lucide-share-2',
+    },
+    {
+      title: 'Evidence over opinions',
+      description:
+        'A/B variants and lightweight events guide iteration with concrete data.',
+      icon: 'i-lucide-bar-chart-3',
+    },
+    {
+      title: 'Open analytics pipeline',
+      description:
+        'Nuxt events emit structured payloads; connect any analytics or data sink you prefer.',
+      icon: 'i-lucide-webhook',
+    },
+  ],
+};
+
+// ===============================
+// THE 1-DAY FLOW (repurpose Overview section)
+// ===============================
+const businessFeaturesContent = {
+  title: 'The 1-Day Flow',
+  description:
+    'A clear path from idea to first signal. Follow the steps, share widely, learn fast.',
   features: [
     {
-      title: 'Instant Theming',
+      title: 'Clone',
       description:
-        '20 curated font pairings and 3 distinct color palettes. Switch themes with a single config change.',
-      icon: 'i-lucide-palette',
-      class: 'lg:row-span-1',
-      component: 'theme-palette', // Custom component identifier
+        'Pull the repo, install, and run locally in minutes. Everything is pre-wired.',
+      icon: 'i-lucide-download',
+      status: 'available',
     },
     {
-      title: 'Extensible Components',
+      title: 'Configure',
       description:
-        'Built on Nuxt UI v4 with Tailwind Variants. Extend or wrap components using the same API patterns.',
-      icon: 'i-lucide-puzzle',
-      class: 'lg:col-span-2 lg:row-span-1',
-      orientation: 'horizontal',
-      component: 'code-example', // Show code snippet
+        'Set your headline, value prop, CTA, and email capture. No complex CMS required.',
+      icon: 'i-lucide-settings-2',
+      status: 'available',
     },
     {
-      title: 'Layered Design System',
+      title: 'Launch & Share',
       description:
-        'Four-layer background hierarchy (default, muted, elevated, accented) with pattern support coming soon.',
-      icon: 'i-lucide-layers',
-      class: 'lg:row-span-2',
-      component: 'layer-stack', // Keep existing layer visualization
+        'Deploy to Vercel/Netlify/Railway and push to your social circle, communities, and influencers.',
+      icon: 'i-lucide-rocket',
+      status: 'available',
     },
     {
-      title: 'Content Management',
+      title: 'Measure',
       description:
-        'Integrated blog system with Nuxt Content v3+ for markdown-based publishing.',
-      icon: 'i-lucide-file-text',
-      class: 'lg:col-span-2 lg:row-span-1',
-      orientation: 'horizontal',
-      reverse: true,
-      component: 'content-demo', // Show blog preview
+        'Turn on lightweight analytics and A/B tests. Track clicks, signups, and message resonance.',
+      icon: 'i-lucide-activity',
+      status: 'available',
     },
     {
-      title: 'Analytics Ready',
+      title: 'Iterate',
       description:
-        'Event system for tracking, funnels, and analytics integration (coming soon).',
-      icon: 'i-lucide-bar-chart',
-      class: 'lg:col-span-1 lg:row-span-1',
-      component: 'analytics-chart', // Show mini chart/dashboard
+        'Refine copy, hero, and CTA based on real signals — not guesswork.',
+      icon: 'i-lucide-rotate-cw',
+      status: 'available',
     },
   ],
 };
 
-// Updated Feature Highlight Data
+// ===============================
+// VALIDATION TOOLS (repurpose Feature Grid)
+// ===============================
+const featuresContent = {
+  headline: 'Validation',
+  title: 'Tools that turn visits into learnings',
+  description:
+    'Built-in levers to get your page in front of people and extract signal quickly — without locking you into a specific analytics vendor.',
+  features: [
+    {
+      title: 'A/B Testing (copy & CTA)',
+      description:
+        'Swap headlines, subheads, and CTAs with simple flags. Compare performance quickly.',
+      icon: 'i-lucide-split',
+      class: 'lg:row-span-1',
+      component: 'ab-testing',
+    },
+    {
+      title: 'Nuxt Events → Any Analytics',
+      description:
+        'Structured events for views, clicks, and conversions. Wire them to your preferred analytics or data sink.',
+      icon: 'i-lucide-line-chart',
+      class: 'lg:col-span-2 lg:row-span-1',
+      orientation: 'horizontal',
+      component: 'analytics-chart',
+    },
+    {
+      title: 'Share & Feedback Playbook',
+      description:
+        'Prompts and checklists for X/Twitter, LinkedIn, Reddit, Discord, and DMs to drive fast signal.',
+      icon: 'i-lucide-share',
+      class: 'lg:row-span-2',
+      component: 'playbook-cards',
+    },
+    {
+      title: 'Optional Email Capture',
+      description:
+        'Collect interest without a backend. Bring your own provider; wire up in the event hook.',
+      icon: 'i-lucide-inbox',
+      class: 'lg:col-span-1 lg:row-span-1',
+      component: 'email-capture',
+    },
+  ],
+};
+
+// ===============================
+// HIGHLIGHTS (repurpose Feature Highlight)
+// ===============================
 const featureHighlightContent = [
   {
-    headline: 'Theming',
-    title: 'Theme your brand in minutes, not hours',
+    headline: 'DX',
+    title: 'Scale if you need. Stay minimal if you don’t.',
     description:
-      'Choose from 20 expertly paired fonts and 3 color palettes. More themes added regularly. Background patterns, gradients, and textures system in development.',
+      'Clean structure on a modern, standards-first stack. Extend only after you’ve validated.',
     features: [
       {
-        title: '20 Font Pairings',
-        description:
-          'Professionally curated typography combinations that work beautifully together across all devices.',
-        icon: 'i-lucide-type',
-      },
-      {
-        title: '3 Color Systems',
-        description:
-          'Carefully designed color palettes with proper contrast ratios and accessibility considerations.',
-        icon: 'i-lucide-palette',
-      },
-    ],
-    image: 'https://picsum.photos/600/400?random=1',
-    orientation: 'horizontal',
-  },
-  {
-    headline: 'Development',
-    title: 'Built for extensibility and performance',
-    description:
-      'Native Nuxt UI v4 integration with Tailwind Variants API. Extend components or build your own component library using familiar patterns.',
-    features: [
-      {
-        title: 'Nuxt UI v4 Native',
-        description:
-          'Latest version with full TypeScript support and modern Vue 3 composition patterns.',
+        title: 'Nuxt 4 + TypeScript',
+        description: 'Fast DX, composables, clear typings.',
         icon: 'i-logos-nuxt-icon',
       },
       {
-        title: 'Component Wrapping',
+        title: 'Tailwind v4 + Nuxt UI',
         description:
-          'Extend Nuxt UI components with custom variants while maintaining API compatibility.',
-        icon: 'i-lucide-layers',
+          'Design tokens via utilities; extend with Tailwind Variants.',
+        icon: 'i-lucide-palette',
       },
     ],
-    image: 'https://picsum.photos/600/400?random=2',
+    image: 'https://picsum.photos/600/400?random=12',
+    orientation: 'horizontal',
+  },
+  {
+    headline: 'Community',
+    title: 'Public critiques & optional coaching',
+    description:
+      'Submit your validation page for a recorded YouTube critique (public). Upgrade to 1:1 coaching for deeper help.',
+    features: [
+      {
+        title: 'Recorded Public Critiques',
+        description: 'Actionable reviews on messaging, clarity, and friction.',
+        icon: 'i-lucide-video',
+      },
+      {
+        title: '1:1 Coaching (add-on)',
+        description: 'Hands-on work on offer, positioning, and variants.',
+        icon: 'i-lucide-user-round',
+      },
+    ],
+    image: 'https://picsum.photos/600/400?random=13',
     orientation: 'horizontal',
     reverse: true,
   },
 ];
 
-// Updated Business Features Data
-const businessFeaturesContent = {
-  title: 'Focus on your business, not your website',
-  description:
-    'Everything pre-configured so you can validate ideas and serve customers from day one.',
-  features: [
-    {
-      title: 'Instant Setup',
-      description:
-        'Clone, install, and deploy in under 5 minutes. No complex configuration required.',
-      icon: 'i-lucide-zap',
-      status: 'available', // available | coming-soon
-    },
-    {
-      title: 'Blog System',
-      description:
-        'Nuxt Content v3+ integration for markdown-based blog posts with full theming support.',
-      icon: 'i-lucide-edit',
-      status: 'coming-soon',
-    },
-    {
-      title: 'Modern Stack',
-      description:
-        'Nuxt v4, TypeScript, Tailwind v4, and Tailwind Variants for maintainable, scalable code.',
-      icon: 'i-lucide-code',
-      status: 'available',
-    },
-    {
-      title: 'Theme Flexibility',
-      description:
-        'Switch between font pairs and color schemes instantly. More options added regularly.',
-      icon: 'i-lucide-paintbrush',
-      status: 'available',
-    },
-    {
-      title: 'Component Library',
-      description:
-        'Extend Nuxt UI components or build your own using the same Tailwind Variants API.',
-      icon: 'i-lucide-box',
-      status: 'available',
-    },
-    {
-      title: 'Analytics Ready',
-      description:
-        'Built-in event system for easy integration with analytics, tracking, and funnel tools.',
-      icon: 'i-lucide-trending-up',
-      status: 'coming-soon',
-    },
-    {
-      title: 'SEO Optimized',
-      description:
-        'Meta tags, structured data, and performance optimizations built-in for better search rankings.',
-      icon: 'i-lucide-search',
-      status: 'available',
-    },
-    {
-      title: 'Mobile First',
-      description:
-        'Responsive design with touch-optimized interactions and fast loading on all devices.',
-      icon: 'i-lucide-smartphone',
-      status: 'available',
-    },
-    {
-      title: 'Deploy Anywhere',
-      description:
-        'Works with Vercel, Netlify, Railway, and any platform that supports Nuxt applications.',
-      icon: 'i-lucide-globe',
-      status: 'available',
-    },
-  ],
-};
-
-// Add new philosophy section data
-const philosophyContent = {
-  headline: 'Philosophy',
-  title: 'Cut the fat, focus on revenue',
-  description:
-    'Every decision removes friction so you can spend time on what actually grows your business.',
-  principles: [
-    {
-      title: 'No Contact Forms',
-      description:
-        'Direct links to calendars, email, and messaging apps. Skip validation, storage, and spam management.',
-      icon: 'i-lucide-link',
-    },
-    {
-      title: 'External Integrations',
-      description:
-        'Connect to existing tools instead of building custom solutions. Reduce maintenance overhead.',
-      icon: 'i-lucide-puzzle',
-    },
-    {
-      title: 'Essential Only',
-      description:
-        'Every feature included has a clear business purpose. No bloat, no "might need someday" code.',
-      icon: 'i-lucide-target',
-    },
-    {
-      title: 'Zero Lock-in',
-      description:
-        'Use standard technologies and external services. Switch providers without rebuilding.',
-      icon: 'i-lucide-unlock',
-    },
-  ],
-};
-
-// Updated Founder Testimonial Data
+// ===============================
+// FOUNDER NOTE
+// ===============================
 const founderTestimonialContent = {
-  headline: 'Founder Story',
+  headline: 'Founder Note',
   quote:
-    'As founders, we waste too much time building websites instead of building businesses. This template gives you a professional foundation so you can focus on the work that actually moves the needle—talking to customers and iterating on your product.',
+    'Most founders overbuild. Validation is about speed, clarity, and evidence. This template and course exist to remove friction so you can learn from real people — fast.',
   user: {
     name: 'Drew MacGibbon',
     description: 'Founder & Developer',
@@ -252,135 +220,177 @@ const founderTestimonialContent = {
   },
 };
 
-// Updated Getting Started Data
+// ===============================
+// GETTING STARTED
+// ===============================
 const gettingStartedContent = {
-  title: 'Ready to validate your idea?',
+  title: 'Validate your idea today',
   subtitle:
-    'Get a professional website running in minutes, not weeks. Focus on your customers, not CSS.',
+    'Clone the template and join the $50 bundle waitlist. Shortest path from idea → evidence.',
   codeLabel: 'Quick start:',
   codeSnippet: `git clone ${businessConfig.contact.secondary}
-cd your-startup-website
+cd your-idea
 pnpm install
 pnpm dev`,
   links: [
     {
-      label: 'Get Template',
+      label: 'Get Validator Course',
       size: 'lg',
-      color: 'secondary',
-      trailingIcon: 'i-lucide-users',
-      to: businessConfig.contact.primary,
-      target: '_blank',
-    },
-    {
-      label: 'View Documentation',
-      size: 'lg',
-      variant: 'ghost',
-      color: 'neutral',
-      trailingIcon: 'i-lucide-star',
+      trailingIcon: 'i-lucide-play',
       to: businessConfig.contact.secondary,
       target: '_blank',
     },
+    {
+      label: 'Get Template (Free)',
+      size: 'lg',
+      color: 'neutral',
+      variant: 'ghost',
+      trailingIcon: 'i-lucide-download',
+      to: businessConfig.contact.primary,
+      target: '_blank',
+    },
   ],
 };
 
-const testimonialsContent = {
-  headline: 'Testimonials',
-  title: 'What our users say',
-  highlightCard: {
-    title: "Cloudflare's Workers LaunchPad",
-    description:
-      "NuxtHub is part of the Cloudflare's Workers Launchpad Cohort to make sure you get a first-class experience on top of Cloudflare's network.",
-    icon: 'i-logos-cloudflare-icon',
-    to: 'https://cloudflare.com',
-  },
-  testimonials: [
-    {
-      quote:
-        'NuxtHub is hands down the easiest way to get a project from zero to production on the Cloudflare stack!',
-      user: {
-        name: 'John Doe',
-        description: 'Software Engineer',
-        avatar: { src: 'https://i.pravatar.cc/150?img=1', alt: 'John Doe' },
-      },
-    },
-    // ... other testimonials (keeping them all)
-    {
-      quote:
-        'I love how NuxtHub combines, amplifies and simplifies the Cloudflare tooling with the wide and mature Nuxt ecosystem. I cannot wait to see how it will evolve and expand in the future!',
-      user: {
-        name: 'John Doe',
-        description: 'Software Engineer',
-        avatar: { src: 'https://i.pravatar.cc/150?img=2', alt: 'John Doe' },
-      },
-    },
-    // ... (include all other testimonials from original)
-  ],
-};
-
-// FAQ Data
+// ===============================
+// FAQ (tailored to course + critique + validation tools)
+// ===============================
 const faqContent = {
   headline: 'Support',
   title: 'Frequently asked questions',
   items: [
     {
-      label: 'What is Nuxt UI?',
-      content:
-        'Nuxt UI is a comprehensive UI library built specifically for Nuxt applications. It provides a rich set of fully-styled, accessible components that follow modern design principles and best practices. The library seamlessly integrates with Nuxt and includes features like dark mode support, customization options, and TypeScript compatibility.',
+      label: 'Is the template free and open-source?',
+      content: 'Yes. Free for personal and commercial use (see repo license).',
     },
     {
-      label: 'How do I install and set up Nuxt UI?',
+      label: 'How is the course priced?',
       content:
-        "You can install Nuxt UI by running 'npm install @nuxt/ui' in your project directory. Then add '@nuxt/ui' to your modules array in nuxt.config.ts. The library will automatically configure Tailwind CSS and provide all components ready to use in your application.",
+        'Pre-launch: $50 bundle (template setup + validation strategy). The standalone $20 setup course may be offered later.',
     },
     {
-      label: 'What components are included?',
+      label: 'What’s included in the Validator Bundle?',
       content:
-        'Nuxt UI includes over 100+ components covering forms, navigation, data display, feedback, overlays, and layout components. This includes buttons, inputs, modals, tables, charts, and much more. All components are fully accessible and customizable to match your design system.',
+        'Cloning/config, deploy, where to edit copy/CTAs, enabling events and variants, crafting A/B tests, social-first distribution, reading signals, and prioritizing iterations.',
     },
     {
-      label: 'Is Nuxt UI customizable?',
+      label: 'How do analytics work?',
       content:
-        "Yes! Nuxt UI is highly customizable. You can customize components using the 'ui' prop, CSS classes, or globally through your app.config.ts file. The library uses Tailwind CSS under the hood, making it easy to apply your brand colors, spacing, and typography throughout your application.",
+        'The template emits Nuxt events (views, clicks, conversions, variant views). You wire them to any analytics or data sink.',
     },
     {
-      label: 'What are the browser compatibility requirements?',
+      label: 'Are critiques public?',
       content:
-        'Nuxt UI supports all modern browsers including Chrome, Firefox, Safari, and Edge. The library follows web standards and uses progressive enhancement to ensure compatibility across different environments while maintaining excellent performance.',
+        'Yes — critiques are recorded on YouTube. Submit only if you’re comfortable with a public review.',
     },
     {
-      label: 'Is there documentation and support available?',
-      content:
-        'Yes! Nuxt UI provides comprehensive documentation with examples, API references, and guides. You can find community support through GitHub discussions, Discord, and Stack Overflow. The library is actively maintained with regular updates and bug fixes.',
+      label: 'Can I hire you?',
+      content: 'Yes. “Hire me” links are available in the nav and footer.',
     },
   ],
 };
 
-// SEO setup
+// (Optional) Testimonials — keep if you have real ones; otherwise omit or replace later
+const testimonialsContent = {
+  headline: 'Community Wins',
+  title: 'What early users say',
+  highlightCard: {
+    title: 'Real-world feedback',
+    description:
+      'Short, actionable critiques deliver outsized learning. Ship faster with clearer messaging.',
+    icon: 'i-lucide-megaphone',
+    to: '#',
+  },
+  testimonials: [
+    {
+      quote:
+        'Launched the same day, got feedback overnight, and iterated the copy by morning. The A/B flags are clutch.',
+      user: {
+        name: 'Alex P.',
+        description: 'Indie hacker',
+        avatar: { src: 'https://i.pravatar.cc/150?img=11', alt: 'Alex P.' },
+      },
+    },
+    {
+      quote:
+        'The critique video pinpointed exactly where my value prop was muddy. Conversion improved with a tighter CTA.',
+      user: {
+        name: 'Samira K.',
+        description: 'Founder',
+        avatar: { src: 'https://i.pravatar.cc/150?img=12', alt: 'Samira K.' },
+      },
+    },
+  ],
+};
+
+const ctaContent = {
+  title: 'Template + Validation Course',
+  subtitle: 'Everything you need to validate in a day.',
+  primaryButton: {
+    text: 'Get Course',
+    icon: 'i-lucide-download',
+  },
+  backCard: {
+    title: "Thanks — you're early 🎉",
+    description: "Lock in early-bird pricing. We'll notify you first.",
+    form: {
+      placeholder: 'you@company.com',
+      buttonText: 'Join Waitlist',
+    },
+    success: {
+      title: "You're on the list!",
+      description:
+        "We'll email you at launch. In the meantime, clone the template and start validating.",
+      buttonText: 'Get Template',
+    },
+    progress: {
+      total: 100,
+      current: 11,
+      labels: {
+        priceIncrease: 'Price Increase After 100',
+        spotsFilled: 'Spots Filled',
+      },
+    },
+  },
+};
+
+// ===============================
+// SEO
+// ===============================
 useSeoMeta({
-  title: `${businessConfig.business.name} - Ship faster with proven components`,
-  description: `Production-ready Nuxt template with ${businessConfig.stats.components_included} components. Built with Nuxt 4, Tailwind v4, and Nuxt UI for rapid development.`,
+  title: `${businessConfig.business.name} — Validate in a day with Nuxt`,
+  description:
+    'Open-source Nuxt template plus paid courses ($20 / $50) to validate your idea fast. Clone, configure, launch, A/B test, emit events, and iterate — without vendor lock-in.',
   keywords: [
     'Nuxt template',
+    'idea validation',
+    'A/B testing',
+    'Nuxt events',
+    'analytics',
     'Tailwind v4',
     'Nuxt UI',
-    'Vue components',
-    'rapid development',
   ],
 });
 </script>
 
 <template>
   <UPageBody>
+    <!-- 1) HERO -->
     <ISectionHero :content="heroContent" />
+
+    <!-- 2) PHILOSOPHY (validation-first) -->
     <ISectionPhilosophy :content="philosophyContent" />
 
+    <!-- 3) THE 1-DAY FLOW -->
     <ISectionOverview :content="businessFeaturesContent" />
 
+    <!-- 4) VALIDATION TOOLS -->
     <ISectionFeatureGrid :content="featuresContent" />
 
+    <!-- 5) DX + 6) COMMUNITY & COACHING -->
     <ISectionFeature :content="featureHighlightContent" />
 
-    <!-- Getting Started Section -->
+    <!-- 7) GETTING STARTED -->
     <UPageSection
       :title="gettingStartedContent.title"
       :description="gettingStartedContent.subtitle"
@@ -398,8 +408,15 @@ useSeoMeta({
       </template>
     </UPageSection>
 
-    <ISectionTestimonials :content="testimonialsContent" />
+    <!-- 8) FOUNDER NOTE -->
     <ISectionFounder :content="founderTestimonialContent" />
+
+    <ISectionCTA :content="ctaContent" />
+
+    <!-- Optional: Testimonials (swap with real ones later) -->
+    <ISectionTestimonials :content="testimonialsContent" />
+
+    <!-- FAQ -->
     <ISectionFAQ :content="faqContent" />
   </UPageBody>
 </template>

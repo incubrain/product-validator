@@ -11,7 +11,6 @@ interface Props {
 }
 
 const { content } = defineProps<Props>();
-
 </script>
 
 <template>
@@ -55,10 +54,9 @@ const { content } = defineProps<Props>();
       <div class="flex flex-col sm:flex-row justify-center gap-4">
         <UButton
           size="xl"
-          color="neutral"
           variant="solid"
           :trailing-icon="content.primaryCta.icon"
-          class="px-8 py-4 text-lg font-semibold text-gray-900 bg-white shadow-xl hover:bg-gray-100"
+          class="px-8 py-4 text-lg font-semibold"
         >
           {{ content.primaryCta.text }}
         </UButton>
@@ -66,9 +64,9 @@ const { content } = defineProps<Props>();
         <UButton
           size="xl"
           color="neutral"
-          variant="outline"
+          variant="ghost"
           :leading-icon="content.secondaryCta.icon"
-          class="px-8 py-4 text-lg font-semibold text-white border-white/20 hover:bg-white/10"
+          class="px-8 py-4 text-lg font-semibold"
         >
           {{ content.secondaryCta.text }}
         </UButton>
