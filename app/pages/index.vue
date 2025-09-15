@@ -6,15 +6,15 @@ import { businessConfig } from '#shared/config/business';
 // ===============================
 const heroContent = {
   badge: { icon: 'i-lucide-bolt', text: 'Open-source template' },
-  headline: 'Clone · Configure · Validate — Today',
+  headline: 'Clone · Configure · Validate — in a day',
   subheadline:
-    'A Nuxt template laser-focused on one question: “Should we build it?” Ship a high-signal landing page fast, share it widely, and learn from A/B tests + analytics without vendor lock-in.',
-  primaryCta: { text: 'Validator Course', icon: 'i-lucide-play' },
-  secondaryCta: { text: 'Template (Free)', icon: 'i-lucide-download' },
-  tertiaryCta: {
-    text: 'Submit for Public Critique',
-    icon: 'i-lucide-message-square',
+    'A Nuxt template laser-focused on one question: “Should we build it?” Ship a high-signal landing page fast, share it to real people, and learn from A/B tests + open Nuxt events — no vendor lock-in.',
+  primaryCta: {
+    text: 'Get Course ($50 early-bird)',
+    icon: 'i-lucide-play',
+    href: 'https://whop.com/incubrain-community/product-validator',
   },
+  secondaryCta: { text: 'Template (Free)', icon: 'i-lucide-download' },
   technologies: [
     { name: 'Nuxt', icon: 'i-logos-nuxt-icon', version: 'v4' },
     { name: 'Nuxt UI', icon: 'i-logos-nuxt-icon', version: 'v4' },
@@ -35,7 +35,7 @@ const philosophyContent = {
   headline: 'Validation-first',
   title: 'Cut scope. Save time. Get evidence.',
   description:
-    'Validation is a learning problem, not a features problem. This template removes drag so you can publish a high-signal page today and get real feedback tomorrow.',
+    'Validation is a learning problem, not a features problem. Publish a high-signal page today and get real feedback tomorrow. Target: 25 visits → 5 CTA clicks → 1 signup before you invest more.',
   principles: [
     {
       title: 'Focused speed',
@@ -184,7 +184,7 @@ const featureHighlightContent = [
     headline: 'Community',
     title: 'Public critiques & optional coaching',
     description:
-      'Submit your validation page for a recorded YouTube critique (public). Upgrade to 1:1 coaching for deeper help.',
+      'Submit your validation page for a recorded YouTube critique (public). Watch examples and build-in-public updates on our channel.',
     features: [
       {
         title: 'Recorded Public Critiques',
@@ -200,6 +200,8 @@ const featureHighlightContent = [
     image: 'https://picsum.photos/600/400?random=13',
     orientation: 'horizontal',
     reverse: true,
+    // Add a channel URL field if your component supports it; otherwise link inline where rendered:
+    channelUrl: 'https://www.youtube.com/@Incubrain',
   },
 ];
 
@@ -226,7 +228,7 @@ const founderTestimonialContent = {
 const gettingStartedContent = {
   title: 'Validate your idea today',
   subtitle:
-    'Clone the template and join the $50 bundle waitlist. Shortest path from idea → evidence.',
+    'Clone the template and get the $50 early-bird bundle (50 spots). Shortest path from idea → evidence.',
   codeLabel: 'Quick start:',
   codeSnippet: `git clone ${businessConfig.contact.secondary}
 cd your-idea
@@ -234,10 +236,10 @@ pnpm install
 pnpm dev`,
   links: [
     {
-      label: 'Get Validator Course',
+      label: 'Get Course ($50 early-bird)',
       size: 'lg',
       trailingIcon: 'i-lucide-play',
-      to: businessConfig.contact.secondary,
+      to: 'https://whop.com/incubrain-community/product-validator',
       target: '_blank',
     },
     {
@@ -266,7 +268,7 @@ const faqContent = {
     {
       label: 'How is the course priced?',
       content:
-        'Pre-launch: $50 bundle (template setup + validation strategy). The standalone $20 setup course may be offered later.',
+        '$50 early-bird bundle (template setup + validation strategy). First 50 spots at this price, then it increases.',
     },
     {
       label: 'What’s included in the Validator Bundle?',
@@ -279,9 +281,9 @@ const faqContent = {
         'The template emits Nuxt events (views, clicks, conversions, variant views). You wire them to any analytics or data sink.',
     },
     {
-      label: 'Are critiques public?',
+      label: 'Where can I watch critiques?',
       content:
-        'Yes — critiques are recorded on YouTube. Submit only if you’re comfortable with a public review.',
+        'On our YouTube channel: https://www.youtube.com/@Incubrain — critiques are public.',
     },
     {
       label: 'Can I hire you?',
@@ -360,7 +362,7 @@ const ctaContent = {
 useSeoMeta({
   title: `${businessConfig.business.name} — Validate in a day with Nuxt`,
   description:
-    'Open-source Nuxt template plus paid courses ($20 / $50) to validate your idea fast. Clone, configure, launch, A/B test, emit events, and iterate — without vendor lock-in.',
+    'Open-source Nuxt template plus $50 video course to validate your idea fast. Clone, configure, launch, A/B test, emit events, and iterate — without vendor lock-in.',
   keywords: [
     'Nuxt template',
     'idea validation',

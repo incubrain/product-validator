@@ -1,21 +1,32 @@
 # Nuxt Launch Kit
 
-> **⚠️ Work in Progress** - This template is under active development
+> **⚠️ Validation-first Template** — Designed to answer *“Should we build it?”*
 
-A production-ready Nuxt template with layout components and modern tooling to help you ship faster.
+A minimal, production-ready **Nuxt 4 + Tailwind v4 + TypeScript** template to help you validate startup ideas fast. Ship a landing page in a day, share it widely, and learn from A/B tests + analytics without vendor lock-in.
+
+---
 
 ## 🌐 Live Demo
 
-Check out the live showcase at [https://launch-kit.incubrain.org](https://launch-kit.incubrain.org)
+See the live showcase: [https://launch-kit.incubrain.org](https://launch-kit.incubrain.org)
 
-## ✨ What's Included
+---
 
-- **Layout Components** - Stack, Grid, Container, ScrollBox, Float, and more
-- **Nuxt 4** - Latest framework features and performance
-- **Tailwind v4** - Cutting-edge CSS engine with Tailwind Variants
-- **Nuxt UI** - Professional component library
-- **TypeScript** - Full type safety throughout
-- **Content Components** - Image optimization, typography, and content blocks
+## ✨ Why This Template?
+
+Most founders overbuild. Validation is not about features — it’s about **evidence**.
+This template removes drag, decision paralysis, and perfectionism hell so you can focus on building a business not a ghost product!
+
+* **Landing Page in Minutes** — clone, configure, deploy
+* **A/B Testing** — try headline and CTA variants fast
+* **Nuxt Events → Any Analytics** — structured events, provider-agnostic
+* **Social-first Playbook** — prompts to share in communities and networks
+* **Optional Email Capture** — bring your own provider, no backend required
+* **Public Critiques on YouTube** — submit your page for a recorded review: [Incubrain YouTube](https://www.youtube.com/@Incubrain)
+
+We’re also **building this template in public**, using it for our own product, and documenting the process openly on YouTube.
+
+---
 
 ## 🚀 Quick Start
 
@@ -31,9 +42,20 @@ pnpm install
 pnpm dev
 ```
 
-## 📖 Documentation
+---
 
-Visit [https://launch-kit.incubrain.org](https://launch-kit.incubrain.org) to see component demos and usage examples.
+## 🎓 Course (Pre-launch Offer)
+
+Get the full **Template Setup + Product Validator** bundle:
+
+* Configure and deploy the template
+* Learn messaging, A/B tests, social-first distribution
+* Understand what signal to look for before you invest more
+
+👉 Available now on [Whop](https://whop.com/incubrain-community/product-validator)
+🎟 **\$50 early-bird (50 spots only)** — price increases after.
+
+---
 
 ## 🛠 Development
 
@@ -48,10 +70,16 @@ pnpm build
 pnpm preview
 ```
 
+---
+
 ## 📄 License
 
-MIT License - see [LICENSE](LICENSE) file for details.
+MIT License — see [LICENSE](LICENSE) file for details.
 
 ---
 
-**Note**: This is a work-in-progress template. Components and APIs may change as we iterate toward a stable release.
+### Notes
+
+* This is a **validation-first kit**, not a full CMS/blog boilerplate.
+* Components and APIs may evolve as we iterate.
+* Focus: **Clone · Configure · Validate — in a day**.

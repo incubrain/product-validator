@@ -8,9 +8,8 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/ui',
     '@vueuse/nuxt',
-    '@vueuse/motion/nuxt',
-    'nuxt-shiki',
     'nuxt-svgo',
+    '@nuxtjs/mdc',
   ],
 
   // ✅ DEVELOPMENT ONLY: All dev-specific configuration
@@ -65,7 +64,7 @@ export default defineNuxtConfig({
   },
 
   imports: {
-    dirs: ['~~/theme/*.ts', '~/providers/*.ts'],
+    dirs: ['~~/theme/*.ts'],
   },
 
   app: {
@@ -91,7 +90,6 @@ export default defineNuxtConfig({
         'success',
         'warning',
         'error',
-        'inverted',
       ],
     },
   },
@@ -108,12 +106,6 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/': { prerender: true },
-    '/blog': { isr: 3600 },
-    '/blog/**': { isr: true },
-    '/api/blog/**': {
-      cache: { maxAge: 60 * 10 },
-      headers: { 'cache-control': 's-maxage=600' },
-    },
   },
 
   components: [
@@ -147,20 +139,6 @@ export default defineNuxtConfig({
       'close': 'i-lucide-x',
       'search': 'i-lucide-search',
     },
-  },
-
-  shiki: {
-    defaultTheme: 'vitesse-dark',
-    defaultLang: 'typescript',
-    bundledLangs: [
-      'typescript',
-      'javascript',
-      'vue',
-      'vue-html',
-      'yaml',
-      'typespec',
-    ],
-    bundledThemes: ['vitesse-dark', 'vitesse-light'],
   },
 
   svgo: {
