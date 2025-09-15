@@ -1,6 +1,5 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { getBusinessRuntimeConfig } from './shared/config/business';
-
 import { fileURLToPath } from 'node:url';
 
 export default defineNuxtConfig({
@@ -11,6 +10,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     '@vueuse/motion/nuxt',
     'nuxt-shiki',
+    'nuxt-svgo',
   ],
 
   // ✅ DEVELOPMENT ONLY: All dev-specific configuration
@@ -143,9 +143,9 @@ export default defineNuxtConfig({
     aliases: {
       'arrow-left': 'i-lucide-arrow-left',
       'arrow-right': 'i-lucide-arrow-right',
-      check: 'i-lucide-check',
-      close: 'i-lucide-x',
-      search: 'i-lucide-search',
+      'check': 'i-lucide-check',
+      'close': 'i-lucide-x',
+      'search': 'i-lucide-search',
     },
   },
 
@@ -163,7 +163,9 @@ export default defineNuxtConfig({
     bundledThemes: ['vitesse-dark', 'vitesse-light'],
   },
 
-  tvBuild: {
-    enabled: true,
+  svgo: {
+    autoImportPath: './assets/svg/',
+    defaultImport: 'component',
+    customComponent: 'ISVG',
   },
 });
