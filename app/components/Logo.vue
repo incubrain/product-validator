@@ -11,12 +11,15 @@ withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <ULink to="/" class="flex items-center space-x-2">
-    <NuxtImg src="/favicon-96x96.png" width="36px" height="auto" />
-    <h6
-      class="font-bold underline text-base underline-offset-4 decoration-primary text-default m-0 leading-0"
-    >
-      NUXT LAUNCH KIT
+  <ULink to="/" class="flex items-center space-x-3">
+    <NuxtImg
+      src="/favicon-96x96.png"
+      width="36px"
+      height="auto"
+      class="p-1 rounded-full bg-inverted border"
+    />
+    <h6 class="font-bold text-base text-default m-0 leading-0">
+      Launch Kit
     </h6>
   </ULink>
 </template>

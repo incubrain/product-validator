@@ -1,5 +1,4 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
-import { getBusinessRuntimeConfig } from './shared/config/business';
 import { fileURLToPath } from 'node:url';
 
 export default defineNuxtConfig({
@@ -91,12 +90,6 @@ export default defineNuxtConfig({
         'warning',
         'error',
       ],
-    },
-  },
-
-  runtimeConfig: {
-    public: {
-      ...getBusinessRuntimeConfig(),
     },
   },
 

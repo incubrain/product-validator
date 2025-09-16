@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import { businessConfig } from '#shared/config/business';
+import { businessConfig, getFounderInfo } from '#shared/config/business';
 
 // ===============================
 // HERO
@@ -208,18 +208,20 @@ const featureHighlightContent = [
 // ===============================
 // FOUNDER NOTE
 // ===============================
-const founderTestimonialContent = {
-  headline: 'Founder Note',
-  quote:
-    'Most founders overbuild. Validation is about speed, clarity, and evidence. This template and course exist to remove friction so you can learn from real people — fast.',
+const founder = getFounderInfo();
+const founderSectionContent = {
+  headline: 'My Promise',
+  longMessage: founder.longMessage,
+  promise: founder.promise,
+  expertise: founder.expertise,
+  backgroundStory: founder.backgroundStory,
   user: {
-    name: 'Drew MacGibbon',
-    description: 'Founder & Developer',
-    avatar: {
-      src: 'https://avatars.githubusercontent.com/u/739984?v=4',
-      alt: 'Drew MacGibbon',
-    },
+    firstName: founder.firstName,
+    lastName: founder.lastName,
+    title: founder.title,
+    avatar: founder.avatar,
   },
+  socials: founder.socials,
 };
 
 // ===============================
@@ -328,31 +330,18 @@ const testimonialsContent = {
 const ctaContent = {
   title: 'Template + Validation Course',
   subtitle: 'Everything you need to validate in a day.',
+  price: '$50',
+  features: [
+    'Setup in minutes (Nuxt 4 + Tailwind v4)',
+    'A/B variants for headline & CTA',
+    'Social-first distribution playbook',
+    'No lock-in (Nuxt events → any analytics)',
+    'Optional public YouTube critique',
+  ],
   primaryButton: {
-    text: 'Get Course',
-    icon: 'i-lucide-download',
-  },
-  backCard: {
-    title: "Thanks — you're early 🎉",
-    description: "Lock in early-bird pricing. We'll notify you first.",
-    form: {
-      placeholder: 'you@company.com',
-      buttonText: 'Join Waitlist',
-    },
-    success: {
-      title: "You're on the list!",
-      description:
-        "We'll email you at launch. In the meantime, clone the template and start validating.",
-      buttonText: 'Get Template',
-    },
-    progress: {
-      total: 100,
-      current: 11,
-      labels: {
-        priceIncrease: 'Price Increase After 100',
-        spotsFilled: 'Spots Filled',
-      },
-    },
+    text: 'Buy Now',
+    action: 'external',
+    url: 'https://whop.com/incubrain-community/product-validator',
   },
 };
 
@@ -411,7 +400,7 @@ useSeoMeta({
     </UPageSection>
 
     <!-- 8) FOUNDER NOTE -->
-    <ISectionFounder :content="founderTestimonialContent" />
+    <ISectionFounder :content="founderSectionContent" />
 
     <ISectionCTA :content="ctaContent" />
 

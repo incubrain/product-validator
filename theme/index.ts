@@ -5,4 +5,4 @@ export type {
 } from './wrap/columns';
 
 // CONTENT RELATED
-export type { VideoVariants, VideoSlots } from './content/video';
+export type { VideoVariants, VideoSlots } from './video';

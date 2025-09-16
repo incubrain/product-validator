@@ -125,11 +125,11 @@
   --ui-border-inverted: var(--color-neutral-300); /* on light surfaces */
 
   /* TEXT */
-  --ui-text-dimmed: var(--color-neutral-500);
-  --ui-text-muted: var(--color-neutral-400);
-  --ui-text-toned: var(--color-neutral-300);
-  --ui-text: var(--color-neutral-200);
-  --ui-text-highlighted: var(--color-primary-100); /* brand-emphasis on dark */
+  --ui-text-dimmed: var(--color-neutral-400);
+  --ui-text-muted: var(--color-neutral-300);
+  --ui-text-toned: var(--color-neutral-200);
+  --ui-text: var(--color-neutral-100);
+  --ui-text-highlighted: var(--color-primary-200); /* brand-emphasis on dark */
   --ui-text-inverted: var(--color-neutral-900);    /* text on inverted/light */
 
   /* Links (brand-led; accessible on dark) */

@@ -15,11 +15,11 @@ const availableIcons = Object.keys(svgModules).reduce((acc, path) => {
 }, {} as Record<string, string[]>);
 
 /** groups & variants – match your folder names under ./assets/svg/<group>/<variant>.svg */
-type ArrowVariant = 'right' | 'left' | 'up' | 'down';
+type ArrowVariant = 'right' | 'left' | 'up' | 'down' | 'corner-line';
 type MarkVariant = 'check' | 'x';
 
 type Group = 'arrows' | 'marks';
-type Color = 'white' | 'black'
+type Color = 'white' | 'black';
 type FlipDirection = 'horizontal' | 'vertical' | 'both';
 
 type BaseProps = {
@@ -74,8 +74,8 @@ const transform = computed(() => {
 
 const style = computed(() => ({
   color: props.color,
-  width: props.size ? `${props.size}px` : undefined,
-  height: props.size ? `${props.size}px` : undefined,
+  width: props.size ? `${props.size}px` : '24px',
+  height: props.size ? `${props.size}px` : '24px',
   transform: transform.value || undefined,
   transformOrigin: 'center',
   transformBox: 'fill-box', // important for SVG
