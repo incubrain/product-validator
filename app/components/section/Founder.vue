@@ -31,8 +31,7 @@ const fullName = `${content.user.firstName} ${content.user.lastName}`;
     orientation="horizontal"
     class="bg-muted"
     :ui="{
-      container:
-        'flex flex-col lg:grid py-16 sm:py-24 lg:py-32 gap-8 sm:gap-8',
+      container: 'flex flex-col lg:grid py-16 sm:py-24 lg:py-32 gap-8 sm:gap-8',
     }"
   >
     <!-- This content goes in the LEFT side of the horizontal layout -->
@@ -91,23 +90,9 @@ const fullName = `${content.user.firstName} ${content.user.lastName}`;
       </div>
 
       <!-- Optional background story -->
-      <UDisclosure v-if="content.backgroundStory" :default-open="false">
-        <template #button>
-          <UButton
-            variant="ghost"
-            color="neutral"
-            size="sm"
-            trailing-icon="i-lucide-chevron-down"
-          >
-            Read my story
-          </UButton>
-        </template>
-        <template #panel>
-          <div class="mt-4 text-muted leading-relaxed">
-            <MDC :value="content.backgroundStory" />
-          </div>
-        </template>
-      </UDisclosure>
+      <div class="mt-4 text-muted leading-relaxed">
+        <MDC :value="content.backgroundStory" />
+      </div>
     </template>
 
     <div>

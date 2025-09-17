@@ -52,31 +52,6 @@ export interface BusinessConfig {
       timezone: string;
     };
   };
-
-  // Contact Information
-  contact: {
-    email: string;
-    phone: string;
-    business_hours: string;
-
-    // Primary/Secondary Contact Methods
-    primary: string;
-    secondary: string;
-
-    // Full URLs for schema.org integration
-    social: {
-      github: string;
-      linkedin: string;
-      twitter: string;
-      community: string;
-    };
-  };
-
-  // Goals/Conversion
-  goals: {
-    primary: string;
-    secondary: string;
-  };
 }
 
 export const businessConfig: BusinessConfig = {
@@ -149,31 +124,6 @@ export const businessConfig: BusinessConfig = {
       timezone: 'Asia/Kolkata',
     },
   },
-
-  // Contact Information
-  contact: {
-    email: 'mac@incubrain.org',
-    phone: '+91-8421399956',
-    business_hours: '24/7 Community Support',
-
-    // Primary/Secondary Contact Methods
-    primary: 'https://whop.com/c/incubrain-community/launch-kit',
-    secondary: 'https://github.com/incubrain/nuxt-launch-kit',
-
-    // Full URLs for schema.org integration
-    social: {
-      github: 'https://github.com/incubrain/nuxt-launch-kit',
-      linkedin: 'https://www.linkedin.com/company/incubrain',
-      twitter: 'https://twitter.com/incubrain',
-      community: 'https://whop.com/experiences/exp_3irNegyjJ8ahwA',
-    },
-  },
-
-  // Goals/Conversion
-  goals: {
-    primary: 'hire_me',
-    secondary: 'github_star',
-  },
 } as const;
 
 // Helper function to access nested config values
@@ -186,11 +136,9 @@ export function getBusinessConfig<T extends keyof BusinessConfig>(
 // Convenience exports for common usage patterns
 export const {
   business: businessInfo,
-  contact: contactInfo,
 } = businessConfig;
 
 // Type-safe getters for template usage
-export const getContactInfo = () => contactInfo;
 export const getBusinessInfo = () => businessInfo;
 export const getFounderInfo = () => businessInfo.founder;
 

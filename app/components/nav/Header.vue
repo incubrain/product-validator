@@ -1,22 +1,8 @@
 <!-- app/components/i/nav/Header.vue -->
 <script setup lang="ts">
-import { getMainNavigation, getCTAButtons } from '#shared/config/navigation';
-import { businessConfig } from '#shared/config/business';
+import { getMainNavigation } from '#shared/config/navigation';
 
 const navigationItems = getMainNavigation();
-const ctaButtons = getCTAButtons();
-
-// Generate CTA URL based on action type
-const getCTAUrl = (action: string) => {
-  switch (action) {
-    case 'whatsapp_consultation':
-      return `${businessConfig.contact.primary}?text=Hi! I'm interested in AI automation consultation.`;
-    case 'template_download':
-      return businessConfig.contact.secondary;
-    default:
-      return businessConfig.contact.primary;
-  }
-};
 </script>
 
 <template>
@@ -41,12 +27,10 @@ const getCTAUrl = (action: string) => {
 
     <template #right>
       <IThemeSlideover />
-      <UButton
-        :label="ctaButtons.primary.label"
+      <IButton
+        location="header"
+        action="paid"
         class="hidden md:inline-flex font-bold"
-        :to="getCTAUrl(ctaButtons.primary.action)"
-        target="_blank"
-        :trailing-icon="ctaButtons.primary.icon"
       />
     </template>
 

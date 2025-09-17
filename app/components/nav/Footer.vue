@@ -1,20 +1,7 @@
 <script setup lang="ts">
-import { getCTAButtons } from '#shared/config/navigation';
 import { businessConfig } from '#shared/config/business';
 
 const currentYear = new Date().getFullYear();
-const ctaButtons = getCTAButtons();
-
-const getCTAUrl = (action: string) => {
-  switch (action) {
-    case 'whatsapp_consultation':
-      return `${businessConfig.contact.primary}?text=Hi! I'm interested in AI automation consultation.`;
-    case 'template_download':
-      return businessConfig.contact.secondary;
-    default:
-      return businessConfig.contact.primary;
-  }
-};
 
 const copyrightYear =
   businessConfig.business.founding_year === currentYear
@@ -61,17 +48,7 @@ const copyrightYear =
 
         <!-- Move CTA here with intro text -->
         <div class="flex items-center gap-3">
-          <span class="text-sm text-muted hidden sm:block"
-            >Ready to validate?</span
-          >
-          <UButton
-            :label="ctaButtons.primary.label"
-            color="secondary"
-            size="md"
-            :leading-icon="ctaButtons.primary.icon"
-            :to="getCTAUrl(ctaButtons.primary.action)"
-            target="_blank"
-          />
+          <IButton location="footer" action="paid" />
         </div>
       </UContainer>
     </template>

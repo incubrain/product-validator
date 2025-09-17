@@ -1,20 +1,15 @@
 <script setup lang="ts">
 import { businessConfig, getFounderInfo } from '#shared/config/business';
+import { actionConfig } from '#shared/config/actions';
 
 // ===============================
 // HERO
 // ===============================
 const heroContent = {
   badge: { icon: 'i-lucide-bolt', text: 'Open-source template' },
-  headline: 'Clone · Configure · Validate — in a day',
+  headline: 'START Validating Your Idea TODAY',
   subheadline:
     'A Nuxt template laser-focused on one question: “Should we build it?” Ship a high-signal landing page fast, share it to real people, and learn from A/B tests + open Nuxt events — no vendor lock-in.',
-  primaryCta: {
-    text: 'Get Course ($50 early-bird)',
-    icon: 'i-lucide-play',
-    href: 'https://whop.com/incubrain-community/product-validator',
-  },
-  secondaryCta: { text: 'Template (Free)', icon: 'i-lucide-download' },
   technologies: [
     { name: 'Nuxt', icon: 'i-logos-nuxt-icon', version: 'v4' },
     { name: 'Nuxt UI', icon: 'i-logos-nuxt-icon', version: 'v4' },
@@ -232,28 +227,10 @@ const gettingStartedContent = {
   subtitle:
     'Clone the template and get the $50 early-bird bundle (50 spots). Shortest path from idea → evidence.',
   codeLabel: 'Quick start:',
-  codeSnippet: `git clone ${businessConfig.contact.secondary}
+  codeSnippet: `git clone ${actionConfig.free.target}
 cd your-idea
 pnpm install
 pnpm dev`,
-  links: [
-    {
-      label: 'Get Course ($50 early-bird)',
-      size: 'lg',
-      trailingIcon: 'i-lucide-play',
-      to: 'https://whop.com/incubrain-community/product-validator',
-      target: '_blank',
-    },
-    {
-      label: 'Get Template (Free)',
-      size: 'lg',
-      color: 'neutral',
-      variant: 'ghost',
-      trailingIcon: 'i-lucide-download',
-      to: businessConfig.contact.primary,
-      target: '_blank',
-    },
-  ],
 };
 
 // ===============================
@@ -338,11 +315,6 @@ const ctaContent = {
     'No lock-in (Nuxt events → any analytics)',
     'Optional public YouTube critique',
   ],
-  primaryButton: {
-    text: 'Buy Now',
-    action: 'external',
-    url: 'https://whop.com/incubrain-community/product-validator',
-  },
 };
 
 // ===============================
@@ -365,7 +337,7 @@ useSeoMeta({
 </script>
 
 <template>
-  <UPageBody>
+  <UPageBody class="mt-0">
     <!-- 1) HERO -->
     <ISectionHero :content="heroContent" />
 
@@ -385,7 +357,6 @@ useSeoMeta({
     <UPageSection
       :title="gettingStartedContent.title"
       :description="gettingStartedContent.subtitle"
-      :links="gettingStartedContent.links"
     >
       <template #body>
         <UCard variant="subtle" class="bg-elevated/50">
@@ -396,6 +367,10 @@ useSeoMeta({
 <code>{{ gettingStartedContent.codeSnippet }}</code>
 </pre>
         </UCard>
+      </template>
+      <template #links>
+        <IButton action="paid" location="getting-started" />
+        <IButton action="free" location="getting-started" />
       </template>
     </UPageSection>
 

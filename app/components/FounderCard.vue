@@ -1,22 +1,26 @@
 <!-- components/IFounderCard.vue -->
 <script setup lang="ts">
-import { getSocialLinks } from '#shared/config/navigation';
-import { businessConfig } from '#shared/config/business';
-
-const socialLinks = getSocialLinks();
-
-const emailLink = {
-  label: 'Email',
-  icon: 'i-lucide-mail',
-  to: `mailto:${businessConfig.contact.email}`,
-  target: '_self',
-};
-
-const contactLinks = [emailLink, ...socialLinks];
+import { computed } from 'vue';
+import { getFounderInfo } from '#shared/config/business';
 
 defineProps<{
   variant?: 'default' | 'mobile';
 }>();
+
+// 1) Source of truth: founder + contact from business config
+const founder = getFounderInfo();
+
+// 2) Dynamic name/description/avatar for UUser
+const displayName = computed(() => `Hi, I'm ${founder.firstName}`);
+const description = computed(() => founder.title || 'Founder');
+const avatar = computed(() => founder.avatar);
+
+// 3) Short, 1-sentence message for this small card
+const shortMessage = computed(
+  () =>
+    founder.shortMessage ||
+    'Built this template to replace overbuilding with fast, focused validation.',
+);
 </script>
 
 <template>
@@ -29,29 +33,28 @@ defineProps<{
       footer: 'p-1 sm:p-2 border-none flex lg:justify-end',
     }"
   >
+    <!-- Header: founder identity -->
     <template #header>
       <UUser
-        name="Hi, I'm Drew"
-        description="Founder & Developer"
+        :name="displayName"
+        :description="description"
         :orientation="variant === 'mobile' ? 'horizontal' : 'vertical'"
         size="lg"
-        :avatar="{
-          src: 'https://avatars.githubusercontent.com/u/739984?v=4',
-          alt: 'Drew MacGibbon',
-        }"
+        :avatar="avatar"
         :ui="{ root: 'items-start text-left lg:items-end lg:text-right' }"
       />
     </template>
 
+    <!-- Body: one-sentence short message from founder config -->
     <p class="text-sm text-toned text-left lg:text-right">
-      Built this template after seeing too many founders overbuild before
-      validating. Speed and clarity beat features every time.
+      {{ shortMessage }}
     </p>
 
+    <!-- Footer: socials (+ email ensured) -->
     <template #footer>
       <span class="w-auto lg:justify-end space-x-2">
         <UButton
-          v-for="contact in contactLinks"
+          v-for="contact in founder.socials"
           :key="contact.label"
           :icon="contact.icon"
           color="secondary"

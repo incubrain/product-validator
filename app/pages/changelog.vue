@@ -19,6 +19,60 @@ useHead({
  */
 const versions = [
   {
+    title: 'Advanced Analytics & User Experience Systems 🎯',
+    description:
+      'Built comprehensive event tracking, A/B testing framework, and exit intent modal system. Focus on actionable data collection and conversion optimization without vendor lock-in.',
+    date: '2025-01-17T00:00:00.000Z',
+    badge: 'v0.2.0',
+    authors: [
+      {
+        name: 'Drew MacGibbon',
+        avatar: {
+          src: 'https://github.com/Drew-MacGibbon.png',
+          alt: 'Drew MacGibbon',
+        },
+        to: 'https://github.com/incubrain',
+        target: '_blank',
+      },
+    ],
+    content: `
+### Event System Architecture
+
+- **Unified tracking composable** — Single \`useAction\` handles both immediate actions and background analytics
+- **Provider-agnostic events** — Nuxt events emit structured payloads, connect any analytics provider
+- **Business-focused tracking** — Only tracks high-value interactions analytics providers can't infer
+- **Prefixed storage management** — All localStorage/sessionStorage uses unified prefix for easy dev cleanup
+
+### A/B Testing Framework
+
+- **Variant-first action system** — CTA configurations with multiple emotional variants (urgency, value, curiosity)
+- **Persistent user experience** — Returning visitors see consistent variants via localStorage
+- **Generic A/B composable** — \`useABVariant\` works with any content type, not just CTAs
+- **Automatic variant selection** — Random assignment for new users, consistent for returning users
+
+### Exit Intent Modal System
+
+- **Engagement-based timing** — 10-second timer starts on first user interaction, not page load
+- **Multi-trigger detection** — Tracks scroll, mousemove, clicks, keystrokes for genuine engagement
+- **Intelligent cooldown** — 7-day localStorage cooldown prevents modal spam
+- **Integrated with Nuxt UI** — Uses \`useOverlay\` composable for proper modal management
+
+### Developer Experience
+
+- **Keyboard shortcuts** — \`⌘+Shift+R\` clears all storage with toast feedback and delayed reload
+- **Storage debugging** — Dev console \`devTools.logStorage()\` for inspection
+- **Manual testing** — \`⌘+Shift+E\` manually triggers exit intent for development
+- **Clean production build** — Debug logging removed, performance optimized
+
+### Technical Implementation
+
+- **IButton component** — Automatically resolves variants, handles tracking, uses UButton for navigation
+- **Storage prefix system** — All keys prefixed with \`nuxt_launch_kit\` for organized cleanup
+- **Event consolidation** — Merged \`useEvents\` into \`useAction\` for simpler API
+- **Proper cleanup** — Event listeners properly removed on component unmount
+    `,
+  },
+  {
     title: 'JUST LAUNCH IT!! 🚀🚀',
     description:
       "You'll never get it perfect. The goal is to get it in front of real humans fast, learn, and iterate. I'm certainly releasing this WAY before I feel comfortable. But that's the point, growth happens in discomfort. Let's go!",

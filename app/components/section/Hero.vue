@@ -16,19 +16,19 @@ const { content } = defineProps<Props>();
 <template>
   <UPageHero
     orientation="vertical"
-    class="bg-gradient-to-b from-default via-muted to-default text-white relative overflow-hidden min-h-screen flex items-center"
+    class="bg-gradient-to-b from-default via-muted to-default text-white relative overflow-hidden"
   >
     <!-- Badge -->
     <template #headline>
-      <UButton
-        variant="outline"
-        color="neutral"
-        size="sm"
-        :leading-icon="content.badge.icon"
-        class="border-white/20 bg-white/5 text-white backdrop-blur-sm hover:bg-white/10 mb-6"
-      >
-        {{ content.badge.text }}
-      </UButton>
+      <div class="flex justify-center items-center pb-2">
+        <UAlert
+          variant="subtle"
+          color="neutral"
+          class="w-auto px-3 py-2"
+          :title="content.badge.text"
+          :icon="content.badge.icon"
+        />
+      </div>
     </template>
 
     <!-- Main Title -->
@@ -52,24 +52,8 @@ const { content } = defineProps<Props>();
     <!-- CTA Buttons -->
     <template #links>
       <div class="flex flex-col sm:flex-row justify-center gap-4">
-        <UButton
-          size="xl"
-          variant="solid"
-          :trailing-icon="content.primaryCta.icon"
-          class="px-8 py-4 text-lg font-semibold"
-        >
-          {{ content.primaryCta.text }}
-        </UButton>
-
-        <UButton
-          size="xl"
-          color="neutral"
-          variant="ghost"
-          :leading-icon="content.secondaryCta.icon"
-          class="px-8 py-4 text-lg font-semibold"
-        >
-          {{ content.secondaryCta.text }}
-        </UButton>
+        <IButton action="paid" location="hero" />
+        <IButton action="free" location="hero" />
       </div>
     </template>
 
@@ -126,10 +110,10 @@ const { content } = defineProps<Props>();
 
       <!-- Gradient orbs -->
       <div
-        class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl pointer-events-none"
+        class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none"
       ></div>
       <div
-        class="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-500/10 rounded-full blur-3xl pointer-events-none"
+        class="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none"
       ></div>
     </template>
   </UPageHero>
