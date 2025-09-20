@@ -1,7 +1,7 @@
 /* assets/css/tokens/layout.css */
 @import 'tailwindcss';
 
-@theme {
+@theme static {
   /* Base spacing unit */
   --spacing: 0.25rem;
   --ui-radius: 0.25rem;
@@ -23,5 +23,5 @@
   --container-7xl: 80rem;
 
   /* UI integration */
-  --ui-container: var(--container-7xl);
+  --ui-container: var(--container-5xl);
 }
