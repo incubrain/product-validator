@@ -1,6 +1,36 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { fileURLToPath } from 'node:url';
 
+const shouldIgnore = (url: string) => {
+  const ignorePaths = [
+    '/_nuxt/',
+    '/_payload.json',
+    '/favicon.ico',
+    '/robots.txt',
+    '/sitemap.xml',
+  ];
+  const ignoreExtensions = [
+    '.js',
+    '.css',
+    '.svg',
+    '.png',
+    '.jpg',
+    '.jpeg',
+    '.gif',
+    '.webp',
+    '.ico',
+    '.woff',
+    '.woff2',
+    '.ttf',
+    '.eot',
+  ];
+
+  return (
+    ignorePaths.some((path) => url.includes(path)) ||
+    ignoreExtensions.some((ext) => url.endsWith(ext))
+  );
+};
+
 export default defineNuxtConfig({
   modules: [
     '@nuxt/fonts',
@@ -29,8 +59,8 @@ export default defineNuxtConfig({
 
     scripts: {
       registry: {
-        umamiAnalytics: "mock",
-      }
+        umamiAnalytics: 'mock',
+      },
     },
 
     // Dev-specific Nitro config
@@ -63,6 +93,15 @@ export default defineNuxtConfig({
       registry: {
         umamiAnalytics: {
           autoTrack: true,
+          beforeSend: (type: string, payload: any) => {
+            console.log('umamiAnalytics', type, payload);
+            // Filter out asset requests
+            if (payload.url && shouldIgnore(payload.url)) {
+              return false; // Cancel send
+            }
+
+            return payload;
+          },
         },
       },
     },
