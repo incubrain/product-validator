@@ -481,7 +481,7 @@ export const flowConfig = {
       'A Nuxt template laser-focused on one question: "Should we build it?"',
     media: {
       type: 'video',
-      src: '/videos/course-preview.mp4',
+      src: '/videos/test-audio.mp4',
       alt: 'Course preview showing validation process',
     },
     flow: [
