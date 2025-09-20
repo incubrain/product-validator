@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { useIntersectionObserver, useMediaControls } from '@vueuse/core';
-import { videoStyles } from '#theme/video';
-import type { VideoVariants } from '#theme/video';
+import { videoStyles } from '#theme';
+import type { VideoVariants } from '#theme';
 
 export interface VideoProps {
   src?: string;

@@ -1,8 +1,8 @@
 <!-- app/components/i/layout/PageColumnsWrapper.vue -->
 <script setup lang="ts">
 import type { PageColumnsProps } from '@nuxt/ui';
-import { pageColumnsWrapperStyles } from '#theme/wrap/columns';
-import type { PageColumnsWrapperVariants } from '#theme/wrap/columns';
+import { pageColumnsWrapperStyles } from '#theme';
+import type { PageColumnsWrapperVariants } from '#theme';
 
 interface PageColumnsWrapperProps extends /* @vue-ignore */ PageColumnsProps {
   preset?: PageColumnsWrapperVariants['preset'];

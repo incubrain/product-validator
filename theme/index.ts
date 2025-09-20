@@ -2,7 +2,9 @@
 export type {
   PageColumnsWrapperSlots,
   PageColumnsWrapperVariants,
-} from './wrap/columns';
+} from './ui/page/columns';
+export { pageColumnsWrapperStyles } from './ui/page/columns';
 
-// CONTENT RELATED
+// CUSTOM COMPONENTS
 export type { VideoVariants, VideoSlots } from './video';
+export { videoStyles } from './video';

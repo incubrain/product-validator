@@ -1,4 +1,4 @@
-// #theme/wrapper/page-columns.ts
+// #theme/ui/page-columns.ts
 import type { ExtractVariants, ExtractSlots } from '#shared/utils/theme'
 
 export const pageColumnsWrapperStyles = {
