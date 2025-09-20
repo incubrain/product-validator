@@ -25,3 +25,4 @@ repomix-output.*
 .env
 .env.*
 !.env.example
+TEMP_CHANGELOG.md

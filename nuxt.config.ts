@@ -9,6 +9,7 @@ export default defineNuxtConfig({
     '@vueuse/nuxt',
     'nuxt-svgo',
     '@nuxtjs/mdc',
+    '@nuxt/scripts',
   ],
 
   // ✅ DEVELOPMENT ONLY: All dev-specific configuration
@@ -24,6 +25,12 @@ export default defineNuxtConfig({
           debug: true,
         },
       },
+    },
+
+    scripts: {
+      registry: {
+        umamiAnalytics: "mock",
+      }
     },
 
     // Dev-specific Nitro config
@@ -50,6 +57,14 @@ export default defineNuxtConfig({
     sourcemap: false,
     experimental: {
       payloadExtraction: false, // Faster builds
+    },
+
+    scripts: {
+      registry: {
+        umamiAnalytics: {
+          autoTrack: true,
+        },
+      },
     },
 
     // Production Nitro optimizations
@@ -96,7 +111,9 @@ export default defineNuxtConfig({
   alias: {
     '#theme': fileURLToPath(new URL('./theme/index.ts', import.meta.url)),
     '#theme/*': fileURLToPath(new URL('./theme', import.meta.url)),
-    '#config': fileURLToPath(new URL('./shared/config/index.ts', import.meta.url)),
+    '#config': fileURLToPath(
+      new URL('./shared/config/index.ts', import.meta.url),
+    ),
     '#config/*': fileURLToPath(new URL('./shared/config', import.meta.url)),
   },
 
