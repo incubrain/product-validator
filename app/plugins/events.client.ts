@@ -1,4 +1,4 @@
-// plugins/events.client.ts - CORRECTED VERSION
+// plugins/events.client.ts - USE COMPOSABLE CORRECTLY
 import type { HookResult } from '@nuxt/schema';
 
 declare module '#app' {
@@ -17,30 +17,26 @@ const consoleLogger: EventHandler = (payload) => {
   console.log(`📊 Event [${payload.type}]:`, payload);
 };
 
-// Generic analytics handler (provider-agnostic)
+// Umami analytics handler using composable
 const analyticsHandler: EventHandler = (payload) => {
   // Only run in production/client
-  if (import.meta.dev || import.meta.server) return;
+  if (import.meta.server) return;
 
   try {
-    // Access the globally configured Umami script
+    // Use the composable with beforeSend filtering
     const { $scripts } = useNuxtApp();
     const umamiScript = $scripts.umamiAnalytics;
 
-    if (umamiScript?.proxy?.track) {
-      sendToAnalyticsProvider(payload, umamiScript.proxy);
+    if (umamiScript.proxy?.track) {
+      sendToAnalytics(payload, umamiScript.proxy);
     }
-
-    // ADD OTHER PROVIDERS HERE:
-    // const gaScript = $scripts.googleAnalytics;
-    // if (gaScript?.proxy?.gtag) { sendToGA(payload, gaScript.proxy); }
   } catch (error) {
     console.error('Analytics handler failed:', error);
   }
 };
 
-// Umami-specific sender (isolated)
-function sendToAnalyticsProvider(payload: EventPayload, analyticsProxy: any) {
+// Umami-specific sender
+function sendToAnalytics(payload: EventPayload, analyticsProxy: any) {
   const eventName = `${payload.type}`;
   const eventData = {
     event_id: payload.id,
@@ -50,11 +46,13 @@ function sendToAnalyticsProvider(payload: EventPayload, analyticsProxy: any) {
     timestamp: payload.timestamp,
   };
 
+  console.log('sendToAnalytics', eventData);
   // Handle different event types
   switch (payload.type) {
     case 'action_click':
       // Track conversions for paid actions
       if (payload.id.includes('paid') || payload.id.includes('purchase')) {
+        console.log('sendToAnalytics trackAttempt');
         analyticsProxy.track('conversion', {
           ...eventData,
           offer_type: 'paid',
@@ -76,18 +74,10 @@ function sendToAnalyticsProvider(payload: EventPayload, analyticsProxy: any) {
   }
 }
 
-// Register handlers based on environment
-if (import.meta.dev) {
-  // Development: console only (scripts are mocked)
-  eventHandlers.set('action_click', [consoleLogger]);
-  eventHandlers.set('action_view', [consoleLogger]);
-  eventHandlers.set('exit_intent', [consoleLogger]);
-} else {
-  // Production: console + analytics
-  eventHandlers.set('action_click', [consoleLogger, analyticsHandler]);
-  eventHandlers.set('action_view', [consoleLogger, analyticsHandler]);
-  eventHandlers.set('exit_intent', [consoleLogger, analyticsHandler]);
-}
+// Dev mocking of analytics is handled in nuxt.config
+eventHandlers.set('action_click', [consoleLogger, analyticsHandler]);
+eventHandlers.set('action_view', [consoleLogger, analyticsHandler]);
+eventHandlers.set('exit_intent', [consoleLogger, analyticsHandler]);
 
 export default defineNuxtPlugin((nuxtApp) => {
   nuxtApp.hook('events:emit', async (payload) => {

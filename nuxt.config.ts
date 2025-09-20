@@ -1,36 +1,6 @@
 // https://nuxt.com/docs/api/configuration/nuxt-config
 import { fileURLToPath } from 'node:url';
 
-const shouldIgnore = (url: string) => {
-  const ignorePaths = [
-    '/_nuxt/',
-    '/_payload.json',
-    '/favicon.ico',
-    '/robots.txt',
-    '/sitemap.xml',
-  ];
-  const ignoreExtensions = [
-    '.js',
-    '.css',
-    '.svg',
-    '.png',
-    '.jpg',
-    '.jpeg',
-    '.gif',
-    '.webp',
-    '.ico',
-    '.woff',
-    '.woff2',
-    '.ttf',
-    '.eot',
-  ];
-
-  return (
-    ignorePaths.some((path) => url.includes(path)) ||
-    ignoreExtensions.some((ext) => url.endsWith(ext))
-  );
-};
-
 export default defineNuxtConfig({
   modules: [
     '@nuxt/fonts',
@@ -47,15 +17,6 @@ export default defineNuxtConfig({
     modules: ['@nuxt/eslint', '@compodium/nuxt'],
 
     devtools: { enabled: true },
-
-    // Dev runtime config
-    runtimeConfig: {
-      public: {
-        incubrain: {
-          debug: true,
-        },
-      },
-    },
 
     scripts: {
       registry: {
@@ -77,13 +38,6 @@ export default defineNuxtConfig({
 
   // ✅ PRODUCTION ONLY: Performance optimizations
   $production: {
-    runtimeConfig: {
-      public: {
-        incubrain: {
-          debug: false,
-        },
-      },
-    },
     sourcemap: false,
     experimental: {
       payloadExtraction: false, // Faster builds
@@ -91,18 +45,7 @@ export default defineNuxtConfig({
 
     scripts: {
       registry: {
-        umamiAnalytics: {
-          autoTrack: true,
-          beforeSend: (type: string, payload: any) => {
-            console.log('umamiAnalytics', type, payload);
-            // Filter out asset requests
-            if (payload.url && shouldIgnore(payload.url)) {
-              return false; // Cancel send
-            }
-
-            return payload;
-          },
-        },
+        umamiAnalytics: true,
       },
     },
 
@@ -128,6 +71,22 @@ export default defineNuxtConfig({
     layoutTransition: {
       name: 'layout',
       mode: 'out-in',
+    },
+  },
+
+  runtimeConfig: {
+    public: {
+      incubrain: {
+        debug: import.meta.dev,
+      },
+      scripts: {
+        umamiAnalytics: {
+          websiteId: '',
+          scriptInput: {
+            src: '',
+          },
+        },
+      },
     },
   },
 
