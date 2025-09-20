@@ -11,16 +11,12 @@ export const useAction = () => {
     await nuxtApp.callHook('events:emit', payload);
   };
 
-  const executeAction = async (
-    offerType: 'paid' | 'free' | 'social',
-    location: string,
-    offer?: any,
-  ) => {
+  const executeAction = async (location: string, offer?: any) => {
     if (!offer) return;
 
     // Track the interaction
     await trackEvent({
-      id: `${offer.id}_${offerType}`,
+      id: `${offer.id}_${location}`,
       type: 'action_click',
       location,
       action: getActionType(offer.cta.href),

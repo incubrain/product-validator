@@ -47,7 +47,7 @@ const copyrightYear = computed(() =>
         </p>
 
         <div class="flex items-center gap-3">
-          <IButton offer="paid" location="footer" />
+          <IButton offer="direct" location="footer" />
         </div>
       </UContainer>
     </template>

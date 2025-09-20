@@ -19,7 +19,7 @@ withDefaults(defineProps<Props>(), {
       class="p-1 rounded-full bg-inverted border"
     />
     <h6 class="font-bold text-base text-default m-0 leading-0">
-      Launch Kit
+      Product Validator
     </h6>
   </ULink>
 </template>

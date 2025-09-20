@@ -27,7 +27,7 @@ const navigationItems = getMainNavigation();
 
     <template #right>
       <IButton
-        offer="paid"
+        offer="product"
         location="header"
         class="hidden md:inline-flex font-bold"
       />

@@ -1,12 +1,12 @@
 <!-- pages/changelog.vue -->
 <script setup lang="ts">
 useHead({
-  title: 'Changelog - Nuxt Launch Kit',
+  title: 'Changelog - Product Validator',
   meta: [
     {
       name: 'description',
       content:
-        'Track the evolution of the Nuxt Launch Kit — a validation-first Nuxt template focused on shipping signal fast.',
+        'Track the evolution of the Product Validator — a validation-first Nuxt template focused on shipping signal fast.',
     },
   ],
 });
@@ -117,7 +117,7 @@ The goal isn’t to “build faster.” It’s to **decide faster**—with confi
   <UPage>
     <UPageHero
       title="Dev Changelog"
-      description="Track the evolution of the Nuxt Launch Kit"
+      description="Track the evolution of the Product Validator"
       headline="Weekly FOCUSED updates"
       :links="[
         {

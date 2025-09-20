@@ -1,21 +1,38 @@
+<!-- Banner.vue - FIXED VERSION -->
 <script setup lang="ts">
-function onBannerClose() {
-  // Banner will automatically handle localStorage persistence
-  console.log('Banner dismissed');
-}
+import type { OfferID } from '#shared/config/overview';
+
+const STORAGE_PREFIX = 'validator';
+
+const props = defineProps<{
+  offer: OfferID;
+}>();
+
+const offer = useFlowOffer(props.offer);
+
+const storageKey = `${STORAGE_PREFIX}_course-support`;
 </script>
 
 <template>
   <UBanner
-    id="course-support"
+    :id="storageKey"
     icon="i-lucide-heart"
-    title="Support the continued development of this template"
-    color="primary"
+    :title="offer.description"
+    color="neutral"
+    :actions="[
+      {
+        label: `${offer.cta.label} ${offer.price}`,
+        to: offer.cta.href,
+        target: offer.cta.href?.startsWith('http') ? '_blank' : undefined,
+        trailingIcon: offer.cta.icon,
+        color: 'primary',
+        size: 'xs',
+        variant: 'solid',
+      },
+    ]"
+    :ui="{
+      icon: 'size-5 shrink-0 text-error pointer-events-none',
+    }"
     close
-    @close="onBannerClose"
-  >
-    <template #actions>
-      <IButton offer="paid" location="banner" />
-    </template>
-  </UBanner>
+  />
 </template>

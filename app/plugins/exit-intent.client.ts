@@ -44,7 +44,9 @@ export default defineNuxtPlugin(() => {
         });
 
         isShowing.value = true;
-        const result = await exitModal.open();
+        const result = await exitModal.open({
+          offer: 'social',
+        });
         isShowing.value = false;
         return result;
       } catch (error) {

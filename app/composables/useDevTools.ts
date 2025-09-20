@@ -6,14 +6,22 @@ export const useDevTools = () => {
 
   const getStorageSnapshot = () => {
     const localStorage_items = Object.keys(localStorage)
-      .filter((key) => key.startsWith(STORAGE_PREFIX))
+      .filter(
+        (key) =>
+          key.startsWith(STORAGE_PREFIX) ||
+          key.startsWith(`banner-${STORAGE_PREFIX}`),
+      )
       .reduce((acc, key) => {
         acc[key] = localStorage.getItem(key);
         return acc;
       }, {} as Record<string, string | null>);
 
     const sessionStorage_items = Object.keys(sessionStorage)
-      .filter((key) => key.startsWith(STORAGE_PREFIX))
+      .filter(
+        (key) =>
+          key.startsWith(STORAGE_PREFIX) ||
+          key.startsWith(`banner-${STORAGE_PREFIX}`),
+      )
       .reduce((acc, key) => {
         acc[key] = sessionStorage.getItem(key);
         return acc;

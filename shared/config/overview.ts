@@ -204,8 +204,9 @@ type FaqItem = {
 // -----------------------------------------------------------------------------
 // 08) Offer (pricing & CTA)
 // -----------------------------------------------------------------------------
+export type OfferID = 'product' | 'magnet' | 'direct' | 'social';
 type Offer = {
-  id: string;
+  id: OfferID;
   name: string;
   description: string;
   price?: string;
@@ -429,8 +430,8 @@ export const flowConfig = {
     comparison: {
       tiers: [
         {
-          id: 'launch-kit',
-          title: 'Launch Kit',
+          id: 'product-validator',
+          title: 'Product Validator',
           highlight: true,
         },
         {
@@ -449,7 +450,7 @@ export const flowConfig = {
             {
               title: 'Speed to validation',
               tiers: {
-                'launch-kit': '1-2 days',
+                'product-validator': '1-2 days',
                 'alternative-a': '2-4 weeks (custom build)',
                 'alternative-b': '1-3 months',
               },
@@ -457,7 +458,7 @@ export const flowConfig = {
             {
               title: 'Cost',
               tiers: {
-                'launch-kit': '$50 + hosting',
+                'product-validator': '$50 + hosting',
                 'alternative-a': '$5k-15k',
                 'alternative-b': '$10k-50k',
               },
@@ -465,7 +466,7 @@ export const flowConfig = {
             {
               title: 'Analytics setup',
               tiers: {
-                'launch-kit': 'Pre-configured events',
+                'product-validator': 'Pre-configured events',
                 'alternative-a': 'Manual integration',
                 'alternative-b': 'Complex dashboard',
               },
@@ -613,7 +614,7 @@ export const flowConfig = {
 
   offers: [
     {
-      id: 'validator-course',
+      id: 'product',
       name: 'Validator Accelerator',
       description: 'Complete validation course with community access',
       price: '$50',
@@ -655,7 +656,7 @@ export const flowConfig = {
       inventory: { total: 50, claimed: 7 },
     },
     {
-      id: 'template-free',
+      id: 'magnet',
       name: 'Use Template',
       price: 'Free',
       description: 'Open-source Nuxt template with validation features',
@@ -675,23 +676,46 @@ export const flowConfig = {
       },
     },
     {
-      id: 'hire-direct',
-      name: 'Hire Me Directly',
-      description: 'Custom validation strategy & implementation',
-      price: 'From $2,500',
+      id: 'direct',
+      name: 'Hire Me (Support Open Source)',
+      description:
+        'Get expert Nuxt development while supporting continued template development and community resources',
+      price: '$27/hour',
       benefits: [
-        { text: 'Custom landing page development', status: 'available' },
-        { text: 'Validation strategy consultation', status: 'available' },
-        { text: 'Analytics implementation', status: 'available' },
-        { text: 'Ongoing optimization support', status: 'available' },
+        { text: 'Expert Nuxt 4 + TypeScript development', status: 'available' },
+        { text: 'Validation-first product strategy', status: 'available' },
+        { text: 'Landing page optimization & analytics', status: 'available' },
+        {
+          text: 'Template updates funded by your project',
+          status: 'available',
+        },
       ],
       cta: {
-        label: 'Schedule Consultation',
-        href: 'mailto:mac@incubrain.org?subject=Direct Hire Inquiry',
-        icon: 'i-lucide-calendar',
+        label: 'Hire on Upwork',
+        href: 'https://www.upwork.com/freelancers/~01b4c32258ac48835f?mp_source=share',
+        icon: 'i-lucide-handshake',
         variant: 'solid',
         color: 'secondary',
-        note: 'Custom pricing available',
+        note: 'Help keep this template free & updated',
+      },
+    },
+    {
+      id: 'social',
+      name: 'YouTube Validator Reviews',
+      description: 'Learn from real validation examples',
+      price: 'Free',
+      benefits: [
+        { text: 'Public landing page critiques', status: 'available' },
+        { text: 'Real validation examples', status: 'available' },
+        { text: 'Community learning', status: 'available' },
+        { text: 'Free feedback', status: 'available' },
+      ],
+      cta: {
+        label: 'Watch Critiques',
+        href: 'https://www.youtube.com/@Incubrain',
+        icon: 'i-lucide-youtube',
+        variant: 'solid',
+        color: 'error',
       },
     },
   ],

@@ -1,34 +1,17 @@
 <!-- components/ExitIntentModal.vue -->
 <script setup lang="ts">
+import type { OfferID } from '#shared/config/overview';
+
+const props = defineProps<{
+  offer: OfferID;
+}>();
+
 const emit = defineEmits<{ close: [boolean] }>();
 
 // Get founder info for social proof
 const founder = useFlowSection('founder');
+const offer = useFlowOffer(props.offer);
 
-// Create social offer data
-const socialOffer = {
-  id: 'social_youtube',
-  name: 'YouTube Validator Reviews',
-  description: 'Learn from real validation examples',
-  media: {
-    type: 'video',
-    src: 'https://www.youtube.com/embed/dQw4w9WgXcQ', // Replace with actual video
-    alt: 'YouTube critique example',
-  },
-  features: [
-    'Public landing page critiques',
-    'Real validation examples', 
-    'Community learning',
-    'Free feedback'
-  ],
-  cta: {
-    label: 'Watch Critiques',
-    href: 'https://www.youtube.com/@Incubrain',
-    icon: 'i-lucide-youtube',
-    variant: 'solid',
-    color: 'error',
-  }
-};
 </script>
 
 <template>
@@ -45,25 +28,27 @@ const socialOffer = {
     }"
   >
     <template #body>
-      <div class="max-w-sm md:max-w-2xl lg:max-w-lg space-y-3 md:space-y-6 w-full">
+      <div
+        class="max-w-sm md:max-w-2xl lg:max-w-lg space-y-3 md:space-y-6 w-full"
+      >
         <div class="space-y-3 md:space-y-4">
           <h2 class="text-3xl font-bold text-primary relative">
-            {{ socialOffer.name }}
+            {{ offer.name }}
           </h2>
           <p class="text-lg md:text-xl text-toned">
-            {{ socialOffer.description }}
+            {{ offer.description }}
           </p>
         </div>
 
         <!-- Video -->
         <div
-          v-if="socialOffer.media?.type === 'video'"
+          v-if="offer.media?.type === 'video'"
           class="w-full max-w-sm md:max-w-2xl mx-auto mb-6 md:mb-8"
         >
           <div class="aspect-video rounded-lg overflow-hidden shadow-lg">
             <iframe
-              :src="socialOffer.media.src"
-              :title="socialOffer.media.alt"
+              :src="offer.media.src"
+              :title="offer.media.alt"
               frameborder="0"
               allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
               referrerpolicy="strict-origin-when-cross-origin"
@@ -74,10 +59,12 @@ const socialOffer = {
         </div>
 
         <!-- Features -->
-        <div class="bg-white/80 dark:bg-default/50 rounded-xl p-4 md:p-6 space-y-3 md:space-y-4 max-w-sm md:max-w-md mx-auto">
+        <div
+          class="bg-white/80 dark:bg-default/50 rounded-xl p-4 md:p-6 space-y-3 md:space-y-4 max-w-sm md:max-w-md mx-auto"
+        >
           <ul class="text-left space-y-1.5 text-sm">
             <li
-              v-for="feature in socialOffer.features"
+              v-for="feature in offer.features"
               :key="feature"
               class="flex items-center gap-2 text-toned font-medium"
             >

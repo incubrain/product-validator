@@ -1,7 +1,9 @@
 <!-- components/Button.vue -->
 <script setup lang="ts">
+import type { OfferID } from '#shared/config/overview';
+
 interface Props {
-  offer: 'paid' | 'free' | 'social';
+  offer: OfferID;
   location: string;
   disabled?: boolean;
   showGuarantee?: boolean;
@@ -18,37 +20,12 @@ const props = withDefaults(defineProps<Props>(), {
 
 const { executeAction } = useAction();
 
-// Get offers from overview.ts
-const offers = useFlowSection('offers');
-
 // Map offer types to actual offers
-const selectedOffer = computed(() => {
-  switch (props.offer) {
-    case 'paid':
-      return offers?.[0]; // First offer is paid
-    case 'free':
-      return offers?.find((o) => o.price === 'Free') || offers?.[1];
-    case 'social':
-      // For social, we'll use founder info or create a simple YouTube CTA
-      return {
-        id: 'social',
-        name: 'Watch Critiques',
-        cta: {
-          label: 'Watch Critiques',
-          href: 'https://www.youtube.com/@Incubrain',
-          icon: 'i-lucide-youtube',
-          variant: 'solid',
-          color: 'error',
-        },
-      };
-    default:
-      return offers?.[0];
-  }
-});
+const selectedOffer = useFlowOffer(props.offer);
 
 const handleClick = async () => {
   if (props.disabled) return;
-  await executeAction(props.offer, props.location, selectedOffer.value);
+  await executeAction(props.location, selectedOffer.value);
 };
 </script>
 
