@@ -1,5 +1,4 @@
 // plugins/events.client.ts
-import type { EventPayload, TrackedEvents } from '#shared/config/events';
 import type { HookResult } from '@nuxt/schema';
 
 declare module '#app' {
