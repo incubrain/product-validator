@@ -1,22 +1,4 @@
 <script setup lang="ts">
-/*
-PURPOSE:
-- Public-facing founder story built from `flowConfig.personal`.
-- Mirrors your old layout but maps to the current data keys.
-
-DATA (from flowConfig.personal):
-- name (combine as display heading)
-- role
-- avatarUrl
-- bioLong
-- promise
-- expertise? (you have `highlights` strings; we’ll render those as badges)
-- links[]: { label, url } (old component had icons; we’ll render simple buttons w/ text)
-
-NOTES:
-- If you later want icons in links, extend personal.links to include `icon` and wire to UIcon.
-*/
-
 const personal = useFlowSection('founder');
 const fullName = personal.name;
 </script>
@@ -79,8 +61,8 @@ const fullName = personal.name;
 
     <!-- RIGHT: Promise callout -->
     <div class="space-y-4">
-      <div class="flex justify-end items-start pb-12">
-        <UBadge color="secondary">
+      <div class="flex justify-center items-start">
+        <UBadge color="info">
           Hi, I'm {{ personal.name.split(' ')[0] }}
         </UBadge>
       </div>

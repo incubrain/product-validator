@@ -545,57 +545,69 @@ export const flowConfig = {
   },
 
   socialProof: [
+    // Highlight card - CTA to Twitter/X
+    {
+      type: 'highlight',
+      title: 'Your testimonial could be here',
+      description:
+        'Share your validation wins and help others learn from your journey.',
+      icon: 'i-simple-icons-x',
+      to: 'https://x.com/incubrain',
+    },
+    // Mock testimonials (clearly labeled as examples)
     {
       type: 'testimonial',
       quote:
-        'Launched the same day, got feedback overnight, and iterated the copy by morning. The A/B flags are clutch.',
-      name: 'Alex P.',
-      role: 'Indie hacker',
+        'Finally shipped after 6 months of "perfecting" my side project. The template forced me to focus on what actually matters.',
+      name: 'Alex Chen',
+      role: 'Example Testimonial*',
       avatarUrl: 'https://i.pravatar.cc/150?img=11',
     },
     {
       type: 'testimonial',
       quote:
-        'The critique video pinpointed exactly where my value prop was muddy. Conversion improved with a tighter CTA.',
-      name: 'Samira K.',
-      role: 'Founder',
-      avatarUrl: 'https://i.pravatar.cc/150?img=12',
+        'Deployed on Tuesday, had 200 email signups by Friday. Sometimes you just need to hit publish and see what happens.',
+      name: 'Taylor Kim',
+      role: 'Example Testimonial*',
+      avatarUrl: 'https://i.pravatar.cc/150?img=32',
     },
-    // Highlight card
     {
-      type: 'highlight',
-      title: 'Real-world feedback',
-      description:
-        'Short, actionable critiques deliver outsized learning. Ship faster with clearer messaging.',
-      icon: 'i-lucide-megaphone',
-      to: '#',
+      type: 'testimonial',
+      quote:
+        'My perfectionist brain hated this template at first. Then I realized that was exactly the point.',
+      name: 'Jordan Rivera',
+      role: 'Example Testimonial*',
+      avatarUrl: 'https://i.pravatar.cc/150?img=68',
     },
     // Case studies
     {
       type: 'case-study',
-      title: 'SaaS Tool Validation',
-      situation: 'Founder had 3 competing product ideas, limited budget',
-      action: 'Built 3 landing pages, ran A/B tests on headlines and CTAs',
+      title: 'Incubrain Launch (WIP)',
+      situation:
+        'Building validation template while using it to validate our own product',
+      action:
+        'Eating our own dog food - using this exact template for incubrain.org',
       result:
-        'One idea got 12% conversion vs 2% others. Clear winner in 5 days.',
+        'Work in progress - follow our journey and learnings in real-time',
       metric: {
-        label: 'Decision speed',
-        value: '5 days',
-        sub: 'vs 3 months planned',
+        label: 'Status',
+        value: 'Building in public',
+        sub: 'Real data coming soon',
       },
+      link: 'https://incubrain.org',
     },
     {
       type: 'case-study',
-      title: 'B2B Service Launch',
-      situation: 'Consultancy testing new service offering',
-      action: 'Used playbook to get feedback from 50 existing clients',
-      result: '8 pre-orders worth $24k before building the service',
+      title: 'Your success story here',
+      situation: 'You have an idea but struggle with validation paralysis',
+      action: 'Use this template to ship fast and gather real feedback',
+      result: 'Data-driven decisions instead of endless iteration',
       metric: {
-        label: 'Pre-validation revenue',
-        value: '$24k',
-        sub: '8 confirmed orders',
+        label: 'Your metric',
+        value: 'Your result',
+        sub: 'Your timeline',
       },
-      link: 'https://example.com/case-study',
+      link: 'https://x.com/incubrain',
     },
   ],
 
@@ -731,7 +743,7 @@ export const flowConfig = {
     },
     {
       q: "What's included in the Validator Bundle?",
-      a: 'Template setup, validation strategy, A/B tests, social-first distribution, reading signals, and prioritizing iterations.',
+      a: 'Template setup, validation strategy, social-first distribution, reading signals, and prioritizing iterations.',
       type: 'general',
     },
     {

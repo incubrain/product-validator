@@ -90,7 +90,7 @@ For years, I confused *being busy* with *making progress*. I’d polish features
 
 I’ve been building businesses since I was 19 and I’m 32 now. I’ve also spent 6+ years as a full-stack developer. Across my own products and client work, I’ve seen the same trap: we build first, validate later (or never). That’s how ghost products happen—months of effort that no one touches.
 
-This template is my antidote: a **focus tool** that forces the shortest path to evidence. Ship a simple landing page, share it to communities, run A/B tests, capture interest, and *only then* decide whether to invest. If you can pre-sell, do it. If not, collect real data from the people you want to serve and make an informed call on the MVP.
+This template is my antidote: a **focus tool** that forces the shortest path to evidence. Ship a simple landing page, share it to communities, track interest, and *only then* decide whether to invest. If you can pre-sell, do it. If not, collect real data from the people you want to serve and make an informed call on the MVP.
 
 The goal isn’t to “build faster.” It’s to **decide faster**—with confidence—so you can either double down or walk away early without sunk costs.
 
