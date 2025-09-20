@@ -7,6 +7,27 @@ export default defineAppConfig({
         size: 'md',
       },
     },
+    pricingTable: {
+      variants: {
+        section: {
+          true: {
+            tr: '*:pt-8',
+          },
+        },
+        active: {
+          true: {
+            tierFeatureIcon: 'text-primary',
+          },
+        },
+        highlight: {
+          true: {
+            tier: 'bg-secondary-950 border-x border-t-0 border-default rounded-none',
+            td: 'bg-secondary-950 border-default',
+            item: 'bg-secondary-950',
+          },
+        },
+      },
+    },
     // NEEDS REVIEW
     carousel: {
       slots: {

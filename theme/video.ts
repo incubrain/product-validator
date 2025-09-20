@@ -3,8 +3,11 @@ import type { ExtractVariants, ExtractSlots } from '#shared/utils/theme';
 
 export const videoStyles = {
   slots: {
-    root: ['relative overflow-hidden bg-black', 'transition-all duration-300'],
-    video: 'w-full h-full object-cover',
+    root: [
+      'relative overflow-hidden bg-black',
+      'transition-all duration-300',
+    ],
+    video: 'w-full object-cover',
     overlay: 'absolute inset-0 flex items-center justify-center',
     controls: [
       'absolute inset-0 flex items-center justify-center',

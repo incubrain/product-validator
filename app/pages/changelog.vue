@@ -21,8 +21,8 @@ const versions = [
   {
     title: 'Advanced Analytics & User Experience Systems 🎯',
     description:
-      'Built comprehensive event tracking, A/B testing framework, and exit intent modal system. Focus on actionable data collection and conversion optimization without vendor lock-in.',
-    date: '2025-01-17T00:00:00.000Z',
+      'Built comprehensive event tracking and exit intent modal system. Focus on actionable data collection and conversion optimization without vendor lock-in.',
+    date: '2025-09-21T00:00:00.000Z',
     badge: 'v0.2.0',
     authors: [
       {
@@ -42,13 +42,6 @@ const versions = [
 - **Provider-agnostic events** — Nuxt events emit structured payloads, connect any analytics provider
 - **Business-focused tracking** — Only tracks high-value interactions analytics providers can't infer
 - **Prefixed storage management** — All localStorage/sessionStorage uses unified prefix for easy dev cleanup
-
-### A/B Testing Framework
-
-- **Variant-first action system** — CTA configurations with multiple emotional variants (urgency, value, curiosity)
-- **Persistent user experience** — Returning visitors see consistent variants via localStorage
-- **Generic A/B composable** — \`useABVariant\` works with any content type, not just CTAs
-- **Automatic variant selection** — Random assignment for new users, consistent for returning users
 
 ### Exit Intent Modal System
 
@@ -104,8 +97,8 @@ The goal isn’t to “build faster.” It’s to **decide faster**—with confi
 ### Key Features
 
 - **Landing page design + copy** — opinionated structure with easy edit points
-- **Tailwind Variants ready** — \`useTV\` composable and \`theme/*\` directory (see \`ISurround\` for example usage)
-- **Nuxt UI wrapper** — ergonomic wrappers (e.g., \`PageColumns\`) for consistent layout
+- **Tailwind Variants ready** — \`useTV\` composable and \`theme/*\` directory (see \`IVideo\` for example usage)
+- **Nuxt UI wrapper using IU prefix** — ergonomic wrappers (e.g., components/ui/page/Columns is used as \`UIPageColumns\` instead of UPageColumns) for consistent layout
 - **Minimal focused template** — validation-first, no CMS/blog overhead
 - **Showcase page** — demo gallery of Nuxt UI components for quick reference
 - **Theme / font pairing switcher** — fast brand exploration
