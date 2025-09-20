@@ -26,10 +26,9 @@ const navigationItems = getMainNavigation();
     />
 
     <template #right>
-      <IThemeSlideover />
       <IButton
+        offer="paid"
         location="header"
-        action="paid"
         class="hidden md:inline-flex font-bold"
       />
     </template>

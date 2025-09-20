@@ -1,40 +1,92 @@
-<!-- components/IButton.vue -->
+<!-- components/Button.vue -->
 <script setup lang="ts">
-import { actionConfig } from '#shared/config/actions'
-import type { ActionKey } from '#shared/config/actions'
-
 interface Props {
-  action: ActionKey
-  location: string
-  disabled?: boolean
+  offer: 'paid' | 'free' | 'social';
+  location: string;
+  disabled?: boolean;
+  showGuarantee?: boolean;
+  guaranteePosition?: string;
+  class?: string;
 }
 
-const props = defineProps<Props>()
-const { executeAction } = useAction()
-const { selectVariant } = useABVariant()
+const props = withDefaults(defineProps<Props>(), {
+  disabled: false,
+  showGuarantee: false,
+  guaranteePosition: 'below',
+  class: '',
+});
 
-const baseAction = computed(() => actionConfig[props.action])
-const selectedVariant = computed(() => 
-  selectVariant(baseAction.value.id, baseAction.value.variants)
-)
+const { executeAction } = useAction();
+
+// Get offers from overview.ts
+const offers = useFlowSection('offers');
+
+// Map offer types to actual offers
+const selectedOffer = computed(() => {
+  switch (props.offer) {
+    case 'paid':
+      return offers?.[0]; // First offer is paid
+    case 'free':
+      return offers?.find((o) => o.price === 'Free') || offers?.[1];
+    case 'social':
+      // For social, we'll use founder info or create a simple YouTube CTA
+      return {
+        id: 'social',
+        name: 'Watch Critiques',
+        cta: {
+          label: 'Watch Critiques',
+          href: 'https://www.youtube.com/@Incubrain',
+          icon: 'i-lucide-youtube',
+          variant: 'solid',
+          color: 'error',
+        },
+      };
+    default:
+      return offers?.[0];
+  }
+});
 
 const handleClick = async () => {
-  if (props.disabled) return
-  await executeAction(props.action, props.location)
-}
-
+  if (props.disabled) return;
+  await executeAction(props.offer, props.location, selectedOffer.value);
+};
 </script>
 
 <template>
-  <UButton
-    :variant="selectedVariant.variant"
-    :color="selectedVariant.color"
-    :icon="selectedVariant.icon"
-    :to="baseAction.target"
-    :target="baseAction.target.startsWith('http') ? '_blank' : undefined"
-    :disabled="disabled || baseAction.disabled"
-    @click="handleClick"
+  <div
+    :class="
+      guaranteePosition === 'right'
+        ? 'flex items-center gap-3'
+        : 'relative inline-block'
+    "
   >
-    {{ selectedVariant.label }}
-  </UButton>
+    <UButton
+      v-if="selectedOffer"
+      :variant="selectedOffer.cta.variant || 'solid'"
+      :color="selectedOffer.cta.color || 'primary'"
+      :trailing-icon="selectedOffer.cta.icon"
+      :to="selectedOffer.cta.href"
+      :target="
+        selectedOffer.cta.href?.startsWith('http') ? '_blank' : undefined
+      "
+      :disabled="disabled"
+      :class="['justify-between', props.class]"
+      @click="handleClick"
+    >
+      {{ selectedOffer.cta.label }}
+    </UButton>
+
+    <!-- Guarantee text -->
+    <div
+      v-if="showGuarantee && selectedOffer?.guarantee"
+      :class="[
+        'text-xs text-muted whitespace-nowrap',
+        guaranteePosition === 'below'
+          ? 'absolute top-full left-1/2 transform -translate-x-1/2 mt-2 pointer-events-none'
+          : 'flex-shrink-0',
+      ]"
+    >
+      {{ selectedOffer.guarantee }}
+    </div>
+  </div>
 </template>

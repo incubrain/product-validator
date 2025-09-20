@@ -1,25 +1,32 @@
-<!-- components/IFounderCard.vue -->
+<!-- components/FounderCard.vue -->
 <script setup lang="ts">
-import { computed } from 'vue';
-import { getFounderInfo } from '#shared/config/business';
-
 defineProps<{
   variant?: 'default' | 'mobile';
 }>();
 
-// 1) Source of truth: founder + contact from business config
-const founder = getFounderInfo();
+// Get founder data from overview.ts
+const founder = useFlowSection('founder');
 
-// 2) Dynamic name/description/avatar for UUser
-const displayName = computed(() => `Hi, I'm ${founder.firstName}`);
-const description = computed(() => founder.title || 'Founder');
-const avatar = computed(() => founder.avatar);
+// Computed properties
+const displayName = computed(() => `Hi, I'm ${founder.name.split(' ')[0]}`);
+const description = computed(() => founder.role);
+const avatar = computed(() => ({
+  src: founder.avatarUrl,
+  alt: founder.name,
+}));
 
-// 3) Short, 1-sentence message for this small card
-const shortMessage = computed(
+// Use bioShort as the short message
+const shortMessage = computed(() => founder.bioShort);
+
+// Map links to proper format for UButton
+const socialLinks = computed(
   () =>
-    founder.shortMessage ||
-    'Built this template to replace overbuilding with fast, focused validation.',
+    founder.links?.map((link) => ({
+      label: link.label,
+      icon: `i-lucide-${link.platform}`,
+      to: link.url,
+      target: link.url.startsWith('https') ? '_blank' : '_self',
+    })) || [],
 );
 </script>
 
@@ -45,24 +52,24 @@ const shortMessage = computed(
       />
     </template>
 
-    <!-- Body: one-sentence short message from founder config -->
+    <!-- Body: short bio message -->
     <p class="text-sm text-toned text-left lg:text-right">
       {{ shortMessage }}
     </p>
 
-    <!-- Footer: socials (+ email ensured) -->
+    <!-- Footer: social links -->
     <template #footer>
       <span class="w-auto lg:justify-end space-x-2">
         <UButton
-          v-for="contact in founder.socials"
-          :key="contact.label"
-          :icon="contact.icon"
+          v-for="social in socialLinks"
+          :key="social.label"
+          :icon="social.icon"
           color="secondary"
           variant="ghost"
           size="sm"
-          :to="contact.to"
-          :target="contact.target"
-          :aria-label="contact.label"
+          :to="social.to"
+          :target="social.target"
+          :aria-label="social.label"
         />
       </span>
     </template>

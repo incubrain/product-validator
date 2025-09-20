@@ -15,7 +15,7 @@ function onBannerClose() {
     @close="onBannerClose"
   >
     <template #actions>
-      <IButton action="paid" location="banner" />
+      <IButton offer="paid" location="banner" />
     </template>
   </UBanner>
 </template>

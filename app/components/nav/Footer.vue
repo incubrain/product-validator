@@ -1,12 +1,14 @@
+<!-- components/nav/Footer.vue -->
 <script setup lang="ts">
-import { businessConfig } from '#shared/config/business';
 
+const business = useFlowSection('founder').business;
 const currentYear = new Date().getFullYear();
 
-const copyrightYear =
-  businessConfig.business.founding_year === currentYear
+const copyrightYear = computed(() =>
+  business.founding_year === currentYear
     ? `${currentYear}`
-    : `${businessConfig.business.founding_year} - ${currentYear}`;
+    : `${business.founding_year} - ${currentYear}`,
+);
 </script>
 
 <template>
@@ -26,15 +28,13 @@ const copyrightYear =
         <ILogo size="md" />
         <div class="space-y-2">
           <p class="text-muted leading-relaxed font-written text-sm max-w-md">
-            {{ businessConfig.business.description }}.
-            {{ businessConfig.business.tagline }}.
+            {{ business.description }}. {{ business.tagline }}.
           </p>
         </div>
       </div>
     </template>
 
     <template #right>
-      <!-- Replace CTA with Founder Card -->
       <IFounderCard />
     </template>
 
@@ -43,12 +43,11 @@ const copyrightYear =
       <UContainer class="flex justify-between w-full items-center">
         <p class="text-sm text-muted whitespace-nowrap">
           © {{ copyrightYear }}
-          {{ businessConfig.business.legal_name }}
+          {{ business.legal_name }}
         </p>
 
-        <!-- Move CTA here with intro text -->
         <div class="flex items-center gap-3">
-          <IButton location="footer" action="paid" />
+          <IButton offer="paid" location="footer" />
         </div>
       </UContainer>
     </template>

@@ -1,122 +1,112 @@
 <script setup lang="ts">
-interface FounderSectionProps {
-  content: {
-    headline?: string;
-    longMessage: string;
-    promise: string;
-    expertise: Array<{ label: string; icon?: string }>;
-    backgroundStory?: string;
-    user: {
-      firstName: string;
-      lastName: string;
-      title: string;
-      avatar: { src: string; alt?: string };
-    };
-    socials?: Array<{
-      label: string;
-      icon: string;
-      to: string;
-      target?: '_blank' | '_self';
-    }>;
-  };
-}
+/*
+PURPOSE:
+- Public-facing founder story built from `flowConfig.personal`.
+- Mirrors your old layout but maps to the current data keys.
 
-const { content } = defineProps<FounderSectionProps>();
+DATA (from flowConfig.personal):
+- name (combine as display heading)
+- role
+- avatarUrl
+- bioLong
+- promise
+- expertise? (you have `highlights` strings; we’ll render those as badges)
+- links[]: { label, url } (old component had icons; we’ll render simple buttons w/ text)
 
-const fullName = `${content.user.firstName} ${content.user.lastName}`;
+NOTES:
+- If you later want icons in links, extend personal.links to include `icon` and wire to UIcon.
+*/
+
+const personal = useFlowSection('founder');
+const fullName = personal.name;
 </script>
 
 <template>
-  <UPageSection
-    orientation="horizontal"
-    class="bg-muted"
-    :ui="{
-      container: 'flex flex-col lg:grid py-16 sm:py-24 lg:py-32 gap-8 sm:gap-8',
-    }"
-  >
-    <!-- This content goes in the LEFT side of the horizontal layout -->
+  <UPageSection orientation="horizontal" icon="i-lucide-bolt" class="bg-muted">
+    <!-- LEFT: Profile + Links + Highlights -->
     <template #header>
-      <!-- User Profile + Social Icons -->
       <div class="flex flex-col items-start gap-4 mb-6">
         <UUser
-          :name="fullName"
-          :description="content.user.title"
-          :avatar="content.user.avatar"
+          :name="fullName || personal.name"
+          :description="personal.role"
+          :avatar="{ src: personal.avatarUrl, alt: fullName || personal.name }"
           size="lg"
         />
 
-        <div class="flex items-center gap-1 mt-1">
+        <!-- Social / Links (text buttons for now) -->
+        <div class="flex items-center gap-2 mt-1" v-if="personal.links?.length">
           <UButton
-            v-for="social in content.socials"
-            :key="social.label"
+            v-for="l in personal.links"
+            :key="l.label"
             variant="ghost"
             color="neutral"
+            :icon="`i-lucide-${l.platform}`"
             size="sm"
-            square
-            :to="social.to"
-            :target="social.target || '_blank'"
-            :aria-label="social.label"
-          >
-            <UIcon :name="social.icon" class="size-4" />
-          </UButton>
+            :to="l.url"
+            target="_blank"
+          />
         </div>
       </div>
 
-      <!-- Expertise badges -->
-      <div v-if="content.expertise?.length" class="flex flex-wrap gap-2 mb-6">
+      <!-- Highlights as badges -->
+      <div v-if="personal.highlights?.length" class="flex flex-wrap gap-2 mb-6">
         <UBadge
-          v-for="expertise in content.expertise"
-          :key="expertise.label"
+          v-for="(h, i) in personal.highlights"
+          :key="i"
           variant="subtle"
           color="primary"
           size="sm"
         >
-          <span class="inline-flex items-center gap-1.5">
-            <UIcon
-              v-if="expertise.icon"
-              :name="expertise.icon"
-              class="size-3"
-            />
-            {{ expertise.label }}
-          </span>
+          {{ h }}
         </UBadge>
       </div>
     </template>
 
+    <!-- BODY: Long story + (optional) background -->
     <template #body>
-      <!-- Long message using MDC -->
-      <div class="prose prose-invert max-w-none mb-6">
-        <MDC :value="content.longMessage" />
+      <div class="prose prose-invert max-w-none mb-6" v-if="personal.bioLong">
+        <!-- If you store markdown, keep MDC; if plain text, a <p> is fine -->
+        <MDC :value="personal.bioLong" />
       </div>
 
-      <!-- Optional background story -->
-      <div class="mt-4 text-muted leading-relaxed">
-        <MDC :value="content.backgroundStory" />
+      <div
+        class="mt-4 text-muted leading-relaxed"
+        v-if="personal.backgroundStory"
+      >
+        <MDC :value="personal.backgroundStory" />
       </div>
     </template>
 
-    <div>
+    <!-- RIGHT: Promise callout -->
+    <div class="space-y-4">
       <div class="flex justify-end items-start pb-12">
-        <ISurround>
-          <div class="text-2xl font-bold text-center font-family-written mb-6">
-            {{ content.headline || 'My Promise' }}
-          </div>
-          <template #bottom-start>
-            <ISVG type="arrows" variant="up" flip="both" :size="44" />
-          </template>
-        </ISurround>
+        <UBadge color="secondary">
+          Hi, I'm {{ personal.name.split(' ')[0] }}
+        </UBadge>
       </div>
-      <blockquote class="relative">
+
+      <div
+        v-if="personal.portraitUrl"
+        class="hidden md:block order-2 lg:order-1"
+      >
+        <div class="relative">
+          <NuxtImg
+            :src="personal.portraitUrl"
+            :alt="`Portrait of ${fullName || personal.name}`"
+            class="w-full max-w-xs mx-auto rounded-2xl shadow-lg"
+          />
+        </div>
+      </div>
+
+      <blockquote class="relative" v-if="personal.promise">
         <div class="absolute -top-4 left-2 text-7xl text-primary font-serif">
           "
         </div>
-
         <UCard class="border-2 border-dashed border-primary/30">
           <p class="text-xl leading-relaxed">
-            {{ content.promise }}
+            {{ personal.promise }}
           </p>
         </UCard>
-
         <div
           class="absolute -bottom-4 right-2 text-7xl text-primary font-serif rotate-180"
         >

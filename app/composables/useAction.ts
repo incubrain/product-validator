@@ -1,11 +1,6 @@
 // composables/useAction.ts
-import type { ActionKey } from '#shared/config/actions';
-import type { EventPayload } from '#shared/config/events';
-import { getActionType, actionConfig } from '#shared/config/actions';
-
 export const useAction = () => {
   const nuxtApp = useNuxtApp();
-  const { selectVariant } = useABVariant();
 
   const trackEvent = async (event: EventPayload) => {
     const payload = {
@@ -16,18 +11,29 @@ export const useAction = () => {
     await nuxtApp.callHook('events:emit', payload);
   };
 
-  const executeAction = async (actionKey: ActionKey, location: string) => {
-    const baseAction = actionConfig[actionKey];
-    const selectedVariant = selectVariant(baseAction.id, baseAction.variants);
+  const executeAction = async (
+    offerType: 'paid' | 'free' | 'social',
+    location: string,
+    offer?: any,
+  ) => {
+    if (!offer) return;
 
     // Track the interaction
     await trackEvent({
-      id: `${baseAction.id}_${selectedVariant.id}`,
+      id: `${offer.id}_${offerType}`,
       type: 'action_click',
       location,
-      action: getActionType(baseAction.target),
-      target: baseAction.target,
+      action: getActionType(offer.cta.href),
+      target: offer.cta.href,
     });
+  };
+
+  const getActionType = (target: string): string => {
+    if (target?.startsWith('#')) return 'scroll';
+    if (target?.startsWith('tel:')) return 'phone';
+    if (target?.startsWith('mailto:')) return 'email';
+    if (target?.startsWith('http')) return 'external';
+    return 'modal';
   };
 
   return { executeAction, trackEvent };
