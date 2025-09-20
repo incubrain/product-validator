@@ -2,6 +2,7 @@
 import { useIntersectionObserver, useMediaControls } from '@vueuse/core';
 import { videoStyles } from '#theme';
 import type { VideoVariants } from '#theme';
+import { useUserInteraction } from '~/composables/useUserInteraction';
 
 export interface VideoProps {
   src?: string;
@@ -71,17 +72,51 @@ const toggleMute = () => {
 };
 
 // Autoplay logic
-watchEffect(() => {
+const { hasInteracted, waitForInteraction } = useUserInteraction();
+const autoplayAttempted = ref(false);
+
+watchEffect(async () => {
   if (
     videoRef.value &&
     props.autoplay &&
     props.muted &&
     shouldLoad.value &&
-    !hasError.value
+    !hasError.value &&
+    !autoplayAttempted.value // Prevent multiple attempts
   ) {
-    playing.value = true;
+    if (hasInteracted.value) {
+      // User has already interacted - try autoplay immediately
+      try {
+        playing.value = true;
+        autoplayAttempted.value = true;
+      } catch (error) {
+        console.log('Autoplay failed:', error.message);
+      }
+    } else {
+      // Wait for first interaction
+      autoplayAttempted.value = true;
+      waitForInteraction().then(() => {
+        if (
+          videoRef.value &&
+          props.autoplay &&
+          props.muted &&
+          !hasError.value &&
+          shouldLoad.value
+        ) {
+          playing.value = true;
+        }
+      });
+    }
   }
 });
+
+// Reset autoplay attempt when src changes
+watch(
+  () => props.src,
+  () => {
+    autoplayAttempted.value = false;
+  },
+);
 
 // Set initial muted state
 watchEffect(() => {
@@ -141,8 +176,8 @@ const computedStyles = useTV(videoStyles, {
       <div class="flex items-center gap-4">
         <!-- Play/Pause Button -->
         <button
+          class="p-2 rounded-full bg-black/20 hover:bg-black/40 transition-colors flex"
           @click="togglePlay"
-          class="p-2 rounded-full bg-black/20 hover:bg-black/40 transition-colors"
         >
           <UIcon
             :name="playing ? 'i-lucide-pause' : 'i-lucide-play'"
