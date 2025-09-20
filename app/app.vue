@@ -1,22 +1,12 @@
 <script setup lang="ts">
-
-// Dev tools
-const { clearAllStorage } = useDevTools()
-
-// Exit intent with integrated modal
-const { fire } = useExitIntent({ 
-  cooldownDays: 7,
-  disabled: false,
-  minTimeOnPage: 10,
-  requireInteraction: true,
-})
-
 // Dev shortcuts
-if (import.meta.dev) {
+if (import.meta.dev && import.meta.client) {
+  const { clearAllStorage } = useDevTools();
+  const { $exitIntent } = useNuxtApp();
   defineShortcuts({
     meta_shift_r: clearAllStorage,
-    meta_shift_e: fire // Manual exit intent trigger for testing
-  })
+    meta_shift_e: () => $exitIntent.fire(true), // Manual exit intent trigger for testing
+  });
 }
 </script>
 
