@@ -1,0 +1,6 @@
+import { flowConfig } from '#shared/config/overview';
+import type { FlowConfig } from '#shared/config/overview';
+
+export function useFlowSection<K extends keyof FlowConfig>(key: K) {
+  return flowConfig[key];
+}
