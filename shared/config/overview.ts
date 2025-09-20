@@ -667,7 +667,7 @@ export const flowConfig = {
       ],
       cta: {
         label: 'Use Template (Free)',
-        href: 'https://github.com/incubrain/nuxt-launch-kit',
+        href: 'https://github.com/incubrain/product-validator',
         icon: 'i-lucide-layout-panel-top',
         variant: 'outline',
         color: 'neutral',

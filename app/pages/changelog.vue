@@ -60,7 +60,7 @@ const versions = [
 ### Technical Implementation
 
 - **IButton component** — Automatically resolves variants, handles tracking, uses UButton for navigation
-- **Storage prefix system** — All keys prefixed with \`nuxt_launch_kit\` for organized cleanup
+- **Storage prefix system** — All keys prefixed with \`validator\` for organized cleanup
 - **Event consolidation** — Merged \`useEvents\` into \`useAction\` for simpler API
 - **Proper cleanup** — Event listeners properly removed on component unmount
     `,
@@ -131,7 +131,7 @@ The goal isn’t to “build faster.” It’s to **decide faster**—with confi
           label: 'Follow on GitHub',
           color: 'neutral',
           variant: 'ghost',
-          to: 'https://github.com/incubrain/nuxt-launch-kit',
+          to: 'https://github.com/incubrain/product-validator',
           icon: 'i-lucide-github',
           target: '_blank',
         },

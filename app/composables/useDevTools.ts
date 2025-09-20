@@ -1,5 +1,5 @@
 // composables/useDevTools.ts
-const STORAGE_PREFIX = 'nuxt_launch_kit';
+const STORAGE_PREFIX = 'validator';
 
 export const useDevTools = () => {
   const toast = useToast();
