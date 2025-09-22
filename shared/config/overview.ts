@@ -1,4 +1,5 @@
 // flow.config.ts
+import type { ButtonProps } from '@nuxt/ui';
 // Opinionated content model for product ideation → landing-page copy.
 // Each section below is commented as if it were a separate file (01..08),
 // but kept together here so you can iterate the structure in one place.
@@ -8,15 +9,36 @@
 // -----------------------------------------------------------------------------
 type Link = { platform: string; label: string; url: string };
 
-type Cta = {
+export type Cta = {
   label: string;
-  href: string;
+  to: string;
   note?: string;
   icon?: string;
-  color?: string;
-  variant?: string;
+  color?: ButtonProps['color'];
+  variant?: ButtonProps['variant'];
   labelMobile?: string;
   disabled?: boolean;
+};
+
+type SectionConfig = {
+  intro: {
+    icon?: string; // Optional section icon
+    headline?: string; // Optional badge/eyebrow text
+    title: string;
+    description: string;
+  };
+  separators?: Record<
+    string,
+    {
+      label: string;
+      description: string;
+    }
+  >;
+  bridge?: {
+    headline: string;
+    message: string;
+    cta: Cta;
+  };
 };
 
 type Metric = { label: string; value: string | number; sub?: string };
@@ -25,6 +47,7 @@ type Metric = { label: string; value: string | number; sub?: string };
 // 00) Hypothesis (claim, audience)
 // -----------------------------------------------------------------------------
 type Scale1to5 = 1 | 2 | 3 | 4 | 5;
+
 type EvidenceItem = {
   id?: string;
   type:
@@ -35,46 +58,63 @@ type EvidenceItem = {
     | 'experiment'
     | 'personal_experience';
   summary: string; // one-line takeaway
-  source?: string; // URL, doc id, or “Customer: ACME”
+  description: string; // detailed explanation for UI
   strength?: Scale1to5; // confidence in this item
+  date?: string;
+  sample_size?: number;
+  source?: string; // URL, doc id, or "Customer: ACME"
+  icon: string; // UI icon for display
 };
 
+interface CustomerProfile {
+  id: string;
+  label: string;
+  primary?: boolean;
+  description: string; // Rich narrative including identity traits
+  context: Record<string, string>; // Flat key-value for easy templating
+  pains: Array<{
+    label: string;
+    severity: string;
+    cost: string;
+  }>;
+  outcomes: Array<{
+    label: string;
+    target: number;
+    unit: string;
+    value: string;
+  }>;
+  objections: Array<{
+    label: string;
+    rebuttal: string;
+  }>;
+}
+
 type Hypothesis = {
-  // Problem object
+  // Section configuration
+  sections: SectionConfig;
+
+  // Consolidated evidence (single source)
+  evidence: EvidenceItem[];
+
+  // Static outcome features (not profile-reactive)
+  outcomeFeatures: Array<{
+    title: string;
+    description: string;
+    icon: string;
+  }>;
+
+  // Simplified problem data for hero section
   problem: {
     statement: string; // What is the problem
-    frequency?: string; // How often is it a problem
-    severity: string; // How painful is the problem
-    triggers: string[]; // What causes the problem
-    evidence: EvidenceItem[]; // How do I know it's a problem
-    evolution: string; // Will it continue to be a problem
-    cost: string; // What will it cost you if you don't sove it
     solution: {
-      // How will I solve it for you
       claim: string; // Bold Claim
       pitch: string; // Claim Explanation
       promise: string; // Minimum Outcome
-      risks?: { label: string; mitigation: string }[]; // What could make this untrue?
     };
   };
 
-  // Customer Profiles - Who is this a problem for
-  customerProfiles: {
-    id: string;
-    label: string; // Who are they
-    primary?: boolean; // Is this our main focus
-    pains: {
-      // What causes this to be a problem for them
-      label: string; // What is the pain
-      severity: string; // How bad is it
-      cost?: string; // Will it cost them if unsolved?
-    }[];
-    outcomes: {
-      // What are the desired outcomes
-      label: string; // Desired outcome
-      target: number; // Desired timeframe
-    }[];
-  }[];
+  // Customer profiles (pains are reactive in tabs)
+  customerProfiles: CustomerProfile[];
 };
 
 // -----------------------------------------------------------------------------
@@ -89,7 +129,13 @@ type BusinessInfo = {
   founding_year: number;
 };
 
+type Image = {
+  src: string;
+  alt: string;
+};
+
 type Founder = {
+  sections: SectionConfig;
   name: string;
   business: BusinessInfo;
   role: string;
@@ -97,8 +143,8 @@ type Founder = {
   bioLong?: string;
   backgroundStory?: string;
   promise?: string;
-  avatarUrl?: string;
-  portraitUrl?: string;
+  avatar?: Image;
+  portrait?: Image;
   skills: string[];
   domains: string[];
   highlights?: string[];
@@ -109,6 +155,7 @@ type Founder = {
 // 02) Positioning (USP)
 // -----------------------------------------------------------------------------
 type Positioning = {
+  sections: SectionConfig;
   category: string;
   affiliations: { name?: string; logo: string; note?: string }[];
   comparison: {
@@ -143,6 +190,7 @@ type FlowContent =
   | { type: 'code'; language: string; snippet: string; label?: string };
 
 type Product = {
+  sections: SectionConfig;
   elevator: string;
   flow: {
     id: string;
@@ -195,7 +243,7 @@ type SocialProof =
 // 07) Questions (Warnings, Objections, Support, General)
 // -----------------------------------------------------------------------------
 
-type FaqItem = {
+export type FaqItem = {
   q: string;
   a: string;
   type: 'general' | 'objection' | 'warning' | 'support';
@@ -217,7 +265,6 @@ type Offer = {
     value?: number;
   }>;
   cta: Cta;
-  guarantee?: string;
   inventory?: { total: number; claimed: number };
 };
 
@@ -225,62 +272,121 @@ export type FlowConfig = {
   hypothesis: Hypothesis;
   positioning: Positioning;
   product: Product;
-  offers: Offer[];
+  offers: {
+    sections: SectionConfig;
+    items: Offer[];
+  };
   founder: Founder;
-  socialProof: SocialProof[];
-  questions: FaqItem[];
+  socialProof: {
+    sections: SectionConfig;
+    items: SocialProof[];
+  };
+  questions: {
+    sections: SectionConfig;
+    items: FaqItem[];
+  };
 };
 
 export const flowConfig = {
   hypothesis: {
+    sections: {
+      intro: {
+        title: "This problem hits different when you're technical",
+        headline: 'something here',
+        icon: 'i-lucide-lightbulb',
+        description:
+          "We've lived it, researched it, and mapped the exact path out",
+      },
+      separators: {
+        research: {
+          label: "We know because we've been there",
+          description:
+            "This isn't theory. It's lived experience backed by systematic research across the developer community.",
+        },
+        solution: {
+          label: 'Your exact path from paralysis to clarity',
+          description:
+            'This is why we built a validation-first approach specifically for technical founders. Stop overthinking, start validating, make confident decisions.',
+        },
+      },
+      bridge: {
+        headline: 'The bottom line:',
+        message:
+          "67% of technical founders waste months building unvalidated features. You don't have to be one of them.",
+        cta: {
+          label: 'See exactly how this works',
+          to: '#positioning',
+          icon: 'i-lucide-arrow-down',
+        },
+      },
+    },
+
+    // CONSOLIDATED: Single evidence source (remove from problem.evidence)
+    evidence: [
+      {
+        summary: 'Built 10+ products that never launched due to perfectionism',
+        description:
+          'Personal journey through the perfectionist trap that keeps technical founders stuck',
+        type: 'personal_experience',
+        icon: 'i-lucide-user',
+        sample_size: 10,
+        date: 'Jan 2024',
+        strength: 5,
+      },
+      {
+        summary: '67% of technical founders have unshipped side projects',
+        description:
+          'Structured research across developer communities revealed validation paralysis patterns',
+        type: 'research',
+        icon: 'i-lucide-users',
+        sample_size: 150,
+        date: 'Aug 2024',
+        strength: 4,
+      },
+      {
+        summary:
+          'Validation prevents 80% of startup failures according to CB Insights',
+        description:
+          'Comprehensive analysis of failed startups shows lack of market need as #1 killer',
+        type: 'market_report',
+        icon: 'i-lucide-trending-down',
+        sample_size: 1000,
+        date: 'Dec 2023',
+        strength: 4,
+      },
+    ],
+
+    // KEPT: Static outcome features (not profile-reactive)
+    outcomeFeatures: [
+      {
+        title: 'Stop Guessing',
+        description:
+          'Get your validation page live and start collecting real user signals within 24 hours',
+        icon: 'i-lucide-target',
+      },
+      {
+        title: 'Start Knowing',
+        description:
+          'Gather meaningful feedback from 20+ target users using proven distribution templates',
+        icon: 'i-lucide-brain',
+      },
+      {
+        title: 'Decide Confidently',
+        description:
+          'Make data-driven build/pivot decisions with clear success metrics and next steps',
+        icon: 'i-lucide-check-circle',
+      },
+    ],
+
+    // SIMPLIFIED: Core problem data for hero section
     problem: {
       statement:
         'Technical experts build impressive products but struggle to package and market their expertise effectively',
-      frequency:
-        'Chronic issue affecting most technical founders throughout their careers',
-      severity:
-        'Career-limiting - prevents monetizing years of valuable experience',
-      triggers: [
-        'Perfectionist tendencies leading to endless iteration',
-        'Preference for building over marketing',
-        'Lack of structured validation process',
-        "Fear of putting 'imperfect' work in public",
-      ],
-      evidence: [
-        {
-          type: 'personal_experience',
-          summary:
-            'Built 10+ products that never launched due to perfectionism',
-          strength: 5,
-        },
-        {
-          type: 'interview',
-          summary:
-            'Interviewed 50 developers - 80% had unshipped side projects',
-          source: 'Dev community survey 2024',
-          strength: 4,
-        },
-      ],
-      evolution:
-        'Problem worsening as tech moves faster and competition increases',
-      cost: 'Years of wasted development time, missed revenue opportunities, career stagnation',
       solution: {
         claim: 'Validate in days, not months, or years!',
         pitch:
           'Pre-built template removes technical friction, forcing rapid validation over perfectionism',
         promise: 'Get real feedback on your idea within 48 hours of setup',
-        risks: [
-          {
-            label: 'Requires basic technical skills',
-            mitigation:
-              'Provides step-by-step setup guide and community support',
-          },
-          {
-            label:
-              'Success depends on user actively sharing and collecting feedback',
-            mitigation: 'Includes proven distribution playbook and templates',
-          },
-        ],
       },
     },
 
@@ -289,6 +395,17 @@ export const flowConfig = {
         id: 'technical-founders',
         label: 'Technical Founders',
         primary: true,
+        description:
+          'Perfectionist builders who fear public failure, confident in code but insecure in marketing, value craftsmanship over speed, and are driven to prove technical expertise can build businesses',
+
+        context: {
+          experience: '3-15 years development experience',
+          team_size: 'Solo founder or small team',
+          budget: '$5k-15k validation budget',
+          decision_style: 'Wants data-driven decisions',
+          stage: 'Pre-revenue bootstrap',
+        },
+
         pains: [
           {
             label: 'Endless iteration without validation',
@@ -300,40 +417,102 @@ export const flowConfig = {
             severity: 'Medium - leads to poor messaging',
             cost: 'Low conversion rates, unclear value props',
           },
+          {
+            label: 'Fear of public failure and judgment',
+            severity: 'High - prevents any launch attempts',
+            cost: 'Zero market feedback, prolonged uncertainty',
+          },
         ],
+
         outcomes: [
           {
-            label: 'Launch validation page',
-            target: 1, // 1 day
+            label: 'Get your validation page live',
+            target: 1,
+            unit: 'days',
+            value: 'Working landing page with analytics',
           },
           {
-            label: 'Collect meaningful feedback',
-            target: 7, // 1 week
+            label: 'Collect real user feedback',
+            target: 7,
+            unit: 'days',
+            value: '20+ meaningful responses from target users',
           },
           {
-            label: 'Make go/no-go decision',
-            target: 30, // 1 month
+            label: 'Make confident build/pivot decision',
+            target: 30,
+            unit: 'days',
+            value: 'Data-driven go/no-go with clear next steps',
+          },
+        ],
+
+        objections: [
+          {
+            label: "Can't I just build and see?",
+            rebuttal: 'Test messaging in days vs shipping features in weeks',
+          },
+          {
+            label: "I don't have an audience",
+            rebuttal:
+              'We provide targeted outreach templates for your communities',
           },
         ],
       },
       {
         id: 'expert-consultants',
         label: 'Expert Consultants',
+        description:
+          'Domain experts frustrated by scaling limits, value expertise and authority, motivated by freedom and leverage, confident in knowledge but uncertain about productization',
+
+        context: {
+          experience: '5+ years consulting experience',
+          team_size: 'Individual consultant',
+          budget: '$2k-10k product budget',
+          decision_style: 'Seeks proven frameworks',
+          stage: 'Established practice',
+        },
+
         pains: [
           {
             label: 'Difficulty packaging expertise into products',
             severity: 'High - limits scaling potential',
             cost: 'Stuck in time-for-money trap',
           },
+          {
+            label: 'Time-for-money ceiling limits growth potential',
+            severity: 'Medium - impacts long-term scaling',
+            cost: 'Capped revenue growth, burnout risk',
+          },
+          {
+            label: 'Difficulty standing out in crowded consulting market',
+            severity: 'Medium - affects client acquisition',
+            cost: 'Lower rates, commodity positioning',
+          },
         ],
+
         outcomes: [
           {
             label: 'Test productized offering',
-            target: 3, // 3 days
+            target: 3,
+            unit: 'days',
+            value: 'Structured product validation approach',
           },
           {
             label: 'Validate market demand',
-            target: 14, // 2 weeks
+            target: 14,
+            unit: 'days',
+            value: 'Clear product-market fit signals',
+          },
+        ],
+
+        objections: [
+          {
+            label: 'My expertise is too complex to productize',
+            rebuttal:
+              'We break complex knowledge into testable value propositions',
+          },
+          {
+            label: 'Clients expect custom solutions',
+            rebuttal: "Products complement consulting - they don't replace it",
           },
         ],
       },
@@ -341,6 +520,25 @@ export const flowConfig = {
   },
 
   founder: {
+    sections: {
+      intro: {
+        icon: 'i-lucide-id-card',
+        headline: 'Built by Founders, for Founders',
+        title: "Who's behind this",
+        description:
+          'Meet Drew, the technical founder who built this validation system from lived experience',
+      },
+      bridge: {
+        headline: 'Real results from real founders',
+        message:
+          'See how other technical founders are using this approach to validate and build',
+        cta: {
+          label: 'See Success Stories',
+          to: '#social-proof',
+          icon: 'i-lucide-trophy',
+        },
+      },
+    },
     name: 'Drew MacGibbon',
     role: 'Product Strategist & Builder',
     business: {
@@ -357,8 +555,14 @@ export const flowConfig = {
     backgroundStory: `I started my first business at 19 and spent a decade building for myself and others. Too often, teams (including me) built polished ghosts—products without proof. This kit is the antidote: a focused path to learn from customers first and build only what matters.`,
     promise:
       "I'll help you decide faster—validate in days, not months—so you either double down with confidence or walk away early without sunk costs.",
-    avatarUrl: 'https://github.com/Drew-MacGibbon.png',
-    portraitUrl: 'https://github.com/Drew-MacGibbon.png',
+    avatar: {
+      src: '/images/founder-avatar.png',
+      alt: 'avatar image of Drew MacGibbon',
+    },
+    portrait: {
+      src: '/images/founder-portrait.png',
+      alt: 'portrait image of Drew MacGibbon',
+    },
     skills: ['Business', 'Full-stack development', 'Product strategy'],
     domains: ['Validation-first products'],
     highlights: [
@@ -383,7 +587,32 @@ export const flowConfig = {
   },
 
   positioning: {
-    category: 'Validation-first landing page kit',
+    sections: {
+      intro: {
+        icon: 'i-lucide-target',
+        headline: 'Competitive Analysis',
+        title: 'Why this approach wins',
+        description:
+          'See how we stack up against alternatives and why our method gets results faster',
+      },
+      separators: {
+        comparison: {
+          label: 'Feature Comparison',
+          description: 'Side-by-side breakdown of approaches and outcomes',
+        },
+      },
+      bridge: {
+        headline: 'Ready to see it in action?',
+        message:
+          "Now that you understand the approach, let's walk through exactly how it works",
+        cta: {
+          label: 'See How It Works',
+          to: '#product',
+          icon: 'i-lucide-arrow-down',
+        },
+      },
+    },
+    category: "We're open-source | Star us on GithHub",
     affiliations: [
       { name: 'Nuxt', logo: 'i-logos-nuxt-icon', note: 'v4' },
       { name: 'Nuxt UI', logo: 'i-logos-nuxt-icon', note: 'v4' },
@@ -426,20 +655,26 @@ export const flowConfig = {
           'Clear success metrics and decision frameworks help you move forward with confidence or cut losses early.',
         icon: 'i-lucide-compass',
       },
+      {
+        title: 'Build community while you validate',
+        description:
+          'Turn validation into relationship-building. Create advocates before you create customers.',
+        icon: 'i-lucide-users',
+      },
     ],
     comparison: {
       tiers: [
         {
-          id: 'product-validator',
+          id: 'us',
           title: 'Product Validator',
           highlight: true,
         },
         {
-          id: 'alternative-a',
+          id: 'option-a',
           title: 'DIY',
         },
         {
-          id: 'alternative-b',
+          id: 'option-b',
           title: 'Agency',
         },
       ],
@@ -450,25 +685,59 @@ export const flowConfig = {
             {
               title: 'Speed to validation',
               tiers: {
-                'product-validator': '1-2 days',
-                'alternative-a': '2-4 weeks (custom build)',
-                'alternative-b': '1-3 months',
+                'us': '1-2 days',
+                'option-a': '2-4 weeks (custom build)',
+                'option-b': '1-3 months',
               },
             },
             {
               title: 'Cost',
               tiers: {
-                'product-validator': '$50 + hosting',
-                'alternative-a': '$5k-15k',
-                'alternative-b': '$10k-50k',
+                'us': '$50 + hosting',
+                'option-a': '$5k-15k',
+                'option-b': '$10k-50k',
               },
             },
             {
               title: 'Analytics setup',
               tiers: {
-                'product-validator': 'Pre-configured events',
-                'alternative-a': 'Manual integration',
-                'alternative-b': 'Complex dashboard',
+                'us': 'Pre-configured events',
+                'option-a': 'Manual integration',
+                'option-b': 'Complex dashboard',
+              },
+            },
+          ],
+        },
+        {
+          title: 'Setup & Launch',
+          features: [
+            {
+              title: 'Time to validation',
+              tiers: {
+                'us': '1-2 days',
+                'option-a': '2-4 weeks',
+                'option-b': '1-3 months',
+              },
+            },
+            {
+              title: 'Technical requirements',
+              tiers: {
+                'us': 'Basic Git/Node.js',
+                'option-a': 'Full dev stack',
+                'option-b': 'Agency managed',
+              },
+            },
+          ],
+        },
+        {
+          title: 'Ongoing Support',
+          features: [
+            {
+              title: 'Community access',
+              tiers: {
+                'us': 'Discord + YouTube',
+                'option-a': 'Stack Overflow',
+                'option-b': 'Account manager',
               },
             },
           ],
@@ -478,6 +747,20 @@ export const flowConfig = {
   },
 
   product: {
+    sections: {
+      intro: {
+        icon: 'i-lucide-package',
+        headline: 'Step-by-Step Process',
+        title: 'How it works',
+        description: 'From idea to validation in three focused steps',
+      },
+      bridge: {
+        headline: 'See the value?',
+        message:
+          'Get started with our validation bundle and turn your idea into evidence',
+        cta: { label: 'Get Early Access', to: '#offers', icon: 'i-lucide-zap' },
+      },
+    },
     elevator:
       'A Nuxt template laser-focused on one question: "Should we build it?"',
     media: {
@@ -523,6 +806,16 @@ export const flowConfig = {
             src: '/videos/launch-step.mp4',
             alt: 'Launching and sharing your page',
           },
+          {
+            type: 'list',
+            style: 'checks',
+            items: [
+              'Deploy with one-click to Vercel/Netlify',
+              'Share in relevant communities and networks',
+              'Send to your email list and social followers',
+              'Reach out directly to 10-20 target users',
+            ],
+          },
         ],
       },
       {
@@ -540,250 +833,332 @@ export const flowConfig = {
             src: '/videos/measure-step.mp4',
             alt: 'Measuring and tracking results',
           },
+          {
+            type: 'list',
+            style: 'checks',
+            items: [
+              'Track visitor behavior and conversion rates',
+              'Monitor which headlines perform best',
+              'Identify strongest interest signals',
+              'Collect qualitative feedback via surveys',
+            ],
+          },
         ],
       },
     ],
   },
 
-  socialProof: [
-    // Highlight card - CTA to Twitter/X
-    {
-      type: 'highlight',
-      title: 'Your testimonial could be here',
-      description:
-        'Share your validation wins and help others learn from your journey.',
-      icon: 'i-simple-icons-x',
-      to: 'https://x.com/incubrain',
-    },
-    // Mock testimonials (clearly labeled as examples)
-    {
-      type: 'testimonial',
-      quote:
-        'Finally shipped after 6 months of "perfecting" my side project. The template forced me to focus on what actually matters.',
-      name: 'Alex Chen',
-      role: 'Example Testimonial*',
-      avatarUrl: 'https://i.pravatar.cc/150?img=11',
-    },
-    {
-      type: 'testimonial',
-      quote:
-        'Deployed on Tuesday, had 200 email signups by Friday. Sometimes you just need to hit publish and see what happens.',
-      name: 'Taylor Kim',
-      role: 'Example Testimonial*',
-      avatarUrl: 'https://i.pravatar.cc/150?img=32',
-    },
-    {
-      type: 'testimonial',
-      quote:
-        'My perfectionist brain hated this template at first. Then I realized that was exactly the point.',
-      name: 'Jordan Rivera',
-      role: 'Example Testimonial*',
-      avatarUrl: 'https://i.pravatar.cc/150?img=68',
-    },
-    // Case studies
-    {
-      type: 'case-study',
-      title: 'Incubrain Launch (WIP)',
-      situation:
-        'Building validation template while using it to validate our own product',
-      action:
-        'Eating our own dog food - using this exact template for incubrain.org',
-      result:
-        'Work in progress - follow our journey and learnings in real-time',
-      metric: {
-        label: 'Status',
-        value: 'Building in public',
-        sub: 'Real data coming soon',
+  socialProof: {
+    sections: {
+      intro: {
+        icon: 'i-lucide-users',
+        headline: 'Community Wins',
+        title: 'What early users say',
+        description:
+          'Real results from founders using the validation-first approach',
       },
-      link: 'https://incubrain.org',
-    },
-    {
-      type: 'case-study',
-      title: 'Your success story here',
-      situation: 'You have an idea but struggle with validation paralysis',
-      action: 'Use this template to ship fast and gather real feedback',
-      result: 'Data-driven decisions instead of endless iteration',
-      metric: {
-        label: 'Your metric',
-        value: 'Your result',
-        sub: 'Your timeline',
+      bridge: {
+        headline: 'Still have questions?',
+        message:
+          'Get answers to common concerns and objections about the validation approach',
+        cta: {
+          label: 'Get Answers',
+          to: '#questions',
+          icon: 'i-lucide-help-circle',
+        },
       },
-      link: 'https://x.com/incubrain',
     },
-  ],
+    items: [
+      // Highlight card - CTA to Twitter/X
+      {
+        type: 'highlight',
+        title: 'Your testimonial could be here',
+        description:
+          'Share your validation wins and help others learn from your journey.',
+        icon: 'i-simple-icons-x',
+        to: 'https://x.com/incubrain',
+      },
+      // Mock testimonials (clearly labeled as examples)
+      {
+        type: 'testimonial',
+        quote:
+          'Finally shipped after 6 months of "perfecting" my side project. The template forced me to focus on what actually matters.',
+        name: 'Alex Chen',
+        role: 'Example Testimonial*',
+        avatarUrl: 'https://i.pravatar.cc/150?img=11',
+      },
+      {
+        type: 'testimonial',
+        quote:
+          'Deployed on Tuesday, had 200 email signups by Friday. Sometimes you just need to hit publish and see what happens.',
+        name: 'Taylor Kim',
+        role: 'Example Testimonial*',
+        avatarUrl: 'https://i.pravatar.cc/150?img=32',
+      },
+      {
+        type: 'testimonial',
+        quote:
+          'My perfectionist brain hated this template at first. Then I realized that was exactly the point.',
+        name: 'Jordan Rivera',
+        role: 'Example Testimonial*',
+        avatarUrl: 'https://i.pravatar.cc/150?img=68',
+      },
+      {
+        type: 'testimonial',
+        quote:
+          'Stopped overthinking and started shipping. Three validation pages later, I found my winning idea.',
+        name: 'Sarah Chen',
+        role: 'Example Testimonial*',
+        avatarUrl: 'https://i.pravatar.cc/150?img=44',
+      },
+      {
+        type: 'testimonial',
+        quote:
+          'The template forced me out of perfectionist mode. Best $50 I spent on my startup journey.',
+        name: 'Marcus Rodriguez',
+        role: 'Example Testimonial*',
+        avatarUrl: 'https://i.pravatar.cc/150?img=52',
+      },
+      // Case studies
+      {
+        type: 'case-study',
+        title: 'Incubrain Launch (WIP)',
+        situation:
+          'Building validation template while using it to validate our own product',
+        action:
+          'Eating our own dog food - using this exact template for incubrain.org',
+        result:
+          'Work in progress - follow our journey and learnings in real-time',
+        metric: {
+          label: 'Status',
+          value: 'Building in public',
+          sub: 'Real data coming soon',
+        },
+        link: 'https://incubrain.org',
+      },
+      {
+        type: 'case-study',
+        title: 'Your success story here',
+        situation: 'You have an idea but struggle with validation paralysis',
+        action: 'Use this template to ship fast and gather real feedback',
+        result: 'Data-driven decisions instead of endless iteration',
+        metric: {
+          label: 'Your metric',
+          value: 'Your result',
+          sub: 'Your timeline',
+        },
+        link: 'https://x.com/incubrain',
+      },
+    ],
+  },
 
-  offers: [
-    {
-      id: 'product',
-      name: 'Validator Accelerator',
-      description: 'Complete validation course with community access',
-      price: '$50',
-      compareAt: '$150',
-      benefits: [
-        {
-          text: 'YouTube review of your product page',
-          value: 200,
-          status: 'available',
-        },
-        {
-          text: '2 selected founders get 1-month 1:1 coaching',
-          value: 2000,
-          status: 'available',
-        },
-        {
-          text: '30-day validation roadmap (step-by-step)',
-          status: 'coming-soon',
-        },
-        {
-          text: 'Asset resource database + AI generation guides',
-          status: 'coming-soon',
-        },
-        {
-          text: 'Proven AI prompts for setup & optimization',
-          status: 'coming-soon',
-        },
-        { text: 'Idea assessment framework', status: 'coming-soon' },
-      ],
-      cta: {
-        label: 'Buy Now',
-        href: 'https://whop.com/incubrain-community/product-validator',
-        icon: 'i-lucide-play',
-        variant: 'solid',
-        color: 'primary',
-        note: 'Secure your spot',
-      },
-      guarantee: 'Lock in $50 early-bird price',
-      inventory: { total: 50, claimed: 7 },
-    },
-    {
-      id: 'magnet',
-      name: 'Use Template',
-      price: 'Free',
-      description: 'Open-source Nuxt template with validation features',
-      benefits: [
-        { text: 'Validation Template', status: 'available' },
-        { text: 'Analytics Integration', status: 'available' },
-        { text: 'Configuration Driven', status: 'beta' },
-        { text: 'Community Support', status: 'beta' },
-      ],
-      cta: {
-        label: 'Use Template (Free)',
-        href: 'https://github.com/incubrain/product-validator',
-        icon: 'i-lucide-layout-panel-top',
-        variant: 'outline',
-        color: 'neutral',
-        note: 'No credit card required',
-      },
-    },
-    {
-      id: 'direct',
-      name: 'Hire Me (Support Open Source)',
-      description:
-        'Get expert Nuxt development while supporting continued template development and community resources',
-      price: '$27/hour',
-      benefits: [
-        { text: 'Expert Nuxt 4 + TypeScript development', status: 'available' },
-        { text: 'Validation-first product strategy', status: 'available' },
-        { text: 'Landing page optimization & analytics', status: 'available' },
-        {
-          text: 'Template updates funded by your project',
-          status: 'available',
-        },
-      ],
-      cta: {
-        label: 'Hire on Upwork',
-        href: 'https://www.upwork.com/freelancers/~01b4c32258ac48835f?mp_source=share',
+  offers: {
+    sections: {
+      intro: {
         icon: 'i-lucide-handshake',
-        variant: 'solid',
-        color: 'secondary',
-        note: 'Help keep this template free & updated',
+        headline: 'Validation Bundle',
+        title: 'Choose your path',
+        description: 'Get the template, strategy, and support to validate fast',
+      },
+      bridge: {
+        headline: 'Questions about fit?',
+        message:
+          'Meet the founder behind this approach and see if it aligns with your goals',
+        cta: {
+          label: 'Meet the Founder',
+          to: '#founder',
+          icon: 'i-lucide-user',
+        },
       },
     },
-    {
-      id: 'social',
-      name: 'YouTube Validator Reviews',
-      description: 'Learn from real validation examples',
-      price: 'Free',
-      benefits: [
-        { text: 'Public landing page critiques', status: 'available' },
-        { text: 'Real validation examples', status: 'available' },
-        { text: 'Community learning', status: 'available' },
-        { text: 'Free feedback', status: 'available' },
-      ],
-      cta: {
-        label: 'Watch Critiques',
-        href: 'https://www.youtube.com/@Incubrain',
-        icon: 'i-lucide-youtube',
-        variant: 'solid',
-        color: 'error',
+    items: [
+      {
+        id: 'product',
+        name: 'Validator Accelerator',
+        description: 'Complete validation course with community access',
+        price: '$50',
+        compareAt: '$150',
+        benefits: [
+          {
+            text: 'YouTube review of your product page',
+            value: 200,
+            status: 'available',
+          },
+          {
+            text: '2 selected founders get 1-month 1:1 coaching',
+            value: 2000,
+            status: 'available',
+          },
+          {
+            text: '30-day validation roadmap (step-by-step)',
+            status: 'coming-soon',
+          },
+          {
+            text: 'Asset resource database + AI generation guides',
+            status: 'coming-soon',
+          },
+          {
+            text: 'Proven AI prompts for setup & optimization',
+            status: 'coming-soon',
+          },
+          { text: 'Idea assessment framework', status: 'coming-soon' },
+        ],
+        cta: {
+          label: 'Join Course',
+          to: 'https://whop.com/incubrain-community/product-validator',
+          icon: 'i-lucide-shopping-cart',
+          variant: 'solid',
+          color: 'primary',
+          note: 'Secure your spot',
+        },
+        inventory: { total: 50, claimed: 7 },
       },
-    },
-  ],
+      {
+        id: 'magnet',
+        name: 'Use Template',
+        price: 'Free',
+        description: "We're open-source",
+        benefits: [
+          { text: 'Validation Template', status: 'available' },
+          { text: 'Analytics Integration', status: 'available' },
+          { text: 'Configuration Driven', status: 'beta' },
+          { text: 'Community Support', status: 'beta' },
+        ],
+        cta: {
+          label: 'Star us on GitHub',
+          to: 'https://github.com/incubrain/product-validator',
+          icon: 'i-lucide-layout-panel-top',
+          variant: 'outline',
+          color: 'neutral',
+          note: 'No credit card required',
+        },
+      },
+      {
+        id: 'direct',
+        name: 'Hire Me (Support Open Source)',
+        description:
+          'Get expert Nuxt development while supporting continued template development and community resources',
+        price: '$27/hour',
+        benefits: [
+          {
+            text: 'Expert Nuxt 4 + TypeScript development',
+            status: 'available',
+          },
+          { text: 'Validation-first product strategy', status: 'available' },
+          {
+            text: 'Landing page optimization & analytics',
+            status: 'available',
+          },
+          {
+            text: 'Template updates funded by your project',
+            status: 'available',
+          },
+        ],
+        cta: {
+          label: 'Hire on Upwork',
+          to: 'https://www.upwork.com/freelancers/~01b4c32258ac48835f?mp_source=share',
+          icon: 'i-lucide-handshake',
+          variant: 'solid',
+          color: 'secondary',
+          note: 'Help keep this template free & updated',
+        },
+      },
+      {
+        id: 'social',
+        name: 'YouTube Validator Reviews',
+        description: 'Learn from real validation examples',
+        price: 'Free',
+        benefits: [
+          { text: 'Public landing page critiques', status: 'available' },
+          { text: 'Real validation examples', status: 'available' },
+          { text: 'Community learning', status: 'available' },
+          { text: 'Free feedback', status: 'available' },
+        ],
+        cta: {
+          label: 'Watch Critiques',
+          to: 'https://www.youtube.com/@Incubrain',
+          icon: 'i-lucide-youtube',
+          variant: 'solid',
+          color: 'error',
+        },
+      },
+    ],
+  },
 
-  questions: [
-    // Warning
-    {
-      q: 'What are the technical requirements?',
-      a: 'Template requires basic dev setup (Node.js, Git). Best results need active sharing and feedback collection. A/B testing requires some traffic to be meaningful.',
-      type: 'warning',
+  questions: {
+    sections: {
+      intro: {
+        icon: 'i-lucide-message-circle',
+        headline: 'Common Questions',
+        title: 'Frequently asked questions',
+        description: 'Addressing concerns, objections, and fit considerations',
+      },
     },
-    {
-      q: 'Who is this NOT suitable for?',
-      a: 'Not suitable for post-PMF companies scaling existing products, non-technical founders without dev support, ideas requiring complex demos, or B2B enterprise sales with long evaluation cycles.',
-      type: 'warning',
-    },
-    // Objections
-    {
-      q: 'I can just build a simple landing page myself',
-      a: "True, but you'll spend weeks on setup, analytics integration, copywriting, product ideation, and distribution strategy. This gives you the validation framework immediately.",
-      type: 'objection',
-    },
-    {
-      q: 'Why not use a no-code tool like Webflow?',
-      a: 'No-code tools are great for marketing sites, but often cost to get started, require design knowhow, knowledge about product messaging structure, and most importantly they are less flexable for when you decide to build; not to mention lock-in!',
-      type: 'objection',
-    },
-    {
-      q: '$50 seems expensive for a template',
-      a: 'The template is free on GitHub. The $50 gets you the validation course, critique review, and coaching opportunity - potentially saving months of wrong direction.',
-      type: 'objection',
-    },
-    // Support
-    {
-      q: 'What support is available?',
-      a: 'We respond within 48 hours via GitHub issues, Email, YouTube comments, or Community Discord.',
-      type: 'support',
-    },
-    // General
-    {
-      q: 'Is the template free and open-source?',
-      a: 'Yes. Free for personal and commercial use (see repo license).',
-      type: 'general',
-    },
-    {
-      q: 'How is the course priced?',
-      a: '$50 early-bird bundle (first 50 spots at this price, then it increases).',
-      type: 'general',
-    },
-    {
-      q: "What's included in the Validator Bundle?",
-      a: 'Template setup, validation strategy, social-first distribution, reading signals, and prioritizing iterations.',
-      type: 'general',
-    },
-    {
-      q: 'How do analytics work?',
-      a: 'The template emits Nuxt events (views, clicks, conversions, variant views). You wire them to any analytics provider.',
-      type: 'general',
-    },
-    {
-      q: 'Where can I watch critiques?',
-      a: 'On our YouTube channel: https://www.youtube.com/@Incubrain',
-      type: 'general',
-    },
-    {
-      q: 'Can I hire you?',
-      a: 'Yes. "Hire me" links are available in the nav and footer.',
-      type: 'general',
-    },
-  ],
+    items: [
+      // Warning
+      {
+        q: 'What are the technical requirements?',
+        a: 'Template requires basic dev setup (Node.js, Git). Best results need active sharing and feedback collection. A/B testing requires some traffic to be meaningful.',
+        type: 'warning',
+      },
+      {
+        q: 'Who is this NOT suitable for?',
+        a: 'Not suitable for post-PMF companies scaling existing products, non-technical founders without dev support, ideas requiring complex demos, or B2B enterprise sales with long evaluation cycles.',
+        type: 'warning',
+      },
+      // Objections
+      {
+        q: 'I can just build a simple landing page myself',
+        a: "True, but you'll spend weeks on setup, analytics integration, copywriting, product ideation, and distribution strategy. This gives you the validation framework immediately.",
+        type: 'objection',
+      },
+      {
+        q: 'Why not use a no-code tool like Webflow?',
+        a: 'No-code tools are great for marketing sites, but often cost to get started, require design knowhow, knowledge about product messaging structure, and most importantly they are less flexable for when you decide to build; not to mention lock-in!',
+        type: 'objection',
+      },
+      {
+        q: '$50 seems expensive for a template',
+        a: 'The template is free on GitHub. The $50 gets you the validation course, critique review, and coaching opportunity - potentially saving months of wrong direction.',
+        type: 'objection',
+      },
+      // Support
+      {
+        q: 'What support is available?',
+        a: 'We respond within 48 hours via GitHub issues, Email, YouTube comments, or Community Discord.',
+        type: 'support',
+      },
+      // General
+      {
+        q: 'Is the template free and open-source?',
+        a: 'Yes. Free for personal and commercial use (see repo license).',
+        type: 'general',
+      },
+      {
+        q: 'How is the course priced?',
+        a: '$50 early-bird bundle (first 50 spots at this price, then it increases).',
+        type: 'general',
+      },
+      {
+        q: "What's included in the Validator Bundle?",
+        a: 'Template setup, validation strategy, social-first distribution, reading signals, and prioritizing iterations.',
+        type: 'general',
+      },
+      {
+        q: 'How do analytics work?',
+        a: 'The template emits Nuxt events (views, clicks, conversions, variant views). You wire them to any analytics provider.',
+        type: 'general',
+      },
+      {
+        q: 'Where can I watch critiques?',
+        a: 'On our YouTube channel: https://www.youtube.com/@Incubrain',
+        type: 'general',
+      },
+      {
+        q: 'Can I hire you?',
+        a: 'Yes. "Hire me" links are available in the nav and footer.',
+        type: 'general',
+      },
+    ],
+  },
 } satisfies FlowConfig;

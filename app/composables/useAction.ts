@@ -19,8 +19,8 @@ export const useAction = () => {
       id: `${offer.id}_${location}`,
       type: 'action_click',
       location,
-      action: getActionType(offer.cta.href),
-      target: offer.cta.href,
+      action: getActionType(offer.cta.to),
+      target: offer.cta.to,
     });
   };
 
