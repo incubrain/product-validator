@@ -1,9 +1,11 @@
 <script setup lang="ts">
 import type { AccordionItem } from '@nuxt/ui';
+import type { FaqItem } from '#shared/config/overview';
 
 type FAQType = 'warning' | 'objection' | 'support' | 'general';
 
-const source = useFlowSection('questions') ?? [];
+const sections = useFlowSection('questions').sections;
+const questions = useFlowSection('questions').items;
 
 // Priority order
 const ORDER: FAQType[] = ['warning', 'objection', 'support', 'general'];
@@ -40,8 +42,8 @@ const TYPE_META: Record<
 
 // Build and sort
 const items = computed<AccordionItem[]>(() =>
-  source
-    .map((it: any, i: number) => {
+  questions
+    ?.map((it: FaqItem, i: number) => {
       const meta = TYPE_META[it.type];
       return {
         value: String(i),
@@ -57,18 +59,18 @@ const items = computed<AccordionItem[]>(() =>
     })
     .sort(
       (a, b) =>
-        ORDER.indexOf(source[+a.value].type) -
-        ORDER.indexOf(source[+b.value].type),
+        ORDER.indexOf(questions[+a.value].type) -
+        ORDER.indexOf(questions[+b.value].type),
     ),
 );
 </script>
 
 <template>
   <UPageSection
-    headline="Support"
-    icon="i-lucide-bolt"
-    title="Frequently asked questions"
-    description="Common questions, objections, and fit considerations"
+    :icon="sections?.intro?.icon"
+    :headline="sections?.intro?.headline"
+    :title="sections?.intro?.title"
+    :description="sections?.intro?.description"
     orientation="vertical"
   >
     <!-- Legend -->

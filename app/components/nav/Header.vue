@@ -29,7 +29,7 @@ const navigationItems = getMainNavigation();
       <IButton
         offer="product"
         location="header"
-        class="hidden md:inline-flex font-bold"
+        class="hidden md:inline-flex text-toned font-black"
       />
     </template>
 

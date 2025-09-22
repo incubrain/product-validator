@@ -10,13 +10,6 @@ const founder = useFlowSection('founder');
 // Computed properties
 const displayName = computed(() => `Hi, I'm ${founder.name.split(' ')[0]}`);
 const description = computed(() => founder.role);
-const avatar = computed(() => ({
-  src: founder.avatarUrl,
-  alt: founder.name,
-}));
-
-// Use bioShort as the short message
-const shortMessage = computed(() => founder.bioShort);
 
 // Map links to proper format for UButton
 const socialLinks = computed(
@@ -47,14 +40,17 @@ const socialLinks = computed(
         :description="description"
         :orientation="variant === 'mobile' ? 'horizontal' : 'vertical'"
         size="lg"
-        :avatar="avatar"
+        :avatar="{
+          src: founder.avatar.src,
+          alt: founder.avatar.alt,
+        }"
         :ui="{ root: 'items-start text-left lg:items-end lg:text-right' }"
       />
     </template>
 
     <!-- Body: short bio message -->
     <p class="text-sm text-toned text-left lg:text-right">
-      {{ shortMessage }}
+      {{ founder.bioShort }}
     </p>
 
     <!-- Footer: social links -->

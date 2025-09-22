@@ -9,9 +9,7 @@ const props = defineProps<{
 const emit = defineEmits<{ close: [boolean] }>();
 
 // Get founder info for social proof
-const founder = useFlowSection('founder');
 const offer = useFlowOffer(props.offer);
-
 </script>
 
 <template>
@@ -85,8 +83,6 @@ const offer = useFlowOffer(props.offer);
         <IButton
           offer="social"
           location="exit-modal"
-          :show-guarantee="true"
-          guarantee-position="right"
           class="transform hover:scale-105"
         />
       </div>

@@ -5,14 +5,15 @@ PURPOSE
 - Uses cleaned positioning data: category, approach, notFor, compare
 */
 const pos = useFlowSection('positioning');
+const sections = useFlowSection('positioning').sections;
 </script>
 
 <template>
   <UPageSection
-    :headline="pos.category"
-    icon="i-lucide-target"
-    title="Who it's for"
-    description="Why this approach works"
+    :icon="sections?.intro?.icon"
+    :headline="sections?.intro?.headline"
+    :title="sections?.intro?.title"
+    :description="sections?.intro?.description"
     orientation="vertical"
   >
     <!-- Approach features grid -->
@@ -24,14 +25,24 @@ const pos = useFlowSection('positioning');
           :title="approach.title"
           :description="approach.description"
           :icon="approach.icon"
-          orientation="vertical"
+          orientation="horizontal"
         />
       </UPageGrid>
     </div>
 
     <!-- Comparison table -->
-    <USeparator label="COMPARISON" />
-    <div v-if="pos?.comparison" class="mb-8">
+    <ISeparator
+      :label="pos.sections.separators.comparison.label"
+      :description="pos.sections.separators.comparison.description"
+    />
+
+    <UPageCard
+      v-if="pos?.comparison"
+      class="mb-8"
+      spotlight-color="info"
+      spotlight
+      variant="naked"
+    >
       <UPricingTable
         :tiers="pos.comparison.tiers"
         :sections="pos.comparison.sections"
@@ -46,16 +57,16 @@ const pos = useFlowSection('positioning');
           tbody:
             'last-of-type:[&_tr:last-child_th]:border-b-0 last-of-type:[&_tr:last-child_td]:border-b-0',
           table:
-            'w-full table-fixed border rounded-2xl border-spacing-x-0 hidden md:table',
+            'w-full table-fixed border rounded-lg border-spacing-x-0 hidden md:table',
         }"
       >
-        <template #us-title>
+        <template #us-title="{ tier }">
           <div class="flex items-center justify-center gap-2">
-            <UIcon name="i-lucide-zap" class="size-4 text-primary" />
-            <span class="font-semibold text-primary">Us</span>
+            <span class="font-semibold text-highlighted">{{ tier.title }}</span>
           </div>
         </template>
       </UPricingTable>
-    </div>
+    </UPageCard>
+    <INavBridge v-if="pos?.sections?.bridge" :bridge="pos.sections.bridge" />
   </UPageSection>
 </template>

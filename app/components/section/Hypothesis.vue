@@ -1,212 +1,230 @@
 <script setup lang="ts">
 const hypothesis = useFlowSection('hypothesis');
+const sections = useFlowSection('hypothesis').sections;
 
-// primary profile
-const primary = computed(
-  () =>
-    hypothesis?.customerProfiles?.find((p) => p.primary) ||
-    hypothesis?.customerProfiles?.[0],
-);
+const route = useRoute();
+const router = useRouter();
 
-// core problem bits
-const prob = computed(() => hypothesis?.problem ?? {});
-const sol = computed(() => prob.value.solution ?? {});
+const customerProfiles = computed(() => hypothesis?.customerProfiles ?? []);
 
-// chips
-const chips = computed(() => {
-  const list: {
-    icon: string;
-    label: string;
-    color?: 'info' | 'warning' | 'success' | 'error' | 'neutral';
-  }[] = [];
-  if (prob.value.frequency)
-    list.push({
-      icon: 'i-lucide-repeat',
-      label: prob.value.frequency,
-      color: 'info',
+// Simplified: Only tabs are reactive
+const activeTab = computed({
+  get() {
+    const queryTab = route.query.profile as string;
+    if (queryTab && customerProfiles.value.some((p) => p.id === queryTab)) {
+      return queryTab;
+    }
+    const primaryProfile = customerProfiles.value.find((p) => p.primary);
+    return primaryProfile?.id || customerProfiles.value[0]?.id || '';
+  },
+  set(profileId) {
+    router.push({
+      query: { ...route.query, profile: profileId },
+      hash: route.hash,
     });
-  if (prob.value.severity)
-    list.push({
-      icon: 'i-lucide-zap',
-      label: prob.value.severity,
-      color: 'warning',
-    });
-  if (sol.value.promise)
-    list.push({
-      icon: 'i-lucide-bolt',
-      label: sol.value.promise,
-      color: 'success',
-    });
-  if (prob.value.cost)
-    list.push({
-      icon: 'i-lucide-siren',
-      label: String(prob.value.cost),
-      color: 'error',
-    });
-  return list;
+  },
 });
 
-// milestones (from primary outcomes)
-const milestones = computed(() =>
-  (primary.value?.outcomes ?? [])
-    .map((o: any) => ({
-      label: o.label,
-      target: o.target, // days per your example data
-    }))
-    // keep the first 3 only for the hero-adjacent block
-    .slice(0, 3),
-);
-
-// top triggers (limit to 4)
-const triggers = computed(() => (prob.value.triggers ?? []).slice(0, 4));
-
-// evidence (take strongest 2)
-const evidence = computed(() =>
-  (prob.value.evidence ?? [])
-    .sort((a: any, b: any) => (b.strength ?? 0) - (a.strength ?? 0))
-    .slice(0, 2)
-    .map((e: any) => ({
-      type: e.type,
-      summary: e.summary,
-      strength: e.strength ?? 3,
-      icon:
-        e.type === 'interview'
-          ? 'i-lucide-users'
-          : e.type === 'personal_experience'
-          ? 'i-lucide-user'
-          : e.type === 'survey'
-          ? 'i-lucide-bar-chart-3'
-          : e.type === 'usage_log'
-          ? 'i-lucide-activity'
-          : 'i-lucide-info',
-    })),
-);
-
-// warnings / mitigations
-const warnings = computed(() =>
-  (sol.value.risks ?? []).map((r: any) => ({
-    label: r.label,
-    mitigation: r.mitigation,
+const tabItems = computed(() =>
+  customerProfiles.value.map((profile) => ({
+    label: profile.label,
+    value: profile.id,
+    slot: profile.id,
+    primary: profile.primary,
+    description: profile.description,
+    context: profile.context || {},
+    pains: profile.pains || [],
+    outcomes: profile.outcomes || [],
   })),
 );
+
+// ONLY profile pains are reactive - everything else static
+const { profilePains } = useProfileData(activeTab);
+
+// Static data from config (no reactivity needed)
+const evidence = computed(() => hypothesis?.evidence ?? []);
+const outcomeFeatures = computed(() => hypothesis?.outcomeFeatures ?? []);
+const bridge = computed(() => hypothesis?.sections.bridge);
 </script>
 
 <template>
   <UPageSection
-    title="Why this works (fast)"
-    description="Proof, timelines, and caveats for technical founders"
-    icon="i-lucide-sparkles"
+    :icon="sections?.intro?.icon"
+    :headline="sections.intro?.headline"
+    :title="sections.intro?.title"
+    :description="sections.intro?.description"
     orientation="vertical"
+    class="bg-muted/20"
   >
-    <!-- Key chips -->
-    <div class="flex flex-wrap gap-2 mb-6 mx-auto justify-center">
-      <UBadge
-        v-for="(c, i) in chips"
-        :key="i"
-        :color="c.color || 'neutral'"
-        variant="soft"
-        class="px-3 py-1.5 rounded-full"
+    <!-- Customer Pain Points with Tabs -->
+    <div>
+      <UTabs
+        v-model="activeTab"
+        :items="tabItems"
+        orientation="vertical"
+        variant="link"
+        :ui="{
+          root: 'grid grid-cols-2 gap-8 items-start',
+          list: 'flex-col w-full',
+          content: 'w-full',
+        }"
       >
-        <UIcon :name="c.icon" class="size-4 mr-1.5" /> {{ c.label }}
-      </UBadge>
-    </div>
-
-    <!-- 3-up grid: Milestones / Triggers / Evidence -->
-    <UPageGrid>
-      <!-- Milestones -->
-      <UCard :ui="{ header: 'pb-2', body: 'pt-2' }">
-        <template #header>
-          <div class="flex items-center gap-2">
-            <UIcon name="i-lucide-flag" class="size-4 text-success" />
-            <span class="font-semibold">Fast-track milestones</span>
-          </div>
-        </template>
-        <ul class="space-y-2">
-          <li
-            v-for="m in milestones"
-            :key="m.label"
-            class="flex items-start gap-3"
+        <!-- Left side: Customer Profile Identity Cards -->
+        <template #default="{ item }">
+          <UPageCard
+            :variant="activeTab === item.value ? 'subtle' : 'ghost'"
+            class="cursor-pointer"
           >
-            <div
-              class="flex-none rounded-md border border-success/30 px-2 py-1 text-xs text-success"
-            >
-              {{ m.target }}d
-            </div>
-            <div class="text-sm text-default">{{ m.label }}</div>
-          </li>
-        </ul>
-      </UCard>
+            <template #title>
+              <div class="flex items-center gap-2">
+                {{ item.label }}
+                <UBadge v-if="item.primary" size="xs" color="info">
+                  Primary
+                </UBadge>
+              </div>
+            </template>
 
-      <!-- Triggers -->
-      <UCard :ui="{ header: 'pb-2', body: 'pt-2' }">
-        <template #header>
-          <div class="flex items-center gap-2">
-            <UIcon name="i-lucide-rss" class="size-4 text-warning" />
-            <span class="font-semibold">You’ll recognize this if…</span>
-          </div>
-        </template>
-        <ul class="grid grid-cols-1 gap-2">
-          <li
-            v-for="t in triggers"
-            :key="t"
-            class="text-sm px-3 py-2 rounded-md border border-warning/20 bg-muted/30"
-          >
-            {{ t }}
-          </li>
-        </ul>
-      </UCard>
+            <template #description>
+              <div class="space-y-3 text-sm text-left">
+                <p class="text-muted italic">{{ item.description }}</p>
 
-      <!-- Evidence -->
-      <UCard :ui="{ header: 'pb-2', body: 'pt-2' }">
-        <template #header>
-          <div class="flex items-center gap-2">
-            <UIcon name="i-lucide-badge-check" class="size-4 text-info" />
-            <span class="font-semibold">Proof we’ve seen</span>
-          </div>
+                <!-- Context as chips -->
+                <div class="flex flex-wrap gap-1">
+                  <UBadge
+                    v-for="(value, key) in item.context"
+                    :key="key"
+                    size="xs"
+                    variant="soft"
+                    color="neutral"
+                  >
+                    {{ value }}
+                  </UBadge>
+                </div>
+              </div>
+            </template>
+          </UPageCard>
         </template>
-        <div class="space-y-3">
-          <div
-            v-for="e in evidence"
-            :key="e.summary"
-            class="flex items-start gap-3"
-          >
-            <UIcon :name="e.icon" class="size-4 mt-0.5 text-info" />
-            <div class="flex-1">
-              <div class="text-sm text-default">{{ e.summary }}</div>
-              <div class="text-xs text-muted">
-                Strength:
-                <span v-for="n in 5" :key="n" class="inline-block">
-                  <UIcon
-                    :name="
-                      n <= e.strength ? 'i-lucide-star' : 'i-lucide-star-half'
-                    "
-                    class="size-3 align-[-1px]"
-                  />
-                </span>
+
+        <!-- Right side: Pain Points for selected profile (reactive) -->
+        <template
+          v-for="profile in customerProfiles"
+          :key="profile.id"
+          #[profile.id]
+        >
+          <UCard class="border-error/30">
+            <template #header>
+              <div class="flex items-center gap-3">
+                <UIcon
+                  name="i-lucide-alert-triangle"
+                  class="size-5 text-error"
+                />
+                <h4 class="font-semibold">
+                  Pain Points for {{ profile.label }}
+                </h4>
+              </div>
+            </template>
+
+            <div class="space-y-4">
+              <div
+                v-for="pain in profilePains"
+                :key="pain.label"
+                class="p-4 bg-error/5 border border-error/20 rounded-lg"
+              >
+                <h5 class="font-medium text-sm mb-2">{{ pain.label }}</h5>
+                <p class="text-xs text-muted mb-1">
+                  Severity: {{ pain.severity }}
+                </p>
+                <p v-if="pain.cost" class="text-xs text-error">
+                  Cost: {{ pain.cost }}
+                </p>
               </div>
             </div>
-          </div>
-        </div>
-      </UCard>
-    </UPageGrid>
+          </UCard>
+        </template>
+      </UTabs>
+    </div>
 
-    <!-- Warnings & mitigations -->
-    <UCard
-      v-if="warnings.length"
-      class="mt-4"
-      variant="outline"
-      :ui="{ body: 'py-4' }"
-    >
-      <div class="flex items-center gap-2 mb-3">
-        <UIcon name="i-lucide-triangle-alert" class="size-4 text-error" />
-        <span class="font-semibold">Warnings & mitigations</span>
-      </div>
-      <ul class="space-y-2">
-        <li v-for="w in warnings" :key="w.label" class="text-sm space-x-2">
-          <span class="font-medium text-error">{{ w.label }}:</span>
-          <span class="text-muted"> {{ w.mitigation }}</span>
-        </li>
-      </ul>
-    </UCard>
+    <ISeparator
+      :label="sections.separators?.research?.label"
+      :description="sections.separators?.research?.description"
+    />
+
+    <!-- Research Evidence -->
+    <div class="text-left">
+      <UPageGrid>
+        <UPageCard
+          v-for="e in evidence"
+          :key="e.summary"
+          spotlight-color="info"
+          spotlight
+        >
+          <template #leading>
+            <div class="p-3 rounded-full bg-info/10 flex">
+              <UIcon :name="e.icon" class="size-6 text-info" />
+            </div>
+          </template>
+          <template #title>
+            {{ e.summary }}
+          </template>
+          <template #description>
+            <div class="space-y-3">
+              <p class="text-sm">{{ e.description }}</p>
+
+              <div class="flex items-center justify-between text-xs">
+                <div class="flex items-center gap-3">
+                  <UBadge variant="outline" size="xs">
+                    n={{ e.sample_size }}
+                  </UBadge>
+                  <span class="text-muted">{{ e.date }}</span>
+                </div>
+                <div class="flex items-center gap-1">
+                  <UIcon
+                    v-for="n in 5"
+                    :key="n"
+                    name="i-lucide-star"
+                    :class="n <= e.strength ? 'text-warning' : 'text-muted'"
+                    class="size-3"
+                  />
+                </div>
+              </div>
+            </div>
+          </template>
+        </UPageCard>
+      </UPageGrid>
+    </div>
+
+    <ISeparator
+      :label="sections.separators?.solution?.label"
+      :description="sections.separators?.solution?.description"
+    />
+
+    <!-- Value Proposition Features -->
+    <div class="text-center">
+      <UPageGrid>
+        <UPageFeature
+          v-for="(feature, index) in outcomeFeatures"
+          :key="feature.title"
+          :title="feature.title"
+          :description="feature.description"
+          :icon="feature.icon"
+          orientation="vertical"
+          class="relative"
+        >
+          <template #leading>
+            <div class="relative">
+              <div
+                class="absolute -top-2 -left-2 w-6 h-6 rounded-full bg-success text-white flex items-center justify-center text-xs font-bold"
+              >
+                {{ index + 1 }}
+              </div>
+              <div class="p-3 rounded-full flex bg-success/10">
+                <UIcon :name="feature.icon" class="size-6 text-success" />
+              </div>
+            </div>
+          </template>
+        </UPageFeature>
+      </UPageGrid>
+    </div>
+    <INavBridge :bridge="bridge" />
   </UPageSection>
 </template>

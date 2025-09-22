@@ -1,5 +1,5 @@
 /* assets/css/tokens/colors.css */
-@import "tailwindcss";
+@import 'tailwindcss';
 
 /* {SETUP} TAILWINDCSS COLOR GENERATOR: https://www.tints.dev/ */
 
@@ -7,96 +7,96 @@
   /* Reset default colors to avoid bloat */
   --color-*: initial;
 
-  /* PRIMARY - Rich Emerald (trust/nature) - Using ui-color prefix */
-  --color-primary-50: oklch(97.5% 0.015 166);   
-  --color-primary-100: oklch(95% 0.03 165);     
-  --color-primary-200: oklch(89% 0.06 164);     
-  --color-primary-300: oklch(84% 0.09 163);     
-  --color-primary-400: oklch(78% 0.12 162);     
-  --color-primary-500: oklch(71% 0.15 161);     /* Base emerald */
-  --color-primary-600: oklch(64% 0.14 160);     
-  --color-primary-700: oklch(57% 0.13 159);     
-  --color-primary-800: oklch(50% 0.12 158);     
-  --color-primary-900: oklch(40% 0.11 157);     
-  --color-primary-950: oklch(25% 0.06 156);     
+  /* PRIMARY - Rich Forest Green (growth/validation) */
+  --color-primary-50: oklch(95% 0.02 145);
+  --color-primary-100: oklch(90% 0.04 145);
+  --color-primary-200: oklch(80% 0.08 145);
+  --color-primary-300: oklch(73% 0.12 145);
+  --color-primary-400: oklch(66% 0.15 145);
+  --color-primary-500: #238636;
+  --color-primary-600: oklch(54% 0.16 145);
+  --color-primary-700: oklch(45% 0.16 145);
+  --color-primary-800: oklch(38% 0.12 145);
+  --color-primary-900: oklch(32% 0.1 145);
+  --color-primary-950: oklch(26% 0.1 145);
 
-  /* SECONDARY - Rich Teal (conversion/trust) */
-  --color-secondary-50: oklch(97.5% 0.01 190);  
-  --color-secondary-100: oklch(95% 0.02 190);   
-  --color-secondary-200: oklch(89% 0.05 192);   
-  --color-secondary-300: oklch(83% 0.08 194);   
-  --color-secondary-400: oklch(77% 0.11 196);   
-  --color-secondary-500: oklch(71% 0.14 198);   
-  --color-secondary-600: oklch(61.172% 0.10402 199.838);   
-  --color-secondary-700: oklch(57.844% 0.09836 199.301);   
-  --color-secondary-800: oklch(48.497% 0.08257 197.042);   
-  --color-secondary-900: oklch(39.133% 0.06659 197.732);    
-  --color-secondary-950: oklch(26.174% 0.04469 194.807);   
+  /* SECONDARY - Professional Gold (premium/success) */
+  --color-secondary-50: oklch(95% 0.02 85);
+  --color-secondary-100: oklch(90% 0.04 85);
+  --color-secondary-200: oklch(85% 0.08 85);
+  --color-secondary-300: oklch(80% 0.12 85);
+  --color-secondary-400: oklch(75% 0.15 85);
+  --color-secondary-500: oklch(70% 0.15 85); /* Base warm gold */
+  --color-secondary-600: oklch(65% 0.14 85);
+  --color-secondary-700: oklch(60% 0.13 85);
+  --color-secondary-800: oklch(55% 0.12 85);
+  --color-secondary-900: oklch(45% 0.1 85);
+  --color-secondary-950: oklch(30% 0.06 85);
 
-  /* SUCCESS - Vibrant Green */
-  --color-success-50: oklch(97.5% 0.01 145);    
-  --color-success-100: oklch(95% 0.02 146);     
-  --color-success-200: oklch(89% 0.05 148);     
-  --color-success-300: oklch(83% 0.09 150);     
-  --color-success-400: oklch(77% 0.13 151);     
-  --color-success-500: oklch(71% 0.17 152);     
-  --color-success-600: oklch(65% 0.16 152);     
-  --color-success-700: oklch(59% 0.15 151);     
-  --color-success-800: oklch(53% 0.13 150);     
-  --color-success-900: oklch(43% 0.11 149);     
-  --color-success-950: oklch(27% 0.07 148);     
+  /* SUCCESS - Blue-Green Teal (positive outcomes) */
+  --color-success-50: oklch(95% 0.02 170);
+  --color-success-100: oklch(90% 0.04 170);
+  --color-success-200: oklch(85% 0.08 170);
+  --color-success-300: oklch(80% 0.12 170);
+  --color-success-400: oklch(75% 0.15 170);
+  --color-success-500: oklch(68% 0.15 170); /* Base blue-green teal */
+  --color-success-600: oklch(62% 0.14 170);
+  --color-success-700: oklch(56% 0.13 170);
+  --color-success-800: oklch(50% 0.12 170);
+  --color-success-900: oklch(40% 0.1 170);
+  --color-success-950: oklch(25% 0.06 170);
 
-  /* WARNING - Rich Amber (urgency) */
-  --color-warning-50: oklch(97.5% 0.015 85);    
-  --color-warning-100: oklch(95% 0.03 86);      
-  --color-warning-200: oklch(89% 0.07 88);      
-  --color-warning-300: oklch(83% 0.12 90);      
-  --color-warning-400: oklch(77% 0.17 92);      
-  --color-warning-500: oklch(71% 0.21 94);      
-  --color-warning-600: oklch(65% 0.2 94);       
-  --color-warning-700: oklch(59% 0.19 93);      
-  --color-warning-800: oklch(53% 0.17 92);      
-  --color-warning-900: oklch(43% 0.15 91);      
-  --color-warning-950: oklch(27% 0.1 90);       
+  /* WARNING - Warm Red-Orange (urgency) */
+  --color-warning-50: oklch(95% 0.02 25);
+  --color-warning-100: oklch(90% 0.04 25);
+  --color-warning-200: oklch(85% 0.08 25);
+  --color-warning-300: oklch(80% 0.12 25);
+  --color-warning-400: oklch(75% 0.15 25);
+  --color-warning-500: oklch(65% 0.18 25); /* Base warm red-orange */
+  --color-warning-600: oklch(60% 0.16 25);
+  --color-warning-700: oklch(55% 0.14 25);
+  --color-warning-800: oklch(50% 0.12 25);
+  --color-warning-900: oklch(40% 0.1 25);
+  --color-warning-950: oklch(25% 0.06 25);
 
-  /* ERROR - Blood Red/Maroon */
-  --color-error-50: oklch(97.5% 0.01 25);       
-  --color-error-100: oklch(95% 0.02 26);        
-  --color-error-200: oklch(89% 0.05 28);        
-  --color-error-300: oklch(83% 0.09 30);        
-  --color-error-400: oklch(77% 0.13 32);        
-  --color-error-500: oklch(71% 0.17 34);        
-  --color-error-600: oklch(65% 0.16 32);        
-  --color-error-700: oklch(59% 0.15 30);        
-  --color-error-800: oklch(53% 0.13 28);        
-  --color-error-900: oklch(43% 0.11 26);        
-  --color-error-950: oklch(27% 0.07 25);        
+  /* ERROR - Warmer Red (problems/alerts) */
+  --color-error-50: oklch(95% 0.02 15);
+  --color-error-100: oklch(90% 0.04 15);
+  --color-error-200: oklch(85% 0.08 15);
+  --color-error-300: oklch(80% 0.12 15);
+  --color-error-400: oklch(75% 0.15 15);
+  --color-error-500: oklch(55% 0.16 15); /* Base warmer red */
+  --color-error-600: oklch(50% 0.15 15);
+  --color-error-700: oklch(45% 0.14 15);
+  --color-error-800: oklch(40% 0.13 15);
+  --color-error-900: oklch(30% 0.11 15);
+  --color-error-950: oklch(20% 0.07 15);
 
-  /* INFO - Enhanced Cyan */
-  --color-info-50: oklch(97.5% 0.008 210);      
-  --color-info-100: oklch(95% 0.015 210);       
-  --color-info-200: oklch(89% 0.035 210);       
-  --color-info-300: oklch(83% 0.065 210);       
-  --color-info-400: oklch(77% 0.095 210);       
-  --color-info-500: oklch(71% 0.125 210);       
-  --color-info-600: oklch(65% 0.115 210);       
-  --color-info-700: oklch(59% 0.105 210);       
-  --color-info-800: oklch(53% 0.095 210);       
-  --color-info-900: oklch(43% 0.085 210);       
-  --color-info-950: oklch(27% 0.055 210);       
+  /* INFO - Enhanced Cyan (unchanged - good harmony) */
+  --color-info-50: oklch(97.5% 0.008 210);
+  --color-info-100: oklch(95% 0.015 210);
+  --color-info-200: oklch(89% 0.035 210);
+  --color-info-300: oklch(83% 0.065 210);
+  --color-info-400: oklch(77% 0.095 210);
+  --color-info-500: oklch(71% 0.125 210);
+  --color-info-600: oklch(65% 0.115 210);
+  --color-info-700: oklch(59% 0.105 210);
+  --color-info-800: oklch(53% 0.095 210);
+  --color-info-900: oklch(43% 0.085 210);
+  --color-info-950: oklch(27% 0.055 210);
 
-  /* NEUTRAL - Enhanced granular grays (pure achromatic) */
-  --color-neutral-50: oklch(98.5% 0 0);         
-  --color-neutral-100: oklch(97% 0 0);          
-  --color-neutral-200: oklch(94% 0 0);          
-  --color-neutral-300: oklch(85% 0 0);          
-  --color-neutral-400: oklch(75% 0 0);          
-  --color-neutral-500: oklch(65% 0 0);          
-  --color-neutral-600: oklch(55% 0 0);          
-  --color-neutral-700: oklch(45% 0 0);          
-  --color-neutral-800: oklch(35% 0 0);          
-  --color-neutral-900: oklch(25% 0 0);          
-  --color-neutral-950: oklch(15% 0.00002 271.152); 
+  /* NEUTRAL - Enhanced granular grays (unchanged) */
+  --color-neutral-50: oklch(98.5% 0 0);
+  --color-neutral-100: oklch(97% 0 0);
+  --color-neutral-200: oklch(94% 0 0);
+  --color-neutral-300: oklch(85% 0 0);
+  --color-neutral-400: oklch(75% 0 0);
+  --color-neutral-500: oklch(65% 0 0);
+  --color-neutral-600: oklch(55% 0 0);
+  --color-neutral-700: oklch(45% 0 0);
+  --color-neutral-800: oklch(35% 0 0);
+  --color-neutral-900: oklch(25% 0 0);
+  --color-neutral-950: oklch(17% 0.00002 271.152);
 
   /* Base colors for compatibility */
   --color-black: #000;
@@ -111,16 +111,18 @@
   --ui-error: var(--color-error-500);
   --ui-neutral: var(--color-neutral-500);
 
-/* SURFACE TOKENS (Nuxt UI-aligned) — dark → light */
---ui-bg: var(--color-neutral-950);          /* default app surface */
---ui-bg-muted: var(--color-neutral-900);    /* foundational “page” layer */
+  /* SURFACE TOKENS (Nuxt UI-aligned) — dark → light */
+  --ui-bg: var(--color-neutral-950); /* default app surface */
+  --ui-bg-muted: var(--color-neutral-900); /* foundational “page” layer */
   --ui-bg-elevated: var(--color-neutral-800); /* cards, modals */
-  --ui-bg-accented: var(--color-neutral-700); /* inputs, hovers, subtle callouts */
-  --ui-bg-inverted: var(--color-white);          /* light/contrast surfaces */
+  --ui-bg-accented: var(
+    --color-neutral-700
+  ); /* inputs, hovers, subtle callouts */
+  --ui-bg-inverted: var(--color-white); /* light/contrast surfaces */
 
   /* BORDERS (lighter than host surface on dark UI) */
-  --ui-border: var(--color-neutral-800);          /* default separators on --ui-bg */
-  --ui-border-muted: var(--color-neutral-900);    /* softer (closer to bg) */
+  --ui-border: var(--color-neutral-800); /* default separators on --ui-bg */
+  --ui-border-muted: var(--color-neutral-900); /* softer (closer to bg) */
   --ui-border-accented: var(--color-neutral-700); /* stronger separation */
   --ui-border-inverted: var(--color-neutral-300); /* on light surfaces */
 
@@ -130,7 +132,7 @@
   --ui-text-toned: var(--color-neutral-200);
   --ui-text: var(--color-neutral-100);
   --ui-text-highlighted: var(--color-primary-50); /* brand-emphasis on dark */
-  --ui-text-inverted: var(--color-neutral-900);    /* text on inverted/light */
+  --ui-text-inverted: var(--color-neutral-900); /* text on inverted/light */
 
   /* Links (brand-led; accessible on dark) */
   --ui-link-default: var(--color-primary-300);

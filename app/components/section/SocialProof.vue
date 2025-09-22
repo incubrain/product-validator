@@ -1,9 +1,10 @@
 <script setup lang="ts">
 const proof = useFlowSection('socialProof');
+const sections = useFlowSection('socialProof').sections;
 
 // Group social proof by type for organized display
 const groupedProof = computed(() => {
-  const items = proof ?? [];
+  const items = proof.items ?? [];
   return {
     highlight: items.filter((item) => item.type === 'highlight'),
     testimonials: items.filter((item) => item.type === 'testimonial'),
@@ -39,14 +40,14 @@ const highlightCard = computed(() => {
 
 <template>
   <UPageSection
-    headline="Community Wins"
-    title="What early users say"
-    description="Real results from founders using the template"
-    icon="i-lucide-bolt"
+    :icon="sections?.intro?.icon"
+    :headline="sections?.intro?.headline"
+    :title="sections?.intro?.title"
+    :description="sections?.intro?.description"
     orientation="vertical"
   >
     <!-- Case Studies -->
-    <USeparator label="SUCCESS STORIES" />
+    <ISeparator label="SUCCESS STORIES" />
     <div v-if="groupedProof.caseStudies.length">
       <UPageGrid class="lg:grid-cols-2">
         <UPageCard
@@ -76,7 +77,7 @@ const highlightCard = computed(() => {
     </div>
 
     <!-- Testimonials -->
-    <USeparator label="TESTIMONIALS" />
+    <ISeparator label="TESTIMONIALS" />
     <div v-if="formattedTestimonials.length || highlightCard">
       <UPageColumns>
         <!-- Highlight card -->
@@ -87,7 +88,7 @@ const highlightCard = computed(() => {
           :icon="highlightCard.icon"
           :to="highlightCard.to"
           variant="solid"
-          :ui="{ leadingIcon: 'size-10' }"
+          :ui="{ leadingIcon: 'size-8' }"
         />
 
         <!-- Testimonial cards -->
@@ -107,5 +108,9 @@ const highlightCard = computed(() => {
         </UPageCard>
       </UPageColumns>
     </div>
+    <INavBridge
+      v-if="proof?.sections?.bridge"
+      :bridge="proof.sections.bridge"
+    />
   </UPageSection>
 </template>

@@ -24,7 +24,7 @@ const closeMenu = () => {
         <!-- Parent Item -->
         <ULink
           :to="item.to"
-          class="flex items-center space-x-3 px-3 py-3 rounded-lg text-toned hover:text-primary hover:bg-elevated transition-colors"
+          class="flex items-center space-x-3 px-3 py-3 rounded-lg text-toned hover:text-secondary hover:bg-elevated transition-colors"
           @click="closeMenu"
         >
           <UIcon :name="item.icon" class="size-4" />
@@ -37,7 +37,7 @@ const closeMenu = () => {
             v-for="child in item.children"
             :key="child.label"
             :to="child.to"
-            class="flex items-center space-x-3 px-3 py-2 rounded-lg text-muted hover:text-primary hover:bg-elevated transition-colors"
+            class="flex items-center space-x-3 px-3 py-2 rounded-lg text-muted hover:text-secondary hover:bg-elevated transition-colors"
             @click="closeMenu"
           >
             <UIcon :name="child.icon || 'i-lucide-circle'" class="size-3" />

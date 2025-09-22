@@ -21,9 +21,31 @@ export default defineAppConfig({
         },
         highlight: {
           true: {
-            tier: 'bg-secondary-950 border-x border-t-0 border-default rounded-none',
-            td: 'bg-secondary-950 border-default',
-            item: 'bg-secondary-950',
+            tier: 'bg-info/20 border-x border-t-0 border-default rounded-none',
+            td: 'bg-info/20 border-default',
+            item: 'bg-info/20',
+          },
+        },
+      },
+    },
+    pageFeature: {
+      slots: {
+        root: 'relative',
+        wrapper: '',
+        leading: 'inline-flex items-center justify-center',
+        leadingIcon: 'size-5 shrink-0 text-secondary',
+        title: 'text-base text-pretty font-semibold text-highlighted',
+        description: 'text-[15px] text-pretty text-muted',
+      },
+    },
+    pageSection: {
+      slots: {
+        leadingIcon: 'size-10 shrink-0 text-secondary',
+      },
+      variants: {
+        headline: {
+          true: {
+            headline: 'font-semibold text-primary uppercase flex items-center gap-1.5',
           },
         },
       },

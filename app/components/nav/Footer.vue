@@ -15,7 +15,7 @@ const copyrightYear = computed(() =>
   <UFooter
     :ui="{
       container:
-        'border-2 border-primary/40 border-dashed rounded-t-lg border-b-0 decoration-dashed md:flex lg:items-start',
+        'border-2 border-dashed rounded-t-lg border-b-0 decoration-dashed md:flex lg:items-start',
       bottom: 'bg-muted border-t ',
       left: 'flex items-center md:items-start justify-start md:justify-start md:flex-1 gap-x-1.5 mt-3 md:mt-0 md:order-1',
       right:

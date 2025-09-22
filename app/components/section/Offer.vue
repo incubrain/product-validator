@@ -1,9 +1,16 @@
 <script setup lang="ts">
-const offers = useFlowSection('offers');
+// Get section config
+const sections = useFlowSection('offers').sections;
 
-// Get primary offer (first one) and alternatives
-const primaryOffer = computed(() => offers?.[0] ?? null);
-const alternativeOffers = computed(() => offers?.slice(1) ?? []);
+// Use composables for specific offers (filtering out social)
+const primaryOffer = useFlowOffer('product');
+const magnetOffer = useFlowOffer('magnet');
+const directOffer = useFlowOffer('direct');
+
+// Build alternatives array (excluding social)
+const alternativeOffers = computed(() =>
+  [magnetOffer.value, directOffer.value].filter(Boolean),
+);
 
 // Pricing calculations for primary offer
 const hasCompare = computed(
@@ -35,10 +42,10 @@ function parseMoney(m?: string) {
 
 <template>
   <UPageSection
-    headline="Pricing"
-    title="Choose Your Path"
-    description="Select the option that best fits your needs"
-    icon="i-lucide-bolt"
+    :icon="sections?.intro?.icon"
+    :headline="sections?.intro?.headline"
+    :title="sections?.intro?.title"
+    :description="sections?.intro?.description"
   >
     <!-- Primary Offer -->
     <UPricingPlan
@@ -48,18 +55,16 @@ function parseMoney(m?: string) {
       highlight
       :title="primaryOffer.name"
       :ui="{
-        root: 'mx-auto ring-1 ring-primary/20 m-0',
+        root: 'mx-auto ring-1 ring-secondary/20 m-0',
         body: 'pb-4 lg:pb-0 lg:pr-6',
         features: 'lg:grid-cols-1 mt-2',
-        footer: 'items-start lg:items-center gap-8 p-4 sm:p-6',
+        footer:
+          'items-start lg:items-center lg:justify-between h-full gap-8 p-4 sm:p-6 lg:py-0',
       }"
     >
       <template #description>
-        <div class="space-y-3">
-          <p class="text-sm text-muted">{{ primaryOffer.description }}</p>
-          <p class="text-muted text-sm">
-            {{ primaryOffer.guarantee || 'Limited time offer' }}
-          </p>
+        <div class="pt-2">
+          <p class="text-lg text-dimmed">{{ primaryOffer.description }}</p>
         </div>
       </template>
 
@@ -84,9 +89,9 @@ function parseMoney(m?: string) {
           />
           <span
             :class="[
-              'text-xs lg:text-sm truncate',
+              'text-sm lg:text-base truncate',
               benefit.status === 'coming-soon'
-                ? 'italic text-muted'
+                ? 'italic text-dimmed'
                 : 'text-highlighted',
             ]"
           >
@@ -95,7 +100,7 @@ function parseMoney(m?: string) {
           <UBadge
             v-if="benefit.value"
             :label="`$${benefit.value} value`"
-            size="xs"
+            size="sm"
             color="success"
             variant="subtle"
             class="ml-auto flex-shrink-0"
@@ -105,53 +110,53 @@ function parseMoney(m?: string) {
 
       <template #footer>
         <div
-          class="flex items-baseline gap-3 border-b-4 border-warning pb-4 w-full"
+          class="py-3 bg-success/5 px-3 space-x-2 w-full rounded-lg border border-success/10 flex items-baseline-last justify-start"
         >
-          <span class="text-3xl sm:text-4xl font-bold text-primary">
+          <span class="text-4xl font-bold text-primary-400">
             {{ primaryOffer.price }}
           </span>
           <span v-if="primaryOffer.compareAt" class="line-through text-muted">
             {{ primaryOffer.compareAt }}
           </span>
-          <UBadge v-if="savings" variant="soft" color="warning" class="ml-1">
-            Save {{ `$${savings}` }}
-          </UBadge>
+          <span v-if="savings" class="text-highlighted text-xs">
+            first {{ inventory.total }} sales
+          </span>
         </div>
 
-        <div v-if="inventory" class="w-full flex flex-col space-y-3">
-          <div class="flex justify-between items-center text-xs md:text-sm">
-            <span class="text-muted">{{ claimed }}/{{ total }} claimed</span>
-            <span class="font-medium text-toned">{{ pct }}% filled</span>
+        <div class="flex flex-col justify-center w-full gap-4">
+          <div v-if="inventory" class="w-full flex flex-col space-y-3">
+            <div class="flex justify-between items-center text-xs md:text-sm">
+              <span class="font-medium text-dimmed">{{ pct }}% claimed</span>
+            </div>
+            <UProgress
+              :model-value="pct"
+              color="success"
+              size="xl"
+              class="w-full"
+            />
           </div>
-          <UProgress
-            :model-value="pct"
-            color="primary"
-            size="xl"
-            class="w-full"
-          />
-        </div>
-
-        <div class="flex flex-col justify-center w-full gap-2">
-          <UButton
-            :to="primaryOffer.cta.href"
-            :trailing-icon="primaryOffer.cta.icon"
-            :variant="primaryOffer.cta.variant || 'solid'"
-            :color="primaryOffer.cta.color || 'primary'"
-            :label="primaryOffer.cta.label"
-            size="lg"
-            class="w-full justify-between"
-          />
-          <p
-            v-if="primaryOffer.cta.note"
-            class="text-xs text-muted text-center"
-          >
-            {{ primaryOffer.cta.note }}
-          </p>
+          <div class="flex flex-col justify-center w-full gap-2">
+            <UButton
+              :to="primaryOffer.cta.to"
+              :trailing-icon="primaryOffer.cta.icon"
+              :variant="primaryOffer.cta.variant || 'solid'"
+              :color="primaryOffer.cta.color || 'primary'"
+              :label="primaryOffer.cta.label"
+              size="lg"
+              class="w-full justify-between font-bold text-highlighted"
+            />
+            <p
+              v-if="primaryOffer.cta.note"
+              class="text-xs text-muted text-center"
+            >
+              {{ primaryOffer.cta.note }}
+            </p>
+          </div>
         </div>
       </template>
     </UPricingPlan>
 
-    <USeparator label="OR" />
+    <ISeparator label="OR" />
 
     <!-- Alternative Offers -->
     <div v-if="alternativeOffers.length" class="mx-auto">
@@ -162,6 +167,7 @@ function parseMoney(m?: string) {
           :title="altOffer.name"
           :description="altOffer.description"
           variant="outline"
+          :spotlight-color="altOffer.id === 'direct' ? 'secondary' : 'info'"
           spotlight
         >
           <template #leading>
@@ -187,7 +193,7 @@ function parseMoney(m?: string) {
           </div>
 
           <UButton
-            :to="altOffer.cta.href"
+            :to="altOffer.cta.to"
             :trailing-icon="altOffer.cta.icon"
             :variant="altOffer.cta.variant"
             :color="altOffer.cta.color"

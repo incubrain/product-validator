@@ -16,9 +16,9 @@ withDefaults(defineProps<Props>(), {
       src="/favicon-96x96.png"
       width="36px"
       height="auto"
-      class="p-1 rounded-full bg-inverted border"
+      class="p-1 rounded-full bg-elevated border"
     />
-    <h6 class="font-bold text-base text-default m-0 leading-0">
+    <h6 class="font-bold text-base text-dimmed m-0 leading-0">
       Product Validator
     </h6>
   </ULink>

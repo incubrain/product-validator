@@ -2,6 +2,7 @@
 import type { StepperItem } from '@nuxt/ui';
 
 const product = useFlowSection('product');
+const sections = useFlowSection('product').sections;
 
 // Transform productFlow data for stepper
 const stepperItems = computed(
@@ -21,27 +22,24 @@ function renderContent(content: any[]) {
 
 <template>
   <UPageSection
-    headline="Product"
-    icon="i-lucide-bolt"
-    title="How it works"
-    :description="product?.elevator"
+    :icon="sections?.intro?.icon"
+    :headline="sections?.intro?.headline"
+    :title="sections?.intro?.title"
+    :description="sections?.intro?.description"
     orientation="vertical"
   >
     <!-- Stepper with dynamic content -->
     <div v-if="stepperItems.length" class="w-full">
       <UStepper
         :items="stepperItems"
+        color="secondary"
         :ui="{
           content: 'mt-8',
           root: 'w-full',
         }"
       >
         <!-- Dynamic step content slots -->
-        <template
-          v-for="step in product?.flow"
-          :key="step.id"
-          #[step.id]
-        >
+        <template v-for="step in product?.flow" :key="step.id" #[step.id]>
           <div class="grid lg:grid-cols-[2fr_1fr] gap-8 items-start">
             <!-- Media content (videos/images) -->
             <div class="space-y-6">
