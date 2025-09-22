@@ -19,9 +19,9 @@ useHead({
  */
 const versions = [
   {
-    title: 'Advanced Analytics & User Experience Systems 🎯',
+    title: 'Unified Data & Conversion Systems 🚀',
     description:
-      'Built comprehensive event tracking and exit intent modal system. Focus on actionable data collection and conversion optimization without vendor lock-in.',
+      'v0.2 refines the template into a research-driven, conversion-focused foundation. Unified data structures, analytics, and product strategy make it easier for founders to validate ideas and move toward revenue fast.',
     date: '2025-09-21T00:00:00.000Z',
     badge: 'v0.2.0',
     authors: [
@@ -36,34 +36,29 @@ const versions = [
       },
     ],
     content: `
-### Event System Architecture
+### Unified Data Structure
+- Consolidated all section data into a single, research-driven schema  
+- Inspired by product ideation frameworks, sales landing psychology, and validation best practices  
+- Guides founders through the right questions in the right order, while mapping seamlessly to section components
 
-- **Unified tracking composable** — Single \`useAction\` handles both immediate actions and background analytics
-- **Provider-agnostic events** — Nuxt events emit structured payloads, connect any analytics provider
-- **Business-focused tracking** — Only tracks high-value interactions analytics providers can't infer
-- **Prefixed storage management** — All localStorage/sessionStorage uses unified prefix for easy dev cleanup
+### Product Model
+- Finalized **four interconnected product types**:  
+  - **Primary Product** — core validation tool  
+  - **Magnet Product** — free entry offer  
+  - **Direct Revenue Product** — immediate monetization option  
+  - **Social Product** — community/engagement driver  
+- All supporting products link back to the primary to accelerate full-time founder paths
 
-### Exit Intent Modal System
+### Conversion Systems
+- Added **Umami Analytics** for event tracking and funnel insights  
+- Introduced **banner CTA** above navigation for persistent visibility  
+- Implemented **exit-intent modal** as a last-chance call to action
 
-- **Engagement-based timing** — 10-second timer starts on first user interaction, not page load
-- **Multi-trigger detection** — Tracks scroll, mousemove, clicks, keystrokes for genuine engagement
-- **Intelligent cooldown** — 7-day localStorage cooldown prevents modal spam
-- **Integrated with Nuxt UI** — Uses \`useOverlay\` composable for proper modal management
-
-### Developer Experience
-
-- **Keyboard shortcuts** — \`⌘+Shift+R\` clears all storage with toast feedback and delayed reload
-- **Storage debugging** — Dev console \`devTools.logStorage()\` for inspection
-- **Manual testing** — \`⌘+Shift+E\` manually triggers exit intent for development
-- **Clean production build** — Debug logging removed, performance optimized
-
-### Technical Implementation
-
-- **IButton component** — Automatically resolves variants, handles tracking, uses UButton for navigation
-- **Storage prefix system** — All keys prefixed with \`validator\` for organized cleanup
-- **Event consolidation** — Merged \`useEvents\` into \`useAction\` for simpler API
-- **Proper cleanup** — Event listeners properly removed on component unmount
-    `,
+### Visual & UX Refinements
+- Refined color palette for a more professional, focused aesthetic  
+- Applied colors strategically across sections to enforce clear **visual hierarchy**  
+- Ensures attention naturally flows to key CTAs and conversion points
+`,
   },
   {
     title: 'JUST LAUNCH IT!! 🚀🚀',
