@@ -6,6 +6,7 @@
   --spacing: 0.25rem;
   --ui-radius: 0.25rem;
   --ui-header-height: --spacing(16);
+  --ui-banner-height: --spacing(12);
 
   /* Container system */
   --container-3xs: 16rem;

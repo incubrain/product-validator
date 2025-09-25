@@ -2,12 +2,24 @@
 <script setup lang="ts">
 import { getMainNavigation } from '#shared/config/navigation';
 
+const props = defineProps<{
+  class?: string;
+  sticky?: boolean;
+}>();
+
 const navigationItems = getMainNavigation();
+
+// Dynamic classes for sticky positioning
+const headerClasses = computed(() => ({
+  [`sticky z-40 ${props.class}`]: props.sticky,
+  'relative z-0': !props.sticky,
+}));
 </script>
 
 <template>
   <UHeader
     mode="slideover"
+    :class="headerClasses"
     :ui="{
       root: 'bg-muted/80 backdrop-blur-md border-b border-default',
       container: 'h-16',

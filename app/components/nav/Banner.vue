@@ -6,11 +6,17 @@ const STORAGE_PREFIX = 'validator';
 
 const props = defineProps<{
   offer: OfferID;
+  sticky?: boolean;
 }>();
 
 const offer = useFlowOffer(props.offer);
 
 const storageKey = `${STORAGE_PREFIX}_course-support`;
+
+const bannerClasses = computed(() => ({
+  'sticky top-0 z-50': props.sticky,
+  'relative': !props.sticky,
+}));
 </script>
 
 <template>
@@ -29,8 +35,9 @@ const storageKey = `${STORAGE_PREFIX}_course-support`;
         variant: 'ghost',
       },
     ]"
+    :class="bannerClasses"
     :ui="{
-      root: 'bg-default text-muted',
+      root: 'bg-default text-muted h-(--ui-banner-height)',
       title: 'text-sm text-muted font-medium truncate pl-3',
       icon: 'size-5 shrink-0 text-error pointer-events-none',
       close: 'text-muted hover:bg-muted cursor-pointer',
