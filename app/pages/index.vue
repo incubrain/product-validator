@@ -1,12 +1,12 @@
 <template>
   <UPageBody class="mt-0">
     <ISectionHero />
-    <ISectionHypothesis />
-    <ISectionPositioning />
-    <ISectionProduct />
-    <ISectionOffer />
+    <ISectionProblem />
+    <ISectionSolution />
+    <ISectionProcess />
     <ISectionFounder />
-    <ISectionSocialProof />
-    <ISectionQuestions />
+    <ISectionOffer />
+    <ISectionResults />
+    <ISectionConcerns />
   </UPageBody>
 </template>

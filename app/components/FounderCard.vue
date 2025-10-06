@@ -8,13 +8,14 @@ defineProps<{
 const founder = useFlowSection('founder');
 
 // Computed properties
-const displayName = computed(() => `Hi, I'm ${founder.name.split(' ')[0]}`);
-const description = computed(() => founder.role);
+//  {EXTRACT}
+const displayName = computed(() => `Hi, I'm ${founder.me.first}`);
+const description = computed(() => founder.me.role);
 
 // Map links to proper format for UButton
 const socialLinks = computed(
   () =>
-    founder.links?.map((link) => ({
+    founder.accessibility.links?.map((link) => ({
       label: link.label,
       icon: `i-lucide-${link.platform}`,
       to: link.url,
@@ -41,8 +42,8 @@ const socialLinks = computed(
         :orientation="variant === 'mobile' ? 'horizontal' : 'vertical'"
         size="lg"
         :avatar="{
-          src: founder.avatar.src,
-          alt: founder.avatar.alt,
+          src: founder.me.avatar.src,
+          alt: founder.me.avatar.alt,
         }"
         :ui="{ root: 'items-start text-left lg:items-end lg:text-right' }"
       />
@@ -50,7 +51,7 @@ const socialLinks = computed(
 
     <!-- Body: short bio message -->
     <p class="text-sm text-toned text-left lg:text-right">
-      {{ founder.bioShort }}
+      {{ founder.story.mission.hook }}
     </p>
 
     <!-- Footer: social links -->

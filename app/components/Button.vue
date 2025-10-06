@@ -1,6 +1,5 @@
 <!-- components/Button.vue -->
 <script setup lang="ts">
-import type { OfferID } from '#shared/config/overview';
 
 interface Props {
   offer: OfferID;

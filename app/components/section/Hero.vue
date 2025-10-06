@@ -1,20 +1,10 @@
 <script setup lang="ts">
-const hypothesis = useFlowSection('hypothesis');
-const positioning = useFlowSection('positioning');
-const product = useFlowSection('product');
+// Updated data access
+const data = useFlowSection('solution');
+const hero = useFlowSection('hero');
 
-// Get main solution claims
-const headline = computed(() => hypothesis?.problem?.solution?.claim ?? '');
-
-// Get primary CTA from first offer
-const primaryCta = useFlowOffer('product').value.cta;
-const secondaryCta = useFlowOffer('magnet').value.cta;
-
-const magnet = useFlowOffer('magnet');
-
-// Tech affiliations from positioning
-const affiliations = computed(() => positioning?.affiliations ?? []);
-const media = computed(() => product?.media ?? null);
+// Tech affiliations from solution data
+const affiliations = computed(() => data?.credibility?.affiliations ?? []);
 </script>
 
 <template>
@@ -28,18 +18,18 @@ const media = computed(() => product?.media ?? null);
       footer: 'mt-10',
     }"
   >
-    <!-- Badge - using positioning category -->
+    <!-- Badge - using magnet offer -->
     <template #headline>
       <div class="flex justify-center items-center pb-2">
         <ULink
-          v-if="magnet"
-          :to="magnet.cta.to"
+          v-if="hero.badge"
+          :to="hero.badge.to"
           target="_blank"
           class="group flex items-center gap-2 rounded-full border border-default bg-default/50 px-4 py-2 shadow-sm hover:bg-muted/50 transition"
         >
           <!-- Left side: badge-style -->
           <span class="text-sm font-semibold text-dimmed">
-            {{ magnet.description }}
+            {{ hero.badge.title }}
           </span>
 
           <!-- Divider -->
@@ -49,8 +39,8 @@ const media = computed(() => product?.media ?? null);
           <span
             class="text-sm font-medium text-secondary group-hover:underline flex items-center gap-1"
           >
-            {{ magnet.cta.label }}
-            <UIcon name="i-lucide-chevron-right" class="size-4" />
+            {{ hero.badge.description }}
+            <UIcon name="i-lucide-star" class="size-4" />
           </span>
         </ULink>
       </div>
@@ -61,56 +51,27 @@ const media = computed(() => product?.media ?? null);
       <h1
         class="text-4xl sm:text-6xl lg:text-7xl text-balance font-bold tracking-tight leading-tight text-center"
       >
-        {{ headline }}
+        {{ hero.intro.title }}
       </h1>
     </template>
 
-    <!-- Hypothesis Card - Primary Customer + Promise -->
+    <!-- Value proposition -->
     <template #description>
       <div class="max-w-3xl mx-auto space-y-4">
-        <!-- Main value proposition -->
         <p class="text-xl sm:text-2xl text-dimmed font-medium leading-relaxed">
-          {{ hypothesis?.problem?.solution?.pitch }}
+          {{ hero.intro.description }}
         </p>
-      </div>
-    </template>
-
-    <!-- CTA Buttons -->
-    <template #links>
-      <div class="flex flex-col sm:flex-row justify-center gap-4">
-        <UButton
-          v-if="primaryCta"
-          :to="primaryCta.to"
-          :trailing-icon="primaryCta.icon"
-          variant="solid"
-          color="primary"
-          size="xl"
-          class="text-highlighted font-bold"
-        >
-          {{ primaryCta.label }}
-        </UButton>
-
-        <UButton
-          v-if="secondaryCta"
-          :to="secondaryCta.to"
-          :trailing-icon="secondaryCta.icon"
-          variant="ghost"
-          color="neutral"
-          size="xl"
-          class="text-dimmed"
-        >
-          {{ secondaryCta.label }}
-        </UButton>
       </div>
     </template>
 
     <!-- Media -->
     <div class="relative pt-12">
-      <div v-if="media?.src" class="relative">
+      <div v-if="hero.media?.src" class="relative">
+        <!-- {EXTRACT} poster -->
         <IVideo
-          v-if="media.type === 'video'"
-          :src="media.src"
-          poster="/images/demo/demo-1.jpg"
+          v-if="hero.media.type === 'video'"
+          :src="hero.media.src"
+          poster="/images/demo/demo-1.jpg" 
           :autoplay="true"
           :muted="true"
           :loop="true"
@@ -118,21 +79,22 @@ const media = computed(() => product?.media ?? null);
           class="rounded-2xl shadow-2xl border border-white/10"
         />
         <NuxtImg
-          v-else-if="media.type === 'image'"
-          :src="media.src"
-          :alt="media.alt || 'hero media'"
+          v-else-if="hero.media.type === 'image'"
+          :src="hero.media.src"
+          :alt="hero.media.alt"
           class="rounded-2xl shadow-2xl border border-white/10 w-full"
         />
       </div>
     </div>
 
-    <!-- Tech Affiliations -->
+    <!-- Tech Stack Showcase -->
     <div v-if="affiliations.length" class="flex relative overflow-hidden pt-4">
       <UBadge
         variant="subtle"
         color="info"
         class="whitespace-nowrap px-3 flex-shrink-0 hidden lg:flex"
       >
+      <!-- {EXTRACT} -->
         Powered By
       </UBadge>
       <UMarquee
@@ -146,22 +108,19 @@ const media = computed(() => product?.media ?? null);
         }"
       >
         <div
-          v-for="affiliation in affiliations"
-          :key="affiliation.name"
+          v-for="affil in affiliations"
+          :key="affil.name"
           class="flex items-center gap-3 px-4 py-2 bg-default backdrop-blur-sm rounded-lg border border-white/10 shrink-0"
         >
-          <UIcon
-            :name="affiliation.logo"
-            class="size-6 text-info flex-shrink-0"
-          />
+          <UIcon :name="affil.logo" class="size-6 text-info flex-shrink-0" />
           <span class="font-medium text-sm whitespace-nowrap">
-            {{ affiliation.name }}
+            {{ affil.name }}
           </span>
           <span
-            v-if="affiliation.note"
+            v-if="affil.note"
             class="text-xs font-mono text-gray-400 bg-black/20 px-2 py-1 rounded whitespace-nowrap"
           >
-            {{ affiliation.note }}
+            {{ affil.note }}
           </span>
         </div>
       </UMarquee>

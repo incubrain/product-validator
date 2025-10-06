@@ -1,18 +1,16 @@
 <!-- components/ExitIntentModal.vue -->
 <script setup lang="ts">
-import type { OfferID } from '#shared/config/overview';
-
 const props = defineProps<{
-  offer: OfferID;
+  offerId: OfferID;
 }>();
 
 const emit = defineEmits<{ close: [boolean] }>();
 
-// Get founder info for social proof
-const offer = useFlowOffer(props.offer);
+const offer = useFlowOffer(props.offerId);
 </script>
 
 <template>
+  <!-- {EXTRACT} -->
   <UModal
     fullscreen
     :close="{ onClick: () => emit('close', false) }"
@@ -21,7 +19,7 @@ const offer = useFlowOffer(props.offer);
     :ui="{
       overlay: 'bg-default',
       content:
-        'bg-gradient-to-br from-primary-50 to-secondary-50 dark:from-primary-950/80 dark:to-secondary-950/90',
+        'bg-gradient-to-br from-neutral-950/95 via-primary-900/50 to-neutral-950/95 dark:from-neutral-950/98 dark:via-primary-900/40 dark:to-neutral-950/90 backdrop-blur-4xl backdrop-brightness-0 ',
       body: 'flex flex-col items-center justify-center text-center p-8',
     }"
   >
@@ -62,12 +60,12 @@ const offer = useFlowOffer(props.offer);
         >
           <ul class="text-left space-y-1.5 text-sm">
             <li
-              v-for="feature in offer.features"
-              :key="feature"
+              v-for="feature in offer.benefits"
+              :key="feature.text"
               class="flex items-center gap-2 text-toned font-medium"
             >
               <UIcon name="i-lucide-check" class="text-success flex-shrink-0" />
-              {{ feature }}
+              {{ feature.text }}
             </li>
           </ul>
         </div>
@@ -76,12 +74,13 @@ const offer = useFlowOffer(props.offer);
 
     <template #footer>
       <div class="flex gap-4 justify-between items-center w-full">
+        <!-- {EXTRACT} -->
         <UButton variant="ghost" color="neutral" @click="emit('close', false)">
           Maybe later
         </UButton>
 
         <IButton
-          offer="social"
+          :offer="offerId"
           location="exit-modal"
           class="transform hover:scale-105"
         />

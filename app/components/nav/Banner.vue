@@ -1,8 +1,5 @@
 <!-- Banner.vue - FIXED VERSION -->
 <script setup lang="ts">
-import type { OfferID } from '#shared/config/overview';
-
-const STORAGE_PREFIX = 'validator';
 
 const props = defineProps<{
   offer: OfferID;
@@ -10,8 +7,6 @@ const props = defineProps<{
 }>();
 
 const offer = useFlowOffer(props.offer);
-
-const storageKey = `${STORAGE_PREFIX}_course-support`;
 
 const bannerClasses = computed(() => ({
   'sticky top-0 z-50': props.sticky,
@@ -21,12 +16,12 @@ const bannerClasses = computed(() => ({
 
 <template>
   <UBanner
-    :id="storageKey"
+    :id="`${$config.public.validator.storagePrefix}_${offer.id}`"
     icon="i-lucide-heart"
     :title="offer.description"
     :actions="[
       {
-        label: `${offer.cta.label} ${offer.price}`,
+        label: `${offer.cta.label} ${offer.price.current}/${offer.price.recurrence}`,
         to: offer.cta.to,
         target: offer.cta.to?.startsWith('http') ? '_blank' : undefined,
         trailingIcon: offer.cta.icon,

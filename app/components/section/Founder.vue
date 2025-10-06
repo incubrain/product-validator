@@ -1,112 +1,71 @@
 <script setup lang="ts">
-const founder = useFlowSection('founder');
-const sections = useFlowSection('founder').sections;
-const fullName = founder.name;
+const data = useFlowSection('founder');
+
+const story = data.story;
+const me = data.me;
 </script>
 
 <template>
-  <UPageSection
-    :icon="sections?.intro?.icon"
-    :headline="sections?.intro?.headline"
-    :title="sections?.intro?.title"
-    :description="sections?.intro?.description"
-    orientation="horizontal"
-    class="bg-muted"
+  <ISectionWrapper
+    id="#founder"
+    :intro="data.intro"
+    :bridge="data.bridge"
+    class="bg-muted/50"
   >
-    <!-- LEFT: Profile + Links + Highlights -->
-    <template #header>
-      <div class="flex flex-col items-start gap-4 mb-6">
-        <UUser
-          :name="fullName || founder.name"
-          :description="founder.role"
-          :avatar="{ src: founder.avatar.src, alt: founder.avatar.alt }"
-          size="lg"
+    <!-- Hook + Mission Quote (merged in quote box) -->
+    <div class="mb-12 max-w-(--ui-container-sm) mx-auto">
+      <div class="flex flex-col items-center gap-4 mb-8">
+        <p class="font-written text-xl text-center">
+          {{ story.greeting }}
+        </p>
+      </div>
+      <div v-if="me.portrait?.src" class="flex justify-center">
+        <NuxtImg
+          :src="me.portrait.src"
+          :alt="me.portrait.alt"
+          class="w-54 object-cover border-primary/20 shadow-xl rounded-lg"
         />
-
-        <!-- Social / Links (text buttons for now) -->
-        <div class="flex items-center gap-2 mt-1" v-if="founder.links?.length">
-          <UButton
-            v-for="l in founder.links"
-            :key="l.label"
-            variant="ghost"
-            color="neutral"
-            :icon="`i-lucide-${l.platform}`"
-            size="sm"
-            :to="l.url"
-            target="_blank"
-          />
-        </div>
       </div>
-
-      <!-- Highlights as badges -->
-      <div v-if="founder.highlights?.length" class="flex flex-wrap gap-2 mb-6">
-        <UBadge
-          v-for="(h, i) in founder.highlights"
-          :key="i"
-          variant="subtle"
-          color="info"
-          size="sm"
-        >
-          {{ h }}
-        </UBadge>
-      </div>
-    </template>
-
-    <!-- BODY: Long story + (optional) background -->
-    <template #body>
-      <div class="prose prose-invert max-w-none mb-6" v-if="founder.bioLong">
-        <!-- If you store markdown, keep MDC; if plain text, a <p> is fine -->
-        <MDC :value="founder.bioLong" />
-      </div>
-
-      <div
-        class="mt-4 text-muted leading-relaxed"
-        v-if="founder.backgroundStory"
+      <UPageCard
+        variant="subtle"
+        spotlight
+        spotlight-color="primary"
+        class="relative"
       >
-        <MDC :value="founder.backgroundStory" />
-      </div>
-    </template>
-
-    <!-- RIGHT: Promise callout -->
-    <div>
-      <div class="flex justify-center items-start pb-4">
-        <UBadge color="neutral">
-          Hi, I'm {{ founder.name.split(' ')[0] }}
-        </UBadge>
-      </div>
-
-      <div
-        v-if="founder.portrait.src"
-        class="hidden md:block order-2 lg:order-1"
-      >
-        <div class="relative">
-          <NuxtImg
-            :src="founder.portrait.src"
-            :alt="founder.portrait.alt"
-            class="w-full max-w-xs mx-auto rounded-2xl"
-          />
-        </div>
-      </div>
-
-      <blockquote class="relative" v-if="founder.promise">
-        <UPageCard
-          class="border-2 border-dashed border-secondary/30"
-          spotlight
-          spotlight-color="secondary"
+        <div
+          class="absolute -top-4 left-4 text-6xl text-primary/30 font-serif leading-none"
         >
-          <p class="text-xl leading-relaxed">
-            {{ founder.promise }}
-          </p>
-        </UPageCard>
-        <div class="absolute -top-4 left-2 text-7xl text-secondary font-serif">
           "
+        </div>
+        <div class="px-6 space-y-4">
+          <p
+            class="text-xl md:text-2xl font-bold leading-tight text-highlighted"
+          >
+            {{ story.mission }}
+          </p>
         </div>
         <div
-          class="absolute -bottom-4 right-2 text-7xl text-secondary font-serif rotate-180"
+          class="absolute -bottom-4 right-4 text-6xl text-primary/30 font-serif leading-none rotate-180"
         >
           "
         </div>
-      </blockquote>
+      </UPageCard>
     </div>
-  </UPageSection>
+
+    <div
+      v-if="story?.background?.length"
+      class="max-w-(--ui-container-sm) mx-auto font-written text-lg md:text-xl leading-relaxed space-y-6 md:space-y-8"
+    >
+      <p v-for="(para, i) in story.background" :key="i" class="text-center">
+        {{ para }}
+      </p>
+      <p class="text-center text-lg md:text-xl font-written font-semibold text-primary leading-relaxed">
+        {{ story.challenge }}
+      </p>
+    </div>
+
+    <!-- FOOTER: Challenge -->
+    <div v-if="story?.challenge" class="max-w-3xl mx-auto text-center">
+    </div>
+  </ISectionWrapper>
 </template>

@@ -187,8 +187,8 @@ const computedStyles = useTV(videoStyles, {
 
         <!-- Volume Control -->
         <button
-          @click="toggleMute"
           class="p-2 rounded-full bg-black/20 hover:bg-black/40 transition-colors flex cursor-pointer"
+          @click="toggleMute"
         >
           <UIcon
             :name="muted ? 'i-lucide-volume-x' : 'i-lucide-volume-2'"

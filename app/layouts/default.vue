@@ -1,17 +1,24 @@
-<!-- layouts/default.vue - UPDATED -->
+<!-- layouts/default.vue -->
 <script lang="ts" setup>
-const bannerSticky = true; // or make this reactive/configurable
-const headerSticky = false;
+import { LAYOUT_CONFIG, getStickyOffset } from '#shared/config/navigation';
 </script>
 
 <template>
   <div class="min-h-screen bg-default text-default antialiased">
-    <INavBanner offer="direct" :sticky="bannerSticky" />
-    <INavHeader
-      :sticky="headerSticky"
-      :class="bannerSticky ? 'top-(--ui-banner-height)' : 'top-0'"
+    <INavBanner
+      v-if="LAYOUT_CONFIG.banner.enabled"
+      offer="direct"
+      :sticky="LAYOUT_CONFIG.banner.sticky"
+      :class="LAYOUT_CONFIG.navbar.sticky ? '' : 'border-b'"
     />
-    <main class="min-h-[calc(100vh-4rem)]">
+    <INavHeader
+      v-if="LAYOUT_CONFIG.navbar.enabled"
+      :sticky="LAYOUT_CONFIG.navbar.sticky"
+      :class="
+        LAYOUT_CONFIG.banner.sticky ? 'top-(--ui-banner-height)' : 'top-0'
+      "
+    />
+    <main :class="`min-h-[calc(100vh-${getStickyOffset(false)})]`">
       <slot />
     </main>
     <INavFooter />

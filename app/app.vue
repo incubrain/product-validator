@@ -1,11 +1,30 @@
 <script setup lang="ts">
+const siteConfig = useSiteConfig()
+
+useHead({
+  titleTemplate: (titleChunk) => {
+    return titleChunk ? `${titleChunk} - ${siteConfig.name}` : siteConfig.name
+  },
+  htmlAttrs: { lang: 'en' },
+  link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
+})
+
+useSeoMeta({
+  description: siteConfig.description,
+  ogTitle: siteConfig.name,
+  ogDescription: siteConfig.description,
+  ogImage: `${siteConfig.url}/og-image.png`,
+  twitterCard: 'summary_large_image',
+})
+
+
 // Dev shortcuts
 if (import.meta.dev && import.meta.client) {
   const { clearAllStorage } = useDevTools();
   const { $exitIntent } = useNuxtApp();
   defineShortcuts({
-    meta_shift_r: clearAllStorage,
-    meta_shift_e: () => $exitIntent.fire(true), // Manual exit intent trigger for testing
+    meta_shift_r: clearAllStorage, // {DX}: cmd+shft+r to clear session/local storage using storagePrefix + refresh
+    meta_shift_e: () => $exitIntent.fire(true), // {DX}: cmd+shft+e to manually trigger intent trigger for testing
   });
 }
 </script>

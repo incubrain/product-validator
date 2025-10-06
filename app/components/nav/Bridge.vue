@@ -1,7 +1,5 @@
 <!-- components/Bridge.vue -->
 <script setup lang="ts">
-import type { Cta } from '#shared/config/overview';
-
 interface BridgeData {
   headline: string;
   message: string;
@@ -16,20 +14,22 @@ defineProps<Props>();
 </script>
 
 <template>
-  <div
-    class="mt-12 p-6 sm:p-8 bg-secondary/5 border border-secondary/20 rounded-2xl max-w-3xl mx-auto backdrop-blur-sm"
-  >
-    <div class="text-center space-y-4">
-      <p class="text-base sm:text-lg text-muted leading-relaxed">
-        <strong class="text-secondary font-semibold">
+  <UPageCard spotlight spotlight-color="secondary">
+    <div class="text-center space-y-6">
+      <div class="space-y-2">
+        <h4
+          class="text-base sm:text-xl text-secondary font-bold leading-relaxed"
+        >
           {{ bridge.headline }}
-        </strong>
-        {{ bridge.message }}
-      </p>
+        </h4>
+        <p class="text-sm sm:text-base text-muted leading-relaxed">
+          {{ bridge.message }}
+        </p>
+      </div>
 
       <UButton
         :to="bridge.cta.to"
-        variant="ghost"
+        variant="subtle"
         color="primary"
         :trailing-icon="bridge.cta.icon"
         size="md"
@@ -38,5 +38,5 @@ defineProps<Props>();
         {{ bridge.cta.label }}
       </UButton>
     </div>
-  </div>
+  </UPageCard>
 </template>

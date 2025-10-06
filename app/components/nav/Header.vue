@@ -11,21 +11,14 @@ const navigationItems = getMainNavigation();
 
 // Dynamic classes for sticky positioning
 const headerClasses = computed(() => ({
-  [`sticky z-40 ${props.class}`]: props.sticky,
-  'relative z-0': !props.sticky,
+  [`sticky z-40 bg-muted/80 backdrop-blur-md border-b border-default ${props.class}`]:
+    props.sticky,
+  'relative z-0 border-none': !props.sticky,
 }));
 </script>
 
 <template>
-  <UHeader
-    mode="slideover"
-    :class="headerClasses"
-    :ui="{
-      root: 'bg-muted/80 backdrop-blur-md border-b border-default',
-      container: 'h-16',
-      body: 'h-full max-h-[calc(100vh-var(--ui-header-height))] overflow-hidden',
-    }"
-  >
+  <UHeader mode="slideover" :class="headerClasses">
     <template #title>
       <ILogo size="md" />
     </template>
@@ -39,7 +32,7 @@ const headerClasses = computed(() => ({
 
     <template #right>
       <IButton
-        offer="product"
+        offer="low"
         location="header"
         class="hidden md:inline-flex text-toned font-black"
       />

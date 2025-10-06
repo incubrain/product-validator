@@ -1,25 +1,27 @@
 <!-- components/nav/Footer.vue -->
 <script setup lang="ts">
-
-const business = useFlowSection('founder').business;
+const founder = useFlowSection('founder');
 const currentYear = new Date().getFullYear();
 
 const copyrightYear = computed(() =>
-  business.founding_year === currentYear
+  founder.business.founding_year === currentYear
     ? `${currentYear}`
-    : `${business.founding_year} - ${currentYear}`,
+    : `${founder.business.founding_year} - ${currentYear}`,
 );
 </script>
 
 <template>
   <UFooter
     :ui="{
+      root: 'border-t',
       container:
-        'border-2 border-dashed rounded-t-lg border-b-0 decoration-dashed md:flex lg:items-start',
-      bottom: 'bg-muted border-t ',
-      left: 'flex items-center md:items-start justify-start md:justify-start md:flex-1 gap-x-1.5 mt-3 md:mt-0 md:order-1',
+        'py-8 lg:py-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between lg:gap-x-3',
+      top: 'py-8 lg:py-12',
+      bottom: 'py-8 lg:py-12 bg-muted border-t',
+      left: 'order-1 flex items-center justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0',
+      center: 'order-2 flex items-center justify-center mt-3 lg:mt-0',
       right:
-        'md:flex-1 flex items-center justify-start md:justify-end gap-x-1.5 md:order-3',
+        'order-3 flex items-center justify-start lg:justify-end lg:flex-1 gap-x-1.5',
     }"
   >
     <!-- TOP: Brand + Description + Founder Card -->
@@ -28,7 +30,7 @@ const copyrightYear = computed(() =>
         <ILogo size="md" />
         <div class="space-y-2">
           <p class="text-muted leading-relaxed font-written text-sm max-w-md">
-            {{ business.description }}. {{ business.tagline }}.
+            {{ founder.story.mission.elevator }}.
           </p>
         </div>
       </div>
@@ -43,7 +45,7 @@ const copyrightYear = computed(() =>
       <UContainer class="flex justify-between w-full items-center">
         <p class="text-sm text-muted whitespace-nowrap">
           © {{ copyrightYear }}
-          {{ business.legal_name }}
+          {{ founder.business.legal_name }}
         </p>
 
         <div class="flex items-center gap-3">
