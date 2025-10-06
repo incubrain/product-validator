@@ -118,7 +118,7 @@
   --ui-bg-accented: var(
     --color-neutral-700
   ); /* inputs, hovers, subtle callouts */
-  --ui-bg-inverted: var(--color-white); /* light/contrast surfaces */
+  --ui-bg-inverted: var(--color-neutral-200); /* light/contrast surfaces */
 
   /* BORDERS (lighter than host surface on dark UI) */
   --ui-border: var(--color-neutral-800); /* default separators on --ui-bg */

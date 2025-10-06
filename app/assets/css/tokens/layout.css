@@ -25,4 +25,5 @@
 
   /* UI integration */
   --ui-container: var(--container-5xl);
+  --ui-container-sm: var(--container-3xl);
 }
