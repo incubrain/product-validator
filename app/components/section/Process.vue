@@ -39,10 +39,7 @@ function renderContent(content: any[]) {
     </UPageGrid>
 
     <!-- Separator -->
-    <ISeparator
-      v-if="data.separators?.[0]"
-      v-bind="data.separators[0]"
-    />
+    <ISeparator v-if="data.separators?.[0]" v-bind="data.separators[0]" />
 
     <!-- Process Flow Stepper - BELOW the features -->
     <div v-if="stepperItems.length" class="w-full">
@@ -79,8 +76,11 @@ function renderContent(content: any[]) {
                 v-for="(contentItem, index) in renderContent(step.content)"
                 :key="index"
               >
+                <div v-if="contentItem.type === 'text'">
+                  <MDC :value="contentItem.value" />
+                </div>
                 <!-- Video content -->
-                <div v-if="contentItem.type === 'video'">
+                <div v-else-if="contentItem.type === 'video'">
                   <IVideo
                     :src="contentItem.src"
                     :autoplay="false"

@@ -1,4 +1,6 @@
+// shared/config/4.process.ts
 // {FRICTION}: this has to be deleted, can it be extracted or does it provide value?
+
 export const process = {
   features: [
     {
@@ -39,9 +41,9 @@ export const process = {
   ],
   flow: [
     {
-      slot: 'create',
-      title: 'Create',
-      description: 'Follow the Magnet Creation Guide.',
+      slot: 'launch',
+      title: 'Launch',
+      description: 'Deploy your validation page and start gathering signal.',
       duration: '3-7 days',
 
       actions: [
@@ -66,13 +68,16 @@ export const process = {
       content: [
         {
           type: 'text',
-          value:
-            'This phase requires deep thinking about your offering, market, and positioning. Rush this and validation results will be meaningless.',
-        },
-        {
-          type: 'image',
-          src: '/images/steps/step-1.png',
-          alt: 'Complete template configuration process',
+          value: `**Deep thinking required here.** This phase forces you to clarify:
+
+- Who you're serving (customer profile)
+- What pain you're solving (problem statement)
+- Why your approach works (solution positioning)
+- How they access value (offer structure)
+
+Rush this and validation results become noise. Take time to articulate clearly. The template structure guides you, but the thinking is yours.
+
+**Pro tip:** If you struggle to write a section, you don't understand that part of your business yet. That's the gap to fill before launching.`,
         },
       ],
     },
@@ -81,7 +86,7 @@ export const process = {
       slot: 'validate',
       title: 'Validate',
       description:
-        'Get real users to interact with your offering targetting 50 magnet COMPLETETIONS and gather feedback.',
+        'Drive traffic, capture feedback, and measure real interest.',
       duration: '1-3 weeks',
 
       actions: [
@@ -106,13 +111,16 @@ export const process = {
       content: [
         {
           type: 'text',
-          value:
-            'Validation requires consistent daily effort. 10 visitors/day × 14 days = 140 visitors. With 35% conversion rate = 50 signups.',
-        },
-        {
-          type: 'image',
-          src: '/images/steps/step-2.png',
-          alt: 'Proven validation and distribution strategies',
+          value: `**Consistent effort beats sporadic hustle.** Validation isn't a one-day push—it's daily iteration.
+
+**Baseline goal:** 10 visitors/day via free channels (Reddit, forums, direct outreach, social posts)
+
+**Math:** 10 visitors/day × 14 days = 140 visitors  
+With 35% conversion = **49 magnet signups**
+
+**Key metric:** Conversion rate matters more than raw traffic. 5% conversion from 100 visitors (5 signups) shows stronger signal than 2% from 300 visitors (6 signups).
+
+Focus on *quality of interest*, not vanity metrics.`,
         },
       ],
     },
@@ -120,7 +128,7 @@ export const process = {
     {
       slot: 'decide',
       title: 'Decide',
-      description: 'Use data to make confident build/pivot/abandon decisions',
+      description: 'Let data guide your next move—build, pivot, or abandon.',
       duration: '2-3 days',
 
       actions: [
@@ -145,13 +153,21 @@ export const process = {
       content: [
         {
           type: 'text',
-          value:
-            'Decision framework removes emotion from the process. Let data guide your choice between pivot, refine & build, or abandon.',
-        },
-        {
-          type: 'image',
-          src: '/images/steps/step-3.png',
-          alt: 'How to interpret validation results and make confident decisions',
+          value: `**Decision framework removes emotion.**
+
+**Below Average (<15% magnet conversion OR <2% paid conversion):**  
+→ Consider pivot or abandon. Messaging/offer likely misaligned with market.
+
+**Average (15-25% magnet OR 2-3% paid):**  
+→ Refine and continue. Some signal present, needs optimization.
+
+**Above Average (25%+ magnet OR 3-5% paid):**  
+→ Strong validation signal. Proceed to build with confidence.
+
+**Strong Signal (35%+ magnet OR 5%+ paid):**  
+→ Exceptional validation. This is a winner. Build now.
+
+Let the data decide. Your job is to interpret it honestly—not justify what you hoped would work.`,
         },
       ],
     },

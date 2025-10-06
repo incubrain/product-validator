@@ -15,7 +15,7 @@ const copyrightYear = computed(() =>
     :ui="{
       root: 'border-t',
       container:
-        'py-8 lg:py-4 flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between lg:gap-x-3',
+        'py-8 lg:py-4 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between lg:gap-x-3',
       top: 'py-8 lg:py-12',
       bottom: 'py-8 lg:py-12 bg-muted border-t',
       left: 'order-1 flex items-center justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0',
@@ -30,7 +30,7 @@ const copyrightYear = computed(() =>
         <ILogo size="md" />
         <div class="space-y-2">
           <p class="text-muted leading-relaxed font-written text-sm max-w-md">
-            {{ founder.story.mission.elevator }}.
+            {{ founder.story.mission }}.
           </p>
         </div>
       </div>
