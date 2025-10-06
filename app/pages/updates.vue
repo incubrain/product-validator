@@ -1,33 +1,19 @@
 <script setup lang="ts">
-type FeatureStatus = 'added' | 'changed' | 'removed' | 'deprecated';
-
-interface Feature {
-  text: string;
-  status: FeatureStatus;
-}
-
-interface ChangelogSection {
-  title: string;
-  features: Feature[];
-  freeText?: string; // For prose sections
-}
-
-interface Version {
-  title: string;
+interface Update {
+  version: string;
   date: string;
-  badge: string;
-  authors: typeof authors;
-  description: string;
-  sections: ChangelogSection[];
+  title: string;
+  summary: string;
+  content: string;
 }
 
 useHead({
-  title: 'Changelog - Product Validator',
+  title: 'Updates - Product Validator',
   meta: [
     {
       name: 'description',
       content:
-        'Track the evolution of the Product Validator — a validation-first Nuxt template focused on shipping signal fast.',
+        'Strategic decisions and philosophical shifts behind the Product Validator template.',
     },
   ],
 });
@@ -44,161 +30,193 @@ const authors = [
   },
 ];
 
-const statusConfig = {
-  added: { color: 'success', label: 'Added' },
-  changed: { color: 'warning', label: 'Changed' },
-  removed: { color: 'error', label: 'Removed' },
-  deprecated: { color: 'warning', label: 'Deprecated' },
-};
-
-const versions: Version[] = [
+const updates: Update[] = [
   {
-    title: 'Unified Data & Conversion Systems 🚀',
-    description:
-      'v0.2 refines the template into a research-driven, conversion-focused foundation. Unified data structures, analytics, and product strategy make it easier for founders to validate ideas and move toward revenue fast.',
-    date: '2025-09-21T00:00:00.000Z',
-    badge: 'v0.2.0',
-    authors,
-    sections: [
-      {
-        title: 'Unified Data Structure',
-        features: [
-          {
-            text: 'Consolidated all section data into a single, research-driven schema',
-            status: 'added',
-          },
-          {
-            text: 'Inspired by product ideation frameworks, sales landing psychology, and validation best practices',
-            status: 'added',
-          },
-          {
-            text: 'Guides founders through the right questions in the right order, while mapping seamlessly to section components',
-            status: 'added',
-          },
-          {
-            text: 'Multi-file config system split across 8+ separate files',
-            status: 'removed',
-          },
-        ],
-      },
-      {
-        title: 'Product Model',
-        features: [
-          {
-            text: 'Finalized four interconnected product types',
-            status: 'added',
-          },
-          { text: 'Primary Product — core validation tool', status: 'added' },
-          { text: 'Magnet Product — free entry offer', status: 'changed' },
-          {
-            text: 'Direct Revenue Product — immediate monetization option',
-            status: 'removed',
-          },
-          {
-            text: 'Social Product — community/engagement driver',
-            status: 'removed',
-          },
-          {
-            text: 'All supporting products link back to the primary to accelerate full-time founder paths',
-            status: 'added',
-          },
-        ],
-      },
-      {
-        title: 'Conversion Systems',
-        features: [
-          {
-            text: 'Added Umami Analytics for event tracking and funnel insights',
-            status: 'added',
-          },
-          {
-            text: 'Introduced banner CTA above navigation for persistent visibility',
-            status: 'added',
-          },
-          {
-            text: 'Implemented exit-intent modal as a last-chance call to action',
-            status: 'added',
-          },
-        ],
-      },
-      {
-        title: 'Visual & UX Refinements',
-        features: [
-          {
-            text: 'Refined color palette for a more professional, focused aesthetic',
-            status: 'added',
-          },
-          {
-            text: 'Applied colors strategically across sections to enforce clear visual hierarchy',
-            status: 'added',
-          },
-          {
-            text: 'Ensures attention naturally flows to key CTAs and conversion points',
-            status: 'added',
-          },
-        ],
-      },
-    ],
+    version: 'v0.2.1',
+    date: '2025-10-06',
+    title: 'Ruthless Focus on Today',
+    summary:
+      'Stripped away complexity, noise, and future-proofing. Only what validates today matters.',
+    content: `
+## The Validation Lifecycle
+
+**Launch → Validate** → *(Monetize → Optimize → Scale)*
+
+Everything in brackets is tomorrow's problem. Until you validate demand, monetization strategy is theoretical. Optimization is premature. Scale is irrelevant.
+
+This template forces you to solve today's problem: **Does anyone want this?**
+
+## Removed Paid Product Complexity
+
+Original template included three paid tiers (low/mid/high-ticket). All removed from initial launch.
+
+**Why?** You're building a ladder before proving people want to climb. Ship the free magnet first. Gather real feedback. *Then* build the paid offer based on actual pain points—not assumptions about what "might" work.
+
+The flow is: Launch → Validate → Decide what to build.
+
+Not: Theorize → Build everything → Hope it works.
+
+## Noise & Friction Elimination
+
+Every element that adds cognitive load got cut:
+- **Videos removed from requirements** — Production is time-intensive and blocks launch. Ship text + images. Add video polish after validation proves the messaging works.
+- **Multi-column responsive layouts** — Killed complexity. Everything stacks vertically on mobile. If it works on the smallest screen, it works everywhere.
+- **Design optimization** — Not a Day 1 priority. Good enough is enough. Perfect is the enemy of shipped.
+
+**The principle:** Complexity compounds. A decision to create multi-column sections means scaling across breakpoints. Focus on mobile-first single column? Minimal work, universal compatibility.
+
+Small decisions like orientation, image placement, video inclusion—these add friction without meaningful validation value. Until you know what converts, you're guessing.
+
+## Copy Over Everything Else
+
+Writing copy forces clarity. You can't articulate value if you don't understand it yourself.
+
+Copy is:
+- Easy to write
+- Easy to change  
+- High-return investment (helps you *think*)
+
+Design, videos, imagery—these are optimization tasks. They matter *after* you prove the message resonates. Before validation, they're distractions that sink ships before they reach the ocean.
+
+**Design is a trap.** People obsess over looks when messaging is the real blocker. If someone doesn't resonate with your product, it's not the design—it's unclear value communication.
+
+You need good copy to get to good design. Not the other way around.
+
+## The Philosophy Shift
+
+Stop solving tomorrow's problems. Be *aware* of the future, but don't build for it yet.
+
+Launch → Validate → Decide → Monetize/Pivot.
+
+In that order. Always.
+    `,
   },
   {
-    title: 'JUST LAUNCH IT!! 🚀🚀',
-    description:
-      "You'll never get it perfect. The goal is to get it in front of real humans fast, learn, and iterate. I'm certainly releasing this WAY before I feel comfortable. But that's the point, growth happens in discomfort. Let's go!",
-    date: '2025-09-15T00:00:00.000Z',
-    badge: 'v0.1.0',
-    authors,
-    sections: [
-      {
-        title: 'My Motivation',
-        freeText: `For years, I confused *being busy* with *making progress*. I'd polish features, perfect designs, and ship "almost ready" products that never reached enough people to matter. Perfectionism became a socially acceptable way to avoid the one thing that actually creates value: **getting the idea in front of real humans** and learning fast.
+    version: 'v0.2.0',
+    date: '2025-09-21',
+    title: 'From Template to Validation System',
+    summary:
+      'Shifted from "how do I make this look good?" to "what evidence do I need to decide?"',
+    content: `
+## The Core Problem
 
-I've been building businesses since I was 19 and I'm 32 now. I've also spent 6+ years as a full-stack developer. Across my own products and client work, I've seen the same trap: we build first, validate later (or never). That's how ghost products happen—months of effort that no one touches.
+Most founders (including me) confuse "looking professional" with "being ready to validate."
 
-This template is my antidote: a **focus tool** that forces the shortest path to evidence. Ship a simple landing page, share it to communities, track interest, and *only then* decide whether to invest. If you can pre-sell, do it. If not, collect real data from the people you want to serve and make an informed call on the MVP.
+Design becomes a procrastination tool. "Just one more iteration on the hero section..." while the real question—**does anyone want this?**—goes unanswered.
 
-The goal isn't to "build faster." It's to **decide faster**—with confidence—so you can either double down or walk away early without sunk costs.`,
-        features: [],
-      },
-      {
-        title: 'Key Features',
-        features: [
-          {
-            text: 'Landing page design + copy — opinionated structure with easy edit points',
-            status: 'added',
-          },
-          {
-            text: 'Tailwind Variants ready — useTV composable and theme/* directory (see IVideo for example usage)',
-            status: 'added',
-          },
-          {
-            text: 'Nuxt UI wrapper using UI prefix — ergonomic wrappers (e.g., components/ui/page/Columns is used as UIPageColumns instead of UPageColumns) for consistent layout',
-            status: 'added',
-          },
-          {
-            text: 'Minimal focused template — validation-first, no CMS/blog overhead',
-            status: 'added',
-          },
-          {
-            text: 'Showcase page — demo gallery of Nuxt UI components for quick reference',
-            status: 'removed',
-          },
-          {
-            text: 'Theme / font pairing switcher — fast brand exploration',
-            status: 'removed',
-          },
-        ],
-      },
-      {
-        title: 'Stack',
-        features: [
-          { text: 'Nuxt 4, Tailwind v4, Nuxt UI, TypeScript', status: 'added' },
-          {
-            text: 'Tailwind Variants for design tokens and extensible component APIs',
-            status: 'added',
-          },
-        ],
-      },
-    ],
+Version 0.1 was a landing page template.  
+Version 0.2 is a **validation methodology** that happens to include a template.
+
+## Why Competitors Miss This
+
+Platforms like ClickFunnels, Unbounce, Leadpages—they skip validation and push you straight to market.
+
+**Their business model:**
+1. Monthly subscriptions (whether you succeed or fail)
+2. Sales commissions (the faster you sell, the faster they profit)
+
+They're incentivized to get you selling *immediately*, not validating *correctly*.
+
+They're not bad tools. They're just solving a different problem: "How do we scale revenue?" not "Should we build this?"
+
+**This template is the headless version of those platforms—for the stages they neglect.**
+
+We don't help you scale. We help you *decide if you should*.
+
+## The Data Structure Advantage
+
+This isn't just a template. It's a structured framework for product ideation.
+
+Eight config files guide you through:
+- Problem definition
+- Solution articulation  
+- Process clarity
+- Value positioning
+- Objection handling
+
+Each section asks the right questions in the right order. You're not just "filling in content"—you're **clarifying your thinking** in a way that produces validation-ready messaging.
+
+## Product Model Evolution
+
+Original model: Four product tiers (magnet/low/mid/high) all mapped upfront.
+
+**New model:**
+1. Free magnet → validate interest
+2. Low-ticket ($50-100) → validate willingness to pay
+3. Mid/high-ticket → only after low-ticket proves demand
+
+Philosophy: Don't build the ladder until you prove people want to climb.
+
+## Why This Matters
+
+Validation isn't about features. It's about **forcing yourself to think clearly before building**.
+
+The template structure itself prevents premature optimization. You can't skip to monetization. You can't jump to scale. The flow is fixed: validate first, build second.
+    `,
+  },
+  {
+    version: 'v0.1.0',
+    date: '2025-09-15',
+    title: 'Just Launch It',
+    summary:
+      'First public release. Built for myself first. Imperfect, but in the wild.',
+    content: `
+## I Am My Own Customer
+
+This template exists because I needed it. I am the target market.
+
+For 13+ years, I've been the struggling founder—trying to launch, getting stuck in cycles of overthinking, rebuilding, perfecting, never shipping. ADHD compounded the pattern. Analysis paralysis became my default state.
+
+I've lost income and earning potential equivalent to $350k+ by investing 5+ years full-time into products that never materialized. Not because they were bad ideas. Because I never validated them.
+
+**This template is my system for breaking that cycle.**
+
+## Why "Be Your Own Customer" Works
+
+When you're building for yourself, messaging becomes easier. You know the pain. You lived it. You can write with vulnerability because it's *your* story.
+
+Vulnerability builds trust. It's authentic. It strips away the slimy feeling of "marketing" because you're not selling—you're sharing.
+
+If you're willing to own your identity, your struggles, your uniqueness—and articulate *why* you wish this product existed before you built it—you'll resonate with others facing the same pain.
+
+Some will connect. Some won't. That's validation working as intended.
+
+## The Trap I Kept Falling Into
+
+Build first. Validate later (or never).
+
+That's how ghost products happen. Months of effort that no one touches.
+
+I'd polish features, perfect designs, ship "almost ready" products that never reached enough people to matter. Perfectionism became a socially acceptable way to avoid the one thing that creates value:
+
+**Getting the idea in front of real humans and learning fast.**
+
+## Why This Template Forces a Different Path
+
+1. **Structured clarity** — Writing copy for this template forces you to articulate value. You can't BS your way through eight sections. Either you know what you're offering, or the gaps become obvious.
+
+2. **Social + landing page in parallel** — Yes, you can validate on social media. But scattered posts don't give the full picture. This landing page is the *complete story*—the hub your social content drives to.
+
+3. **Guided ideation** — The template structure tells you what information you need. Use that to guide your social posts. Gather feedback. Iterate the landing page. Repeat.
+
+You're not choosing between social validation OR a landing page. You're doing both. The template just gives you a structured framework instead of guessing what to post.
+
+## Why I'm Shipping This Now
+
+I'm not "cured" of imposter syndrome. I still battle my brain daily. This isn't a finished system—it's a work-in-progress foundation to prevent me from falling back into self-defeating cycles.
+
+But I'm shipping it anyway.
+
+Because the goal isn't to "build faster." It's to **decide faster**—with confidence—so I can either double down or walk away early without sunk costs.
+
+If it's not perfect? Good. That's the whole point.
+
+**Target market:** The struggling founder. 3-10+ years trying to build. Stuck in mental loops. Knows they're capable but can't break through.
+
+**Mission:** Help 100 founders achieve financial freedom so they can pursue other interests from a strong foundation.
+
+This template is step one.
+    `,
   },
 ];
 </script>
@@ -206,10 +224,10 @@ The goal isn't to "build faster." It's to **decide faster**—with confidence—
 <template>
   <UPage>
     <UPageHero
-      icon="i-lucide-book-open"
-      title="Dev Changelog"
-      description="Track the evolution of the Product Validator"
-      headline="Weekly FOCUSED updates"
+      icon="i-lucide-lightbulb"
+      title="Updates"
+      description="Strategic decisions and philosophical shifts behind the template"
+      headline="Think different, ship faster"
       :links="[
         {
           label: 'Follow on YouTube',
@@ -234,12 +252,12 @@ The goal isn't to "build faster." It's to **decide faster**—with confidence—
       <UContainer>
         <UChangelogVersions :indicator="false">
           <UChangelogVersion
-            v-for="(version, vIndex) in versions"
-            :key="vIndex"
-            :title="version.title"
-            :description="version.description"
-            :date="version.date"
-            :authors="version.authors"
+            v-for="update in updates"
+            :key="update.version"
+            :title="update.title"
+            :description="update.summary"
+            :date="update.date"
+            :authors="authors"
             :badge="undefined"
             :ui="{
               indicator:
@@ -247,16 +265,16 @@ The goal isn't to "build faster." It's to **decide faster**—with confidence—
             }"
           >
             <template #title>
-              <h2 class="text-3xl font-bold underline underline-offset-8 pb-4">
-                {{ version.title }}
+              <h2 class="text-3xl font-bold pb-4">
+                {{ update.title }}
               </h2>
             </template>
 
             <template #indicator>
-              <UBadge :label="version.badge" variant="soft" />
+              <UBadge :label="update.version" variant="soft" />
               <span class="text-sm text-muted">
                 {{
-                  new Date(version.date).toLocaleDateString('en-US', {
+                  new Date(update.date).toLocaleDateString('en-US', {
                     year: 'numeric',
                     month: 'short',
                     day: 'numeric',
@@ -266,43 +284,8 @@ The goal isn't to "build faster." It's to **decide faster**—with confidence—
             </template>
 
             <template #body>
-              <div class="space-y-8 pt-10">
-                <div
-                  v-for="(section, sIndex) in version.sections"
-                  :key="sIndex"
-                  class="space-y-3"
-                >
-                  <h3 class="text-xl font-semibold">{{ section.title }}</h3>
-
-                  <!-- Free text prose (for My Motivation section) -->
-                  <div
-                    v-if="section.freeText"
-                    class="prose prose-invert max-w-none"
-                  >
-                    <MDC :value="section.freeText" />
-                  </div>
-
-                  <!-- Feature list -->
-                  <ul
-                    v-if="section.features.length"
-                    class="space-y-2 list-decimal"
-                  >
-                    <li
-                      v-for="(feature, fIndex) in section.features"
-                      :key="fIndex"
-                      class="flex items-start justify-between gap-3"
-                    >
-                      <span class="flex-1">{{ feature.text }}</span>
-                      <UBadge
-                        :label="statusConfig[feature.status].label"
-                        :color="statusConfig[feature.status].color"
-                        variant="subtle"
-                        size="xs"
-                        class="flex-shrink-0 mt-0.5"
-                      />
-                    </li>
-                  </ul>
-                </div>
+              <div class="prose prose-invert max-w-none pt-6">
+                <MDC :value="update.content" />
               </div>
             </template>
           </UChangelogVersion>
