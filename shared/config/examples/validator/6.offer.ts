@@ -45,8 +45,8 @@ export const offer = [
       },
     ],
     cta: {
-      label: 'Get Starter Pack',
-      to: '#magnet-form', // Or FillOutForm embed ID
+      label: 'Get Launch Pack',
+      to: '#offer', // Or FillOutForm embed ID
       icon: 'i-lucide-rocket',
       variant: 'solid',
       formId: 'aYZbzo6xQ5us',

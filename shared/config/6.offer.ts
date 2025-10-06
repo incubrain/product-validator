@@ -16,7 +16,7 @@ export const offer = [
     ],
     cta: {
       label: '⚠️ Button text',
-      to: '#magnet-form',
+      to: '#offer',
       icon: 'i-lucide-rocket',
       variant: 'solid',
       color: 'primary',
@@ -25,42 +25,6 @@ export const offer = [
     upsells: [
       {
         target: 'low',
-        primary: true,
-      },
-    ],
-  },
-
-  {
-    id: 'low',
-    name: '⚠️ Low-Ticket Product Name',
-    description: '⚠️ What they get for this price',
-    price: {
-      current: '$50',
-      future: '$100',
-      recurrence: 'never',
-    },
-    stock: {
-      limit: 50,
-      claimed: 0,
-    },
-    benefits: [
-      {
-        text: '⚠️ What is included',
-        value: 200,
-        status: 'available',
-      },
-    ],
-    cta: {
-      label: '⚠️ Button text',
-      to: 'https://your-payment-link.com',
-      icon: 'i-lucide-shopping-cart',
-      variant: 'solid',
-      color: 'primary',
-      note: '⚠️ Small text below button',
-    },
-    upsells: [
-      {
-        target: 'medium',
         primary: true,
       },
     ],

@@ -32,7 +32,7 @@ const headerClasses = computed(() => ({
 
     <template #right>
       <IButton
-        offer="low"
+        offer="magnet"
         location="header"
         class="hidden md:inline-flex text-toned font-black"
       />

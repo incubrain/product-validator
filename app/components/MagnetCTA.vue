@@ -16,6 +16,7 @@ const isValidEmail = (email: string) => {
 };
 
 const filloutParams = computed(() => ({
+  id: offer.value.name,
   email: email.value,
 }));
 </script>
