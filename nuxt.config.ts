@@ -7,10 +7,17 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@nuxt/ui',
     '@vueuse/nuxt',
-    'nuxt-svgo',
     '@nuxtjs/mdc',
     '@nuxt/scripts',
+    '@nuxtjs/seo',
   ],
+
+  // {CONFIG}
+  site: {
+    url: 'https://product-validator.incubrain.org',
+    name: 'Product Validator',
+    description: 'Ship today, build in public, validate in weeks',
+  },
 
   // ✅ DEVELOPMENT ONLY: All dev-specific configuration
   $development: {
@@ -76,8 +83,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
-      incubrain: {
-        debug: import.meta.dev,
+      validator: {
+        storagePrefix: 'validator',
       },
       scripts: {
         umamiAnalytics: {
@@ -115,8 +122,20 @@ export default defineNuxtConfig({
     '#config/*': fileURLToPath(new URL('./shared/config', import.meta.url)),
   },
 
+  router: {
+    options: {
+      scrollBehaviorType: 'smooth',
+    },
+  },
+
   routeRules: {
     '/': { prerender: true },
+    '/analytics': {
+      redirect: {
+        to: import.meta.env.ANALYTICS_SHARE_LINK,
+        statusCode: 301,
+      },
+    },
   },
 
   components: [
@@ -152,9 +171,5 @@ export default defineNuxtConfig({
     },
   },
 
-  svgo: {
-    autoImportPath: './assets/svg/',
-    defaultImport: 'component',
-    customComponent: 'ISVG',
-  },
+  
 });

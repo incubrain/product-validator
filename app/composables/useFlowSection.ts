@@ -1,33 +1,15 @@
-import { flowConfig } from '#shared/config/overview';
-import type { FlowConfig, OfferID } from '#shared/config/overview';
+// {CONFIG}:1 remove 'examples/validator/' from import
+import { flowConfig } from '#shared/config/examples/validator/1.flow';
 
-export function useFlowSection<K extends keyof FlowConfig>(key: K) {
+// app/composables/useFlowSection.ts
+export function useFlowSection<K extends keyof FlowConfig>(
+  key: K,
+): FlowConfig[K] {
   return flowConfig[key];
 }
 
+// Update offer composable for new structure
 export function useFlowOffer(offerId: OfferID) {
-  const offers = useFlowSection('offers');
-  return computed(() => offers?.items.find((offer) => offer.id === offerId));
-}
-
-// Add to useFlowSection.ts
-export function useProfileData(activeProfileId: Ref<string>) {
-  const hypothesis = useFlowSection('hypothesis');
-
-  const selectedProfile = computed(
-    () =>
-      hypothesis?.customerProfiles?.find(
-        (p) => p.id === activeProfileId.value,
-      ) ||
-      hypothesis?.customerProfiles?.find((p) => p.primary) ||
-      hypothesis?.customerProfiles?.[0],
-  );
-
-  // ONLY return what's actually reactive
-  const profilePains = computed(() => selectedProfile.value?.pains || []);
-
-  return {
-    selectedProfile,
-    profilePains,
-  };
+  const offer = useFlowSection('offer'); // This now returns the array directly
+  return computed(() => offer?.items.find((offer) => offer.id === offerId));
 }

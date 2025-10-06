@@ -1,15 +1,15 @@
 // composables/useDevTools.ts
-const STORAGE_PREFIX = 'validator';
 
 export const useDevTools = () => {
   const toast = useToast();
+  const storagePrefix = useRuntimeConfig().public.validator.storagePrefix
 
   const getStorageSnapshot = () => {
     const localStorage_items = Object.keys(localStorage)
       .filter(
         (key) =>
-          key.startsWith(STORAGE_PREFIX) ||
-          key.startsWith(`banner-${STORAGE_PREFIX}`),
+          key.startsWith(storagePrefix) ||
+          key.startsWith(`banner-${storagePrefix}`),
       )
       .reduce((acc, key) => {
         acc[key] = localStorage.getItem(key);
@@ -19,8 +19,8 @@ export const useDevTools = () => {
     const sessionStorage_items = Object.keys(sessionStorage)
       .filter(
         (key) =>
-          key.startsWith(STORAGE_PREFIX) ||
-          key.startsWith(`banner-${STORAGE_PREFIX}`),
+          key.startsWith(storagePrefix) ||
+          key.startsWith(`banner-${storagePrefix}`),
       )
       .reduce((acc, key) => {
         acc[key] = sessionStorage.getItem(key);

@@ -2,7 +2,7 @@
 import { LazyIExitIntentModal } from '#components';
 
 export default defineNuxtPlugin(() => {
-  const STORAGE_PREFIX = 'validator';
+  const storagePrefix = useRuntimeConfig().public.validator.storagePrefix
 
   // Only run on client
   if (typeof window === 'undefined') return;
@@ -18,7 +18,7 @@ export default defineNuxtPlugin(() => {
     const { trackEvent } = useAction();
     const overlay = useOverlay();
     const isShowing = ref(false);
-    const storageKey = `${STORAGE_PREFIX}_exit_intent_triggered`;
+    const storageKey = `${storagePrefix}_exit_intent_triggered`;
 
     const { hasInteracted, interactionTime, setup, cleanup } =
       useUserInteraction({
@@ -45,7 +45,7 @@ export default defineNuxtPlugin(() => {
 
         isShowing.value = true;
         const result = await exitModal.open({
-          offer: 'social',
+          offerId: 'direct', // {EXTRACT}
         });
         isShowing.value = false;
         return result;
