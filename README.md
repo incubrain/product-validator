@@ -11,7 +11,7 @@ widely, and learn from analytics without vendor lock-in.
 ## 🌐 Live Demo
 
 See the live showcase:
-[https://product-validator.incubrain.org](https://product-validator.incubrain.org)
+[product-validator](https://product-validator.incubrain.org)
 
 ---
 
@@ -65,20 +65,23 @@ pnpm install
 pnpm dev
 ```
 
-⸻
+---
 
 🎓 Course (Pre-launch Offer)
 
-Get the full Template Setup + Product Validator bundle: • Configure and deploy
-the template • Learn messaging + social-first distribution • Understand what
-signal to look for before you invest more
+- Get the full Template Setup + Product Validator bundle:
+- Configure and deploy the template
+- Learn messaging + social-first distribution
+- Understand what signal to look for before you invest more
 
 👉 Available now on Whop 🎟 $50 early-bird (50 spots only) — price increases
 after.
 
-⸻
+---
 
 🛠 Development
+
+
 
 ```bash
 # Development server
@@ -91,14 +94,39 @@ pnpm build
 pnpm preview
 ```
 
-⸻
+## 🔎 Searchable Tags
+
+Use inline tags (`// {TAG}: ...`) to make the template easier to configure and maintain.  
+Search with Cmd+Shift+F '{CONFIG}:' to identify exactly what you need to update.
+
+### Tags
+- **{CONFIG}** → Things the user must update when cloning.  
+- **{TASK}** → Work that still needs doing.  
+- **{DOC}** → Areas needing documentation.  
+- **{DECISION}** → Why something was implemented this way.  
+- **{DX}** → Developer experience tips.  
+- **{FRICTION}** → Things causing friction for developer setup or customer conversion  
+
+### Example
+```js
+// {CONFIG}: Replace with your API key
+// {TASK}: Add unit test for validation
+// {DOC}: Explain color token mapping
+// {DECISION}: Using Nitro gateway instead of direct DB
+// {DX}: use this keyboard shortcut to do this thing
+// {FRICTION}: This file needs to be deleted before going live
+```
+
+---
 
 📄 License
 
 MIT License.
 
-⸻
+---
 
-Notes • This is a validation-first kit, not a full CMS/blog boilerplate •
-Components and APIs will evolve as we iterate • Focus: Clone · Configure ·
-Validate — in days
+Notes
+
+- This is a validation-first kit, not a full CMS/blog boilerplate
+- Components and APIs will evolve as we iterate
+- Focus: Clone · Configure · Validate — in days

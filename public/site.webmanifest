@@ -1,6 +1,6 @@
 {
-  "name": "Incubrain",
-  "short_name": "IBrain",
+  "name": "Product Validator",
+  "short_name": "Validator",
   "icons": [
     {
       "src": "/web-app-manifest-192x192.png",

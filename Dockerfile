@@ -1,3 +1,4 @@
+# {FRICTION}: this will probably have to be deleted by most template users, can it be extracted?
 FROM node:20.19-bookworm
 
 RUN corepack enable && corepack prepare pnpm@9.15.2 --activate

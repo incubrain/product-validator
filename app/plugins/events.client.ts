@@ -52,7 +52,6 @@ function sendToAnalytics(payload: EventPayload, analyticsProxy: any) {
     case 'action_click':
       // Track conversions for paid actions
       if (payload.id.includes('paid') || payload.id.includes('purchase')) {
-        console.log('sendToAnalytics trackAttempt');
         analyticsProxy.track('conversion', {
           ...eventData,
           offer_type: 'paid',
@@ -74,7 +73,8 @@ function sendToAnalytics(payload: EventPayload, analyticsProxy: any) {
   }
 }
 
-// Dev mocking of analytics is handled in nuxt.config
+// {DECISION}: Dev mocking of analytics is handled in nuxt.config
+// {CONFIG}: remove consoleLogger after analytics connected and tested
 eventHandlers.set('action_click', [consoleLogger, analyticsHandler]);
 eventHandlers.set('action_view', [consoleLogger, analyticsHandler]);
 eventHandlers.set('exit_intent', [consoleLogger, analyticsHandler]);
