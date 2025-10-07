@@ -34,9 +34,6 @@ export default defineNuxtConfig({
     // Dev-specific Nitro config
     nitro: {
       debug: true,
-      prerender: {
-        ignore: ['/analytics'],
-      },
     },
 
     // TypeScript checking in dev
@@ -87,7 +84,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       analyticsLink: '',
-
+      configSource: '',
       validator: {
         storagePrefix: 'validator',
       },

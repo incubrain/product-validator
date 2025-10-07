@@ -1,6 +1,6 @@
 <!-- app/components/section/Problem.vue -->
 <script setup lang="ts">
-const data = useFlowSection('problem');
+const data = await useFlowSection('problem');
 
 const profile = computed(() => data?.customerProfile);
 </script>

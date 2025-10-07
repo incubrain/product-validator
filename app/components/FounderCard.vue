@@ -5,7 +5,7 @@ defineProps<{
 }>();
 
 // Get founder data from overview.ts
-const founder = useFlowSection('founder');
+const founder = await useFlowSection('founder');
 
 // Computed properties
 //  {EXTRACT}

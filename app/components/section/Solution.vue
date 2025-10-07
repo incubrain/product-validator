@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const data = useFlowSection('solution');
+const data = await useFlowSection('solution');
 </script>
 
 <template>
@@ -17,10 +17,7 @@ const data = useFlowSection('solution');
     </UPageGrid>
 
     <!-- Separator -->
-    <ISeparator
-      v-if="data.separators?.[0]"
-      v-bind="data.separators[0]"
-    />
+    <ISeparator v-if="data.separators?.[0]" v-bind="data.separators[0]" />
 
     <!-- Alternatives Grid -->
     <UPageGrid v-if="data?.alternatives?.length" class="lg:grid-cols-3">

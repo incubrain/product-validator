@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const data = useFlowSection('results');
+const data = await useFlowSection('results');
 
 const caseStudies = computed(() => data?.caseStudies ?? []);
 const testimonials = computed(() => data?.testimonials ?? []);
@@ -152,10 +152,7 @@ const formattedTestimonials = computed(() =>
     </div>
 
     <!-- Testimonials -->
-    <ISeparator
-      v-if="data.separators?.[1]"
-      v-bind="data.separators[1]"
-    />
+    <ISeparator v-if="data.separators?.[1]" v-bind="data.separators[1]" />
 
     <div v-if="formattedTestimonials.length">
       <UPageColumns>

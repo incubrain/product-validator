@@ -16,7 +16,15 @@ const props = withDefaults(defineProps<Props>(), {
 </script>
 
 <template>
-  <UPageSection v-bind="intro" :orientation="orientation" :class="props.class">
+  <UPageSection
+    v-bind="intro"
+    :orientation="orientation"
+    :class="props.class"
+    :ui="{
+      title:
+        'text-3xl sm:text-4xl lg:text-5xl text-pretty tracking-tight leading-snug font-bold text-highlighted',
+    }"
+  >
     <template #top>
       <INavAnchor :id="id" />
     </template>

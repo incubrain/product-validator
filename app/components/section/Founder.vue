@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const data = useFlowSection('founder');
+const data = await useFlowSection('founder');
 
 const story = data.story;
 const me = data.me;
@@ -59,13 +59,14 @@ const me = data.me;
       <p v-for="(para, i) in story.background" :key="i" class="text-center">
         {{ para }}
       </p>
-      <p class="text-center text-lg md:text-xl font-written font-semibold text-primary leading-relaxed">
+      <p
+        class="text-center text-lg md:text-xl font-written font-semibold text-primary leading-relaxed"
+      >
         {{ story.challenge }}
       </p>
     </div>
 
     <!-- FOOTER: Challenge -->
-    <div v-if="story?.challenge" class="max-w-3xl mx-auto text-center">
-    </div>
+    <div v-if="story?.challenge" class="max-w-3xl mx-auto text-center"></div>
   </ISectionWrapper>
 </template>

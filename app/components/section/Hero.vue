@@ -1,7 +1,7 @@
 <script setup lang="ts">
 // Updated data access
-const data = useFlowSection('solution');
-const hero = useFlowSection('hero');
+const data = await useFlowSection('solution');
+const hero = await useFlowSection('hero');
 
 // Tech affiliations from solution data
 const affiliations = computed(() => data?.credibility?.affiliations ?? []);
@@ -71,7 +71,7 @@ const affiliations = computed(() => data?.credibility?.affiliations ?? []);
         <IVideo
           v-if="hero.media.type === 'video'"
           :src="hero.media.src"
-          poster="/images/demo/demo-1.jpg" 
+          :poster="hero.media.poster"
           :autoplay="true"
           :muted="true"
           :loop="true"
@@ -94,7 +94,7 @@ const affiliations = computed(() => data?.credibility?.affiliations ?? []);
         color="info"
         class="whitespace-nowrap px-3 flex-shrink-0 hidden lg:flex"
       >
-      <!-- {EXTRACT} -->
+        <!-- {EXTRACT} -->
         Powered By
       </UBadge>
       <UMarquee
