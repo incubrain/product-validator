@@ -49,6 +49,17 @@ const copyrightYear = computed(() =>
         </p>
 
         <div class="flex items-center gap-3">
+          <UButton
+            v-if="$config.public.analyticsLink"
+            :to="$config.public.analyticsLink"
+            external
+            target="_blank"
+            icon="i-lucide-bar-chart-3"
+            variant="ghost"
+            size="sm"
+            color="neutral"
+            aria-label="View Analytics Dashboard"
+          />
           <IButton offer="direct" location="footer" />
         </div>
       </UContainer>

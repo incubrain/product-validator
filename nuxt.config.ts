@@ -34,6 +34,9 @@ export default defineNuxtConfig({
     // Dev-specific Nitro config
     nitro: {
       debug: true,
+      prerender: {
+        ignore: ['/analytics'],
+      },
     },
 
     // TypeScript checking in dev
@@ -83,6 +86,8 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
+      analyticsLink: '',
+
       validator: {
         storagePrefix: 'validator',
       },
@@ -130,12 +135,6 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/': { prerender: true },
-    '/analytics': {
-      redirect: {
-        to: import.meta.env.ANALYTICS_SHARE_LINK,
-        statusCode: 301,
-      },
-    },
   },
 
   components: [
@@ -170,6 +169,4 @@ export default defineNuxtConfig({
       'search': 'i-lucide-search',
     },
   },
-
-  
 });
