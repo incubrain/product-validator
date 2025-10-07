@@ -2,11 +2,11 @@
 import type { NavigationMenuItem } from '@nuxt/ui';
 
 export interface NavigationConfig {
-  mainNavigation: NavigationMenuItem[];
+  main: NavigationMenuItem[];
 }
 
-export const navigationConfig: NavigationConfig = {
-  mainNavigation: [
+export const NAVIGATION: NavigationConfig = {
+  main: [
     {
       label: 'Updates',
       to: '/updates',
@@ -14,6 +14,18 @@ export const navigationConfig: NavigationConfig = {
     },
   ],
 } as const;
+
+export const CONVERSION = {
+  stage: 'validation',
+  primary: 'magnet',
+  secondary: 'direct',
+  banner: {
+    sticky: true,
+  },
+  navbar: {
+    sticky: true,
+  },
+};
 
 // Layout configuration for sticky offset calculation
 export const LAYOUT_CONFIG = {
@@ -32,24 +44,4 @@ export const LAYOUT_CONFIG = {
   },
 } as const;
 
-export const getStickyOffset = (withOffset = true) => {
-  const banner =
-    LAYOUT_CONFIG.banner.enabled && LAYOUT_CONFIG.banner.sticky
-      ? `${LAYOUT_CONFIG.banner.height}+`
-      : '';
-
-  const navbar =
-    LAYOUT_CONFIG.navbar.enabled && LAYOUT_CONFIG.navbar.sticky
-      ? `${LAYOUT_CONFIG.navbar.height}+`
-      : '';
-
-  if (!withOffset) {
-    return `calc(${banner}${navbar})`;
-  }
-
-  return `calc(${banner}${navbar}${LAYOUT_CONFIG.anchor.offset})`;
-};
-
-export const getMainNavigation = () => navigationConfig.mainNavigation;
-
-export default navigationConfig;
+export default NAVIGATION;

@@ -1,19 +1,23 @@
 // plugins/exit-intent.client.ts
-import { LazyIExitIntentModal } from '#components';
+import { LazyIModalFullscreen } from '#components';
+import { CONVERSION } from '~~/shared/config/navigation';
 
 export default defineNuxtPlugin(() => {
-  const storagePrefix = useRuntimeConfig().public.validator.storagePrefix
+  const storagePrefix = useRuntimeConfig().public.validator.storagePrefix;
 
   // Only run on client
   if (typeof window === 'undefined') return;
 
   const createExitIntent = (
     options: {
+      offerId: OfferID;
       cooldownDays?: number;
       disabled?: boolean;
       minTimeOnPage?: number;
       requireInteraction?: boolean;
-    } = {},
+    } = {
+      offerId: 'magnet',
+    },
   ) => {
     const { trackEvent } = useAction();
     const overlay = useOverlay();
@@ -29,7 +33,7 @@ export default defineNuxtPlugin(() => {
     // Manual setup since we're in plugin context
     setup();
 
-    const exitModal = overlay.create(LazyIExitIntentModal);
+    const exitModal = overlay.create(LazyIModalFullscreen);
 
     const openModal = async (source: 'natural' | 'direct' = 'natural') => {
       if (!exitModal || isShowing.value) return;
@@ -45,7 +49,8 @@ export default defineNuxtPlugin(() => {
 
         isShowing.value = true;
         const result = await exitModal.open({
-          offerId: 'direct', // {EXTRACT}
+          offerId: options.offerId,
+          location: 'exit-intent',
         });
         isShowing.value = false;
         return result;
@@ -104,6 +109,7 @@ export default defineNuxtPlugin(() => {
   };
 
   const exitIntent = createExitIntent({
+    offerId: CONVERSION.secondary,
     cooldownDays: 7,
     disabled: false,
     minTimeOnPage: 10,

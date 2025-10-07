@@ -6,13 +6,18 @@ import type { ButtonProps } from '@nuxt/ui';
 // ============================================================================
 
 export type Cta = {
-  label: string;
   to: ButtonProps['to'];
-  note?: string;
   icon?: string;
   color?: ButtonProps['color'];
   variant?: ButtonProps['variant'];
+
+  label: string;
+  note?: string;
+
+  modal?: 'window' | 'fullscreen';
+
   formId?: string;
+  captureEmail?: boolean;
   disabled?: boolean;
 };
 
@@ -78,12 +83,6 @@ export type HeroMedia = {
   src: string;
   alt: string;
   poster?: string;
-};
-
-export type HeroConfig = {
-  badge: HeroBadge;
-  intro: HeroIntro;
-  media: HeroMedia;
 };
 
 // ============================================================================
@@ -232,7 +231,7 @@ export type FounderAccessibility = {
 // OFFER SECTION (6.offer.ts)
 // ============================================================================
 
-export type OfferID = 'magnet' | 'low' | 'medium' | 'high' | 'direct';
+export type OfferID = 'magnet' | 'direct' | 'low' | 'medium' | 'high';
 
 export type OfferBenefit = {
   text: string;
@@ -246,10 +245,17 @@ export type OfferPrice = {
   recurrence: 'never' | 'hour' | 'month' | 'year';
 };
 
+export type OfferStockType =
+  | 'spots' // Course/program enrollment spots
+  | 'hours' // Service hours available
+  | 'units' // Physical/digital product units
+  | 'licenses' // Software licenses
+  | 'seats'; // Subscription seats
+
 export type OfferStock = {
   limit: number;
   claimed: number;
-  type?: 'units' | 'hours' | 'spots';
+  type?: OfferStockType;
 };
 
 export type OfferUpsell = {
@@ -323,7 +329,6 @@ export type CaseStudy = {
 
 export type SocialProofItem = Testimonial | CaseStudy;
 
-
 // ============================================================================
 // CONCERNS SECTION (8.concerns.ts)
 // ============================================================================
@@ -337,75 +342,49 @@ export type FaqItem = {
 };
 
 // ============================================================================
-// FLOW CONFIG (0.flow.ts)
-// ============================================================================
-
-export type ProblemData = {
-  statement: string;
-  solution: {
-    claim: string;
-    pitch: string;
-    promise: string;
-  };
-  customerProfile: CustomerProfile;
-};
-
-export type SolutionData = {
-  outcomes: Outcome[];
-  alternatives: Alternative[];
-  credibility?: {
-    affiliations: Affiliation[];
-  };
-};
-
-export type ProcessData = {
-  features: ProcessFeature[];
-  flow: ProcessStep[];
-};
-
-export type FounderData = {
-  me: FounderProfile;
-  business: BusinessInfo;
-  story: FounderStory;
-  accessibility: FounderAccessibility;
-};
-
-export type OfferData = {
-  items: Offer[];
-};
-
-export type ResultsData = {
-  testimonials: Testimonial[];
-  caseStudies: CaseStudy[];
-};
-
-export type ConcernsData = {
-  items: FaqItem[];
-};
-
-// ============================================================================
-// COMPLETE SECTION TYPES (Data + Base)
-// ============================================================================
-
-export type ProblemSection = SectionBase & ProblemData;
-export type SolutionSection = SectionBase & SolutionData;
-export type ProcessSection = SectionBase & ProcessData;
-export type FounderSection = SectionBase & FounderData;
-export type OfferSection = SectionBase & OfferData;
-export type ResultsSection = SectionBase & ResultsData;
-export type ConcernsSection = SectionBase & ConcernsData;
-
-// ============================================================================
 // FLOW CONFIG
 // ============================================================================
 
 export type FlowConfig = {
-  hero: HeroConfig;
-  problem: ProblemSection;
-  solution: SolutionSection;
-  process: ProcessSection;
-  founder: FounderSection;
-  offer: OfferSection;
-  results: ResultsSection;
-  concerns: ConcernsSection;
+  hero: {
+    badge: HeroBadge;
+    intro: HeroIntro;
+    media?: HeroMedia;
+  };
+  problem: SectionBase & {
+    statement: string;
+    solution: {
+      claim: string;
+      pitch: string;
+      promise: string;
+    };
+    customerProfile: CustomerProfile;
+  };
+  solution: SectionBase & {
+    outcomes: Outcome[];
+    alternatives: Alternative[];
+    credibility?: {
+      affiliations: Affiliation[];
+    };
+  };
+  process: SectionBase & {
+    features: ProcessFeature[];
+    flow: ProcessStep[];
+  };
+  founder: SectionBase & {
+    me: FounderProfile;
+    business: BusinessInfo;
+    story: FounderStory;
+    accessibility: FounderAccessibility;
+  };
+  offer: SectionBase & {
+    items: Offer[];
+  };
+  results: SectionBase & {
+    testimonials: Testimonial[];
+    caseStudies: CaseStudy[];
+  };
+  concerns: SectionBase & {
+    items: FaqItem[];
+  };
 };

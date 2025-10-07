@@ -3,7 +3,7 @@ export const offer = [
   {
     id: 'magnet',
     primary: true,
-    name: 'Validation Starter Pack',
+    name: 'Validation Launch Kit',
     description:
       '4-step guided process: deploy now, discover your value, create irresistible offers, configure with purpose',
     price: null,
@@ -46,12 +46,11 @@ export const offer = [
     ],
     cta: {
       label: 'Get Launch Pack',
-      to: '#offer', // Or FillOutForm embed ID
       icon: 'i-lucide-rocket',
-      variant: 'solid',
+      modal: 'window',
+      captureEmail: true,
       formId: 'aYZbzo6xQ5us',
-      color: 'primary',
-      note: 'Email required for step-by-step delivery',
+      note: 'Email required for delivery',
     },
     upsells: [
       {
@@ -122,8 +121,9 @@ export const offer = [
   },
   {
     id: 'direct',
-    name: 'Hire Me to Build with This Template',
-    description: "I'll personally guide your through product ideation, creation, and validation",
+    name: 'Hire me directly',
+    description:
+      "I'll guide you through the validation process",
     price: {
       current: '$27',
       future: '$50',
@@ -134,6 +134,32 @@ export const offer = [
       claimed: 10,
       type: 'hours',
     },
+    benefits: [
+      {
+        text: 'Accountability & execution rhythm (weekly check-ins, task plan)',
+        status: 'available',
+      },
+      {
+        text: 'Mentorship to clarify product from strengths & life experience',
+        status: 'available',
+      },
+      {
+        text: 'Product ideation & irresistible-offer packaging',
+        status: 'available',
+      },
+      {
+        text: 'Hands-on development support or fully managed',
+        status: 'available',
+      },
+      {
+        text: 'Validation strategy & daily guerrilla marketing playbook',
+        status: 'available',
+      },
+      {
+        text: 'Copywriting & messaging review for clarity and conversion',
+        status: 'available',
+      },
+    ],
     cta: {
       label: 'Hire me',
       to: 'https://www.upwork.com/freelancers/~01b4c32258ac48835f?mp_source=share',
@@ -143,4 +169,4 @@ export const offer = [
       note: 'Direct-hire via Upwork',
     },
   },
-] satisfies OfferSection;
+] satisfies Offer[];

@@ -1,13 +1,11 @@
 <!-- app/components/i/nav/Header.vue -->
 <script setup lang="ts">
-import { getMainNavigation } from '#shared/config/navigation';
+import { NAVIGATION, CONVERSION } from '#shared/config/navigation';
 
 const props = defineProps<{
   class?: string;
   sticky?: boolean;
 }>();
-
-const navigationItems = getMainNavigation();
 
 // Dynamic classes for sticky positioning
 const headerClasses = computed(() => ({
@@ -25,21 +23,22 @@ const headerClasses = computed(() => ({
 
     <UNavigationMenu
       class="flex flex-grow mx-auto max-w-xl justify-center items-center"
-      :items="navigationItems"
+      :items="NAVIGATION.main"
       color="neutral"
       content-orientation="horizontal"
     />
 
     <template #right>
-      <IButton
-        offer="magnet"
+      <IButtonCTA
+        :offer-id="CONVERSION.primary"
         location="header"
+        anchor
         class="hidden md:inline-flex text-toned font-black"
       />
     </template>
 
     <template #body>
-      <INavMobile :navigation-items="navigationItems" />
+      <INavMobile :navigation-items="NAVIGATION.main" />
     </template>
   </UHeader>
 </template>

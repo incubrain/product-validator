@@ -6,7 +6,7 @@ const props = defineProps<{
   sticky?: boolean;
 }>();
 
-const offer = useFlowOffer(props.offer);
+const offer = await useFlowOffer(props.offer);
 
 const bannerClasses = computed(() => ({
   'sticky top-0 z-50': props.sticky,

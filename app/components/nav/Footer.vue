@@ -1,6 +1,8 @@
 <!-- components/nav/Footer.vue -->
 <script setup lang="ts">
-const founder = useFlowSection('founder');
+import { CONVERSION } from '#shared/config/navigation';
+
+const founder = await useFlowSection('founder');
 const currentYear = new Date().getFullYear();
 
 const copyrightYear = computed(() =>
@@ -60,7 +62,7 @@ const copyrightYear = computed(() =>
             color="neutral"
             aria-label="View Analytics Dashboard"
           />
-          <IButton offer="direct" location="footer" />
+          <IButtonCTA :offer-id="CONVERSION.secondary" location="footer" />
         </div>
       </UContainer>
     </template>
