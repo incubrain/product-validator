@@ -1,10 +1,10 @@
 <script setup lang="ts">
 // Updated data access
-const data = await useFlowSection('solution');
-const hero = await useFlowSection('hero');
+const hero = useFlowSection('hero');
+const data = useFlowSection('solution');
 
 // Tech affiliations from solution data
-const affiliations = computed(() => data?.credibility?.affiliations ?? []);
+const affiliations = computed(() => data?.affiliations ?? []);
 </script>
 
 <template>

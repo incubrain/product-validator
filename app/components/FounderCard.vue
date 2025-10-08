@@ -5,7 +5,7 @@ defineProps<{
 }>();
 
 // Get founder data from overview.ts
-const founder = await useFlowSection('founder');
+const founder = useFlowSection('founder');
 
 // Computed properties
 //  {EXTRACT}
@@ -51,7 +51,7 @@ const socialLinks = computed(
 
     <!-- Body: short bio message -->
     <p class="text-sm text-toned text-left lg:text-right">
-      {{ founder.story.mission.hook }}
+      {{ founder.story.mission }}
     </p>
 
     <!-- Footer: social links -->

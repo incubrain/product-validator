@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const data = await useFlowSection('founder');
+const data = useFlowSection('founder');
 
 const story = data.story;
 const me = data.me;

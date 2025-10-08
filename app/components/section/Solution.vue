@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const data = await useFlowSection('solution');
+const data = useFlowSection('solution');
 </script>
 
 <template>
@@ -41,7 +41,7 @@ const data = await useFlowSection('solution');
             <!-- {EXTRACT} -->
             <p><strong>Problem:</strong> {{ alt.problem }}</p>
             <p><strong>Cost:</strong> {{ alt.cost }}</p>
-            <p class="italic text-error font-medium">{{ alt.why_fails }}</p>
+            <p class="font-bold">{{ alt.why_fails }}</p>
           </div>
         </template>
 

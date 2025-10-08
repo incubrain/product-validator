@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { CONVERSION } from '#shared/config/navigation';
 
-const founder = await useFlowSection('founder');
+const founder = useFlowSection('founder');
 const currentYear = new Date().getFullYear();
 
 const copyrightYear = computed(() =>

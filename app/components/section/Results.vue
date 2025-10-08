@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const data = await useFlowSection('results');
+const data = useFlowSection('results');
 
 const caseStudies = computed(() => data?.caseStudies ?? []);
 const testimonials = computed(() => data?.testimonials ?? []);

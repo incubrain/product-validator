@@ -3,7 +3,7 @@ import type { AccordionItem } from '@nuxt/ui';
 
 type FAQType = 'warning' | 'objection' | 'support' | 'general';
 
-const concernsData = await useFlowSection('concerns');
+const concernsData = useFlowSection('concerns');
 
 // Priority order
 // {EXTRACT}

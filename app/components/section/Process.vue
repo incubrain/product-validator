@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { StepperItem } from '@nuxt/ui';
 
-const data = await useFlowSection('process');
+const data = useFlowSection('process');
 
 // Transform process flow data for stepper
 const stepperItems = computed(

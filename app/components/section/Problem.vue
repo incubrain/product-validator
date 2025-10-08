@@ -1,6 +1,6 @@
 <!-- app/components/section/Problem.vue -->
 <script setup lang="ts">
-const data = await useFlowSection('problem');
+const data = useFlowSection('problem');
 
 const profile = computed(() => data?.customerProfile);
 </script>
@@ -15,7 +15,7 @@ const profile = computed(() => data?.customerProfile);
     <!-- Two-column layout: Profile + Pains -->
     <div class="grid lg:grid-cols-2 gap-8 items-start">
       <!-- LEFT: Customer Profile Identity -->
-      <UCard variant="ghost" class="lg:sticky lg:top-24">
+      <UPageCard variant="naked" class="lg:sticky lg:top-24 px-4">
         <template #header>
           <div class="flex items-center gap-2">
             <UIcon name="i-lucide-target" class="size-5 text-primary" />
@@ -24,7 +24,7 @@ const profile = computed(() => data?.customerProfile);
         </template>
 
         <div class="space-y-4">
-          <p class="text-muted leading-relaxed">
+          <p class="text-dimmed leading-relaxed">
             {{ profile?.description }}
           </p>
 
@@ -33,7 +33,7 @@ const profile = computed(() => data?.customerProfile);
             <UBadge
               v-for="(value, key) in profile?.context"
               :key="key"
-              size="sm"
+              size="md"
               variant="soft"
               color="neutral"
             >
@@ -41,22 +41,22 @@ const profile = computed(() => data?.customerProfile);
             </UBadge>
           </div>
         </div>
-      </UCard>
+      </UPageCard>
 
       <!-- RIGHT: Pain Points -->
-      <div class="space-y-4 lg:space-y-12">
-        <div class="flex items-center gap-3 mb-6">
+      <div class="space-y-8">
+        <div class="flex items-center gap-3">
           <UIcon name="i-lucide-alert-triangle" class="size-6 text-error" />
           <!-- {EXTRACT} -->
-          <h3 class="text-xl font-semibold">Identify Your Blockers</h3>
+          <h3 class="text-xl font-bold">Identify Your Blockers</h3>
         </div>
 
         <div
           v-for="(pain, index) in profile?.pains"
           :key="pain.label"
-          class="p-5 border-b-4 border-error/20 space-y-2"
+          class="border-b-4 border-error/20 space-y-2 pb-8"
         >
-          <div class="flex items-start justify-between gap-3">
+          <div class="flex items-start justify-between gap-3 pb-2">
             <h4 class="font-semibold text-base">{{ pain.label }}</h4>
             <UBadge
               :label="`#${index + 1}`"
@@ -66,16 +66,19 @@ const profile = computed(() => data?.customerProfile);
             />
           </div>
 
-          <p class="text-sm text-muted">
-            <strong>Impact:</strong> {{ pain.impact }}
+          <p class="text-sm text-dimmed">
+            <UBadge color="warning" variant="soft">IMPACT</UBadge>
+            {{ pain.impact }}
           </p>
 
-          <p class="text-sm text-error">
-            <strong>Cost:</strong> {{ pain.cost }}
+          <p class="text-sm text-dimmed">
+            <UBadge color="error" variant="soft">COST</UBadge>
+            {{ pain.cost }}
           </p>
 
-          <p class="text-sm text-success">
-            <strong>Reality:</strong> {{ pain.reality }}
+          <p class="text-sm">
+            <UBadge color="success" variant="soft">REALITY</UBadge>
+            {{ pain.reality }}
           </p>
         </div>
       </div>

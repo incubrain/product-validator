@@ -39,9 +39,9 @@ const label = computed(() => {
 
 // Urgency color based on availability
 const urgencyColor = computed(() => {
-  if (percent.value >= 90) return 'error';
-  if (percent.value >= 70) return 'warning';
-  return 'success';
+  if (percent.value >= 70) return 'error';
+  if (percent.value >= 50) return 'warning';
+  return 'info';
 });
 </script>
 
@@ -49,7 +49,6 @@ const urgencyColor = computed(() => {
   <div :class="['space-y-3 w-full', props.class]">
     <UProgress :model-value="percent" :color="urgencyColor" size="xl" />
     <div class="flex justify-between items-center text-xs">
-      <span class="font-medium text-dimmed"> {{ percent }}% claimed </span>
       <span class="text-muted">
         {{ label }}
       </span>
