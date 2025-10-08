@@ -21,13 +21,25 @@ export const flow = [
         task: '⚠️ Specific action to take',
         estimated_time: '⚠️ Time estimate',
       },
+      {
+        task: '⚠️ Specific action to take',
+        estimated_time: '⚠️ Time estimate',
+      },
+      {
+        task: '⚠️ Specific action to take',
+        estimated_time: '⚠️ Time estimate',
+      },
     ],
 
     content: [
       {
-        type: 'video',
-        src: '/videos/step-1.mp4',
-        alt: '⚠️ Video description',
+        type: 'text',
+        value: `⚠️ **Start with a text block here.**:
+
+  - This can uses the MDC component so write in markdown
+  - Use this for an overview of each step
+  - Later you can change the 'type' property to image or video if it suites your usecase
+  `,
       },
     ],
   },

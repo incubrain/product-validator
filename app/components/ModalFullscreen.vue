@@ -7,7 +7,7 @@ interface Props {
 const props = defineProps<Props>();
 const emit = defineEmits<{ close: [] }>();
 
-const offer = await useFlowOffer(props.offerId);
+const offer = useFlowOffer(props.offerId);
 </script>
 
 <template>
@@ -24,7 +24,7 @@ const offer = await useFlowOffer(props.offerId);
     <template #body>
       <div class="max-w-lg space-y-6">
         <div class="space-y-3">
-          <h2 class="text-3xl font-bold text-primary">{{ offer?.name }}</h2>
+          <h2 class="text-3xl font-bold text-primary">{{ offer?.title }}</h2>
           <p class="text-xl text-toned">{{ offer?.description }}</p>
         </div>
 
@@ -43,15 +43,15 @@ const offer = await useFlowOffer(props.offerId);
         </div>
 
         <!-- Features -->
-        <div v-if="offer?.benefits" class="bg-default/50 rounded-xl p-6">
+        <div v-if="offer?.features" class="bg-default/50 rounded-xl p-6">
           <ul class="text-left space-y-2 text-sm">
             <li
-              v-for="benefit in offer.benefits"
-              :key="benefit.text"
+              v-for="benefit in offer.features"
+              :key="benefit.title"
               class="flex items-center gap-2"
             >
               <UIcon name="i-lucide-check" class="text-success flex-shrink-0" />
-              <span class="text-toned font-medium">{{ benefit.text }}</span>
+              <span class="text-toned font-medium">{{ benefit.title }}</span>
             </li>
           </ul>
         </div>

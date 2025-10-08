@@ -9,20 +9,21 @@ import type {
 export const profile = {
   role: '⚠️ Your role or title',
   title: 'Sir/Dr.',
-  first: '⚠️ Your first name',
-  surname: '⚠️ Your last name',
+  given_name: '⚠️ Your given name',
+  surname: '⚠️ Your surname',
   avatar: {
-    src: '/images/avatar.png',
-    alt: '⚠️ Your name',
+    src: '/images/team/founder-avatar.jpeg',
+    alt: '⚠️ Replace image of my dog with your own',
   },
   portrait: {
-    src: '/images/portrait.png',
-    alt: '⚠️ Your name',
+    src: '/images/team/founder-portrait.jpeg',
+    alt: '⚠️ Same as above',
   },
-  videos: {
-    src: '/videos/founder-message.mp4',
-    alt: '⚠️ Video description',
-  },
+  // {OPTIMIZE}: If metrics indicate strong messaging, invest in founder story video
+  // videos: {
+  //   src: '/videos/founder-message.mp4',
+  //   alt: '⚠️ Video description',
+  // },
 } satisfies FounderProfile;
 
 export const business = {
@@ -30,6 +31,7 @@ export const business = {
   legal_name: '⚠️ Legal entity name',
   founding_year: 2024,
   location: '⚠️ City, Country',
+  logo: 'favicon-96x96.png',
 } satisfies BusinessInfo;
 
 export const story = {

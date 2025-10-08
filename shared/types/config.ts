@@ -177,11 +177,11 @@ export type ProcessStep = {
 export type FounderProfile = {
   role: string;
   title?: string;
-  first: string;
+  given_name: string;
   surname: string;
   avatar: Image;
   portrait?: Image;
-  videos?: {
+  video?: {
     src: string;
     alt: string;
   };
@@ -192,6 +192,7 @@ export type BusinessInfo = {
   legal_name: string;
   founding_year: number;
   location: string;
+  logo: string;
 };
 
 export type FounderStory = {

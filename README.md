@@ -65,6 +65,35 @@ pnpm install
 pnpm dev
 ```
 
+## 🔎 Searchable Tags
+
+Use inline tags (`// {TAG}: ...`) to make the template easier to configure and
+maintain.  
+Search with Cmd+Shift+F '{CONFIG}:' to identify exactly what you need to update.
+
+### Tags
+
+- **{CONFIG}** → Things the user must update when cloning.
+- **{TASK}** → Work that still needs doing.
+- **{OPTIMIZE}** → Things to consider after validation step
+- **{DOC}** → Areas needing documentation.
+- **{DECISION}** → Why something was implemented this way.
+- **{DX}** → Developer experience tips.
+- **{FRICTION}** → Things causing friction for developer setup or customer
+  conversion
+
+### Example
+
+```js
+// {CONFIG}: Replace with your API key
+// {TASK}: Add unit test for validation
+// {OPTIMIZE}: Consider adding optimized, scripted hero video, may boost your conversions
+// {DOC}: Explain color token mapping
+// {DECISION}: Using Nitro gateway instead of direct DB
+// {DX}: use this keyboard shortcut to do this thing
+// {FRICTION}: This file needs to be deleted before going live
+```
+
 ---
 
 🎓 Course (Pre-launch Offer)
@@ -81,8 +110,6 @@ after.
 
 🛠 Development
 
-
-
 ```bash
 # Development server
 pnpm dev
@@ -92,29 +119,6 @@ pnpm build
 
 # Preview production build
 pnpm preview
-```
-
-## 🔎 Searchable Tags
-
-Use inline tags (`// {TAG}: ...`) to make the template easier to configure and maintain.  
-Search with Cmd+Shift+F '{CONFIG}:' to identify exactly what you need to update.
-
-### Tags
-- **{CONFIG}** → Things the user must update when cloning.  
-- **{TASK}** → Work that still needs doing.  
-- **{DOC}** → Areas needing documentation.  
-- **{DECISION}** → Why something was implemented this way.  
-- **{DX}** → Developer experience tips.  
-- **{FRICTION}** → Things causing friction for developer setup or customer conversion  
-
-### Example
-```js
-// {CONFIG}: Replace with your API key
-// {TASK}: Add unit test for validation
-// {DOC}: Explain color token mapping
-// {DECISION}: Using Nitro gateway instead of direct DB
-// {DX}: use this keyboard shortcut to do this thing
-// {FRICTION}: This file needs to be deleted before going live
 ```
 
 ---

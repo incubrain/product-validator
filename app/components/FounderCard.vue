@@ -9,7 +9,7 @@ const founder = useFlowSection('founder');
 
 // Computed properties
 //  {EXTRACT}
-const displayName = computed(() => `Hi, I'm ${founder.profile.first}`);
+const displayName = computed(() => `Hi, I'm ${founder.profile.given_name}`);
 const description = computed(() => founder.profile.role);
 
 // Map links to proper format for UButton

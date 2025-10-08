@@ -4,7 +4,7 @@ const hero = useFlowSection('hero');
 const data = useFlowSection('solution');
 
 // Tech affiliations from solution data
-const affiliations = computed(() => data?.affiliations ?? {});
+const affiliations = computed(() => data?.affiliations);
 </script>
 
 <template>

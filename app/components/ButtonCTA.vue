@@ -16,7 +16,7 @@ const props = defineProps<Props>();
 
 const overlay = useOverlay();
 const { trackEvent } = useAction();
-const offer = await useFlowOffer(props.offerId);
+const offer = useFlowOffer(props.offerId);
 
 // Determine if this triggers a modal
 const isModal = computed(() => !!offer.value?.cta.modal);

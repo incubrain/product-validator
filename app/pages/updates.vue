@@ -7,6 +7,8 @@ interface Update {
   content: string;
 }
 
+const founder = useFlowSection('founder')
+
 useHead({
   title: 'Updates - Product Validator',
   meta: [
@@ -20,11 +22,8 @@ useHead({
 
 const authors = [
   {
-    name: 'Drew MacGibbon',
-    avatar: {
-      src: '/images/team/founder-avatar.png',
-      alt: 'Drew MacGibbon',
-    },
+    name: `${founder.profile.given_name} ${founder.profile.surname}`,
+    avatar: founder.profile.avatar,
     to: 'https://github.com/incubrain',
     target: '_blank',
   },

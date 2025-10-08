@@ -1,12 +1,11 @@
 <!-- Banner.vue - FIXED VERSION -->
 <script setup lang="ts">
-
 const props = defineProps<{
   offer: OfferID;
   sticky?: boolean;
 }>();
 
-const offer = await useFlowOffer(props.offer);
+const offer = useFlowOffer(props.offer);
 
 const bannerClasses = computed(() => ({
   'sticky top-0 z-50': props.sticky,
@@ -21,7 +20,7 @@ const bannerClasses = computed(() => ({
     :title="offer.description"
     :actions="[
       {
-        label: `${offer.cta.label} ${offer.price.current}/${offer.price.recurrence}`,
+        label: `${offer.cta.label} ${offer.price}/${offer.billingCycle}`,
         to: offer.cta.to,
         target: offer.cta.to?.startsWith('http') ? '_blank' : undefined,
         trailingIcon: offer.cta.icon,

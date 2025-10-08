@@ -7,7 +7,7 @@ interface Props {
 const props = defineProps<Props>();
 const emit = defineEmits<{ close: [result?: any] }>();
 
-const offer = await useFlowOffer(props.offerId);
+const offer = useFlowOffer(props.offerId);
 const email = ref('');
 
 // ✅ ADD: Modal open state
@@ -15,7 +15,7 @@ const isOpen = ref(true);
 
 const filloutParams = computed(() => ({
   offer_id: offer.value?.id,
-  offer_name: offer.value?.name,
+  offer_name: offer.value?.title,
   email: email.value,
 }));
 
@@ -37,7 +37,7 @@ watch(isOpen, (newValue) => {
 <template>
   <UModal
     v-model:open="isOpen"
-    :title="offer?.name"
+    :title="offer?.title"
     :description="offer?.description"
   >
     <template #body>

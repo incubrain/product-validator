@@ -6,27 +6,27 @@
  * - status-beta        → Blue flask (beta/testing)
  * - status-coming-soon → Orange clock (planned feature)
  */
+
 import type { Offer } from '#types';
 
 export const offers = [
   {
     id: 'magnet',
     primary: true,
-
+    variant: 'outline',
+    highlight: true,
     title: '⚠️ Lead Magnet Name',
     description: '⚠️ What they get for free',
-
     badge: {
       label: 'FREE',
       color: 'success',
       variant: 'solid',
       size: 'lg',
     },
-
     features: [
       {
         title: '⚠️ Benefit included in magnet',
-        icon: 'status-beta', // 🎯 Use alias
+        icon: 'status-beta',
       },
       {
         title: '⚠️ Another benefit',
@@ -37,10 +37,6 @@ export const offers = [
         icon: 'status-coming-soon',
       },
     ],
-
-    variant: 'outline',
-    highlight: true,
-
     cta: {
       label: '⚠️ Button text',
       to: undefined,
@@ -51,17 +47,14 @@ export const offers = [
       note: '⚠️ Small text below button',
     },
   },
-
   {
     id: 'direct',
-
+    variant: 'outline',
     title: '⚠️ Hire Me Directly',
     description: '⚠️ Your hourly service description',
-
     price: '$50',
     discount: '$100',
     billingCycle: '/hour',
-
     features: [
       {
         title: '⚠️ Service benefit 1',
@@ -76,15 +69,11 @@ export const offers = [
         icon: 'status-coming-soon',
       },
     ],
-
-    variant: 'outline',
-
     stock: {
       limit: 80,
       claimed: 0,
       type: 'hours',
     },
-
     cta: {
       label: '⚠️ Button text',
       to: 'https://your-booking-link.com',

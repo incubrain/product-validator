@@ -9,19 +9,15 @@ import type {
 export const profile = {
   role: 'Product Strategist & Builder',
   title: 'Sir/Dr.',
-  first: 'Drew',
+  given_name: 'Drew',
   surname: ' MacGibbon',
   avatar: {
-    src: '/images/team/founder-avatar.png',
+    src: '/examples/validator/images/team/founder-avatar.png',
     alt: 'avatar image of Drew MacGibbon',
   },
   portrait: {
-    src: '/images/team/founder-portrait.png',
+    src: '/examples/validator/images/team/founder-portrait.png',
     alt: 'portrait image of Drew MacGibbon',
-  },
-  videos: {
-    src: '/videos/founder-message.mp4',
-    alt: 'Video message from Drew MacGibbon',
   },
 } satisfies FounderProfile;
 
@@ -30,6 +26,7 @@ export const business = {
   legal_name: 'Incubrain Pvt. Ltd.',
   founding_year: 2023,
   location: 'Pune, India',
+  logo: 'favicon-96x96.png',
 } satisfies BusinessInfo;
 
 export const story = {
