@@ -4,13 +4,13 @@ const hero = useFlowSection('hero');
 const data = useFlowSection('solution');
 
 // Tech affiliations from solution data
-const affiliations = computed(() => data?.affiliations ?? []);
+const affiliations = computed(() => data?.affiliations ?? {});
 </script>
 
 <template>
   <UPageHero
     orientation="vertical"
-    class="bg-gradient-to-b from-default via-muted to-default text-white relative overflow-hidden"
+    class="bg-gradient-to-b from-default via-muted to-default text-white relative overflow-hidden min-h-screen"
     :ui="{
       wrapper: 'text-center',
       container:
@@ -88,27 +88,27 @@ const affiliations = computed(() => data?.affiliations ?? []);
     </div>
 
     <!-- Tech Stack Showcase -->
-    <div v-if="affiliations.length" class="flex relative overflow-hidden pt-4">
+    <div v-if="affiliations" class="flex relative overflow-hidden pt-4">
       <UBadge
         variant="subtle"
         color="info"
         class="whitespace-nowrap px-3 flex-shrink-0 hidden lg:flex"
       >
         <!-- {EXTRACT} -->
-        Powered By
+        {{ affiliations.label }}
       </UBadge>
       <UMarquee
         pause-on-hover
         overlay
         :repeat="2"
         :ui="{
-          root: 'group relative flex items-center overflow-hidden gap-(--gap) [--gap:--spacing(4)] [--duration:20s] max-w-full',
+          root: 'group relative flex items-center overflow-hidden gap-(--gap) [--gap:--spacing(4)] [--duration:20s] max-w-full w-full',
           content:
             'flex items-center shrink-0 justify-around gap-(--gap) min-w-max',
         }"
       >
         <div
-          v-for="affil in affiliations"
+          v-for="affil in affiliations.items"
           :key="affil.name"
           class="flex items-center gap-3 px-4 py-2 bg-default backdrop-blur-sm rounded-lg border border-white/10 shrink-0"
         >

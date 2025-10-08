@@ -2,7 +2,7 @@
 const data = useFlowSection('founder');
 
 const story = data.story;
-const me = data.me;
+const profile = data.profile;
 </script>
 
 <template>
@@ -19,10 +19,10 @@ const me = data.me;
           {{ story.greeting }}
         </p>
       </div>
-      <div v-if="me.portrait?.src" class="flex justify-center">
+      <div v-if="profile.portrait?.src" class="flex justify-center">
         <NuxtImg
-          :src="me.portrait.src"
-          :alt="me.portrait.alt"
+          :src="profile.portrait.src"
+          :alt="profile.portrait.alt"
           class="w-54 object-cover border-primary/20 shadow-xl rounded-lg"
         />
       </div>

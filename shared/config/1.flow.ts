@@ -1,19 +1,18 @@
-// shared/config/0.flow.ts
-// {FRICTION}: this has to be deleted, can it be extracted or does it provide value?
-import { problem } from './examples/validator/2.problem';
-import { solution } from './examples/validator/3.solution';
-import { process } from './examples/validator/4.process';
-import { founder } from './examples/validator/5.founder';
-import { offer } from './examples/validator/6.offer';
-import { results } from './examples/validator/7.results';
-import { concerns } from './examples/validator/8.concerns';
+// shared/config/1.flow.ts
+import type { FlowConfig } from '#types';
+import { solution, customerProfile } from './2.problem';
+import { outcomes, alternatives, affiliations } from './3.solution';
+import { features, flow } from './4.process';
+import { profile, business, story, accessibility } from './5.founder';
+import { offers } from './6.offers';
+import { testimonials, caseStudies } from './7.results';
+import { concerns } from './8.concerns';
 
-export type OfferID = 'magnet' | 'low' | 'medium' | 'high' | 'direct';
-
+// {CONFIG}: Update this once you have completed your other config files
 export const flowConfig = {
   hero: {
     badge: {
-      title: "⚠️ Badge title",
+      title: '⚠️ Badge title',
       description: '⚠️ Badge text',
       to: 'https://github.com/your-org/your-repo',
     },
@@ -21,11 +20,13 @@ export const flowConfig = {
       title: '⚠️ Your headline',
       description: '⚠️ Your value prop',
     },
-    media: {
-      type: 'video',
-      src: '/videos/demo.mp4',
-      alt: '⚠️ Video description',
-    },
+    // {OPTIMIZE}: After gathering feedback and validating consider adding a hero video
+    // media: {
+    //   type: 'video',
+    //   src: '/videos/demo.mp4',
+    //   alt: '⚠️ Video description',
+    //   poster: '/images/your-hero-poster.jpg',
+    // },
   },
 
   problem: {
@@ -35,8 +36,10 @@ export const flowConfig = {
       title: '⚠️ Core problem statement',
       description: '⚠️ Pain point elaboration',
     },
-    ...problem,
+    solution,
+    customerProfile,
   },
+
   solution: {
     intro: {
       icon: 'i-lucide-target',
@@ -44,8 +47,17 @@ export const flowConfig = {
       title: '⚠️ How you solve it',
       description: '⚠️ Approach details',
     },
-    ...solution,
+    outcomes,
+    separators: [
+      {
+        label: '⚠️ Separator label',
+        description: '⚠️ Optional separator description',
+      },
+    ],
+    affiliations,
+    alternatives,
   },
+
   process: {
     intro: {
       icon: 'i-lucide-package',
@@ -53,7 +65,14 @@ export const flowConfig = {
       title: '⚠️ How it works',
       description: '⚠️ Process overview',
     },
-    ...process, // features, flow
+    features,
+    separators: [
+      {
+        label: '⚠️ Separator label',
+        description: '⚠️ Optional separator description',
+      },
+    ],
+    flow,
     bridge: {
       headline: '⚠️ Bridge headline',
       message: '⚠️ Transition message',
@@ -64,6 +83,7 @@ export const flowConfig = {
       },
     },
   },
+
   founder: {
     intro: {
       icon: 'i-lucide-user',
@@ -71,8 +91,12 @@ export const flowConfig = {
       title: '⚠️ Credibility statement',
       description: '⚠️ Background brief',
     },
-    ...founder, // me, business, story, accessibility
+    profile,
+    business,
+    story,
+    accessibility,
   },
+
   offer: {
     intro: {
       icon: 'i-lucide-handshake',
@@ -80,7 +104,7 @@ export const flowConfig = {
       title: '⚠️ Offer structure',
       description: '⚠️ Pricing explanation',
     },
-    items: offer,
+    items: offers,
     bridge: {
       headline: '⚠️ Bridge to concerns',
       message: '⚠️ Objection prompt',
@@ -91,6 +115,7 @@ export const flowConfig = {
       },
     },
   },
+
   results: {
     intro: {
       icon: 'i-lucide-trending-up',
@@ -98,8 +123,18 @@ export const flowConfig = {
       title: '⚠️ Social proof headline',
       description: '⚠️ Testimonial context',
     },
-    ...results,
+    testimonials,
+    separators: [
+      {
+        label: '⚠️ Separator label',
+      },
+      {
+        label: '⚠️ Another separator label',
+      },
+    ],
+    caseStudies,
   },
+
   concerns: {
     intro: {
       icon: 'i-lucide-help-circle',

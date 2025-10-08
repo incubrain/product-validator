@@ -1,13 +1,12 @@
-// shared/config/0.flow.ts
 import type { FlowConfig } from '#shared/types/config';
 
 // Import domain data only
-import { problem } from './2.problem';
-import { solution } from './3.solution';
-import { process } from './4.process';
-import { founder } from './5.founder';
-import { offer } from './6.offer';
-import { results } from './7.results';
+import { solution, customerProfile } from './2.problem';
+import { outcomes, affiliations, alternatives } from './3.solution';
+import { features, flow } from './4.process';
+import { profile, accessibility, business, story } from './5.founder';
+import { offers } from './6.offers';
+import { caseStudies, testimonials } from './7.results';
 import { concerns } from './8.concerns';
 
 export const flowConfig: FlowConfig = {
@@ -21,9 +20,9 @@ export const flowConfig: FlowConfig = {
       to: 'https://github.com/incubrain/product-validator',
     },
     intro: {
-      title: 'Ship today, add your idea, validate in weeks',
+      title: 'How Long Have You Been "Almost Ready" to Launch?',
       description:
-        'Stop wasting months building ghost products. Package your idea as a lead magnet, gather feedback and let users drive your product creation.',
+        'Ship a validation page today. Stop preparing. Start learning. Free template that forces you to deploy now, not later.',
     },
     media: {
       type: 'video',
@@ -41,9 +40,10 @@ export const flowConfig: FlowConfig = {
       headline: 'This Is Critical',
       title: 'Your Brain IS Holding You Back',
       description:
-        "Mine cost me 13 years and $350k+ in investements/lost income, don't make the same mistakes I did",
+        "I know because mine did, 13 years of being 'almost ready.' Your brain will keep you safe, comfortable, and broke unless you force it to ship.",
     },
-    ...problem,
+    solution,
+    customerProfile,
   },
 
   // ============================================================================
@@ -52,11 +52,12 @@ export const flowConfig: FlowConfig = {
   solution: {
     intro: {
       icon: 'i-lucide-target',
-      headline: 'Validation-First System',
+      headline: 'Signal First System',
       title: 'Break The Cycle, Ship Today',
       description:
         'Force immediate deployment with placeholder content. Break psychological barriers through public iteration. Validate demand before investing months.',
     },
+    outcomes,
     separators: [
       {
         label: 'Why Alternatives Fail',
@@ -64,7 +65,8 @@ export const flowConfig: FlowConfig = {
           "High cost to start, vendor lock-in, 'do it all' approach, and lack of personalised support at scale while pushing you to build a business without validating it first",
       },
     ],
-    ...solution,
+    affiliations,
+    alternatives,
   },
 
   // ============================================================================
@@ -78,6 +80,7 @@ export const flowConfig: FlowConfig = {
       description:
         'Deploy in under an hour, provider agnostic, validate + earn, pay for scaling assistance.',
     },
+    features,
     separators: [
       {
         label: 'step by step breakdown',
@@ -85,12 +88,12 @@ export const flowConfig: FlowConfig = {
           "You're success is our success, we are here to help at every step",
       },
     ],
-    ...process,
+    flow,
     bridge: {
-      headline: 'Fits your needs?',
-      message: 'jump in and get started',
+      headline: 'Ready to get started?',
+      message: "No excuses it's free! No strings attached",
       cta: {
-        label: 'Get Started Now',
+        label: 'Check out the Launch Kit',
         to: { path: '/', hash: '#offer' },
         icon: 'i-lucide-arrow-down',
       },
@@ -103,12 +106,15 @@ export const flowConfig: FlowConfig = {
   founder: {
     intro: {
       icon: 'i-lucide-user',
-      headline: 'Learn from my mistakes',
-      title: '13 years and $350k+ lost building ghost products',
+      headline: 'Learn from my many mistakes',
+      title: '13 Years and $350k+ Lost',
       description:
         "One month ago I started shipping weekly. You're watching the validation method work in real-time. Transparent, not polished.",
     },
-    ...founder,
+    profile,
+    accessibility,
+    business,
+    story,
   },
 
   // ============================================================================
@@ -117,12 +123,12 @@ export const flowConfig: FlowConfig = {
   offer: {
     intro: {
       icon: 'i-lucide-handshake',
-      headline: 'Start Free, Upgrade When Ready',
-      title: 'Most founders begin with the free magnet',
+      headline: 'Limited Spots Available',
+      title: 'Stop Guessing, Get Feedback',
       description:
-        'Free 4-step validation guide gets you live and gathering feedback. Accelerator ($50) adds structured methodology + expert critique.',
+        'Free validation launch kit gets you live and gathering feedback.',
     },
-    items: offer,
+    items: offers,
     bridge: {
       headline: 'Have concerns?',
       message:
@@ -141,11 +147,12 @@ export const flowConfig: FlowConfig = {
   results: {
     intro: {
       icon: 'i-lucide-trending-up',
-      headline: 'Example Testimonials',
+      headline: 'Testimonials',
       title: 'Your Testimonial Could Be Here',
       description:
         "We just launched! Use the template and provide some feedback, we'll drive traffic to your landing page.",
     },
+    caseStudies,
     separators: [
       {
         label: 'Success Stories',
@@ -154,7 +161,7 @@ export const flowConfig: FlowConfig = {
         label: 'Testimonials',
       },
     ],
-    ...results,
+    testimonials,
   },
 
   // ============================================================================
@@ -164,7 +171,7 @@ export const flowConfig: FlowConfig = {
     intro: {
       icon: 'i-lucide-help-circle',
       headline: 'Objections & Reality Checks',
-      title: 'Why not ClickFunnels? Too fresh? No audience?',
+      title: 'Why not ClickFunnels?',
       description:
         "Honest answers about technical requirements, competition, freshness, and who this isn't for",
     },
@@ -173,7 +180,7 @@ export const flowConfig: FlowConfig = {
       headline: 'Questions answered?',
       message: "Let's turn your idea into validated evidence—start free",
       cta: {
-        label: 'Get Validation Starter Pack',
+        label: 'Get Validation Launch Kit',
         to: { path: '/', hash: '#offer' },
         icon: 'i-lucide-rocket',
       },

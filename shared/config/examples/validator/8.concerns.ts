@@ -1,3 +1,4 @@
+import type { FaqItem } from '#types'
 // {FRICTION}: this has to be deleted, can it be extracted or does it provide value?
 
 export const concerns = [

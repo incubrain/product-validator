@@ -1,5 +1,6 @@
 import type { Offer } from '#types'
-export const offer: Offer[] = [
+
+export const offers = [
   {
     id: 'magnet',
     primary: true,
@@ -166,4 +167,4 @@ export const offer: Offer[] = [
       color: 'secondary',
     },
   },
-];
+] satisfies Offer[];

@@ -1,5 +1,7 @@
 // {CONFIG}: Add testimonials and case studies for social proof
-export const testimonials: Testimonial[] = [
+import type { Testimonial, CaseStudy } from '#types';
+
+export const testimonials = [
   {
     type: 'testimonial',
     name: '⚠️ Customer name',
@@ -8,9 +10,9 @@ export const testimonials: Testimonial[] = [
     avatarUrl: 'https://i.pravatar.cc/150?img=11',
     highlight: false,
   },
-];
+] satisfies Testimonial[];
 
-export const caseStudies: CaseStudy[] = [
+export const caseStudies = [
   {
     type: 'case-study',
     status: 'example',
@@ -41,9 +43,4 @@ export const caseStudies: CaseStudy[] = [
 
     link: 'https://example.com',
   },
-];
-
-export const results = {
-  testimonials,
-  caseStudies,
-};
+] satisfies CaseStudy[];

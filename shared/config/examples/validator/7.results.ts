@@ -1,4 +1,4 @@
-// shared/config/7.results.ts
+import type { Testimonial, CaseStudy } from '#types';
 // {FRICTION}: this has to be deleted, can it be extracted or does it provide value?
 
 export const testimonials: Testimonial[] = [
@@ -111,8 +111,3 @@ export const caseStudies: CaseStudy[] = [
     link: 'https://x.com/incubrain',
   },
 ] satisfies CaseStudy[];
-
-export const results = {
-  testimonials,
-  caseStudies,
-};

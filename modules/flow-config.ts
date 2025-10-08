@@ -11,7 +11,6 @@ export default defineNuxtModule({
     // Get config source from runtime config
     const configSource = process.env.NUXT_PUBLIC_CONFIG_SOURCE || '';
 
-    console.log('🔍 Config source:', configSource || '(custom)');
     // Map config source to file path
     const configPaths: Record<string, string> = {
       'validator': resolver.resolve(

@@ -43,7 +43,7 @@ export default defineNuxtConfig({
     },
   },
 
-  // ✅ PRODUCTION ONLY: Performance optimizations
+  // {PERF}: Production only performance optimizations
   $production: {
     sourcemap: false,
     experimental: {
@@ -84,7 +84,6 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       analyticsLink: '',
-      configSource: '',
       validator: {
         storagePrefix: 'validator',
       },

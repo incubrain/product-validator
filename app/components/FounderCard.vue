@@ -9,8 +9,8 @@ const founder = useFlowSection('founder');
 
 // Computed properties
 //  {EXTRACT}
-const displayName = computed(() => `Hi, I'm ${founder.me.first}`);
-const description = computed(() => founder.me.role);
+const displayName = computed(() => `Hi, I'm ${founder.profile.first}`);
+const description = computed(() => founder.profile.role);
 
 // Map links to proper format for UButton
 const socialLinks = computed(
@@ -42,8 +42,8 @@ const socialLinks = computed(
         :orientation="variant === 'mobile' ? 'horizontal' : 'vertical'"
         size="lg"
         :avatar="{
-          src: founder.me.avatar.src,
-          alt: founder.me.avatar.alt,
+          src: founder.profile.avatar.src,
+          alt: founder.profile.avatar.alt,
         }"
         :ui="{ root: 'items-start text-left lg:items-end lg:text-right' }"
       />
