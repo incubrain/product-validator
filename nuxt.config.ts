@@ -34,6 +34,7 @@ export default defineNuxtConfig({
     // Dev-specific Nitro config
     nitro: {
       debug: true,
+      
     },
 
     // TypeScript checking in dev
@@ -59,6 +60,7 @@ export default defineNuxtConfig({
     // Production Nitro optimizations
     nitro: {
       minify: true,
+      preset: import.meta.env.PROVIDER,
       prerender: {
         crawlLinks: true,
         routes: ['/'],
