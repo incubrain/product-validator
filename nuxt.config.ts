@@ -121,6 +121,9 @@ export default defineNuxtConfig({
     '#config': fileURLToPath(
       new URL('./shared/config/index.ts', import.meta.url),
     ),
+    '#types': fileURLToPath(
+      new URL('./shared/types/config.ts', import.meta.url),
+    ),
     '#config/*': fileURLToPath(new URL('./shared/config', import.meta.url)),
   },
 
@@ -155,15 +158,9 @@ export default defineNuxtConfig({
 
   icon: {
     serverBundle: {
-      // using full @iconify/json define collections to tree-shake
+      // {DX}: Using full @iconify/json no need to install collection packages
+      // collections array enables tree-shake
       collections: ['lucide', 'mdi', 'logos'],
-    },
-    aliases: {
-      'arrow-left': 'i-lucide-arrow-left',
-      'arrow-right': 'i-lucide-arrow-right',
-      'check': 'i-lucide-check',
-      'close': 'i-lucide-x',
-      'search': 'i-lucide-search',
     },
   },
 });

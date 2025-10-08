@@ -1,4 +1,17 @@
 export default defineAppConfig({
+  icon: {
+    aliases: {
+      'arrow-left': 'lucide:arrow-left',
+      'arrow-right': 'lucide:arrow-right',
+      'check': 'lucide:check',
+      'close': 'lucide:x',
+      'search': 'lucide:search',
+      // {DX}: Offer status icon aliases
+      'status-available': 'lucide:check',
+      'status-beta': 'lucide:flask-conical',
+      'status-coming-soon': 'lucide:clock',
+    },
+  },
   ui: {
     button: {
       defaultVariants: {
@@ -45,7 +58,8 @@ export default defineAppConfig({
       variants: {
         headline: {
           true: {
-            headline: 'font-semibold text-primary uppercase flex items-center gap-1.5',
+            headline:
+              'font-semibold text-primary uppercase flex items-center gap-1.5',
           },
         },
       },

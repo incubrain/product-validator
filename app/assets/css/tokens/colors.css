@@ -139,3 +139,18 @@
   --ui-link-hover: var(--color-primary-400);
   --ui-link-active: var(--color-primary-200);
 }
+
+/* {DX}: Icon aliases mapped to colors, check app.config for aliases */
+@layer components {
+  .status-available {
+    color: var(--color-success);
+  }
+
+  .status-beta {
+    color: var(--color-info);
+  }
+
+  .status-coming-soon {
+    color: var(--color-warning);
+  }
+}
