@@ -1,5 +1,5 @@
 // shared/types/config.ts
-import type { ButtonProps } from '@nuxt/ui';
+import type { ButtonProps, PricingPlanProps } from '@nuxt/ui';
 
 // ============================================================================
 // SHARED PRIMITIVES
@@ -233,18 +233,7 @@ export type FounderAccessibility = {
 
 export type OfferID = 'magnet' | 'direct' | 'low' | 'medium' | 'high';
 
-export type OfferBenefit = {
-  text: string;
-  value?: number;
-  status: 'available' | 'coming-soon' | 'beta';
-};
-
-export type OfferPrice = {
-  current: string;
-  future?: string;
-  recurrence: 'never' | 'hour' | 'month' | 'year';
-};
-
+// ✅ Stock types (unchanged - our custom extension)
 export type OfferStockType =
   | 'spots' // Course/program enrollment spots
   | 'hours' // Service hours available
@@ -252,26 +241,48 @@ export type OfferStockType =
   | 'licenses' // Software licenses
   | 'seats'; // Subscription seats
 
+export type FeatureStatus =
+  | 'status-available'
+  | 'status-beta'
+  | 'status-coming-soon';
+
 export type OfferStock = {
   limit: number;
   claimed: number;
   type?: OfferStockType;
 };
 
+// ✅ Upsell (unchanged - our custom extension)
 export type OfferUpsell = {
   target: OfferID;
   primary?: boolean;
 };
 
-export type Offer = {
+export type OfferFeature = {
+  title: string;
+  icon: FeatureStatus;
+};
+
+// ✅ NEW: Directly extends PricingPlanProps
+export type Offer = Pick<
+  PricingPlanProps,
+  | 'title'
+  | 'description'
+  | 'badge'
+  | 'price'
+  | 'discount'
+  | 'billingCycle'
+  | 'variant'
+  | 'highlight'
+  | 'tagline'
+  | 'terms'
+> & {
+  // ✅ Our custom fields
+  features: OfferFeature[];
   id: OfferID;
   primary?: boolean;
-  name: string;
-  description: string;
-  price: OfferPrice | null;
-  benefits: OfferBenefit[];
-  cta: Cta;
   stock?: OfferStock;
+  cta: Cta;
   upsells?: OfferUpsell[];
   media?: {
     type: 'video' | 'image';
@@ -363,9 +374,7 @@ export type FlowConfig = {
   solution: SectionBase & {
     outcomes: Outcome[];
     alternatives: Alternative[];
-    credibility?: {
-      affiliations: Affiliation[];
-    };
+    affiliations: Affiliation[];
   };
   process: SectionBase & {
     features: ProcessFeature[];

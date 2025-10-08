@@ -1,56 +1,94 @@
-// {CONFIG}: Define your product offers and pricing structure
+/**
+ * {CONFIG}: Define your product offers and pricing structure
+ * 
+ * FEATURE STATUS ICONS (via aliases in nuxt.config):
+ * - status-available   → Green check (ready to use)
+ * - status-beta        → Blue flask (beta/testing)
+ * - status-coming-soon → Orange clock (planned feature)
+ */
 
-export const offer = [
+export const offer: Offer[] = [
   {
     id: 'magnet',
     primary: true,
-    name: '⚠️ Lead Magnet Name',
+    
+    title: '⚠️ Lead Magnet Name',
     description: '⚠️ What they get for free',
-    price: null,
-    benefits: [
+    
+    badge: {
+      label: 'FREE',
+      color: 'success',
+      variant: 'solid',
+      size: 'lg',
+    },
+    
+    features: [
       {
-        text: '⚠️ Benefit included in magnet',
-        value: 0,
-        status: 'available',
+        title: '⚠️ Benefit included in magnet',
+        icon: 'status-beta',  // 🎯 Use alias
+      },
+      {
+        title: '⚠️ Another benefit',
+        icon: 'status-available',
+      },
+      {
+        title: '⚠️ Coming soon feature',
+        icon: 'status-coming-soon',
       },
     ],
+    
+    variant: 'outline',
+    highlight: true,
+    
     cta: {
       label: '⚠️ Button text',
-      to: '#offer',
       icon: 'i-lucide-rocket',
-      variant: 'solid',
-      color: 'primary',
+      modal: 'window',
+      captureEmail: true,
+      formId: 'your-form-id',
       note: '⚠️ Small text below button',
     },
-    upsells: [
-      {
-        target: 'low',
-        primary: true,
-      },
-    ],
   },
 
   {
     id: 'direct',
-    name: '⚠️ Hire Me Directly',
+    
+    title: '⚠️ Hire Me Directly',
     description: '⚠️ Your hourly service description',
-    price: {
-      current: '$50',
-      future: '$100',
-      recurrence: 'hour',
-    },
+    
+    price: '$50',
+    discount: '$100',
+    billingCycle: '/hour',
+    
+    features: [
+      {
+        title: '⚠️ Service benefit 1',
+        icon: 'status-available',
+      },
+      {
+        title: '⚠️ Service benefit 2',
+        icon: 'status-available',
+      },
+      {
+        title: '⚠️ Service benefit 3',
+        icon: 'status-coming-soon',
+      },
+    ],
+    
+    variant: 'outline',
+    
     stock: {
       limit: 80,
       claimed: 0,
       type: 'hours',
     },
+    
     cta: {
       label: '⚠️ Button text',
       to: 'https://your-booking-link.com',
       icon: 'i-lucide-handshake',
-      variant: 'solid',
       color: 'secondary',
       note: '⚠️ Small text below button',
     },
   },
-] satisfies OfferConfig;
+];
