@@ -12,17 +12,17 @@ export const profile = {
   given_name: 'Drew',
   surname: ' MacGibbon',
   avatar: {
-    src: '/examples/validator/images/team/founder-avatar.png',
+    src: 'examples/validator/team/founder-avatar.png',
     alt: 'avatar image of Drew MacGibbon',
   },
   portrait: {
-    src: '/examples/validator/images/team/founder-portrait.png',
+    src: 'examples/validator/team/founder-portrait.png',
     alt: 'portrait image of Drew MacGibbon',
   },
 } satisfies FounderProfile;
 
 export const business = {
-  name: 'Incubrain',
+  name: 'Product Validator',
   legal_name: 'Incubrain Pvt. Ltd.',
   founding_year: 2023,
   location: 'Pune, India',

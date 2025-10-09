@@ -3,13 +3,13 @@ import { fileURLToPath } from 'node:url';
 
 export default defineNuxtConfig({
   modules: [
+    '@nuxtjs/seo',
+    '@nuxt/ui',
+    '@nuxt/content', // <-- Must be after @nuxtjs/seo & @nuxt/ui
     '@nuxt/fonts',
     '@nuxt/image',
-    '@nuxt/ui',
     '@vueuse/nuxt',
-    '@nuxtjs/mdc',
     '@nuxt/scripts',
-    '@nuxtjs/seo',
   ],
 
   // {CONFIG}
@@ -34,7 +34,6 @@ export default defineNuxtConfig({
     // Dev-specific Nitro config
     nitro: {
       debug: true,
-      
     },
 
     // TypeScript checking in dev

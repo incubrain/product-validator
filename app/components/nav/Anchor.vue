@@ -1,6 +1,6 @@
 <!-- components/INavAnchor.vue -->
 <script setup lang="ts">
-import { LAYOUT_CONFIG } from '#shared/config/navigation';
+import { CONFIG } from '#shared/config/navigation';
 
 interface Props {
   id: SectionAnchor;
@@ -10,20 +10,20 @@ const props = defineProps<Props>();
 
 const getStickyOffset = (withOffset = true) => {
   const banner =
-    LAYOUT_CONFIG.banner.enabled && LAYOUT_CONFIG.banner.sticky
-      ? `${LAYOUT_CONFIG.banner.height}+`
+    CONFIG.banner.enabled && CONFIG.banner.sticky
+      ? `${CONFIG.banner.height}+`
       : '';
 
   const navbar =
-    LAYOUT_CONFIG.navbar.enabled && LAYOUT_CONFIG.navbar.sticky
-      ? `${LAYOUT_CONFIG.navbar.height}+`
+    CONFIG.navbar.enabled && CONFIG.navbar.sticky
+      ? `${CONFIG.navbar.height}+`
       : '';
 
   if (!withOffset) {
     return `calc(${banner}${navbar})`;
   }
 
-  return `calc(${banner}${navbar}${LAYOUT_CONFIG.anchor.offset})`;
+  return `calc(${banner}${navbar}${CONFIG.anchor.offset})`;
 };
 
 const anchorOffset = computed(() => {

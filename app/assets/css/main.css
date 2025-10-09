@@ -14,6 +14,6 @@
 
 @source "../../../theme";
 @source "../../../shared/config/theme.ts";
-/* @source "../../../content"; PICKUP CSS CLASSES IN nuxt/content */
+@source "../../../content/**/*";
 
 @import '@nuxt/ui';

@@ -28,7 +28,7 @@ export const CONVERSION = {
 };
 
 // Layout configuration for sticky offset calculation
-export const LAYOUT_CONFIG = {
+export const CONFIG = {
   banner: {
     enabled: true,
     sticky: true,
