@@ -1,6 +1,6 @@
-<!-- components/INavAnchor.vue -->
+<!-- components/nav/Anchor.vue -->
 <script setup lang="ts">
-import { CONFIG } from '#shared/config/navigation';
+import { CONVERSION } from '#shared/config/navigation';
 
 interface Props {
   id: SectionAnchor;
@@ -8,34 +8,23 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const getStickyOffset = (withOffset = true) => {
-  const banner =
-    CONFIG.banner.enabled && CONFIG.banner.sticky
-      ? `${CONFIG.banner.height}+`
-      : '';
+const getStickyOffset = () => {
+  const banner = CONVERSION.banner?.sticky ? 'var(--ui-banner-height)+' : '';
 
-  const navbar =
-    CONFIG.navbar.enabled && CONFIG.navbar.sticky
-      ? `${CONFIG.navbar.height}+`
-      : '';
+  const navbar = CONVERSION.navbar?.sticky ? 'var(--ui-header-height)+' : '';
 
-  if (!withOffset) {
-    return `calc(${banner}${navbar})`;
-  }
+  const offset = '--spacing(12)';
 
-  return `calc(${banner}${navbar}${CONFIG.anchor.offset})`;
+  return `calc(${banner}${navbar}${offset})`;
 };
 
-const anchorOffset = computed(() => {
-  return getStickyOffset();
-});
-
+const anchorOffset = getStickyOffset();
 const cleanId = computed(() => props.id.replace(/^#/, ''));
 
 onMounted(() => {
   const element = document.getElementById(props.id);
   if (element) {
-    element.style.scrollMarginTop = anchorOffset.value;
+    element.style.scrollMarginTop = anchorOffset;
   }
 });
 </script>
@@ -43,9 +32,7 @@ onMounted(() => {
 <template>
   <div
     :id="cleanId"
-    :style="{
-      scrollMarginTop: anchorOffset,
-    }"
+    :style="{ scrollMarginTop: anchorOffset }"
     class="anchor-target"
   />
 </template>

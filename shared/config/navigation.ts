@@ -23,24 +23,7 @@ export const CONVERSION = {
     sticky: true,
   },
   navbar: {
-    sticky: true,
-  },
-};
-
-// Layout configuration for sticky offset calculation
-export const CONFIG = {
-  banner: {
-    enabled: true,
-    sticky: true,
-    height: 'var(--ui-banner-height)',
-  },
-  navbar: {
-    enabled: true,
     sticky: false,
-    height: 'var(--ui-header-height)',
-  },
-  anchor: {
-    offset: '--spacing(12)',
   },
 } as const;
 
