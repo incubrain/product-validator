@@ -1,4 +1,5 @@
 import { defineNuxtModule, addTemplate, createResolver } from '@nuxt/kit';
+import { getConfigPath } from '../shared/utils/config-resolver';
 
 export default defineNuxtModule({
   meta: {
@@ -8,27 +9,11 @@ export default defineNuxtModule({
   setup(options, nuxt) {
     const resolver = createResolver(import.meta.url);
 
-    // Get config source from runtime config
-    const configSource = process.env.NUXT_PUBLIC_CONFIG_SOURCE || '';
-
-    // Map config source to file path
-    const configPaths: Record<string, string> = {
-      'validator': resolver.resolve(
-        '../shared/config/examples/validator/1.flow.ts',
-      ),
-      '': resolver.resolve('../shared/config/1.flow.ts'),
-    };
-
-    const configPath = configPaths[configSource];
-
-    if (!configPath) {
-      const available = Object.keys(configPaths)
-        .filter((k) => k)
-        .join(', ');
-      throw new Error(
-        `[flow-config] Unknown config source: "${configSource}"\nAvailable: ${available}, "" (custom)`,
-      );
-    }
+    const configPath = getConfigPath({
+      prefix: '../shared/config/',
+      suffix: '1.flow.ts',
+      resolver,
+    });
 
     // Add virtual module that re-exports the selected config
     addTemplate({
