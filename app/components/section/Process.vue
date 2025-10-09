@@ -24,7 +24,6 @@ function renderContent(content: any[]) {
 
 <template>
   <ISectionWrapper id="#process" :intro="data.intro" :bridge="data.bridge">
-    <!-- Features Grid - ABOVE the flow -->
     <UPageGrid>
       <UPageCard
         v-for="(feature, index) in features"

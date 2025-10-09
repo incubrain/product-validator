@@ -86,15 +86,13 @@ const heroLinks = computed(() =>
 
             <template #indicator>
               <UBadge :label="update.version" variant="soft" />
-              <span class="text-sm text-muted">
-                {{
-                  new Date(update.date).toLocaleDateString('en-US', {
-                    year: 'numeric',
-                    month: 'short',
-                    day: 'numeric',
-                  })
-                }}
-              </span>
+              <NuxtTime
+                class="text-sm text-muted"
+                :datetime="update.date"
+                year="numeric"
+                month="short"
+                day="numeric"
+              />
             </template>
 
             <template #body>

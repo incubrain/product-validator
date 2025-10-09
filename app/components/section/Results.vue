@@ -114,9 +114,13 @@ const formattedTestimonials = computed(() =>
                   class="size-2 rounded-full bg-primary mt-1 flex-shrink-0"
                 />
                 <div class="flex-1">
-                  <p class="text-muted">
-                    {{ new Date(milestone.date).toLocaleDateString() }}
-                  </p>
+                  <NuxtTime
+                    :datetime="milestone.date"
+                    class="text-muted"
+                    year="numeric"
+                    month="short"
+                    day="numeric"
+                  />
                   <p class="text-highlighted">{{ milestone.event }}</p>
                 </div>
               </div>
@@ -126,13 +130,15 @@ const formattedTestimonials = computed(() =>
           <!-- Footer: Start Date + Link -->
           <template #footer>
             <div class="flex justify-between items-center">
-              <span class="text-xs text-muted">
-                {{
-                  study.timeline.start
-                    ? new Date(study.timeline.start).toLocaleDateString()
-                    : study.timeline.duration
-                }}
-              </span>
+              <NuxtTime
+                v-if="study.timeline.start"
+                class="text-xs text-muted"
+                :datetime="study.timeline.start"
+                year="numeric"
+                month="short"
+                day="numeric"
+              />
+
               <UButton
                 v-if="study.link || study.founder.websiteUrl"
                 :to="study.link || study.founder.websiteUrl"
