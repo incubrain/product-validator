@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import type { ButtonProps } from '@nuxt/ui';
+
 const founder = useFlowSection('founder');
 
 // Query updates collection
@@ -6,27 +8,49 @@ const { data: updates } = await useAsyncData('updates', () =>
   queryCollection('updates').order('date', 'DESC').all(),
 );
 
-console.log('updates content', updates.value);
+// Get social links
+const socialLinks = pickSocialLinks(founder.accessibility.links, [
+  'youtube',
+  'github',
+]);
 
 useHead({
-  title: 'Updates - Product Validator',
+  title: 'Updates',
   meta: [
     {
       name: 'description',
-      content:
-        'Strategic decisions and philosophical shifts behind the Product Validator template.',
+      content: `${founder.story.mission} - Product updates and strategic decisions.`,
     },
   ],
 });
 
+// Authors for changelog
 const authors = [
   {
     name: `${founder.profile.given_name} ${founder.profile.surname}`,
     avatar: founder.profile.avatar,
-    to: 'https://github.com/incubrain',
+    to: socialLinks?.find((link) => link.platform === 'github').url,
     target: '_blank',
   },
 ];
+
+// Hero links (dynamic from founder accessibility)
+const heroLinks = computed(() =>
+  socialLinks.map((link) => ({
+    label: `Follow on ${link.label}`,
+    to: link.url,
+    icon: link.platform, // Uses icon alias directly
+    color:
+      link.platform === 'youtube'
+        ? 'primary'
+        : ('neutral' as ButtonProps['color']),
+    variant:
+      link.platform === 'youtube'
+        ? 'solid'
+        : ('ghost' as ButtonProps['variant']),
+    target: '_blank',
+  })),
+);
 </script>
 
 <template>
@@ -34,25 +58,9 @@ const authors = [
     <UPageHero
       icon="i-lucide-lightbulb"
       title="Updates"
-      description="Strategic decisions and philosophical shifts behind the template"
+      :description="`${founder.story.mission.split('.')[0]}.`"
       headline="Think different, ship faster"
-      :links="[
-        {
-          label: 'Follow on YouTube',
-          to: 'https://www.youtube.com/@Incubrain',
-          color: 'primary',
-          icon: 'i-lucide-youtube',
-          target: '_blank',
-        },
-        {
-          label: 'Follow on GitHub',
-          color: 'neutral',
-          variant: 'ghost',
-          to: 'https://github.com/incubrain/product-validator',
-          icon: 'i-lucide-github',
-          target: '_blank',
-        },
-      ]"
+      :links="heroLinks"
       class="bg-muted border-b"
     />
 
@@ -91,7 +99,7 @@ const authors = [
 
             <template #body>
               <div class="prose max-w-none pt-6">
-                <ContentRenderer v-if="update" :value="update" class="prose" />
+                <ContentRenderer v-if="update" :value="update" />
               </div>
             </template>
           </UChangelogVersion>

@@ -10,6 +10,12 @@ export default defineAppConfig({
       'status-available': 'lucide:check status-available',
       'status-beta': 'lucide:flask-conical status-beta',
       'status-coming-soon': 'lucide:clock status-coming-soon',
+      // Social platform icons
+      'youtube': 'lucide:youtube',
+      'github': 'lucide:github',
+      'x': 'lucide:twitter',
+      'linkedin': 'lucide:linkedin',
+      'website': 'lucide:globe',
     },
   },
   ui: {
