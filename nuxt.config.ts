@@ -19,7 +19,6 @@ export default defineNuxtConfig({
     description: 'Ship today, build in public, validate in weeks',
   },
 
-  // ✅ DEVELOPMENT ONLY: All dev-specific configuration
   $development: {
     modules: ['@nuxt/eslint', '@compodium/nuxt'],
 

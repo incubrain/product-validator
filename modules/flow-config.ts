@@ -1,15 +1,15 @@
 import { defineNuxtModule, addTemplate, createResolver } from '@nuxt/kit';
-import { getConfigPath } from '../shared/utils/config-resolver';
+import { resolveConfigPath } from '../shared/utils/config-resolver';
 
 export default defineNuxtModule({
   meta: {
     name: 'flow-config',
     configKey: 'flowConfig',
   },
-  setup(options, nuxt) {
+  setup() {
     const resolver = createResolver(import.meta.url);
 
-    const configPath = getConfigPath({
+    const configPath = resolveConfigPath({
       prefix: '../shared/config/',
       suffix: '1.flow.ts',
       resolver,

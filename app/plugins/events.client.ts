@@ -8,13 +8,11 @@ declare module '#app' {
 }
 
 type EventHandler = (payload: EventPayload) => void;
-
-// Map of event handlers
 const eventHandlers = new Map<TrackedEvents, EventHandler[]>();
 
 // Console logger for all environments
 const consoleLogger: EventHandler = (payload) => {
-  console.log(`📊 Event [${payload.type}]:`, payload);
+  console.info(`📊 Event [${payload.type}]:`, payload);
 };
 
 // Umami analytics handler using composable
@@ -46,8 +44,6 @@ function sendToAnalytics(payload: EventPayload, analyticsProxy: any) {
     timestamp: payload.timestamp,
   };
 
-  console.log('sendToAnalytics', eventData);
-  // Handle different event types
   switch (payload.type) {
     case 'action_click':
       // Track conversions for paid actions

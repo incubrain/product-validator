@@ -36,9 +36,9 @@ export const flow = [
         type: 'text',
         value: `⚠️ **Start with a text block here.**:
 
-  - This can uses the MDC component so write in markdown
+  - This uses the MDC component so write in markdown
   - Use this for an overview of each step
-  - Later you can change the 'type' property to image or video if it suites your usecase
+  - In optimization phase you can change the 'type' property to 'image' or 'video' if it suites your usecase
   `,
       },
     ],

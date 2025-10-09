@@ -1,11 +1,11 @@
-<!-- Banner.vue - FIXED VERSION -->
+<!-- components/nav/Banner.vue -->
 <script setup lang="ts">
 const props = defineProps<{
-  offer: OfferID;
+  offerId: OfferID;
   sticky?: boolean;
 }>();
 
-const offer = useFlowOffer(props.offer);
+const offer = useFlowOffer(props.offerId);
 
 const bannerClasses = computed(() => ({
   'sticky top-0 z-50': props.sticky,

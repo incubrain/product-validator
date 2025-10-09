@@ -5,7 +5,7 @@ import type { VideoVariants } from '#theme';
 import { useUserInteraction } from '~/composables/useUserInteraction';
 
 export interface VideoProps {
-  src?: string;
+  src: string;
   poster?: string;
   aspectRatio?: VideoVariants['aspectRatio'];
   autoplay?: boolean;
@@ -22,6 +22,7 @@ const props = withDefaults(defineProps<VideoProps>(), {
   loop: false,
   controls: false,
   loading: 'lazy',
+  poster: undefined
 });
 
 // Refs
@@ -35,7 +36,7 @@ const shouldLoad = ref(props.loading === 'eager');
 const showControls = ref(false);
 
 // VueUse Media Controls
-const { playing, waiting, muted, volume } = useMediaControls(videoRef, {
+const { playing, waiting, muted } = useMediaControls(videoRef, {
   src: computed(() => (shouldLoad.value ? props.src : '')),
 });
 
@@ -90,7 +91,7 @@ watchEffect(async () => {
         playing.value = true;
         autoplayAttempted.value = true;
       } catch (error) {
-        console.log('Autoplay failed:', error.message);
+        console.warn('Autoplay failed:', error.message);
       }
     } else {
       // Wait for first interaction

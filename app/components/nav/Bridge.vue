@@ -1,4 +1,4 @@
-<!-- components/Bridge.vue -->
+<!-- components/nav/Bridge.vue -->
 <script setup lang="ts">
 interface BridgeData {
   headline: string;

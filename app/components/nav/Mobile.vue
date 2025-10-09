@@ -1,4 +1,4 @@
-<!-- app/components/i/nav/Mobile.vue -->
+<!-- app/components/nav/Mobile.vue -->
 <script setup lang="ts">
 import type { NavigationMenuItem } from '@nuxt/ui';
 

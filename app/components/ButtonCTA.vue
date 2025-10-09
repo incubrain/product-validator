@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { ButtonProps } from '@nuxt/ui';
 import { LazyIModalFullscreen, LazyIModalWindowed } from '#components';
 
 interface Props {
@@ -7,7 +8,7 @@ interface Props {
 
   // Pass-through to UButton
   class?: string;
-  size?: string;
+  size?: ButtonProps['size'];
   block?: boolean;
   anchor?: boolean;
 }

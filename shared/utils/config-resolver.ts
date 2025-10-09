@@ -35,19 +35,19 @@ export function getActiveConfigSource(): ConfigSource {
  *
  * @example
  * // Content config (relative paths)
- * getConfigPath({ suffix: 'updates/*.md' })
+ * resolveConfigPath({ suffix: 'updates/*.md' })
  * // NUXT_PUBLIC_CONFIG_SOURCE=validator => 'examples/validator/updates/*.md'
  * // NUXT_PUBLIC_CONFIG_SOURCE='' => 'updates/*.md'
  *
  * @example
  * // Flow config (absolute paths with resolver)
- * getConfigPath({
+ * resolveConfigPath({
  *   prefix: '../shared/config/',
  *   suffix: '1.flow.ts',
  *   resolver
  * })
  */
-export function getConfigPath(options: {
+export function resolveConfigPath(options: {
   prefix?: string;
   suffix?: string;
   resolver?: { resolve: (path: string) => string };

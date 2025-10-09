@@ -1,4 +1,4 @@
-<!-- app/components/i/layout/PageColumnsWrapper.vue -->
+<!-- app/components/ui/page/Columns.vue -->
 <script setup lang="ts">
 import type { PageColumnsProps } from '@nuxt/ui';
 import { pageColumnsWrapperStyles } from '#theme';

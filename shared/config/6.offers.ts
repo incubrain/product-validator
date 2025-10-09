@@ -25,15 +25,15 @@ export const offers = [
     },
     features: [
       {
-        title: '⚠️ Benefit included in magnet',
-        icon: 'status-beta',
-      },
-      {
-        title: '⚠️ Another benefit',
+        title: '⚠️ Available benefit',
         icon: 'status-available',
       },
       {
-        title: '⚠️ Coming soon feature',
+        title: '⚠️ Beta benefit',
+        icon: 'status-beta',
+      },
+      {
+        title: '⚠️ Coming soon benefit',
         icon: 'status-coming-soon',
       },
     ],

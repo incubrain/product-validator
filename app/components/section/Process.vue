@@ -83,6 +83,7 @@ function renderContent(content: any[]) {
                 <div v-else-if="contentItem.type === 'video'">
                   <IVideo
                     :src="contentItem.src"
+                    :poster="contentItem.poster"
                     :autoplay="false"
                     :muted="true"
                     :loop="false"

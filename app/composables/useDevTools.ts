@@ -50,8 +50,7 @@ export const useDevTools = () => {
     );
 
     const after = getStorageSnapshot();
-
-    console.log('Storage cleared:', { before, after });
+    console.info('Storage cleared:', { before, after });
 
     // Show toast with summary
     const totalCleared =

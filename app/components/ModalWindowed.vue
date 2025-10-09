@@ -7,11 +7,10 @@ interface Props {
 const props = defineProps<Props>();
 const emit = defineEmits<{ close: [result?: any] }>();
 
+const isOpen = ref(true);
+
 const offer = useFlowOffer(props.offerId);
 const email = ref('');
-
-// ✅ ADD: Modal open state
-const isOpen = ref(true);
 
 const filloutParams = computed(() => ({
   offer_id: offer.value?.id,
@@ -19,13 +18,11 @@ const filloutParams = computed(() => ({
   email: email.value,
 }));
 
-// ✅ ADD: Close handler that updates state
 const handleClose = (result?: any) => {
   isOpen.value = false;
   emit('close', result);
 };
 
-// ✅ ADD: Watch for modal close animation to complete
 watch(isOpen, (newValue) => {
   if (!newValue) {
     // Give time for close animation before emitting
@@ -42,7 +39,6 @@ watch(isOpen, (newValue) => {
   >
     <template #body>
       <div class="space-y-4">
-        <!-- Form embed -->
         <LazyIFilloutForm
           v-if="offer.cta.formId"
           :form-id="offer.cta.formId"
@@ -54,7 +50,7 @@ watch(isOpen, (newValue) => {
 
     <template #footer>
       <UButton
-        label="Cancel"
+        label="Close"
         variant="ghost"
         color="neutral"
         @click="handleClose()"

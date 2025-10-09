@@ -27,9 +27,9 @@ export const profile = {
 } satisfies FounderProfile;
 
 export const business = {
-  name: '⚠️ Business name',
+  name: '⚠️ Product name',
   legal_name: '⚠️ Legal entity name',
-  founding_year: 2024,
+  founding_year: 2025,
   location: '⚠️ City, Country',
   logo: 'favicon-96x96.png',
 } satisfies BusinessInfo;

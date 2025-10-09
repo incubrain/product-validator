@@ -1,4 +1,4 @@
-<!-- app/components/i/nav/Header.vue -->
+<!-- components/nav/Header.vue -->
 <script setup lang="ts">
 import { NAVIGATION, CONVERSION } from '#shared/config/navigation';
 
