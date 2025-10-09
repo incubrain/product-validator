@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import type { IconProps } from '@nuxt/ui';
 import { CONVERSION } from '#shared/config/navigation';
 
 const data = useFlowSection('offer');
@@ -6,6 +7,30 @@ const data = useFlowSection('offer');
 const primaryOffer = computed(() =>
   data?.items.find((offer) => offer.id === CONVERSION.primary),
 );
+
+// Simple icon alias + color mapping
+const STATUS_ICONS: Record<string, IconProps> = {
+  'status-available': { name: 'lucide:check', class: 'text-success' },
+  'status-beta': { name: 'lucide:flask-conical', class: 'text-info' },
+  'status-coming-soon': { name: 'lucide:clock', class: 'text-warning' },
+};
+
+// Transform features to include resolved icons
+const transformedFeatures = computed(() => {
+  if (!primaryOffer.value?.features) return [];
+
+  return primaryOffer.value.features.map((feature) => {
+    const resolved = STATUS_ICONS[feature.icon] || {
+      name: feature.icon,
+      class: '',
+    };
+    return {
+      title: feature.title,
+      icon: resolved.name,
+      class: resolved.class,
+    };
+  });
+});
 
 const email = ref('');
 const isEmailValid = computed(() =>
@@ -19,6 +44,7 @@ const isEmailValid = computed(() =>
       <UPricingPlan
         v-if="primaryOffer"
         v-bind="primaryOffer"
+        :features="transformedFeatures"
         :ui="{
           root: 'bg-primary/5',
           features: 'gap-3',
@@ -26,7 +52,23 @@ const isEmailValid = computed(() =>
           featureTitle: 'text-sm leading-tight',
         }"
       >
-        <!-- Button slot (same as before) -->
+        <template #features>
+          <ul class="flex flex-col gap-3 flex-1 mt-6 grow-0">
+            <li
+              v-for="feature in transformedFeatures"
+              :key="feature.title"
+              class="flex items-center gap-2 min-w-0"
+            >
+              <UIcon
+                :name="feature.icon"
+                :class="[feature.class, 'size-5 shrink-0']"
+              />
+              <span class="text-muted text-sm truncate">
+                {{ feature.title }}
+              </span>
+            </li>
+          </ul>
+        </template>
         <template #button>
           <div
             v-if="primaryOffer.id === 'magnet'"
@@ -63,7 +105,6 @@ const isEmailValid = computed(() =>
           />
         </template>
 
-        <!-- Stock progress -->
         <template v-if="primaryOffer.stock" #terms>
           <IStockProgress :stock="primaryOffer.stock" class="w-full" />
         </template>
