@@ -9,7 +9,7 @@ const { data: updates } = await useAsyncData('updates', () =>
 );
 
 // Get social links
-const socialLinks = pickSocialLinks(founder.accessibility.links, [
+const socialLinks = pickSocialLinks(founder.value.accessibility.links, [
   'youtube',
   'github',
 ]);
@@ -19,7 +19,7 @@ useHead({
   meta: [
     {
       name: 'description',
-      content: `${founder.story.mission} - Product updates and strategic decisions.`,
+      content: `${founder.value.story.mission} - Product updates and strategic decisions.`,
     },
   ],
 });
@@ -27,8 +27,8 @@ useHead({
 // Authors for changelog
 const authors = [
   {
-    name: `${founder.profile.given_name} ${founder.profile.surname}`,
-    avatar: founder.profile.avatar,
+    name: `${founder.value.profile.given_name} ${founder.value.profile.surname}`,
+    avatar: founder.value.profile.avatar,
     to: socialLinks?.find((link) => link.platform === 'github').url,
     target: '_blank',
   },
@@ -78,10 +78,11 @@ const heroLinks = computed(() =>
             :ui="{
               indicator:
                 'sticky top-(--ui-header-height) pt-4 -mt-4 flex flex-col items-end',
+              title: 'text-3xl font-bold pb-4',
             }"
           >
             <template #title>
-              <h2 class="text-3xl font-bold pb-4">{{ update.title }}</h2>
+              {{ update.title }}
             </template>
 
             <template #indicator>

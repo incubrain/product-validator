@@ -2,7 +2,7 @@
 <script setup lang="ts">
 const data = useFlowSection('problem');
 
-const profile = computed(() => data?.customerProfile);
+const profile = computed(() => data?.value.customerProfile);
 </script>
 
 <template>

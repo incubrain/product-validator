@@ -16,7 +16,7 @@ const headerClasses = computed(() => ({
 </script>
 
 <template>
-  <UHeader mode="slideover" :class="headerClasses">
+  <UHeader mode="slideover" :class="headerClasses" to="/">
     <template #title>
       <ILogo size="md" />
     </template>

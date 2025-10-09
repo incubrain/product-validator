@@ -6,9 +6,9 @@ const founder = useFlowSection('founder');
 const currentYear = new Date().getFullYear();
 
 const copyrightYear = computed(() =>
-  founder.business.founding_year === currentYear
+  founder.value.business.founding_year === currentYear
     ? `${currentYear}`
-    : `${founder.business.founding_year} - ${currentYear}`,
+    : `${founder.value.business.founding_year} - ${currentYear}`,
 );
 </script>
 

@@ -9,13 +9,13 @@ const founder = useFlowSection('founder');
 
 // Computed properties
 //  {EXTRACT}
-const displayName = computed(() => `Hi, I'm ${founder.profile.given_name}`);
-const description = computed(() => founder.profile.role);
+const displayName = computed(() => `Hi, I'm ${founder.value.profile.given_name}`);
+const description = computed(() => founder.value.profile.role);
 
 // Map links to proper format for UButton
 const socialLinks = computed(
   () =>
-    founder.accessibility.links?.map((link) => ({
+    founder.value.accessibility.links?.map((link) => ({
       label: link.label,
       icon: `i-lucide-${link.platform}`,
       to: link.url,

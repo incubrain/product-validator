@@ -1,8 +1,8 @@
 <script setup lang="ts">
 const data = useFlowSection('results');
 
-const caseStudies = computed(() => data?.caseStudies ?? []);
-const testimonials = computed(() => data?.testimonials ?? []);
+const caseStudies = computed(() => data.value?.caseStudies ?? []);
+const testimonials = computed(() => data.value?.testimonials ?? []);
 
 // Format testimonials for UPageCard
 const formattedTestimonials = computed(() =>

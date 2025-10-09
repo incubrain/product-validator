@@ -6,7 +6,7 @@ const data = useFlowSection('process');
 // Transform process flow data for stepper
 const stepperItems = computed(
   () =>
-    (data?.flow?.map((f) => ({
+    (data.value?.flow?.map((f) => ({
       title: f.title,
       duration: f.duration,
       slot: f.slot,
@@ -14,7 +14,7 @@ const stepperItems = computed(
     })) satisfies StepperItem[]) ?? [],
 );
 
-const features = computed(() => data?.features ?? []);
+const features = computed(() => data.value?.features ?? []);
 
 // Helper to render different content types
 function renderContent(content: any[]) {

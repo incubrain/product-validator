@@ -5,7 +5,7 @@ import { CONVERSION } from '#shared/config/navigation';
 const data = useFlowSection('offer');
 
 const primaryOffer = computed(() =>
-  data?.items.find((offer) => offer.id === CONVERSION.primary),
+  data?.value.items.find((offer) => offer.id === CONVERSION.primary),
 );
 
 // Simple icon alias + color mapping

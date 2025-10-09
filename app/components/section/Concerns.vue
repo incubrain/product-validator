@@ -43,7 +43,7 @@ const TYPE_META: Record<
 // Build and sort
 const items = computed<AccordionItem[]>(
   () =>
-    concernsData?.items
+    concernsData?.value.items
       ?.map((it, i: number) => {
         const meta = TYPE_META[it.type];
         return {
@@ -60,15 +60,15 @@ const items = computed<AccordionItem[]>(
       })
       .sort(
         (a, b) =>
-          ORDER.indexOf(concernsData.items[+a.value].type) -
-          ORDER.indexOf(concernsData.items[+b.value].type),
+          ORDER.indexOf(concernsData.value.items[+a.value].type) -
+          ORDER.indexOf(concernsData.value.items[+b.value].type),
       ) ?? [],
 );
 
 // Count items by type for legend
 const typeCounts = computed(() => {
   const counts = { warning: 0, objection: 0, support: 0, general: 0 };
-  concernsData?.items?.forEach((item) => {
+  concernsData?.value.items?.forEach((item) => {
     counts[item.type]++;
   });
   return counts;

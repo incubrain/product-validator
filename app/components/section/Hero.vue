@@ -4,7 +4,7 @@ const hero = useFlowSection('hero');
 const data = useFlowSection('solution');
 
 // Tech affiliations from solution data
-const affiliations = computed(() => data?.affiliations);
+const affiliations = computed(() => data?.value.affiliations);
 </script>
 
 <template>
@@ -48,11 +48,7 @@ const affiliations = computed(() => data?.affiliations);
 
     <!-- Main Title - Solution Claim -->
     <template #title>
-      <h1
-        class="text-4xl sm:text-6xl lg:text-7xl text-balance font-bold tracking-tight leading-tight text-center"
-      >
-        {{ hero.intro.title }}
-      </h1>
+      {{ hero.intro.title }}
     </template>
 
     <!-- Value proposition -->
@@ -144,10 +140,8 @@ const affiliations = computed(() => data?.affiliations);
 <style scoped>
 .bg-grid-white\/\[0\.02\] {
   z-index: 0;
-  background-image: linear-gradient(
-      rgba(255, 255, 255, 0.02) 1px,
-      transparent 1px
-    ),
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
   background-size: 50px 50px;
 }
