@@ -7,9 +7,9 @@ export default defineAppConfig({
       'close': 'lucide:x',
       'search': 'lucide:search',
       // {DX}: Offer status icon aliases
-      'status-available': 'lucide:check',
-      'status-beta': 'lucide:flask-conical',
-      'status-coming-soon': 'lucide:clock',
+      'status-available': 'lucide:check status-available',
+      'status-beta': 'lucide:flask-conical status-beta',
+      'status-coming-soon': 'lucide:clock status-coming-soon',
     },
   },
   ui: {

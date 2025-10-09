@@ -16,19 +16,13 @@ const isEmailValid = computed(() =>
 <template>
   <ISectionWrapper id="#offer" :intro="data.intro" :bridge="data.bridge">
     <div class="max-w-md mx-auto">
-      <!-- ✅ Direct binding - zero transformation -->
       <UPricingPlan
         v-if="primaryOffer"
         v-bind="primaryOffer"
         :ui="{
           root: 'bg-primary/5',
           features: 'gap-3',
-          feature: 'items-start',
-          featureIcon: [
-            '[&.status-available]:text-success',
-            '[&.status-beta]:text-info',
-            '[&.status-coming-soon]:text-warning',
-          ],
+          feature: 'items-center',
           featureTitle: 'text-sm leading-tight',
         }"
       >

@@ -141,16 +141,14 @@
 }
 
 /* {DX}: Icon aliases mapped to colors, check app.config for aliases */
-@layer components {
-  .status-available {
-    color: var(--color-success);
-  }
+.status-available {
+  color: var(--color-success);
+}
 
-  .status-beta {
-    color: var(--color-info);
-  }
+.status-beta {
+  color: var(--color-info);
+}
 
-  .status-coming-soon {
-    color: var(--color-warning);
-  }
+.status-coming-soon {
+  color: var(--color-warning);
 }
