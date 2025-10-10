@@ -51,6 +51,30 @@ and documenting the process openly on YouTube.
 
 ---
 
+## 🚀 Deployment
+
+Deploy with one click:
+
+### Vercel
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fincubrain%2Fproduct-validator&project-name=product-validator&demo-title=Product%20Validator%20Demo&demo-description=Validate%20your%20startup%20idea%20with%20this%20Nuxt%20template&demo-url=https%3A%2F%2Fproduct-validator.incubrain.org&demo-image=https%3A%2F%2Fgithub.com%2Fincubrain%2Fproduct-validator%2Fraw%2Fmain%2Fpublic%2Fog.png)
+
+- **Notes**: Auto-forks repo to your GitHub. Uses default env vars from
+  `vercel.json`. **Update ENV's when releasing v0.1.0 of your landing page**.
+
+- **Notes**: Prompts for Umami analytics. Defaults in `vercel.json`. Auto-forks
+  repo to your GitHub. For updates, sync fork via GitHub's "Sync fork" button
+  and push to auto-redeploy.
+
+### Railway
+
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/usbhW2?referralCode=gvXQKE&utm_medium=integration&utm_source=template&utm_campaign=generic)
+
+- **Notes**: Deploys from repo using Dockerfile. Provide Umami vars if prompted.
+  Railway auto-checks for repo updates, creating PRs for easy merging.
+
+---
+
 ## 🚀 Quick Start
 
 ```bash
