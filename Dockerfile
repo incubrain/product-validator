@@ -26,6 +26,7 @@ COPY package.json pnpm-lock.yaml .npmrc tsconfig.json nuxt.config.ts content.con
 COPY app ./app
 COPY shared ./shared  
 COPY theme ./theme
+COPY content ./content
 COPY modules ./modules
 
 
