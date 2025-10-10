@@ -15,6 +15,8 @@ export default defineNuxtModule({
       resolver,
     });
 
+    console.log('CONFIG_PATH', configPath);
+
     // Add virtual module that re-exports the selected config
     addTemplate({
       filename: 'flow-config.mjs',

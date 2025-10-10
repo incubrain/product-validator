@@ -23,7 +23,15 @@ export function getActiveConfigSource(): ConfigSource {
     );
   }
 
-  return (source || 'custom') as ConfigSource;
+  const resolvedSource = (source || 'custom') as ConfigSource;
+  console.log(
+    '[config-resolver] Resolved to:',
+    resolvedSource,
+    '→',
+    CONFIG_SOURCES[resolvedSource],
+  );
+
+  return resolvedSource;
 }
 
 /**
