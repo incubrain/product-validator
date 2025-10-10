@@ -2,7 +2,7 @@
 import { flowConfig } from '#build/flow-config.mjs';
 
 export function useFlowSection<K extends keyof FlowConfig>(key: K) {
-  return computed(() => flowConfig[key]);
+  return computed(() => flowConfig[key] as FlowConfig[K]);
 }
 
 export function useFlowOffer(offerId: OfferID) {
