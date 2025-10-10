@@ -134,6 +134,7 @@ export default defineNuxtConfig({
 
   routeRules: {
     '/': { prerender: true },
+    '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background
   },
 
   components: [
