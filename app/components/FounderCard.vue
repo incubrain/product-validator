@@ -51,7 +51,7 @@ const socialLinks = computed(
 
     <!-- Body: short bio message -->
     <p class="text-sm text-toned text-left lg:text-right">
-      {{ founder.story.mission }}
+      {{ founder.story.challenge }}
     </p>
 
     <!-- Footer: social links -->
