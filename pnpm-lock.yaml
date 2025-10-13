@@ -9,8 +9,8 @@ importers:
   .:
     dependencies:
       '@iconify/json':
-        specifier: ^2.2.363
-        version: 2.2.391
+        specifier: ^2.2.395
+        version: 2.2.395
       '@internationalized/date':
         specifier: ^3.9.0
         version: 3.10.0
@@ -558,8 +558,8 @@ packages:
   '@iconify/collections@1.0.601':
     resolution: {integrity: sha512-0rTkng4arHTfeEPA+h5zHHBCdvRsWxcrGbit+dOGyRqNj7Rtx3PwBtdh/q9+h8wai5j+wcbkaJSQPHqgRLb2zw==}
 
-  '@iconify/json@2.2.391':
-    resolution: {integrity: sha512-RQGiFsnxHvyn0bT5TZvI9XKI++Kto9kzXEBUOemNdci+r6qUVs/w7/20JcgCf3rv6fgtENHtj5Uf5S0ColSJ4A==}
+  '@iconify/json@2.2.395':
+    resolution: {integrity: sha512-XSYOnlGqiZhJkFFBUiVK4C5VIiv4rxyKtCmkQ9nS4zfMpS4xT0BF9+qWUKOHYgeCzCLghyWfrm6Eti3Sv5kfqQ==}
 
   '@iconify/types@2.0.0':
     resolution: {integrity: sha512-+wluvCrRhXrhyOmRDJ3q8mux9JkKy5SJ/v8ol2tu4FVjyYvtEzkc/3pK15ET6RKg4b4w4BmTk1+gsCUhf21Ykg==}
@@ -6189,10 +6189,10 @@ snapshots:
     dependencies:
       '@iconify/types': 2.0.0
 
-  '@iconify/json@2.2.391':
+  '@iconify/json@2.2.395':
     dependencies:
       '@iconify/types': 2.0.0
-      pathe: 1.1.2
+      pathe: 2.0.3
 
   '@iconify/types@2.0.0': {}
 
