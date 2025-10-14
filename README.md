@@ -1,160 +1,253 @@
 # Product Validator
 
-> **⚠️ Validation-first Template** — Designed to answer _“Should we build it?”_
+> **⚠️ Validation-first Template** — Ship a landing page in <1 hour, validate in
+> weeks, not months.
 
-A minimal, production-ready **Nuxt 4 + Tailwind v4 + TypeScript** template to
-help you validate startup ideas fast. Ship a landing page in a day, share it
-widely, and learn from analytics without vendor lock-in.
+A minimal, production-ready **Nuxt 4 + Tailwind v4 + TypeScript** template
+designed to help struggling founders break perfectionist cycles and validate
+ideas through action.
+
+**Core Philosophy:** You are the product. You are the customer. Ship signal, not
+perfection.
 
 ---
 
 ## 🌐 Live Demo
 
-See the live showcase:
-[product-validator](https://product-validator.incubrain.org)
+See the template in action:
+[product-validator.incubrain.org](https://product-validator.incubrain.org)
 
 ---
 
-## ✨ Why This Template?
+## ✨ Why This Template Exists
 
-Most founders overbuild. Validation is not about features — it’s about
-**evidence**.  
-This template removes drag, decision paralysis, and perfectionism hell so you
-can focus on building a business not a ghost product!
+Most founders get stuck in perfectionist loops:
 
-- **Landing Page in Minutes** — clone, configure, deploy
-- **Research-driven Data Model** — unified config for profiles, hypotheses,
-  offers, and proof
-- **Conversion Systems Baked-in** — banner CTA + exit-intent modal included
-- **Four-Product Framework** — primary + magnet + direct-revenue + social
-  offers, all driving to your core product
-- **Nuxt Events → Any Analytics** — structured events, provider-agnostic
-  (pre-configured with Umami)
-- **Social-first Playbook** — prompts to share in communities and networks
-- **Public Critiques on YouTube** — submit your page for review:
-  [Incubrain YouTube](https://www.youtube.com/@Incubrain)
+- "Just one more feature..."
+- "I need to research more first..."
+- "It's not ready to show anyone yet..."
 
-We’re also **building this template in public**, using it for our own product,
-and documenting the process openly on YouTube.
+**This template forces a different path:**
+
+1. **Deploy with placeholders** (break the "not ready" barrier)
+2. **AI-guided introspection** (discover what you're uniquely positioned to
+   build)
+3. **Package your offer** (structure your Launch Kit based on your positioning)
+4. **Ship real content** (replace placeholders with validated messaging)
+5. **Get feedback** (recorded YouTube critique + strategic guidance)
+
+**Total time investment:** 8-12 hours → Live validated landing page
 
 ---
 
-## 🧩 What’s Inside
+## 🎯 What's Included
 
-- **Profiles + Hypotheses** — capture audience pains, outcomes, and evidence
-  before you build
-- **Offers + Social Proof** — structured to map directly to pricing and
-  credibility components
-- **Conversion UX** — CTA banner + exit intent to maximize early signal
-- **Analytics Ready** — Umami integration plus provider-agnostic event system
-- **Developer-Friendly** — Nuxt 4, Tailwind v4, TypeScript, Tailwind Variants
+### For Founders (Validation Features)
 
----
+**Free Launch Kit** — 4-step email sequence that guides you from placeholder
+site to validated landing page:
 
-## 🚀 Deployment
+- ✅ Automated email delivery with progressive content
+- ✅ AI-guided positioning discovery (speech-to-text optimized)
+- ✅ Competitive analysis and differentiation framework
+- ✅ Config file generation from your unique context
+- ✅ 30-min recorded YouTube feedback call
+- ✅ Support community access throughout
 
-Deploy with one click:
+**Total time:** 8-12 hours over 1-4 weeks
 
-### Vercel
+### For Developers (Technical Features)
 
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fincubrain%2Fproduct-validator&project-name=product-validator&demo-title=Product%20Validator%20Demo&demo-description=Validate%20your%20startup%20idea%20with%20this%20Nuxt%20template&demo-url=https%3A%2F%2Fproduct-validator.incubrain.org&demo-image=https%3A%2F%2Fgithub.com%2Fincubrain%2Fproduct-validator%2Fraw%2Fmain%2Fpublic%2Fog.png)
-
-- **Notes**: Auto-forks repo to your GitHub. Uses default env vars from
-  `vercel.json`. **Update ENV's when releasing v0.1.0 of your landing page**.
-
-- **Notes**: Prompts for Umami analytics. Defaults in `vercel.json`. Auto-forks
-  repo to your GitHub. For updates, sync fork via GitHub's "Sync fork" button
-  and push to auto-redeploy.
-
-### Railway
-
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/usbhW2?referralCode=gvXQKE&utm_medium=integration&utm_source=template&utm_campaign=generic)
-
-- **Notes**: Deploys from repo using Dockerfile. Provide Umami vars if prompted.
-  Railway auto-checks for repo updates, creating PRs for easy merging.
+- **Modern Stack:** Nuxt 4, Tailwind v4, TypeScript
+- **Conversion Systems:** Exit-intent modals, progressive forms, CTA
+  optimization
+- **Analytics Ready:** Provider-agnostic event system (pre-configured for Umami)
+- **Email Automation:** Integrated with FilloutForm for sequence delivery
+- **Type-Safe Config:** Structured data model with inline documentation
+- **One-Click Deploy:** Railway and Vercel support out of the box
+- **Hot Module Replacement:** Config changes without page reload
 
 ---
 
 ## 🚀 Quick Start
 
+### Option A: One-Click Deploy (Fastest)
+
+**Vercel:**
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fincubrain%2Fproduct-validator)
+
+**Railway:**
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/usbhW2?referralCode=gvXQKE)
+
+**Your site goes live with placeholder content in <10 minutes.**
+
+---
+
+### Option B: Clone First (Recommended for Developers)
+
 ```bash
-# Clone the repository
-git clone https://github.com/incubrain/product-validator
-cd product-validator
+# Clone repository
+git clone https://github.com/incubrain/product-validator your-project
+cd your-project
 
 # Install dependencies
 pnpm install
 
-# Start development server
+# Start dev server
 pnpm dev
 ```
 
-## 🔎 Searchable Tags
-
-Use inline tags (`// {TAG}: ...`) to make the template easier to configure and
-maintain.  
-Search with Cmd+Shift+F '{CONFIG}:' to identify exactly what you need to update.
-
-### Tags
-
-- **{CONFIG}** → Things the user must update when cloning.
-- **{TASK}** → Work that still needs doing.
-- **{OPTIMIZE}** → Things to consider after validation step
-- **{DOC}** → Areas needing documentation.
-- **{DECISION}** → Why something was implemented this way.
-- **{DX}** → Developer experience tips.
-- **{FRICTION}** → Things causing friction for developer setup or customer
-  conversion
-
-### Example
-
-```js
-// {CONFIG}: Replace with your API key
-// {TASK}: Add unit test for validation
-// {OPTIMIZE}: Consider adding optimized, scripted hero video, may boost your conversions
-// {DOC}: Explain color token mapping
-// {DECISION}: Using Nitro gateway instead of direct DB
-// {DX}: use this keyboard shortcut to do this thing
-// {FRICTION}: This file needs to be deleted before going live
-```
+Visit `http://localhost:3000` to see placeholder site.
 
 ---
 
-🎓 Course (Pre-launch Offer)
+## 📚 Documentation
 
-- Get the full Template Setup + Product Validator bundle:
-- Configure and deploy the template
-- Learn messaging + social-first distribution
-- Understand what signal to look for before you invest more
+### Guides (For Founders)
 
-👉 Available now on Whop 🎟 $50 early-bird (50 spots only) — price increases
-after.
+**Getting Started:**
+
+- [Step 1: Deployment](guides/1.deployment.md) — Get live with placeholders
+  in <1 hour
+- [FilloutForm Setup](guides/fillout-setup.md) — Automate your Launch Kit email
+  sequence
+
+**After Launch Kit Completion:**
+
+- [Step 4: Configuration](guides/step-4-configuration.md) — Replace placeholders
+  with AI-generated content
+- [Analytics Setup](guides/analytics-setup.md) — Track conversions (setup AFTER
+  feedback call)
+
+### System Prompts (AI Guides)
+
+Attached to Launch Kit emails, used in your AI project
+(ChatGPT/Claude/Gemini/Grok):
+
+- **Step 2:** Introspection Guide (deep positioning discovery)
+- **Step 3:** Positioning + Offer Packaging (competitive analysis)
+- **Step 4:** Config Generation (transform context into production files)
+
+### Configuration
+
+All landing page content is managed through structured config files in
+`shared/config/`.
+
+**To customize your site:** Update the config files with your content. Each file
+has inline comments explaining what it needs and where that information comes
+from (Step 2 or 3 of the Launch Kit).
+
+**After completing the Launch Kit:** AI will generate completed config files
+based on your introspection and positioning work. Simply copy them into your
+codebase and deploy.
 
 ---
 
-🛠 Development
+## 🎯 Who This Is For
 
-```bash
-# Development server
-pnpm dev
+**Ideal for:**
 
-# Build for production
-pnpm build
+- Technical founders stuck in "almost ready" mode for 3-10+ years
+- Founders with domain expertise but can't identify what to build
+- Those who keep rebuilding instead of validating
+- People tired of perfectionist loops preventing launches
 
-# Preview production build
-pnpm preview
-```
+**Not ideal for:**
 
----
-
-📄 License
-
-MIT License.
+- Post-PMF companies scaling existing products
+- B2B enterprise with long sales cycles
+- Non-technical founders without dev support
+- Anyone expecting passive validation without marketing effort
 
 ---
 
-Notes
+## 🏗️ Why This Approach Works
 
-- This is a validation-first kit, not a full CMS/blog boilerplate
-- Components and APIs will evolve as we iterate
-- Focus: Clone · Configure · Validate — in days
+### Email Sequence (Not PDFs/Videos)
+
+- Fastest format to deliver value
+- No production overhead (write text, automate delivery)
+- Progressive value delivery (each step builds on previous)
+- Easy to iterate based on feedback
+
+### AI-Guided (Not Worksheets)
+
+- Recognizes patterns you're too close to see
+- Pushes for specificity when answers are vague
+- Speech-to-text optimized (think out loud, AI extracts signal)
+- Replaces expensive coaching or mastermind groups
+
+### Placeholder-First Deployment
+
+- Breaks perfectionism by forcing public iteration from day one
+- Removes the "not ready yet" excuse
+- Tests messaging before investing in design
+- Psychological shift from private iteration to public learning
+
+### Structured Config (Not CMS)
+
+- Single-page validation doesn't need content management
+- Version controlled (Git history of messaging iterations)
+- Type-safe (catches errors at compile-time)
+- Fast (no database queries, pure static generation)
+
+---
+
+## 🔎 Quick Navigation
+
+Use inline tags to find what you need quickly:
+
+**Search:** `Cmd+Shift+F` → `{CONFIG}:` (things you must update)
+
+**Other tags:**
+
+- `{OPTIMIZE}` — Post-validation improvements to consider
+- `{DECISION}` — Why something was implemented this way
+- `{DX}` — Developer experience tips
+
+---
+
+## ⚡ Quick Reference
+
+| Action        | Command / Location                                     |
+| ------------- | ------------------------------------------------------ |
+| **Deploy**    | Push to main branch (Railway/Vercel auto-deploy)       |
+| **Configure** | Update files in `shared/config/`                       |
+| **Guides**    | See `guides/` directory                                |
+| **Analytics** | Setup AFTER feedback call (see guide)                  |
+| **Support**   | [Community Chat](https://whop.com/incubrain-community) |
+
+---
+
+## 🤝 Contributing
+
+This template evolves based on real founder feedback.
+
+**Ways to contribute:**
+
+- Submit your site for YouTube review
+- Share validation results (anonymized if needed)
+- Report bugs or unclear documentation
+- Suggest improvements based on your experience
+
+**Not accepting:** Feature requests that add complexity before validation.
+
+---
+
+## 🔗 Links
+
+- **Live Demo:**
+  [product-validator.incubrain.org](https://product-validator.incubrain.org)
+- **YouTube Reviews:** [Incubrain Channel](https://www.youtube.com/@Incubrain)
+- **Support Community:** [Join Chat](https://whop.com/incubrain-community)
+- **Repository:** [GitHub](https://github.com/incubrain/product-validator)
+
+---
+
+## 📄 License
+
+MIT License — Use for personal or commercial projects.
+
+---
+
+**Focus:** Ship signal, not perfection. Validate in weeks, not months.
