@@ -1,5 +1,18 @@
-// {CONFIG}: Define your target customer profile and their core pain points
 import type { CustomerProfile, ProblemSolution } from '#types';
+
+/**
+ * {CONFIG}: PROBLEM & CUSTOMER PROFILE
+ *
+ * Define WHO you're serving and WHAT pain you're solving.
+ *
+ * SOURCES:
+ * - Step 2: Your expensive pain point, target customer (past-you)
+ * - Step 3: Refined problem framing from competitive analysis
+ *
+ * Key sections:
+ * - solution: Your problem statement and promise
+ * - customerProfile: Detailed persona with context and pain points
+ */
 
 export const solution = {
   statement: '⚠️ One-sentence problem statement',

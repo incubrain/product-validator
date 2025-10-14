@@ -8,7 +8,19 @@ import { offers } from './6.offers';
 import { testimonials, caseStudies } from './7.results';
 import { concerns } from './8.concerns';
 
-// {CONFIG}: Update this once you have completed your other config files
+/**
+ * {CONFIG}: MAIN FLOW CONFIGURATION
+ *
+ * This is the master file that composes your entire landing page.
+ * Complete the other config files (2-8) first, then return here for final touches.
+ *
+ * SOURCES:
+ * - Step 2 (Introspection): Founder profile, pain points, customer profile
+ * - Step 3 (Positioning): Hero messaging, positioning statements, offer structure
+ *
+ * All ⚠️ placeholders will be replaced by AI in Step 4.
+ */
+
 export const flowConfig = {
   hero: {
     badge: {

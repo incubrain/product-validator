@@ -1,5 +1,17 @@
-// {CONFIG}: Outline your process features and step-by-step flow
 import type { ProcessFeature, ProcessStep } from '#types';
+
+/**
+ * {CONFIG}: PROCESS & FEATURES
+ * 
+ * Define WHAT you're delivering and HOW it works step-by-step.
+ * 
+ * SOURCES:
+ * - Step 3: Launch Kit offer structure, email sequence outline
+ * 
+ * Key sections:
+ * - features: High-level benefits of your Launch Kit
+ * - flow: Step-by-step breakdown of your delivery process
+ */
 
 export const features = [
   {

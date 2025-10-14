@@ -1,5 +1,20 @@
-// {CONFIG}: Address customer objections and common questions
 import type { FaqItem } from '#types';
+
+/**
+ * {CONFIG}: FAQ & OBJECTIONS
+ *
+ * Address common concerns and objections before they ask.
+ *
+ * SOURCES:
+ * - Step 3: Competitive positioning (why not alternatives?)
+ * - Common sense: Time investment, support, technical requirements
+ *
+ * Key sections:
+ * - warning: Set realistic expectations
+ * - objection: Address competitive concerns
+ * - support: Explain help available
+ * - general: Answer basic questions
+ */
 
 export const concerns = [
   {

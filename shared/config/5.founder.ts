@@ -1,10 +1,24 @@
-// {CONFIG}: Your founder profile and story
 import type {
   FounderProfile,
   BusinessInfo,
   FounderStory,
   FounderAccessibility,
 } from '#types';
+
+/**
+ * {CONFIG}: FOUNDER PROFILE & STORY
+ *
+ * Share WHO you are and WHY you're qualified to help.
+ *
+ * SOURCES:
+ * - Step 2: Your background, expertise, breakthrough story, authority
+ *
+ * Key sections:
+ * - profile: Basic info and images
+ * - business: Company details
+ * - story: Your origin story and mission
+ * - accessibility: How people can reach you
+ */
 
 export const profile = {
   role: '⚠️ Your role or title',

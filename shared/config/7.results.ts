@@ -1,5 +1,20 @@
-// {CONFIG}: Add testimonials and case studies for social proof
 import type { Testimonial, CaseStudy } from '#types';
+
+/**
+ * {CONFIG}: SOCIAL PROOF & RESULTS
+ *
+ * Testimonials and case studies that build trust.
+ *
+ * SOURCES:
+ * - Step 2: Your own results/transformation (can be first case study)
+ * - External: Customer testimonials (add as you gather them)
+ *
+ * Key sections:
+ * - testimonials: Short quotes from customers
+ * - caseStudies: Detailed success stories with metrics
+ *
+ * START WITH: Your own story as the first case study
+ */
 
 export const testimonials = [
   {

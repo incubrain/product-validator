@@ -1,13 +1,22 @@
-/**
- * {CONFIG}: Define your product offers and pricing structure
- *
- * FEATURE STATUS ICONS (via aliases in nuxt.config):
- * - status-available   → Green check (ready to use)
- * - status-beta        → Blue flask (beta/testing)
- * - status-coming-soon → Orange clock (planned feature)
- */
-
 import type { Offer } from '#types';
+
+/**
+ * {CONFIG}: OFFERS & PRICING
+ *
+ * Define your monetization structure.
+ *
+ * SOURCES:
+ * - Step 3: Launch Kit package (free magnet) + Direct hire service
+ *
+ * Key sections:
+ * - magnet: Free Launch Kit offer (primary conversion)
+ * - direct: Hourly service offer (paid alternative)
+ *
+ * FEATURE STATUS ICONS:
+ * - status-available: Green check (ready to use)
+ * - status-beta: Blue flask (beta/testing)
+ * - status-coming-soon: Orange clock (planned feature)
+ */
 
 export const offers = [
   {

@@ -1,5 +1,19 @@
-// {CONFIG}: Define your solution outcomes and competitive positioning
 import type { Outcome, Alternative, Affiliations } from '#types';
+
+/**
+ * {CONFIG}: SOLUTION & COMPETITIVE POSITIONING
+ *
+ * Define HOW you solve it and WHY they choose you vs alternatives.
+ *
+ * SOURCES:
+ * - Step 2: Your breakthrough solution and unique experience
+ * - Step 3: Competitive research, positioning statement, differentiators
+ *
+ * Key sections:
+ * - outcomes: Benefits/transformations you deliver
+ * - alternatives: Competitors and why they fall short
+ * - affiliations: Trust markers (tech stack, endorsements, etc.)
+ */
 
 export const outcomes = [
   {
