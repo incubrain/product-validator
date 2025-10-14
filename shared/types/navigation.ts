@@ -3,6 +3,7 @@ export type SectionAnchor =
   | '#problem'
   | '#solution'
   | '#process'
+  | '#methodology'
   | '#founder'
   | '#offer'
   | '#results'

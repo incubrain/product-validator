@@ -8,6 +8,7 @@ import { profile, accessibility, business, story } from './5.founder';
 import { offers } from './6.offers';
 import { caseStudies, testimonials } from './7.results';
 import { concerns } from './8.concerns';
+import { validationExamples, methodologyFramework } from './9.methodology';
 
 export const flowConfig: FlowConfig = {
   // ============================================================================
@@ -60,6 +61,11 @@ export const flowConfig: FlowConfig = {
     outcomes,
     separators: [
       {
+        label: 'Validation That Works',
+        description:
+          'Proven examples from companies that validated before building',
+      },
+      {
         label: 'Why Alternatives Fail',
         description:
           "High cost to start, vendor lock-in, 'do it all' approach, and lack of personalised support at scale while pushing you to build a business without validating it first",
@@ -85,7 +91,7 @@ export const flowConfig: FlowConfig = {
       {
         label: 'step by step breakdown',
         description:
-          "You're success is our success, we are here to help at every step",
+          'Your success is our success, we are here to help at every step',
       },
     ],
     flow,
@@ -101,6 +107,21 @@ export const flowConfig: FlowConfig = {
   },
 
   // ============================================================================
+  // METHODOLOGY SECTION (NEW - Optional)
+  // ============================================================================
+  methodology: {
+    intro: {
+      icon: 'i-lucide-bar-chart-3',
+      headline: 'Define Success Before You Ship',
+      title: 'What Does "Validated" Mean?',
+      description:
+        'Data-driven thresholds prevent emotional decisions. Set your criteria now based on these industry standards, measure later, decide with confidence.',
+    },
+    examples: validationExamples,
+    framework: methodologyFramework,
+  },
+
+  // ============================================================================
   // FOUNDER SECTION
   // ============================================================================
   founder: {
@@ -109,7 +130,7 @@ export const flowConfig: FlowConfig = {
       headline: 'Learn from my many mistakes',
       title: '13 Years and $350k+ Lost',
       description:
-        "One month ago I started shipping weekly. You're watching the validation method work in real-time. Transparent, not polished.",
+        "Started shipping weekly one month ago. You're watching the validation method work in real-time. Transparent, not polished.",
     },
     profile,
     accessibility,
@@ -123,16 +144,16 @@ export const flowConfig: FlowConfig = {
   offer: {
     intro: {
       icon: 'i-lucide-handshake',
-      headline: 'Limited Spots Available',
-      title: 'Stop Guessing, Get Feedback',
+      headline: 'Limited Early Access',
+      title: 'Free Launch Kit + Feedback Call',
       description:
-        'Free validation launch kit gets you live and gathering feedback.',
+        'Get live in <10 minutes, complete the 4-step sequence, receive strategic feedback. Zero cost until you validate demand.',
     },
     items: offers,
     bridge: {
       headline: 'Have concerns?',
       message:
-        'Address objections about technical requirements, time investment, and why alternatives fail',
+        "Honest answers about technical requirements, time investment, competition, and who this isn't for",
       cta: {
         label: 'Get Answers',
         to: { path: '/', hash: '#concerns' },
@@ -147,18 +168,21 @@ export const flowConfig: FlowConfig = {
   results: {
     intro: {
       icon: 'i-lucide-trending-up',
-      headline: 'Testimonials',
-      title: 'Your Testimonial Could Be Here',
+      headline: 'Built in Public',
+      title: 'Your Success Story Could Be Here',
       description:
-        "We just launched! Use the template and provide some feedback, we'll drive traffic to your landing page.",
+        "Just launched publicly. Use the template, provide feedback, and we'll drive traffic to your validated landing page as social proof.",
     },
     caseStudies,
     separators: [
       {
+        label: 'What Your Numbers Mean',
+      },
+      {
         label: 'Success Stories',
       },
       {
-        label: 'Testimonials',
+        label: 'Community Feedback',
       },
     ],
     testimonials,
@@ -171,16 +195,17 @@ export const flowConfig: FlowConfig = {
     intro: {
       icon: 'i-lucide-help-circle',
       headline: 'Objections & Reality Checks',
-      title: 'Why not ClickFunnels?',
+      title: 'Why Not ClickFunnels or Webflow?',
       description:
-        "Honest answers about technical requirements, competition, freshness, and who this isn't for",
+        "Honest answers: technical requirements, time commitment, competition, freshness concerns, and who this isn't for.",
     },
     items: concerns,
     bridge: {
-      headline: 'Questions answered?',
-      message: "Let's turn your idea into validated evidence—start free",
+      headline: 'Validation is Phase 1. What about Phase 2?',
+      message:
+        'After you validate demand, Phase 2 is productization: building your delivery system and scaling traffic. We can help with that too. First validate the signal. Then we help you build what sells.',
       cta: {
-        label: 'Get Validation Launch Kit',
+        label: 'Start Phase 1 Now',
         to: { path: '/', hash: '#offer' },
         icon: 'i-lucide-rocket',
       },

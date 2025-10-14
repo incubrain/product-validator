@@ -4,6 +4,7 @@
     <ISectionProblem />
     <ISectionSolution />
     <ISectionProcess />
+    <ISectionMethodology />
     <ISectionFounder />
     <ISectionOffer />
     <ISectionResults />

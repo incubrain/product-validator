@@ -1,4 +1,4 @@
-import type { Offer } from '#types'
+import type { Offer } from '#types';
 
 export const offers = [
   {
@@ -6,8 +6,11 @@ export const offers = [
     primary: true,
 
     title: 'Launch Kit',
-    description:
-      'Guided process: deploy now, discover your value, create irresistible offers, configure with purpose',
+    description: 'AI Guided: Deploy → Discover → Package → Ship. (8-12 hours)',
+
+    // NEW: Add tagline for clarity
+    tagline:
+      '🎯 Perfect for: Technical founders who can execute with structured guidance',
 
     badge: {
       label: 'FREE',
@@ -17,32 +20,32 @@ export const offers = [
     },
     features: [
       {
-        title: 'Technical setup guide (deploy in <1 hour)',
-        icon: 'status-beta',
+        title: 'Step 1: Deploy in <10 minutes - break the cycle',
+        icon: 'status-available',
       },
       {
-        title: 'Deep introspection workbook (PDF)',
-        icon: 'status-beta',
+        title: 'Step 2: Discover your value',
+        icon: 'status-available',
       },
       {
-        title: 'Irresistible offer creation framework (PDF)',
-        icon: 'status-beta',
+        title: 'Step 3: Positioning + offer packaging',
+        icon: 'status-available',
       },
       {
-        title: 'Unified configuration checklist',
-        icon: 'status-beta',
+        title: 'Step 4: Content generation + ship',
+        icon: 'status-available',
       },
       {
-        title: '30-min recorded YouTube critique of your site',
-        icon: 'status-beta',
+        title: '30-min recorded YouTube feedback call',
+        icon: 'status-available',
       },
       {
-        title: 'Private feedback session (10-15 min)',
-        icon: 'status-beta',
+        title: 'Private strategic guidance (10-15 min)',
+        icon: 'status-available',
       },
       {
-        title: 'Support chat access throughout',
-        icon: 'status-beta',
+        title: 'Support community access throughout',
+        icon: 'status-available',
       },
     ],
 
@@ -50,12 +53,12 @@ export const offers = [
     highlight: true,
 
     stock: {
-      limit: 50,
+      limit: 100,
       claimed: 7,
     },
 
     cta: {
-      label: 'Free Launch Kit',
+      label: 'Start Free Launch Kit',
       to: undefined,
       icon: 'i-lucide-rocket',
       modal: 'window',
@@ -66,88 +69,42 @@ export const offers = [
   },
 
   {
-    id: 'low',
-    title: 'Validator Accelerator',
-    description: 'Complete validation course with community access',
-    price: '$100',
-    discount: '$50',
-    billingCycle: 'one-time',
-
-    features: [
-      {
-        title: 'YouTube review of your product page',
-        icon: 'status-available',
-      },
-      {
-        title: '2 selected founders get 1-month 1:1 coaching',
-        icon: 'status-available',
-      },
-      {
-        title: '30-day validation roadmap (step-by-step)',
-        icon: 'status-coming-soon',
-      },
-      {
-        title: 'Asset resource database + AI generation guides',
-        icon: 'status-coming-soon',
-      },
-      {
-        title: 'Proven AI prompts for setup & optimization',
-        icon: 'status-coming-soon',
-      },
-      {
-        title: 'Idea assessment framework',
-        icon: 'status-coming-soon',
-      },
-    ],
-
-    variant: 'outline',
-
-    stock: {
-      limit: 50,
-      claimed: 7,
-    },
-
-    cta: {
-      label: 'Accelerator Course',
-      to: 'https://whop.com/incubrain-community/product-validator',
-      icon: 'i-lucide-shopping-cart',
-    },
-  },
-
-  {
     id: 'direct',
 
-    title: 'Hire Me Directly',
-    description: "I'll guide you through the validation process",
+    title: 'Done-With-You Implementation',
+    description:
+      'Weekly accountability + hands-on execution. We build it together (or I do it for you).',
 
-    price: '$50',
-    discount: '$27',
-    billingCycle: '/hour',
+    tagline:
+      '⚡ Upgrade when: You need momentum, accountability, or technical execution help',
+
+    price: '$27',
+    discount: '$50',
+    billingCycle: 'hour',
 
     features: [
       {
-        title:
-          'Accountability & execution rhythm (weekly check-ins, task plan)',
+        title: 'Weekly 1:1 check-ins + execution planning (not just advice)',
         icon: 'status-available',
       },
       {
-        title: 'Mentorship to clarify product from strengths & life experience',
+        title: 'Strategic mentorship: positioning, offer packaging, messaging',
         icon: 'status-available',
       },
       {
-        title: 'Product ideation & irresistible-offer packaging',
+        title: 'Hands-on development support (or fully managed implementation)',
         icon: 'status-available',
       },
       {
-        title: 'Hands-on development support or fully managed',
+        title: 'Daily guerrilla marketing playbook + validation strategy',
         icon: 'status-available',
       },
       {
-        title: 'Validation strategy & daily guerrilla marketing playbook',
+        title: 'Copywriting + messaging review for conversions',
         icon: 'status-available',
       },
       {
-        title: 'Copywriting & messaging review for clarity and conversion',
+        title: 'Custom integration setup (analytics, forms, email sequences)',
         icon: 'status-available',
       },
     ],
@@ -161,10 +118,11 @@ export const offers = [
     },
 
     cta: {
-      label: 'Hire me',
+      label: 'Book a Call',
       to: 'https://www.upwork.com/freelancers/~01b4c32258ac48835f',
       icon: 'i-lucide-handshake',
       color: 'secondary',
+      note: 'Monthly packages available. First hour: strategy session.',
     },
   },
 ] satisfies Offer[];

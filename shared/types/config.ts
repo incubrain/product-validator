@@ -131,7 +131,7 @@ export type Affiliations = {
     name?: string;
     logo: string;
     note?: string;
-  }[]
+  }[];
 };
 
 // ============================================================================
@@ -168,6 +168,59 @@ export type ProcessStep = {
   duration: string;
   actions?: ProcessAction[];
   content?: FlowContent[];
+};
+
+// ============================================================================
+// METHODOLOGY SECTION (Optional)
+// ============================================================================
+
+export type ValidationExample = {
+  company: string;
+  year: number;
+  approach: string[];
+  result: string;
+  url?: string;
+};
+
+export type ThresholdRange = {
+  range: string;
+  meaning: string;
+};
+
+export type SuccessMetric = {
+  id: string;
+  name: string;
+  description: string;
+  icon: string;
+  thresholds: {
+    weak: ThresholdRange;
+    average: ThresholdRange;
+    strong: ThresholdRange;
+  };
+};
+
+export type DecisionOption = {
+  label: string;
+  icon: string;
+  color: 'success' | 'warning' | 'error';
+  threshold: string;
+  action: string;
+  description: string;
+};
+
+export type MethodologyFramework = {
+  metrics: SuccessMetric[];
+  decisions: {
+    build: DecisionOption;
+    refine: DecisionOption;
+    pivot: DecisionOption;
+  };
+};
+
+export type MethodologySection = {
+  intro: SectionIntro;
+  examples: ValidationExample[];
+  framework: MethodologyFramework;
 };
 
 // ============================================================================
@@ -349,6 +402,8 @@ export type FlowConfig = {
     features: ProcessFeature[];
     flow: ProcessStep[];
   };
+
+  methodology?: MethodologySection;
 
   founder: SectionBase & {
     profile: FounderProfile;

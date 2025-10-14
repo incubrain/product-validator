@@ -44,7 +44,7 @@ export const story = {
     "It's exhausting and I'm done!!",
   ],
   mission:
-    'My mission is to help 100 struggling founders acheive financial freedom so they can build the next wave of world changing products from a strong foundation.',
+    'My mission is to help 100 struggling founders acheive financial freedom so they can chase bigger dreams with confidence.',
   challenge: 'Join me and other founders on this journey',
 } satisfies FounderStory;
 

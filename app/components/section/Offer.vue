@@ -52,6 +52,11 @@ const isEmailValid = computed(() =>
           featureTitle: 'text-sm leading-tight',
         }"
       >
+        <!-- NEW: Display tagline if exists -->
+        <template #description>
+          <p class="text-base text-toned">{{ primaryOffer.description }}</p>
+        </template>
+
         <template #features>
           <ul class="flex flex-col gap-3 flex-1 mt-6 grow-0">
             <li

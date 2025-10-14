@@ -3,8 +3,9 @@ import type { ProcessFeature, ProcessStep } from '#types';
 
 export const features = [
   {
-    title: 'Deploy in Under 1 Hour',
-    description: 'Step by step guide to get you live today, no excuses!',
+    title: 'Deploy with one click',
+    description:
+      'If you can click a button and have a GitHub account, no excuses!',
     icon: 'i-lucide-rocket',
   },
   {
