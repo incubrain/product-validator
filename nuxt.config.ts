@@ -116,7 +116,6 @@ export default defineNuxtConfig({
 
   alias: {
     '#theme': fileURLToPath(new URL('./theme/index.ts', import.meta.url)),
-    '#theme/*': fileURLToPath(new URL('./theme', import.meta.url)),
     '#config': fileURLToPath(
       new URL('./shared/config/index.ts', import.meta.url),
     ),
