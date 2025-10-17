@@ -23,7 +23,7 @@ if (import.meta.dev && import.meta.client) {
   const { clearAllStorage } = useDevTools();
   const { $exitIntent } = useNuxtApp();
   defineShortcuts({
-    meta_shift_r: clearAllStorage, // {DX}: cmd+shft+r to clear session/local storage using storagePrefix + refresh
+    meta_shift_r: clearAllStorage, // {DX}: cmd+shft+r to clear session/local storage + refresh
     meta_shift_e: () => $exitIntent.fire(true), // {DX}: cmd+shft+e to manually trigger intent trigger for testing
   });
 }

@@ -2,7 +2,7 @@
 
 export const useDevTools = () => {
   const toast = useToast();
-  const storagePrefix = useRuntimeConfig().public.validator.storagePrefix
+  const storagePrefix = useRuntimeConfig().public.configSource;
 
   const getStorageSnapshot = () => {
     const localStorage_items = Object.keys(localStorage)
@@ -11,10 +11,13 @@ export const useDevTools = () => {
           key.startsWith(storagePrefix) ||
           key.startsWith(`banner-${storagePrefix}`),
       )
-      .reduce((acc, key) => {
-        acc[key] = localStorage.getItem(key);
-        return acc;
-      }, {} as Record<string, string | null>);
+      .reduce(
+        (acc, key) => {
+          acc[key] = localStorage.getItem(key);
+          return acc;
+        },
+        {} as Record<string, string | null>,
+      );
 
     const sessionStorage_items = Object.keys(sessionStorage)
       .filter(
@@ -22,10 +25,13 @@ export const useDevTools = () => {
           key.startsWith(storagePrefix) ||
           key.startsWith(`banner-${storagePrefix}`),
       )
-      .reduce((acc, key) => {
-        acc[key] = sessionStorage.getItem(key);
-        return acc;
-      }, {} as Record<string, string | null>);
+      .reduce(
+        (acc, key) => {
+          acc[key] = sessionStorage.getItem(key);
+          return acc;
+        },
+        {} as Record<string, string | null>,
+      );
 
     return { localStorage_items, sessionStorage_items };
   };

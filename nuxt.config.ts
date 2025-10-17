@@ -84,9 +84,7 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       analyticsLink: '',
-      validator: {
-        storagePrefix: 'validator',
-      },
+      configSource: 'custom',
       scripts: {
         umamiAnalytics: {
           websiteId: '',
