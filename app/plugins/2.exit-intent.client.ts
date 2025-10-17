@@ -3,7 +3,7 @@ import { LazyIModalFullscreen } from '#components';
 import { CONVERSION } from '~~/shared/config/navigation';
 
 export default defineNuxtPlugin(() => {
-  const storagePrefix = useRuntimeConfig().public.validator.storagePrefix;
+  const storagePrefix = useRuntimeConfig().public.configSource;
 
   // Only run on client
   if (typeof window === 'undefined') return;
