@@ -1,3 +1,4 @@
+<!-- components/I/Offers.vue -->
 <script setup lang="ts">
 import type { IconProps } from '@nuxt/ui';
 import { CONVERSION } from '#shared/config/navigation';
@@ -8,14 +9,12 @@ const primaryOffer = computed(() =>
   data?.value.items.find((offer) => offer.id === CONVERSION.primary),
 );
 
-// Simple icon alias + color mapping
 const STATUS_ICONS: Record<string, IconProps> = {
   'status-available': { name: 'lucide:check', class: 'text-success' },
   'status-beta': { name: 'lucide:flask-conical', class: 'text-info' },
   'status-coming-soon': { name: 'lucide:clock', class: 'text-warning' },
 };
 
-// Transform features to include resolved icons
 const transformedFeatures = computed(() => {
   if (!primaryOffer.value?.features) return [];
 
@@ -31,11 +30,6 @@ const transformedFeatures = computed(() => {
     };
   });
 });
-
-const email = ref('');
-const isEmailValid = computed(() =>
-  /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email.value),
-);
 </script>
 
 <template>
@@ -52,7 +46,6 @@ const isEmailValid = computed(() =>
           featureTitle: 'text-sm leading-tight',
         }"
       >
-        <!-- NEW: Display tagline if exists -->
         <template #description>
           <p class="text-base text-toned">{{ primaryOffer.description }}</p>
         </template>
@@ -74,40 +67,12 @@ const isEmailValid = computed(() =>
             </li>
           </ul>
         </template>
-        <template #button>
-          <div
-            v-if="primaryOffer.id === 'magnet'"
-            class="space-y-3 pt-4 w-full"
-          >
-            <UInput
-              v-model="email"
-              type="email"
-              placeholder="your@email.com"
-              size="xl"
-              class="w-full"
-            />
-            <IButtonCTA
-              :offer-id="primaryOffer.id"
-              location="offer-section"
-              size="xl"
-              block
-              :disabled="!isEmailValid"
-            />
-            <p
-              v-if="primaryOffer.cta.note"
-              class="text-xs text-muted text-center"
-            >
-              {{ primaryOffer.cta.note }}
-            </p>
-          </div>
 
-          <IButtonCTA
-            v-else
-            :offer-id="primaryOffer.id"
-            location="offer-section"
-            size="xl"
-            block
-          />
+        <template #button>
+          <!-- Replace IButtonCTA with FormValidation wrapper -->
+          <div class="pt-4">
+            <IFormValidation location="offer-section" :offer="primaryOffer" />
+          </div>
         </template>
 
         <template v-if="primaryOffer.stock" #terms>

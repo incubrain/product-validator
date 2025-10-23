@@ -19,6 +19,11 @@ export default defineAppConfig({
     },
   },
   ui: {
+    formField: {
+      defaultVariants: {
+        size: 'xl',
+      },
+    },
     button: {
       defaultVariants: {
         color: 'secondary',

@@ -18,7 +18,7 @@ export default defineNuxtPlugin((nuxtApp) => {
   eventHandlers.set('form_submit', [
     consoleLogger,
     analyticsHandler,
-    formSubmissionHandler,
+    serverPipeHandler,
   ]);
   eventHandlers.set('form_error', [consoleLogger, analyticsHandler]);
 

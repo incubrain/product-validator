@@ -1,3 +1,4 @@
+<!-- components/ModalFullscreen.vue -->
 <script setup lang="ts">
 interface Props {
   offerId: OfferID;
@@ -28,7 +29,6 @@ const offer = useFlowOffer(props.offerId);
           <p class="text-xl text-toned">{{ offer?.description }}</p>
         </div>
 
-        <!-- Media (if configured) -->
         <div
           v-if="offer?.media?.type === 'video'"
           class="w-full aspect-video rounded-lg overflow-hidden"
@@ -42,7 +42,6 @@ const offer = useFlowOffer(props.offerId);
           />
         </div>
 
-        <!-- Features -->
         <div v-if="offer?.features" class="bg-default/50 rounded-xl p-6">
           <ul class="text-left space-y-2 text-sm">
             <li
@@ -62,7 +61,11 @@ const offer = useFlowOffer(props.offerId);
           class="max-w-sm mx-auto"
         />
 
-        <IButtonCTA :offer-id="offerId" :location="`${location}_modal`" />
+        <IButtonCTA
+          :offer-id="offerId"
+          :location="`${location}_modal`"
+          size="xl"
+        />
       </div>
     </template>
 

@@ -9,6 +9,8 @@ export const useAction = () => {
     } satisfies EventPayload;
 
     await nuxtApp.callHook('events:emit', payload);
+
+    return payload.response;
   };
 
   const executeAction = async (location: string, offer?: any) => {

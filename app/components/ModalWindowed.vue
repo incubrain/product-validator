@@ -1,7 +1,11 @@
+<!-- components/ModalWindowed.vue - SIMPLIFIED -->
 <script setup lang="ts">
 interface Props {
-  offerId: OfferID;
-  location: string;
+  modalConfig?: {
+    title?: string;
+    contentId?: string;
+  };
+  formData?: Record<string, any>;
 }
 
 const props = defineProps<Props>();
@@ -9,52 +13,42 @@ const emit = defineEmits<{ close: [result?: any] }>();
 
 const isOpen = ref(true);
 
-const offer = useFlowOffer(props.offerId);
-const email = ref('');
+// Load content if ID provided
+const { data: content } = await useAsyncData(
+  () =>
+    props.modalConfig?.contentId
+      ? queryCollection('forms')
+          .where('formId', '=', props.modalConfig.contentId)
+          .first()
+      : null,
+  { immediate: !!props.modalConfig?.contentId },
+);
 
-const filloutParams = computed(() => ({
-  offer_id: offer.value?.id,
-  offer_name: offer.value?.title,
-  email: email.value,
-}));
-
-const handleClose = (result?: any) => {
+const handleClose = () => {
   isOpen.value = false;
-  emit('close', result);
+  emit('close');
 };
-
-watch(isOpen, (newValue) => {
-  if (!newValue) {
-    // Give time for close animation before emitting
-    setTimeout(() => emit('close'), 200);
-  }
-});
 </script>
 
 <template>
   <UModal
     v-model:open="isOpen"
-    :title="offer?.title"
-    :description="offer?.description"
+    :title="modalConfig?.title || 'Success'"
+    @update:open="(val) => !val && handleClose()"
   >
     <template #body>
-      <div class="space-y-4">
-        <LazyIFilloutForm
-          v-if="offer.cta.formId"
-          :form-id="offer.cta.formId"
-          :params="filloutParams"
-          height="500px"
-        />
+      <!-- Dynamic content from collection -->
+      <ContentRenderer v-if="content" :value="content" class="prose" />
+
+      <!-- Default success if no content -->
+      <div v-else class="text-center py-8">
+        <div class="text-6xl mb-4">🎉</div>
+        <p class="text-lg">Success! Check your email.</p>
       </div>
     </template>
 
     <template #footer>
-      <UButton
-        label="Close"
-        variant="ghost"
-        color="neutral"
-        @click="handleClose()"
-      />
+      <UButton label="Close" variant="ghost" @click="handleClose" />
     </template>
   </UModal>
 </template>
