@@ -94,7 +94,7 @@ export const flowConfig: FlowConfig = {
       headline: 'Learn from my many mistakes',
       title: '13 Years and $350k+ Lost',
       description:
-        "Started shipping weekly one month ago. You're watching the validation method work in real-time. Transparent, not polished.",
+        "You're watching the validation method work in real-time. Transparent, not polished.",
     },
     profile,
     accessibility,

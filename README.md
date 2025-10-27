@@ -1,21 +1,56 @@
 # Product Validator
 
-> **⚠️ Validation-first Template** — Ship a landing page in <10 minutes,
-> validate in weeks, not months.
-
-A minimal, production-ready **Nuxt 4 + Tailwind v4 + TypeScript** template
-designed to help struggling founders break perfectionist cycles and validate
-ideas through action.
-
-**Core Philosophy:** You are the product. You are the customer. Ship signal, not
-perfection.
+> **⚠️ WORK IN PROGRESS** — Active development on main branch. Breaking changes
+> may occur as we rapidly iterate toward product-market fit. Star & watch for
+> updates.
 
 ---
 
-## 🌐 Live Demo
+> **Validation-First Template** — Ship a landing page in <10 minutes, validate
+> with data in weeks, not months.
 
-See the template in action:
-[product-validator.incubrain.org](https://product-validator.incubrain.org)
+<div align="center">
+
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fincubrain%2Fproduct-validator)
+&nbsp;&nbsp;
+[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/usbhW2?referralCode=gvXQKE)
+
+**[→ View Live Demo](https://product-validator.incubrain.org)**
+
+</div>
+
+---
+
+A minimal, production-ready **Nuxt 4 + Tailwind v4 + TypeScript** template
+designed to help struggling founders break perfectionist cycles and validate
+business models through metrics-driven action.
+
+**Core Philosophy:** Ship signal, not perfection. Let data guide your decisions.
+
+---
+
+## 🚀 Built With
+
+<table>
+<tr>
+<td align="center" width="25%">
+<a href="https://nuxt.com"><strong>Nuxt 4</strong></a><br/>
+Vue framework with<br/>best-in-class DX
+</td>
+<td align="center" width="25%">
+<a href="https://tailwindcss.com"><strong>Tailwind v4</strong></a><br/>
+CSS-first utility<br/>framework
+</td>
+<td align="center" width="25%">
+<a href="https://www.typescriptlang.org"><strong>TypeScript</strong></a><br/>
+Full type safety<br/>throughout
+</td>
+<td align="center" width="25%">
+<a href="https://ui.nuxt.com"><strong>Nuxt UI</strong></a><br/>
+Production-ready<br/>components
+</td>
+</tr>
+</table>
 
 ---
 
@@ -30,60 +65,165 @@ Most founders get stuck in perfectionist loops:
 **This template forces a different path:**
 
 1. **Deploy with placeholders** (break the "not ready" barrier)
-2. **AI-guided introspection** (discover what you're uniquely positioned to
-   build)
-3. **Package your offer** (structure your Validation Kit based on your
-   positioning)
-4. **Ship real content** (replace placeholders with validated messaging)
-5. **Get feedback** (recorded YouTube critique + strategic guidance)
+2. **Replace with your content** (positioning, offer, value proposition)
+3. **Drive traffic** (validate attention before building)
+4. **Track metrics** (data-driven decisions at each stage)
+5. **Build only what's validated** (stop guessing, start measuring)
 
-**Total time investment:** 8-12 hours → Live validated landing page
+**Result:** Know if people want your solution before investing months building
+it.
 
----
+### **Core Features**
 
-## 🎯 What's Included
+**Metrics-Driven Framework:**
 
-### For Founders (Validation Features)
+- ✅ 5-stage validation journey with clear thresholds
+- ✅ Progressive disclosure (UI adapts to validation stage)
+- ✅ Data-driven decision framework
+- ✅ Conversion-optimized components (exit-intent, CTAs)
+- ✅ Provider-agnostic analytics events
+- ✅ Type-safe configuration system
 
-**Free Validation Kit** — 4-step email sequence that guides you from placeholder
-site to validated landing page:
+**Developer Experience:**
 
-- ✅ Automated email delivery with progressive content
-- ✅ AI-guided positioning discovery (speech-to-text optimized)
-- ✅ Competitive analysis and differentiation framework
-- ✅ Config file generation from your unique context
-- ✅ 30-min recorded YouTube feedback call
-- ✅ Support community access throughout
-
-**Total time:** 8-12 hours over 1-4 weeks
-
-### For Developers (Technical Features)
-
-- **Modern Stack:** Nuxt 4, Tailwind v4, TypeScript
-- **Conversion Systems:** Exit-intent modals, progressive forms, CTA
-  optimization
-- **Analytics Ready:** Provider-agnostic event system (pre-configured for Umami)
-- **Type-Safe Config:** Structured data model with inline documentation
-- **One-Click Deploy:** Railway and Vercel support out of the box
-- **Hot Module Replacement:** Config changes without page reload
+- ✅ Hot Module Replacement for config changes
+- ✅ Inline documentation in config files
+- ✅ Type-safe validation stage system
+- ✅ One-click deployment (Vercel/Railway)
+- ✅ Pre-configured analytics (Umami) - easily swap via
+  [Nuxt Scripts](https://scripts.nuxt.com/scripts)
 
 ---
 
-## 🚀 Quick Start
+## 🎯 5-Stage Validation Journey
 
-### Option A: One-Click Deploy (Fastest)
+The template guides you through a metrics-driven validation process. Set your
+current stage via `NUXT_PUBLIC_VALIDATION_STAGE` environment variable.
 
-**Vercel:**
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Fincubrain%2Fproduct-validator)
-
-**Railway:**
-[![Deploy on Railway](https://railway.com/button.svg)](https://railway.com/deploy/usbhW2?referralCode=gvXQKE)
-
-**Your site goes live with placeholder content in <10 minutes.**
+**⚠️ Important:** Always start with `attention` unless you already have an
+established traffic source and marketing experience. Each stage builds on the
+previous one.
 
 ---
 
-### Option B: Clone First
+### **Stage 1: Attention**
+
+**Question:** Can you drive traffic and capture attention?  
+**Metric:** Daily visitors + bounce rate  
+**Time:** 1-2 weeks  
+**ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=attention`
+
+**Thresholds & Actions:**
+
+| Signal      | Range     | Meaning                  | Action                                  |
+| ----------- | --------- | ------------------------ | --------------------------------------- |
+| **Weak**    | <10/day   | No traffic strategy      | Learn one channel, test different hooks |
+| **Average** | 10-30/day | Growing traction         | Refine messaging, optimize bounce rate  |
+| **Strong**  | >30/day   | Validated traffic source | Progress to Stage 2                     |
+
+**Decision Point:**
+
+- Strong signal → Move to conversion stage
+- Weak signal after 4+ weeks → Pivot traffic strategy or reconsider market
+- Average signal → Continue iterating
+
+---
+
+### **Stage 2: Conversion**
+
+**Question:** Do visitors want your solution enough to exchange their email?  
+**Metric:** Email capture rate (visitors → signups)  
+**Time:** 2-4 weeks  
+**ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=conversion`
+
+**Thresholds & Actions:**
+
+| Signal      | Range | Meaning             | Action                                     |
+| ----------- | ----- | ------------------- | ------------------------------------------ |
+| **Weak**    | <5%   | Positioning unclear | Refine offer, test new messaging           |
+| **Average** | 5-15% | Good interest       | A/B test improvements, gather feedback     |
+| **Strong**  | >15%  | Strong signal       | Build the lead magnet, progress to Stage 3 |
+
+**Decision Point:**
+
+- Strong signal → Build magnet and move to engagement stage
+- Weak signal after 10+ tests → Revisit positioning or pivot
+- Average signal → Continue optimizing conversion elements
+
+---
+
+### **Stage 3: Engagement**
+
+**Question:** Do they complete what you deliver?  
+**Metric:** Magnet completion rate (signups → completed)  
+**Time:** 2-4 weeks  
+**ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=engagement`
+
+**Thresholds & Actions:**
+
+| Signal      | Range  | Meaning             | Action                                       |
+| ----------- | ------ | ------------------- | -------------------------------------------- |
+| **Weak**    | <20%   | Content lacks value | Improve magnet quality, shorten content      |
+| **Average** | 20-40% | Decent engagement   | Refine delivery, add more value              |
+| **Strong**  | >40%   | High completion     | Schedule feedback calls, progress to Stage 4 |
+
+**Decision Point:**
+
+- Strong signal → Schedule calls with completers, move to demand stage
+- Weak signal → Content mismatch, rebuild magnet based on feedback
+- Average signal → Optimize delivery and follow-up sequence
+
+---
+
+### **Stage 4: Demand**
+
+**Question:** Will they pay for a solution to their next pain point?  
+**Metric:** Purchase intent rate (completers → expressed interest)  
+**Time:** 2-4 weeks  
+**ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=demand`
+
+**Thresholds & Actions:**
+
+| Signal      | Range  | Meaning                    | Action                                   |
+| ----------- | ------ | -------------------------- | ---------------------------------------- |
+| **Weak**    | <10%   | Offer misaligned           | Revisit pain points, adjust pricing      |
+| **Average** | 10-20% | Some interest              | Refine offer packaging, test pricing     |
+| **Strong**  | >20%   | Strong monetization signal | Close initial sales, progress to Stage 5 |
+
+**Decision Point:**
+
+- Strong signal → Start building full product/service, move to build stage
+- Weak signal → Offer doesn't solve real pain point, pivot or abandon
+- Average signal → Continue optimizing offer and pricing
+
+---
+
+### **Stage 5: Build**
+
+**Question:** Can you optimize the full funnel and scale confidently?  
+**Metric:** Full-funnel conversion (visitors → paying customers)  
+**Time:** Ongoing  
+**ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=build`
+
+**Thresholds & Actions:**
+
+| Signal      | Range | Meaning                  | Action                                    |
+| ----------- | ----- | ------------------------ | ----------------------------------------- |
+| **Weak**    | <1%   | Funnel leaks             | Identify drop-off points, optimize stages |
+| **Average** | 1-3%  | Solid foundation         | Continue optimization, add testimonials   |
+| **Strong**  | >3%   | Validated business model | Scale traffic with confidence             |
+
+**Focus Areas:**
+
+- Optimize all previous stages (attention → demand)
+- Add testimonials and social proof
+- Create media assets (demo videos, case studies)
+- Refine messaging based on validated feedback
+- Scale traffic and optimize conversion at each stage
+
+---
+
+### Local Development
 
 ```bash
 # Clone repository
@@ -93,6 +233,9 @@ cd your-project
 # Install dependencies
 pnpm install
 
+# Copy example environment file
+cp example.env .env
+
 # Start dev server
 pnpm dev
 ```
@@ -101,93 +244,68 @@ Visit `http://localhost:3000` to see placeholder site.
 
 ---
 
-## 📚 Documentation
+### Next Steps After Deployment
 
-### Guides (For Founders)
+1. **Setup environment variables** - Copy `example.env` to `.env` (local) or
+   configure in your deployment provider's environment settings
+2. **Replace placeholder content** in `shared/config/` files
+3. **Setup analytics** (Umami pre-configured, swap easily via
+   [Nuxt Scripts](https://scripts.nuxt.com/scripts))
+4. **Start with Stage 1** and progress based on metrics
 
-**Getting Started:**
-
-- [Step 1: Deployment](guides/1.deployment.md) — Get live with placeholders in
-  <10 minutes
-
-**After Validation Kit Completion:**
-
-- [Step 4: Configuration](guides/step-4-configuration.md) — Replace placeholders
-  with AI-generated content
-- [Analytics Setup](guides/analytics-setup.md) — Track conversions (setup AFTER
-  feedback call)
-
-### System Prompts (AI Guides)
-
-Attached to Validation Kit emails, used in your AI project
-(ChatGPT/Claude/Gemini/Grok):
-
-- **Step 2:** Introspection Guide (deep positioning discovery)
-- **Step 3:** Positioning + Offer Packaging (competitive analysis)
-- **Step 4:** Config Generation (transform context into production files)
-
-### Configuration
+## 📚 Configuration
 
 All landing page content is managed through structured config files in
 `shared/config/`.
 
-**To customize your site:** Update the config files with your content. Each file
-has inline comments explaining what it needs and where that information comes
-from (Step 2 or 3 of the Validation Kit).
+### Config Files Structure
 
-**After completing the Validation Kit:** AI will generate completed config files
-based on your introspection and positioning work. Simply copy them into your
-codebase and deploy.
+```
+shared/config/
+├── 1.flow.ts               # Overall page structure & section config
+├── 2.problem-solution.ts   # Problem/solution cards
+├── 4.process.ts            # 5-stage validation journey content
+├── 5.founder.ts            # Your story & positioning
+├── 6.offers.ts             # Lead magnet + paid service
+├── 7.results.ts            # Testimonials & social proof
+├── 8.concerns.ts           # FAQ & objections
+└── navigation.ts           # Primary/secondary CTA configuration
+```
 
----
-
-## 🎯 Who This Is For
-
-**Ideal for:**
-
-- Technical founders stuck in "almost ready" mode for 3-10+ years
-- Founders with domain expertise but can't identify what to build
-- Those who keep rebuilding instead of validating
-- People tired of perfectionist loops preventing launches
-
-**Not ideal for:**
-
-- Post-PMF companies scaling existing products
-- B2B enterprise with long sales cycles
-- Non-technical founders without dev support
-- Anyone expecting passive validation without marketing effort
+**Progressive Disclosure:** Sections appear/hide based on your validation stage
+(set via ENV), keeping focus on what matters now.
 
 ---
 
-## 🏗️ Why This Approach Works
+## 🔍 Who This Is For
 
-### Email Sequence (Not PDFs/Videos)
+### Ideal For
 
-- Fastest format to deliver value
-- No production overhead (write text, automate delivery)
-- Progressive value delivery (each step builds on previous)
-- Easy to iterate based on feedback
+✅ Technical founders stuck in "almost ready" mode for 3-10+ years  
+✅ Founders with domain expertise who struggle to identify what to build  
+✅ Those who keep rebuilding instead of validating  
+✅ People tired of perfectionist loops preventing launches  
+✅ Founders willing to market and drive traffic to test
 
-### AI-Guided (Not Worksheets)
+### Not Ideal For
 
-- Recognizes patterns you're too close to see
-- Pushes for specificity when answers are vague
-- Speech-to-text optimized (think out loud, AI extracts signal)
-- Replaces expensive coaching or mastermind groups
+❌ Post-PMF companies scaling existing products  
+❌ B2B enterprise with 6-12 month sales cycles  
+❌ Non-technical founders without dev support  
+❌ Anyone expecting passive validation without marketing effort  
+❌ Those unwilling to make decisions based on data
 
-### Placeholder-First Deployment
+---
 
-- Breaks perfectionism by forcing public iteration from day one
-- Removes the "not ready yet" excuse
-- Tests messaging before investing in design
-- Psychological shift from private iteration to public learning
+## ⚡ Quick Reference
 
-### Structured Config (Not CMS)
-
-- Single-page validation doesn't need content management
-- Version controlled (Git history of messaging iterations)
-- Type-safe (catches errors at compile-time)
-- Fast (no database queries, pure static generation)
+| Action             | Command / Location                                                    |
+| ------------------ | --------------------------------------------------------------------- |
+| **Deploy**         | Push to main branch (auto-deploy on Railway/Vercel)                   |
+| **Configure**      | Update files in `shared/config/`                                      |
+| **Set Stage**      | Update `NUXT_PUBLIC_VALIDATION_STAGE` in ENV                          |
+| **Track Metrics**  | Setup analytics ([Umami](https://umami.is) recommended)               |
+| **Swap Analytics** | Use any provider via [Nuxt Scripts](https://scripts.nuxt.com/scripts) |
 
 ---
 
@@ -195,25 +313,14 @@ codebase and deploy.
 
 Use inline tags to find what you need quickly:
 
-**Search:** `Cmd+Shift+F` → `{CONFIG}:` (things you must update)
+**Search:** `Cmd+Shift+F` (VS Code)
 
-**Other tags:**
+**Tags:**
 
-- `{OPTIMIZE}` — Post-validation improvements to consider
-- `{DECISION}` — Why something was implemented this way
-- `{DX}` — Developer experience tips
-
----
-
-## ⚡ Quick Reference
-
-| Action        | Command / Location                                     |
-| ------------- | ------------------------------------------------------ |
-| **Deploy**    | Push to main branch (Railway/Vercel auto-deploy)       |
-| **Configure** | Update files in `shared/config/`                       |
-| **Guides**    | See `guides/` directory                                |
-| **Analytics** | Setup AFTER feedback call (see guide)                  |
-| **Support**   | [Community Chat](https://whop.com/incubrain-community) |
+- `{CONFIG}:` → Things you must update
+- `{DECISION}:` → Why something was implemented this way
+- `{DX}:` → Developer experience tips
+- `{OPTIMIZE}:` → Post-validation improvements
 
 ---
 
@@ -223,29 +330,23 @@ This template evolves based on real founder feedback.
 
 **Ways to contribute:**
 
-- Submit your site for YouTube review
-- Share validation results (anonymized if needed)
+- Share your validation results (anonymized if needed)
 - Report bugs or unclear documentation
 - Suggest improvements based on your experience
+- Submit case studies of successful validations
 
 **Not accepting:** Feature requests that add complexity before validation.
 
 ---
 
-## 🔗 Links
-
-- **Live Demo:**
-  [product-validator.incubrain.org](https://product-validator.incubrain.org)
-- **YouTube Reviews:** [Incubrain Channel](https://www.youtube.com/@Incubrain)
-- **Support Community:** [Join Chat](https://whop.com/incubrain-community)
-- **Repository:** [GitHub](https://github.com/incubrain/product-validator)
-
----
-
 ## 📄 License
 
-MIT License — Use for personal or commercial projects.
+MIT License with restriction: You may use this template for personal or
+commercial projects, but you may not clone this template and build a competing
+business offering the same or substantially similar template as a product or
+service.
 
 ---
 
-**Focus:** Ship signal, not perfection. Validate in weeks, not months.
+**Focus:** Ship signal, not perfection. Validate with data, build with
+confidence.
