@@ -27,14 +27,14 @@ const data = useFlowSection('founder');
         variant="subtle"
         spotlight
         spotlight-color="primary"
-        class="relative"
+        class="relative text-center"
       >
         <div
           class="absolute -top-4 left-4 text-6xl text-primary/30 font-serif leading-none"
         >
           "
         </div>
-        <div class="px-6 space-y-4">
+        <div class="px-6 space-y-4 text-center">
           <p
             class="text-xl md:text-2xl font-bold leading-tight text-highlighted"
           >

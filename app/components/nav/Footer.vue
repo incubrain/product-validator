@@ -5,6 +5,8 @@ import { CONVERSION } from '#shared/config/navigation';
 const founder = useFlowSection('founder');
 const currentYear = new Date().getFullYear();
 
+const { reachedStage } = useSectionVisibility();
+
 const copyrightYear = computed(() =>
   founder.value.business.founding_year === currentYear
     ? `${currentYear}`
@@ -15,7 +17,6 @@ const copyrightYear = computed(() =>
 <template>
   <UFooter
     :ui="{
-      root: 'border-t',
       container:
         'py-8 lg:py-4 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between lg:gap-x-3',
       top: 'py-8 lg:py-12',
@@ -27,7 +28,7 @@ const copyrightYear = computed(() =>
     }"
   >
     <!-- TOP: Brand + Description + Founder Card -->
-    <template #left>
+    <template v-if="reachedStage('engagement')" #left>
       <div class="flex flex-col items-start gap-4">
         <ILogo size="md" />
         <div class="space-y-2">
@@ -38,7 +39,7 @@ const copyrightYear = computed(() =>
       </div>
     </template>
 
-    <template #right>
+    <template v-if="reachedStage('engagement')" #right>
       <IFounderCard />
     </template>
 

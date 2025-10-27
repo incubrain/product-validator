@@ -15,14 +15,16 @@ const bannerClasses = computed(() => ({
 
 <template>
   <UBanner
-    :id="`${$config.public.validator.storagePrefix}_${offer.id}`"
+    :id="`${$config.public.configSource}_${offer.id}`"
     icon="i-lucide-heart"
     :title="offer.description"
+    :to="offer.cta.to"
+    :target="offer.cta.to?.startsWith('http') ? '_blank' : undefined"
     :actions="[
       {
-        label: `${offer.cta.label} ${offer.price}/${offer.billingCycle}`,
         to: offer.cta.to,
         target: offer.cta.to?.startsWith('http') ? '_blank' : undefined,
+        label: offer.cta.label,
         trailingIcon: offer.cta.icon,
         color: 'secondary',
         size: 'sm',
@@ -31,7 +33,7 @@ const bannerClasses = computed(() => ({
     ]"
     :class="bannerClasses"
     :ui="{
-      root: 'bg-default text-muted h-(--ui-banner-height)',
+      root: 'bg-default hover:bg-primary/10 backdrop-blur-3xl text-muted h-(--ui-banner-height)',
       title: 'text-sm text-muted font-medium truncate pl-3',
       icon: 'size-5 shrink-0 text-error pointer-events-none',
       close: 'text-muted hover:bg-muted cursor-pointer',

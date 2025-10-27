@@ -14,7 +14,11 @@ defineProps<Props>();
 </script>
 
 <template>
-  <UPageCard spotlight spotlight-color="secondary">
+  <UPageCard
+    spotlight
+    spotlight-color="secondary"
+    class="max-w-(--ui-container-sm) mx-auto w-full"
+  >
     <div class="text-center space-y-6">
       <div class="space-y-2">
         <h4

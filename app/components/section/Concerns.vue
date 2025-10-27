@@ -101,12 +101,6 @@ const typeCounts = computed(() => {
           />
         </span>
       </div>
-
-      <!-- {EXTRACT} -->
-      <p class="text-center text-sm text-muted max-w-2xl mx-auto">
-        Address your concerns before committing. Click any question to expand
-        the answer.
-      </p>
     </div>
 
     <!-- Accordion -->
@@ -116,7 +110,7 @@ const typeCounts = computed(() => {
         type="multiple"
         :unmount-on-hide="false"
         :ui="{
-          item: 'border border-default/50 rounded-lg mb-2 last:mb-0 overflow-hidden last:border-b',
+          item: 'border-b border-default/50 first:border-t last:mb-0 overflow-hidden last:border-b',
           trigger:
             'group flex-1 flex items-center gap-3 font-medium text-sm p-4 hover:bg-muted/30 transition-colors',
           body: 'text-sm p-4 pt-0 leading-relaxed',

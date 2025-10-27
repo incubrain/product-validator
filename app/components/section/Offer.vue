@@ -9,7 +9,7 @@ const primaryOffer = computed(() =>
   data?.value.items.find((offer) => offer.id === CONVERSION.primary),
 );
 
-const STATUS_ICONS: Record<string, IconProps> = {
+const STATUS_ICONS: Record<string, IconProps & { class: string }> = {
   'status-available': { name: 'lucide:check', class: 'text-success' },
   'status-beta': { name: 'lucide:flask-conical', class: 'text-info' },
   'status-coming-soon': { name: 'lucide:clock', class: 'text-warning' },
