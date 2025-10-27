@@ -1,30 +1,30 @@
 // server/utils/providers/nocodb.ts
 import { $fetch } from 'ofetch';
-import type { DatabaseProvider } from '../db.handler';
+import type { StorageProvider } from '../storage.handler';
 
-export const nocodbProvider: DatabaseProvider = {
+export const nocodbProvider: StorageProvider = {
   name: 'nocodb',
 
-  async send({ apiUrl, apiKey, record_id, data }) {
-    const method = record_id ? 'PATCH' : 'POST';
-    const body = record_id ? { id: record_id, fields: data } : { fields: data };
+  async send({ storageUrl, storageSecret, recordId, data }) {
+    const method = recordId ? 'PATCH' : 'POST';
+    const body = recordId ? { id: recordId, fields: data } : { fields: data };
 
-    const res = await $fetch(apiUrl, {
+    const res = await $fetch(storageUrl, {
       method,
       headers: {
         'Content-Type': 'application/json',
-        'xc-token': apiKey,
+        'xc-token': storageSecret,
       },
       body,
     });
 
-    const recordId = String(
+    const newRecordId = String(
       res?.records?.[0]?.id ?? res?.records?.[0]?.Id ?? `temp_${Date.now()}`,
     );
 
     return {
       success: true,
-      recordId,
+      recordId: newRecordId,
       raw: res,
     };
   },

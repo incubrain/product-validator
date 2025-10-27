@@ -35,11 +35,11 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
 
         // ✅ All forms send same structure
         data: {
-          form_id: options.formId,
+          formId: options.formId,
           email: validated.email,
           offer: formData.offerId || options.formId,
-          customer_stage: 'email_captured',
-          validation_stage: CONVERSION.stage,
+          customerStage: 'email_captured',
+          validationStage: CONVERSION.stage,
           metadata: {
             location: route.path,
             userAgent: navigator.userAgent,
@@ -68,7 +68,7 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
           target: firstError.path.join('.'),
           timestamp: Date.now(),
           data: {
-            form_id: options.formId,
+            formId: options.formId,
           },
           error: firstError,
         });
@@ -86,7 +86,7 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
           target: 'unknown',
           timestamp: Date.now(),
           data: {
-            form_id: options.formId,
+            formId: options.formId,
           },
           error: errorMessage.value,
         });
@@ -128,9 +128,9 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
         timestamp: Date.now(),
 
         data: {
-          form_id: options.formId,
-          record_id: recordId.value, // ✅ Signals PATCH
-          customer_stage: 'feedback_submitted',
+          formId: options.formId,
+          recordId: recordId.value, // ✅ Signals PATCH
+          customerStage: 'feedback_submitted',
           feedback,
           metadata: {
             location: route.path,

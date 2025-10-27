@@ -84,7 +84,8 @@ export default defineNuxtConfig({
   runtimeConfig: {
     public: {
       analyticsLink: '',
-      configSource: 'custom',
+      configSource: '',
+      validationStage: '',
       scripts: {
         umamiAnalytics: {
           websiteId: '',
@@ -93,6 +94,11 @@ export default defineNuxtConfig({
           },
         },
       },
+    },
+    storage: {
+      provider: '',
+      url: '',
+      secret: '',
     },
   },
 
@@ -120,7 +126,6 @@ export default defineNuxtConfig({
     '#types': fileURLToPath(
       new URL('./shared/types/config.ts', import.meta.url),
     ),
-    '#config/*': fileURLToPath(new URL('./shared/config', import.meta.url)),
   },
 
   router: {

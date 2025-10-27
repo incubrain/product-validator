@@ -15,12 +15,12 @@ export interface EventPayload {
   target?: string;
   timestamp?: number;
   data?: {
-    form_id?: string;
-    record_id?: string;
+    formId?: string;
+    recordId?: string;
     email?: string;
     offer?: string;
-    customer_stage?: string;
-    validation_stage?: 'fake_door' | 'magnet' | 'payment_intent';
+    customerStage?: string;
+    validationStage?: ValidationStage;
     feedback?: string;
     metadata?: Record<string, any>;
   };

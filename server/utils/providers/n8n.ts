@@ -1,13 +1,13 @@
 // server/utils/providers/n8n.ts
 import { $fetch } from 'ofetch';
-import type { DatabaseProvider } from '../db.handler';
+import type { StorageProvider } from '../storage.handler';
 
-export const n8nProvider: DatabaseProvider = {
+export const n8nProvider: StorageProvider = {
   name: 'n8n',
-  async send({ apiUrl, data }) {
+  async send({ storageUrl, data }) {
     try {
       // n8n webhooks don't need an API key unless you added auth
-      const res = await $fetch(apiUrl, {
+      const res = await $fetch(storageUrl, {
         method: 'POST',
         body: data,
       });

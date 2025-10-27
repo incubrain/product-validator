@@ -1,16 +1,17 @@
+// server/api/v1/events.post.ts
 import { z } from 'zod';
-import { sendToDatabase } from '~~/server/utils/db.handler';
+import { storeData } from '~~/server/utils/storage.handler';
 
 const eventSchema = z.object({
-  record_id: z.string().optional(),
+  recordId: z.string().optional(),
   timestamp: z.number(),
   data: z.object({
-    form_id: z.string(),
+    formId: z.string(),
     email: z.string().email().optional(),
     offer: z.string().optional(),
-    customer_stage: z.enum(['email_captured', 'feedback_submitted']),
-    validation_stage: z
-      .enum(['fake_door', 'magnet', 'monetization'])
+    customerStage: z.enum(['email_captured', 'feedback_submitted']),
+    validationStage: z
+      .enum(['attention', 'conversion', 'engagement', 'demand'])
       .optional(),
     feedback: z.string().optional(),
     metadata: z.record(z.any()).optional(),
@@ -23,12 +24,7 @@ export default defineEventHandler(async (event) => {
 
   const parsed = eventSchema.safeParse(body);
   if (!parsed.success) {
-    console.error('[Events] Validation failed:', JSON.stringify({
-      errors: parsed.error.format ? parsed.error.format() : parsed.error.errors,
-      received: body,
-    }));
-
-    // Return full error details (safe for dev). In prod, redact before returning.
+    console.error('[Events] Validation failed:', parsed.error.errors);
     throw createError({
       statusCode: 400,
       message: 'Invalid event payload',
@@ -36,13 +32,15 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  const { record_id, data } = parsed.data;
-  const provider = config.db?.provider ?? 'nocodb';
+  const { recordId, data } = parsed.data;
 
-  const result = await sendToDatabase(provider, {
-    apiUrl: config.db?.apiUrl,
-    apiKey: config.db?.secret,
-    record_id,
+  // Default to KV storage, but allow override via env
+  const provider = config.storage?.provider ?? 'kv';
+
+  const result = await storeData(provider, {
+    storageUrl: config.storage?.url,
+    storageSecret: config.storage?.secret,
+    recordId,
     data,
   });
 
