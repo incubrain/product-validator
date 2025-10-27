@@ -2,11 +2,11 @@
 <script setup lang="ts">
 import type { NuxtError } from '#app';
 
-const props = defineProps({
+defineProps({
   error: Object as () => NuxtError,
 });
 
-const isDev = true;
+const isDev = import.meta.env;
 
 const handleError = () => clearError({ redirect: '/' });
 </script>
