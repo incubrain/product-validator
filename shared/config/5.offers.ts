@@ -1,16 +1,16 @@
 import type { Offer } from '#types';
 
 /**
- * {CONFIG}: OFFERS & PRICING
+ * {CONFIG}: MONETIZATION OFFERS
  *
  * Define your monetization structure.
  *
- * SOURCES:
- * - Step 3: Launch Kit package (free magnet) + Direct hire service
+ * VALIDATION PHASE: Only 2 offers needed
+ * - magnet: Free lead magnet (primary conversion)
+ * - direct: Paid hourly service (revenue bridge)
  *
- * Key sections:
- * - magnet: Free Launch Kit offer (primary conversion)
- * - direct: Hourly service offer (paid alternative)
+ * SOURCES:
+ * - Step 3: Your offer packaging and positioning
  *
  * FEATURE STATUS ICONS:
  * - status-available: Green check (ready to use)
@@ -24,14 +24,19 @@ export const offers = [
     primary: true,
     variant: 'outline',
     highlight: true,
-    title: '⚠️ Lead Magnet Name',
+    price: 'Free',
+    discount: undefined,
+    billingCycle: 'Limited availability',
+    title: '⚠️ Lead Magnet',
     description: '⚠️ What they get for free',
     badge: {
-      label: 'FREE',
+      label: '100 Spots',
       color: 'success',
       variant: 'solid',
       size: 'lg',
     },
+    terms: '⚠️ Terms of service or billing',
+    tagline: '⚠️ Short compelling tagline',
     features: [
       {
         title: '⚠️ Available benefit',
@@ -51,8 +56,6 @@ export const offers = [
       to: undefined,
       icon: 'i-lucide-rocket',
       modal: 'window',
-      captureEmail: true,
-      formId: 'your-form-id',
       note: '⚠️ Small text below button',
     },
   },
@@ -61,9 +64,13 @@ export const offers = [
     variant: 'outline',
     title: '⚠️ Hire Me Directly',
     description: '⚠️ Your hourly service description',
-    price: '$50',
-    discount: '$100',
+    price: '$100',
+    discount: '$50',
     billingCycle: '/hour',
+    badge: '⚠️ Badge text',
+    terms: '⚠️ Terms of service or billing',
+    tagline: '⚠️ Short compelling tagline',
+    highlight: false,
     features: [
       {
         title: '⚠️ Service benefit 1',
@@ -78,11 +85,6 @@ export const offers = [
         icon: 'status-coming-soon',
       },
     ],
-    stock: {
-      limit: 80,
-      claimed: 0,
-      type: 'hours',
-    },
     cta: {
       label: '⚠️ Button text',
       to: 'https://your-booking-link.com',

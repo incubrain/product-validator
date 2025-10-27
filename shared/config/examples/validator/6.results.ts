@@ -1,5 +1,44 @@
-import type { Testimonial, CaseStudy } from '#types';
+import type { Testimonial, CaseStudy, ProofTrack } from '#types';
 // {FRICTION}: this has to be deleted, can it be extracted or does it provide value?
+
+export const proof: ProofTrack[] = [
+  {
+    label: 'Proven Method',
+    badgeColor: 'secondary',
+    items: [
+      {
+        name: 'Buffer: 60M+ users',
+        logo: 'https://cdn.brandfetch.io/buffer.com/w/100/h/100?c=1idC13RnP4eaEvuuG55',
+        note: '2010',
+      },
+      {
+        name: 'Dropbox: $2B+ valuation',
+        logo: 'https://cdn.brandfetch.io/dropbox.com/w/100/h/100?c=1idC13RnP4eaEvuuG55',
+        note: '2007',
+      },
+      {
+        name: 'Pebble: $10M+ from 69k backers',
+        logo: 'https://cdn.brandfetch.io/pebble.com/w/100/h/100?c=1idC13RnP4eaEvuuG55',
+        note: '2012',
+      },
+      {
+        name: 'Slack: $27B valuation',
+        logo: 'https://cdn.brandfetch.io/slack.com/w/100/h/100?c=1idC13RnP4eaEvuuG55',
+        note: '2014',
+      },
+      {
+        name: 'Pinterest: 500M+ users',
+        logo: 'https://cdn.brandfetch.io/pinterest.com/w/100/h/100?c=1idC13RnP4eaEvuuG55',
+        note: '2012',
+      },
+      {
+        name: 'Spotify: $70B valuation',
+        logo: 'https://cdn.brandfetch.io/spotify.com/w/100/h/100?c=1idC13RnP4eaEvuuG55',
+        note: '2015',
+      },
+    ],
+  },
+];
 
 export const testimonials: Testimonial[] = [
   {

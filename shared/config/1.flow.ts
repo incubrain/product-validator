@@ -1,81 +1,71 @@
-// shared/config/1.flow.ts
-import type { FlowConfig } from '#types';
-import { solution, customerProfile } from './2.problem';
-import { outcomes, alternatives, affiliations } from './3.solution';
-import { features, flow } from './4.process';
-import { profile, business, story, accessibility } from './5.founder';
-import { offers } from './6.offers';
-import { testimonials, caseStudies } from './7.results';
-import { concerns } from './8.concerns';
+import type { FlowConfig } from '#shared/types/config';
 
-/**
- * {CONFIG}: MAIN FLOW CONFIGURATION
- *
- * This is the master file that composes your entire landing page.
- * Complete the other config files (2-8) first, then return here for final touches.
- *
- * SOURCES:
- * - Step 2 (Introspection): Founder profile, pain points, customer profile
- * - Step 3 (Positioning): Hero messaging, positioning statements, offer structure
- *
- * All ⚠️ placeholders will be replaced by AI in Step 4.
- */
+// Import domain data only
+import { problemSolutionCards } from './2.problem-solution';
+import { features, processSteps } from './3.process';
+import { profile, accessibility, business, story } from './4.founder';
+import { offers } from './5.offers';
+import { caseStudies, testimonials, proof } from './6.results';
+import { concerns } from './7.concerns';
 
-export const flowConfig = {
+export const flowConfig: FlowConfig = {
+  // ============================================================================
+  // HERO SECTION
+  // ============================================================================
   hero: {
+    enabled: true,
+    minStage: 'attention',
     badge: {
       title: '⚠️ Badge title',
-      description: '⚠️ Badge text',
-      to: 'https://github.com/your-org/your-repo',
+      description: '⚠️ Badge description',
+      to: 'https://example.com',
     },
     intro: {
-      title: '⚠️ Your headline',
-      description: '⚠️ Your value prop',
+      title: '⚠️ Your compelling headline',
+      description: '⚠️ Your value proposition description',
     },
-    // {OPTIMIZE}: After gathering feedback and validating consider adding a hero video
-    // media: {
-    //   type: 'video',
-    //   src: '/videos/demo.mp4',
-    //   alt: '⚠️ Video description',
-    //   poster: '/images/your-hero-poster.jpg',
-    // },
+    media: {
+      type: 'video',
+      src: null,
+      alt: null,
+    },
   },
 
-  problem: {
+  // ============================================================================
+  // PROBLEM/SOLUTION SECTION
+  // ============================================================================
+  problemSolution: {
+    enabled: true,
+    minStage: 'conversion',
     intro: {
       icon: 'i-lucide-alert-triangle',
-      headline: '⚠️ Problem section eyebrow',
-      title: '⚠️ Core problem statement',
-      description: '⚠️ Pain point elaboration',
+      headline: '⚠️ Section headline',
+      title: '⚠️ Section title',
+      description: '⚠️ Section description',
     },
-    solution,
-    customerProfile,
-  },
-
-  solution: {
-    intro: {
-      icon: 'i-lucide-target',
-      headline: '⚠️ Solution eyebrow',
-      title: '⚠️ How you solve it',
-      description: '⚠️ Approach details',
-    },
-    outcomes,
-    separators: [
-      {
-        label: '⚠️ Separator label',
-        description: '⚠️ Optional separator description',
+    cards: problemSolutionCards,
+    bridge: {
+      headline: '⚠️ Bridge headline',
+      message: '⚠️ Bridge message',
+      cta: {
+        label: '⚠️ CTA label',
+        to: { path: '/', hash: '#offer' },
+        icon: 'i-lucide-arrow-down',
       },
-    ],
-    affiliations,
-    alternatives,
+    },
   },
 
+  // ============================================================================
+  // PROCESS SECTION
+  // ============================================================================
   process: {
+    enabled: true,
+    minStage: 'conversion',
     intro: {
       icon: 'i-lucide-package',
-      headline: '⚠️ Process eyebrow',
-      title: '⚠️ How it works',
-      description: '⚠️ Process overview',
+      headline: '⚠️ Section headline',
+      title: '⚠️ Section title',
+      description: '⚠️ Section description',
     },
     features,
     separators: [
@@ -83,59 +73,68 @@ export const flowConfig = {
         label: '⚠️ Separator label',
         description: '⚠️ Optional separator description',
       },
-    ],
-    flow,
-    bridge: {
-      headline: '⚠️ Bridge headline',
-      message: '⚠️ Transition message',
-      cta: {
-        label: '⚠️ Button text',
-        to: { path: '/', hash: '#offer' },
-        icon: 'i-lucide-arrow-down',
+      {
+        label: '⚠️ Another separator label',
+        description: '⚠️ Optional separator description',
       },
-    },
+    ],
+    steps: processSteps,
   },
 
+  // ============================================================================
+  // FOUNDER SECTION
+  // ============================================================================
   founder: {
+    enabled: true,
+    minStage: 'engagement',
     intro: {
       icon: 'i-lucide-user',
-      headline: '⚠️ Founder eyebrow',
-      title: '⚠️ Credibility statement',
-      description: '⚠️ Background brief',
+      headline: '⚠️ Section headline',
+      title: '⚠️ Section title',
+      description: '⚠️ Section description',
     },
     profile,
+    accessibility,
     business,
     story,
-    accessibility,
   },
 
+  // ============================================================================
+  // OFFER SECTION
+  // ============================================================================
   offer: {
+    enabled: true,
+    minStage: 'attention',
     intro: {
       icon: 'i-lucide-handshake',
-      headline: '⚠️ Offer eyebrow',
-      title: '⚠️ Offer structure',
-      description: '⚠️ Pricing explanation',
+      headline: '⚠️ Section headline',
+      title: '⚠️ Section title',
+      description: '⚠️ Section description',
     },
     items: offers,
     bridge: {
-      headline: '⚠️ Bridge to concerns',
-      message: '⚠️ Objection prompt',
+      headline: '⚠️ Bridge headline',
+      message: '⚠️ Bridge message',
       cta: {
-        label: '⚠️ Button text',
+        label: '⚠️ CTA label',
         to: { path: '/', hash: '#concerns' },
         icon: 'i-lucide-arrow-down',
       },
     },
   },
 
+  // ============================================================================
+  // RESULTS SECTION
+  // ============================================================================
   results: {
+    enabled: true,
+    minStage: 'demand',
     intro: {
       icon: 'i-lucide-trending-up',
-      headline: '⚠️ Results eyebrow',
-      title: '⚠️ Social proof headline',
-      description: '⚠️ Testimonial context',
+      headline: '⚠️ Section headline',
+      title: '⚠️ Section title',
+      description: '⚠️ Section description',
     },
-    testimonials,
     separators: [
       {
         label: '⚠️ Separator label',
@@ -145,24 +144,31 @@ export const flowConfig = {
       },
     ],
     caseStudies,
+    testimonials,
+    proof,
   },
 
+  // ============================================================================
+  // CONCERNS SECTION
+  // ============================================================================
   concerns: {
+    enabled: true,
+    minStage: 'conversion',
     intro: {
       icon: 'i-lucide-help-circle',
-      headline: '⚠️ FAQ eyebrow',
-      title: '⚠️ Objections headline',
-      description: '⚠️ FAQ intro',
+      headline: '⚠️ Section headline',
+      title: '⚠️ Section title',
+      description: '⚠️ Section description',
     },
     items: concerns,
     bridge: {
-      headline: '⚠️ Final CTA headline',
-      message: '⚠️ Final message',
+      headline: '⚠️ Bridge headline',
+      message: '⚠️ Bridge message',
       cta: {
-        label: '⚠️ Button text',
+        label: '⚠️ CTA label',
         to: { path: '/', hash: '#offer' },
         icon: 'i-lucide-rocket',
       },
     },
   },
-} satisfies FlowConfig;
+};

@@ -31,7 +31,7 @@ export const business = {
 
 export const story = {
   greeting:
-    "Hi, I'm Drew; I created this template to hold myself accountable, it's taken me 13 years and an ADHD diagnosis to figure out what was holding me back.",
+    "Hi, I'm Mac; I created the Product Validator to break my cycle; after 13 years and an ADHD diagnosis I've identified what was holding me back.",
   background: [
     "My obsession with business (and personal development) started when I was 16, I read all the books, and caught the first wave of YouTube 'gurus'",
     'I was in love!',
@@ -44,7 +44,7 @@ export const story = {
     "It's exhausting and I'm done!!",
   ],
   mission:
-    'My mission is to help 100 struggling founders acheive financial freedom so they can chase bigger dreams with confidence.',
+    'My mission for the Product Validator is to help 100 struggling founders acheive financial freedom.',
   challenge: 'Join me and other founders on this journey',
 } satisfies FounderStory;
 

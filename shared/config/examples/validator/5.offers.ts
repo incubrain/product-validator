@@ -5,46 +5,44 @@ export const offers = [
     id: 'magnet',
     primary: true,
 
-    title: 'Launch Kit',
-    description: 'AI Guided: Deploy → Discover → Package → Ship. (8-12 hours)',
+    title: 'Validation Kit',
+    description:
+      'Complete 5-stage validation system. Go from idea to validated business model with structured guidance and community support.',
 
-    // NEW: Add tagline for clarity
+    price: 'Free',
+    discount: null,
+    billingCycle: 'Limited availability',
+    terms: 'No credit card required',
+
     tagline:
-      '🎯 Perfect for: Technical founders who can execute with structured guidance',
+      '🎯 For technical founders ready to validate through real market feedback',
 
     badge: {
-      label: 'FREE',
+      label: 'Early Access',
       color: 'success',
       variant: 'solid',
       size: 'lg',
     },
+
     features: [
       {
-        title: 'Step 1: Deploy in <10 minutes - break the cycle',
+        title: '5-stage validation framework with success metrics',
         icon: 'status-available',
       },
       {
-        title: 'Step 2: Discover your value',
+        title: 'AI prompts guiding each validation stage',
         icon: 'status-available',
       },
       {
-        title: 'Step 3: Positioning + offer packaging',
-        icon: 'status-available',
+        title: 'Guerrilla marketing playbook',
+        icon: 'status-coming-soon',
       },
       {
-        title: 'Step 4: Content generation + ship',
-        icon: 'status-available',
+        title: 'Video walkthrough: Setup to validation',
+        icon: 'status-coming-soon',
       },
       {
-        title: '30-min recorded YouTube feedback call',
-        icon: 'status-available',
-      },
-      {
-        title: 'Private strategic guidance (10-15 min)',
-        icon: 'status-available',
-      },
-      {
-        title: 'Support community access throughout',
+        title: 'Exclusive founder community + support chat',
         icon: 'status-available',
       },
     ],
@@ -55,33 +53,33 @@ export const offers = [
     stock: {
       limit: 100,
       claimed: 7,
+      type: 'spots',
     },
 
     cta: {
-      label: 'Start Free Launch Kit',
+      label: 'Get Free Validation Kit',
       to: undefined,
       icon: 'i-lucide-rocket',
       modal: 'window',
-      captureEmail: true,
-      formId: 'aYZbzo6xQ5us',
       note: 'Email required for delivery',
     },
   },
 
   {
     id: 'direct',
-
     title: 'Done-With-You Implementation',
     description:
-      'Weekly accountability + hands-on execution. We build it together (or I do it for you).',
-
+      'Accountability + hands-on execution; let\'s build together.',
     tagline:
       '⚡ Upgrade when: You need momentum, accountability, or technical execution help',
-
-    price: '$27',
-    discount: '$50',
+    price: '$50',
+    discount: '$27',
     billingCycle: 'hour',
-
+    terms: 'Billed monthly. Minimum 3 hours.',
+    highlight: false,
+    variant: 'outline',
+    primary: false,
+    badge: undefined,
     features: [
       {
         title: 'Weekly 1:1 check-ins + execution planning (not just advice)',
@@ -108,14 +106,6 @@ export const offers = [
         icon: 'status-available',
       },
     ],
-
-    variant: 'outline',
-
-    stock: {
-      limit: 80,
-      claimed: 10,
-      type: 'hours',
-    },
 
     cta: {
       label: 'Book a Call',
