@@ -1,7 +1,7 @@
 # Product Validator
 
-> **⚠️ Validation-first Template** — Ship a landing page in <1 hour, validate in
-> weeks, not months.
+> **⚠️ Validation-first Template** — Ship a landing page in <10 minutes,
+> validate in weeks, not months.
 
 A minimal, production-ready **Nuxt 4 + Tailwind v4 + TypeScript** template
 designed to help struggling founders break perfectionist cycles and validate
@@ -32,7 +32,8 @@ Most founders get stuck in perfectionist loops:
 1. **Deploy with placeholders** (break the "not ready" barrier)
 2. **AI-guided introspection** (discover what you're uniquely positioned to
    build)
-3. **Package your offer** (structure your Launch Kit based on your positioning)
+3. **Package your offer** (structure your Validation Kit based on your
+   positioning)
 4. **Ship real content** (replace placeholders with validated messaging)
 5. **Get feedback** (recorded YouTube critique + strategic guidance)
 
@@ -44,7 +45,7 @@ Most founders get stuck in perfectionist loops:
 
 ### For Founders (Validation Features)
 
-**Free Launch Kit** — 4-step email sequence that guides you from placeholder
+**Free Validation Kit** — 4-step email sequence that guides you from placeholder
 site to validated landing page:
 
 - ✅ Automated email delivery with progressive content
@@ -62,7 +63,6 @@ site to validated landing page:
 - **Conversion Systems:** Exit-intent modals, progressive forms, CTA
   optimization
 - **Analytics Ready:** Provider-agnostic event system (pre-configured for Umami)
-- **Email Automation:** Integrated with FilloutForm for sequence delivery
 - **Type-Safe Config:** Structured data model with inline documentation
 - **One-Click Deploy:** Railway and Vercel support out of the box
 - **Hot Module Replacement:** Config changes without page reload
@@ -83,7 +83,7 @@ site to validated landing page:
 
 ---
 
-### Option B: Clone First (Recommended for Developers)
+### Option B: Clone First
 
 ```bash
 # Clone repository
@@ -107,12 +107,10 @@ Visit `http://localhost:3000` to see placeholder site.
 
 **Getting Started:**
 
-- [Step 1: Deployment](guides/1.deployment.md) — Get live with placeholders
-  in <1 hour
-- [FilloutForm Setup](guides/fillout-setup.md) — Automate your Launch Kit email
-  sequence
+- [Step 1: Deployment](guides/1.deployment.md) — Get live with placeholders in
+  <10 minutes
 
-**After Launch Kit Completion:**
+**After Validation Kit Completion:**
 
 - [Step 4: Configuration](guides/step-4-configuration.md) — Replace placeholders
   with AI-generated content
@@ -121,7 +119,7 @@ Visit `http://localhost:3000` to see placeholder site.
 
 ### System Prompts (AI Guides)
 
-Attached to Launch Kit emails, used in your AI project
+Attached to Validation Kit emails, used in your AI project
 (ChatGPT/Claude/Gemini/Grok):
 
 - **Step 2:** Introspection Guide (deep positioning discovery)
@@ -135,9 +133,9 @@ All landing page content is managed through structured config files in
 
 **To customize your site:** Update the config files with your content. Each file
 has inline comments explaining what it needs and where that information comes
-from (Step 2 or 3 of the Launch Kit).
+from (Step 2 or 3 of the Validation Kit).
 
-**After completing the Launch Kit:** AI will generate completed config files
+**After completing the Validation Kit:** AI will generate completed config files
 based on your introspection and positioning work. Simply copy them into your
 codebase and deploy.
 
