@@ -1,16 +1,16 @@
 <script setup lang="ts">
-// Updated data access
+import { CONVERSION } from '#shared/config/navigation';
 const hero = useFlowSection('hero');
-const data = useFlowSection('solution');
+const results = useFlowSection('results');
+const { isStage } = useSectionVisibility();
 
-// Tech affiliations from solution data
-const affiliations = computed(() => data?.value.affiliations);
+const proof = computed(() => results?.value.proof ?? []);
 </script>
 
 <template>
   <UPageHero
     orientation="vertical"
-    class="bg-gradient-to-b from-default via-muted to-default text-white relative overflow-hidden min-h-screen"
+    class="bg-gradient-to-b from-default via-muted to-default text-white relative overflow-hidden min-h-[calc(100vh-var(--ui-banner-height)-var(--ui-header-height))]"
     :ui="{
       wrapper: 'text-center',
       container:
@@ -18,24 +18,19 @@ const affiliations = computed(() => data?.value.affiliations);
       footer: 'mt-10',
     }"
   >
-    <!-- Badge - using magnet offer -->
+    <!-- Badge -->
     <template #headline>
-      <div class="flex justify-center items-center pb-2">
+      <div class="flex justify-center items-center pb-8">
         <ULink
           v-if="hero.badge"
           :to="hero.badge.to"
           target="_blank"
           class="group flex items-center gap-2 rounded-full border border-default bg-default/50 px-4 py-2 shadow-sm hover:bg-muted/50 transition"
         >
-          <!-- Left side: badge-style -->
           <span class="text-sm font-semibold text-dimmed">
             {{ hero.badge.title }}
           </span>
-
-          <!-- Divider -->
           <span class="h-4 w-px bg-inverted"></span>
-
-          <!-- Right side: CTA -->
           <span
             class="text-sm font-medium text-secondary group-hover:underline flex items-center gap-1"
           >
@@ -46,7 +41,7 @@ const affiliations = computed(() => data?.value.affiliations);
       </div>
     </template>
 
-    <!-- Main Title - Solution Claim -->
+    <!-- Main Title -->
     <template #title>
       {{ hero.intro.title }}
     </template>
@@ -57,13 +52,20 @@ const affiliations = computed(() => data?.value.affiliations);
         <p class="text-xl sm:text-2xl text-dimmed font-medium leading-relaxed">
           {{ hero.intro.description }}
         </p>
+        <IButtonCTA
+          v-if="isStage('attention')"
+          size="xl"
+          :offer-id="CONVERSION.primary"
+          location="hero"
+          anchor
+          class="hidden md:inline-flex text-toned font-black"
+        />
       </div>
     </template>
 
     <!-- Media -->
     <div class="relative pt-12">
       <div v-if="hero.media?.src" class="relative">
-        <!-- {EXTRACT} poster -->
         <IVideo
           v-if="hero.media.type === 'video'"
           :src="hero.media.src"
@@ -83,44 +85,15 @@ const affiliations = computed(() => data?.value.affiliations);
       </div>
     </div>
 
-    <!-- Tech Stack Showcase -->
-    <div v-if="affiliations" class="flex relative overflow-hidden pt-4">
-      <UBadge
-        variant="subtle"
-        color="info"
-        class="whitespace-nowrap px-3 flex-shrink-0 hidden lg:flex"
-      >
-        <!-- {EXTRACT} -->
-        {{ affiliations.label }}
-      </UBadge>
-      <UMarquee
-        pause-on-hover
-        overlay
-        :repeat="2"
-        :ui="{
-          root: 'group relative flex items-center overflow-hidden gap-(--gap) [--gap:--spacing(4)] [--duration:20s] max-w-full w-full',
-          content:
-            'flex items-center shrink-0 justify-around gap-(--gap) min-w-max',
-        }"
-      >
-        <div
-          v-for="affil in affiliations.items"
-          :key="affil.name"
-          class="flex items-center gap-3 px-4 py-2 bg-default backdrop-blur-sm rounded-lg border border-white/10 shrink-0"
-        >
-          <UIcon :name="affil.logo" class="size-6 text-info flex-shrink-0" />
-          <span class="font-medium text-sm whitespace-nowrap">
-            {{ affil.name }}
-          </span>
-          <span
-            v-if="affil.note"
-            class="text-xs font-mono text-gray-400 bg-black/20 px-2 py-1 rounded whitespace-nowrap"
-          >
-            {{ affil.note }}
-          </span>
-        </div>
-      </UMarquee>
-    </div>
+    <!-- Dynamic Marquees -->
+    <IMarqueeWrapper
+      v-for="(track, index) in proof"
+      :key="track.label"
+      :label="track.label"
+      :badge-color="track.badgeColor"
+      :items="track.items"
+      :track-index="index"
+    />
 
     <!-- Background Effects -->
     <template #bottom>
