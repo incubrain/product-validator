@@ -1,5 +1,6 @@
 // shared/config/navigation.ts
 import type { NavigationMenuItem } from '@nuxt/ui';
+import type { ValidationStage } from '#types';
 
 export interface NavigationConfig {
   main: NavigationMenuItem[];
@@ -15,26 +16,21 @@ export const NAVIGATION: NavigationConfig = {
   ],
 } as const;
 
-/**
- * Validation lifecycle stages:
- * - fake_door: Capture interest only (no delivery)
- * - magnet: Deliver lead magnet via email
- * - payment_intent: Are customers ready to pay?
- */
-export type ValidationStage = 'fake_door' | 'magnet' | 'payment_intent';
+
+
 
 export const CONVERSION = {
   /**
    * Current validation stage
    * Toggle this to move through validation lifecycle
    */
-  stage: 'fake_door' as ValidationStage,
+  stage: 'attention' as ValidationStage,
 
   primary: 'magnet',
   secondary: 'direct',
 
   /**
-   * Fake door configuration (only applies when stage === 'fake_door')
+   * Fake door configuration (only applies when stage === 'attention')
    */
   fakeDoor: {
     message:
@@ -46,7 +42,7 @@ export const CONVERSION = {
   banner: {
     sticky: true,
   },
-  
+
   navbar: {
     sticky: false,
   },

@@ -1,8 +1,24 @@
-import type { ButtonProps, PricingPlanProps } from '@nuxt/ui';
+import type { ButtonProps, PricingPlanProps, BadgeProps } from '@nuxt/ui';
 
 // ============================================================================
 // SHARED PRIMITIVES
 // ============================================================================
+
+/**
+ * Validation lifecycle stages:
+ * - attention: Can you drive traffic and capture attention - bounce rate analysis
+ * - conversion: Can you convert visitors into leads? - lead magnet conversion
+ * - engagement: Can you keep customers engaged? - magnet engagement / completion rates analysis
+ * - demand: Are customers ready to pay? - payment intent analysis
+ * - build: Are you ready to build? - product development phase
+ */
+
+export type ValidationStage =
+  | 'attention'
+  | 'conversion'
+  | 'engagement'
+  | 'demand'
+  | 'build';
 
 export type Cta = {
   to: ButtonProps['to'];
@@ -12,8 +28,6 @@ export type Cta = {
   label: string;
   note?: string;
   modal?: 'window' | 'fullscreen';
-  formId?: string;
-  captureEmail?: boolean;
   disabled?: boolean;
 };
 
@@ -35,7 +49,12 @@ export type SectionSeparator = {
   description?: string;
 };
 
-export type SectionBase = {
+export type BaseSectionConfig = {
+  enabled?: boolean;
+  minStage?: ValidationStage;
+};
+
+export type SectionBase = BaseSectionConfig & {
   intro: SectionIntro;
   separators?: SectionSeparator[];
   bridge?: SectionBridge;
@@ -81,58 +100,16 @@ export type HeroMedia = {
 };
 
 // ============================================================================
-// PROBLEM SECTION
+// PROBLEM/SOLUTION SECTION
 // ============================================================================
 
-export type CustomerPain = {
-  label: string;
-  impact: string;
-  cost: string;
-  reality: string;
-};
-
-export type CustomerProfile = {
+export interface ProblemSolutionCard {
   id: string;
-  label: string;
-  description: string;
-  context: string[];
-  pains: CustomerPain[];
-};
-
-export type ProblemSolution = {
-  statement: string;
-  claim: string;
-  pitch: string;
-  promise: string;
-};
-
-// ============================================================================
-// SOLUTION SECTION
-// ============================================================================
-
-export type Outcome = {
   title: string;
-  description: string;
   icon: string;
-};
-
-export type Alternative = {
-  id: string;
-  title: string;
   problem: string;
-  cost: string;
-  why_fails: string;
-  examples?: string[];
-};
-
-export type Affiliations = {
-  label: string;
-  items: {
-    name?: string;
-    logo: string;
-    note?: string;
-  }[];
-};
+  solution: string;
+}
 
 // ============================================================================
 // PROCESS SECTION
@@ -150,77 +127,30 @@ export type ProcessAction = {
   estimated_time: string;
 };
 
-export type FlowContent =
-  | { type: 'text'; value: string }
-  | { type: 'video'; src: string; alt?: string; poster?: string }
-  | { type: 'image'; src: string; alt?: string }
-  | {
-      type: 'list';
-      items: string[];
-      style?: 'bullets' | 'numbers' | 'checks';
-    }
-  | { type: 'code'; language: string; snippet: string; label?: string };
-
-export type ProcessStep = {
-  slot: string;
-  title: string;
-  description: string;
-  duration: string;
-  actions?: ProcessAction[];
-  content?: FlowContent[];
-};
-
-// ============================================================================
-// METHODOLOGY SECTION (Optional)
-// ============================================================================
-
-export type ValidationExample = {
-  company: string;
-  year: number;
-  approach: string[];
-  result: string;
-  url?: string;
-};
-
-export type ThresholdRange = {
+export type MetricThreshold = {
   range: string;
   meaning: string;
 };
 
-export type SuccessMetric = {
-  id: string;
-  name: string;
+export type ContentLayout = 'left' | 'right' | 'full';
+
+export type MetricCard = {
+  title: string;
   description: string;
   icon: string;
   thresholds: {
-    weak: ThresholdRange;
-    average: ThresholdRange;
-    strong: ThresholdRange;
+    weak: MetricThreshold;
+    average: MetricThreshold;
+    strong: MetricThreshold;
   };
 };
 
-export type DecisionOption = {
-  label: string;
-  icon: string;
-  color: 'success' | 'warning' | 'error';
-  threshold: string;
-  action: string;
+export type ProcessStep = {
+  id: string;
+  title: string;
+  duration: string;
   description: string;
-};
-
-export type MethodologyFramework = {
-  metrics: SuccessMetric[];
-  decisions: {
-    build: DecisionOption;
-    refine: DecisionOption;
-    pivot: DecisionOption;
-  };
-};
-
-export type MethodologySection = {
-  intro: SectionIntro;
-  examples: ValidationExample[];
-  framework: MethodologyFramework;
+  card: MetricCard;
 };
 
 // ============================================================================
@@ -266,7 +196,7 @@ export type FounderAccessibility = {
 
 export type OfferID = 'magnet' | 'direct' | 'low' | 'medium' | 'high';
 
-export type OfferStockType = 'spots' | 'hours' | 'units' | 'licenses' | 'seats';
+export type OfferStockType = 'spots' | 'units';
 
 export type FeatureStatus =
   | 'status-available'
@@ -318,6 +248,18 @@ export type Offer = Pick<
 // ============================================================================
 // RESULTS SECTION
 // ============================================================================
+
+export interface ProofItem {
+  name: string;
+  logo?: string;
+  note?: string;
+}
+
+export interface ProofTrack {
+  label: string;
+  badgeColor: BadgeProps['color'];
+  items: ProofItem[];
+}
 
 export type Testimonial = {
   type: 'testimonial';
@@ -381,29 +323,20 @@ export type FaqItem = {
 // ============================================================================
 
 export type FlowConfig = {
-  hero: {
+  hero: BaseSectionConfig & {
     badge: HeroBadge;
     intro: HeroIntro;
     media?: HeroMedia;
   };
 
-  problem: SectionBase & {
-    solution: ProblemSolution; // ⚠️ Remove if unused
-    customerProfile: CustomerProfile;
-  };
-
-  solution: SectionBase & {
-    outcomes: Outcome[];
-    alternatives: Alternative[];
-    affiliations: Affiliations;
+  problemSolution: SectionBase & {
+    cards: ProblemSolutionCard[];
   };
 
   process: SectionBase & {
     features: ProcessFeature[];
-    flow: ProcessStep[];
+    steps: ProcessStep[];
   };
-
-  methodology?: MethodologySection;
 
   founder: SectionBase & {
     profile: FounderProfile;
@@ -419,6 +352,7 @@ export type FlowConfig = {
   results: SectionBase & {
     testimonials: Testimonial[];
     caseStudies: CaseStudy[];
+    proof: ProofTrack[];
   };
 
   concerns: SectionBase & {

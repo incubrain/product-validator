@@ -1,4 +1,4 @@
-<!-- app/components/section/Wrapper.vue -->
+<!-- app/components/section/SectionWrapper.vue -->
 <script setup lang="ts">
 interface Props {
   id: SectionAnchor;
@@ -7,6 +7,7 @@ interface Props {
   orientation?: 'vertical' | 'horizontal';
   class?: string;
 }
+const { reachedStage } = useSectionVisibility();
 
 const props = withDefaults(defineProps<Props>(), {
   orientation: 'vertical',
@@ -36,6 +37,6 @@ const props = withDefaults(defineProps<Props>(), {
     <slot />
 
     <!-- Bridge always at the end -->
-    <INavBridge v-if="bridge" :bridge="bridge" />
+    <INavBridge v-if="bridge && reachedStage('build')" :bridge="bridge" />
   </UPageSection>
 </template>
