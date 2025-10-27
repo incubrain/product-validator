@@ -24,8 +24,6 @@ export const CONVERSION = {
    * Current validation stage
    * Toggle this to move through validation lifecycle
    */
-  stage: 'attention' as ValidationStage,
-
   primary: 'magnet',
   secondary: 'direct',
 

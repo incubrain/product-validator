@@ -10,11 +10,13 @@ interface Props {
 }
 
 const props = defineProps<Props>();
+const config = useRuntimeConfig();
 
 // Determine which form to show based on stage + offer
 const formComponent = computed(() => {
   // If this is the primary offer and we're in fake door stage
-  const useFakeDoor = CONVERSION.stage === 'attention' || CONVERSION.stage === 'conversion';
+  const useFakeDoor = config.validationStage === 'attention' || config.validationStage === 'conversion';
+
   if (
     useFakeDoor &&
     props.offer.id === CONVERSION.primary
