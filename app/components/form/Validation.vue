@@ -14,15 +14,16 @@ const props = defineProps<Props>();
 // Determine which form to show based on stage + offer
 const formComponent = computed(() => {
   // If this is the primary offer and we're in fake door stage
+  const useFakeDoor = CONVERSION.stage === 'attention' || CONVERSION.stage === 'conversion';
   if (
-    CONVERSION.stage === 'fake_door' &&
+    useFakeDoor &&
     props.offer.id === CONVERSION.primary
   ) {
     return IFormFakeDoor;
   }
 
-  // If this is the primary offer and we're in magnet stage
-  if (CONVERSION.stage === 'magnet' && props.offer.id === CONVERSION.primary) {
+  // deliver the content
+  if (!useFakeDoor && props.offer.id === CONVERSION.primary) {
     return IFormMagnet;
   }
 

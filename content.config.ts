@@ -17,5 +17,14 @@ export default defineContentConfig({
         }),
       }),
     ),
+    forms: defineCollection(
+      asSeoCollection({
+        type: 'page',
+        source: resolveConfigPath({ suffix: 'forms/*.md' }),
+        schema: z.object({
+          formId: z.string(),
+        }),
+      }),
+    ),
   },
 });
