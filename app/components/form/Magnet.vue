@@ -55,6 +55,6 @@ const handleSubmit = async () => {
     </div>
 
     <!-- ✅ Success message (only when NOT redirecting) -->
-    <IFormMessage form-id="magnet" :celebrate="true" />
+    <IFormMessage v-else form-id="magnet" :celebrate="true" />
   </div>
 </template>
