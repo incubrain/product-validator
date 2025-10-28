@@ -73,7 +73,7 @@ export const offers = [
     tagline:
       '⚡ Upgrade when: You need momentum, accountability, or technical execution help',
     price: '$50',
-    discount: '$27',
+    discount: '$30',
     billingCycle: 'hour',
     terms: 'Billed monthly. Minimum 3 hours.',
     highlight: false,
@@ -109,7 +109,7 @@ export const offers = [
 
     cta: {
       label: 'Book a Call',
-      to: 'https://www.upwork.com/freelancers/~01b4c32258ac48835f',
+      to: 'https://cal.com/drew-macgibbon/30min',
       icon: 'i-lucide-handshake',
       color: 'secondary',
       note: 'Monthly packages available. First hour: strategy session.',
