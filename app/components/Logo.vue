@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const data = useFlowSection('founder').value.business;
+const data = useSectionConfig('founder').value.business;
 
 interface Props {
   size?: 'sm' | 'md' | 'lg';

@@ -3,7 +3,7 @@
 import type { IconProps } from '@nuxt/ui';
 import { CONVERSION } from '#shared/config/navigation';
 
-const data = useFlowSection('offer');
+const data = useSectionConfig('offer');
 
 const primaryOffer = computed(() =>
   data?.value.items.find((offer) => offer.id === CONVERSION.primary),

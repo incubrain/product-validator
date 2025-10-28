@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import { CONVERSION } from '#shared/config/navigation';
-const hero = useFlowSection('hero');
-const results = useFlowSection('results');
+const hero = useSectionConfig('hero');
+const results = useSectionConfig('results');
 const { isStage } = useSectionVisibility();
 
 const proof = computed(() => results?.value.proof ?? []);

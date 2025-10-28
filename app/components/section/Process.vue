@@ -1,6 +1,6 @@
 <!-- ~/components/section/Process.vue -->
 <script setup lang="ts">
-const data = useFlowSection('process');
+const data = useSectionConfig('process');
 const features = computed(() => data.value?.features ?? []);
 const steps = computed(() => data.value?.steps ?? []);
 </script>

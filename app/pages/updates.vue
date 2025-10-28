@@ -1,7 +1,7 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui';
 
-const founder = useFlowSection('founder');
+const founder = useSectionConfig('founder');
 
 // Query updates collection
 const { data: updates } = await useAsyncData('updates', () =>

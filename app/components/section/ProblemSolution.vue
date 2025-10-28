@@ -1,6 +1,6 @@
 <!-- ~/components/section/ProblemSolution.vue -->
 <script setup lang="ts">
-const data = useFlowSection('problemSolution');
+const data = useSectionConfig('problemSolution');
 const cards = computed(() => data?.value.cards ?? []);
 </script>
 

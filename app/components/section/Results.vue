@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const data = useFlowSection('results');
+const data = useSectionConfig('results');
 
 const caseStudies = computed(() => data.value?.caseStudies ?? []);
 const testimonials = computed(() => data.value?.testimonials ?? []);

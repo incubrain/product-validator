@@ -1,5 +1,5 @@
 <script setup lang="ts">
-const data = useFlowSection('founder');
+const data = useSectionConfig('founder');
 const isBackgroundExpanded = ref(false);
 </script>
 
@@ -57,7 +57,9 @@ const isBackgroundExpanded = ref(false);
           class="flex flex-col justify-center items-center gap-4"
         >
           <UButton
-            :label="isBackgroundExpanded ? 'Hide My Story' : 'Read My Full Story'"
+            :label="
+              isBackgroundExpanded ? 'Hide My Story' : 'Read My Full Story'
+            "
             color="neutral"
             variant="subtle"
             :trailing-icon="
@@ -70,7 +72,7 @@ const isBackgroundExpanded = ref(false);
             }"
             class="group"
           />
-  
+
           <template #content>
             <div
               class="font-written text-lg md:text-xl leading-relaxed space-y-6 md:space-y-8 pt-4"

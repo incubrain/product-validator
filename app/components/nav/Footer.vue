@@ -2,7 +2,7 @@
 <script setup lang="ts">
 import { CONVERSION } from '#shared/config/navigation';
 
-const founder = useFlowSection('founder');
+const founder = useSectionConfig('founder');
 const currentYear = new Date().getFullYear();
 
 const { reachedStage } = useSectionVisibility();

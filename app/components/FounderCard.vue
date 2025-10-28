@@ -5,11 +5,13 @@ defineProps<{
 }>();
 
 // Get founder data from overview.ts
-const founder = useFlowSection('founder');
+const founder = useSectionConfig('founder');
 
 // Computed properties
 //  {EXTRACT}
-const displayName = computed(() => `Hi, I'm ${founder.value.profile.given_name}`);
+const displayName = computed(
+  () => `Hi, I'm ${founder.value.profile.given_name}`,
+);
 const description = computed(() => founder.value.profile.role);
 
 // Map links to proper format for UButton
