@@ -5,7 +5,7 @@ import { hash } from 'ohash';
 import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 import type { StorageProvider } from '../storage.handler';
 
-const storage = createStorage({
+export const storage = createStorage({
   driver: fsDriver({ base: './.data' }),
 });
 
@@ -15,7 +15,7 @@ interface EmailCapture {
   formId: string;
   offer?: string;
   customerStage: 'email_captured' | 'feedback_submitted';
-  validationStage?: ValidationStage
+  validationStage?: ValidationStage;
   feedback?: string;
   metadata?: Record<string, any>;
   capturedAt: number;
@@ -27,7 +27,7 @@ interface EmailCapture {
  */
 function getEncryptionKey(): Buffer {
   const config = useRuntimeConfig();
-  const secret = config.storage.secret || 'default-secret-change-me-32bit';
+  const secret = config.storage.secret;
   return Buffer.from(secret.padEnd(32, '0').slice(0, 32));
 }
 
@@ -63,9 +63,9 @@ function decryptEmail(encrypted: string): string {
 /**
  * Hash email (for key lookup)
  */
-function hashEmail(email: string): string {
+export function hashEmail(email: string): string {
   const config = useRuntimeConfig();
-  const secret = config.storage.secret || 'default-secret-change-me';
+  const secret = config.storage.secret;
   return hash({ email, secret });
 }
 
@@ -160,6 +160,32 @@ export const kvProvider: StorageProvider = {
         recordId: `temp_${Date.now()}`,
         error: err,
       };
+    }
+  },
+
+  async authorize(email: string): Promise<{
+    exists: boolean;
+    customerStage?: string;
+    validationStage?: string;
+  }> {
+    try {
+      const emailHash = hashEmail(email);
+      const key = `emails:${emailHash}`;
+
+      const record = await storage.getItem<EmailCapture>(key);
+
+      if (!record) {
+        return { exists: false };
+      }
+
+      return {
+        exists: true,
+        customerStage: record.customerStage,
+        validationStage: record.validationStage,
+      };
+    } catch (error) {
+      console.error('[KV Provider] Verify email error:', error);
+      return { exists: false };
     }
   },
 };

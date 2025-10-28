@@ -1,4 +1,4 @@
-<!-- components/form/Magnet.vue -->
+<!-- components/form/Magnet.vue - SIMPLIFIED -->
 <script setup lang="ts">
 import { z } from 'zod';
 import type { Offer } from '#types';
@@ -23,6 +23,7 @@ const state = reactive({
 const { submit, isSubmitting, isSuccess } = useFormSubmission({
   formId: 'magnet',
   schema,
+  location: props.location,
 });
 
 const handleSubmit = async () => {
@@ -54,7 +55,7 @@ const handleSubmit = async () => {
       </p>
     </div>
 
-    <!-- Magnet Success -->
+    <!-- Success (only shows on landing page, not access gate) -->
     <IFormSuccess
       v-else
       title="Check Your Email!"

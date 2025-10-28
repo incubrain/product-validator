@@ -10,7 +10,7 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const config = useRuntimeConfig();
+const config = useRuntimeConfig().public;
 
 // Determine which form to show based on stage + offer
 const formComponent = computed(() => {

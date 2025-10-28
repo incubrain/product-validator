@@ -1,5 +1,4 @@
 // shared/utils/config-resolver.ts
-
 export const CONFIG_SOURCES = {
   validator: 'examples/validator/',
   custom: '',
@@ -11,7 +10,11 @@ export type ConfigSource = keyof typeof CONFIG_SOURCES;
  * Get the active config source from environment
  */
 export function getActiveConfigSource(): ConfigSource {
-  const source = process.env.NUXT_PUBLIC_CONFIG_SOURCE || '';
+  let source = process.env.NUXT_PUBLIC_CONFIG_SOURCE || '';
+
+  if (import.meta.client) {
+    source = useRuntimeConfig().public.configSource;
+  }
 
   if (source && !(source in CONFIG_SOURCES)) {
     const available = Object.keys(CONFIG_SOURCES)
@@ -67,4 +70,42 @@ export function resolveConfigPath(options: {
   const fullPath = `${prefix}${sourcePath}${suffix}`;
 
   return resolver ? resolver.resolve(fullPath) : fullPath;
+}
+
+/**
+ * Remove config source prefix from content paths
+ * Ensures URLs are clean regardless of source location
+ *
+ * @example
+ * // NUXT_PUBLIC_CONFIG_SOURCE=validator
+ * normalizeContentPath('/examples/validator/magnet/step-1')
+ * // Returns: '/magnet/step-1'
+ *
+ * @example
+ * // NUXT_PUBLIC_CONFIG_SOURCE=custom
+ * normalizeContentPath('/magnet/step-1')
+ * // Returns: '/magnet/step-1'
+ */
+export function normalizeContentPath(path: string): string {
+  const source = getActiveConfigSource();
+  const sourcePrefix = CONFIG_SOURCES[source];
+
+  console.log('normalizeContentPath 1', { source, sourcePrefix, path });
+
+  // If there's a source prefix, remove it
+  if (sourcePrefix) {
+    // Remove leading slash from sourcePrefix for comparison
+    const prefix = `/${sourcePrefix.replace(/\/$/, '')}`;
+
+    console.log('normalizeContentPath 2', {
+      path,
+      prefix,
+      startsWith: path.startsWith(prefix),
+    });
+    if (path.startsWith(prefix)) {
+      return path.slice(prefix.length) || '/';
+    }
+  }
+
+  return path;
 }

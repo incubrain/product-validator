@@ -1,13 +1,13 @@
 <script setup lang="ts">
-const siteConfig = useSiteConfig()
+const siteConfig = useSiteConfig();
 
 useHead({
   titleTemplate: (titleChunk) => {
-    return titleChunk ? `${titleChunk} - ${siteConfig.name}` : siteConfig.name
+    return titleChunk ? `${titleChunk} - ${siteConfig.name}` : siteConfig.name;
   },
   htmlAttrs: { lang: 'en' },
   link: [{ rel: 'icon', type: 'image/x-icon', href: '/favicon.ico' }],
-})
+});
 
 useSeoMeta({
   description: siteConfig.description,
@@ -15,16 +15,17 @@ useSeoMeta({
   ogDescription: siteConfig.description,
   ogImage: `${siteConfig.url}/og-image.png`,
   twitterCard: 'summary_large_image',
-})
-
+});
 
 // Dev shortcuts
 if (import.meta.dev && import.meta.client) {
   const { clearAllStorage } = useDevTools();
   const { $exitIntent } = useNuxtApp();
+  const { revokeAccess } = useGatedAccess();
   defineShortcuts({
     meta_shift_r: clearAllStorage, // {DX}: cmd+shft+r to clear session/local storage + refresh
     meta_shift_e: () => $exitIntent.fire(true), // {DX}: cmd+shft+e to manually trigger intent trigger for testing
+    meta_shift_x: () => revokeAccess,
   });
 }
 </script>

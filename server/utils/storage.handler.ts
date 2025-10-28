@@ -17,9 +17,16 @@ export interface ProviderResult {
   error?: any;
 }
 
+export interface AuthorizeResult {
+  exists: boolean;
+  customerStage?: string;
+  validationStage?: string;
+}
+
 export interface StorageProvider {
   name: string;
   send(params: ProviderParams): Promise<ProviderResult>;
+  authorize?(email: string): Promise<AuthorizeResult>; // ← Optional method
 }
 
 const providers: Record<string, StorageProvider> = {
@@ -48,5 +55,35 @@ export async function storeData(
   } catch (err) {
     console.error(`[StorageHandler] ${providerName} failed:`, err);
     return { success: false, recordId: `temp_${Date.now()}`, error: err };
+  }
+}
+
+/**
+ * Universal authorization handler
+ * Checks if email exists in storage provider
+ */
+export async function authorizeEmail(
+  providerName: string,
+  email: string,
+): Promise<AuthorizeResult> {
+  const provider = providers[providerName];
+
+  if (!provider) {
+    console.warn(`[StorageHandler] Unknown provider: ${providerName}`);
+    return { exists: false };
+  }
+
+  if (!provider.authorize) {
+    console.warn(
+      `[StorageHandler] ${providerName} does not support authorization`,
+    );
+    return { exists: false };
+  }
+
+  try {
+    return await provider.authorize(email);
+  } catch (err) {
+    console.error(`[StorageHandler] ${providerName} authorize failed:`, err);
+    return { exists: false };
   }
 }

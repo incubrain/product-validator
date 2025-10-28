@@ -2,15 +2,15 @@
 import { flowConfig } from '#build/flow-config.mjs';
 
 export const useSectionVisibility = () => {
-  const config = useRuntimeConfig();
-  const currentStage = config.public.validationStage as ValidationStage;
+  const config = useRuntimeConfig().public;
+  const currentStage = config.validationStage as ValidationStage;
 
   const stageOrder: Record<ValidationStage, number> = {
     attention: 1,
     conversion: 2,
     engagement: 3,
     demand: 4,
-    build: 5,
+    build_prep: 5,
   };
 
   const currentLevel = stageOrder[currentStage];

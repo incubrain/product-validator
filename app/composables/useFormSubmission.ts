@@ -1,15 +1,17 @@
 // composables/useFormSubmission.ts
 import { z } from 'zod';
-import { CONVERSION } from '#shared/config/navigation';
 
+// composables/useFormSubmission.ts - FIXED
 export const useFormSubmission = <T extends z.ZodSchema>(options: {
   formId: FormID;
   schema: T;
+  location?: string;
 }) => {
   const { trackEvent } = useAction();
   const route = useRoute();
   const toast = useToast();
-  const config = useRuntimeConfig();
+  const config = useRuntimeConfig().public;
+  const { grantAccess } = useGatedAccess();
 
   const isSubmitting = ref(false);
   const isSuccess = ref(false);
@@ -25,16 +27,13 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
     try {
       const validated = options.schema.parse(formData);
 
-      // ✅ Universal event emission (no branching!)
       const response = await trackEvent({
         id: `${options.formId}_submit`,
-        type: 'form_submit', // ✅ Single event type
+        type: 'form_submit',
         location: route.path,
         action: 'submit',
         target: options.formId,
         timestamp: Date.now(),
-
-        // ✅ All forms send same structure
         data: {
           formId: options.formId,
           email: validated.email,
@@ -45,16 +44,32 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
             location: route.path,
             userAgent: navigator.userAgent,
             timestamp: Date.now(),
-            ...validated, // Include all form data
+            ...validated,
           },
         },
       } satisfies EventPayload);
 
-      // Store recordId if returned (for feedback)
       if (response?.recordId) {
         recordId.value = response.recordId;
       }
 
+      // ✅ For magnet form: grant access and navigate immediately
+      // Skip isSuccess to bypass the success message
+      if (validated.email && options.formId === 'magnet') {
+        grantAccess(validated.email);
+
+        // ✅ Only navigate if NOT from access gate
+        if (options.location !== 'access-gate') {
+          await navigateTo('/magnet');
+          return; // Exit early, don't set isSuccess
+        }
+
+        // ✅ From access gate: Don't navigate, modal will close via watch
+        // Don't set isSuccess to avoid showing success message
+        return;
+      }
+
+      // ✅ For other forms: show success message
       isSuccess.value = true;
     } catch (error) {
       if (error instanceof z.ZodError) {
@@ -119,18 +134,16 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
     isSubmitting.value = true;
 
     try {
-      // ✅ Same pattern as submit
       await trackEvent({
         id: `${options.formId}_feedback`,
-        type: 'form_submit', // ✅ Same event type
+        type: 'form_submit',
         location: route.path,
         action: 'submit_feedback',
         target: options.formId,
         timestamp: Date.now(),
-
         data: {
           formId: options.formId,
-          recordId: recordId.value, // ✅ Signals PATCH
+          recordId: recordId.value,
           customerStage: 'feedback_submitted',
           feedback,
           metadata: {

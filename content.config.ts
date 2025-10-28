@@ -26,5 +26,17 @@ export default defineContentConfig({
         }),
       }),
     ),
+    magnet: defineCollection(
+      asSeoCollection({
+        type: 'page',
+        source: resolveConfigPath({ suffix: 'magnet/*.md' }),
+        schema: z.object({
+          step: z.number().optional(),
+          title: z.string(),
+          description: z.string().optional(),
+          duration: z.string().optional(),
+        }),
+      }),
+    ),
   },
 });
