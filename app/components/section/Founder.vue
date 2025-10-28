@@ -1,5 +1,6 @@
 <script setup lang="ts">
 const data = useFlowSection('founder');
+const isBackgroundExpanded = ref(false);
 </script>
 
 <template>
@@ -10,7 +11,7 @@ const data = useFlowSection('founder');
     class="bg-muted/50"
   >
     <!-- Hook + Mission Quote (merged in quote box) -->
-    <div class="mb-12 max-w-(--ui-container-sm) mx-auto">
+    <div class="mb-12 max-w-(--ui-container-sm) mx-auto flex flex-col">
       <div class="flex flex-col items-center gap-4 mb-8">
         <p class="font-written text-xl text-center">
           {{ data.story.greeting }}
@@ -47,27 +48,52 @@ const data = useFlowSection('founder');
           "
         </div>
       </UPageCard>
+      <div
+        v-if="data.story?.background?.length"
+        class="max-w-(--ui-container-sm) mx-auto pt-8"
+      >
+        <UCollapsible
+          v-model:open="isBackgroundExpanded"
+          class="flex flex-col justify-center items-center gap-4"
+        >
+          <UButton
+            :label="isBackgroundExpanded ? 'Hide My Story' : 'Read My Full Story'"
+            color="neutral"
+            variant="subtle"
+            :trailing-icon="
+              isBackgroundExpanded
+                ? 'i-lucide-chevron-up'
+                : 'i-lucide-chevron-down'
+            "
+            :ui="{
+              trailingIcon: 'transition-transform duration-200',
+            }"
+            class="group"
+          />
+  
+          <template #content>
+            <div
+              class="font-written text-lg md:text-xl leading-relaxed space-y-6 md:space-y-8 pt-4"
+            >
+              <p
+                v-for="(para, i) in data.story.background"
+                :key="i"
+                class="text-center"
+              >
+                {{ para }}
+              </p>
+              <p
+                v-if="data.story?.challenge"
+                class="text-center text-lg md:text-xl font-written font-semibold text-primary leading-relaxed"
+              >
+                {{ data.story.challenge }}
+              </p>
+            </div>
+          </template>
+        </UCollapsible>
+      </div>
     </div>
 
-    <div
-      v-if="data.story?.background?.length"
-      class="max-w-(--ui-container-sm) mx-auto font-written text-lg md:text-xl leading-relaxed space-y-6 md:space-y-8"
-    >
-      <p
-        v-for="(para, i) in data.story.background"
-        :key="i"
-        class="text-center"
-      >
-        {{ para }}
-      </p>
-      <p
-        class="text-center text-lg md:text-xl font-written font-semibold text-primary leading-relaxed"
-      >
-        {{ data.story.challenge }}
-      </p>
-    </div>
-
-    <!-- FOOTER: Challenge -->
-    <div v-if="data.story?.challenge" class="max-w-3xl mx-auto text-center" />
+    <!-- Collapsible Background Story -->
   </ISectionWrapper>
 </template>

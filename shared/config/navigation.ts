@@ -1,6 +1,5 @@
 // shared/config/navigation.ts
 import type { NavigationMenuItem } from '@nuxt/ui';
-import type { ValidationStage } from '#types';
 
 export interface NavigationConfig {
   main: NavigationMenuItem[];
@@ -15,9 +14,6 @@ export const NAVIGATION: NavigationConfig = {
     },
   ],
 } as const;
-
-
-
 
 export const CONVERSION = {
   /**

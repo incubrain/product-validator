@@ -107,8 +107,7 @@ export interface ProblemSolutionCard {
   id: string;
   title: string;
   icon: string;
-  problem: string;
-  solution: string;
+  description: string;
 }
 
 // ============================================================================

@@ -1,7 +1,6 @@
 <!-- ~/components/section/ProblemSolution.vue -->
 <script setup lang="ts">
 const data = useFlowSection('problemSolution');
-
 const cards = computed(() => data?.value.cards ?? []);
 </script>
 
@@ -11,32 +10,20 @@ const cards = computed(() => data?.value.cards ?? []);
     :intro="data.intro"
     :bridge="data.bridge"
   >
-    <!-- Problem-Solution Cards Grid -->
     <UPageGrid>
       <UPageCard
         v-for="card in cards"
         :key="card.id"
         :title="card.title"
+        :description="card.description"
         spotlight
         spotlight-color="secondary"
-        :ui="{ body: 'space-y-3' }"
+        :ui="{
+          description: 'text-pretty leading-relaxed',
+        }"
       >
         <template #leading>
           <UIcon :name="card.icon" class="size-5 text-secondary" />
-        </template>
-
-        <template #description>
-          <div class="space-y-3">
-            <!-- PROBLEM Section -->
-            <p class="text-sm text-dimmed leading-relaxed">
-              {{ card.problem }}
-            </p>
-
-            <!-- SOLUTION Section -->
-            <p class="text-sm text-toned leading-relaxed">
-              {{ card.solution }}
-            </p>
-          </div>
         </template>
       </UPageCard>
     </UPageGrid>
