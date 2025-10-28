@@ -10,7 +10,7 @@ import type { ButtonProps, PricingPlanProps, BadgeProps } from '@nuxt/ui';
  * - conversion: Can you convert visitors into leads? - lead magnet conversion
  * - engagement: Can you keep customers engaged? - magnet engagement / completion rates analysis
  * - demand: Are customers ready to pay? - payment intent analysis
- * - build: Are you ready to build? - product development phase
+ * - build_prep: Are you ready to build? - product development phase
  */
 
 export type ValidationStage =
@@ -18,7 +18,7 @@ export type ValidationStage =
   | 'conversion'
   | 'engagement'
   | 'demand'
-  | 'build';
+  | 'build_prep';
 
 export type Cta = {
   to: ButtonProps['to'];

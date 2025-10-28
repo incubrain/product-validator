@@ -198,12 +198,12 @@ previous one.
 
 ---
 
-### **Stage 5: Build**
+### **Stage 5: Build Prep**
 
 **Question:** Can you optimize the full funnel and scale confidently?  
 **Metric:** Full-funnel conversion (visitors → paying customers)  
 **Time:** Ongoing  
-**ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=build`
+**ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=build_prep`
 
 **Thresholds & Actions:**
 
