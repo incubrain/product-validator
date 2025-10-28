@@ -17,7 +17,7 @@ const offer = useFlowOffer(props.offerId);
     :ui="{
       overlay: 'bg-default',
       content:
-        'bg-gradient-to-br from-neutral-950/95 via-primary-900/50 to-neutral-950/95 backdrop-blur-4xl',
+        'bg-linear-to-br from-neutral-950/95 via-primary-900/50 to-neutral-950/95 backdrop-blur-4xl',
       body: 'flex flex-col items-center justify-center text-center p-8',
     }"
     @close="emit('close')"
@@ -49,7 +49,7 @@ const offer = useFlowOffer(props.offerId);
               :key="benefit.title"
               class="flex items-center gap-2"
             >
-              <UIcon name="i-lucide-check" class="text-success flex-shrink-0" />
+              <UIcon name="i-lucide-check" class="text-success shrink-0" />
               <span class="text-toned font-medium">{{ benefit.title }}</span>
             </li>
           </ul>
@@ -58,6 +58,7 @@ const offer = useFlowOffer(props.offerId);
         <IStockProgress
           v-if="offer?.stock"
           :stock="offer.stock"
+          :offer-id="offer.id"
           class="max-w-sm mx-auto"
         />
 

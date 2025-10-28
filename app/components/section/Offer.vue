@@ -76,7 +76,11 @@ const transformedFeatures = computed(() => {
         </template>
 
         <template v-if="primaryOffer.stock" #terms>
-          <IStockProgress :stock="primaryOffer.stock" class="w-full" />
+          <IStockProgress
+            :stock="primaryOffer.stock"
+            :offer-id="primaryOffer.id"
+            class="w-full"
+          />
         </template>
       </UPricingPlan>
     </div>

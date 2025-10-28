@@ -4,6 +4,7 @@ import fsDriver from 'unstorage/drivers/fs-lite';
 import { hash } from 'ohash';
 import { createCipheriv, createDecipheriv, randomBytes } from 'crypto';
 import type { StorageProvider } from '../storage.handler';
+import { nitroFunctionCacheKey, nitroHandlerCacheKey } from '../cache';
 
 export const storage = createStorage({
   driver: fsDriver({ base: './.data' }),
@@ -97,7 +98,7 @@ export const kvProvider: StorageProvider = {
         };
       }
 
-      const key = `emails:${emailHash}`;
+      const key = `leads:${emailHash}`;
       const timestamp = Date.now();
 
       // Check if record exists
@@ -148,6 +149,36 @@ export const kvProvider: StorageProvider = {
 
       await storage.setItem(key, record);
 
+      try {
+        const cache = useStorage('cache');
+        const funcKey = nitroFunctionCacheKey('metricsLeads', 'default');
+        const handlerKey = nitroHandlerCacheKey('metricsLeads', 'default');
+
+        // Invalidate both possible keys; ignore errors individually
+        await cache.removeItem(funcKey).catch((e) => {
+          // no-op but log at debug level
+          console.debug(
+            '[kvProvider] removeItem failed for funcKey',
+            funcKey,
+            e?.message || e,
+          );
+        });
+        await cache.removeItem(handlerKey).catch((e) => {
+          console.debug(
+            '[kvProvider] removeItem failed for handlerKey',
+            handlerKey,
+            e?.message || e,
+          );
+        });
+
+        console.log('[kvProvider] invalidated metrics cache', {
+          funcKey,
+          handlerKey,
+        });
+      } catch (err) {
+        console.warn('[kvProvider] cache invalidation failed', err);
+      }
+
       return {
         success: true,
         recordId: emailHash,
@@ -170,7 +201,7 @@ export const kvProvider: StorageProvider = {
   }> {
     try {
       const emailHash = hashEmail(email);
-      const key = `emails:${emailHash}`;
+      const key = `leads:${emailHash}`;
 
       const record = await storage.getItem<EmailCapture>(key);
 
@@ -194,7 +225,7 @@ export const kvProvider: StorageProvider = {
  * Get all email captures with optional decryption
  */
 export async function getAllLeads(decrypt = false): Promise<any[]> {
-  const keys = await storage.getKeys('emails:');
+  const keys = await storage.getKeys('leads:');
   const records = await Promise.all(
     keys.map((key) => storage.getItem<EmailCapture>(key)),
   );
@@ -205,9 +236,71 @@ export async function getAllLeads(decrypt = false): Promise<any[]> {
     return filtered;
   }
 
-  // Decrypt emails for admin view
+  // Decrypt leads for admin view
   return filtered.map((record) => ({
     ...record,
     email: decryptEmail(record.emailEncrypted),
   }));
 }
+
+export const cachedLeadsMetrics = defineCachedFunction(
+  async () => {
+    try {
+      const keys = await storage.getKeys('leads:');
+      const totalLeads = keys.length;
+
+      const records = await Promise.all(keys.map((k) => storage.getItem(k)));
+      const filtered = records.filter(Boolean);
+
+      const byStage = filtered.reduce(
+        (acc: Record<string, number>, record: any) => {
+          const stage = record.customerStage || 'unknown';
+          acc[stage] = (acc[stage] || 0) + 1;
+          return acc;
+        },
+        {} as Record<string, number>,
+      );
+
+      const byForm = filtered.reduce(
+        (acc: Record<string, number>, record: any) => {
+          const form = record.formId || 'unknown';
+          acc[form] = (acc[form] || 0) + 1;
+          return acc;
+        },
+        {} as Record<string, number>,
+      );
+
+      const byValidationStage = filtered.reduce(
+        (acc: Record<string, number>, record: any) => {
+          const stage = record.validationStage || 'unknown';
+          acc[stage] = (acc[stage] || 0) + 1;
+          return acc;
+        },
+        {} as Record<string, number>,
+      );
+
+      return {
+        total: totalLeads,
+        byStage,
+        byForm,
+        byValidationStage,
+        lastUpdated: Date.now(),
+      };
+    } catch (err) {
+      console.error('[metrics] error computing metrics', err);
+      return {
+        total: 0,
+        byStage: {},
+        byForm: {},
+        byValidationStage: {},
+        lastUpdated: Date.now(),
+        error: 'failed to compute metrics',
+      };
+    }
+  },
+  {
+    maxAge: 60 * 10, // 10 minutes, tweak as desired
+    name: 'metricsLeads',
+    getKey: () => 'default',
+  },
+);
