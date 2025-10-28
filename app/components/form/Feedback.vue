@@ -6,11 +6,13 @@ interface Props {
   prompt?: string;
   onSubmit: (feedback: string) => Promise<void>;
   minLength?: number;
+  successFormId?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   prompt: 'What would make this more valuable for you?',
   minLength: 10,
+  successFormId: undefined,
 });
 
 const schema = z.object({
@@ -98,12 +100,6 @@ const handleSkip = () => {
     </div>
 
     <!-- Feedback Success -->
-    <IFormSuccess
-      v-else
-      title="Thanks for your feedback!"
-      icon="✅"
-      message="We'll use this to build something you'll love."
-      :celebrate="false"
-    />
+    <IFormMessage v-else :form-id="props.successFormId" :celebrate="false" />
   </div>
 </template>

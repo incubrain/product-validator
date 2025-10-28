@@ -1,4 +1,3 @@
-<!-- components/form/Magnet.vue - SIMPLIFIED -->
 <script setup lang="ts">
 import { z } from 'zod';
 import type { Offer } from '#types';
@@ -55,13 +54,7 @@ const handleSubmit = async () => {
       </p>
     </div>
 
-    <!-- Success (only shows on landing page, not access gate) -->
-    <IFormSuccess
-      v-else
-      title="Check Your Email!"
-      icon="🎉"
-      message="We've sent you step 1."
-      :celebrate="true"
-    />
+    <!-- ✅ Success message (only when NOT redirecting) -->
+    <IFormMessage form-id="magnet" :celebrate="true" />
   </div>
 </template>

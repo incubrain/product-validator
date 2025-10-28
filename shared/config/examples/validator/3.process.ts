@@ -127,7 +127,7 @@ export const processSteps = [
   },
   {
     id: 'step-5-build',
-    title: 'Stage 5: Build & Polish',
+    title: 'Stage 5: Build Prep',
     duration: 'Ongoing',
     description:
       'Optimize all conversion stages, add testimonials, create media assets, and refine messaging based on validated feedback.',
