@@ -1,4 +1,4 @@
-<!-- components/form/Feedback.vue -->
+<!-- components/form/Feedback.vue - FIXED -->
 <script setup lang="ts">
 import { z } from 'zod';
 
@@ -12,7 +12,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   prompt: 'What would make this more valuable for you?',
   minLength: 10,
-  successFormId: undefined,
+  successFormId: 'feedback',
 });
 
 const schema = z.object({
@@ -30,12 +30,12 @@ const state = reactive({
 
 const isSubmitting = ref(false);
 const isSuccess = ref(false);
+const isSkipped = ref(false); // ✅ Track if skipped
 const errorMessage = ref('');
 
 const handleSubmit = async () => {
   errorMessage.value = '';
 
-  // Validate
   const result = schema.safeParse(state);
   if (!result.success) {
     errorMessage.value = result.error.errors[0].message;
@@ -55,14 +55,14 @@ const handleSubmit = async () => {
 };
 
 const handleSkip = () => {
-  isSuccess.value = true;
+  isSkipped.value = true; // ✅ Mark as skipped, not success
 };
 </script>
 
 <template>
   <div class="w-full max-w-md mx-auto">
-    <!-- Feedback Form -->
-    <div v-if="!isSuccess" class="space-y-4">
+    <!-- ✅ Hide form if skipped or submitted -->
+    <div v-if="!isSuccess && !isSkipped" class="space-y-4">
       <div class="space-y-2 text-left">
         <label class="text-sm font-medium">
           {{ prompt }}
@@ -92,14 +92,18 @@ const handleSkip = () => {
               Submit Feedback
             </UButton>
             <UButton size="lg" variant="ghost" @click="handleSkip">
-              No thanks
+              Skip
             </UButton>
           </div>
         </div>
       </UForm>
     </div>
 
-    <!-- Feedback Success -->
-    <IFormMessage v-else :form-id="props.successFormId" :celebrate="false" />
+    <!-- ✅ Only show success message if actually submitted (not skipped) -->
+    <IFormMessage
+      v-else-if="isSuccess"
+      :form-id="successFormId"
+      :celebrate="false"
+    />
   </div>
 </template>

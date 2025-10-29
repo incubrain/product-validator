@@ -1,3 +1,4 @@
+<!-- components/form/FakeDoor.vue - UPDATED -->
 <script setup lang="ts">
 import { z } from 'zod';
 import type { Offer } from '#types';
@@ -24,6 +25,7 @@ const { submit, submitFeedback, isSubmitting, isSuccess, recordId } =
   useFormSubmission({
     formId: 'fake_door',
     schema,
+    location: props.location,
   });
 
 const handleSubmit = async () => {
@@ -44,14 +46,6 @@ const shouldShowFeedback = computed(() => {
     CONVERSION.fakeDoor.collectFeedback &&
     !!recordId.value
   );
-});
-
-// DEBUG: Watch for changes
-watch([isSuccess, recordId], ([success, id]) => {
-  console.log('[FakeDoor] State changed:', {
-    isSuccess: success,
-    recordId: id,
-  });
 });
 </script>
 
@@ -79,25 +73,25 @@ watch([isSuccess, recordId], ([success, id]) => {
       </p>
     </div>
 
-    <!-- Email Success + Optional Feedback
-         Use IFormMessage to fetch success content from content/forms/fake_door-success.md
-    -->
-    <IFormMessage
-      v-else-if="!feedbackSubmitted"
-      form-id="fake-door"
-      form-state="feedback"
-      :celebrate="true"
-    >
-      <!-- Feedback form in slot. Provide successFormId so feedback can render its own content when done -->
-      <IFormFeedback
-        v-if="shouldShowFeedback"
-        :prompt="CONVERSION.fakeDoor.feedbackPrompt"
-        :on-submit="handleFeedbackSubmit"
-        success-form-id="feedback"
+    <!-- Success State -->
+    <div v-else class="text-center space-y-6 py-6">
+      <!-- ✅ Show feedback success after submission -->
+      <IFormMessage
+        v-if="feedbackSubmitted"
+        form-id="feedback"
+        :celebrate="false"
       />
-    </IFormMessage>
 
-    <!-- Final Success (feedback already submitted) -->
-    <IFormMessage v-else form-id="fake-door" :celebrate="false" />
+      <!-- ✅ Show initial success + optional feedback form -->
+      <template v-else>
+        <IFormMessage form-id="fake-door" :celebrate="true" />
+        <IFormFeedback
+          v-if="shouldShowFeedback"
+          :prompt="CONVERSION.fakeDoor.feedbackPrompt"
+          :on-submit="handleFeedbackSubmit"
+          success-form-id="feedback"
+        />
+      </template>
+    </div>
   </div>
 </template>

@@ -53,8 +53,5 @@ const handleSubmit = async () => {
         {{ offer.cta.note }}
       </p>
     </div>
-
-    <!-- ✅ Success message (only when NOT redirecting) -->
-    <IFormMessage v-else form-id="magnet" :celebrate="true" />
   </div>
 </template>
