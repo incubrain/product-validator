@@ -36,7 +36,7 @@
     "husky": "^9.1.7"
   },
   "devDependencies": {
-    "@compodium/nuxt": "0.1.0-beta.11",
+    "@compodium/nuxt": "0.1.0-beta.12",
     "@eslint/json": "^0.13.2",
     "@nuxt/eslint": "1.9.0",
     "@types/node": "^20.19.23",
