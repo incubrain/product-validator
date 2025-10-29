@@ -9,24 +9,41 @@ pnpm leads:backup
 # Check exit code
 if [ $? -ne 0 ]; then
   echo ""
-  echo "❌ Backup failed. Push aborted."
+  echo "❌ Backup failed."
   echo ""
-  exit 1
-fi
+  echo "⚠️  This usually means:"
+  echo "   - Production server is down"
+  echo "   - NUXT_STORAGE_PROD_URL or NUXT_STORAGE_PROD_SECRET is incorrect"
+  echo "   - Network issues"
+  echo ""
+  
+  # Admin override prompt
+  read -p "Continue push anyway? (ADMIN OVERRIDE - y/n): " -n 1 -r
+  echo ""
+  
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "❌ Push cancelled"
+    exit 1
+  fi
+  
+  echo "⚠️  WARNING: Pushing without backup!"
+  echo "   Make sure you have a manual backup if needed."
+  echo ""
+else
+  echo ""
+  echo "⚠️  Next steps after deployment:"
+  echo "   1. Wait for deployment to complete"
+  echo "   2. Run: pnpm leads:restore"
+  echo ""
 
-echo ""
-echo "⚠️  Next steps after deployment:"
-echo "   1. Wait for deployment to complete"
-echo "   2. Run: pnpm leads:restore"
-echo ""
+  # Normal confirmation prompt (after successful backup)
+  read -p "Continue with push? (y/n): " -n 1 -r
+  echo ""
 
-# Prompt for confirmation
-read -p "Continue with push? (y/n): " -n 1 -r
-echo ""
-
-if [[ ! $REPLY =~ ^[Yy]$ ]]; then
-  echo "❌ Push cancelled"
-  exit 1
+  if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+    echo "❌ Push cancelled"
+    exit 1
+  fi
 fi
 
 echo "✅ Proceeding with push..."
