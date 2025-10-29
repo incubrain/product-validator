@@ -1,4 +1,4 @@
-<!-- components/FounderCard.vue -->
+<!-- components/card/Founder.vue -->
 <script setup lang="ts">
 defineProps<{
   variant?: 'default' | 'mobile';

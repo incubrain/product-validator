@@ -40,7 +40,7 @@ const copyrightYear = computed(() =>
     </template>
 
     <template v-if="reachedStage('engagement')" #right>
-      <IFounderCard />
+      <ICardFounder />
     </template>
 
     <!-- BOTTOM: Copyright + CTA -->

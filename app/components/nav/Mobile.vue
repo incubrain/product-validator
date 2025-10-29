@@ -13,7 +13,6 @@ const isOpen = defineModel<boolean>('open', { default: false });
 const closeMenu = () => {
   isOpen.value = false;
 };
-
 </script>
 
 <template>
@@ -48,7 +47,7 @@ const closeMenu = () => {
     </nav>
 
     <div class="space-y-4 text-center border-t pt-4">
-      <IFounderCard variant="mobile" />
+      <ICardFounder variant="mobile" />
     </div>
   </div>
 </template>

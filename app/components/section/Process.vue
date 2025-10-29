@@ -38,7 +38,7 @@ const steps = computed(() => data.value?.steps ?? []);
         next: 'end-4 sm:-end-12 top-1/2 -translate-y-1/2',
       }"
     >
-      <IMetricCard v-bind="item" />
+      <ICardMetric v-bind="item" />
     </UCarousel>
   </ISectionWrapper>
 </template>
