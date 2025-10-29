@@ -1,5 +1,4 @@
 #!/usr/bin/env sh
-# .husky/pre-push
 
 echo ""
 echo "🔍 Checking for production leads to backup..."
