@@ -1,4 +1,5 @@
 #!/usr/bin/env sh
+# .husky/pre-push
 
 echo ""
 echo "🔍 Checking for production leads to backup..."
@@ -17,8 +18,10 @@ if [ $? -ne 0 ]; then
   echo "   - Network issues"
   echo ""
   
-  # Admin override prompt
-  read -p "Continue push anyway? (ADMIN OVERRIDE - y/n): " -n 1 -r
+  # Admin override prompt - redirect stdin from terminal
+  exec < /dev/tty
+  printf "Continue push anyway? (ADMIN OVERRIDE - y/n): "
+  read -r REPLY
   echo ""
   
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
@@ -27,7 +30,6 @@ if [ $? -ne 0 ]; then
   fi
   
   echo "⚠️  WARNING: Pushing without backup!"
-  echo "   Make sure you have a manual backup if needed."
   echo ""
 else
   echo ""
@@ -36,8 +38,10 @@ else
   echo "   2. Run: pnpm leads:restore"
   echo ""
 
-  # Normal confirmation prompt (after successful backup)
-  read -p "Continue with push? (y/n): " -n 1 -r
+  # Normal confirmation prompt - redirect stdin from terminal
+  exec < /dev/tty
+  printf "Continue with push? (y/n): "
+  read -r REPLY
   echo ""
 
   if [[ ! $REPLY =~ ^[Yy]$ ]]; then
