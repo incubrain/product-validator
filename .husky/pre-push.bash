@@ -1,0 +1,34 @@
+#!/usr/bin/env sh
+# .husky/pre-push
+
+echo ""
+echo "🔍 Checking for production leads to backup..."
+echo ""
+
+pnpm leads:backup
+
+# Check exit code
+if [ $? -ne 0 ]; then
+  echo ""
+  echo "❌ Backup failed. Push aborted."
+  echo ""
+  exit 1
+fi
+
+echo ""
+echo "⚠️  Next steps after deployment:"
+echo "   1. Wait for deployment to complete"
+echo "   2. Run: pnpm leads:restore"
+echo ""
+
+# Prompt for confirmation
+read -p "Continue with push? (y/n): " -n 1 -r
+echo ""
+
+if [[ ! $REPLY =~ ^[Yy]$ ]]; then
+  echo "❌ Push cancelled"
+  exit 1
+fi
+
+echo "✅ Proceeding with push..."
+echo ""

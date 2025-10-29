@@ -27,3 +27,4 @@ repomix-output.*
 !.env.example
 strategy
 ideas
+backups
