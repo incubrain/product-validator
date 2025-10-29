@@ -32,14 +32,14 @@
     "nuxt": "^4.2.0",
     "typescript": "^5.9.3",
     "vue": "^3.5.22",
-    "vue-router": "^4.6.3"
+    "vue-router": "^4.6.3",
+    "husky": "^9.1.7"
   },
   "devDependencies": {
     "@compodium/nuxt": "0.1.0-beta.11",
     "@eslint/json": "^0.13.2",
     "@nuxt/eslint": "1.9.0",
     "@types/node": "^20.19.23",
-    "husky": "^9.1.7",
     "vue-tsc": "^3.1.2"
   },
   "packageManager": "pnpm@9.15.4+sha512.b2dc20e2fc72b3e18848459b37359a32064663e5627a51e4c74b2c29dd8e8e0491483c3abb40789cfd578bf362fb6ba8261b05f0387d76792ed6e23ea3b1b6a0"
