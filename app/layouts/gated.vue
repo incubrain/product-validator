@@ -1,5 +1,7 @@
 <script setup lang="ts">
-import { findPageChildren } from '@nuxt/content/utils';
+import { findPageChildren, findPageBreadcrumb } from '@nuxt/content/utils';
+import { mapContentNavigation } from '@nuxt/ui/utils/content';
+
 import { CONVERSION } from '~~/shared/config/navigation';
 
 const ROOT_PATH = '/magnet';
@@ -13,7 +15,11 @@ const { isStageAccessible, getStageLabel, getStageVariant } = useStageAccess();
 
 // Fetch navigation for sidebar
 const { data: navigation } = await useAsyncData('magnet-navigation', () => {
-  return queryCollectionNavigation('magnet', ['duration', 'status', 'disabled']);
+  return queryCollectionNavigation('magnet', [
+    'duration',
+    'status',
+    'disabled',
+  ]);
 });
 
 // ✅ Verify on mount if email exists
@@ -80,6 +86,18 @@ const handleModalClose = (open: boolean) => {
 
 const isCollapsed = ref(false);
 const stages = computed(() => findPageChildren(navigation.value, ROOT_PATH));
+
+const breadcrumb = computed(() =>
+  mapContentNavigation(
+    findPageBreadcrumb(navigation?.value, route.fullPath, {
+      current: true,
+      indexAsChild: false,
+    }),
+    { deep: 0 },
+  ).map(({ icon, ...link }) => link),
+);
+
+console.log('REZZZ', { nav: navigation.value, bread: breadcrumb.value });
 </script>
 
 <template>
@@ -168,9 +186,7 @@ const stages = computed(() => findPageChildren(navigation.value, ROOT_PATH));
       <template #header>
         <UDashboardNavbar>
           <template #title>
-            <NuxtLink :to="ROOT_PATH">
-              <ILogo size="md" />
-            </NuxtLink>
+            <UBreadcrumb :items="breadcrumb" />
           </template>
           <template #right>
             <div v-if="hasAccess" class="flex items-center gap-3">

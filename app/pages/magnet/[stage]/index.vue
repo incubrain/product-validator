@@ -66,7 +66,7 @@ const normalizedSteps = computed(() => {
       variant="ghost"
       size="sm"
     >
-      Back to Overview
+      Back to Dashboard
     </UButton>
 
     <!-- Stage Header -->
@@ -140,37 +140,20 @@ const normalizedSteps = computed(() => {
             {{ step.description }}
           </p>
 
-          <div class="flex justify-between pt-2">
-            <div v-if="step.duration" class="text-sm text-muted">
-              ⏱️ {{ step.duration }}
-            </div>
-            <UButton
-              :to="step.path"
-              color="primary"
-              variant="subtle"
-              trailing-icon="i-lucide-arrow-right"
-              size="sm"
-            >
-              Start
-            </UButton>
-          </div>
-
           <template #footer>
-            <div v-if="step.metrics?.length" class="space-y-2">
-              <p
-                class="text-xs font-medium text-dimmed uppercase tracking-wide"
-              >
-                Success Metrics
-              </p>
-              <div class="space-y-3">
-                <IMetric
-                  v-for="(metric, idx) in step.metrics"
-                  :key="idx"
-                  :level="metric.level"
-                  :range="metric.range"
-                  :meaning="metric.meaning"
-                />
+            <div class="flex justify-between pt-2">
+              <div v-if="step.duration" class="text-sm text-muted">
+                ⏱️ {{ step.duration }}
               </div>
+              <UButton
+                :to="step.path"
+                color="primary"
+                variant="subtle"
+                trailing-icon="i-lucide-arrow-right"
+                size="sm"
+              >
+                Start
+              </UButton>
             </div>
           </template>
         </UCard>
