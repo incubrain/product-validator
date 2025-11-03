@@ -29,12 +29,39 @@ export default defineContentConfig({
     magnet: defineCollection(
       asSeoCollection({
         type: 'page',
-        source: resolveConfigPath({ suffix: 'magnet/*.md' }),
+        source: {
+          include: resolveConfigPath({ suffix: 'magnet/**/*.{md,yml}' }),
+          prefix: '/magnet',
+        },
         schema: z.object({
-          step: z.number().optional(),
+          stage: z.enum([
+            'attention',
+            'conversion',
+            'engagement',
+            'demand',
+            'build_prep',
+          ]),
+          step: z.number().min(1).max(3),
           title: z.string(),
           description: z.string().optional(),
           duration: z.string().optional(),
+          media: z
+            .object({
+              src: z.string(),
+              alt: z.string().optional(),
+              type: z.enum(['image', 'video']).optional().default('image'),
+            })
+            .optional(),
+          metrics: z
+            .array(
+              z.object({
+                name: z.string(),
+                level: z.enum(['weak', 'average', 'strong']),
+                range: z.string(),
+                meaning: z.string(),
+              }),
+            )
+            .optional(),
         }),
       }),
     ),
