@@ -39,52 +39,22 @@ defineProps<ProcessStep>();
           </p>
         </div>
 
-        <!-- Thresholds -->
         <div class="space-y-3">
-          <!-- Weak -->
-          <div class="space-y-1.5">
-            <div
-              class="flex items-center justify-between p-2 rounded bg-error/10 border border-error/30"
-            >
-              <span class="text-xs font-medium text-error">Weak</span>
-              <span class="text-xs font-bold text-error">
-                {{ card.thresholds.weak.range }}
-              </span>
-            </div>
-            <p class="text-xs text-dimmed leading-snug">
-              {{ card.thresholds.weak.meaning }}
-            </p>
-          </div>
-
-          <!-- Average -->
-          <div class="space-y-1.5">
-            <div
-              class="flex items-center justify-between p-2 rounded bg-warning/10 border border-warning/30"
-            >
-              <span class="text-xs font-medium text-warning">Average</span>
-              <span class="text-xs font-bold text-warning">
-                {{ card.thresholds.average.range }}
-              </span>
-            </div>
-            <p class="text-xs text-dimmed leading-snug">
-              {{ card.thresholds.average.meaning }}
-            </p>
-          </div>
-
-          <!-- Strong -->
-          <div class="space-y-1.5">
-            <div
-              class="flex items-center justify-between p-2 rounded bg-success/10 border border-success/30"
-            >
-              <span class="text-xs font-medium text-success">Strong</span>
-              <span class="text-xs font-bold text-success">
-                {{ card.thresholds.strong.range }}
-              </span>
-            </div>
-            <p class="text-xs text-dimmed leading-snug">
-              {{ card.thresholds.strong.meaning }}
-            </p>
-          </div>
+          <IMetric
+            level="weak"
+            :range="card.thresholds.weak.range"
+            :meaning="card.thresholds.weak.meaning"
+          />
+          <IMetric
+            level="average"
+            :range="card.thresholds.average.range"
+            :meaning="card.thresholds.average.meaning"
+          />
+          <IMetric
+            level="strong"
+            :range="card.thresholds.strong.range"
+            :meaning="card.thresholds.strong.meaning"
+          />
         </div>
       </div>
     </template>
