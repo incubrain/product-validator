@@ -6,6 +6,7 @@ import { useUserInteraction } from '~/composables/useUserInteraction';
 
 export interface VideoProps {
   src: string;
+  alt?: string;
   poster?: string;
   aspectRatio?: VideoVariants['aspectRatio'];
   autoplay?: boolean;
@@ -17,27 +18,42 @@ export interface VideoProps {
 
 const props = withDefaults(defineProps<VideoProps>(), {
   aspectRatio: 'video',
+  alt: 'video',
   autoplay: false,
   muted: true,
   loop: false,
   controls: false,
   loading: 'lazy',
-  poster: undefined
+  poster: undefined,
+});
+
+// Detect external video sources
+const isExternalVideo = computed(() => {
+  const src = props.src.toLowerCase();
+  return (
+    src.includes('youtube.com') ||
+    src.includes('youtu.be') ||
+    src.includes('vimeo.com') ||
+    src.startsWith('http://') ||
+    src.startsWith('https://')
+  );
 });
 
 // Refs
 const containerRef = ref<HTMLElement>();
 const videoRef = ref<HTMLVideoElement>();
 
-// State
+// State (only for self-hosted videos)
 const isLoading = ref(true);
 const hasError = ref(false);
 const shouldLoad = ref(props.loading === 'eager');
 const showControls = ref(false);
 
-// VueUse Media Controls
+// VueUse Media Controls (only for self-hosted videos)
 const { playing, waiting, muted } = useMediaControls(videoRef, {
-  src: computed(() => (shouldLoad.value ? props.src : '')),
+  src: computed(() =>
+    shouldLoad.value && !isExternalVideo.value ? props.src : '',
+  ),
 });
 
 // Intersection Observer for lazy loading
@@ -53,7 +69,7 @@ if (props.loading === 'lazy') {
   );
 }
 
-// Event handlers
+// Event handlers (self-hosted only)
 const handleLoadedData = () => {
   isLoading.value = false;
   hasError.value = false;
@@ -72,7 +88,7 @@ const toggleMute = () => {
   muted.value = !muted.value;
 };
 
-// Autoplay logic
+// Autoplay logic (self-hosted only)
 const { hasInteracted, waitForInteraction } = useUserInteraction();
 const autoplayAttempted = ref(false);
 
@@ -83,10 +99,10 @@ watchEffect(async () => {
     props.muted &&
     shouldLoad.value &&
     !hasError.value &&
-    !autoplayAttempted.value // Prevent multiple attempts
+    !autoplayAttempted.value &&
+    !isExternalVideo.value // Only for self-hosted
   ) {
     if (hasInteracted.value) {
-      // User has already interacted - try autoplay immediately
       try {
         playing.value = true;
         autoplayAttempted.value = true;
@@ -94,7 +110,6 @@ watchEffect(async () => {
         console.warn('Autoplay failed:', error.message);
       }
     } else {
-      // Wait for first interaction
       autoplayAttempted.value = true;
       waitForInteraction().then(() => {
         if (
@@ -119,27 +134,31 @@ watch(
   },
 );
 
-// Set initial muted state
+// Set initial muted state (self-hosted only)
 watchEffect(() => {
-  if (videoRef.value) {
+  if (videoRef.value && !isExternalVideo.value) {
     muted.value = props.muted;
   }
 });
 
-// Show/hide controls on hover
+// Show/hide controls on hover (self-hosted only)
 const handleMouseEnter = () => {
-  showControls.value = true;
+  if (!isExternalVideo.value) {
+    showControls.value = true;
+  }
 };
 
 const handleMouseLeave = () => {
-  showControls.value = false;
+  if (!isExternalVideo.value) {
+    showControls.value = false;
+  }
 };
 
-// Computed styles - fix the loading state issue
+// Computed styles
 const computedStyles = useTV(videoStyles, {
   ...props,
-  loading: isLoading.value && shouldLoad.value, // Only show loading when actually loading
-  error: hasError.value,
+  loading: isLoading.value && shouldLoad.value && !isExternalVideo.value,
+  error: hasError.value && !isExternalVideo.value,
 });
 </script>
 
@@ -150,9 +169,24 @@ const computedStyles = useTV(videoStyles, {
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
-    <!-- Video Element -->
+    <!-- External Video (iframe) -->
+    <div
+      v-if="isExternalVideo && shouldLoad"
+      class="relative w-full aspect-video"
+    >
+      <iframe
+        :src="src"
+        :title="alt"
+        class="absolute inset-0 w-full h-full"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen
+      />
+    </div>
+
+    <!-- Self-hosted Video Element -->
     <video
-      v-if="shouldLoad"
+      v-else-if="shouldLoad && !isExternalVideo"
       ref="videoRef"
       :class="computedStyles.video()"
       :poster="poster"
@@ -168,9 +202,11 @@ const computedStyles = useTV(videoStyles, {
       <p>Your browser doesn't support video playback.</p>
     </video>
 
-    <!-- Custom Controls Overlay (only show on hover) -->
+    <!-- Custom Controls Overlay (self-hosted only, on hover) -->
     <div
-      v-if="!controls && !hasError && shouldLoad && showControls"
+      v-if="
+        !isExternalVideo && !controls && !hasError && shouldLoad && showControls
+      "
       :class="computedStyles.controls()"
       class="opacity-100 transition-opacity duration-200"
     >
@@ -199,15 +235,18 @@ const computedStyles = useTV(videoStyles, {
       </div>
     </div>
 
-    <!-- Loading State (only when actually loading) -->
-    <div v-if="isLoading && shouldLoad" :class="computedStyles.overlay()">
+    <!-- Loading State (self-hosted only) -->
+    <div
+      v-if="!isExternalVideo && isLoading && shouldLoad"
+      :class="computedStyles.overlay()"
+    >
       <div :class="computedStyles.loadingState()">
         <UIcon name="i-lucide-loader" class="size-8 animate-spin text-white" />
       </div>
     </div>
 
-    <!-- Error State -->
-    <div v-if="hasError" :class="computedStyles.overlay()">
+    <!-- Error State (self-hosted only) -->
+    <div v-if="!isExternalVideo && hasError" :class="computedStyles.overlay()">
       <div :class="computedStyles.errorState()">
         <UIcon name="i-lucide-video-off" class="size-12 mb-2" />
         <p class="text-sm mb-3">Failed to load video</p>
@@ -222,9 +261,9 @@ const computedStyles = useTV(videoStyles, {
       </div>
     </div>
 
-    <!-- Buffering Indicator -->
+    <!-- Buffering Indicator (self-hosted only) -->
     <div
-      v-if="waiting && !hasError && !isLoading"
+      v-if="!isExternalVideo && waiting && !hasError && !isLoading"
       :class="computedStyles.overlay()"
     >
       <div :class="computedStyles.loadingState()">
