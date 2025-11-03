@@ -1,11 +1,24 @@
-<!-- layouts/gated.vue - SIMPLIFIED -->
 <script setup lang="ts">
+import { findPageChildren } from '@nuxt/content/utils';
 import { CONVERSION } from '~~/shared/config/navigation';
+
+const ROOT_PATH = '/magnet';
 
 const route = useRoute();
 const { hasAccess, email, isVerified, verifyAccess, isVerifying } =
   useGatedAccess();
 const offer = useFlowOffer(CONVERSION.primary);
+
+// Fetch navigation for sidebar
+const { data: navigation } = await useAsyncData('magnet-navigation', () => {
+  return queryCollectionNavigation('magnet', [
+    'description',
+    'navigation',
+    'duration',
+    'metrics',
+    'step',
+  ]);
+});
 
 // ✅ Verify on mount if email exists
 onMounted(async () => {
@@ -14,7 +27,6 @@ onMounted(async () => {
     isVerified: isVerified.value,
   });
 
-  // Email is already loaded from localStorage by useStorage
   if (email.value && !isVerified.value) {
     console.log('[Layout] Found email, verifying...');
     await verifyAccess();
@@ -31,7 +43,6 @@ watch(
       hasAccess: hasAccess.value,
     });
 
-    // When email is set but not verified (after grantAccess), verify it
     if (newEmail && !newIsVerified) {
       console.log('[Layout] Email set but not verified, verifying...');
       await verifyAccess();
@@ -43,10 +54,9 @@ watch(
 // Control modal state
 const isModalOpen = ref(false);
 
-// Show modal when no access and not verifying
 watchEffect(() => {
   const shouldShow =
-    route.path.startsWith('/magnet') && !hasAccess.value && !isVerifying.value;
+    route.path.startsWith(ROOT_PATH) && !hasAccess.value && !isVerifying.value;
 
   console.log('[Layout] Modal state:', {
     shouldShow,
@@ -57,7 +67,6 @@ watchEffect(() => {
   isModalOpen.value = shouldShow;
 });
 
-// Prevent modal from closing unless we have access
 const handleModalClose = (open: boolean) => {
   console.log('[Layout] Modal close requested:', {
     open,
@@ -72,15 +81,86 @@ const handleModalClose = (open: boolean) => {
   console.log('[Layout] ✅ Allowing modal close');
   isModalOpen.value = open;
 };
+
+const collapsed = ref(false);
+console.log('NAV', navigation.value);
 </script>
 
 <template>
   <UDashboardGroup>
+    <!-- Sidebar -->
+    <UDashboardSidebar
+      v-model:collapsed="collapsed"
+      collapsible
+      :ui="{
+        header: 'justify-between',
+        footer: 'border-t border-default',
+      }"
+    >
+      <template #header>
+        <ILogo
+          v-if="!collapsed"
+          :show-text="false"
+          size="md"
+          class="h-5 w-auto shrink-0"
+        />
+        <UDashboardSidebarCollapse />
+      </template>
+
+      <template #default>
+        <div v-if="collapsed" class="space-y-2">
+          <UButton
+            v-for="stage in findPageChildren(navigation, '/magnet')"
+            :key="stage.path"
+            :icon="stage.icon"
+            :to="stage.path"
+            color="neutral"
+            variant="ghost"
+            square
+            size="lg"
+          />
+        </div>
+
+        <!-- Show full navigation when expanded -->
+        <UContentNavigation
+          v-else
+          :navigation="findPageChildren(navigation, '/magnet')"
+          type="single"
+          collapsible
+          highlight
+          highlight-color="primary"
+          color="primary"
+        />
+      </template>
+
+      <template #footer>
+        <div v-if="hasAccess" class="w-full">
+          <UButton
+            v-if="!collapsed"
+            :label="email || 'User'"
+            icon="i-lucide-user"
+            color="neutral"
+            variant="ghost"
+            block
+            truncate
+          />
+          <UButton
+            v-else
+            icon="i-lucide-user"
+            color="neutral"
+            variant="ghost"
+            square
+          />
+        </div>
+      </template>
+    </UDashboardSidebar>
+
+    <!-- Main Panel -->
     <UDashboardPanel>
       <template #header>
         <UDashboardNavbar>
           <template #title>
-            <NuxtLink to="/magnet">
+            <NuxtLink :to="ROOT_PATH">
               <ILogo size="md" />
             </NuxtLink>
           </template>
@@ -102,12 +182,13 @@ const handleModalClose = (open: boolean) => {
       </template>
 
       <template #body>
-        <div>
+        <div class="p-6">
           <slot />
         </div>
       </template>
     </UDashboardPanel>
 
+    <!-- Access Modal -->
     <UModal
       :open="isModalOpen"
       :dismissible="false"
