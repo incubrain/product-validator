@@ -41,7 +41,19 @@ export default defineContentConfig({
             'demand',
             'build_prep',
           ]),
+          status: z
+            .enum([
+              'published',
+              'draft',
+              'locked',
+              'feature_flag',
+              'beta',
+              'deprecated',
+            ])
+            .optional()
+            .default('draft'),
           step: z.number().min(1).max(3),
+          disabled: z.boolean(),
           title: z.string(),
           description: z.string().optional(),
           duration: z.string().optional(),

@@ -1,50 +1,42 @@
 <script setup lang="ts">
-import { normalizeContentPath } from '#shared/utils/config-resolver';
 
 definePageMeta({
   layout: 'gated',
 });
 
 const route = useRoute();
+const { isStageAccessible, getStageLabel } = useStageAccess();
 
-// Fetch current page - query by step pattern
+// Fetch current page
 const { data: page } = await useAsyncData(`magnet-${route.params.step}`, () => {
   return queryCollection('magnet')
     .where('path', 'LIKE', `%/${route.params.step}`)
     .first();
 });
 
-console.log('[Magnet Step] Found page:', page.value?.path);
+// Check access immediately
+if (page.value && !isStageAccessible(page.value)) {
+  const statusLabel = getStageLabel(page.value) || 'unavailable';
 
-// Fetch navigation using the FULL path (before normalization)
+  throw createError({
+    statusCode: 403,
+    statusMessage: `This step is ${statusLabel}.`,
+    fatal: true,
+  });
+}
+
+// Fetch navigation
 const { data: surround } = await useAsyncData(
   `${route.params.step}-surround`,
   () => {
     if (!page.value?.path) return null;
-
     return queryCollectionItemSurroundings('magnet', page.value.path, {
-      fields: ['title', 'step', 'path'], // ← Use 'path' not '_path'
+      fields: ['title', 'step', 'path', 'status'],
     });
   },
 );
 
-console.log(
-  '[Magnet Step] Surround:',
-  surround.value?.map((s) => s?.path),
-);
-
-// Normalize surround paths for display
-const normalizedSurround = computed(() => {
-  if (!surround.value) return [];
-
-  return surround.value.map((item) => {
-    if (!item) return null;
-    return {
-      ...item,
-      path: normalizeContentPath(item.path), // Normalize for navigation
-    };
-  });
-});
+const normalizedSurround = computed(() => surround.value ?? []);
 
 if (!page.value) {
   throw createError({
@@ -68,7 +60,7 @@ if (!page.value) {
           size="sm"
         />
         <UBadge v-if="page.step" color="primary" variant="subtle">
-          Step {{ page.step }} of 4
+          Step {{ page.step }}
         </UBadge>
       </div>
 

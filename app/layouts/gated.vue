@@ -9,15 +9,11 @@ const { hasAccess, email, isVerified, verifyAccess, isVerifying } =
   useGatedAccess();
 const offer = useFlowOffer(CONVERSION.primary);
 
+const { isStageAccessible, getStageLabel, getStageVariant } = useStageAccess();
+
 // Fetch navigation for sidebar
 const { data: navigation } = await useAsyncData('magnet-navigation', () => {
-  return queryCollectionNavigation('magnet', [
-    'description',
-    'navigation',
-    'duration',
-    'metrics',
-    'step',
-  ]);
+  return queryCollectionNavigation('magnet', ['duration', 'status', 'disabled']);
 });
 
 // ✅ Verify on mount if email exists
@@ -82,15 +78,15 @@ const handleModalClose = (open: boolean) => {
   isModalOpen.value = open;
 };
 
-const collapsed = ref(false);
-console.log('NAV', navigation.value);
+const isCollapsed = ref(false);
+const stages = computed(() => findPageChildren(navigation.value, ROOT_PATH));
 </script>
 
 <template>
   <UDashboardGroup>
     <!-- Sidebar -->
     <UDashboardSidebar
-      v-model:collapsed="collapsed"
+      v-model:collapsed="isCollapsed"
       collapsible
       :ui="{
         header: 'justify-between',
@@ -99,7 +95,7 @@ console.log('NAV', navigation.value);
     >
       <template #header>
         <ILogo
-          v-if="!collapsed"
+          v-if="!isCollapsed"
           :show-text="false"
           size="md"
           class="h-5 w-auto shrink-0"
@@ -108,23 +104,35 @@ console.log('NAV', navigation.value);
       </template>
 
       <template #default>
-        <div v-if="collapsed" class="space-y-2">
-          <UButton
-            v-for="stage in findPageChildren(navigation, '/magnet')"
-            :key="stage.path"
-            :icon="stage.icon"
-            :to="stage.path"
-            color="neutral"
-            variant="ghost"
-            square
-            size="lg"
-          />
+        <div v-if="isCollapsed" class="flex flex-col gap-2">
+          <UTooltip v-for="stage in stages" :key="stage.path" placement="right">
+            <template #text>
+              <span>{{ stage.title }}</span>
+              <span v-if="!isStageAccessible(stage)" class="text-xs opacity-75">
+                ({{ getStageLabel(stage) }})
+              </span>
+            </template>
+
+            <UButton
+              :icon="stage.icon"
+              :to="isStageAccessible(stage) ? stage.path : undefined"
+              :disabled="!isStageAccessible(stage)"
+              color="neutral"
+              variant="ghost"
+              square
+              size="md"
+              :class="{
+                'bg-primary/10 text-primary': route.path.startsWith(stage.path),
+                'opacity-50 cursor-not-allowed': !isStageAccessible(stage),
+              }"
+            />
+          </UTooltip>
         </div>
 
-        <!-- Show full navigation when expanded -->
+        <!-- Full navigation when expanded -->
         <UContentNavigation
           v-else
-          :navigation="findPageChildren(navigation, '/magnet')"
+          :navigation="stages"
           type="single"
           collapsible
           highlight
@@ -136,7 +144,7 @@ console.log('NAV', navigation.value);
       <template #footer>
         <div v-if="hasAccess" class="w-full">
           <UButton
-            v-if="!collapsed"
+            v-if="!isCollapsed"
             :label="email || 'User'"
             icon="i-lucide-user"
             color="neutral"

@@ -12,6 +12,16 @@ export default defineNuxtConfig({
     '@nuxt/scripts',
   ],
 
+  hooks: {
+    'content:file:afterParse'(ctx) {
+      const { content } = ctx;
+      console.log('afterParse', content, ctx);
+      if (content.id.startsWith('magnet')) {
+        content.disabled = content.status !== 'published';
+      }
+    },
+  },
+
   // {CONFIG}
   site: {
     url: 'https://product-validator.incubrain.org',

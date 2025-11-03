@@ -8,13 +8,31 @@ definePageMeta({
 const route = useRoute();
 const stageSlug = route.params.stage as string;
 
-// Fetch stage index.md content
+const { isStageAccessible } = useStageAccess();
+
+// Fetch stage index.md
 const { data: page } = await useAsyncData(
   `magnet-${stageSlug}-overview`,
   () => {
     return queryCollection('magnet').path(route.path).first();
   },
 );
+
+if (page.value && !isStageAccessible(page.value)) {
+  throw createError({
+    statusCode: 403,
+    statusMessage: `This stage is ${page.value.status}.`,
+    fatal: true,
+  });
+}
+
+if (!page.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: 'Stage overview not found',
+    fatal: true,
+  });
+}
 
 // Query step docs for this stage only
 const { data: steps } = await useAsyncData(`magnet-${stageSlug}-steps`, () => {
@@ -36,14 +54,6 @@ const normalizedSteps = computed(() => {
     })) || []
   );
 });
-
-if (!page.value) {
-  throw createError({
-    statusCode: 404,
-    statusMessage: 'Stage overview not found',
-    fatal: true,
-  });
-}
 </script>
 
 <template>
