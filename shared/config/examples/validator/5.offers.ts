@@ -109,7 +109,7 @@ export const offers = [
 
     cta: {
       label: 'Book a Call',
-      to: 'https://cal.com/drew-macgibbon/30min',
+      to: 'https://cal.com/drew-macgibbon/strategy-consultation',
       icon: 'i-lucide-handshake',
       color: 'secondary',
       note: 'Monthly packages available. First hour: strategy session.',
