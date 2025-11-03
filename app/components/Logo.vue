@@ -20,7 +20,7 @@ withDefaults(defineProps<Props>(), {
       height="auto"
       class="p-1 rounded-full bg-elevated border"
     />
-    <h6 class="font-bold text-base text-dimmed m-0 leading-0">
+    <h6 v-if="showText" class="font-bold text-base text-dimmed m-0 leading-0">
       {{ data.name }}
     </h6>
   </div>
