@@ -1,7 +1,6 @@
 <script setup lang="ts">
 import { findPageChildren, findPageBreadcrumb } from '@nuxt/content/utils';
 import { mapContentNavigation } from '@nuxt/ui/utils/content';
-
 import { CONVERSION } from '~~/shared/config/navigation';
 
 const ROOT_PATH = '/magnet';
@@ -11,15 +10,11 @@ const { hasAccess, email, isVerified, verifyAccess, isVerifying } =
   useGatedAccess();
 const offer = useFlowOffer(CONVERSION.primary);
 
-const { isStageAccessible, getStageLabel, getStageVariant } = useStageAccess();
+const { isStageAccessible, getStageLabel } = useStageAccess();
 
 // Fetch navigation for sidebar
 const { data: navigation } = await useAsyncData('magnet-navigation', () => {
-  return queryCollectionNavigation('magnet', [
-    'duration',
-    'status',
-    'disabled',
-  ]);
+  return queryCollectionNavigation('magnet', ['status', 'disabled']);
 });
 
 // ✅ Verify on mount if email exists
@@ -85,7 +80,11 @@ const handleModalClose = (open: boolean) => {
 };
 
 const isCollapsed = ref(false);
-const stages = computed(() => findPageChildren(navigation.value, ROOT_PATH));
+const stages = computed(() =>
+  findPageChildren(navigation.value, ROOT_PATH, {
+    indexAsChild: false,
+  }),
+);
 
 const breadcrumb = computed(() =>
   mapContentNavigation(
@@ -96,8 +95,6 @@ const breadcrumb = computed(() =>
     { deep: 0 },
   ).map(({ icon, ...link }) => link),
 );
-
-console.log('REZZZ', { nav: navigation.value, bread: breadcrumb.value });
 </script>
 
 <template>
@@ -106,19 +103,23 @@ console.log('REZZZ', { nav: navigation.value, bread: breadcrumb.value });
     <UDashboardSidebar
       v-model:collapsed="isCollapsed"
       collapsible
+      :min-size="22"
+      :default-size="22"
+      :max-size="22"
       :ui="{
         header: 'justify-between',
+        body: 'pt-4',
         footer: 'border-t border-default',
       }"
     >
       <template #header>
-        <ILogo
-          v-if="!isCollapsed"
-          :show-text="false"
-          size="md"
-          class="h-5 w-auto shrink-0"
-        />
-        <UDashboardSidebarCollapse />
+        <NuxtLink :to="ROOT_PATH">
+          <ILogo
+            :show-text="!isCollapsed"
+            size="md"
+            class="h-5 w-auto shrink-0"
+          />
+        </NuxtLink>
       </template>
 
       <template #default>
@@ -152,32 +153,12 @@ console.log('REZZZ', { nav: navigation.value, bread: breadcrumb.value });
           v-else
           :navigation="stages"
           type="single"
+          default-open
           collapsible
           highlight
           highlight-color="primary"
           color="primary"
         />
-      </template>
-
-      <template #footer>
-        <div v-if="hasAccess" class="w-full">
-          <UButton
-            v-if="!isCollapsed"
-            :label="email || 'User'"
-            icon="i-lucide-user"
-            color="neutral"
-            variant="ghost"
-            block
-            truncate
-          />
-          <UButton
-            v-else
-            icon="i-lucide-user"
-            color="neutral"
-            variant="ghost"
-            square
-          />
-        </div>
       </template>
     </UDashboardSidebar>
 
@@ -186,6 +167,7 @@ console.log('REZZZ', { nav: navigation.value, bread: breadcrumb.value });
       <template #header>
         <UDashboardNavbar>
           <template #title>
+            <UDashboardSidebarCollapse />
             <UBreadcrumb :items="breadcrumb" />
           </template>
           <template #right>

@@ -1,13 +1,11 @@
 <script setup lang="ts">
-import { normalizeContentPath } from '#shared/utils/config-resolver';
-
 definePageMeta({
   layout: 'gated',
 });
 
-// Fetch the index.md content
+const route = useRoute();
 const { data: page } = await useAsyncData('magnet-overview', () => {
-  return queryCollection('magnet').where('step', 'IS NULL').first();
+  return queryCollection('magnet').path(route.path).first();
 });
 
 if (!page.value) {

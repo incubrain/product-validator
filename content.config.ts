@@ -34,13 +34,8 @@ export default defineContentConfig({
           prefix: '/magnet',
         },
         schema: z.object({
-          stage: z.enum([
-            'attention',
-            'conversion',
-            'engagement',
-            'demand',
-            'build_prep',
-          ]),
+          title: z.string(),
+          description: z.string().optional(),
           status: z
             .enum([
               'published',
@@ -52,27 +47,13 @@ export default defineContentConfig({
             ])
             .optional()
             .default('draft'),
-          step: z.number().min(1).max(3),
           disabled: z.boolean(),
-          title: z.string(),
-          description: z.string().optional(),
-          duration: z.string().optional(),
           media: z
             .object({
               src: z.string(),
               alt: z.string().optional(),
               type: z.enum(['image', 'video']).optional().default('image'),
             })
-            .optional(),
-          metrics: z
-            .array(
-              z.object({
-                name: z.string(),
-                level: z.enum(['weak', 'average', 'strong']),
-                range: z.string(),
-                meaning: z.string(),
-              }),
-            )
             .optional(),
         }),
       }),

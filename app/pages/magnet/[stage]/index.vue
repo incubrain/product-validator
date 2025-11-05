@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { normalizeContentPath } from '#shared/utils/config-resolver';
-
 definePageMeta({
   layout: 'gated',
 });
@@ -36,23 +34,11 @@ if (!page.value) {
 
 // Query step docs for this stage only
 const { data: steps } = await useAsyncData(`magnet-${stageSlug}-steps`, () => {
-  // Extract stage key from slug (e.g., "0.identity" -> "identity")
-  const stageKey = stageSlug.replace(/^\d+\./, '');
-
   return queryCollection('magnet')
-    .where('stage', '=', stageKey)
-    .where('step', 'IS NOT NULL')
-    .order('step', 'ASC')
+    .where('path', 'LIKE', `${route.fullPath}/%`)
+    .where('extension', '=', 'md')
+    .select()
     .all();
-});
-
-const normalizedSteps = computed(() => {
-  return (
-    steps.value?.map((step) => ({
-      ...step,
-      path: normalizeContentPath(step.path),
-    })) || []
-  );
 });
 </script>
 
@@ -112,21 +98,17 @@ const normalizedSteps = computed(() => {
     <USeparator />
 
     <!-- Step Cards -->
-    <div v-if="normalizedSteps.length" class="space-y-6">
+    <div v-if="steps.length" class="space-y-6">
       <h2 class="text-2xl font-bold">Steps in This Stage</h2>
 
       <UPageGrid :cols="3">
-        <UCard
-          v-for="step in normalizedSteps"
-          :key="step.path"
-          variant="outline"
-        >
+        <UCard v-for="(step, i) in steps" :key="step.path" variant="outline">
           <template #header>
             <div class="flex items-center gap-3">
               <div
                 class="flex items-center justify-center size-10 rounded-full bg-primary/10 text-primary font-bold shrink-0"
               >
-                {{ step.step }}
+                {{ i + 1 }}
               </div>
               <div class="flex-1 min-w-0">
                 <h3 class="font-semibold text-base">
@@ -141,10 +123,7 @@ const normalizedSteps = computed(() => {
           </p>
 
           <template #footer>
-            <div class="flex justify-between pt-2">
-              <div v-if="step.duration" class="text-sm text-muted">
-                ⏱️ {{ step.duration }}
-              </div>
+            <div class="flex justify-end pt-2">
               <UButton
                 :to="step.path"
                 color="primary"
