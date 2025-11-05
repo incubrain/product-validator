@@ -3,8 +3,8 @@ import type { ButtonProps } from '@nuxt/ui';
 
 const founder = useSectionConfig('founder');
 
-// Query updates collection
-const { data: updates } = await useAsyncData('updates', () =>
+// ✅ Non-blocking data fetch
+const { data: updates, pending } = useAsyncData('updates', () =>
   queryCollection('updates').order('date', 'DESC').all(),
 );
 
@@ -34,12 +34,12 @@ const authors = [
   },
 ];
 
-// Hero links (dynamic from founder accessibility)
+// Hero links
 const heroLinks = computed(() =>
   socialLinks.map((link) => ({
     label: `Follow on ${link.label}`,
     to: link.url,
-    icon: link.platform, // Uses icon alias directly
+    icon: link.platform,
     color:
       link.platform === 'youtube'
         ? 'primary'
@@ -66,7 +66,16 @@ const heroLinks = computed(() =>
 
     <UPageBody>
       <UContainer>
-        <UChangelogVersions :indicator="false">
+        <!-- ✅ Show loading state while data fetches -->
+        <div v-if="pending" class="flex justify-center py-12">
+          <UIcon
+            name="i-lucide-loader-2"
+            class="animate-spin size-8 text-muted"
+          />
+        </div>
+
+        <!-- ✅ Render updates when ready -->
+        <UChangelogVersions v-else :indicator="false">
           <UChangelogVersion
             v-for="update in updates"
             :key="update.version"
