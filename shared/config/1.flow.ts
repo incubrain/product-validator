@@ -2,7 +2,7 @@ import type { FlowConfig } from '#shared/types/config';
 
 // Import domain data only
 import { problemSolutionCards } from './2.problem-solution';
-import { features, processSteps } from './3.process';
+import { productSteps } from './3.process';
 import { profile, accessibility, business, story } from './4.founder';
 import { offers } from './5.offers';
 import { caseStudies, testimonials, proof } from './6.results';
@@ -67,18 +67,8 @@ export const flowConfig: FlowConfig = {
       title: '⚠️ Section title',
       description: '⚠️ Section description',
     },
-    features,
-    separators: [
-      {
-        label: '⚠️ Separator label',
-        description: '⚠️ Optional separator description',
-      },
-      {
-        label: '⚠️ Another separator label',
-        description: '⚠️ Optional separator description',
-      },
-    ],
-    steps: processSteps,
+
+    steps: productSteps,
   },
 
   // ============================================================================

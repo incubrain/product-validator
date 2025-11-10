@@ -114,42 +114,13 @@ export interface ProblemSolutionCard {
 // PROCESS SECTION
 // ============================================================================
 
-export type ProcessFeature = {
-  title: string;
-  description: string;
-  icon: string;
-  class?: string;
-};
-
-export type ProcessAction = {
-  task: string;
-  estimated_time: string;
-};
-
-export type MetricThreshold = {
-  range: string;
-  meaning: string;
-};
-
-export type ContentLayout = 'left' | 'right' | 'full';
-
-export type MetricCard = {
-  title: string;
-  description: string;
-  icon: string;
-  thresholds: {
-    weak: MetricThreshold;
-    average: MetricThreshold;
-    strong: MetricThreshold;
-  };
-};
-
 export type ProcessStep = {
   id: string;
   title: string;
+  icon: string;
   duration: string;
   description: string;
-  card: MetricCard;
+  result: string;
 };
 
 // ============================================================================
@@ -330,10 +301,10 @@ export type FlowConfig = {
 
   problemSolution: SectionBase & {
     cards: ProblemSolutionCard[];
+    statement?: string;
   };
 
   process: SectionBase & {
-    features: ProcessFeature[];
     steps: ProcessStep[];
   };
 
