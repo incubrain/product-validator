@@ -16,7 +16,7 @@ const isIcon = computed(() => {
     <UIcon
       v-if="isIcon"
       :name="logo"
-      class="size-8 flex-shrink-0"
+      class="size-8 shrink-0"
       :class="logo.includes('check-circle') ? 'text-success' : 'text-info'"
     />
 
@@ -25,7 +25,7 @@ const isIcon = computed(() => {
       :src="logo"
       width="36"
       height="36"
-      class="rounded-full flex-shrink-0"
+      class="rounded-full shrink-0"
       alt=""
     />
 
