@@ -86,25 +86,47 @@ export function resolveConfigPath(options: {
  * normalizeContentPath('/magnet/step-1')
  * // Returns: '/magnet/step-1'
  */
-export function normalizeContentPath(path: string): string {
+/**
+ * Normalize or add config source prefix to content paths
+ *
+ * @param path - The content path to transform
+ * @param addPrefix - If true, adds prefix; if false (default), removes it
+ *
+ * @example
+ * // Remove prefix (default behavior)
+ * normalizeContentPath('/examples/validator/magnet/step-1')
+ * // Returns: '/magnet/step-1'
+ *
+ * @example
+ * // Add prefix
+ * normalizeContentPath('/magnet/step-1', true)
+ * // Returns: '/examples/validator/magnet/step-1'
+ */
+export function normalizeContentPath(path: string, addPrefix = true): string {
+  if (path.startsWith('http')) {
+    return path;
+  }
+
   const source = getActiveConfigSource();
   const sourcePrefix = CONFIG_SOURCES[source];
 
-  console.log('normalizeContentPath 1', { source, sourcePrefix, path });
+  if (!sourcePrefix) {
+    return path;
+  }
 
-  // If there's a source prefix, remove it
-  if (sourcePrefix) {
-    // Remove leading slash from sourcePrefix for comparison
-    const prefix = `/${sourcePrefix.replace(/\/$/, '')}`;
+  const prefix = `/${sourcePrefix.replace(/\/$/, '')}`;
 
-    console.log('normalizeContentPath 2', {
-      path,
-      prefix,
-      startsWith: path.startsWith(prefix),
-    });
-    if (path.startsWith(prefix)) {
-      return path.slice(prefix.length) || '/';
+  if (addPrefix) {
+    // Add prefix if not already present
+    if (!path.startsWith(prefix)) {
+      return `${prefix}${path.startsWith('/') ? path : `/${path}`}`;
     }
+    return path;
+  }
+
+  // Remove prefix (original behavior)
+  if (path.startsWith(prefix)) {
+    return path.slice(prefix.length) || '/';
   }
 
   return path;
