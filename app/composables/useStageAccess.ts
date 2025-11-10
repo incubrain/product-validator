@@ -1,5 +1,4 @@
 // composables/useStageAccess.ts
-
 export type StageStatus =
   | 'published'
   | 'draft'

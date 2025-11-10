@@ -15,7 +15,7 @@ const useLiveCount = computed(() => {
 
 // ✅ Fetch live count if it's a magnet offer
 const { data: metrics } = useLiveCount.value
-  ? await useFetch('/api/v1/metrics/leads')
+  ? useFetch('/api/v1/metrics/leads')
   : { data: ref(null) };
 
 // ✅ Use live count or static count
@@ -63,13 +63,21 @@ const urgencyColor = computed(() => {
 </script>
 
 <template>
-  <div :class="['space-y-3 w-full', props.class]">
-    <UProgress :model-value="percent" :color="urgencyColor" size="xl" />
+  <div class="space-y-3 w-full flex flex-col">
+    <UProgress
+      :model-value="percent"
+      :color="urgencyColor"
+      size="2xl"
+      class="w-full"
+    />
     <div class="flex justify-between items-center text-xs">
       <span class="text-muted">
         {{ label }}
       </span>
-      <span v-if="useLiveCount" class="text-dimmed flex items-center gap-1 pl-2">
+      <span
+        v-if="useLiveCount"
+        class="text-dimmed flex items-center gap-1 pl-2"
+      >
         <span class="size-1.5 rounded-full bg-success animate-pulse" />
         Live
       </span>

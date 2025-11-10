@@ -43,6 +43,7 @@ const transformedFeatures = computed(() => {
           root: 'bg-primary/5',
           features: 'gap-3',
           feature: 'items-center',
+          terms: 'w-full',
           featureTitle: 'text-sm leading-tight',
         }"
       >

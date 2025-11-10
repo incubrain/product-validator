@@ -10,7 +10,7 @@ const proof = computed(() => results?.value.proof ?? []);
 <template>
   <UPageHero
     orientation="vertical"
-    class="bg-gradient-to-b from-default via-muted to-default text-white relative overflow-hidden min-h-[calc(100vh-var(--ui-banner-height)-var(--ui-header-height))]"
+    class="bg-linear-to-b from-default via-muted to-default text-white relative overflow-hidden min-h-[calc(100vh-var(--ui-banner-height)-var(--ui-header-height))]"
     :ui="{
       wrapper: 'text-center',
       container:
@@ -30,7 +30,7 @@ const proof = computed(() => results?.value.proof ?? []);
           <span class="text-sm font-semibold text-dimmed">
             {{ hero.badge.title }}
           </span>
-          <span class="h-4 w-px bg-inverted"></span>
+          <span class="h-4 w-px bg-inverted" />
           <span
             class="text-sm font-medium text-secondary group-hover:underline flex items-center gap-1"
           >
@@ -99,13 +99,13 @@ const proof = computed(() => results?.value.proof ?? []);
     <template #bottom>
       <div
         class="absolute top-0 inset-0 bg-grid-white/[0.02] pointer-events-none"
-      ></div>
+      />
       <div
         class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none"
-      ></div>
+      />
       <div
         class="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none"
-      ></div>
+      />
     </template>
   </UPageHero>
 </template>

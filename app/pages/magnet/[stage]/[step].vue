@@ -24,7 +24,7 @@ if (page.value && !isStageAccessible(page.value)) {
 }
 
 // Fetch navigation
-const { data: surround } = await useAsyncData(
+const { data: surround } = useAsyncData(
   `${route.params.step}-surround`,
   () => {
     if (!page.value?.path) return null;

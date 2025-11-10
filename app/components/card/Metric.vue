@@ -2,12 +2,12 @@
 <script setup lang="ts">
 import type { ProcessStep } from '#shared/types/config';
 
-defineProps<ProcessStep>();
+defineProps<ProcessStep & { index: number }>();
 </script>
 
 <template>
   <UPageCard
-    :title="card.title"
+    :title="title"
     spotlight
     spotlight-color="secondary"
     class="h-full"
@@ -17,16 +17,18 @@ defineProps<ProcessStep>();
     }"
   >
     <template #leading>
-      <UIcon :name="card.icon" class="text-info size-5" />
+      <UBadge variant="subtle" class="rounded-full mr-2"> {{ index }} </UBadge>
+      <UIcon :name="icon" class="text-secondary size-5" />
+    </template>
+
+    <template #title>
+      {{ title }}
     </template>
 
     <template #description>
       <div class="space-y-4 flex-1">
         <!-- Step Header -->
         <div class="space-y-2">
-          <h4 class="text-base font-bold text-highlighted">
-            {{ title }}
-          </h4>
           <p class="text-sm text-muted leading-relaxed">
             {{ description }}
           </p>
@@ -35,26 +37,8 @@ defineProps<ProcessStep>();
         <!-- Metric Description -->
         <div class="pt-3 border-t border-default">
           <p class="text-sm text-dimmed font-medium">
-            {{ card.description }}
+            {{ result }}
           </p>
-        </div>
-
-        <div class="space-y-3">
-          <IMetric
-            level="weak"
-            :range="card.thresholds.weak.range"
-            :meaning="card.thresholds.weak.meaning"
-          />
-          <IMetric
-            level="average"
-            :range="card.thresholds.average.range"
-            :meaning="card.thresholds.average.meaning"
-          />
-          <IMetric
-            level="strong"
-            :range="card.thresholds.strong.range"
-            :meaning="card.thresholds.strong.meaning"
-          />
         </div>
       </div>
     </template>

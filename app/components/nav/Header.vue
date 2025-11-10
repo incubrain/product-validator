@@ -22,7 +22,7 @@ const headerClasses = computed(() => ({
     </template>
 
     <UNavigationMenu
-      class="flex flex-grow mx-auto max-w-xl justify-center items-center"
+      class="flex grow mx-auto max-w-xl justify-center items-center"
       :items="NAVIGATION.main"
       color="neutral"
       content-orientation="horizontal"

@@ -27,5 +27,6 @@ const cards = computed(() => data?.value.cards ?? []);
         </template>
       </UPageCard>
     </UPageGrid>
+    <IMarqueeText v-if="data.statement" :text="data.statement" />
   </ISectionWrapper>
 </template>

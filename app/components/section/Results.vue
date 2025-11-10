@@ -110,9 +110,7 @@ const formattedTestimonials = computed(() =>
                 :key="milestone.date"
                 class="flex items-start gap-2 text-xs"
               >
-                <div
-                  class="size-2 rounded-full bg-primary mt-1 flex-shrink-0"
-                />
+                <div class="size-2 rounded-full bg-primary mt-1 shrink-0" />
                 <div class="flex-1">
                   <NuxtTime
                     :datetime="milestone.date"
@@ -180,8 +178,8 @@ const formattedTestimonials = computed(() =>
               v-bind="testimonial.user"
               size="xl"
               :ui="{
-                description: testimonial.highlight ? '!text-inverted' : '',
-                name: testimonial.highlight ? '!text-inverted' : '',
+                description: testimonial.highlight ? 'text-inverted!' : '',
+                name: testimonial.highlight ? 'text-inverted!' : '',
               }"
             />
           </template>

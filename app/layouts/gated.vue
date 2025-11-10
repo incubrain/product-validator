@@ -13,7 +13,7 @@ const offer = useFlowOffer(CONVERSION.primary);
 const { isStageAccessible, getStageLabel } = useStageAccess();
 
 // Fetch navigation for sidebar
-const { data: navigation } = await useAsyncData('magnet-navigation', () => {
+const { data: navigation } = useAsyncData('magnet-navigation', () => {
   return queryCollectionNavigation('magnet', ['status', 'disabled']);
 });
 

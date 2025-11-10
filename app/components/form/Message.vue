@@ -14,7 +14,7 @@ const props = withDefaults(defineProps<Props>(), {
   celebrate: true,
 });
 
-const { data } = await useAsyncData(
+const { data } = useAsyncData(
   `form-${props.formState}-${props.formId}`,
   () =>
     queryCollection('forms')
