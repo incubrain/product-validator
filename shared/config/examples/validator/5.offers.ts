@@ -7,15 +7,14 @@ export const offers = [
 
     title: 'Validation Kit',
     description:
-      'Complete 5-stage validation system. Go from idea to validated business model with structured guidance and community support.',
+      'Go from idea to validated business model with structured guidance and community support.',
 
     price: 'Free',
     discount: null,
-    billingCycle: 'Limited availability',
+    billingCycle: 'Limited for quality control',
     terms: 'No credit card required',
 
-    tagline:
-      '🎯 For technical founders ready to validate through real market feedback',
+    tagline: null,
 
     badge: {
       label: 'Early Access',
@@ -26,7 +25,7 @@ export const offers = [
 
     features: [
       {
-        title: '5-stage validation framework with success metrics',
+        title: 'Stage based validation framework',
         icon: 'status-available',
       },
       {
@@ -34,11 +33,7 @@ export const offers = [
         icon: 'status-available',
       },
       {
-        title: 'Guerrilla marketing playbook',
-        icon: 'status-coming-soon',
-      },
-      {
-        title: 'Video walkthrough: Setup to validation',
+        title: 'Template video walkthrough',
         icon: 'status-coming-soon',
       },
       {
@@ -61,15 +56,14 @@ export const offers = [
       to: undefined,
       icon: 'i-lucide-rocket',
       modal: 'window',
-      note: 'Email required for delivery',
+      note: null,
     },
   },
 
   {
     id: 'direct',
     title: 'Done-With-You Implementation',
-    description:
-      'Accountability + hands-on execution; let\'s build together.',
+    description: 'Hands on accountability + validation guidance.',
     tagline:
       '⚡ Upgrade when: You need momentum, accountability, or technical execution help',
     price: '$50',

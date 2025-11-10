@@ -8,7 +8,7 @@ import type {
 
 export const profile = {
   role: 'Product Strategist & Builder',
-  title: 'Sir/Dr.',
+  title: null,
   given_name: 'Drew',
   surname: ' MacGibbon',
   avatar: {
@@ -31,7 +31,7 @@ export const business = {
 
 export const story = {
   greeting:
-    "Hi, I'm Mac; I created the Product Validator to break my cycle; after 13 years and an ADHD diagnosis I've identified what was holding me back.",
+    "Hi, I'm Mac; I created the Product Validator to break my cycle; after 13 years as a struggling founder and an ADHD diagnosis I've identified what was blocking me.",
   mission:
     'My mission for the Product Validator is to help 100 struggling founders acheive financial freedom.',
   background: [

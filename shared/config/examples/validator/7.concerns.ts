@@ -26,7 +26,7 @@ export const concerns = [
   // ============================================================================
   {
     q: 'Why not use ClickFunnels, Kajabi, or other funnel/no-code platforms?',
-    a: 'Cost: $147-399/month forever vs $0-50 one-time. Lock-in: They own your data and design—migrating means rebuilding from scratch. Assumption: They assume you have a validated offer and know how to market. Reality: 42% of startups fail building products nobody wants (CB Insights). Platforms skip validation methodology entirely. This gives you: (1) Stage-by-stage validation framework with success metrics, (2) Technical ownership from day one, (3) Free forever, (4) Guidance from idea → validated business. No-code is faster for simple pages, but when you need custom features or want to scale, platform limitations hurt. Start with ownership.',
+    a: 'Cost: $147-399/month forever vs $0-50 one-time. Lock-in: They own your data and design—migrating means rebuilding from scratch. Assumption: They assume you have a validated offer and know how to market. Reality: 42% of startups fail building products nobody wants (CB Insights). Platforms skip validation methodology entirely. This gives you: (1) Stage-by-stage validation framework, (2) Technical ownership from day one, (3) Free forever, (4) Guidance from idea → validated business. No-code is faster for simple pages, but when you need custom features or want to scale, platform limitations hurt. Start with ownership.',
     type: 'objection',
   },
   {

@@ -2,45 +2,45 @@ import type { ProblemSolutionCard } from '#types';
 
 export const problemSolutionCards: ProblemSolutionCard[] = [
   {
-    id: 'perfectionist-paralysis',
-    title: 'Break Perfectionist Paralysis',
+    id: 'ship-imperfect',
+    title: 'You ARE Good Enough',
     icon: 'i-lucide-rocket',
     description:
-      'The bar for "ready" keeps rising. Deploy your placeholder now—something beats nothing.',
+      'Early-adopters accept imperfection if it works, feedback beats polish',
   },
+
   {
-    id: 'fear-of-judgment',
-    title: 'Normalize Public Iteration',
+    id: 'build-in-public',
+    title: 'You ARE The Business',
     icon: 'i-lucide-eye',
     description:
-      'Private iteration avoids criticism but builds nothing. Weekly updates build audience; no audience means no product.',
+      'Accept your flaws, share your story; to help, people need to know you can',
   },
   {
-    id: 'value-articulation',
-    title: 'Discover Your Unique Value',
+    id: 'you-are-product',
+    title: 'You ARE The Product',
     icon: 'i-lucide-compass',
-    description:
-      "Can't explain your value? Package a past problem you solved as your product.",
+    description: 'A $10k MRR product is hiding in your scars; unpack them',
   },
   {
-    id: 'validate-with-empathy',
-    title: 'Validate With Empathy',
-    icon: 'i-lucide-trending-up',
+    id: 'progressive-stages',
+    title: 'You ARE The Customer',
+    icon: 'i-lucide-layers',
     description:
-      "Chasing unicorns when $10k MRR would change your life? Solve problems you've lived—build foundation first, scale later.",
+      "Don't assume value if you wouldn't use it; self-use is quality control",
   },
   {
-    id: 'first-feedback',
-    title: 'Get Real Feedback Fast',
-    icon: 'i-lucide-bandage',
+    id: 'progressive-stages',
+    title: 'Build The Idea',
+    icon: 'i-lucide-layers',
     description:
-      'Always 90% done because you fear what comes next. Stop guessing—data drives decisions.',
+      'Share it, refine the packaging, validate demand, paid on delivery',
   },
   {
-    id: 'community-accountability',
-    title: 'Build With Community',
-    icon: 'i-lucide-users',
+    id: 'progressive-stages',
+    title: 'Ship EVERY Day',
+    icon: 'i-lucide-layers',
     description:
-      'Easy to quit alone when it gets hard. Share struggles, overcome together.',
+      'Share the idea, be human, be bold, connect, rejection fuels success',
   },
-];
+] satisfies ProblemSolutionCard[];

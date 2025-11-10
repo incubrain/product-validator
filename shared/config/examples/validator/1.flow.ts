@@ -2,7 +2,7 @@ import type { FlowConfig } from '#shared/types/config';
 
 // Import domain data only
 import { problemSolutionCards } from './2.problem-solution';
-import { features, processSteps } from './3.process';
+import { productSteps } from './3.process';
 import { profile, accessibility, business, story } from './4.founder';
 import { offers } from './5.offers';
 import { caseStudies, testimonials, proof } from './6.results';
@@ -17,13 +17,13 @@ export const flowConfig: FlowConfig = {
     minStage: 'attention',
     badge: {
       title: "We're open-source",
-      description: 'Star us on GitHub',
+      description: 'helping 70+ founders',
       to: 'https://github.com/incubrain/product-validator',
     },
     intro: {
       title: 'Sick of Being "Almost Ready" to Launch?',
       description:
-        'Flip the script and ship a headless funnel today, let data drive your business decisions.',
+        'Flip the script, strategically validate your business model BEFORE you build the product',
     },
     media: {
       type: 'video',
@@ -38,11 +38,13 @@ export const flowConfig: FlowConfig = {
     intro: {
       icon: 'i-lucide-alert-triangle',
       headline: 'Struggling Founders',
-      title: 'Stop Making Excuses',
+      title: 'Destroy Your Excuses',
       description:
-        'You have years of experience and expertise but cannot translate this into your own business; why?',
+        'Take control of your destiny today or risk wasting years like I did.',
     },
     cards: problemSolutionCards,
+    statement:
+      'Break Perfectionism - Ship Daily • Validate First - Build For Demand • Stop Chasing Unicorns - Define Your Success •',
     bridge: {
       headline: 'Ready to get started?',
       message: "No excuses it's free! No strings attached",
@@ -63,24 +65,11 @@ export const flowConfig: FlowConfig = {
     intro: {
       icon: 'i-lucide-package',
       headline: 'All You Need - No Distractions',
-      title: 'Zero Upfront Cost',
+      title: 'Product Validator Template',
       description:
-        'Deploy in under an hour, provider agnostic, validate first, pay for scaling assistance.',
+        'Step-by-step system; fail fast, fail early, advance with confidence.',
     },
-    features,
-    separators: [
-      {
-        label: 'step by step breakdown',
-        description:
-          'Your success is our success, we are here to help at every step',
-      },
-      {
-        label: 'What Does "Validated" Mean?',
-        description:
-          'Data-driven thresholds prevent emotional decisions. Set your criteria now based on these industry standards, measure later, decide with confidence.',
-      },
-    ],
-    steps: processSteps,
+    steps: productSteps,
   },
 
   // ============================================================================
@@ -91,10 +80,9 @@ export const flowConfig: FlowConfig = {
     minStage: 'engagement',
     intro: {
       icon: 'i-lucide-user',
-      headline: 'Learn from my many mistakes',
-      title: '13 Years and $350k+ Lost',
-      description:
-        "You're watching the validation method work in real-time. Transparent, not polished.",
+      headline: 'Learn from my mistakes',
+      title: 'My Scar, 13 Years and $300k+',
+      description: 'The Product Validator only exists because of my suffering; you need not!',
     },
     profile,
     accessibility,
@@ -111,9 +99,9 @@ export const flowConfig: FlowConfig = {
     intro: {
       icon: 'i-lucide-handshake',
       headline: 'Limited Early Access',
-      title: 'Everything You Need to Start',
+      title: 'Focus On What Matters',
       description:
-        'Get live in <10 minutes, complete the 4-step sequence, receive strategic feedback. Zero cost until you validate demand.',
+        'Solve the problems that are holding your back from success.',
     },
     items: offers,
     bridge: {
