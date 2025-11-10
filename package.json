@@ -13,7 +13,7 @@
     "lint:fix": "eslint . --fix",
     "leads:backup": "tsx --env-file=.env shared/utils/leads-backup.ts",
     "leads:restore": "tsx --env-file=.env shared/utils/leads-restore.ts",
-    "backup": "npm run leads:export"
+    "ship": "git push"
   },
   "dependencies": {
     "@iconify/json": "^2.2.401",

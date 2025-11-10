@@ -14,7 +14,7 @@ if [ $? -ne 0 ]; then
   echo ""
   echo "⚠️  This usually means:"
   echo "   - Production server is down"
-  echo "   - NUXT_STORAGE_PROD_URL or NUXT_STORAGE_PROD_SECRET is incorrect"
+  echo "   - PRODUCTION_URL or PRODUCTION_STORAGE_SECRET is incorrect"
   echo "   - Network issues"
   echo ""
   
