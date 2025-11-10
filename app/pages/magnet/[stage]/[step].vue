@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { normalizeContentPath } from '#shared/utils/config-resolver';
 definePageMeta({
   layout: 'gated',
 });
@@ -45,7 +46,7 @@ if (!page.value) {
 </script>
 
 <template>
-  <div v-if="page" class="max-w-4xl mx-auto space-y-8">
+  <div v-if="page" class="max-w-2xl mx-auto space-y-8">
     <!-- Header -->
     <div class="space-y-4">
       <div>
@@ -55,6 +56,26 @@ if (!page.value) {
         <p v-if="page.description" class="text-lg text-muted mt-2">
           {{ page.description }}
         </p>
+      </div>
+
+      <div
+        v-if="page.media?.src"
+        class="rounded-lg overflow-hidden border border-default"
+      >
+        <!-- Image -->
+        <NuxtImg
+          v-if="page.media.type === 'image'"
+          :src="normalizeContentPath(page.media.src)"
+          :alt="page.media.alt || page.title"
+          class="w-full h-auto"
+        />
+
+        <!-- Video -->
+        <IVideo
+          v-else-if="page.media.type === 'video'"
+          :src="normalizeContentPath(page.media.src)"
+          :alt="page.media.alt"
+        />
       </div>
 
       <USeparator />

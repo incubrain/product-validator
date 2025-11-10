@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import { normalizeContentPath } from '#shared/utils/config-resolver';
 definePageMeta({
   layout: 'gated',
 });
@@ -43,7 +44,7 @@ const { data: steps } = await useAsyncData(`magnet-${stageSlug}-steps`, () => {
 </script>
 
 <template>
-  <div v-if="page" class="max-w-4xl mx-auto space-y-8">
+  <div v-if="page" class="max-w-2xl mx-auto space-y-8">
     <!-- Back Button -->
     <UButton
       to="/magnet"
@@ -73,7 +74,7 @@ const { data: steps } = await useAsyncData(`magnet-${stageSlug}-steps`, () => {
       <!-- Image -->
       <NuxtImg
         v-if="page.media.type === 'image'"
-        :src="page.media.src"
+        :src="normalizeContentPath(page.media.src)"
         :alt="page.media.alt || page.title"
         class="w-full h-auto"
       />
@@ -81,7 +82,7 @@ const { data: steps } = await useAsyncData(`magnet-${stageSlug}-steps`, () => {
       <!-- Video -->
       <IVideo
         v-else-if="page.media.type === 'video'"
-        :src="page.media.src"
+        :src="normalizeContentPath(page.media.src)"
         :alt="page.media.alt"
       />
     </div>
@@ -101,7 +102,7 @@ const { data: steps } = await useAsyncData(`magnet-${stageSlug}-steps`, () => {
     <div v-if="steps.length" class="space-y-6">
       <h2 class="text-2xl font-bold">Steps in This Stage</h2>
 
-      <UPageGrid :cols="3">
+      <UPageGrid class="lg:grid-cols-2">
         <UCard v-for="(step, i) in steps" :key="step.path" variant="outline">
           <template #header>
             <div class="flex items-center gap-3">
