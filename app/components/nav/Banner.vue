@@ -6,6 +6,7 @@ const props = defineProps<{
 }>();
 
 const offer = useFlowOffer(props.offerId);
+const { configSource } = useDevTools();
 
 const bannerClasses = computed(() => ({
   'sticky top-0 z-50': props.sticky,
@@ -15,7 +16,7 @@ const bannerClasses = computed(() => ({
 
 <template>
   <UBanner
-    :id="`${$config.public.configSource}_${offer.id}`"
+    :id="`${configSource}_${offer.id}`"
     icon="i-lucide-heart"
     :title="offer.description"
     :to="offer.cta.to"

@@ -2,8 +2,8 @@
 import { useStorage } from '@vueuse/core';
 
 export const useGatedAccess = () => {
-  const storagePrefix = useRuntimeConfig().public.configSource;
-  const storageKey = `${storagePrefix}_magnet_email`;
+  const { configSource: storagePrefix } = useDevTools();
+  const storageKey = `${storagePrefix.value}_magnet_email`;
 
   // ✅ Only use useStorage on client, fallback to ref on server
   const email = import.meta.client
@@ -18,28 +18,20 @@ export const useGatedAccess = () => {
 
   const hasAccess = computed(() => {
     const access = !!email.value && isVerified.value;
-    console.log('[useGatedAccess] hasAccess computed:', {
-      email: email.value,
-      isVerified: isVerified.value,
-      hasAccess: access,
-    });
     return access;
   });
 
   const verifyAccess = async () => {
     // Skip if already verified
     if (isVerified.value && email.value) {
-      console.log('[useGatedAccess] Already verified, skipping');
       return;
     }
 
     if (!email.value) {
-      console.log('[useGatedAccess] No email, setting verified = false');
       isVerified.value = false;
       return;
     }
 
-    console.log('[useGatedAccess] Verifying email:', email.value);
     isVerifying.value = true;
 
     try {
@@ -49,7 +41,6 @@ export const useGatedAccess = () => {
       });
 
       isVerified.value = data?.exists || false;
-      console.log('[useGatedAccess] Verification result:', isVerified.value);
 
       if (!isVerified.value) {
         email.value = null;
@@ -64,13 +55,11 @@ export const useGatedAccess = () => {
   };
 
   const grantAccess = (userEmail: string) => {
-    console.log('[useGatedAccess] ✅ GRANTING ACCESS:', userEmail);
     email.value = userEmail;
     isVerified.value = true;
   };
 
   const revokeAccess = () => {
-    console.log('[useGatedAccess] ❌ REVOKING ACCESS');
     email.value = null;
     isVerified.value = false;
     navigateTo('/');

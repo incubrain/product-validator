@@ -17,8 +17,10 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 });
 
+
 // Dev shortcuts
-if (import.meta.dev && import.meta.client) {
+const isDev = import.meta.dev;
+if (isDev && import.meta.client) {
   const { clearAllStorage } = useDevTools();
   const { $exitIntent } = useNuxtApp();
   const { revokeAccess } = useGatedAccess();
@@ -35,6 +37,7 @@ if (import.meta.dev && import.meta.client) {
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
+    <IDevTools v-if="isDev" />
   </UApp>
 </template>
 

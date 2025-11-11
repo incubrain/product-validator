@@ -10,7 +10,7 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
   const { trackEvent } = useAction();
   const route = useRoute();
   const toast = useToast();
-  const config = useRuntimeConfig().public;
+  const { validationStage} = useDevTools();
   const { grantAccess } = useGatedAccess();
 
   const isSubmitting = ref(false);
@@ -39,7 +39,7 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
           email: validated.email,
           offer: formData.offerId || options.formId,
           customerStage: 'email_captured',
-          validationStage: config.validationStage as ValidationStage,
+          validationStage: validationStage.value as ValidationStage,
           metadata: {
             location: route.path,
             userAgent: navigator.userAgent,

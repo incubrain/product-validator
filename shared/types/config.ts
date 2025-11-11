@@ -6,19 +6,25 @@ import type { ButtonProps, PricingPlanProps, BadgeProps } from '@nuxt/ui';
 
 /**
  * Validation lifecycle stages:
- * - attention: Can you drive traffic and capture attention - bounce rate analysis
+ * - identity: Who are you? What do you stand for? - Decision clarity
+ * - attention: Can you grab attention? - social media, direct outreach, guerrilla marketing
+ * - traffic: Can you drive consistent visitors? - visitor analytics
  * - conversion: Can you convert visitors into leads? - lead magnet conversion
- * - engagement: Can you keep customers engaged? - magnet engagement / completion rates analysis
- * - demand: Are customers ready to pay? - payment intent analysis
+ * - engagement: Can you keep leads engaged? - magnet engagement / completion rates analysis
+ * - demand: Are leads ready to pay? - payment intent analysis
  * - build_prep: Are you ready to build? - product development phase
  */
 
 export type ValidationStage =
+  | 'identity'
   | 'attention'
+  | 'traffic'
   | 'conversion'
   | 'engagement'
   | 'demand'
   | 'build_prep';
+
+export type ConfigSource = 'validator' | 'custom';
 
 export type Cta = {
   to: ButtonProps['to'];

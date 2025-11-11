@@ -197,7 +197,7 @@ export const kvProvider: StorageProvider = {
   async authorize(email: string): Promise<{
     exists: boolean;
     customerStage?: string;
-    validationStage?: string;
+    validationStage?: ValidationStage;
   }> {
     try {
       const emailHash = hashEmail(email);

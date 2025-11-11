@@ -2,18 +2,19 @@
 import { flowConfig } from '#build/flow-config.mjs';
 
 export const useSectionVisibility = () => {
-  const config = useRuntimeConfig().public;
-  const currentStage = config.validationStage as ValidationStage;
+  const { validationStage } = useDevTools()
 
   const stageOrder: Record<ValidationStage, number> = {
-    attention: 1,
-    conversion: 2,
-    engagement: 3,
-    demand: 4,
-    build_prep: 5,
+    identity: 1,
+    attention: 2,
+    traffic: 3,
+    conversion: 4,
+    engagement: 5,
+    demand: 6,
+    build_prep: 7,
   };
 
-  const currentLevel = stageOrder[currentStage];
+  const currentLevel = computed(() => stageOrder[validationStage.value]);
 
   /**
    * Check if section should be visible
@@ -23,22 +24,22 @@ export const useSectionVisibility = () => {
 
     if (section.enabled === false) return false;
 
-    const minLevel = stageOrder[section.minStage || 'attention'];
-    return currentLevel >= minLevel;
+    const minLevel = stageOrder[section.minStage || 'identity'];
+    return currentLevel.value >= minLevel;
   };
 
   /**
    * Check if we've reached (or passed) a specific stage
    */
   const reachedStage = (stage: ValidationStage): boolean => {
-    return currentLevel >= stageOrder[stage];
+    return currentLevel.value >= stageOrder[stage];
   };
 
   /**
    * Check if we've reached (or passed) a specific stage
    */
   const isStage = (stage: ValidationStage): boolean => {
-    return currentLevel === stageOrder[stage];
+    return currentLevel.value === stageOrder[stage];
   };
 
   return { show, reachedStage, isStage };

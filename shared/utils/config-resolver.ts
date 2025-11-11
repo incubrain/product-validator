@@ -1,10 +1,10 @@
 // shared/utils/config-resolver.ts
+import type { ConfigSource } from '~~/shared/types/config';
+
 export const CONFIG_SOURCES = {
   validator: 'examples/validator/',
   custom: '',
 } as const;
-
-export type ConfigSource = keyof typeof CONFIG_SOURCES;
 
 /**
  * Get the active config source from environment

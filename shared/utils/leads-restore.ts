@@ -1,6 +1,7 @@
 import { readFile, readdir } from 'fs/promises';
 import { join } from 'path';
 import * as readline from 'readline';
+import type { ValidationStage } from '~~/shared/types/config';
 
 interface LeadRecord {
   emailHash: string;
@@ -8,7 +9,7 @@ interface LeadRecord {
   formId: string;
   offer?: string;
   customerStage: string;
-  validationStage?: string;
+  validationStage?: ValidationStage;
   feedback?: string;
   metadata?: Record<string, any>;
   capturedAt: number;

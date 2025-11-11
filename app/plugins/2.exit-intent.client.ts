@@ -3,11 +3,10 @@ import { LazyIModalFullscreen } from '#components';
 import { CONVERSION } from '~~/shared/config/navigation';
 
 export default defineNuxtPlugin(() => {
-  const storagePrefix = useRuntimeConfig().public.configSource;
-
-  // Only run on client
   if (typeof window === 'undefined') return;
 
+  const { configSource: storagePrefix } = useDevTools();
+  
   const createExitIntent = (
     options: {
       offerId: OfferID;
@@ -22,7 +21,7 @@ export default defineNuxtPlugin(() => {
     const { trackEvent } = useAction();
     const overlay = useOverlay();
     const isShowing = ref(false);
-    const storageKey = `${storagePrefix}_exit_intent_triggered`;
+    const storageKey = `${storagePrefix.value}_exit_intent_triggered`;
 
     const { hasInteracted, interactionTime, setup, cleanup } =
       useUserInteraction({
