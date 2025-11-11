@@ -77,7 +77,7 @@ it.
 
 **Metrics-Driven Framework:**
 
-- ✅ 5-stage validation journey with clear thresholds
+- ✅ staged validation journey with sequential progression
 - ✅ Progressive disclosure (UI adapts to validation stage)
 - ✅ Data-driven decision framework
 - ✅ Conversion-optimized components (exit-intent, CTAs)
@@ -95,131 +95,89 @@ it.
 
 ---
 
-## 🎯 5-Stage Validation Journey
+## 🎯 6-Stage Validation Journey
 
 The template guides you through a metrics-driven validation process. Set your
 current stage via `NUXT_PUBLIC_VALIDATION_STAGE` environment variable.
 
-**⚠️ Important:** Always start with `attention` unless you already have an
-established traffic source and marketing experience. Each stage builds on the
-previous one.
+**⚠️ Important:** Always start with `identity`. This foundation stage enables
+rapid idea vetting and prevents wasted validation effort. Each stage builds on
+the previous one.
 
 ---
 
-### **Stage 1: Attention**
+### **Identity**
 
-**Question:** Can you drive traffic and capture attention?  
-**Metric:** Daily visitors + bounce rate  
+**Question:** Who am I and what unique value do I bring?  
+**Focus:** Values, competitive edge, network, voice, decision framework  
+**Time:** 1-2 weeks  
+**ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=identity`
+
+**Purpose:** Self-knowledge enables rapid idea vetting. By establishing your
+values, competitive edge, network, and authentic voice, you can evaluate ideas
+in minutes instead of months. Identity clarity = validation velocity.
+
+---
+
+### **Attention**
+
+**Question:** Can you build consistent communication habits?  
+**Focus:** Social engagement, content cadence, messaging consistency  
 **Time:** 1-2 weeks  
 **ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=attention`
 
-**Thresholds & Actions:**
-
-| Signal      | Range     | Meaning                  | Action                                  |
-| ----------- | --------- | ------------------------ | --------------------------------------- |
-| **Weak**    | <10/day   | No traffic strategy      | Learn one channel, test different hooks |
-| **Average** | 10-30/day | Growing traction         | Refine messaging, optimize bounce rate  |
-| **Strong**  | >30/day   | Validated traffic source | Progress to Stage 2                     |
-
-**Decision Point:**
-
-- Strong signal → Move to conversion stage
-- Weak signal after 4+ weeks → Pivot traffic strategy or reconsider market
-- Average signal → Continue iterating
+**Purpose:** Building the habit of showing up regularly with valuable content.
+This stage validates your ability to communicate consistently before investing
+in traffic generation.
 
 ---
 
-### **Stage 2: Conversion**
+### **Traffic**
+
+**Question:** Can you drive visitors and maintain message continuity?  
+**Focus:** Daily visitors, bounce rate, message alignment  
+**Time:** 1-2 weeks  
+**ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=traffic`
+
+**Purpose:** Converting attention into site visitors. High bounce rates signal
+misalignment between your outreach messaging and landing page content.
+
+---
+
+### **Conversion**
 
 **Question:** Do visitors want your solution enough to exchange their email?  
-**Metric:** Email capture rate (visitors → signups)  
+**Focus:** Email capture rate (visitors → signups)  
 **Time:** 2-4 weeks  
 **ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=conversion`
 
-**Thresholds & Actions:**
-
-| Signal      | Range | Meaning             | Action                                     |
-| ----------- | ----- | ------------------- | ------------------------------------------ |
-| **Weak**    | <5%   | Positioning unclear | Refine offer, test new messaging           |
-| **Average** | 5-15% | Good interest       | A/B test improvements, gather feedback     |
-| **Strong**  | >15%  | Strong signal       | Build the lead magnet, progress to Stage 3 |
-
-**Decision Point:**
-
-- Strong signal → Build magnet and move to engagement stage
-- Weak signal after 10+ tests → Revisit positioning or pivot
-- Average signal → Continue optimizing conversion elements
+**Purpose:** Testing whether visitors want your solution enough to exchange
+contact information. Strong conversion rates validate positioning and offer
+clarity.
 
 ---
 
-### **Stage 3: Engagement**
+### **Engagement**
 
 **Question:** Do they complete what you deliver?  
-**Metric:** Magnet completion rate (signups → completed)  
+**Focus:** Magnet completion rate (signups → completed)  
 **Time:** 2-4 weeks  
 **ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=engagement`
 
-**Thresholds & Actions:**
-
-| Signal      | Range  | Meaning             | Action                                       |
-| ----------- | ------ | ------------------- | -------------------------------------------- |
-| **Weak**    | <20%   | Content lacks value | Improve magnet quality, shorten content      |
-| **Average** | 20-40% | Decent engagement   | Refine delivery, add more value              |
-| **Strong**  | >40%   | High completion     | Schedule feedback calls, progress to Stage 4 |
-
-**Decision Point:**
-
-- Strong signal → Schedule calls with completers, move to demand stage
-- Weak signal → Content mismatch, rebuild magnet based on feedback
-- Average signal → Optimize delivery and follow-up sequence
+**Purpose:** Validating whether your delivered content provides real value. High
+completion rates signal strong product-market fit for your lead magnet.
 
 ---
 
-### **Stage 4: Demand**
+### **Demand**
 
 **Question:** Will they pay for a solution to their next pain point?  
-**Metric:** Purchase intent rate (completers → expressed interest)  
+**Focus:** Purchase intent rate (completers → expressed interest)  
 **Time:** 2-4 weeks  
 **ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=demand`
 
-**Thresholds & Actions:**
-
-| Signal      | Range  | Meaning                    | Action                                   |
-| ----------- | ------ | -------------------------- | ---------------------------------------- |
-| **Weak**    | <10%   | Offer misaligned           | Revisit pain points, adjust pricing      |
-| **Average** | 10-20% | Some interest              | Refine offer packaging, test pricing     |
-| **Strong**  | >20%   | Strong monetization signal | Close initial sales, progress to Stage 5 |
-
-**Decision Point:**
-
-- Strong signal → Start building full product/service, move to build stage
-- Weak signal → Offer doesn't solve real pain point, pivot or abandon
-- Average signal → Continue optimizing offer and pricing
-
----
-
-### **Stage 5: Build Prep**
-
-**Question:** Can you optimize the full funnel and scale confidently?  
-**Metric:** Full-funnel conversion (visitors → paying customers)  
-**Time:** Ongoing  
-**ENV:** `NUXT_PUBLIC_VALIDATION_STAGE=build_prep`
-
-**Thresholds & Actions:**
-
-| Signal      | Range | Meaning                  | Action                                    |
-| ----------- | ----- | ------------------------ | ----------------------------------------- |
-| **Weak**    | <1%   | Funnel leaks             | Identify drop-off points, optimize stages |
-| **Average** | 1-3%  | Solid foundation         | Continue optimization, add testimonials   |
-| **Strong**  | >3%   | Validated business model | Scale traffic with confidence             |
-
-**Focus Areas:**
-
-- Optimize all previous stages (attention → demand)
-- Add testimonials and social proof
-- Create media assets (demo videos, case studies)
-- Refine messaging based on validated feedback
-- Scale traffic and optimize conversion at each stage
+**Purpose:** Testing willingness to pay for solutions. Strong purchase intent
+validates real business opportunity beyond free content engagement.
 
 ---
 
@@ -251,26 +209,12 @@ Visit `http://localhost:3000` to see placeholder site.
 2. **Replace placeholder content** in `shared/config/` files
 3. **Setup analytics** (Umami pre-configured, swap easily via
    [Nuxt Scripts](https://scripts.nuxt.com/scripts))
-4. **Start with Stage 1** and progress based on metrics
+4. **Start with Identity stage** and progress sequentially through validation
 
 ## 📚 Configuration
 
 All landing page content is managed through structured config files in
 `shared/config/`.
-
-### Config Files Structure
-
-```
-shared/config/
-├── 1.flow.ts               # Overall page structure & section config
-├── 2.problem-solution.ts   # Problem/solution cards
-├── 4.process.ts            # 5-stage validation journey content
-├── 5.founder.ts            # Your story & positioning
-├── 6.offers.ts             # Lead magnet + paid service
-├── 7.results.ts            # Testimonials & social proof
-├── 8.concerns.ts           # FAQ & objections
-└── navigation.ts           # Primary/secondary CTA configuration
-```
 
 **Progressive Disclosure:** Sections appear/hide based on your validation stage
 (set via ENV), keeping focus on what matters now.
@@ -299,13 +243,13 @@ shared/config/
 
 ## ⚡ Quick Reference
 
-| Action             | Command / Location                                                    |
-| ------------------ | --------------------------------------------------------------------- |
-| **Deploy**         | Push to main branch (auto-deploy on Railway/Vercel)                   |
-| **Configure**      | Update files in `shared/config/`                                      |
-| **Set Stage**      | Update `NUXT_PUBLIC_VALIDATION_STAGE` in ENV                          |
-| **Track Metrics**  | Setup analytics ([Umami](https://umami.is) recommended)               |
-| **Swap Analytics** | Use any provider via [Nuxt Scripts](https://scripts.nuxt.com/scripts) |
+| Action             | Command / Location                                                                                     |
+| ------------------ | ------------------------------------------------------------------------------------------------------ |
+| **Deploy**         | Push to main branch (auto-deploy on Railway/Vercel)                                                    |
+| **Configure**      | Update files in `shared/config/`                                                                       |
+| **Set Stage**      | Update `NUXT_PUBLIC_VALIDATION_STAGE` in ENV (identity/attention/traffic/conversion/engagement/demand) |
+| **Track Metrics**  | Setup analytics ([Umami](https://umami.is) recommended)                                                |
+| **Swap Analytics** | Use any provider via [Nuxt Scripts](https://scripts.nuxt.com/scripts)                                  |
 
 ---
 
