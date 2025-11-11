@@ -49,15 +49,15 @@ export const useDevTools = () => {
   const devOverrides = useState<DevOverrides>('dev-overrides', () => ({}));
 
   // ✅ FIX: Load from localStorage after client mount
-  onMounted(() => {
-    if (import.meta.dev) {
+  if (import.meta.client && import.meta.dev) {
+    onMounted(() => {
       const persisted = loadPersistedOverrides();
       if (Object.keys(persisted).length > 0) {
         devOverrides.value = persisted;
         console.info('Dev overrides loaded:', persisted);
       }
-    }
-  });
+    });
+  }
 
   // Active config source
   const configSource = computed<ConfigSource>(() => {
