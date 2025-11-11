@@ -12,7 +12,6 @@ import type { ButtonProps, PricingPlanProps, BadgeProps } from '@nuxt/ui';
  * - conversion: Can you convert visitors into leads? - lead magnet conversion
  * - engagement: Can you keep leads engaged? - magnet engagement / completion rates analysis
  * - demand: Are leads ready to pay? - payment intent analysis
- * - build_prep: Are you ready to build? - product development phase
  */
 
 export type ValidationStage =
@@ -21,8 +20,7 @@ export type ValidationStage =
   | 'traffic'
   | 'conversion'
   | 'engagement'
-  | 'demand'
-  | 'build_prep';
+  | 'demand';
 
 export type ConfigSource = 'validator' | 'custom';
 

@@ -13,8 +13,6 @@ export const useStageAccess = () => {
   const isStageAccessible = (stage: any): boolean => {
     const status: StageStatus = stage.status || 'draft';
 
-    console.log('TEST', stage, status);
-
     switch (status) {
       case 'published':
         return true;

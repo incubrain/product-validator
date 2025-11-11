@@ -26,7 +26,6 @@ const stages: ValidationStage[] = [
   'conversion',
   'engagement',
   'demand',
-  'build_prep',
 ];
 const sources: ConfigSource[] = ['validator', 'custom'];
 

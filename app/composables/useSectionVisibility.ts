@@ -2,7 +2,7 @@
 import { flowConfig } from '#build/flow-config.mjs';
 
 export const useSectionVisibility = () => {
-  const { validationStage } = useDevTools()
+  const { validationStage } = useDevTools();
 
   const stageOrder: Record<ValidationStage, number> = {
     identity: 1,
@@ -11,7 +11,6 @@ export const useSectionVisibility = () => {
     conversion: 4,
     engagement: 5,
     demand: 6,
-    build_prep: 7,
   };
 
   const currentLevel = computed(() => stageOrder[validationStage.value]);

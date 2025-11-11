@@ -121,7 +121,7 @@ export const flowConfig: FlowConfig = {
   // ============================================================================
   results: {
     enabled: true,
-    minStage: 'build_prep',
+    minStage: 'demand',
     intro: {
       icon: 'i-lucide-trending-up',
       headline: 'Built in Public',

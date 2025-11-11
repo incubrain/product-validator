@@ -18,7 +18,6 @@ const eventSchema = z.object({
         'conversion',
         'engagement',
         'demand',
-        'build_prep',
       ])
       .optional(),
     feedback: z.string().optional(),

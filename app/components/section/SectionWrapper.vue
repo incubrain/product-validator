@@ -37,6 +37,6 @@ const props = withDefaults(defineProps<Props>(), {
     <slot />
 
     <!-- Bridge always at the end -->
-    <INavBridge v-if="bridge && reachedStage('build_prep')" :bridge="bridge" />
+    <INavBridge v-if="bridge && reachedStage('demand')" :bridge="bridge" />
   </UPageSection>
 </template>
