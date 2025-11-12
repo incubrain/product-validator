@@ -14,7 +14,7 @@ export const flowConfig: FlowConfig = {
   // ============================================================================
   hero: {
     enabled: true,
-    minStage: 'attention',
+    minStage: 'traffic',
     badge: {
       title: '⚠️ Badge title',
       description: '⚠️ Badge description',
@@ -28,6 +28,12 @@ export const flowConfig: FlowConfig = {
       type: 'video',
       src: null,
       alt: null,
+    },
+    countdown: {
+      enabled: true,
+      launchDate: '2025-12-31T00:00:00Z',
+      fallbackMessage: 'Launching Any Day Now',
+      showTimer: true, // false = just shows "Coming in 2025!"
     },
   },
 
@@ -94,7 +100,7 @@ export const flowConfig: FlowConfig = {
   // ============================================================================
   offer: {
     enabled: true,
-    minStage: 'attention',
+    minStage: 'traffic',
     intro: {
       icon: 'i-lucide-handshake',
       headline: '⚠️ Section headline',

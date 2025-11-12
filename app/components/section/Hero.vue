@@ -1,10 +1,28 @@
+<!-- components/section/Hero.vue -->
 <script setup lang="ts">
 import { CONVERSION } from '#shared/config/navigation';
+
 const hero = useSectionConfig('hero');
 const results = useSectionConfig('results');
 const { isStage } = useSectionVisibility();
 
 const proof = computed(() => results?.value.proof ?? []);
+
+// Countdown mode: active in identity/attention stages
+const showCountdown = computed(() => {
+  return (
+    hero.value.countdown?.enabled &&
+    (isStage('identity') || isStage('attention'))
+  );
+});
+
+// Show media/marquees only after countdown period
+const showMedia = computed(() => !showCountdown.value && hero.value.media?.src);
+const showMarquees = computed(() => !showCountdown.value);
+const showCTA = computed(() => !showCountdown.value && isStage('traffic'));
+
+// ✅ Reuse primary offer from config instead of creating fake one
+const primaryOffer = useFlowOffer(CONVERSION.primary);
 </script>
 
 <template>
@@ -18,7 +36,7 @@ const proof = computed(() => results?.value.proof ?? []);
       footer: 'mt-10',
     }"
   >
-    <!-- Badge -->
+    <!-- Badge (Same across all stages) -->
     <template #headline>
       <div class="flex justify-center items-center pb-8">
         <ULink
@@ -41,19 +59,48 @@ const proof = computed(() => results?.value.proof ?? []);
       </div>
     </template>
 
-    <!-- Main Title -->
+    <!-- Title (Same size across all stages) -->
     <template #title>
       {{ hero.intro.title }}
     </template>
 
-    <!-- Value proposition -->
+    <!-- Description Area (Conditional content based on stage) -->
     <template #description>
-      <div class="max-w-3xl mx-auto space-y-4">
+      <div class="max-w-3xl mx-auto space-y-6">
+        <!-- Countdown Timer (Identity + Attention only) -->
+        <div v-if="showCountdown && hero.countdown.showTimer" class="space-y-3">
+          <div class="flex items-center justify-center gap-2">
+            <UIcon name="i-lucide-calendar" class="size-4 text-success" />
+            <span
+              class="text-sm font-semibold text-success uppercase tracking-wider"
+            >
+              Launching In
+            </span>
+          </div>
+          <ICountdown
+            :target-date="hero.countdown.launchDate"
+            :fallback-message="hero.countdown.fallbackMessage"
+            compact
+          />
+        </div>
+
+        <!-- Description Text (All stages) -->
         <p class="text-xl sm:text-2xl text-dimmed font-medium leading-relaxed">
           {{ hero.intro.description }}
         </p>
+
+        <!-- Countdown Email Form (Identity + Attention only) -->
+        <div v-if="showCountdown && primaryOffer" class="max-w-2xl mx-auto">
+          <IFormFakeDoor
+            location="hero-countdown"
+            :offer="primaryOffer"
+            layout="horizontal"
+          />
+        </div>
+
+        <!-- Normal CTA (Traffic stage onward) -->
         <IButtonCTA
-          v-if="isStage('attention')"
+          v-if="showCTA"
           size="xl"
           :offer-id="CONVERSION.primary"
           location="hero"
@@ -63,9 +110,9 @@ const proof = computed(() => results?.value.proof ?? []);
       </div>
     </template>
 
-    <!-- Media -->
-    <div class="relative pt-12">
-      <div v-if="hero.media?.src" class="relative">
+    <!-- Media (Traffic stage onward) -->
+    <div v-if="showMedia" class="relative pt-12">
+      <div class="relative">
         <IVideo
           v-if="hero.media.type === 'video'"
           :src="hero.media.src"
@@ -85,9 +132,11 @@ const proof = computed(() => results?.value.proof ?? []);
       </div>
     </div>
 
-    <!-- Dynamic Marquees -->
+    <!-- Marquees (Traffic stage onward) -->
     <IMarqueeWrapper
+      class="pt-12"
       v-for="(track, index) in proof"
+      v-if="showMarquees"
       :key="track.label"
       :label="track.label"
       :badge-color="track.badgeColor"

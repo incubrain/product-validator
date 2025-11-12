@@ -20,6 +20,6 @@ const { reachedStage } = useSectionVisibility();
     <main>
       <slot />
     </main>
-    <INavFooter />
+    <INavFooter v-if="reachedStage('conversion')" />
   </div>
 </template>

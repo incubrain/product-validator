@@ -17,7 +17,9 @@ const formComponent = computed(() => {
   // If this is the primary offer and we're in fake door stage
   const useFakeDoor =
     validationStage.value === 'identity' ||
-    validationStage.value === 'attention';
+    validationStage.value === 'attention' ||
+    validationStage.value === 'traffic' ||
+    validationStage.value === 'conversion';
 
   if (useFakeDoor && props.offer.id === CONVERSION.primary) {
     return IFormFakeDoor;

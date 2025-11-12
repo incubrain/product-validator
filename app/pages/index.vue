@@ -3,7 +3,7 @@ const { show } = useSectionVisibility();
 </script>
 
 <template>
-  <UPageBody class="mt-0">
+  <UPageBody class="mt-0 p-0">
     <ISectionHero v-if="show('hero')" />
     <ISectionProblemSolution v-if="show('problemSolution')" />
     <ISectionProcess v-if="show('process')" />

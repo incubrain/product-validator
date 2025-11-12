@@ -1,4 +1,5 @@
 import type { ButtonProps, PricingPlanProps, BadgeProps } from '@nuxt/ui';
+import type { CountdownConfig } from '#shared/types/countdown';
 
 // ============================================================================
 // SHARED PRIMITIVES
@@ -301,6 +302,12 @@ export type FlowConfig = {
     badge: HeroBadge;
     intro: HeroIntro;
     media?: HeroMedia;
+    countdown?: {
+      enabled: boolean;
+      launchDate: string; // ISO 8601
+      fallbackMessage?: string;
+      showTimer?: boolean; // Show compact countdown timer
+    };
   };
 
   problemSolution: SectionBase & {

@@ -14,7 +14,7 @@ export const flowConfig: FlowConfig = {
   // ============================================================================
   hero: {
     enabled: true,
-    minStage: 'attention',
+    minStage: 'identity',
     badge: {
       title: "We're open-source",
       description: 'helping 70+ founders',
@@ -29,6 +29,12 @@ export const flowConfig: FlowConfig = {
       type: 'video',
       src: null,
       alt: null,
+    },
+    countdown: {
+      enabled: true,
+      launchDate: '2025-12-31T00:00:00Z',
+      fallbackMessage: 'Launching Any Day Now',
+      showTimer: true, // false = just shows "Coming in 2025!"
     },
   },
 
@@ -82,7 +88,8 @@ export const flowConfig: FlowConfig = {
       icon: 'i-lucide-user',
       headline: 'Learn from my mistakes',
       title: 'My Scar, 13 Years and $300k+',
-      description: 'The Product Validator only exists because of my suffering; you need not!',
+      description:
+        'The Product Validator only exists because of my suffering; you need not!',
     },
     profile,
     accessibility,
@@ -95,7 +102,7 @@ export const flowConfig: FlowConfig = {
   // ============================================================================
   offer: {
     enabled: true,
-    minStage: 'attention',
+    minStage: 'traffic',
     intro: {
       icon: 'i-lucide-handshake',
       headline: 'Limited Early Access',
