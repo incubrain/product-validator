@@ -30,16 +30,17 @@
     "@vueuse/nuxt": "13.7.0",
     "better-sqlite3": "^12.4.1",
     "canvas-confetti": "^1.9.4",
+    "husky": "^9.1.7",
     "nuxt": "^4.2.0",
     "typescript": "^5.9.3",
     "vue": "^3.5.22",
-    "vue-router": "^4.6.3",
-    "husky": "^9.1.7"
+    "vue-router": "^4.6.3"
   },
   "devDependencies": {
     "@compodium/nuxt": "0.1.0-beta.11",
     "@eslint/json": "^0.13.2",
     "@nuxt/eslint": "1.9.0",
+    "@nuxt/hints": "1.0.0-alpha.1",
     "@types/node": "^20.19.23",
     "vue-tsc": "^3.1.2"
   },

@@ -30,7 +30,7 @@ export default defineNuxtConfig({
   },
 
   $development: {
-    modules: ['@nuxt/eslint', '@compodium/nuxt'],
+    modules: ['@nuxt/eslint', '@compodium/nuxt', '@nuxt/hints'],
 
     devtools: { enabled: true },
 
