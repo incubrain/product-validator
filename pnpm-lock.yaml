@@ -64,8 +64,8 @@ importers:
         version: 4.6.3(vue@3.5.22(typescript@5.9.3))
     devDependencies:
       '@compodium/nuxt':
-        specifier: 0.1.0-beta.11
-        version: 0.1.0-beta.11(@nuxt/kit@4.2.0(magicast@0.3.5))(magicast@0.3.5)(typescript@5.9.3)(vite@7.1.12(@types/node@20.19.23)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.3))
+        specifier: 0.1.0-beta.12
+        version: 0.1.0-beta.12(@nuxt/kit@4.2.0(magicast@0.3.5))(magicast@0.3.5)(typescript@5.9.3)(vite@7.1.12(@types/node@20.19.23)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.3))
       '@eslint/json':
         specifier: ^0.13.2
         version: 0.13.2
@@ -282,8 +282,8 @@ packages:
     peerDependencies:
       typescript: '*'
 
-  '@compodium/nuxt@0.1.0-beta.11':
-    resolution: {integrity: sha512-QfMMX8tr6zt1GSNot4YPIWk6sSMczgY38Lop8i8x3NCzeIqMXIXTc17Xn2QNsFftkUc4bqi153BiRjgndWdTfw==}
+  '@compodium/nuxt@0.1.0-beta.12':
+    resolution: {integrity: sha512-BrlazZUVc0HeR5X3loUBmB/uDQZpUwoUbx6CP9dnKGqt243vv6Nv4sYnCHF9UlZhjfOPCHzWga5uPmhLVpUJ9A==}
     peerDependencies:
       '@nuxt/kit': '>=3.15'
 
@@ -6134,7 +6134,7 @@ snapshots:
       vue-component-meta: 2.2.12(typescript@5.9.3)
       vue-component-type-helpers: 2.2.12
 
-  '@compodium/nuxt@0.1.0-beta.11(@nuxt/kit@4.2.0(magicast@0.3.5))(magicast@0.3.5)(typescript@5.9.3)(vite@7.1.12(@types/node@20.19.23)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.3))':
+  '@compodium/nuxt@0.1.0-beta.12(@nuxt/kit@4.2.0(magicast@0.3.5))(magicast@0.3.5)(typescript@5.9.3)(vite@7.1.12(@types/node@20.19.23)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.3))':
     dependencies:
       '@compodium/core': 0.1.0-beta.12(typescript@5.9.3)(vite@7.1.12(@types/node@20.19.23)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.0)(yaml@2.8.1))(vue@3.5.22(typescript@5.9.3))
       '@nuxt/devtools-kit': 2.7.0(magicast@0.3.5)(vite@7.1.12(@types/node@20.19.23)(jiti@2.6.1)(lightningcss@1.30.2)(terser@5.44.0)(yaml@2.8.1))
