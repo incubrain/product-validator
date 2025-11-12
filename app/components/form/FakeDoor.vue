@@ -97,24 +97,23 @@ const buttonBlockProp = computed(() => {
     </div>
 
     <!-- Success State -->
-    <div v-else class="text-center space-y-6 py-6">
-      <!-- ✅ Show feedback success after submission -->
-      <IFormMessage
-        v-if="feedbackSubmitted"
-        form-id="feedback"
-        :celebrate="false"
-      />
+    <div v-else class="text-center space-y-6">
+      <!-- ✅ ALWAYS show initial success message -->
+      <IFormMessage form-id="fake-door" :celebrate="true" />
 
-      <!-- ✅ Show initial success + optional feedback form -->
-      <template v-else>
-        <IFormMessage form-id="fake-door" :celebrate="true" />
+      <!-- ✅ Show feedback form OR thank you message -->
+      <div v-if="shouldShowFeedback">
         <IFormFeedback
-          v-if="shouldShowFeedback"
           :prompt="CONVERSION.fakeDoor.feedbackPrompt"
           :on-submit="handleFeedbackSubmit"
           success-form-id="feedback"
         />
-      </template>
+      </div>
+
+      <!-- ✅ Show feedback thank you (replaces form, keeps initial message) -->
+      <div v-else-if="feedbackSubmitted">
+        <IFormMessage form-id="feedback" :celebrate="false" />
+      </div>
     </div>
   </div>
 </template>

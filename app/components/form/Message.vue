@@ -14,12 +14,10 @@ const props = withDefaults(defineProps<Props>(), {
   celebrate: true,
 });
 
-const { data } = useAsyncData(
-  `form-${props.formState}-${props.formId}`,
-  () =>
-    queryCollection('forms')
-      .where('formId', '=', `${props.formId}-${props.formState}`)
-      .first(),
+const { data } = useAsyncData(`form-${props.formState}-${props.formId}`, () =>
+  queryCollection('forms')
+    .where('formId', '=', `${props.formId}-${props.formState}`)
+    .first(),
 );
 
 const isDev = import.meta.dev;
@@ -36,7 +34,7 @@ onMounted(() => {
 </script>
 
 <template>
-  <div class="text-center space-y-6 py-6">
+  <div class="text-center space-y-6">
     <ContentRenderer v-if="data" :value="data" />
     <p v-else-if="!data && isDev">
       No success form found for {{ props.formId }}-{{ props.formState }}
