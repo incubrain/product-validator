@@ -1,29 +1,41 @@
-<!-- components/StockProgress.vue - SIMPLIFIED -->
+<!-- components/StockProgress.vue - WITH CONDITIONAL DISPLAY -->
 <script setup lang="ts">
+import { CONVERSION } from '~~/shared/config/navigation';
+
 interface Props {
   stock: OfferStock;
-  offerId?: OfferID; // ✅ Pass offer ID to detect type
+  offerId?: OfferID;
   class?: string;
+  minThreshold?: number; // NEW: minimum claimed count to show
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  minThreshold: 10, // Default: show when >10 claimed
+  class: '',
+  offerId: CONVERSION.primary,
+});
 
-// ✅ Auto-detect if this is a magnet offer (should use live count)
+// Auto-detect if this is a magnet offer (should use live count)
 const useLiveCount = computed(() => {
   return props.offerId === 'magnet';
 });
 
-// ✅ Fetch live count if it's a magnet offer
+// Fetch live count if it's a magnet offer
 const { data: metrics } = useLiveCount.value
   ? useFetch('/api/v1/metrics/leads')
   : { data: ref(null) };
 
-// ✅ Use live count or static count
+// Use live count or static count
 const claimed = computed(() => {
   if (useLiveCount.value && metrics.value) {
     return metrics.value.total || 0;
   }
   return props.stock.claimed;
+});
+
+// ✅ NEW: Only show if claimed count exceeds threshold
+const shouldShow = computed(() => {
+  return claimed.value > props.minThreshold;
 });
 
 // Calculate percentage
@@ -63,7 +75,8 @@ const urgencyColor = computed(() => {
 </script>
 
 <template>
-  <div class="space-y-3 w-full flex flex-col">
+  <!-- ✅ Only render if claimed > threshold -->
+  <div v-if="shouldShow" class="space-y-3 w-full flex flex-col">
     <UProgress
       :model-value="percent"
       :color="urgencyColor"
