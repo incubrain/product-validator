@@ -91,6 +91,7 @@ export default defineNuxtConfig({
       prerender: {
         crawlLinks: true,
         routes: ['/'],
+        ignore: ['/magnet', '/magnet/**'],
       },
     },
   },
@@ -162,11 +163,13 @@ export default defineNuxtConfig({
       scrollBehaviorType: 'smooth',
     },
   },
-  
-    routeRules: {
-      '/': { prerender: true },
-      '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background
-    },
+
+  routeRules: {
+    '/': { prerender: true },
+    '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background
+    '/magnet': { ssr: false }, // Magnet dashboard SPA-only (client-side rendered)
+    '/magnet/**': { ssr: false }, // Magnet pages SPA-only (client-side rendered)
+  },
 
   components: [
     { path: '~/components', prefix: 'I' },
