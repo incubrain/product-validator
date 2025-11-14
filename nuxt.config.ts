@@ -2,6 +2,8 @@
 import { fileURLToPath } from 'node:url';
 
 export default defineNuxtConfig({
+  debug: true,
+
   modules: [
     '@nuxtjs/seo',
     '@nuxt/ui',
@@ -10,6 +12,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@vueuse/nuxt',
     '@nuxt/scripts',
+    'nuxt-studio',
   ],
 
   hooks: {
@@ -28,6 +31,22 @@ export default defineNuxtConfig({
     name: 'Product Validator',
     description: 'Ship today, build in public, validate in weeks',
   },
+
+  studio: {
+    // Studio admin route (default: '/_studio')
+    route: '/_studio',
+
+    // GitHub repository configuration (owner and repo are required)
+    repository: {
+      provider: 'github', // only GitHub is currently supported
+      owner: 'incubrain', // your GitHub username or organization
+      repo: 'product-validator', // your repository name
+      branch: process.env.STUDIO_GITHUB_BRANCH_NAME, // the branch to commit to (default: main)
+      rootDir: '', // optional: if your Nuxt app is in a subdirectory (default: '')
+    },
+  },
+
+  ssr: true,
 
   $development: {
     modules: ['@nuxt/eslint', '@compodium/nuxt', '@nuxt/hints'],
@@ -68,7 +87,7 @@ export default defineNuxtConfig({
     // Production Nitro optimizations
     nitro: {
       minify: true,
-      preset: import.meta.env.PROVIDER,
+      preset: process.env.PROVIDER,
       prerender: {
         crawlLinks: true,
         routes: ['/'],
@@ -143,11 +162,11 @@ export default defineNuxtConfig({
       scrollBehaviorType: 'smooth',
     },
   },
-
-  routeRules: {
-    '/': { prerender: true },
-    '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background
-  },
+  
+    routeRules: {
+      '/': { prerender: true },
+      '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background
+    },
 
   components: [
     { path: '~/components', prefix: 'I' },
