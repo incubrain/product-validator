@@ -67,27 +67,29 @@ const primaryOffer = useFlowOffer(CONVERSION.primary);
     <!-- Description Area (Conditional content based on stage) -->
     <template #description>
       <div class="max-w-3xl mx-auto space-y-6">
+        <!-- Description Text (All stages) -->
+        <p class="text-xl sm:text-2xl text-dimmed font-medium leading-relaxed">
+          {{ hero.intro.description }}
+        </p>
+
         <!-- Countdown Timer (Identity + Attention only) -->
-        <div v-if="showCountdown && hero.countdown.showTimer" class="space-y-3">
+        <div
+          v-if="showCountdown && hero.countdown.showTimer"
+          class="flex flex-col lg:flex-row gap-3 mx-auto justify-center"
+        >
           <div class="flex items-center justify-center gap-2">
-            <UIcon name="i-lucide-calendar" class="size-4 text-success" />
-            <span
-              class="text-sm font-semibold text-success uppercase tracking-wider"
-            >
-              Launching In
+            <UIcon name="i-lucide-calendar" class="size-6 text-success" />
+            <span class="text-base font-semibold text-success uppercase">
+              {{ hero.countdown.message }}
             </span>
           </div>
           <ICountdown
             :target-date="hero.countdown.launchDate"
             :fallback-message="hero.countdown.fallbackMessage"
             compact
+            class="lg:min-w-xs"
           />
         </div>
-
-        <!-- Description Text (All stages) -->
-        <p class="text-xl sm:text-2xl text-dimmed font-medium leading-relaxed">
-          {{ hero.intro.description }}
-        </p>
 
         <!-- Countdown Email Form (Identity + Attention only) -->
         <div v-if="showCountdown && primaryOffer" class="max-w-2xl mx-auto">
@@ -134,10 +136,10 @@ const primaryOffer = useFlowOffer(CONVERSION.primary);
 
     <!-- Marquees (Traffic stage onward) -->
     <IMarqueeWrapper
-      class="pt-12"
       v-for="(track, index) in proof"
       v-if="showMarquees"
       :key="track.label"
+      class="pt-12"
       :label="track.label"
       :badge-color="track.badgeColor"
       :items="track.items"

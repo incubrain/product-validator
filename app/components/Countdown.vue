@@ -74,10 +74,10 @@ const format = (num: number) => String(num).padStart(2, '0');
 
 // Time units for compact display
 const timeUnits = computed(() => [
-  { value: displayCountdown.value.days, label: 'Days' },
-  { value: displayCountdown.value.hours, label: 'Hrs' },
-  { value: displayCountdown.value.minutes, label: 'Min' },
-  { value: displayCountdown.value.seconds, label: 'Sec' },
+  { value: displayCountdown.value.days, label: 'D' },
+  { value: displayCountdown.value.hours, label: 'H' },
+  { value: displayCountdown.value.minutes, label: 'M' },
+  { value: displayCountdown.value.seconds, label: 'S' },
 ]);
 </script>
 
@@ -88,7 +88,7 @@ const timeUnits = computed(() => [
       <div
         v-for="(unit, index) in timeUnits"
         :key="unit.label"
-        class="flex items-baseline gap-1"
+        class="flex items-baseline gap-1 w-16"
       >
         <span class="text-2xl sm:text-3xl font-bold text-success tabular-nums">
           {{ format(unit.value) }}

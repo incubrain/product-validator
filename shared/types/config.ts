@@ -305,6 +305,7 @@ export type FlowConfig = {
     countdown?: {
       enabled: boolean;
       launchDate: string; // ISO 8601
+      message: string;
       fallbackMessage?: string;
       showTimer?: boolean; // Show compact countdown timer
     };
