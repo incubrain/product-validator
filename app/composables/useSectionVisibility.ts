@@ -1,5 +1,5 @@
 // composables/useSectionVisibility.ts
-import { flowConfig } from '#build/flow-config.mjs';
+import { SECTIONS } from '#shared/config/settings';
 
 export const useSectionVisibility = () => {
   const { validationStage } = useDevTools();
@@ -18,12 +18,12 @@ export const useSectionVisibility = () => {
   /**
    * Check if section should be visible
    */
-  const show = (sectionKey: keyof typeof flowConfig): boolean => {
-    const section = flowConfig[sectionKey];
+  const show = (sectionKey: keyof typeof SECTIONS): boolean => {
+    const section = SECTIONS[sectionKey];
 
-    if (section.enabled === false) return false;
+    if (!section.enabled) return false;
 
-    const minLevel = stageOrder[section.minStage || 'identity'];
+    const minLevel = stageOrder[section.minStage];
     return currentLevel.value >= minLevel;
   };
 

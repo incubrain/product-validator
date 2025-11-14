@@ -13,8 +13,6 @@ export const flowConfig: FlowConfig = {
   // HERO SECTION
   // ============================================================================
   hero: {
-    enabled: true,
-    minStage: 'traffic',
     badge: {
       title: '⚠️ Badge title',
       description: '⚠️ Badge description',
@@ -32,6 +30,7 @@ export const flowConfig: FlowConfig = {
     countdown: {
       enabled: true,
       launchDate: '2025-12-31T00:00:00Z',
+      message: 'Launching Soon!',
       fallbackMessage: 'Launching Any Day Now',
       showTimer: true, // false = just shows "Coming in 2025!"
     },
@@ -41,8 +40,6 @@ export const flowConfig: FlowConfig = {
   // PROBLEM/SOLUTION SECTION
   // ============================================================================
   problemSolution: {
-    enabled: true,
-    minStage: 'conversion',
     intro: {
       icon: 'i-lucide-alert-triangle',
       headline: '⚠️ Section headline',
@@ -65,8 +62,6 @@ export const flowConfig: FlowConfig = {
   // PROCESS SECTION
   // ============================================================================
   process: {
-    enabled: true,
-    minStage: 'conversion',
     intro: {
       icon: 'i-lucide-package',
       headline: '⚠️ Section headline',
@@ -81,8 +76,6 @@ export const flowConfig: FlowConfig = {
   // FOUNDER SECTION
   // ============================================================================
   founder: {
-    enabled: true,
-    minStage: 'engagement',
     intro: {
       icon: 'i-lucide-user',
       headline: '⚠️ Section headline',
@@ -99,8 +92,6 @@ export const flowConfig: FlowConfig = {
   // OFFER SECTION
   // ============================================================================
   offer: {
-    enabled: true,
-    minStage: 'traffic',
     intro: {
       icon: 'i-lucide-handshake',
       headline: '⚠️ Section headline',
@@ -123,8 +114,6 @@ export const flowConfig: FlowConfig = {
   // RESULTS SECTION
   // ============================================================================
   results: {
-    enabled: true,
-    minStage: 'demand',
     intro: {
       icon: 'i-lucide-trending-up',
       headline: '⚠️ Section headline',
@@ -148,8 +137,6 @@ export const flowConfig: FlowConfig = {
   // CONCERNS SECTION
   // ============================================================================
   concerns: {
-    enabled: true,
-    minStage: 'conversion',
     intro: {
       icon: 'i-lucide-help-circle',
       headline: '⚠️ Section headline',
