@@ -29,25 +29,28 @@ business models through metrics-driven action.
 
 ---
 
-## 🚀 Built With
+## 🚀 Built For Developers
 
 <table>
 <tr>
-<td align="center" width="25%">
-<a href="https://nuxt.com"><strong>Nuxt 4</strong></a><br/>
-Vue framework with<br/>best-in-class DX
+<td align="center" width="20%">
+<a href="https://nuxt.com"><strong>Nuxt 4</strong></a><br/>Best DX
 </td>
-<td align="center" width="25%">
+<td align="center" width="20%">
 <a href="https://tailwindcss.com"><strong>Tailwind v4</strong></a><br/>
-CSS-first utility<br/>framework
+CSS Styling
 </td>
-<td align="center" width="25%">
+<td align="center" width="20%">
 <a href="https://www.typescriptlang.org"><strong>TypeScript</strong></a><br/>
-Full type safety<br/>throughout
+Duhh
 </td>
-<td align="center" width="25%">
+<td align="center" width="20%">
 <a href="https://ui.nuxt.com"><strong>Nuxt UI</strong></a><br/>
-Production-ready<br/>components
+Components Lib
+</td>
+<td align="center" width="20%">
+<a href="https://content.nuxt.com/docs/studio"><strong>Nuxt Studio</strong></a><br/>
+Visual Editor
 </td>
 </tr>
 </table>
@@ -92,6 +95,8 @@ it.
 - ✅ One-click deployment (Vercel/Railway)
 - ✅ Pre-configured analytics (Umami) - easily swap via
   [Nuxt Scripts](https://scripts.nuxt.com/scripts)
+- ✅ Visual content editing via
+  [Nuxt Studio](https://content.nuxt.com/docs/studio) (alpha)
 
 ---
 
