@@ -2,6 +2,12 @@
 - future automation https://docs.anythingllm.com/
 - ***
 
+landing page ideas:
+
+- https://shipfa.st
+
+
+
 ## Ideas
 
 - Let people know the real you, you should want to be seen, some people will not

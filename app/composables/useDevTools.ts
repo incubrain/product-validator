@@ -6,34 +6,47 @@ interface DevOverrides {
 }
 
 export const useDevTools = () => {
-  const toast = useToast();
-  const runtimeConfig = useRuntimeConfig();
+  const env = useRuntimeConfig().public;
+
+  const isClient = import.meta.client;
+  const isDev = import.meta.dev;
+
+  // SSR-safe reduced API (no access to localStorage, no lifecycle, no toast)
+  if (!isClient || !isDev) {
+    return {
+      configSource: computed(() => env.configSource as ConfigSource),
+      validationStage: computed(() => env.validationStage as ValidationStage),
+      setDevOverrides: () => {},
+      resetDevOverrides: () => {},
+      hasActiveOverrides: computed(() => false),
+      envValues: computed(() => ({
+        configSource: env.configSource as ConfigSource,
+        validationStage: env.validationStage as ValidationStage,
+      })),
+      clearAllStorage: () => {},
+      logCurrentStorage: () => {},
+      getStorageSnapshot: () => ({}),
+    };
+  }
 
   // Use ENV config source as prefix for dev overrides key
-  const baseConfigSource = runtimeConfig.public.configSource as ConfigSource;
+  const toast = useToast();
+  const baseConfigSource = env.configSource as ConfigSource;
   const DEV_OVERRIDES_KEY = `${baseConfigSource}_dev_overrides`;
 
-  // ========================================
-  // PERSISTENT DEV OVERRIDES
-  // ========================================
-
-  // Load persisted overrides from localStorage
-  const loadPersistedOverrides = (): DevOverrides => {
-    if (!import.meta.client || !import.meta.dev) return {};
-
+  // Persisted overrides are read synchronously only on client/dev in the initializer.
+  // This avoids using onMounted or lifecycle hooks.
+  const devOverrides = useState<DevOverrides>('dev-overrides', () => {
     try {
       const stored = localStorage.getItem(DEV_OVERRIDES_KEY);
       return stored ? JSON.parse(stored) : {};
-    } catch (error) {
-      console.error('Failed to load dev overrides:', error);
+    } catch (e) {
+      // corrupted localStorage or access error -> return empty
       return {};
     }
-  };
+  });
 
-  // Save overrides to localStorage
   const persistOverrides = (overrides: DevOverrides) => {
-    if (!import.meta.client || !import.meta.dev) return;
-
     try {
       if (Object.keys(overrides).length === 0) {
         localStorage.removeItem(DEV_OVERRIDES_KEY);
@@ -41,43 +54,29 @@ export const useDevTools = () => {
         localStorage.setItem(DEV_OVERRIDES_KEY, JSON.stringify(overrides));
       }
     } catch (error) {
+      // swallow errors; dev only
       console.error('Failed to persist dev overrides:', error);
     }
   };
 
-  // Initialize state (empty during SSR)
-  const devOverrides = useState<DevOverrides>('dev-overrides', () => ({}));
-
-  // ✅ FIX: Load from localStorage after client mount
-  if (import.meta.client && import.meta.dev) {
-    onMounted(() => {
-      const persisted = loadPersistedOverrides();
-      if (Object.keys(persisted).length > 0) {
-        devOverrides.value = persisted;
-        console.info('Dev overrides loaded:', persisted);
-      }
-    });
-  }
-
   // Active config source
   const configSource = computed<ConfigSource>(() => {
-    if (import.meta.dev && devOverrides.value.configSource) {
-      return devOverrides.value.configSource;
+    if (isDev && devOverrides.value.configSource) {
+      return devOverrides.value.configSource!;
     }
     return baseConfigSource;
   });
 
-  // Active validation stage
+  // Active validation stage (dev override wins on client)
   const validationStage = computed<ValidationStage>(() => {
-    if (import.meta.dev && devOverrides.value.validationStage) {
-      return devOverrides.value.validationStage;
+    if (isDev && devOverrides.value.validationStage) {
+      return devOverrides.value.validationStage!;
     }
-    return runtimeConfig.public.validationStage as ValidationStage;
+    return env.validationStage as ValidationStage;
   });
 
-  // Set dev overrides and persist
   const setDevOverrides = (source?: ConfigSource, stage?: ValidationStage) => {
-    if (!import.meta.dev) {
+    if (!isDev) {
       console.warn('setDevOverrides only available in development');
       return;
     }
@@ -99,7 +98,8 @@ export const useDevTools = () => {
     persistOverrides(newOverrides);
 
     if (changes.length > 0) {
-      toast.add({
+      // toast might be no-op if not available
+      toast.add?.({
         title: 'Dev Override Active',
         description: changes.join(' | '),
         color: 'warning',
@@ -108,20 +108,14 @@ export const useDevTools = () => {
     }
   };
 
-  // Reset all dev overrides
   const resetDevOverrides = () => {
-    if (!import.meta.dev) {
-      console.warn('resetDevOverrides only available in development');
-      return;
-    }
-
+    if (!isDev) return;
     const hadOverrides = Object.keys(devOverrides.value).length > 0;
-
     devOverrides.value = {};
     persistOverrides({});
 
     if (hadOverrides) {
-      toast.add({
+      toast.add?.({
         title: 'Overrides Reset',
         description: 'Using .env values',
         color: 'success',
@@ -130,74 +124,66 @@ export const useDevTools = () => {
     }
   };
 
-  // Check if any overrides are active
   const hasActiveOverrides = computed(() => {
-    if (!import.meta.dev) return false;
     return Object.keys(devOverrides.value).length > 0;
   });
 
-  // Get original .env values
   const envValues = computed(() => ({
     configSource: baseConfigSource,
-    validationStage: runtimeConfig.public.validationStage as ValidationStage,
+    validationStage: env.validationStage as ValidationStage,
   }));
 
-  // ========================================
-  // STORAGE MANAGEMENT
-  // ========================================
-
+  // Storage helpers (client-only)
   const storagePrefix = computed(() => configSource.value);
 
   const getStorageSnapshot = () => {
-    const localStorage_items = Object.keys(localStorage)
-      .filter(
-        (key) =>
-          key.startsWith(storagePrefix.value) ||
-          key.startsWith(`banner-${storagePrefix.value}`) ||
-          key === DEV_OVERRIDES_KEY,
-      )
-      .reduce(
-        (acc, key) => {
-          acc[key] = localStorage.getItem(key);
-          return acc;
-        },
-        {} as Record<string, string | null>,
-      );
+    try {
+      const localStorage_items = Object.keys(localStorage)
+        .filter(
+          (key) =>
+            key.startsWith(storagePrefix.value) ||
+            key.startsWith(`banner-${storagePrefix.value}`) ||
+            key === DEV_OVERRIDES_KEY,
+        )
+        .reduce(
+          (acc, key) => {
+            acc[key] = localStorage.getItem(key);
+            return acc;
+          },
+          {} as Record<string, string | null>,
+        );
 
-    const sessionStorage_items = Object.keys(sessionStorage)
-      .filter(
-        (key) =>
-          key.startsWith(storagePrefix.value) ||
-          key.startsWith(`banner-${storagePrefix.value}`),
-      )
-      .reduce(
-        (acc, key) => {
-          acc[key] = sessionStorage.getItem(key);
-          return acc;
-        },
-        {} as Record<string, string | null>,
-      );
+      const sessionStorage_items = Object.keys(sessionStorage)
+        .filter(
+          (key) =>
+            key.startsWith(storagePrefix.value) ||
+            key.startsWith(`banner-${storagePrefix.value}`),
+        )
+        .reduce(
+          (acc, key) => {
+            acc[key] = sessionStorage.getItem(key);
+            return acc;
+          },
+          {} as Record<string, string | null>,
+        );
 
-    return { localStorage_items, sessionStorage_items };
+      return { localStorage_items, sessionStorage_items };
+    } catch (e) {
+      return { localStorage_items: {}, sessionStorage_items: {} };
+    }
   };
 
   const clearAllStorage = () => {
-    if (!import.meta.dev) {
-      console.warn('clearAllStorage only available in development');
-      return;
-    }
-
+    if (!isDev) return;
     const before = getStorageSnapshot();
-
-    Object.keys(before.localStorage_items).forEach((key) =>
-      localStorage.removeItem(key),
+    Object.keys(before.localStorage_items).forEach((k) =>
+      localStorage.removeItem(k),
     );
-
-    Object.keys(before.sessionStorage_items).forEach((key) =>
-      sessionStorage.removeItem(key),
+    Object.keys(before.sessionStorage_items).forEach((k) =>
+      sessionStorage.removeItem(k),
     );
-
     devOverrides.value = {};
+    persistOverrides({});
 
     const after = getStorageSnapshot();
     console.info('Storage cleared:', { before, after });
@@ -206,7 +192,7 @@ export const useDevTools = () => {
       Object.keys(before.localStorage_items).length +
       Object.keys(before.sessionStorage_items).length;
 
-    toast.add({
+    toast.add?.({
       title: 'Development Storage Cleared',
       description: `Cleared ${totalCleared} items (including dev overrides). Page will reload in 3 seconds.`,
       color: 'warning',
@@ -219,9 +205,7 @@ export const useDevTools = () => {
       ],
     });
 
-    setTimeout(() => {
-      window.location.reload();
-    }, 3000);
+    setTimeout(() => window.location.reload(), 3000);
   };
 
   const logCurrentStorage = () => {
@@ -237,7 +221,7 @@ export const useDevTools = () => {
     });
     console.groupEnd();
 
-    toast.add({
+    toast.add?.({
       title: 'Storage Logged',
       description: 'Check console for storage contents',
       color: 'info',
@@ -245,22 +229,18 @@ export const useDevTools = () => {
     });
   };
 
-  // ========================================
-  // GLOBAL DEV TOOLS
-  // ========================================
-
-  if (import.meta.dev && typeof window !== 'undefined') {
+  // Expose a global helper for dev (safe to assign on client)
+  if (typeof window !== 'undefined') {
+    // safe assignment, no lifecycle hooks
     // @ts-expect-error devTools extension
     window.devTools = {
       clearAll: clearAllStorage,
       logStorage: logCurrentStorage,
       snapshot: getStorageSnapshot,
-
       setConfig: (source: ConfigSource) => setDevOverrides(source, undefined),
       setStage: (stage: ValidationStage) => setDevOverrides(undefined, stage),
       setOverrides: setDevOverrides,
       resetOverrides: resetDevOverrides,
-
       status: () => {
         console.table({
           'Storage Key': DEV_OVERRIDES_KEY,
@@ -284,7 +264,6 @@ export const useDevTools = () => {
     resetDevOverrides,
     hasActiveOverrides,
     envValues,
-
     clearAllStorage,
     logCurrentStorage,
     getStorageSnapshot,
