@@ -8,7 +8,7 @@ const isBackgroundExpanded = ref(false);
     id="#founder"
     :intro="data.intro"
     :bridge="data.bridge"
-    class="bg-muted/50"
+    :class="`bg-muted/50 ${$attrs.class}`"
   >
     <!-- Hook + Mission Quote (merged in quote box) -->
     <div class="mb-12 max-w-(--ui-container-sm) mx-auto flex flex-col">
@@ -49,11 +49,12 @@ const isBackgroundExpanded = ref(false);
         </div>
       </UPageCard>
       <div
-        v-if="data.story?.background?.length"
+        v-show="data.story?.background?.length"
         class="max-w-(--ui-container-sm) mx-auto pt-8"
       >
         <UCollapsible
           v-model:open="isBackgroundExpanded"
+          :unmount-on-hide="false"
           class="flex flex-col justify-center items-center gap-4"
         >
           <UButton
@@ -79,7 +80,7 @@ const isBackgroundExpanded = ref(false);
             >
               <p
                 v-for="(para, i) in data.story.background"
-                :key="i"
+                :key="`background-${i}`"
                 class="text-center"
               >
                 {{ para }}
@@ -95,7 +96,5 @@ const isBackgroundExpanded = ref(false);
         </UCollapsible>
       </div>
     </div>
-
-    <!-- Collapsible Background Story -->
   </ISectionWrapper>
 </template>

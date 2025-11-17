@@ -10,14 +10,14 @@ const data = useSectionConfig('process');
 <template>
   <ISectionWrapper id="#process" :intro="data.intro" :bridge="data.bridge">
     <UCarousel
+      v-if="data.steps"
       v-slot="{ item, index }"
       :arrows="!smallerThanLg"
       loop
       :items="data.steps"
       :ui="{
         root: 'border-y',
-        container: 'gap-4',
-        item: 'basis-full sm:basis-1/2 lg:basis-1/3 min-w-0',
+        item: 'basis-full sm:basis-1/2 lg:basis-1/3',
       }"
     >
       <ICardMetric v-bind="{ ...item, index: index + 1 }" />

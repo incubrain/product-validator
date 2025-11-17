@@ -9,7 +9,6 @@ defineProps<ProcessStep & { index: number }>();
   <UPageCard
     :title="title"
     variant="ghost"
-    class="h-full"
     :ui="{
       root: 'relative flex rounded-none',
       body: 'space-y-4 flex flex-col',

@@ -31,29 +31,33 @@ export default defineNuxtConfig({
   },
 
   // {DX}: Commented out as it is too buggy and impacting dx significantly
-//   studio: {
-//     // Studio admin route (default: '/_studio')
-//     route: '/_studio',
-// 
-//     // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
-//     // development: {
-//     //   sync: true, // Enable development mode
-//     // },
-// 
-//     // GitHub repository configuration (owner and repo are required)
-//     repository: {
-//       provider: 'github', // only GitHub is currently supported
-//       owner: 'incubrain', // your GitHub username or organization
-//       repo: 'product-validator', // your repository name
-//       branch: process.env.STUDIO_GITHUB_BRANCH_NAME, // the branch to commit to (default: main)
-//       rootDir: '', // optional: if your Nuxt app is in a subdirectory (default: '')
-//     },
-//   },
+  //   studio: {
+  //     // Studio admin route (default: '/_studio')
+  //     route: '/_studio',
+  //
+  //     // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
+  //     // development: {
+  //     //   sync: true, // Enable development mode
+  //     // },
+  //
+  //     // GitHub repository configuration (owner and repo are required)
+  //     repository: {
+  //       provider: 'github', // only GitHub is currently supported
+  //       owner: 'incubrain', // your GitHub username or organization
+  //       repo: 'product-validator', // your repository name
+  //       branch: process.env.STUDIO_GITHUB_BRANCH_NAME, // the branch to commit to (default: main)
+  //       rootDir: '', // optional: if your Nuxt app is in a subdirectory (default: '')
+  //     },
+  //   },
 
   ssr: true,
 
   $development: {
-    modules: ['@nuxt/eslint', '@compodium/nuxt', '@nuxt/hints'],
+    modules: [
+      '@nuxt/eslint',
+      '@compodium/nuxt',
+      // '@nuxt/hints'
+    ],
 
     devtools: { enabled: true },
 

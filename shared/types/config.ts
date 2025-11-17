@@ -1,5 +1,4 @@
 import type { ButtonProps, PricingPlanProps, BadgeProps } from '@nuxt/ui';
-import type { CountdownConfig } from '#shared/types/countdown';
 
 // ============================================================================
 // SHARED PRIMITIVES

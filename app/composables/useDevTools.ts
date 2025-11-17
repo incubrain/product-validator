@@ -7,7 +7,6 @@ interface DevOverrides {
 
 export const useDevTools = () => {
   const env = useRuntimeConfig().public;
-
   const isClient = import.meta.client;
   const isDev = import.meta.dev;
 
@@ -69,9 +68,17 @@ export const useDevTools = () => {
 
   // Active validation stage (dev override wins on client)
   const validationStage = computed<ValidationStage>(() => {
-    if (isDev && devOverrides.value.validationStage) {
-      return devOverrides.value.validationStage!;
+    if (import.meta.server) {
+      return env.validationStage as ValidationStage;
     }
+
+    if (isDev) {
+      return (
+        devOverrides.value.validationStage ||
+        (env.validationStage as ValidationStage)
+      );
+    }
+
     return env.validationStage as ValidationStage;
   });
 

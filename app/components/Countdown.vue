@@ -3,11 +3,12 @@
 import { useNow } from '@vueuse/core';
 
 interface Props {
-  targetDate: string;
+  targetDate?: string;
   fallbackMessage?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  targetDate: new Date().toISOString(),
   fallbackMessage: 'Launching Any Day Now',
 });
 
