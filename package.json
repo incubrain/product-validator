@@ -23,8 +23,8 @@
     "@nuxt/content": "^3.8.2",
     "@nuxt/image": "2.0.0",
     "@nuxt/scripts": "0.13.0",
-    "@nuxt/test-utils": "3.19.2",
-    "@nuxt/ui": "4.0.1",
+    "@nuxt/test-utils": "3.20.1",
+    "@nuxt/ui": "4.1.0",
     "@nuxtjs/seo": "3.2.2",
     "@unhead/vue": "^2.0.19",
     "@vueuse/core": "^13.9.0",
@@ -41,7 +41,7 @@
   "devDependencies": {
     "@compodium/nuxt": "0.1.0-beta.11",
     "@eslint/json": "^0.13.2",
-    "@nuxt/eslint": "1.9.0",
+    "@nuxt/eslint": "1.10.0",
     "@nuxt/hints": "1.0.0-alpha.1",
     "@types/node": "^22.0.0",
     "vue-tsc": "^3.1.3"
