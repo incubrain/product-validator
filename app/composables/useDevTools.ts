@@ -5,6 +5,15 @@ interface DevOverrides {
   validationStage?: ValidationStage;
 }
 
+const stages: ValidationStage[] = [
+  'identity',
+  'attention',
+  'traffic',
+  'conversion',
+  'engagement',
+  'demand',
+];
+
 export const useDevTools = () => {
   const env = useRuntimeConfig().public;
   const isClient = import.meta.client;
@@ -131,6 +140,14 @@ export const useDevTools = () => {
     }
   };
 
+  const cycleStage = () => {
+    if (!isDev) return;
+
+    const currentIndex = stages.indexOf(validationStage.value);
+    const nextIndex = (currentIndex + 1) % stages.length;
+    setDevOverrides(undefined, stages[nextIndex]);
+  };
+
   const hasActiveOverrides = computed(() => {
     return Object.keys(devOverrides.value).length > 0;
   });
@@ -247,6 +264,7 @@ export const useDevTools = () => {
       setConfig: (source: ConfigSource) => setDevOverrides(source, undefined),
       setStage: (stage: ValidationStage) => setDevOverrides(undefined, stage),
       setOverrides: setDevOverrides,
+      cycleStage,
       resetOverrides: resetDevOverrides,
       status: () => {
         console.table({
@@ -269,7 +287,9 @@ export const useDevTools = () => {
     validationStage,
     setDevOverrides,
     resetDevOverrides,
+    cycleStage,
     hasActiveOverrides,
+    stages,
     envValues,
     clearAllStorage,
     logCurrentStorage,

@@ -11,6 +11,7 @@ const {
   setDevOverrides,
   resetDevOverrides,
   hasActiveOverrides,
+  stages,
   envValues,
   clearAllStorage,
   logCurrentStorage,
@@ -18,15 +19,6 @@ const {
 
 const isOpen = ref(false);
 
-// Available options
-const stages: ValidationStage[] = [
-  'identity',
-  'attention',
-  'traffic',
-  'conversion',
-  'engagement',
-  'demand',
-];
 const sources: ConfigSource[] = ['validator', 'custom'];
 
 // ✅ Use Nuxt UI keyboard shortcuts instead of VueUse

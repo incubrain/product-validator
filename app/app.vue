@@ -24,6 +24,7 @@ if (isDev && import.meta.client) {
     meta_shift_r: useDevTools().clearAllStorage, // {DX}: cmd+shft+r to clear session/local storage + refresh
     meta_shift_e: () => useNuxtApp().$exitIntent.fire(true), // {DX}: cmd+shft+e to manually trigger intent trigger for testing
     meta_shift_x: () => useGatedAccess().revokeAccess,
+    meta_shift_arrowright: useDevTools().cycleStage,
   });
 }
 </script>
