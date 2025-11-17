@@ -14,6 +14,7 @@ const data = useSectionConfig('process');
       v-slot="{ item, index }"
       :arrows="!smallerThanLg"
       loop
+      align="start"
       :items="data.steps"
       :ui="{
         root: 'border-y',

@@ -1,9 +1,9 @@
-import type { Testimonial, CaseStudy, ProofTrack } from '#types';
+import type { Testimonial, ProofTrack } from '#types';
 
 /**
  * {CONFIG}: SOCIAL PROOF & RESULTS
  *
- * Testimonials, case studies, and proof tracks that build trust.
+ * Testimonials - proof builds trust.
  *
  * SOURCES:
  * - Step 2: Your own results/transformation (can be first case study)
@@ -12,7 +12,6 @@ import type { Testimonial, CaseStudy, ProofTrack } from '#types';
  *
  * Key sections:
  * - testimonials: Short quotes from customers
- * - caseStudies: Detailed success stories with metrics
  * - proof: Logo/name tracks showing credibility
  *
  * START WITH: Your own story as the first case study
@@ -36,39 +35,6 @@ export const testimonials = [
     highlight: false,
   },
 ] satisfies Testimonial[];
-
-export const caseStudies = [
-  {
-    type: 'case-study',
-    status: 'example',
-    highlight: true,
-
-    title: '⚠️ Case study title',
-
-    founder: {
-      name: '⚠️ Founder name',
-      productType: '⚠️ Product type',
-      websiteUrl: 'https://example.com',
-    },
-
-    description: '⚠️ Brief case study description',
-
-    metrics: [{ label: '⚠️ Metric name', value: '⚠️ Metric value' }],
-
-    timeline: {
-      start: '2025-10-13',
-      duration: '⚠️ Time period',
-      milestones: [
-        {
-          date: '2025-10-13',
-          event: '⚠️ What did they achieve',
-        },
-      ],
-    },
-
-    link: 'https://example.com',
-  },
-] satisfies CaseStudy[];
 
 export const proof = [
   {

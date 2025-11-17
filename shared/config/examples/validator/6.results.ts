@@ -1,4 +1,4 @@
-import type { Testimonial, CaseStudy, ProofTrack } from '#types';
+import type { Testimonial, ProofTrack } from '#types';
 // {FRICTION}: this has to be deleted, can it be extracted or does it provide value?
 
 export const proof: ProofTrack[] = [
@@ -92,61 +92,3 @@ export const testimonials: Testimonial[] = [
   },
 ] satisfies Testimonial[];
 
-export const caseStudies: CaseStudy[] = [
-  {
-    type: 'case-study',
-    status: 'in-progress',
-
-    title: 'Incubrain Launch',
-
-    founder: {
-      name: 'Drew MacGibbon',
-      productType: 'Workshops (Template + Mentorship Funnel)',
-      websiteUrl: 'https://incubrain.org',
-    },
-
-    description:
-      'Assuming the validation of this template, I will be launching workshops in Maharashtra (Pune & Mumbai) as the primary product, built around this validation template.',
-
-    metrics: [
-      { label: 'Status', value: 'Conceptual' },
-      { label: 'Target locations', value: 'Pune & Mumbai' },
-    ],
-
-    timeline: {
-      start: '2025-11-01',
-      milestones: [
-        {
-          date: '2025-11-01',
-          event: 'Start building landing page & offer magnet',
-        },
-      ],
-    },
-
-    link: 'https://incubrain.org',
-  },
-
-  {
-    type: 'case-study',
-    status: 'example',
-    highlight: true, // This one gets special UI treatment
-
-    title: 'Your success story here',
-
-    founder: {
-      name: 'Your name',
-      productType: 'Your product type',
-    },
-
-    description:
-      'You have an idea but struggle with validation paralysis. Use this template to ship fast and gather real feedback. Data-driven decisions instead of endless iteration.',
-
-    metrics: [{ label: 'Your metric', value: 'Your result' }],
-
-    timeline: {
-      start: new Date().toISOString().slice(0, 10),
-    },
-
-    link: 'https://x.com/incubrain',
-  },
-] satisfies CaseStudy[];

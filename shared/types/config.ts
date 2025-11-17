@@ -48,10 +48,6 @@ export type SectionBridge = {
   cta: Cta;
 };
 
-export type SectionSeparator = {
-  label: string;
-  description?: string;
-};
 
 export type BaseSectionConfig = {
   enabled?: boolean;
@@ -60,7 +56,6 @@ export type BaseSectionConfig = {
 
 export type SectionBase = BaseSectionConfig & {
   intro: SectionIntro;
-  separators?: SectionSeparator[];
   bridge?: SectionBridge;
 };
 
@@ -244,40 +239,7 @@ export type Testimonial = {
   highlight?: boolean;
 };
 
-export type CaseStudyFounder = {
-  name: string;
-  productType?: string;
-  websiteUrl?: string;
-};
-
-export type CaseStudyTimeline = {
-  start?: string;
-  duration?: string;
-  milestones?: Array<{
-    date: string;
-    event: string;
-  }>;
-};
-
-export type CaseStudyEvidence = {
-  screenshot?: string;
-  videoUrl?: string;
-};
-
-export type CaseStudy = {
-  type: 'case-study';
-  title: string;
-  status: 'validated' | 'in-progress' | 'example';
-  highlight?: boolean;
-  founder: CaseStudyFounder;
-  description: string;
-  metrics: Metric[];
-  timeline: CaseStudyTimeline;
-  evidence?: CaseStudyEvidence;
-  link?: string;
-};
-
-export type SocialProofItem = Testimonial | CaseStudy;
+export type SocialProofItem = Testimonial;
 
 // ============================================================================
 // CONCERNS SECTION
@@ -331,7 +293,6 @@ export type FlowConfig = {
 
   results: SectionBase & {
     testimonials: Testimonial[];
-    caseStudies: CaseStudy[];
     proof: ProofTrack[];
   };
 

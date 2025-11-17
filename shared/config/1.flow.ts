@@ -5,7 +5,7 @@ import { problemSolutionCards } from './2.problem-solution';
 import { productSteps } from './3.process';
 import { profile, accessibility, business, story } from './4.founder';
 import { offers } from './5.offers';
-import { caseStudies, testimonials, proof } from './6.results';
+import { testimonials, proof } from './6.results';
 import { concerns } from './7.concerns';
 
 export const flowConfig: FlowConfig = {
@@ -120,15 +120,6 @@ export const flowConfig: FlowConfig = {
       title: '⚠️ Section title',
       description: '⚠️ Section description',
     },
-    separators: [
-      {
-        label: '⚠️ Separator label',
-      },
-      {
-        label: '⚠️ Another separator label',
-      },
-    ],
-    caseStudies,
     testimonials,
     proof,
   },
