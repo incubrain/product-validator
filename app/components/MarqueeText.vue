@@ -8,8 +8,8 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   reverse: false,
-  pauseOnHover: true,
-  baseSpeed: 4, // Default: 50 characters per second
+  pauseOnHover: false,
+  baseSpeed: 3, // Default: 50 characters per second
 });
 
 // Calculate duration based on text length and base speed
@@ -22,7 +22,7 @@ const adjustedDuration = computed(() => `${duration.value}s`);
 </script>
 
 <template>
-  <div class="relative overflow-hidden w-full">
+  <div class="relative overflow-hidden w-full py-6">
     <UMarquee
       :pause-on-hover="pauseOnHover"
       :reverse="reverse"
@@ -33,7 +33,7 @@ const adjustedDuration = computed(() => `${duration.value}s`);
         content: 'flex items-center shrink-0 min-w-max',
       }"
     >
-      <span class="text-6xl font-bold whitespace-nowrap uppercase">
+      <span class="text-5xl lg:text-6xl font-bold whitespace-nowrap uppercase">
         {{ text }}
       </span>
     </UMarquee>

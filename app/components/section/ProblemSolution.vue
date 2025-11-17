@@ -10,14 +10,13 @@ const cards = computed(() => data?.value.cards ?? []);
     :intro="data.intro"
     :bridge="data.bridge"
   >
-    <UPageGrid>
+    <UPageGrid class="border-y py-4">
       <UPageCard
         v-for="card in cards"
         :key="card.id"
         :title="card.title"
         :description="card.description"
-        spotlight
-        spotlight-color="secondary"
+        variant="ghost"
         :ui="{
           description: 'text-pretty leading-relaxed',
         }"

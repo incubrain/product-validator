@@ -8,10 +8,10 @@ defineProps<ProcessStep & { index: number }>();
 <template>
   <UPageCard
     :title="title"
-    spotlight
-    spotlight-color="secondary"
+    variant="ghost"
     class="h-full"
     :ui="{
+      root: 'relative flex rounded-none',
       body: 'space-y-4 flex flex-col',
       title: 'text-lg font-bold',
     }"

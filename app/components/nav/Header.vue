@@ -11,7 +11,7 @@ const props = defineProps<{
 const headerClasses = computed(() => ({
   [`sticky z-40 bg-muted/80 backdrop-blur-md border-b border-default ${props.class}`]:
     props.sticky,
-  'relative z-0 border-none': !props.sticky,
+  'relative z-0 border-b border-default/60': !props.sticky,
 }));
 </script>
 

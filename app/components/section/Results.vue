@@ -159,7 +159,7 @@ const formattedTestimonials = computed(() =>
     <ISeparator v-if="data.separators?.[1]" v-bind="data.separators[1]" />
 
     <div v-if="formattedTestimonials.length">
-      <UPageColumns>
+      <UPageColumns class="gap-0 space-y-0">
         <UPageCard
           v-for="(testimonial, index) in formattedTestimonials"
           :key="index"
@@ -168,6 +168,7 @@ const formattedTestimonials = computed(() =>
           :variant="testimonial.highlight ? 'solid' : 'outline'"
           :class="testimonial.highlight ? 'text-inverted' : ''"
           :ui="{
+            root: 'rounded-none',
             description: testimonial.highlight
               ? 'text-inverted'
               : 'before:content-[open-quote] after:content-[close-quote]',

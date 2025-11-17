@@ -30,9 +30,11 @@ const primaryOffer = useFlowOffer(CONVERSION.primary);
     orientation="vertical"
     class="bg-linear-to-b from-default via-muted to-default text-white relative overflow-hidden min-h-[calc(100vh-var(--ui-banner-height)-var(--ui-header-height))]"
     :ui="{
-      wrapper: 'text-center',
+      root: 'px-0',
+      body: 'px-0',
+      wrapper: 'text-center px-0',
       container:
-        'flex flex-col lg:grid py-24 sm:py-32 lg:py-24 gap-0 sm:gap-y-0',
+        'flex flex-col lg:grid py-24 sm:py-32 lg:py-24 gap-0 sm:gap-y-0 lg:px-0 border-x border-default/60',
       footer: 'mt-10',
     }"
   >
@@ -167,6 +169,6 @@ const primaryOffer = useFlowOffer(CONVERSION.primary);
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
-  background-size: 50px 50px;
+  background-size: 60px 60px;
 }
 </style>

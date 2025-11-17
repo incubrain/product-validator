@@ -1,4 +1,4 @@
-<!-- components/I/Offers.vue -->
+<!-- components/I/Offers.vue - UPDATED -->
 <script setup lang="ts">
 import type { IconProps } from '@nuxt/ui';
 import { CONVERSION } from '#shared/config/navigation';
@@ -33,14 +33,26 @@ const transformedFeatures = computed(() => {
 </script>
 
 <template>
-  <ISectionWrapper id="#offer" :intro="data.intro" :bridge="data.bridge">
-    <div class="max-w-md mx-auto">
+  <ISectionWrapper
+    id="#offer"
+    :intro="data.intro"
+    :bridge="data.bridge"
+    class="relative"
+  >
+    <!-- ✅ Subtle radial glow -->
+    <div
+      class="absolute inset-0 flex items-center justify-center pointer-events-none"
+    >
+      <div class="w-[80%] h-[80%] bg-primary/5 rounded-full blur-3xl" />
+    </div>
+
+    <div class="max-w-md mx-auto relative z-10">
       <UPricingPlan
         v-if="primaryOffer"
         v-bind="primaryOffer"
         :features="transformedFeatures"
         :ui="{
-          root: 'bg-primary/5',
+          root: 'bg-primary/5 backdrop-blur-sm', // ✅ Added backdrop-blur for depth
           features: 'gap-3',
           feature: 'items-center',
           terms: 'w-full',
@@ -70,7 +82,6 @@ const transformedFeatures = computed(() => {
         </template>
 
         <template #button>
-          <!-- Replace IButtonCTA with FormValidation wrapper -->
           <div class="pt-4">
             <IFormValidation location="offer-section" :offer="primaryOffer" />
           </div>

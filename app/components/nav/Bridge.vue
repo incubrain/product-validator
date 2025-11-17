@@ -14,33 +14,44 @@ defineProps<Props>();
 </script>
 
 <template>
-  <UPageCard
-    spotlight
-    spotlight-color="secondary"
-    class="max-w-(--ui-container-sm) mx-auto w-full"
-  >
-    <div class="text-center space-y-6">
-      <div class="space-y-2">
-        <h4
-          class="text-base sm:text-xl text-secondary font-bold leading-relaxed"
-        >
-          {{ bridge.headline }}
-        </h4>
-        <p class="text-sm sm:text-base text-muted leading-relaxed">
-          {{ bridge.message }}
-        </p>
-      </div>
-
-      <UButton
-        :to="bridge.cta.to"
-        variant="subtle"
-        color="primary"
-        :trailing-icon="bridge.cta.icon"
-        size="md"
-        class="font-medium"
-      >
-        {{ bridge.cta.label }}
-      </UButton>
+  <div class="relative">
+    <!-- Corner brackets -->
+    <div class="absolute inset-0 pointer-events-none z-10">
+      <div
+        class="absolute -top-px -left-px w-12 h-12 border-t-2 border-l-2 border-secondary/30"
+      />
+      <div
+        class="absolute -top-px -right-px w-12 h-12 border-t-2 border-r-2 border-secondary/30"
+      />
+      <div
+        class="absolute -bottom-px -left-px w-12 h-12 border-b-2 border-l-2 border-secondary/30"
+      />
+      <div
+        class="absolute -bottom-px -right-px w-12 h-12 border-b-2 border-r-2 border-secondary/30"
+      />
     </div>
-  </UPageCard>
+
+    <UPageCTA
+      :title="bridge.headline"
+      :description="bridge.message"
+      orientation="vertical"
+      variant="outline"
+      :links="[
+        {
+          label: bridge.cta.label,
+          to: bridge.cta.to,
+          trailingIcon: bridge.cta.icon,
+          color: 'secondary',
+          variant: 'subtle',
+          size: 'lg',
+        },
+      ]"
+      class="rounded-none border border-default/20"
+      :ui="{
+        container: 'py-12 sm:py-16',
+        title: 'text-lg sm:text-xl font-bold text-secondary',
+        description: 'text-sm sm:text-base',
+      }"
+    />
+  </div>
 </template>

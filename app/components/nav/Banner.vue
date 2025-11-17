@@ -34,7 +34,7 @@ const bannerClasses = computed(() => ({
     ]"
     :class="bannerClasses"
     :ui="{
-      root: 'bg-default hover:bg-primary/10 backdrop-blur-3xl text-muted h-(--ui-banner-height)',
+      root: 'hover:bg-default bg-primary/10 backdrop-blur-3xl text-muted h-(--ui-banner-height)',
       title: 'text-sm text-muted font-medium truncate pl-3',
       icon: 'size-5 shrink-0 text-error pointer-events-none',
       close: 'text-muted hover:bg-muted cursor-pointer',
