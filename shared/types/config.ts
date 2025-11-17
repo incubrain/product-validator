@@ -153,7 +153,6 @@ export type BusinessInfo = {
 };
 
 export type FounderStory = {
-  greeting: string;
   background: string[];
   mission: string;
   challenge: string;

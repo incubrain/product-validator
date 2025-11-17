@@ -49,8 +49,8 @@ export const business = {
 } satisfies BusinessInfo;
 
 export const story = {
-  greeting: "⚠️ Hi, I'm [Name]; brief intro and hook",
   background: [
+    "⚠️ Hi, I'm [Name]; brief intro and hook",
     '⚠️ First paragraph of your story',
     '⚠️ Second paragraph detailing your journey',
     '⚠️ Third paragraph explaining what changed',

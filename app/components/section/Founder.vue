@@ -12,11 +12,6 @@ const isBackgroundExpanded = ref(false);
   >
     <!-- Hook + Mission Quote (merged in quote box) -->
     <div class="mb-12 max-w-(--ui-container-sm) mx-auto flex flex-col">
-      <div class="flex flex-col items-center gap-4 mb-8">
-        <p class="font-written text-xl text-center">
-          {{ data.story.greeting }}
-        </p>
-      </div>
       <div v-if="data.profile.portrait?.src" class="flex justify-center">
         <NuxtImg
           :src="data.profile.portrait.src"
