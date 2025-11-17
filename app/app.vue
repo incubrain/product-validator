@@ -31,10 +31,10 @@ if (isDev && import.meta.client) {
 
 <template>
   <UApp>
+    <IDevTools v-if="isDev" />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>
-    <IDevTools v-if="isDev" />
   </UApp>
 </template>
 

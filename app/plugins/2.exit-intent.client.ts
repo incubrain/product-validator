@@ -5,8 +5,8 @@ import { CONVERSION } from '~~/shared/config/navigation';
 export default defineNuxtPlugin(() => {
   if (typeof window === 'undefined') return;
 
-  const { configSource: storagePrefix } = useDevTools();
-  
+  const env = useRuntimeConfig().public;
+
   const createExitIntent = (
     options: {
       offerId: OfferID;
@@ -21,7 +21,7 @@ export default defineNuxtPlugin(() => {
     const { trackEvent } = useAction();
     const overlay = useOverlay();
     const isShowing = ref(false);
-    const storageKey = `${storagePrefix.value}_exit_intent_triggered`;
+    const storageKey = `${env.configSource}_exit_intent_triggered`;
 
     const { hasInteracted, interactionTime, setup, cleanup } =
       useUserInteraction({

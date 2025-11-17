@@ -2,8 +2,8 @@
 import { useStorage } from '@vueuse/core';
 
 export const useGatedAccess = () => {
-  const { configSource: storagePrefix } = useDevTools();
-  const storageKey = `${storagePrefix.value}_magnet_email`;
+  const env = useRuntimeConfig().public;
+  const storageKey = `${env.configSource}_magnet_email`;
 
   // ✅ Only use useStorage on client, fallback to ref on server
   const email = import.meta.client

@@ -1,8 +1,7 @@
 // composables/useDevTools.ts
 
 interface DevOverrides {
-  configSource?: ConfigSource;
-  validationStage?: ValidationStage;
+  validationStage?: ValidationStage; // ✅ Remove configSource
 }
 
 const stages: ValidationStage[] = [
@@ -19,16 +18,16 @@ export const useDevTools = () => {
   const isClient = import.meta.client;
   const isDev = import.meta.dev;
 
-  // SSR-safe reduced API (no access to localStorage, no lifecycle, no toast)
+  // SSR-safe reduced API
   if (!isClient || !isDev) {
     return {
-      configSource: computed(() => env.configSource as ConfigSource),
       validationStage: computed(() => env.validationStage as ValidationStage),
       setDevOverrides: () => {},
       resetDevOverrides: () => {},
+      cycleStage: () => {},
       hasActiveOverrides: computed(() => false),
+      stages,
       envValues: computed(() => ({
-        configSource: env.configSource as ConfigSource,
         validationStage: env.validationStage as ValidationStage,
       })),
       clearAllStorage: () => {},
@@ -37,19 +36,15 @@ export const useDevTools = () => {
     };
   }
 
-  // Use ENV config source as prefix for dev overrides key
   const toast = useToast();
-  const baseConfigSource = env.configSource as ConfigSource;
-  const DEV_OVERRIDES_KEY = `${baseConfigSource}_dev_overrides`;
+  const configSource = env.configSource as ConfigSource; // ✅ Just read from ENV
+  const DEV_OVERRIDES_KEY = `${configSource}_dev_overrides`;
 
-  // Persisted overrides are read synchronously only on client/dev in the initializer.
-  // This avoids using onMounted or lifecycle hooks.
   const devOverrides = useState<DevOverrides>('dev-overrides', () => {
     try {
       const stored = localStorage.getItem(DEV_OVERRIDES_KEY);
       return stored ? JSON.parse(stored) : {};
     } catch (e) {
-      // corrupted localStorage or access error -> return empty
       return {};
     }
   });
@@ -62,20 +57,10 @@ export const useDevTools = () => {
         localStorage.setItem(DEV_OVERRIDES_KEY, JSON.stringify(overrides));
       }
     } catch (error) {
-      // swallow errors; dev only
       console.error('Failed to persist dev overrides:', error);
     }
   };
 
-  // Active config source
-  const configSource = computed<ConfigSource>(() => {
-    if (isDev && devOverrides.value.configSource) {
-      return devOverrides.value.configSource!;
-    }
-    return baseConfigSource;
-  });
-
-  // Active validation stage (dev override wins on client)
   const validationStage = computed<ValidationStage>(() => {
     if (import.meta.server) {
       return env.validationStage as ValidationStage;
@@ -91,37 +76,15 @@ export const useDevTools = () => {
     return env.validationStage as ValidationStage;
   });
 
-  const setDevOverrides = (source?: ConfigSource, stage?: ValidationStage) => {
+  const setDevOverrides = (stage: ValidationStage) => {
+    // ✅ Simplified signature
     if (!isDev) {
       console.warn('setDevOverrides only available in development');
       return;
     }
 
-    const changes: string[] = [];
-    const newOverrides = { ...devOverrides.value };
-
-    if (source !== undefined) {
-      newOverrides.configSource = source;
-      changes.push(`Config: ${source}`);
-    }
-
-    if (stage !== undefined) {
-      newOverrides.validationStage = stage;
-      changes.push(`Stage: ${stage}`);
-    }
-
-    devOverrides.value = newOverrides;
-    persistOverrides(newOverrides);
-
-    if (changes.length > 0) {
-      // toast might be no-op if not available
-      toast.add?.({
-        title: 'Dev Override Active',
-        description: changes.join(' | '),
-        color: 'warning',
-        duration: 2000,
-      });
-    }
+    devOverrides.value = { validationStage: stage };
+    persistOverrides(devOverrides.value);
   };
 
   const resetDevOverrides = () => {
@@ -142,10 +105,9 @@ export const useDevTools = () => {
 
   const cycleStage = () => {
     if (!isDev) return;
-
     const currentIndex = stages.indexOf(validationStage.value);
     const nextIndex = (currentIndex + 1) % stages.length;
-    setDevOverrides(undefined, stages[nextIndex]);
+    setDevOverrides(stages[nextIndex]);
   };
 
   const hasActiveOverrides = computed(() => {
@@ -153,12 +115,10 @@ export const useDevTools = () => {
   });
 
   const envValues = computed(() => ({
-    configSource: baseConfigSource,
     validationStage: env.validationStage as ValidationStage,
   }));
 
-  // Storage helpers (client-only)
-  const storagePrefix = computed(() => configSource.value);
+  const storagePrefix = computed(() => configSource); // ✅ Now just reads ENV
 
   const getStorageSnapshot = () => {
     try {
@@ -235,8 +195,7 @@ export const useDevTools = () => {
   const logCurrentStorage = () => {
     const snapshot = getStorageSnapshot();
     console.group('📦 Storage Snapshot');
-    console.log('Base Config (ENV):', baseConfigSource);
-    console.log('Active Config:', configSource.value);
+    console.log('Config Source (ENV):', configSource);
     console.log('Active Stage:', validationStage.value);
     console.log('Dev Overrides Key:', DEV_OVERRIDES_KEY);
     console.table({
@@ -253,25 +212,19 @@ export const useDevTools = () => {
     });
   };
 
-  // Expose a global helper for dev (safe to assign on client)
   if (typeof window !== 'undefined') {
-    // safe assignment, no lifecycle hooks
     // @ts-expect-error devTools extension
     window.devTools = {
       clearAll: clearAllStorage,
       logStorage: logCurrentStorage,
       snapshot: getStorageSnapshot,
-      setConfig: (source: ConfigSource) => setDevOverrides(source, undefined),
-      setStage: (stage: ValidationStage) => setDevOverrides(undefined, stage),
-      setOverrides: setDevOverrides,
+      setStage: setDevOverrides, // ✅ Simplified
       cycleStage,
       resetOverrides: resetDevOverrides,
       status: () => {
         console.table({
           'Storage Key': DEV_OVERRIDES_KEY,
-          'Config Source (ENV)': baseConfigSource,
-          'Config Source (Active)': configSource.value,
-          'Config Source (Override)': devOverrides.value.configSource || 'none',
+          'Config Source (ENV)': configSource,
           'Validation Stage (ENV)': envValues.value.validationStage,
           'Validation Stage (Active)': validationStage.value,
           'Validation Stage (Override)':
@@ -283,7 +236,6 @@ export const useDevTools = () => {
   }
 
   return {
-    configSource,
     validationStage,
     setDevOverrides,
     resetDevOverrides,
