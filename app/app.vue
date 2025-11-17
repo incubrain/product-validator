@@ -17,17 +17,13 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 });
 
-
 // Dev shortcuts
 const isDev = import.meta.dev;
 if (isDev && import.meta.client) {
-  const { clearAllStorage } = useDevTools();
-  const { $exitIntent } = useNuxtApp();
-  const { revokeAccess } = useGatedAccess();
   defineShortcuts({
-    meta_shift_r: clearAllStorage, // {DX}: cmd+shft+r to clear session/local storage + refresh
-    meta_shift_e: () => $exitIntent.fire(true), // {DX}: cmd+shft+e to manually trigger intent trigger for testing
-    meta_shift_x: () => revokeAccess,
+    meta_shift_r: useDevTools().clearAllStorage, // {DX}: cmd+shft+r to clear session/local storage + refresh
+    meta_shift_e: () => useNuxtApp().$exitIntent.fire(true), // {DX}: cmd+shft+e to manually trigger intent trigger for testing
+    meta_shift_x: () => useGatedAccess().revokeAccess,
   });
 }
 </script>
