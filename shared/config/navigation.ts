@@ -1,5 +1,6 @@
 // shared/config/navigation.ts
 import type { NavigationMenuItem } from '@nuxt/ui';
+import type { ValidationStage } from '#shared/types/config';
 
 export interface NavigationConfig {
   main: NavigationMenuItem[];
@@ -15,16 +16,34 @@ export const NAVIGATION: NavigationConfig = {
   ],
 } as const;
 
+/**
+ * Form type options for validation stages
+ */
+export type FormType = 'fake_door' | 'magnet';
+
 export const CONVERSION = {
   /**
-   * Current validation stage
-   * Toggle this to move through validation lifecycle
+   * Primary and secondary offer IDs
    */
   primary: 'magnet',
   secondary: 'direct',
 
   /**
-   * Fake door configuration (only applies when stage === 'attention')
+   * Form behavior by validation stage
+   * Controls which form shows for primary offer at each stage
+   */
+  conversionTarget: {
+    identity: 'fake_door',
+    attention: 'fake_door',
+    traffic: 'fake_door',
+    conversion: 'fake_door',
+    engagement: 'magnet',
+    demand: 'magnet',
+  } as const satisfies Record<ValidationStage, FormType>,
+
+  /**
+   * Fake door configuration
+   * Used when conversionTarget returns 'fake_door'
    */
   fakeDoor: {
     message:
@@ -33,6 +52,9 @@ export const CONVERSION = {
     feedbackPrompt: 'What would make this most valuable for you?',
   },
 
+  /**
+   * Layout configuration
+   */
   banner: {
     sticky: true,
   },
