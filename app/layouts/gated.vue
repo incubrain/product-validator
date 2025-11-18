@@ -10,7 +10,12 @@ const { hasAccess, email, isVerified, verifyAccess, isVerifying } =
   useGatedAccess();
 const offer = useFlowOffer(CONVERSION.primary);
 
-const { isContentAccessible, getContentLabel } = useContentAccess();
+const {
+  isContentAccessible,
+  getContentLabel,
+  getContentIcon,
+  getContentIconColor,
+} = useContentAccess();
 
 // Fetch navigation for sidebar
 const { data: navigation } = useAsyncData('magnet-navigation', () => {
@@ -19,13 +24,7 @@ const { data: navigation } = useAsyncData('magnet-navigation', () => {
 
 // ✅ Verify on mount if email exists
 onMounted(async () => {
-  console.log('[Layout] onMounted:', {
-    email: email.value,
-    isVerified: isVerified.value,
-  });
-
   if (email.value && !isVerified.value) {
-    console.log('[Layout] Found email, verifying...');
     await verifyAccess();
   }
 });
@@ -34,14 +33,7 @@ onMounted(async () => {
 watch(
   [email, isVerified],
   async ([newEmail, newIsVerified]) => {
-    console.log('[Layout] Access state changed:', {
-      email: newEmail,
-      isVerified: newIsVerified,
-      hasAccess: hasAccess.value,
-    });
-
     if (newEmail && !newIsVerified) {
-      console.log('[Layout] Email set but not verified, verifying...');
       await verifyAccess();
     }
   },
@@ -54,28 +46,13 @@ const isModalOpen = ref(false);
 watchEffect(() => {
   const shouldShow =
     route.path.startsWith(ROOT_PATH) && !hasAccess.value && !isVerifying.value;
-
-  console.log('[Layout] Modal state:', {
-    shouldShow,
-    hasAccess: hasAccess.value,
-    isVerifying: isVerifying.value,
-  });
-
   isModalOpen.value = shouldShow;
 });
 
 const handleModalClose = (open: boolean) => {
-  console.log('[Layout] Modal close requested:', {
-    open,
-    hasAccess: hasAccess.value,
-  });
-
   if (!open && !hasAccess.value) {
-    console.log('[Layout] ❌ Prevented modal close - no access');
     return;
   }
-
-  console.log('[Layout] ✅ Allowing modal close');
   isModalOpen.value = open;
 };
 
@@ -85,6 +62,8 @@ const stages = computed(() =>
     indexAsChild: false,
   }),
 );
+
+console.log('Stages:', { stages: stages, navigation: navigation });
 
 const breadcrumb = computed(() =>
   mapContentNavigation(
@@ -123,6 +102,7 @@ const breadcrumb = computed(() =>
       </template>
 
       <template #default>
+        <!-- Collapsed navigation with icons -->
         <div v-if="isCollapsed" class="flex flex-col gap-2">
           <UTooltip v-for="stage in stages" :key="stage.path" placement="right">
             <template #text>
@@ -135,23 +115,36 @@ const breadcrumb = computed(() =>
               </span>
             </template>
 
-            <UButton
-              :icon="stage.icon"
-              :to="isContentAccessible(stage) ? stage.path : undefined"
-              :disabled="!isContentAccessible(stage)"
-              color="neutral"
-              variant="ghost"
-              square
-              size="md"
-              :class="{
-                'bg-primary/10 text-primary': route.path.startsWith(stage.path),
-                'opacity-50 cursor-not-allowed': !isContentAccessible(stage),
-              }"
-            />
+            <!-- Button with status badge -->
+            <div class="relative inline-flex">
+              <UButton
+                :icon="stage.icon"
+                :to="isContentAccessible(stage) ? stage.path : undefined"
+                :disabled="!isContentAccessible(stage)"
+                color="neutral"
+                variant="ghost"
+                square
+                size="md"
+                :class="{
+                  'bg-primary/10 text-primary': route.path.startsWith(
+                    stage.path,
+                  ),
+                  'opacity-50 cursor-not-allowed': !isContentAccessible(stage),
+                }"
+              />
+
+              <!-- Status badge icon -->
+              <UIcon
+                v-if="!isContentAccessible(stage) && getContentIcon(stage)"
+                :name="getContentIcon(stage)!"
+                class="absolute -top-1 -right-1 size-3 bg-background rounded-full"
+                :class="getContentIconColor(stage)"
+              />
+            </div>
           </UTooltip>
         </div>
 
-        <!-- Full navigation when expanded -->
+        <!-- Expanded navigation with proper slots -->
         <UContentNavigation
           v-else
           :navigation="stages"
@@ -161,7 +154,23 @@ const breadcrumb = computed(() =>
           highlight
           highlight-color="primary"
           color="primary"
-        />
+        >
+          <!-- ✅ Use link-trailing slot (correct slot name from docs) -->
+          <template #link-trailing="{ link }">
+            <!-- Only show status for inaccessible content -->
+            <div
+              v-if="!isContentAccessible(link)"
+              class="flex items-center gap-1.5"
+            >
+              <UIcon
+                v-if="getContentIcon(link)"
+                :name="getContentIcon(link)!"
+                class="size-3.5"
+                :class="getContentIconColor(link)"
+              />
+            </div>
+          </template>
+        </UContentNavigation>
       </template>
     </UDashboardSidebar>
 

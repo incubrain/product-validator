@@ -8,41 +8,29 @@ export type StageStatus =
   | 'deprecated';
 
 export const useContentAccess = () => {
-  //   const { hasCompletedStage } = useStageProgress(); // Future
-
   const isContentAccessible = (stage: any): boolean => {
-    const status: StageStatus = stage.status || 'draft';
+    const status: StageStatus = stage.status;
 
     switch (status) {
       case 'published':
         return true;
-
       case 'draft':
-        return false; // Today: hard-blocked
-      // Tomorrow: return isDev || hasAdminAccess()
-
+        return false;
       case 'locked':
-        return false; // Today: hard-blocked
-      // Tomorrow: return hasCompletedPreviousStage(stage.order)
-
+        return false;
       case 'feature_flag':
-        return false; // Today: hard-blocked
-      // Tomorrow: return useFeatureFlag(stage.featureFlagKey)
-
+        return false;
       case 'beta':
-        return false; // Today: hard-blocked
-      // Tomorrow: return hasBetaAccess()
-
+        return false;
       case 'deprecated':
-        return true; // Still accessible, just warn user
-
+        return true;
       default:
         return false;
     }
   };
 
   const getContentLabel = (stage: any): string | undefined => {
-    const status: StageStatus = stage.status || 'draft';
+    const status: StageStatus = stage.status;
 
     switch (status) {
       case 'draft':
@@ -59,7 +47,7 @@ export const useContentAccess = () => {
   };
 
   const getContentVariant = (stage: any): 'info' | 'warning' | 'neutral' => {
-    const status: StageStatus = stage.status || 'draft';
+    const status: StageStatus = stage.status;
 
     switch (status) {
       case 'draft':
@@ -75,9 +63,53 @@ export const useContentAccess = () => {
     }
   };
 
+  // ✅ NEW: Get status icon
+  const getContentIcon = (stage: any): string | undefined => {
+    const status: StageStatus = stage.status;
+
+    console.log('Getting icon for status:', status, stage);
+
+    switch (status) {
+      case 'draft':
+        return 'i-lucide-clock';
+      case 'locked':
+        return 'i-lucide-lock';
+      case 'beta':
+        return 'i-lucide-flask-conical';
+      case 'deprecated':
+        return 'i-lucide-alert-triangle';
+      case 'feature_flag':
+        return 'i-lucide-flag';
+      default:
+        return undefined;
+    }
+  };
+
+  // ✅ NEW: Get icon color
+  const getContentIconColor = (stage: any): string => {
+    const status: StageStatus = stage.status;
+
+    switch (status) {
+      case 'draft':
+        return 'text-muted';
+      case 'locked':
+        return 'text-warning';
+      case 'beta':
+        return 'text-info';
+      case 'deprecated':
+        return 'text-error';
+      case 'feature_flag':
+        return 'text-primary';
+      default:
+        return 'text-muted';
+    }
+  };
+
   return {
     isContentAccessible,
     getContentLabel,
     getContentVariant,
+    getContentIcon,
+    getContentIconColor,
   };
 };
