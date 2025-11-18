@@ -1,5 +1,5 @@
-// composables/useAction.ts
-export const useAction = () => {
+// composables/useEvents.ts
+export const useEvents = () => {
   const nuxtApp = useNuxtApp();
 
   const trackEvent = async (event: EventPayload) => {

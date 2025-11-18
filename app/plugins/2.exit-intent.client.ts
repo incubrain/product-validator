@@ -18,7 +18,7 @@ export default defineNuxtPlugin(() => {
       offerId: 'magnet',
     },
   ) => {
-    const { trackEvent } = useAction();
+    const { trackEvent } = useEvents();
     const overlay = useOverlay();
     const isShowing = ref(false);
     const storageKey = `${env.configSource}_exit_intent_triggered`;

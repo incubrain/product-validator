@@ -21,7 +21,7 @@ interface Props {
 const props = defineProps<Props>();
 
 const overlay = useOverlay();
-const { executeAction } = useAction();
+const { executeAction } = useEvents();
 const offer = useFlowOffer(props.offerId);
 
 // Map offer IDs to form components

@@ -7,10 +7,10 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
   schema: T;
   location?: string;
 }) => {
-  const { trackEvent } = useAction();
+  const { trackEvent } = useEvents();
   const route = useRoute();
   const toast = useToast();
-  const { validationStage} = useDevTools();
+  const { validationStage } = useDevTools();
   const { grantAccess } = useGatedAccess();
 
   const isSubmitting = ref(false);
