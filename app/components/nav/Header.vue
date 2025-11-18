@@ -1,11 +1,24 @@
 <!-- components/nav/Header.vue -->
 <script setup lang="ts">
-import { NAVIGATION, CONVERSION } from '#shared/config/navigation';
+import { NAVIGATION } from '#shared/config/navigation';
 
 const props = defineProps<{
   class?: string;
   sticky?: boolean;
 }>();
+
+// Get founder data for social links
+const founder = useSectionConfig('founder');
+
+// Map links to proper format for UButton
+const socialLinks = computed(
+  () =>
+    founder.value.accessibility.links?.map((link) => ({
+      label: link.label,
+      icon: `i-lucide-${link.platform}`,
+      url: link.url,
+    })) || [],
+);
 
 // Dynamic classes for sticky positioning
 const headerClasses = computed(() => ({
@@ -29,12 +42,19 @@ const headerClasses = computed(() => ({
     />
 
     <template #right>
-      <IButtonCTA
-        :offer-id="CONVERSION.primary"
-        location="header"
-        anchor
-        class="hidden md:inline-flex text-toned font-black"
-      />
+      <div class="hidden md:flex items-center gap-1">
+        <UButton
+          v-for="social in socialLinks"
+          :key="social.label"
+          :icon="social.icon"
+          color="neutral"
+          variant="ghost"
+          size="sm"
+          :to="social.url"
+          target="_blank"
+          :aria-label="social.label"
+        />
+      </div>
     </template>
 
     <template #body>
