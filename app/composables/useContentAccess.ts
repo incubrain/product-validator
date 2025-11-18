@@ -1,4 +1,4 @@
-// composables/useStageAccess.ts
+// composables/useContentAccess.ts
 export type StageStatus =
   | 'published'
   | 'draft'
@@ -7,10 +7,10 @@ export type StageStatus =
   | 'beta'
   | 'deprecated';
 
-export const useStageAccess = () => {
+export const useContentAccess = () => {
   //   const { hasCompletedStage } = useStageProgress(); // Future
 
-  const isStageAccessible = (stage: any): boolean => {
+  const isContentAccessible = (stage: any): boolean => {
     const status: StageStatus = stage.status || 'draft';
 
     switch (status) {
@@ -41,7 +41,7 @@ export const useStageAccess = () => {
     }
   };
 
-  const getStageLabel = (stage: any): string | undefined => {
+  const getContentLabel = (stage: any): string | undefined => {
     const status: StageStatus = stage.status || 'draft';
 
     switch (status) {
@@ -58,7 +58,7 @@ export const useStageAccess = () => {
     }
   };
 
-  const getStageVariant = (stage: any): 'info' | 'warning' | 'neutral' => {
+  const getContentVariant = (stage: any): 'info' | 'warning' | 'neutral' => {
     const status: StageStatus = stage.status || 'draft';
 
     switch (status) {
@@ -76,8 +76,8 @@ export const useStageAccess = () => {
   };
 
   return {
-    isStageAccessible,
-    getStageLabel,
-    getStageVariant,
+    isContentAccessible,
+    getContentLabel,
+    getContentVariant,
   };
 };

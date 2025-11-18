@@ -5,7 +5,7 @@ definePageMeta({
 });
 
 const route = useRoute();
-const { isStageAccessible, getStageLabel } = useStageAccess();
+const { isContentAccessible, getContentLabel } = useContentAccess();
 
 // Fetch current page
 const { data: page } = await useAsyncData(`magnet-${route.params.step}`, () => {
@@ -13,8 +13,8 @@ const { data: page } = await useAsyncData(`magnet-${route.params.step}`, () => {
 });
 
 // Check access immediately
-if (page.value && !isStageAccessible(page.value)) {
-  const statusLabel = getStageLabel(page.value) || 'unavailable';
+if (page.value && !isContentAccessible(page.value)) {
+  const statusLabel = getContentLabel(page.value) || 'unavailable';
 
   throw createError({
     statusCode: 403,

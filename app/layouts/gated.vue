@@ -10,7 +10,7 @@ const { hasAccess, email, isVerified, verifyAccess, isVerifying } =
   useGatedAccess();
 const offer = useFlowOffer(CONVERSION.primary);
 
-const { isStageAccessible, getStageLabel } = useStageAccess();
+const { isContentAccessible, getContentLabel } = useContentAccess();
 
 // Fetch navigation for sidebar
 const { data: navigation } = useAsyncData('magnet-navigation', () => {
@@ -127,22 +127,25 @@ const breadcrumb = computed(() =>
           <UTooltip v-for="stage in stages" :key="stage.path" placement="right">
             <template #text>
               <span>{{ stage.title }}</span>
-              <span v-if="!isStageAccessible(stage)" class="text-xs opacity-75">
-                ({{ getStageLabel(stage) }})
+              <span
+                v-if="!isContentAccessible(stage)"
+                class="text-xs opacity-75"
+              >
+                ({{ getContentLabel(stage) }})
               </span>
             </template>
 
             <UButton
               :icon="stage.icon"
-              :to="isStageAccessible(stage) ? stage.path : undefined"
-              :disabled="!isStageAccessible(stage)"
+              :to="isContentAccessible(stage) ? stage.path : undefined"
+              :disabled="!isContentAccessible(stage)"
               color="neutral"
               variant="ghost"
               square
               size="md"
               :class="{
                 'bg-primary/10 text-primary': route.path.startsWith(stage.path),
-                'opacity-50 cursor-not-allowed': !isStageAccessible(stage),
+                'opacity-50 cursor-not-allowed': !isContentAccessible(stage),
               }"
             />
           </UTooltip>
@@ -199,7 +202,7 @@ const breadcrumb = computed(() =>
       :open="isModalOpen"
       :dismissible="false"
       :ui="{
-        overlay: 'bg-background/95 backdrop-blur-md',
+        overlay: 'bg-default/95 backdrop-blur-md',
         content: 'sm:max-w-md',
       }"
       @update:open="handleModalClose"

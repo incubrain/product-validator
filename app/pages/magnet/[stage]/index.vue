@@ -4,7 +4,7 @@ definePageMeta({ layout: 'gated' });
 
 const route = useRoute();
 const stageSlug = route.params.stage as string;
-const { isStageAccessible } = useStageAccess();
+const { isContentAccessible } = useContentAccess();
 
 const { data: page } = await useAsyncData(
   `magnet-${stageSlug}-overview`,
@@ -13,7 +13,7 @@ const { data: page } = await useAsyncData(
   },
 );
 
-if (page.value && !isStageAccessible(page.value)) {
+if (page.value && !isContentAccessible(page.value)) {
   throw createError({
     statusCode: 403,
     statusMessage: `This stage is ${page.value.status}.`,
@@ -45,5 +45,3 @@ const { data: steps } = await useAsyncData(`magnet-${stageSlug}-steps`, () => {
     :back-button="{ to: '/magnet', label: 'Back to Dashboard' }"
   />
 </template>
-
-
