@@ -2,7 +2,6 @@
 <script setup lang="ts">
 import { z } from 'zod';
 import type { Offer } from '#types';
-import { CONVERSION } from '#shared/config/navigation';
 
 interface Props {
   location: string;
@@ -24,32 +23,15 @@ const state = reactive({
   offerId: props.offer.id,
 });
 
-const { submit, submitFeedback, isSubmitting, isSuccess, recordId } =
-  useFormSubmission({
-    formId: 'fake_door',
-    schema,
-    location: props.location,
-  });
+const { submit, isSubmitting, isSuccess } = useFormSubmission({
+  formId: 'fake_door',
+  schema,
+  location: props.location,
+});
 
 const handleSubmit = async () => {
   await submit(state);
 };
-
-const feedbackSubmitted = ref(false);
-
-const handleFeedbackSubmit = async (feedback: string) => {
-  await submitFeedback(feedback);
-  feedbackSubmitted.value = true;
-};
-
-const shouldShowFeedback = computed(() => {
-  return (
-    isSuccess.value &&
-    !feedbackSubmitted.value &&
-    CONVERSION.fakeDoor.collectFeedback &&
-    !!recordId.value
-  );
-});
 
 // Dynamic classes based on layout
 const formLayoutClass = computed(() => {
@@ -94,26 +76,6 @@ const buttonBlockProp = computed(() => {
       <p v-if="offer.cta.note" class="text-xs text-muted text-center">
         {{ offer.cta.note }}
       </p>
-    </div>
-
-    <!-- Success State -->
-    <div v-else class="text-center space-y-6">
-      <!-- ✅ ALWAYS show initial success message -->
-      <IFormMessage form-id="fake-door" :celebrate="true" />
-
-      <!-- ✅ Show feedback form OR thank you message -->
-      <div v-if="shouldShowFeedback">
-        <IFormFeedback
-          :prompt="CONVERSION.fakeDoor.feedbackPrompt"
-          :on-submit="handleFeedbackSubmit"
-          success-form-id="feedback"
-        />
-      </div>
-
-      <!-- ✅ Show feedback thank you (replaces form, keeps initial message) -->
-      <div v-else-if="feedbackSubmitted">
-        <IFormMessage form-id="feedback" :celebrate="false" />
-      </div>
     </div>
   </div>
 </template>

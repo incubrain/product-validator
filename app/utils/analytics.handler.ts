@@ -28,7 +28,7 @@ function sendToAnalytics(payload: EventPayload, analyticsProxy: any) {
   };
 
   switch (payload.type) {
-    case 'action_click':
+    case 'element_clicked':
       if (payload.id.includes('paid') || payload.id.includes('purchase')) {
         analyticsProxy.track('conversion', {
           ...eventData,
@@ -40,18 +40,18 @@ function sendToAnalytics(payload: EventPayload, analyticsProxy: any) {
       break;
 
     case 'exit_intent':
-      analyticsProxy.track('exit_intent_triggered', {
+      analyticsProxy.track('exit_intent', {
         ...eventData,
         trigger_location: payload.location,
       });
       break;
 
-    case 'form_submit':
-      analyticsProxy.track('form_submission', eventData);
+    case 'form_submitted':
+      analyticsProxy.track('form_submitted', eventData);
       break;
 
     case 'form_error':
-      analyticsProxy.track('form_validation_error', eventData);
+      analyticsProxy.track('form_error', eventData);
       break;
 
     default:

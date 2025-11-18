@@ -1,5 +1,4 @@
 // plugins/exit-intent.client.ts
-import { LazyIModalFullscreen } from '#components';
 import { CONVERSION } from '~~/shared/config/navigation';
 
 export default defineNuxtPlugin(() => {
@@ -19,7 +18,7 @@ export default defineNuxtPlugin(() => {
     },
   ) => {
     const { trackEvent } = useEvents();
-    const overlay = useOverlay();
+    const route = useRoute();
     const isShowing = ref(false);
     const storageKey = `${env.configSource}_exit_intent_triggered`;
 
@@ -32,57 +31,50 @@ export default defineNuxtPlugin(() => {
     // Manual setup since we're in plugin context
     setup();
 
-    const exitModal = overlay.create(LazyIModalFullscreen);
+    const fire = async (directTrigger: boolean = false) => {
+      if (isShowing.value) return;
 
-    const openModal = async (source: 'natural' | 'direct' = 'natural') => {
-      if (!exitModal || isShowing.value) return;
+      // Skip checks for direct triggers (DevTools)
+      if (!directTrigger) {
+        const engagementTime = interactionTime.value
+          ? (Date.now() - interactionTime.value) / 1000
+          : 0;
+
+        if (options.disabled) return;
+        if (engagementTime < (options.minTimeOnPage || 10)) return;
+        if (options.requireInteraction && !hasInteracted.value) return;
+
+        const lastTriggered = localStorage.getItem(storageKey);
+        if (lastTriggered) {
+          const now = Date.now();
+          const daysSince =
+            (now - parseInt(lastTriggered)) / (1000 * 60 * 60 * 24);
+          if (daysSince < (options.cooldownDays || 7)) return;
+        }
+
+        localStorage.setItem(storageKey, Date.now().toString());
+      }
+
+      // ✅ Trigger via event system instead of direct overlay
+      isShowing.value = true;
 
       try {
-        trackEvent({
-          id: source === 'direct' ? 'exit_intent_direct' : 'exit_intent',
-          action: 'triggered',
-          location: source === 'direct' ? 'dev-shortcut' : 'page',
+        await trackEvent({
+          id: directTrigger ? 'exit_intent_direct' : 'exit_intent',
           type: 'exit_intent',
+          location: route.path,
+          action: directTrigger ? 'dev_trigger' : 'mouse_leave',
           target: 'exit_modal',
+          data: {
+            offerId: options.offerId,
+          },
         });
-
-        isShowing.value = true;
-        const result = await exitModal.open({
-          offerId: options.offerId,
-          location: 'exit-intent',
-        });
-        isShowing.value = false;
-        return result;
-      } catch (error) {
-        isShowing.value = false;
-        throw error;
+      } finally {
+        // Reset after modal closes
+        setTimeout(() => {
+          isShowing.value = false;
+        }, 1000);
       }
-    };
-
-    const fire = async (directTrigger: boolean = false) => {
-      if (directTrigger) {
-        await openModal('direct');
-        return;
-      }
-
-      const engagementTime = interactionTime.value
-        ? (Date.now() - interactionTime.value) / 1000
-        : 0;
-
-      if (options.disabled) return;
-      if (engagementTime < (options.minTimeOnPage || 10)) return;
-      if (options.requireInteraction && !hasInteracted.value) return;
-
-      const lastTriggered = localStorage.getItem(storageKey);
-      if (lastTriggered) {
-        const now = Date.now();
-        const daysSince =
-          (now - parseInt(lastTriggered)) / (1000 * 60 * 60 * 24);
-        if (daysSince < (options.cooldownDays || 7)) return;
-      }
-
-      localStorage.setItem(storageKey, Date.now().toString());
-      await openModal('natural');
     };
 
     // Exit intent detection
@@ -99,7 +91,6 @@ export default defineNuxtPlugin(() => {
     return {
       isShowing: readonly(isShowing),
       fire,
-      openModal,
       cleanup: () => {
         cleanup(); // Cleanup user interaction
         document.removeEventListener('mouseleave', handleMouseLeave);

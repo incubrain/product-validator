@@ -1,9 +1,20 @@
 // plugins/events.client.ts
 import type { HookResult } from '@nuxt/schema';
+import { EVENT_CHAINS, applyFallbacks } from '#shared/config/events';
 
 declare module '#app' {
   interface RuntimeNuxtHooks {
     'events:emit': (payload: EventPayload) => HookResult;
+    'devtools:event-executed': (event: {
+      eventId: string;
+      eventType: TrackedEvents;
+      data?: Record<string, any>;
+    }) => HookResult;
+    'devtools:event-error': (event: {
+      eventId: string;
+      eventType: TrackedEvents;
+      error: any;
+    }) => HookResult;
   }
 }
 
@@ -12,18 +23,28 @@ const eventHandlers = new Map<TrackedEvents, EventHandler[]>();
 
 export default defineNuxtPlugin((nuxtApp) => {
   // Register handlers
-  eventHandlers.set('action_click', [consoleLogger, analyticsHandler]);
-  eventHandlers.set('action_view', [consoleLogger, analyticsHandler]);
+  eventHandlers.set('element_clicked', [consoleLogger, analyticsHandler]);
+  eventHandlers.set('element_viewed', [consoleLogger, analyticsHandler]);
   eventHandlers.set('exit_intent', [consoleLogger, analyticsHandler]);
-  eventHandlers.set('form_submit', [
+  eventHandlers.set('form_submitted', [
     consoleLogger,
     analyticsHandler,
     serverPipeHandler,
   ]);
   eventHandlers.set('form_error', [consoleLogger, analyticsHandler]);
+  eventHandlers.set('form_success', [consoleLogger]);
+  eventHandlers.set('modal_open', [consoleLogger, modalHandler]);
+  eventHandlers.set('modal_close', [consoleLogger]);
 
   // Listen for event emissions
   nuxtApp.hook('events:emit', async (payload) => {
+    if (payload._devToolsTriggered) {
+      const chainConfig = EVENT_CHAINS[payload.type];
+      if (chainConfig?.requiredFields) {
+        payload.data = applyFallbacks(payload.data, chainConfig.requiredFields);
+      }
+    }
+
     const handlers = eventHandlers.get(payload.type);
 
     if (!handlers) {
@@ -33,12 +54,53 @@ export default defineNuxtPlugin((nuxtApp) => {
       return;
     }
 
-    // Execute all handlers
+    // Execute handlers
     for (const handler of handlers) {
       try {
         await handler(payload);
       } catch (error) {
         console.error(`Handler failed for ${payload.type}:`, error);
+
+        // ✅ Track error in DevTools visualizer
+        if (payload._devToolsTriggered && import.meta.dev) {
+          nuxtApp.callHook('devtools:event-error', {
+            eventId: payload.id,
+            eventType: payload.type,
+            error,
+          });
+        }
+      }
+    }
+
+    // ✅ Track successful execution in DevTools
+    if (payload._devToolsTriggered && import.meta.dev) {
+      nuxtApp.callHook('devtools:event-executed', {
+        eventId: payload.id,
+        eventType: payload.type,
+        data: payload.data,
+      });
+    }
+
+    // Event chaining
+    const chainConfig = EVENT_CHAINS[payload.type];
+    if (chainConfig) {
+      if (chainConfig.condition && !chainConfig.condition(payload)) {
+        return;
+      }
+
+      for (const triggeredEventType of chainConfig.triggers) {
+        const triggeredPayload: EventPayload = {
+          id: `${payload.id}_chain_${triggeredEventType}`,
+          type: triggeredEventType,
+          location: payload.location,
+          action: 'chain_trigger',
+          target: triggeredEventType,
+          timestamp: Date.now(),
+          data: chainConfig.data ? chainConfig.data(payload) : payload.data,
+          _devToolsTriggered: payload._devToolsTriggered, // ✅ Propagate flag
+        };
+
+        await nuxtApp.callHook('events:emit', triggeredPayload);
       }
     }
   });

@@ -14,7 +14,7 @@ interface EmailCapture {
   emailHash: string;
   emailEncrypted: string;
   formId: string;
-  offer?: string;
+  offerId?: string;
   customerStage: 'email_captured' | 'feedback_submitted';
   validationStage?: ValidationStage;
   feedback?: string;
@@ -114,7 +114,7 @@ export const kvProvider: StorageProvider = {
         record = {
           ...existing,
           formId: data.formId ?? existing.formId,
-          offer: data.offer ?? existing.offer,
+          offerId: data.offerId ?? existing.offerId,
           customerStage: data.customerStage ?? existing.customerStage,
           validationStage: data.validationStage ?? existing.validationStage,
           feedback: data.feedback ?? existing.feedback,
@@ -137,7 +137,7 @@ export const kvProvider: StorageProvider = {
           emailHash,
           emailEncrypted: encryptEmail(email),
           formId: data.formId,
-          offer: data.offer,
+          offerId: data.offerId,
           customerStage: data.customerStage || 'email_captured',
           validationStage: data.validationStage,
           feedback: data.feedback,

@@ -1,22 +1,22 @@
-<!-- components/form/Message.vue (IFormMessage) -->
+<!-- components/form/Message.vue -->
 <script setup lang="ts">
 import confetti from 'canvas-confetti';
 
 interface Props {
-  formId?: string;
+  formId?: FormID;
   formState?: string;
   celebrate?: boolean;
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  formId: 'magnet',
+  formId: 'fake_door',
   formState: 'success',
   celebrate: true,
 });
 
 const { data } = useAsyncData(`form-${props.formState}-${props.formId}`, () =>
   queryCollection('forms')
-    .where('formId', '=', `${props.formId}-${props.formState}`)
+    .where('formId', '=', `${props.formId}_${props.formState}`)
     .first(),
 );
 

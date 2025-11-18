@@ -19,18 +19,21 @@ useSeoMeta({
 
 // Dev shortcuts
 const isDev = import.meta.dev;
+const eventTrigger = ref<{ open: () => void } | null>(null);
+
 if (isDev && import.meta.client) {
   defineShortcuts({
-    meta_shift_r: useDevTools().clearAllStorage, // {DX}: cmd+shft+r to clear session/local storage + refresh
-    meta_shift_e: () => useNuxtApp().$exitIntent.fire(true), // {DX}: cmd+shft+e to manually trigger intent trigger for testing
-    meta_shift_x: () => useGatedAccess().revokeAccess,
-    meta_shift_arrowright: useDevTools().cycleStage,
+    meta_shift_r: useDevTools().clearAllStorage, // cmd+shift+r to clear storage
+    meta_shift_e: () => eventTrigger.value?.open(), // ✅ NEW: cmd+shift+e to open event trigger
+    meta_shift_x: () => useGatedAccess().revokeAccess, // cmd+shift+x to revoke access
+    meta_shift_arrowright: useDevTools().cycleStage, // cmd+shift+→ to cycle stage
   });
 }
 </script>
 
 <template>
   <UApp>
+    <IDevToolsEventTrigger ref="eventTrigger" />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

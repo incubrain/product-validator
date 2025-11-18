@@ -19,7 +19,7 @@ export const useEvents = () => {
     // Track the interaction
     await trackEvent({
       id: `${offer.id}_${location}`,
-      type: 'action_click',
+      type: 'element_clicked',
       location,
       action: getActionType(offer.cta.to),
       target: offer.cta.to,

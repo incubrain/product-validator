@@ -8,7 +8,7 @@ const eventSchema = z.object({
   data: z.object({
     formId: z.string(),
     email: z.string().email().optional(),
-    offer: z.string().optional(),
+    offerId: z.string().optional(),
     customerStage: z.enum(['email_captured', 'feedback_submitted']),
     validationStage: z
       .enum([

@@ -1,3 +1,3 @@
 // types/forms.ts
 
-export type FormID = 'magnet' | 'consultation' | 'fake_door' | 'feedback';
+export type FormID = 'magnet' | 'fake_door' | 'feedback';

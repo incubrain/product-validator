@@ -6,7 +6,8 @@ landing page ideas:
 
 - https://shipfa.st
 
-
+- Add a '/join' route that is concise and used for direct joining in marketing
+  campaigns (~150vh on desktop), probably would be part of the demand stage
 
 ## Ideas
 
@@ -140,9 +141,11 @@ landing page ideas:
   competitors
 - For marketing / sales - you are either going to get something you want, or
   avoid something you don't - specificity is key here
-- Environment → Eliminate friction, cut distractions ruthlessly in your personal life
-- Ask for referrals instead of asking for sales, do you know anybody who would benefit from this thing. Message structure: Greet, Compliment, Problem/Solution, Referral.
-
+- Environment → Eliminate friction, cut distractions ruthlessly in your personal
+  life
+- Ask for referrals instead of asking for sales, do you know anybody who would
+  benefit from this thing. Message structure: Greet, Compliment,
+  Problem/Solution, Referral.
 
 1. Pierre Herubel - Marketing Strategy
 2. Josh Sanders - Creator Growth

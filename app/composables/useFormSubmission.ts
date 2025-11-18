@@ -29,7 +29,7 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
 
       const response = await trackEvent({
         id: `${options.formId}_submit`,
-        type: 'form_submit',
+        type: 'form_submitted',
         location: route.path,
         action: 'submit',
         target: options.formId,
@@ -37,7 +37,7 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
         data: {
           formId: options.formId,
           email: validated.email,
-          offer: formData.offerId || options.formId,
+          offerId: formData.offerId || options.formId,
           customerStage: 'email_captured',
           validationStage: validationStage.value as ValidationStage,
           metadata: {
@@ -136,7 +136,7 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
     try {
       await trackEvent({
         id: `${options.formId}_feedback`,
-        type: 'form_submit',
+        type: 'form_submitted',
         location: route.path,
         action: 'submit_feedback',
         target: options.formId,

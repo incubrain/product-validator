@@ -31,27 +31,6 @@ export default defineAppConfig({
         size: 'md',
       },
     },
-    pricingTable: {
-      variants: {
-        section: {
-          true: {
-            tr: '*:pt-8',
-          },
-        },
-        active: {
-          true: {
-            tierFeatureIcon: 'text-primary',
-          },
-        },
-        highlight: {
-          true: {
-            tier: 'bg-info/20 border-x border-t-0 border-default rounded-none',
-            td: 'bg-info/20 border-default',
-            item: 'bg-info/20',
-          },
-        },
-      },
-    },
     pageFeature: {
       slots: {
         root: 'relative',
