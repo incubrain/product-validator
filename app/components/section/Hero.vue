@@ -33,6 +33,7 @@ const primaryOffer = useFlowOffer(CONVERSION.primary);
       root: 'px-0',
       body: 'px-0',
       wrapper: 'text-center px-0',
+      description: 'pb-12',
       container:
         'flex flex-col lg:grid py-24 sm:py-32 lg:py-24 gap-0 sm:gap-y-0 lg:px-0 border-x border-default/60',
       footer: 'mt-10',
@@ -141,7 +142,6 @@ const primaryOffer = useFlowOffer(CONVERSION.primary);
       v-for="(track, index) in proof"
       v-if="showMarquees"
       :key="track.label"
-      class="pt-12"
       :label="track.label"
       :badge-color="track.badgeColor"
       :items="track.items"

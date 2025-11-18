@@ -114,6 +114,7 @@ const typeCounts = computed(() => {
           trigger:
             'group flex-1 flex items-center gap-3 font-medium text-sm p-4 hover:bg-muted/30 transition-colors',
           body: 'text-sm p-4 pt-0 leading-relaxed',
+          leadingIcon: 'size-4',
           content: 'pt-0 data-[state=open]:pt-4',
         }"
       />
