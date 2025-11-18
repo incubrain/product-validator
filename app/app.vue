@@ -31,7 +31,6 @@ if (isDev && import.meta.client) {
 
 <template>
   <UApp>
-    <IDevTools v-if="isDev" />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

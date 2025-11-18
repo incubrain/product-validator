@@ -9,15 +9,14 @@ interface Props {
   items: ProofItem[];
   trackIndex: number;
 }
-const { reachedStage } = useSectionVisibility();
+const { showFeature } = useSectionVisibility();
 
 const props = defineProps<Props>();
 
 // Dynamic duration calculation
-const baseDuration = 30;
-const baseItemCount = 6;
+const baseDuration = 8;
 const duration = computed(() => {
-  return Math.round((props.items.length / baseItemCount) * baseDuration);
+  return Math.round(props.items.length * baseDuration);
 });
 
 // Alternate reverse direction per track
@@ -32,7 +31,7 @@ const adjustedDuration = computed(() => {
 
 <template>
   <div
-    v-if="reachedStage('conversion')"
+    v-if="showFeature('marqueeProof')"
     class="flex flex-col justify-center items-center gap-4 relative overflow-hidden"
   >
     <UBadge variant="soft" size="xl" :color="badgeColor">
@@ -40,7 +39,6 @@ const adjustedDuration = computed(() => {
     </UBadge>
 
     <UMarquee
-      pause-on-hover
       overlay
       :reverse="isReverse"
       :repeat="2"

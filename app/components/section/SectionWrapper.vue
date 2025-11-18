@@ -8,7 +8,7 @@ interface Props {
   class?: string;
 }
 
-const { reachedStage } = useSectionVisibility();
+const { showFeature } = useSectionVisibility();
 
 const props = withDefaults(defineProps<Props>(), {
   orientation: 'vertical',
@@ -74,6 +74,9 @@ const props = withDefaults(defineProps<Props>(), {
 
     <slot />
 
-    <INavBridge v-if="bridge && reachedStage('demand')" :bridge="bridge" />
+    <INavBridge
+      v-if="bridge && showFeature('sectionBridge')"
+      :bridge="bridge"
+    />
   </UPageSection>
 </template>

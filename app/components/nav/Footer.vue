@@ -5,7 +5,7 @@ import { CONVERSION } from '#shared/config/navigation';
 const founder = useSectionConfig('founder');
 const currentYear = new Date().getFullYear();
 
-const { reachedStage } = useSectionVisibility();
+const { showFeature } = useSectionVisibility();
 
 const copyrightYear = computed(() =>
   founder.value.business.founding_year === currentYear
@@ -29,7 +29,7 @@ const copyrightYear = computed(() =>
     }"
   >
     <!-- TOP: Brand + Description + Founder Card -->
-    <template v-if="reachedStage('engagement')" #left>
+    <template v-if="showFeature('footerFounder')" #left>
       <div class="flex flex-col items-start gap-4">
         <ILogo size="md" />
         <div class="space-y-2">
@@ -40,7 +40,7 @@ const copyrightYear = computed(() =>
       </div>
     </template>
 
-    <template v-if="reachedStage('engagement')" #right>
+    <template v-if="showFeature('footerFounder')" #right>
       <ICardFounder />
     </template>
 

@@ -4,22 +4,17 @@ import { CONVERSION } from '#shared/config/navigation';
 
 const hero = useSectionConfig('hero');
 const results = useSectionConfig('results');
-const { isStage } = useSectionVisibility();
+const { showFeature } = useSectionVisibility();
 
 const proof = computed(() => results?.value.proof ?? []);
 
-// Countdown mode: active in identity/attention stages
-const showCountdown = computed(() => {
-  return (
-    hero.value.countdown?.enabled &&
-    (isStage('identity') || isStage('attention'))
-  );
-});
-
-// Show media/marquees only after countdown period
-const showMedia = computed(() => !showCountdown.value && hero.value.media?.src);
-const showMarquees = computed(() => !showCountdown.value);
-const showCTA = computed(() => !showCountdown.value && isStage('traffic'));
+// ✅ Explicit feature flags
+const showCountdown = computed(() => showFeature('heroCountdown'));
+const showMedia = computed(
+  () => showFeature('heroMedia') && hero.value.media?.src,
+);
+const showMarquees = computed(() => showFeature('heroMarquees'));
+const showCTA = computed(() => showFeature('heroCTA'));
 
 // ✅ Reuse primary offer from config instead of creating fake one
 const primaryOffer = useFlowOffer(CONVERSION.primary);
