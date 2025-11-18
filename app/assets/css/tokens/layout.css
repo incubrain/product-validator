@@ -22,8 +22,9 @@
   --container-5xl: 64rem;
   --container-6xl: 72rem;
   --container-7xl: 80rem;
+}
 
-  /* UI integration */
+:root {
   --ui-container: var(--container-5xl);
   --ui-container-sm: var(--container-xl);
 }

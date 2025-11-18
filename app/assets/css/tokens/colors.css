@@ -6,6 +6,7 @@
 @theme static {
   /* Reset default colors to avoid bloat */
   --color-*: initial;
+  --ui-*: initial;
 
   /* PRIMARY - Rich Forest Green (growth/validation) */
   --color-primary-50: oklch(95% 0.02 145);
@@ -101,6 +102,17 @@
   /* Base colors for compatibility */
   --color-black: #000;
   --color-white: #fff;
+}
+
+:root {
+  /* SURFACE TOKENS (Nuxt UI-aligned) — dark → light */
+  --ui-bg: var(--color-neutral-950); /* default app surface */
+  --ui-bg-muted: var(--color-neutral-900); /* foundational “page” layer */
+  --ui-bg-elevated: var(--color-neutral-800); /* cards, modals */
+  --ui-bg-accented: var(
+    --color-neutral-700
+  ); /* inputs, hovers, subtle callouts */
+  --ui-bg-inverted: var(--color-neutral-200); /* light/contrast surfaces */
 
   /* Semantic color mappings for Nuxt UI components */
   --ui-primary: var(--color-primary-500);
@@ -110,15 +122,6 @@
   --ui-warning: var(--color-warning-500);
   --ui-error: var(--color-error-500);
   --ui-neutral: var(--color-neutral-500);
-
-  /* SURFACE TOKENS (Nuxt UI-aligned) — dark → light */
-  --ui-bg: var(--color-neutral-950); /* default app surface */
-  --ui-bg-muted: var(--color-neutral-900); /* foundational “page” layer */
-  --ui-bg-elevated: var(--color-neutral-800); /* cards, modals */
-  --ui-bg-accented: var(
-    --color-neutral-700
-  ); /* inputs, hovers, subtle callouts */
-  --ui-bg-inverted: var(--color-neutral-200); /* light/contrast surfaces */
 
   /* BORDERS (lighter than host surface on dark UI) */
   --ui-border: var(--color-neutral-800); /* default separators on --ui-bg */
