@@ -46,8 +46,8 @@ export type SectionBridge = {
   headline: string;
   message: string;
   cta: Cta;
+  primary?: boolean;
 };
-
 
 export type BaseSectionConfig = {
   enabled?: boolean;

@@ -79,7 +79,7 @@ const typeCounts = computed(() => {
   <ISectionWrapper
     id="#concerns"
     :intro="concernsData.intro"
-    :bridge="concernsData.bridge"
+    :bridge="{ ...concernsData.bridge, primary: true }"
   >
     <!-- Enhanced Legend with counts -->
     <div class="space-y-4">

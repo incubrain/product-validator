@@ -1,4 +1,4 @@
-<!-- components/StockProgress.vue - WITH CONDITIONAL DISPLAY -->
+<!-- components/StockProgress.vue -->
 <script setup lang="ts">
 import { CONVERSION } from '~~/shared/config/navigation';
 
@@ -6,11 +6,9 @@ interface Props {
   stock: OfferStock;
   offerId?: OfferID;
   class?: string;
-  minThreshold?: number; // NEW: minimum claimed count to show
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  minThreshold: 10, // Default: show when >10 claimed
   class: '',
   offerId: CONVERSION.primary,
 });
@@ -33,9 +31,9 @@ const claimed = computed(() => {
   return props.stock.claimed;
 });
 
-// ✅ NEW: Only show if claimed count exceeds threshold
-const shouldShow = computed(() => {
-  return claimed.value > props.minThreshold;
+// Calculate remaining
+const remaining = computed(() => {
+  return props.stock.limit - claimed.value;
 });
 
 // Calculate percentage
@@ -46,11 +44,11 @@ const percent = computed(() => {
 
 // Format label based on stock type
 const label = computed(() => {
-  const { limit, type = 'spots' } = props.stock;
+  const { type = 'spots' } = props.stock;
 
   const typeLabels: Record<string, { singular: string; plural: string }> = {
     spots: { singular: 'spot', plural: 'spots' },
-    hours: { singular: 'hour', plural: 'hours/month' },
+    hours: { singular: 'hour', plural: 'hours' },
     units: { singular: 'unit', plural: 'units' },
     licenses: { singular: 'license', plural: 'licenses' },
     seats: { singular: 'seat', plural: 'seats' },
@@ -60,13 +58,13 @@ const label = computed(() => {
     singular: type,
     plural: type,
   };
-  const remaining = limit - claimed.value;
-  const typeLabel = remaining === 1 ? singular : plural;
 
-  return `${claimed.value}/${limit} ${typeLabel} claimed`;
+  const typeLabel = remaining.value === 1 ? singular : plural;
+
+  return `${remaining.value} ${typeLabel} remaining`;
 });
 
-// Urgency color based on availability
+// Urgency color based on remaining availability
 const urgencyColor = computed(() => {
   if (percent.value >= 70) return 'error';
   if (percent.value >= 50) return 'warning';
@@ -75,8 +73,7 @@ const urgencyColor = computed(() => {
 </script>
 
 <template>
-  <!-- ✅ Only render if claimed > threshold -->
-  <div v-if="shouldShow" class="space-y-3 w-full flex flex-col">
+  <div class="space-y-3 w-full flex flex-col">
     <UProgress
       :model-value="percent"
       :color="urgencyColor"
