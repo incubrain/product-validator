@@ -4,7 +4,6 @@ import type {
   FounderProfile,
   FounderStory,
 } from '#types';
-// {FRICTION}: this has to be deleted, can it be extracted or does it provide value?
 
 export const profile = {
   role: 'Product Strategist & Builder',
@@ -12,11 +11,11 @@ export const profile = {
   given_name: 'Drew',
   surname: ' MacGibbon',
   avatar: {
-    src: 'examples/validator/team/founder-avatar.png',
+    src: 'team/founder-avatar.png',
     alt: 'avatar image of Drew MacGibbon',
   },
   portrait: {
-    src: 'examples/validator/team/founder-portrait.png',
+    src: 'team/founder-portrait.png',
     alt: 'portrait image of Drew MacGibbon',
   },
 } satisfies FounderProfile;
