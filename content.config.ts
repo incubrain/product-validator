@@ -1,14 +1,26 @@
 // content.config.ts
 import { defineCollection, defineContentConfig, z } from '@nuxt/content';
 import { asSeoCollection } from '@nuxtjs/seo/content';
-import { resolveConfigPath } from './shared/utils/config-resolver';
+import { getActiveConfigSource } from './shared/utils/config-resolver';
+import path from 'node:path';
+
+// Determine the root directory for content based on the active source
+// Validator: Uses root 'examples/validator' (which contains a 'content' dir)
+// Custom: Uses project root (which contains a 'content' dir)
+const activeSource = getActiveConfigSource();
+const contentCwd = activeSource === 'validator' 
+  ? path.resolve(process.cwd(), 'examples/validator/content') 
+  : process.cwd();
 
 export default defineContentConfig({
   collections: {
     updates: defineCollection(
       asSeoCollection({
         type: 'page',
-        source: resolveConfigPath({ suffix: 'updates/*.md' }),
+        source: {
+          cwd: contentCwd,
+          include: 'updates/*.md',
+        },
         schema: z.object({
           version: z.string(),
           date: z.string(),
@@ -20,7 +32,10 @@ export default defineContentConfig({
     forms: defineCollection(
       asSeoCollection({
         type: 'page',
-        source: resolveConfigPath({ suffix: 'forms/*.md' }),
+        source: {
+          cwd: contentCwd,
+          include: 'forms/*.md',
+        },
         schema: z.object({
           formId: z.string(),
         }),
@@ -30,7 +45,8 @@ export default defineContentConfig({
       asSeoCollection({
         type: 'page',
         source: {
-          include: resolveConfigPath({ suffix: 'magnet/**/*.{md,yml}' }),
+          cwd: contentCwd,
+          include: 'magnet/**/*.{md,yml}',
           prefix: '/magnet',
         },
         schema: z.object({
@@ -44,6 +60,7 @@ export default defineContentConfig({
               'feature_flag',
               'beta',
               'deprecated',
+              'deprecated_hidden',
             ])
             .optional()
             .default('draft'),
