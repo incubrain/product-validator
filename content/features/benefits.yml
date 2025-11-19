@@ -1,25 +1,25 @@
 items:
-  - id: problem-1
-    title: '⚠️ Problem Title 1'
+  - id: benefit-1
+    title: '⚠️ Benefit Title 1'
     icon: i-lucide-alert-circle
-    description: '⚠️ Describe the specific problem your audience faces and how your solution addresses this problem'
-  - id: problem-2
-    title: '⚠️ Problem Title 2'
+    description: '⚠️ Describe the specific benefit your audience receives and how your solution addresses this benefit'
+  - id: benefit-2
+    title: '⚠️ Benefit Title 2'
     icon: i-lucide-alert-circle
-    description: '⚠️ Describe the specific problem your audience faces and how your solution addresses this problem'
-  - id: problem-3
-    title: '⚠️ Problem Title 3'
+    description: '⚠️ Describe the specific benefit your audience receives and how your solution addresses this benefit'
+  - id: benefit-3
+    title: '⚠️ Benefit Title 3'
     icon: i-lucide-alert-circle
-    description: '⚠️ Describe the specific problem your audience faces and how your solution addresses this problem'
-  - id: problem-4
-    title: '⚠️ Problem Title 4'
+    description: '⚠️ Describe the specific benefit your audience receives and how your solution addresses this benefit'
+  - id: benefit-4
+    title: '⚠️ Benefit Title 4'
     icon: i-lucide-alert-circle
-    description: '⚠️ Describe the specific problem your audience faces and how your solution addresses this problem'
-  - id: problem-5
-    title: '⚠️ Problem Title 5'
+    description: '⚠️ Describe the specific benefit your audience receives and how your solution addresses this benefit'
+  - id: benefit-5
+    title: '⚠️ Benefit Title 5'
     icon: i-lucide-alert-circle
-    description: '⚠️ Describe the specific problem your audience faces and how your solution addresses this problem'
-  - id: problem-6
-    title: '⚠️ Problem Title 6'
+    description: '⚠️ Describe the specific benefit your audience receives and how your solution addresses this benefit'
+  - id: benefit-6
+    title: '⚠️ Benefit Title 6'
     icon: i-lucide-alert-circle
-    description: '⚠️ Describe the specific problem your audience faces and how your solution addresses this problem'
+    description: '⚠️ Describe the specific benefit your audience receives and how your solution addresses this benefit'

@@ -59,6 +59,12 @@ export type ProcessStep = {
   result: string;
 };
 
+export interface ProofItem {
+  name: string;
+  logo?: string;
+  note?: string;
+}
+
 // ============================================================================
 // OFFER SECTION
 // ============================================================================
