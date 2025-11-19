@@ -1,0 +1,28 @@
+slug: magnet
+primary: true
+title: '⚠️ Lead Magnet'
+description: '⚠️ What they get for free'
+price: Free
+discount: null
+billingCycle: 'Limited availability'
+terms: '⚠️ Terms of service or billing'
+tagline: '⚠️ Short compelling tagline'
+badge:
+  label: '100 Spots'
+  color: success
+  variant: solid
+  size: lg
+features:
+  - title: '⚠️ Available benefit'
+    icon: status-available
+  - title: '⚠️ Beta benefit'
+    icon: status-beta
+  - title: '⚠️ Coming soon benefit'
+    icon: status-coming-soon
+variant: outline
+highlight: true
+cta:
+  label: '⚠️ Button text'
+  icon: i-lucide-rocket
+  modal: window
+  note: '⚠️ Small text below button'

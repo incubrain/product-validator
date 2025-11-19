@@ -10,7 +10,7 @@ import path from 'node:path';
 const activeSource = getActiveConfigSource();
 const contentCwd = activeSource === 'validator' 
   ? path.resolve(process.cwd(), 'examples/validator/content') 
-  : process.cwd();
+  : path.resolve(process.cwd(), 'content');
 
 export default defineContentConfig({
   collections: {

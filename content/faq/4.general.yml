@@ -1,0 +1,7 @@
+type: general
+label: General
+icon: i-lucide-help-circle
+color: info
+items:
+  - q: '⚠️ General question about your product?'
+    a: '⚠️ Clear factual answer'

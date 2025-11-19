@@ -1,0 +1,19 @@
+business:
+  name: '⚠️ Product name'
+  legal_name: '⚠️ Legal entity name'
+  founding_year: 2025
+  location: '⚠️ City, Country'
+  logo: favicon-96x96.png
+social:
+  availability: '⚠️ How available you are and where'
+  response_time: '24 hours'
+  links:
+    - platform: youtube
+      label: YouTube
+      url: https://youtube.com/@yourchannel
+    - platform: github
+      label: GitHub
+      url: https://github.com/yourusername
+    - platform: x
+      label: X
+      url: https://x.com/yourusername

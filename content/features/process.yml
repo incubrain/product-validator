@@ -1,0 +1,19 @@
+items:
+  - id: stage-1-setup
+    title: 'Stage 1: Initial Setup'
+    icon: i-lucide-circle-play
+    duration: '5-10 minutes'
+    description: 'User completes account setup and connects necessary integrations. Example: "Connect your Stripe account and set your first product price."'
+    result: 'Account configured + first integration connected'
+  - id: stage-2-first-action
+    title: 'Stage 2: First Meaningful Action'
+    icon: i-lucide-zap
+    duration: '30-60 minutes'
+    description: 'User completes their first core action that delivers immediate value. Example: "Generate your first analytics report and identify one growth opportunity."'
+    result: 'First core action completed + immediate value received'
+  - id: stage-3-habit-formation
+    title: 'Stage 3: Habit Formation'
+    icon: i-lucide-repeat
+    duration: '1-2 weeks'
+    description: 'User repeats core actions enough times to form a habit and see compounding results. Example: "Complete 7 daily check-ins and track week-over-week improvement."'
+    result: 'Repeated action 5-7 times + measurable progress shown'

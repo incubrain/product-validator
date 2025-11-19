@@ -1,0 +1,29 @@
+slug: direct
+primary: false
+title: '⚠️ Hire Me Directly'
+description: '⚠️ Your hourly service description'
+price: '$100'
+discount: '$50'
+billingCycle: /hour
+terms: '⚠️ Terms of service or billing'
+tagline: '⚠️ Short compelling tagline'
+badge:
+  label: '⚠️ Badge text'
+  color: neutral
+  variant: outline
+  size: sm
+features:
+  - title: '⚠️ Service benefit 1'
+    icon: status-available
+  - title: '⚠️ Service benefit 2'
+    icon: status-available
+  - title: '⚠️ Service benefit 3'
+    icon: status-coming-soon
+variant: outline
+highlight: false
+cta:
+  label: '⚠️ Button text'
+  to: https://your-booking-link.com
+  icon: i-lucide-handshake
+  color: secondary
+  note: '⚠️ Small text below button'

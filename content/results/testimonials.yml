@@ -1,0 +1,13 @@
+items:
+  - type: testimonial
+    name: '⚠️ Customer name'
+    role: '⚠️ Customer role or title'
+    quote: '⚠️ Their testimonial quote'
+    avatarUrl: https://i.pravatar.cc/150?img=11
+    highlight: true
+  - type: testimonial
+    name: '⚠️ Customer name'
+    role: '⚠️ Customer role or title'
+    quote: '⚠️ Their testimonial quote'
+    avatarUrl: https://i.pravatar.cc/150?img=11
+    highlight: false

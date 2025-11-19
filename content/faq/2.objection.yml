@@ -1,0 +1,7 @@
+type: objection
+label: Objection
+icon: i-lucide-shield-alert
+color: warning
+items:
+  - q: '⚠️ Why not use competitor X?'
+    a: '⚠️ Your differentiation and trade-offs'
