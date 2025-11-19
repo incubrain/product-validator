@@ -1,8 +1,6 @@
 // shared/config/events.ts
 import type { EventPayload } from '#shared/types/events';
 
-// shared/config/events.ts
-
 /**
  * Smart fallback data provider
  * Generates sensible defaults for missing data
