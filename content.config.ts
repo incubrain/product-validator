@@ -97,9 +97,9 @@ export default defineContentConfig({
         tagline: z.string().nullable().optional(),
         badge: z.object({
           label: z.string(),
-          color: z.string(),
-          variant: z.string(),
-          size: z.string(),
+          color: z.enum(['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']),
+          variant: z.enum(['solid', 'outline', 'subtle', 'soft', 'ghost', 'link']),
+          size: z.enum(['xs', 'sm', 'md', 'lg', 'xl']),
         }).optional(),
         features: z.array(z.object({
           title: z.string(),

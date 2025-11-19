@@ -35,30 +35,6 @@ export type Cta = {
   disabled?: boolean;
 };
 
-export type SectionIntro = {
-  icon: string;
-  headline: string;
-  title: string;
-  description: string;
-};
-
-export type SectionBridge = {
-  headline: string;
-  message: string;
-  cta: Cta;
-  primary?: boolean;
-};
-
-export type BaseSectionConfig = {
-  enabled?: boolean;
-  minStage?: ValidationStage;
-};
-
-export type SectionBase = BaseSectionConfig & {
-  intro: SectionIntro;
-  bridge?: SectionBridge;
-};
-
 export type Link = {
   platform: string;
   label: string;
@@ -69,45 +45,6 @@ export type Image = {
   src: string;
   alt: string;
 };
-
-export type Metric = {
-  label: string;
-  value: string | number;
-  sub?: string;
-};
-
-// ============================================================================
-// HERO SECTION
-// ============================================================================
-
-export type HeroBadge = {
-  title: string;
-  description: string;
-  to: string;
-};
-
-export type HeroIntro = {
-  title: string;
-  description: string;
-};
-
-export type HeroMedia = {
-  type: 'video' | 'image';
-  src: string | null;
-  alt: string | null;
-  poster?: string;
-};
-
-// ============================================================================
-// PROBLEM/SOLUTION SECTION
-// ============================================================================
-
-export interface ProblemSolutionCard {
-  id: string;
-  title: string;
-  icon: string;
-  description: string;
-}
 
 // ============================================================================
 // PROCESS SECTION
@@ -120,42 +57,6 @@ export type ProcessStep = {
   duration: string;
   description: string;
   result: string;
-};
-
-// ============================================================================
-// FOUNDER SECTION
-// ============================================================================
-
-export type FounderProfile = {
-  role: string;
-  title?: string;
-  given_name: string;
-  surname: string;
-  avatar: Image;
-  portrait?: Image;
-  video?: {
-    src: string;
-    alt: string;
-  };
-};
-
-export type BusinessInfo = {
-  name: string;
-  legal_name: string;
-  founding_year: number;
-  location: string;
-  logo: string;
-};
-
-export type FounderStory = {
-  background: string[];
-  mission: string;
-  challenge: string;
-};
-
-export type FounderAccessibility = {
-  availability: string;
-  links: Link[];
 };
 
 // ============================================================================
@@ -201,7 +102,7 @@ export type Offer = Pick<
   | 'terms'
 > & {
   features: OfferFeature[];
-  id: OfferID;
+  slug: OfferID;
   primary?: boolean;
   stock?: OfferStock;
   cta: Cta;
@@ -210,93 +111,5 @@ export type Offer = Pick<
     type: 'video' | 'image';
     src: string;
     alt: string;
-  };
-};
-
-// ============================================================================
-// RESULTS SECTION
-// ============================================================================
-
-export interface ProofItem {
-  name: string;
-  logo?: string;
-  note?: string;
-}
-
-export interface ProofTrack {
-  label: string;
-  badgeColor: BadgeProps['color'];
-  items: ProofItem[];
-}
-
-export type Testimonial = {
-  type: 'testimonial';
-  quote: string;
-  name: string;
-  role: string;
-  avatarUrl?: string;
-  link?: string;
-  highlight?: boolean;
-};
-
-export type SocialProofItem = Testimonial;
-
-// ============================================================================
-// CONCERNS SECTION
-// ============================================================================
-
-export type FaqType = 'warning' | 'objection' | 'support' | 'general';
-
-export type FaqItem = {
-  q: string;
-  a: string;
-  type: FaqType;
-};
-
-// ============================================================================
-// FLOW CONFIG
-// ============================================================================
-
-export type FlowConfig = {
-  hero: BaseSectionConfig & {
-    badge: HeroBadge;
-    intro: HeroIntro;
-    media?: HeroMedia;
-    countdown?: {
-      enabled: boolean;
-      launchDate: string; // ISO 8601
-      message: string;
-      fallbackMessage?: string;
-      showTimer?: boolean; // Show compact countdown timer
-    };
-  };
-
-  problemSolution: SectionBase & {
-    cards: ProblemSolutionCard[];
-    statement?: string;
-  };
-
-  process: SectionBase & {
-    steps: ProcessStep[];
-  };
-
-  founder: SectionBase & {
-    profile: FounderProfile;
-    business: BusinessInfo;
-    story: FounderStory;
-    accessibility: FounderAccessibility;
-  };
-
-  offer: SectionBase & {
-    items: Offer[];
-  };
-
-  results: SectionBase & {
-    testimonials: Testimonial[];
-    proof: ProofTrack[];
-  };
-
-  concerns: SectionBase & {
-    items: FaqItem[];
   };
 };

@@ -8,7 +8,6 @@ const publicDir = activeSource === 'custom'
   ? 'public' 
   : path.resolve(process.cwd(), `examples/${activeSource}/public`);
 
-
 export default defineNuxtConfig({
   // Configure the public directory based on the active source
   dir: {
