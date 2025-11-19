@@ -2,20 +2,30 @@
 <script setup lang="ts">
 import { breakpointsTailwind, useBreakpoints } from '@vueuse/core';
 
+defineProps<{
+    data?: any;
+}>();
+
 const breakpoints = useBreakpoints(breakpointsTailwind);
 const smallerThanLg = breakpoints.smaller('lg');
-const data = useSectionConfig('process');
+
+// Fetch steps from features collection (benefits.yml)
+const { data: benefitsFile } = await useAsyncData('benefits', () => 
+  queryCollection('features').where('stem', '=', 'features/benefits').first()
+);
+
+const steps = computed(() => benefitsFile.value?.items || []);
 </script>
 
 <template>
   <ISectionWrapper id="#process" :intro="data.intro" :bridge="data.bridge">
     <UCarousel
-      v-if="data.steps"
+      v-if="steps.length"
       v-slot="{ item, index }"
       :arrows="!smallerThanLg"
       loop
       align="start"
-      :items="data.steps"
+      :items="steps"
       :ui="{
         root: 'border-y',
         item: 'basis-full sm:basis-1/2 lg:basis-1/3',

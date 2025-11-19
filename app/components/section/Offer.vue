@@ -1,12 +1,19 @@
-<!-- components/I/Offers.vue - UPDATED -->
+<!-- components/section/Offer.vue -->
 <script setup lang="ts">
 import type { IconProps } from '@nuxt/ui';
-import { CONVERSION } from '#shared/config/navigation';
 
-const data = useSectionConfig('offer');
+const props = defineProps<{
+  data?: any;
+}>();
 
+// Fetch offers from offers collection
+const { data: offersData } = await useAsyncData('offers', () => 
+  queryCollection('offers').all()
+);
+
+// Get primary offer
 const primaryOffer = computed(() =>
-  data?.value.items.find((offer) => offer.id === CONVERSION.primary),
+  offersData.value?.find((offer) => offer.primary === true),
 );
 
 const STATUS_ICONS: Record<string, IconProps & { class: string }> = {
@@ -52,7 +59,7 @@ const transformedFeatures = computed(() => {
         v-bind="primaryOffer"
         :features="transformedFeatures"
         :ui="{
-          root: 'bg-primary/5 backdrop-blur-sm', // ✅ Added backdrop-blur for depth
+          root: 'bg-primary/5 backdrop-blur-sm',
           features: 'gap-3',
           feature: 'items-center',
           terms: 'w-full',

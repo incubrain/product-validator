@@ -5,7 +5,12 @@ const props = defineProps<{
   sticky?: boolean;
 }>();
 
-const offer = useFlowOffer(props.offerId);
+// Fetch offer from collection by ID
+const { getOffer } = useContentCache();
+const { data: offer } = await getOffer(props.offerId);
+
+console.log('OFFER', offer.value, props.offerId)
+
 const { configSource } = useDevTools();
 
 const bannerClasses = computed(() => ({
@@ -16,7 +21,7 @@ const bannerClasses = computed(() => ({
 
 <template>
   <UBanner
-    :id="`${configSource}_${offer.id}`"
+    :id="`${configSource}_${offer.slug}`"
     icon="i-lucide-heart"
     :title="offer.description"
     :to="offer.cta.to"

@@ -1,7 +1,12 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui';
 
-const founder = useSectionConfig('founder');
+// Fetch founder data from team collection
+const { data: founderData } = await useFounder();
+
+// Fetch config data for social links
+const { getSiteConfig } = useContentCache();
+const { data: configData } = await getSiteConfig();
 
 // ✅ Non-blocking data fetch
 const { data: updates, pending } = useAsyncData('updates', () =>
@@ -9,7 +14,7 @@ const { data: updates, pending } = useAsyncData('updates', () =>
 );
 
 // Get social links
-const socialLinks = pickSocialLinks(founder.value.accessibility.links, [
+const socialLinks = pickSocialLinks(configData.value?.social.links || [], [
   'youtube',
   'github',
 ]);
@@ -19,7 +24,7 @@ useHead({
   meta: [
     {
       name: 'description',
-      content: `${founder.value.story.mission} - Product updates and strategic decisions.`,
+      content: `${founderData.value?.story.mission} - Product updates and strategic decisions.`,
     },
   ],
 });
@@ -27,10 +32,10 @@ useHead({
 // Authors for changelog
 const authors = [
   {
-    name: `${founder.value.profile.given_name} ${founder.value.profile.surname}`,
-    avatar: founder.value.profile.avatar,
+    name: `${founderData.value?.profile.given_name} ${founderData.value?.profile.surname}`,
+    avatar: founderData.value?.profile.avatar,
     to: socialLinks?.find((link) => link.platform === 'github')?.url,
-    target: '_blank',
+   target: '_blank',
   },
 ];
 
@@ -86,7 +91,7 @@ const scrollToTop = () => {
     <UPageHero
       icon="i-lucide-lightbulb"
       title="Updates"
-      :description="`${founder.story.mission.split('.')[0]}.`"
+      :description="`${founderData?.story.mission.split('.')[0]}.`"
       headline="Think different, ship faster"
       :links="heroLinks"
       class="bg-muted border-b"

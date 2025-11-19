@@ -4,20 +4,21 @@ defineProps<{
   variant?: 'default' | 'mobile';
 }>();
 
-// Get founder data from overview.ts
-const founder = useSectionConfig('founder');
+// Fetch founder and config data
+const { getFounder, getSiteConfig } = useContentCache();
+const { data: founderData } = await getFounder();
+const { data: configData } = await getSiteConfig();
 
 // Computed properties
-//  {EXTRACT}
 const displayName = computed(
-  () => `Hi, I'm ${founder.value.profile.given_name}`,
+  () => `Hi, I'm ${founderData.value?.profile.given_name}`,
 );
-const description = computed(() => founder.value.profile.role);
+const description = computed(() => founderData.value?.profile.role);
 
 // Map links to proper format for UButton
 const socialLinks = computed(
   () =>
-    founder.value.accessibility.links?.map((link) => ({
+    configData.value?.social.links?.map((link) => ({
       label: link.label,
       icon: `i-lucide-${link.platform}`,
       to: link.url,
@@ -44,8 +45,8 @@ const socialLinks = computed(
         :orientation="variant === 'mobile' ? 'horizontal' : 'vertical'"
         size="lg"
         :avatar="{
-          src: founder.profile.avatar.src,
-          alt: founder.profile.avatar.alt,
+          src: founderData?.profile.avatar?.src,
+          alt: founderData?.profile.avatar?.alt,
         }"
         :ui="{ root: 'items-start text-left lg:items-end lg:text-right' }"
       />
@@ -53,7 +54,7 @@ const socialLinks = computed(
 
     <!-- Body: short bio message -->
     <p class="text-sm text-toned text-left lg:text-right">
-      {{ founder.story.challenge }}
+      {{ founderData?.story.challenge }}
     </p>
 
     <!-- Footer: social links -->

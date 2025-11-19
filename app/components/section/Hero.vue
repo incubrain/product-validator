@@ -1,23 +1,35 @@
 <!-- components/section/Hero.vue -->
 <script setup lang="ts">
-import { CONVERSION } from '#shared/config/navigation';
+import { CONVERSION } from '#shared/config/navigation'
+// Accept data as prop (from MDC)
+const props = defineProps<{
+  data?: any;
+}>();
 
-const hero = useSectionConfig('hero');
-const results = useSectionConfig('results');
 const { showFeature } = useSectionVisibility();
 
-const proof = computed(() => results?.value.proof ?? []);
+// Use prop data from MDC
+const hero = computed(() => props.data);
+
+console.log('HERO', hero.value)
+
+// Fetch proof from results collection (customers.yml)
+const { data: proofData } = await useAsyncData('customers-proof', () => 
+  queryCollection('results').where('label', 'IS NOT NULL').first()
+);
+const proof = computed(() => proofData.value ? [proofData.value] : []);
 
 // ✅ Explicit feature flags
 const showCountdown = computed(() => showFeature('heroCountdown'));
 const showMedia = computed(
-  () => showFeature('heroMedia') && hero.value.media?.src,
+  () => showFeature('heroMedia') && hero.value?.media?.src,
 );
 const showMarquees = computed(() => showFeature('heroMarquees'));
 const showCTA = computed(() => showFeature('heroCTA'));
 
-// ✅ Reuse primary offer from config instead of creating fake one
-const primaryOffer = useFlowOffer(CONVERSION.primary);
+// Fetch primary offer from collection
+const { getPrimaryOffer } = useContentCache();
+const { data: primaryOffer } = await getPrimaryOffer();
 </script>
 
 <template>

@@ -7,13 +7,14 @@ const props = defineProps<{
   sticky?: boolean;
 }>();
 
-// Get founder data for social links
-const founder = useSectionConfig('founder');
+// Fetch config data for social links
+const { getSiteConfig } = useContentCache();
+const { data: configData } = await getSiteConfig();
 
 // Map links to proper format for UButton
 const socialLinks = computed(
   () =>
-    founder.value.accessibility.links?.map((link) => ({
+    configData.value?.social.links?.map((link) => ({
       label: link.label,
       icon: `i-lucide-${link.platform}`,
       url: link.url,

@@ -2,15 +2,19 @@
 <script setup lang="ts">
 import { CONVERSION } from '#shared/config/navigation';
 
-const founder = useSectionConfig('founder');
+// Fetch founder and config data
+const { getFounder, getSiteConfig } = useContentCache();
+const { data: founderData } = await getFounder();
+const { data: configData } = await getSiteConfig();
+
 const currentYear = new Date().getFullYear();
 
 const { showFeature } = useSectionVisibility();
 
 const copyrightYear = computed(() =>
-  founder.value.business.founding_year === currentYear
+  configData.value?.business.founding_year === currentYear
     ? `${currentYear}`
-    : `${founder.value.business.founding_year} - ${currentYear}`,
+    : `${configData.value?.business.founding_year} - ${currentYear}`,
 );
 </script>
 
@@ -34,7 +38,7 @@ const copyrightYear = computed(() =>
         <ILogo size="md" />
         <div class="space-y-2">
           <p class="text-muted leading-relaxed font-written text-sm max-w-md">
-            {{ founder.story.mission }}.
+            {{ founderData?.story.mission }}.
           </p>
         </div>
       </div>
@@ -49,7 +53,7 @@ const copyrightYear = computed(() =>
       <UContainer class="flex justify-between w-full items-center">
         <p class="text-sm text-muted whitespace-nowrap">
           © {{ copyrightYear }}
-          {{ founder.business.legal_name }}
+          {{ configData?.business.legal_name }}
         </p>
 
         <div class="flex items-center gap-3">

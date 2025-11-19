@@ -1,5 +1,13 @@
 <script setup lang="ts">
-const data = useSectionConfig('founder');
+const props = defineProps<{
+  data?: any;
+}>();
+
+// Fetch founder and config data
+const { getFounder, getSiteConfig } = useContentCache();
+const { data: founderData } = await getFounder();
+const { data: configData } = await getSiteConfig();
+
 const isBackgroundExpanded = ref(false);
 </script>
 
@@ -12,10 +20,10 @@ const isBackgroundExpanded = ref(false);
   >
     <!-- Hook + Mission Quote (merged in quote box) -->
     <div class="mb-12 max-w-(--ui-container-sm) mx-auto flex flex-col">
-      <div v-if="data.profile.portrait?.src" class="flex justify-center">
+      <div v-if="founderData?.profile.portrait?.src" class="flex justify-center">
         <NuxtImg
-          :src="data.profile.portrait.src"
-          :alt="data.profile.portrait.alt"
+          :src="founderData.profile.portrait.src"
+          :alt="founderData.profile.portrait.alt"
           class="w-54 object-cover border-primary/20 shadow-xl rounded-lg"
         />
       </div>
@@ -34,7 +42,7 @@ const isBackgroundExpanded = ref(false);
           <p
             class="text-xl md:text-2xl font-bold leading-tight text-highlighted"
           >
-            {{ data.story.mission }}
+            {{ founderData?.story.mission }}
           </p>
         </div>
         <div
@@ -44,7 +52,7 @@ const isBackgroundExpanded = ref(false);
         </div>
       </UPageCard>
       <div
-        v-show="data.story?.background?.length"
+        v-show="founderData?.story?.background?.length"
         class="max-w-(--ui-container-sm) mx-auto pt-8"
       >
         <UCollapsible
@@ -74,17 +82,17 @@ const isBackgroundExpanded = ref(false);
               class="font-written text-lg md:text-xl leading-relaxed space-y-6 md:space-y-8 pt-4"
             >
               <p
-                v-for="(para, i) in data.story.background"
+                v-for="(para, i) in founderData?.story.background"
                 :key="`background-${i}`"
                 class="text-center"
               >
                 {{ para }}
               </p>
               <p
-                v-if="data.story?.challenge"
+                v-if="founderData?.story?.challenge"
                 class="text-center text-lg md:text-xl font-written font-semibold text-primary leading-relaxed"
               >
-                {{ data.story.challenge }}
+                {{ founderData.story.challenge }}
               </p>
             </div>
           </template>

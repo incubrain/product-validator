@@ -1,7 +1,5 @@
 <!-- components/nav/Bridge.vue -->
 <script setup lang="ts">
-import { CONVERSION } from '#shared/config/navigation';
-
 interface BridgeData {
   headline: string;
   message: string;
@@ -15,8 +13,9 @@ interface Props {
 
 defineProps<Props>();
 
-// ✅ Get primary offer for form
-const primaryOffer = useFlowOffer(CONVERSION.primary);
+// Fetch primary offer from collection
+const { getPrimaryOffer } = useContentCache();
+const { data: primaryOffer } = await getPrimaryOffer();
 </script>
 
 <template>

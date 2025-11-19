@@ -17,11 +17,13 @@ export const useDevTools = () => {
   const env = useRuntimeConfig().public;
   const isClient = import.meta.client;
   const isDev = import.meta.dev;
+  const configSource = env.configSource as ConfigSource; // ✅ Just read from ENV
 
   // SSR-safe reduced API
   if (!isClient || !isDev) {
     return {
       validationStage: computed(() => env.validationStage as ValidationStage),
+      configSource,
       setDevOverrides: () => {},
       resetDevOverrides: () => {},
       cycleStage: () => {},
@@ -37,7 +39,7 @@ export const useDevTools = () => {
   }
 
   const toast = useToast();
-  const configSource = env.configSource as ConfigSource; // ✅ Just read from ENV
+  
   const DEV_OVERRIDES_KEY = `${configSource}_dev_overrides`;
 
   const devOverrides = useState<DevOverrides>('dev-overrides', () => {
@@ -242,6 +244,7 @@ export const useDevTools = () => {
     cycleStage,
     hasActiveOverrides,
     stages,
+    configSource,
     envValues,
     clearAllStorage,
     logCurrentStorage,

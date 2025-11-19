@@ -1,7 +1,15 @@
 <!-- ~/components/section/ProblemSolution.vue -->
 <script setup lang="ts">
-const data = useSectionConfig('problemSolution');
-const cards = computed(() => data?.value.cards ?? []);
+const props = defineProps<{
+  data?: any;
+}>();
+
+// Fetch cards from features collection (process.yml)
+const { data: processFile } = await useAsyncData('process-cards', () => 
+  queryCollection('features').where('stem', '=', 'features/process').first()
+);
+
+const cards = computed(() => processFile.value?.items || []);
 </script>
 
 <template>

@@ -22,7 +22,10 @@ const props = defineProps<Props>();
 
 const overlay = useOverlay();
 const { executeAction } = useEvents();
-const offer = useFlowOffer(props.offerId);
+
+// Fetch offer from collection by ID
+const { getOffer } = useContentCache();
+const { data: offer } = await getOffer(props.offerId);
 
 // Map offer IDs to form components
 const FORM_COMPONENTS: Record<string, any> = {

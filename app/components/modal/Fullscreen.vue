@@ -8,7 +8,8 @@ interface Props {
 const props = defineProps<Props>();
 const emit = defineEmits<{ close: [] }>();
 
-const offer = useFlowOffer(props.offerId);
+const { getOffer } = useContentCache();
+const { data: offer } = await getOffer(props.offerId);
 </script>
 
 <template>

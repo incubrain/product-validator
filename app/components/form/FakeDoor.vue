@@ -20,7 +20,7 @@ const schema = z.object({
 
 const state = reactive({
   email: '',
-  offerId: props.offer.id,
+  offerId: props.offer.slug,
 });
 
 const { submit, isSubmitting, isSuccess } = useFormSubmission({

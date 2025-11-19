@@ -1,6 +1,5 @@
 <!-- components/MagnetPage.vue -->
 <script setup lang="ts">
-import { normalizeContentPath } from '#shared/utils/config-resolver';
 
 interface Props {
   page: any; // Your page type
@@ -43,14 +42,14 @@ defineProps<Props>();
     >
       <NuxtImg
         v-if="page.media.type === 'image'"
-        :src="normalizeContentPath(page.media.src)"
+        :src="page.media.src"
         :alt="page.media.alt || page.title"
         class="w-full h-full aspect-3/2 invert"
       />
 
       <IVideo
         v-else-if="page.media.type === 'video'"
-        :src="normalizeContentPath(page.media.src)"
+        :src="page.media.src"
         :alt="page.media.alt"
       />
     </div>

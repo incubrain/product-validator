@@ -1,14 +1,16 @@
 <script setup lang="ts">
 import { findPageChildren, findPageBreadcrumb } from '@nuxt/content/utils';
 import { mapContentNavigation } from '@nuxt/ui/utils/content';
-import { CONVERSION } from '~~/shared/config/navigation';
 
 const ROOT_PATH = '/magnet';
 
 const route = useRoute();
 const { hasAccess, email, isVerified, verifyAccess, isVerifying } =
   useGatedAccess();
-const offer = useFlowOffer(CONVERSION.primary);
+
+// Fetch primary offer from collection
+const { getPrimaryOffer } = useContentCache();
+const { data: offer } = await getPrimaryOffer();
 
 const {
   isContentAccessible,
