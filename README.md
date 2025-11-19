@@ -211,15 +211,14 @@ Visit `http://localhost:3000` to see placeholder site.
 
 1. **Setup environment variables** - Copy `example.env` to `.env` (local) or
    configure in your deployment provider's environment settings
-2. **Replace placeholder content** in `shared/config/` files
+2. **Replace placeholder content** in `content/` files (Markdown & YAML)
 3. **Setup analytics** (Umami pre-configured, swap easily via
    [Nuxt Scripts](https://scripts.nuxt.com/scripts))
 4. **Start with Identity stage** and progress sequentially through validation
 
 ## 📚 Configuration
 
-All landing page content is managed through structured config files in
-`shared/config/`.
+All landing page content is managed through structured files in the `content/` directory, powered by **Nuxt Content**.
 
 **Progressive Disclosure:** Sections appear/hide based on your validation stage
 (set via ENV), keeping focus on what matters now.
@@ -251,7 +250,7 @@ All landing page content is managed through structured config files in
 | Action             | Command / Location                                                                                     |
 | ------------------ | ------------------------------------------------------------------------------------------------------ |
 | **Deploy**         | Push to main branch (auto-deploy on Railway/Vercel)                                                    |
-| **Configure**      | Update files in `shared/config/`                                                                       |
+| **Configure**      | Update files in `content/`                                                                             |
 | **Set Stage**      | Update `NUXT_PUBLIC_VALIDATION_STAGE` in ENV (identity/attention/traffic/conversion/engagement/demand) |
 | **Track Metrics**  | Setup analytics ([Umami](https://umami.is) recommended)                                                |
 | **Swap Analytics** | Use any provider via [Nuxt Scripts](https://scripts.nuxt.com/scripts)                                  |
