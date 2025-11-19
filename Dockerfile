@@ -47,7 +47,7 @@ COPY app ./app
 COPY shared ./shared  
 COPY theme ./theme
 COPY content ./content
-COPY modules ./modules
+COPY examples ./examples
 
 
 # Copy other workspace directories
