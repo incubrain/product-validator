@@ -28,9 +28,8 @@ const primaryOffer = useFlowOffer(CONVERSION.primary);
       root: 'px-0',
       body: 'px-0',
       wrapper: 'text-center px-0',
-      description: 'pb-12',
       container:
-        'flex flex-col lg:grid py-24 sm:py-32 lg:py-24 gap-0 sm:gap-y-0 lg:px-0 border-x border-default/60',
+        'flex flex-col lg:grid py-12 sm:py-24 lg:py-12 gap-0 sm:gap-y-0 lg:px-0',
       footer: 'mt-10',
     }"
   >
@@ -111,48 +110,52 @@ const primaryOffer = useFlowOffer(CONVERSION.primary);
     </template>
 
     <!-- Media (Traffic stage onward) -->
-    <div v-if="showMedia" class="relative pt-12">
-      <div class="relative">
-        <IVideo
-          v-if="hero.media.type === 'video'"
-          :src="hero.media.src"
-          :poster="hero.media.poster"
-          :autoplay="true"
-          :muted="true"
-          :loop="true"
-          aspect-ratio="video"
-          class="rounded-2xl shadow-2xl border border-white/10"
-        />
-        <NuxtImg
-          v-else-if="hero.media.type === 'image'"
-          :src="hero.media.src"
-          :alt="hero.media.alt"
-          class="rounded-2xl shadow-2xl border border-white/10 w-full"
+    <template #body>
+      <div v-if="showMedia" class="relative pt-12">
+        <div class="relative">
+          <IVideo
+            v-if="hero.media.type === 'video'"
+            :src="hero.media.src"
+            :poster="hero.media.poster"
+            :autoplay="true"
+            :muted="true"
+            :loop="true"
+            aspect-ratio="video"
+            class="rounded-2xl shadow-2xl border border-white/10"
+          />
+          <NuxtImg
+            v-else-if="hero.media.type === 'image'"
+            :src="hero.media.src"
+            :alt="hero.media.alt"
+            class="rounded-2xl shadow-2xl border border-white/10 w-full"
+          />
+        </div>
+      </div>
+    </template>
+
+    <!-- ✅ Bottom slot: Full-width marquees + background effects -->
+    <template #bottom>
+      <!-- Marquees (Full-width, outside container) -->
+      <div v-if="showMarquees" class="space-y-8 pb-24">
+        <IMarqueeWrapper
+          v-for="(track, index) in proof"
+          :key="track.label"
+          :label="track.label"
+          :badge-color="track.badgeColor"
+          :items="track.items"
+          :track-index="index"
         />
       </div>
-    </div>
 
-    <!-- Marquees (Traffic stage onward) -->
-    <IMarqueeWrapper
-      v-for="(track, index) in proof"
-      v-if="showMarquees"
-      :key="track.label"
-      :label="track.label"
-      :badge-color="track.badgeColor"
-      :items="track.items"
-      :track-index="index"
-    />
-
-    <!-- Background Effects -->
-    <template #bottom>
+      <!-- Background Effects -->
       <div
-        class="absolute top-0 inset-0 bg-grid-white/[0.02] pointer-events-none"
+        class="absolute top-0 inset-0 bg-grid-white/[0.02] pointer-events-none -z-10"
       />
       <div
-        class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none"
+        class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none -z-10"
       />
       <div
-        class="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none"
+        class="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none -z-10"
       />
     </template>
   </UPageHero>
@@ -160,7 +163,6 @@ const primaryOffer = useFlowOffer(CONVERSION.primary);
 
 <style scoped>
 .bg-grid-white\/\[0\.02\] {
-  z-index: 0;
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);

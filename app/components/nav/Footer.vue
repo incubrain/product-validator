@@ -17,7 +17,7 @@ const copyrightYear = computed(() =>
 <template>
   <UFooter
     :ui="{
-      root: 'border-t pt-4',
+      root: 'border-t border-default/60 pt-4',
       container:
         'py-8 lg:py-4 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between lg:gap-x-3',
       top: 'py-8 lg:py-12',

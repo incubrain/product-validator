@@ -9,6 +9,7 @@ const cards = computed(() => data?.value.cards ?? []);
     id="#problem-solution"
     :intro="data.intro"
     :bridge="data.bridge"
+    class="bg-muted/50"
   >
     <UPageGrid class="border-y py-4">
       <UPageCard

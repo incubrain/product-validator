@@ -27,7 +27,7 @@ const adjustedDuration = computed(() => `${duration.value}s`);
       :pause-on-hover="pauseOnHover"
       :reverse="reverse"
       :repeat="2"
-      overlay
+      :overlay="false"
       :ui="{
         root: 'marquee-root group [--gap:--spacing(5)] relative flex items-center overflow-hidden max-w-full w-full',
         content: 'flex items-center shrink-0 min-w-max',

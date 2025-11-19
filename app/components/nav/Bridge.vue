@@ -45,7 +45,7 @@ const primaryOffer = useFlowOffer(CONVERSION.primary);
       :title="bridge.headline"
       :description="bridge.message"
       orientation="vertical"
-      :variant="bridge.primary ? 'soft' : 'outline'"
+      variant="naked"
       :links="
         bridge.primary
           ? []
@@ -60,7 +60,7 @@ const primaryOffer = useFlowOffer(CONVERSION.primary);
               },
             ]
       "
-      class="rounded-none border border-default/20"
+      class="rounded-none"
       :ui="{
         container: bridge.primary ? 'py-16 sm:py-20' : 'py-12 sm:py-16',
         title: bridge.primary
