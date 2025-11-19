@@ -8,8 +8,6 @@ const publicDir = activeSource === 'custom'
   ? 'public' 
   : path.resolve(process.cwd(), `examples/${activeSource}/public`);
 
-console.log('Active source:', activeSource);
-console.log('Public directory:', publicDir);
 
 export default defineNuxtConfig({
   // Configure the public directory based on the active source
@@ -51,17 +49,18 @@ export default defineNuxtConfig({
       route: '/_studio',
   
       // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
-      // development: {
-      //   sync: true, // Enable development mode
-      // },
+      development: {
+        sync: true, // Enable development mode
+      },
   
       // GitHub repository configuration (owner and repo are required)
       repository: {
         provider: 'github', // only GitHub is currently supported
         owner: 'incubrain', // your GitHub username or organization
         repo: 'product-validator', // your repository name
-        branch: process.env.STUDIO_GITHUB_BRANCH_NAME, // the branch to commit to (default: main)
-        rootDir: '', // optional: if your Nuxt app is in a subdirectory (default: '')
+        branch: 'main', // the branch to commit to (default: main)
+        rootDir: activeSource === 'validator' ? 'examples/validator' : '', // optional: if your Nuxt app is in a subdirectory (default: '')
+        private: true,
       },
     },
 

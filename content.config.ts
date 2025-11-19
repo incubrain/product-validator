@@ -14,6 +14,181 @@ const contentCwd = activeSource === 'validator'
 
 export default defineContentConfig({
   collections: {
+    pages: defineCollection({
+      type: 'page',
+      source: {
+        cwd: contentCwd,
+        include: 'pages/*.md',
+        prefix: '/'
+      },
+    }),
+
+    config: defineCollection({
+      type: 'data',
+      source: {
+        cwd: contentCwd,
+        include: 'config/*.yml',
+      },
+      schema: z.object({
+        business: z.object({
+          name: z.string(),
+          legal_name: z.string(),
+          founding_year: z.number(),
+          location: z.string(),
+          logo: z.string(),
+        }).optional(),
+        social: z.object({
+          availability: z.string(),
+          response_time: z.string(),
+          links: z.array(z.object({
+            platform: z.string(),
+            label: z.string(),
+            url: z.string(),
+          })),
+        }).optional(),
+      }),
+    }),
+
+    team: defineCollection({
+      type: 'data',
+      source: {
+        cwd: contentCwd,
+        include: 'team/*.yml',
+      },
+      schema: z.object({
+        id: z.string(),
+        profile: z.object({
+          given_name: z.string(),
+          surname: z.string(),
+          name: z.string(),
+          role: z.string(),
+          avatar: z.object({
+            src: z.string(),
+            alt: z.string(),
+          }).optional(),
+          portrait: z.object({
+            src: z.string(),
+            alt: z.string(),
+          }).optional(),
+        }),
+        story: z.object({
+          mission: z.string(),
+          background: z.array(z.string()),
+          challenge: z.string(),
+        }),
+      }),
+    }),
+
+    offers: defineCollection({
+      type: 'data',
+      source: {
+        cwd: contentCwd,
+        include: 'offers/*.yml',
+      },
+      schema: z.object({
+        slug: z.string(),
+        primary: z.boolean().optional(),
+        title: z.string(),
+        description: z.string(),
+        price: z.string(),
+        discount: z.string().nullable().optional(),
+        billingCycle: z.string(),
+        terms: z.string(),
+        tagline: z.string().nullable().optional(),
+        badge: z.object({
+          label: z.string(),
+          color: z.string(),
+          variant: z.string(),
+          size: z.string(),
+        }).optional(),
+        features: z.array(z.object({
+          title: z.string(),
+          icon: z.string(),
+        })),
+        variant: z.string(),
+        highlight: z.boolean(),
+        stock: z.object({
+          limit: z.number(),
+          claimed: z.number(),
+          type: z.string(),
+        }).optional(),
+        cta: z.object({
+          label: z.string(),
+          to: z.string().optional(),
+          icon: z.string(),
+          modal: z.string().optional(),
+          color: z.string().optional(),
+          note: z.string().nullable().optional(),
+        }),
+      }),
+    }),
+
+    faq: defineCollection({
+      type: 'data',
+      source: {
+        cwd: contentCwd,
+        include: 'faq/*.yml',
+      },
+      schema: z.object({
+        type: z.enum(['warning', 'objection', 'support', 'general']),
+        label: z.string(),
+        icon: z.string(),
+        color: z.enum(['error', 'warning', 'success', 'info']),
+        items: z.array(z.object({
+          q: z.string(),
+          a: z.string(),
+        })),
+      }),
+    }),
+
+    // Consolidated features collection (benefits + process cards)
+    features: defineCollection({
+      type: 'data',
+      source: {
+        cwd: contentCwd,
+        include: 'features/*.yml',
+      },
+      schema: z.object({
+        items: z.array(z.object({
+          id: z.string(),
+          title: z.string(),
+          icon: z.string(),
+          description: z.string(),
+          // Optional fields for benefits
+          duration: z.string().optional(),
+          result: z.string().optional(),
+        })),
+      }),
+    }),
+
+    // Renamed from testimonials to results
+    results: defineCollection({
+      type: 'data',
+      source: {
+        cwd: contentCwd,
+        include: 'results/*.yml',
+      },
+      schema: z.object({
+        // For testimonials.yml
+        items: z.array(z.object({
+          type: z.string().optional(),
+          name: z.string().optional(),
+          role: z.string().optional(),
+          quote: z.string().optional(),
+          link: z.string().optional(),
+          highlight: z.boolean().optional(),
+          avatarUrl: z.string().optional(),
+        })).optional(),
+        // For customers.yml (proof track)
+        label: z.string().optional(),
+        badgeColor: z.string().optional(),
+      }),
+    }),
+
+    // ============================================================================
+    // OTHER CONTENT COLLECTIONS
+    // ============================================================================
+
     updates: defineCollection(
       asSeoCollection({
         type: 'page',
