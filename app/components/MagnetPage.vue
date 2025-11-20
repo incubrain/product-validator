@@ -31,7 +31,21 @@ const totalSteps = computed(() => {
     return count;
   };
   
-const { isComplete, isAccessible, markComplete } = useMagnetProgress();
+const { isComplete, isAccessible, markComplete, initialize, getLatestUnlockedStep } = useMagnetProgress();
+
+// Initialize progress with navigation data
+if (navigation.value) {
+  initialize(navigation.value);
+}
+
+// Watch for navigation changes
+watch(() => navigation.value, (newNav) => {
+  if (newNav) {
+    initialize(newNav);
+  }
+}, { immediate: true });
+
+const latestUnlockedStep = computed(() => getLatestUnlockedStep());
 
 // Find the first incomplete step in the current list to show the "Start" button
 const nextStepPath = computed(() => {
@@ -148,18 +162,6 @@ const isStepLocked = (step: any) => {
                 <h3 class="font-semibold text-lg">
                   {{ step.title }}
                 </h3>
-                
-                <!-- Start Button (Only for the next actionable step) -->
-                <UButton
-                  v-if="isNextStep(step.path)"
-                  :to="step.path"
-                  color="primary"
-                  variant="solid"
-                  trailing-icon="i-lucide-arrow-right"
-                  size="xs"
-                >
-                  Start
-                </UButton>
               </div>
               
               <p v-if="step.description" class="text-sm text-muted mt-1">
@@ -175,6 +177,20 @@ const isStepLocked = (step: any) => {
               aria-label="Go to step"
             />
           </div>
+        </div>
+
+        <!-- Global Continue Button -->
+        <div v-if="latestUnlockedStep" class="flex justify-end pt-4">
+          <UButton
+            :to="latestUnlockedStep"
+            size="xl"
+            color="primary"
+            variant="solid"
+            trailing-icon="i-lucide-arrow-right"
+            class="w-full sm:w-auto min-w-48 shadow-lg hover:shadow-xl transition-all"
+          >
+            Continue Journey
+          </UButton>
         </div>
       </div>
     </template>

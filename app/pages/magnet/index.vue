@@ -14,8 +14,24 @@ if (!page.value) {
     fatal: true,
   });
 }
+
+const { flatSteps } = useMagnetProgress();
+const nextPath = computed(() => {
+  if (flatSteps.value.length === 0) return undefined;
+  const currentIndex = flatSteps.value.indexOf(route.path);
+  if (currentIndex === -1 || currentIndex === flatSteps.value.length - 1) return undefined;
+  return flatSteps.value[currentIndex + 1];
+});
 </script>
 
 <template>
-  <IMagnetPage :page="page" />
+  <IMagnetPage :page="page">
+    <div class="mt-8 flex justify-end">
+      <IMagnetCompleteButton 
+        :current-path="route.path"
+        :next-path="nextPath"
+        label="Start Your Journey"
+      />
+    </div>
+  </IMagnetPage>
 </template>

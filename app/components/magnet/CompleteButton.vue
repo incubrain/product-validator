@@ -8,10 +8,11 @@ const props = defineProps<{
   totalSteps?: number;
 }>();
 
-const { markComplete, isComplete, checkAndShowMilestone } = useMagnetProgress();
+const { markComplete, isComplete, checkAndShowMilestone, isStepValid } = useMagnetProgress();
 const router = useRouter();
 
 const isCompleted = computed(() => isComplete(props.currentPath));
+const isValid = computed(() => isStepValid(props.currentPath));
 
 const handleComplete = async () => {
   if (!isCompleted.value) {
@@ -80,6 +81,7 @@ const triggerConfetti = () => {
 
 <template>
   <UButton
+    v-if="isValid || isCompleted"
     size="xl"
     :color="isCompleted ? 'success' : 'primary'"
     :variant="isCompleted ? 'soft' : 'solid'"

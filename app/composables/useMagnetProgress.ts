@@ -1,8 +1,10 @@
 import { createSharedComposable, useLocalStorage } from '@vueuse/core';
 
 const _useMagnetProgress = () => {
+  const configSource = useRuntimeConfig().public.configSource;
+
   // State: Set of completed path strings
-  const completedSteps = useLocalStorage<Set<string>>('magnet-progress', new Set(), {
+  const completedSteps = useLocalStorage<Set<string>>(`${configSource}-magnet-progress`, new Set(), {
     serializer: {
       read: (raw) => new Set(JSON.parse(raw)),
       write: (value) => JSON.stringify(Array.from(value)),
@@ -10,12 +12,27 @@ const _useMagnetProgress = () => {
   });
 
   // Track which milestones we've already shown toasts for
-  const shownMilestones = useLocalStorage<Set<string>>('magnet-milestones', new Set(), {
+  const shownMilestones = useLocalStorage<Set<string>>(`${configSource}-magnet-milestones`, new Set(), {
     serializer: {
       read: (raw) => new Set(JSON.parse(raw)),
       write: (value) => JSON.stringify(Array.from(value)),
     },
   });
+
+  // Track validation status of steps (e.g. Definition of Done)
+  // Key: path, Value: boolean (true = valid/ready to complete)
+  const stepValidation = useState<Record<string, boolean>>('magnet-step-validation', () => ({}));
+
+  const setStepValidity = (path: string, isValid: boolean) => {
+    const normalized = normalizePath(path);
+    stepValidation.value[normalized] = isValid;
+  };
+
+  const isStepValid = (path: string) => {
+    const normalized = normalizePath(path);
+    // Default to true if no validation is registered for this step
+    return stepValidation.value[normalized] ?? true;
+  };
 
   // Normalize path by removing trailing slashes and query params
   const normalizePath = (path: string) => {
@@ -106,11 +123,10 @@ const _useMagnetProgress = () => {
     const flatten = (items: any[]): string[] => {
       let paths: string[] = [];
       for (const item of items) {
-        // If it's a page (leaf node or has path), add it
-        // We only care about actual pages that can be visited
-        // FIX: Only include if it has NO children (leaf node)
-        const path = item.path || item._path;
-        if (path && (!item.children || item.children.length === 0)) {
+        // If it's a page (has a path), add it
+        // We include parent pages (like /magnet) if they have a path
+        const path = item.path;
+        if (path) {
           paths.push(normalizePath(path));
         }
         if (item.children) {
@@ -126,8 +142,8 @@ const _useMagnetProgress = () => {
   };
 
   const isAccessible = (path: string) => {
-    // If not initialized, assume open
-    if (flatSteps.value.length === 0) return true;
+    // If not initialized, assume closed (strict mode)
+    if (flatSteps.value.length === 0) return false;
 
     const normalized = normalizePath(path);
     const index = flatSteps.value.indexOf(normalized);
@@ -139,7 +155,6 @@ const _useMagnetProgress = () => {
     if (index === 0) return true;
 
     // Find the furthest step that has been completed
-    // We iterate through all completed steps and find the one with the highest index
     let maxCompletedIndex = -1;
     for (const step of completedSteps.value) {
       const stepIndex = flatSteps.value.indexOf(step);
@@ -149,7 +164,6 @@ const _useMagnetProgress = () => {
     }
 
     // Allow access to any step up to the next one after the furthest completed
-    // This ensures that if step 5 is done, steps 1-6 are accessible
     return index <= maxCompletedIndex + 1;
   };
 
@@ -188,6 +202,8 @@ const _useMagnetProgress = () => {
     isAccessible,
     getLatestUnlockedStep,
     reset,
+    setStepValidity,
+    isStepValid,
   };
 };
 

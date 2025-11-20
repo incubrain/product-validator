@@ -69,17 +69,16 @@ const totalSteps = computed(() => {
 });
 
 
+// ✅ Watch for navigation changes to initialize progress
+watch(navigation, (newNav) => {
+  if (newNav) {
+    initialize(newNav);
+  }
+}, { immediate: true });
+
 // Get current step number based on route
 const currentStepNumber = computed(() => {
   if (!navigation.value) return 0;
-  
-  // Initialize the progress logic with our navigation structure
-  // Note: initialize is idempotent and safe to call, but ideally called once.
-  // We call it here to ensure it's ready when navigation loads.
-  if (navigation.value && flatSteps.value.length === 0) {
-    initialize(navigation.value);
-  }
-  
   return getCompletedCount() + 1; // Current is completed + 1
 });
 
@@ -163,8 +162,10 @@ watchEffect(() => {
       <template #default>
         <UNavigationMenu 
           :items="menuItems" 
+          type="single"
           orientation="vertical" 
           :collapsed="isCollapsed"
+          collapsible
           class="w-full px-2 py-2"
           :ui="{
             link: 'disabled:opacity-100', 
