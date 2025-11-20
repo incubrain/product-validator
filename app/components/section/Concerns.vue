@@ -62,10 +62,13 @@ const legendMeta = computed(() => {
   });
   return meta;
 });
+
+const { showSection } = useSectionVisibility();
 </script>
 
 <template>
   <ISectionWrapper
+    v-if="showSection('concerns')"
     id="#concerns"
     :intro="data.intro"
     :bridge="{ ...data.bridge, primary: true }"

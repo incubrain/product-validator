@@ -37,10 +37,13 @@ const transformedFeatures = computed(() => {
     };
   });
 });
+
+const { showSection } = useSectionVisibility();
 </script>
 
 <template>
   <ISectionWrapper
+    v-if="showSection('offer')"
     id="#offer"
     :intro="data.intro"
     :bridge="data.bridge"

@@ -10,10 +10,13 @@ const { data: processFile } = await useAsyncData('process-cards', () =>
 );
 
 const cards = computed(() => processFile.value?.items || []);
+
+const { showSection } = useSectionVisibility();
 </script>
 
 <template>
   <ISectionWrapper
+    v-if="showSection('problemSolution')"
     id="#problem-solution"
     :intro="data.intro"
     :bridge="data.bridge"

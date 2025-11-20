@@ -6,7 +6,7 @@ const props = defineProps<{
   data?: any;
 }>();
 
-const { showFeature } = useSectionVisibility();
+const { showFeature, showSection } = useSectionVisibility();
 
 // Use prop data from MDC
 const hero = computed(() => props.data);
@@ -34,6 +34,7 @@ const { data: primaryOffer } = await getPrimaryOffer();
 
 <template>
   <UPageHero
+    v-if="showSection('hero')"
     orientation="vertical"
     class="bg-linear-to-b from-default via-muted to-default text-white relative overflow-hidden min-h-[calc(100vh-var(--ui-banner-height)-var(--ui-header-height))]"
     :ui="{

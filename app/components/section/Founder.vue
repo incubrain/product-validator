@@ -9,10 +9,13 @@ const { data: founderData } = await getFounder();
 const { data: configData } = await getSiteConfig();
 
 const isBackgroundExpanded = ref(false);
+
+const { showSection } = useSectionVisibility();
 </script>
 
 <template>
   <ISectionWrapper
+    v-if="showSection('founder')"
     id="#founder"
     :intro="data.intro"
     :bridge="data.bridge"

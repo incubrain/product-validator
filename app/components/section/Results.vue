@@ -23,10 +23,12 @@ const formattedTestimonials = computed(() =>
     highlight: t.highlight,
   })),
 );
+
+const { showSection } = useSectionVisibility();
 </script>
 
 <template>
-  <ISectionWrapper id="#results" :intro="data.intro" :bridge="data.bridge">
+  <ISectionWrapper v-if="showSection('results')" id="#results" :intro="data.intro" :bridge="data.bridge">
     <div v-if="formattedTestimonials.length">
       <UPageColumns class="gap-0 space-y-0">
         <UPageCard

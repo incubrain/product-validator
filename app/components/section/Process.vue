@@ -15,10 +15,12 @@ const { data: benefitsFile } = await useAsyncData('benefits', () =>
 );
 
 const steps = computed(() => benefitsFile.value?.items || []);
+
+const { showSection } = useSectionVisibility();
 </script>
 
 <template>
-  <ISectionWrapper id="#process" :intro="data.intro" :bridge="data.bridge">
+  <ISectionWrapper v-if="showSection('process')" id="#process" :intro="data.intro" :bridge="data.bridge">
     <UCarousel
       v-if="steps.length"
       v-slot="{ item, index }"
