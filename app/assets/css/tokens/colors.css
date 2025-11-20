@@ -6,7 +6,6 @@
 @theme static {
   /* Reset default colors to avoid bloat */
   --color-*: initial;
-  --ui-*: initial;
 
   /* PRIMARY - Rich Forest Green (growth/validation) */
   --color-primary-50: oklch(95% 0.02 145);
