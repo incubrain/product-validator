@@ -43,6 +43,8 @@ export const useDevTools = () => {
   const DEV_OVERRIDES_KEY = `${configSource}_dev_overrides`;
 
   const devOverrides = useState<DevOverrides>('dev-overrides', () => {
+    if (import.meta.server) return
+
     try {
       const stored = localStorage.getItem(DEV_OVERRIDES_KEY);
       return stored ? JSON.parse(stored) : {};
@@ -52,6 +54,8 @@ export const useDevTools = () => {
   });
 
   const persistOverrides = (overrides: DevOverrides) => {
+    if (import.meta.server) return
+
     try {
       if (Object.keys(overrides).length === 0) {
         localStorage.removeItem(DEV_OVERRIDES_KEY);
@@ -123,6 +127,8 @@ export const useDevTools = () => {
   const storagePrefix = computed(() => configSource); // ✅ Now just reads ENV
 
   const getStorageSnapshot = () => {
+    if (import.meta.server) return
+
     try {
       const localStorage_items = Object.keys(localStorage)
         .filter(
@@ -186,12 +192,12 @@ export const useDevTools = () => {
       actions: [
         {
           label: 'Reload Now',
-          onClick: () => window.location.reload(),
+          onClick: () => window?.location.reload(),
         },
       ],
     });
 
-    setTimeout(() => window.location.reload(), 3000);
+    setTimeout(() => window?.location.reload(), 3000);
   };
 
   const logCurrentStorage = () => {

@@ -9,8 +9,6 @@ const props = defineProps<{
 const { getOffer } = useContentCache();
 const { data: offer } = await getOffer(props.offerId);
 
-console.log('OFFER', offer.value, props.offerId)
-
 const { configSource } = useDevTools();
 
 const bannerClasses = computed(() => ({

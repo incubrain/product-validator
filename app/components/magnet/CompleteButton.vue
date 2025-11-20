@@ -48,7 +48,7 @@ const handleComplete = async () => {
     await navigateTo(props.nextPath);
     // Scroll to top of the dashboard panel body
     await nextTick();
-    const scrollContainer = document.querySelector('[data-dashboard-panel-body], .overflow-y-auto');
+    const scrollContainer = document?.querySelector('[data-dashboard-panel-body], .overflow-y-auto');
     if (scrollContainer) {
       scrollContainer.scrollTo({ top: 0, behavior: 'smooth' });
     }

@@ -9,7 +9,6 @@ const publicDir = activeSource === 'custom'
   : path.resolve(process.cwd(), `examples/${activeSource}/public`);
 
 export default defineNuxtConfig({
-  // Configure the public directory based on the active source
   dir: {
     public: publicDir,
   },
@@ -105,14 +104,10 @@ export default defineNuxtConfig({
       },
     },
 
-    // Production Nitro optimizations
     nitro: {
-      minify: true,
-      preset: process.env.PROVIDER,
       prerender: {
-        crawlLinks: true,
-        routes: ['/'],
-        ignore: ['/magnet', '/magnet/**'],
+        routes: [],
+        crawlLinks: false,
       },
     },
   },
@@ -186,7 +181,10 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': { prerender: true },
+    '/': { 
+      ssr: true,      
+      prerender: false
+    },
     '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background
     '/magnet': { ssr: false }, // Magnet dashboard SPA-only (client-side rendered)
     '/magnet/**': { ssr: false }, // Magnet pages SPA-only (client-side rendered)

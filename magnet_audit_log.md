@@ -85,7 +85,6 @@ You should see these logs during normal flow:
 [MagnetProgress] isStepValid check: {path, result, ...}
 [MagnetProgress] Marking complete: {path, ...}
 [MagnetIndex] nextPath calculation: {currentIndex, ...}
-[MagnetPage] latestUnlockedStep: {result, ...}
 ```
 
 If these aren't appearing, there's an initialization issue.

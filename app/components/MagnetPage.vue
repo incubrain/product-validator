@@ -31,7 +31,7 @@ const totalSteps = computed(() => {
     return count;
   };
   
-const { isComplete, isAccessible, markComplete, initialize, getLatestUnlockedStep } = useMagnetProgress();
+const { isComplete, isAccessible, initialize } = useMagnetProgress();
 
 // Initialize progress with navigation data
 if (navigation.value) {
@@ -45,16 +45,6 @@ watch(() => navigation.value, (newNav) => {
   }
 }, { immediate: true });
 
-const latestUnlockedStep = computed(() => {
-  const result = getLatestUnlockedStep();
-  console.log('[MagnetPage] latestUnlockedStep:', {
-    result,
-    propsSteps: props.steps,
-    hasSteps: !!props.steps?.length,
-  });
-  return result;
-});
-
 // Find the first incomplete step in the current list to show the "Start" button
 const nextStepPath = computed(() => {
   if (!props.steps) return null;
@@ -66,11 +56,6 @@ const nextStepPath = computed(() => {
   }
   return null;
 });
-
-
-const isNextStep = (path: string) => {
-  return path === nextStepPath.value;
-};
 
 const isStepLocked = (step: any) => {
   return !isAccessible(step.path);

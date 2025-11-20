@@ -75,14 +75,14 @@ const showScrollTop = ref(false);
 
 onMounted(() => {
   const handleScroll = () => {
-    showScrollTop.value = window.scrollY > 500;
+    showScrollTop.value = window?.scrollY > 500;
   };
-  window.addEventListener('scroll', handleScroll);
-  onUnmounted(() => window.removeEventListener('scroll', handleScroll));
+  window?.addEventListener('scroll', handleScroll);
+  onUnmounted(() => window?.removeEventListener('scroll', handleScroll));
 });
 
 const scrollToTop = () => {
-  window.scrollTo({ top: 0, behavior: 'smooth' });
+  window?.scrollTo({ top: 0, behavior: 'smooth' });
 };
 </script>
 

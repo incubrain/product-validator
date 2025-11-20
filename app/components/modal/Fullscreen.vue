@@ -31,7 +31,7 @@ const { data: offer } = await getOffer(props.offerId);
         </div>
 
         <div
-          v-if="offer?.media?.type === 'video'"
+          v-if="offer?.media"
           class="w-full aspect-video rounded-lg overflow-hidden"
         >
           <iframe

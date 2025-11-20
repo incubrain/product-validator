@@ -121,6 +121,11 @@ export default defineContentConfig({
           color: z.string().optional(),
           note: z.string().nullable().optional(),
         }),
+        media: z.object({
+          type: z.enum(['image', 'video']),
+          src: z.string(),
+          alt: z.string(),
+        }).optional(),
       }),
     }),
 
