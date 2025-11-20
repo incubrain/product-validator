@@ -30,8 +30,17 @@ const _useMagnetProgress = () => {
 
   const isStepValid = (path: string) => {
     const normalized = normalizePath(path);
+    const validationValue = stepValidation.value[normalized];
+    const result = validationValue ?? true;
+    console.log('[MagnetProgress] isStepValid check:', { 
+      path, 
+      normalized, 
+      validationValue, 
+      result,
+      allValidations: stepValidation.value 
+    });
     // Default to true if no validation is registered for this step
-    return stepValidation.value[normalized] ?? true;
+    return result;
   };
 
   // Normalize path by removing trailing slashes and query params

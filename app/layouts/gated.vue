@@ -242,7 +242,11 @@ watchEffect(() => {
         <!-- Breadcrumb -->
         
         
-        <div class="px-6 py-6 max-w-4xl mx-auto ">
+        <div 
+          class="px-6 py-6 max-w-4xl mx-auto"
+          data-dashboard-panel-body
+          data-testid="dashboard-content-area"
+        >
           <slot />
         </div>
       </template>

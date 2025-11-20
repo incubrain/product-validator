@@ -14,6 +14,21 @@ const router = useRouter();
 const isCompleted = computed(() => isComplete(props.currentPath));
 const isValid = computed(() => isStepValid(props.currentPath));
 
+console.log('[CompleteButton] Mounted with props:', {
+  currentPath: props.currentPath,
+  nextPath: props.nextPath,
+  label: props.label,
+});
+
+watch([isValid, isCompleted], ([valid, completed]) => {
+  console.log('[CompleteButton] Validity changed:', {
+    path: props.currentPath,
+    isValid: valid,
+    isCompleted: completed,
+    shouldShow: valid || completed,
+  });
+}, { immediate: true });
+
 const handleComplete = async () => {
   if (!isCompleted.value) {
     markComplete(props.currentPath);
@@ -89,6 +104,7 @@ const triggerConfetti = () => {
     trailing-icon="i-lucide-arrow-right"
     class="w-full sm:w-auto min-w-64 group transition-all duration-300 shadow-lg hover:shadow-xl"
     :class="{ 'animate-pulse': isCompleted }"
+    data-testid="magnet-progress-button"
     @click="handleComplete"
   >
     <span class="font-semibold">

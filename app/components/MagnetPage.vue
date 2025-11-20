@@ -45,7 +45,15 @@ watch(() => navigation.value, (newNav) => {
   }
 }, { immediate: true });
 
-const latestUnlockedStep = computed(() => getLatestUnlockedStep());
+const latestUnlockedStep = computed(() => {
+  const result = getLatestUnlockedStep();
+  console.log('[MagnetPage] latestUnlockedStep:', {
+    result,
+    propsSteps: props.steps,
+    hasSteps: !!props.steps?.length,
+  });
+  return result;
+});
 
 // Find the first incomplete step in the current list to show the "Start" button
 const nextStepPath = computed(() => {
@@ -122,75 +130,68 @@ const isStepLocked = (step: any) => {
       class="prose prose-primary dark:prose-invert max-w-none"
     />
 
-    <!-- Step List (stage index only) -->
+    <!-- Default Slot for custom content (e.g., custom buttons) -->
+    <slot />
+
+    <!-- Step List (stage index only) - Simple list for progress tracking -->
     <template v-if="steps?.length">
       <USeparator />
-      <div class="space-y-6">
+      <div class="space-y-6" data-testid="stage-steps-section">
         <h2 class="text-2xl font-bold">Steps in This Stage</h2>
 
-        <div class="space-y-3">
-          <div
+        <ul class="space-y-2" data-testid="steps-list">
+          <li
             v-for="(step, i) in steps"
             :key="step.path"
-            class="group relative flex items-start gap-4 p-4 rounded-xl border border-default bg-background/50 hover:bg-background transition-colors"
+            class="flex items-start gap-3 py-2"
             :class="{
               'opacity-50': isStepLocked(step) && !isComplete(step.path),
             }"
+            :data-testid="`step-item-${i}`"
+            :data-step-path="step.path"
           >
             <!-- Status Icon -->
-            <div class="mt-1 shrink-0">
+            <div class="mt-0.5 shrink-0">
               <UIcon
                 v-if="isComplete(step.path)"
-                name="i-lucide-check-square"
-                class="size-6 text-primary"
+                name="i-lucide-check-circle-2"
+                class="size-5 text-success"
+                :data-testid="`step-icon-complete-${i}`"
               />
               <UIcon
                 v-else-if="isStepLocked(step)"
                 name="i-lucide-lock"
-                class="size-6 text-muted-foreground/50"
+                class="size-5 text-muted-foreground/50"
+                :data-testid="`step-icon-locked-${i}`"
               />
               <UIcon
                 v-else
-                name="i-lucide-square"
-                class="size-6 text-muted-foreground"
+                name="i-lucide-circle"
+                class="size-5 text-muted-foreground"
+                :data-testid="`step-icon-unlocked-${i}`"
               />
             </div>
 
             <!-- Content -->
-            <div class="flex-1 min-w-0 pt-0.5">
-              <div class="flex items-center justify-between gap-4">
-                <h3 class="font-semibold text-lg">
-                  {{ step.title }}
-                </h3>
-              </div>
-              
-              <p v-if="step.description" class="text-sm text-muted mt-1">
+            <div class="flex-1 min-w-0">
+              <h3 class="font-medium text-base" :data-testid="`step-title-${i}`">
+                {{ step.title }}
+              </h3>
+              <p v-if="step.description" class="text-sm text-muted mt-0.5">
                 {{ step.description }}
               </p>
             </div>
-            
-            <!-- Full card link for accessibility (if accessible) -->
-            <NuxtLink
-              v-if="!isStepLocked(step)"
-              :to="step.path"
-              class="absolute inset-0 z-0"
-              aria-label="Go to step"
-            />
-          </div>
-        </div>
+          </li>
+        </ul>
 
-        <!-- Global Continue Button -->
-        <div v-if="latestUnlockedStep" class="flex justify-end pt-4">
-          <UButton
-            :to="latestUnlockedStep"
-            size="xl"
-            color="primary"
-            variant="solid"
-            trailing-icon="i-lucide-arrow-right"
-            class="w-full sm:w-auto min-w-48 shadow-lg hover:shadow-xl transition-all"
-          >
-            Continue Journey
-          </UButton>
+        <!-- Continue Journey Button -->
+        <div v-if="nextStepPath" class="flex justify-end pt-4">
+          <IMagnetCompleteButton
+            :current-path="page.path"
+            :next-path="nextStepPath"
+            :total-steps="totalSteps"
+            label="Continue Journey"
+          />
         </div>
       </div>
     </template>
