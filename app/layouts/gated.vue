@@ -2,6 +2,7 @@
 import { findPageChildren, findPageBreadcrumb } from '@nuxt/content/utils';
 import { mapContentNavigation } from '@nuxt/ui/utils/content';
 
+
 const ROOT_PATH = '/magnet';
 
 const route = useRoute();
@@ -9,15 +10,12 @@ const { hasAccess, email, isVerified, verifyAccess, isVerifying } =
   useGatedAccess();
 
 // Fetch primary offer from collection
+// Fetch primary offer from collection
 const { getPrimaryOffer } = useContentCache();
 const { data: offer } = await getPrimaryOffer();
 
-const {
-  isContentAccessible,
-  getContentLabel,
-  getContentIcon,
-  getContentIconColor,
-} = useContentAccess();
+const { getCompletedCount, initialize, isAccessible, isComplete, flatSteps } = useMagnetProgress();
+
 
 // Fetch navigation for sidebar
 const { data: navigation } = useAsyncData('magnet-navigation', () => {
@@ -65,7 +63,25 @@ const stages = computed(() =>
   }),
 );
 
-console.log('Stages:', { stages: stages, navigation: navigation });
+// Count total steps (all leaf nodes in navigation)
+const totalSteps = computed(() => {
+  return flatSteps.value.length;
+});
+
+
+// Get current step number based on route
+const currentStepNumber = computed(() => {
+  if (!navigation.value) return 0;
+  
+  // Initialize the progress logic with our navigation structure
+  // Note: initialize is idempotent and safe to call, but ideally called once.
+  // We call it here to ensure it's ready when navigation loads.
+  if (navigation.value && flatSteps.value.length === 0) {
+    initialize(navigation.value);
+  }
+  
+  return getCompletedCount() + 1; // Current is completed + 1
+});
 
 const breadcrumb = computed(() =>
   mapContentNavigation(
@@ -76,6 +92,47 @@ const breadcrumb = computed(() =>
     { deep: 0 },
   ).map(({ icon, ...link }) => link),
 );
+
+// Map to UNavigationMenu items
+const mapToNavigationMenu = (items: any[]): any[] => {
+  return items.map(item => {
+    const hasChildren = item.children && item.children.length > 0;
+    
+    // Check content status
+    const status = item.status || 'published'; // Default to published if not set
+    const isRestrictedStatus = status !== 'published' && status !== 'beta';
+    
+    // Accessibility logic
+    // A page is accessible if:
+    // 1. It's unlocked via progress (isAccessible)
+    // 2. AND it's not in a restricted status (draft, archived, etc.)
+    const unlocked = isAccessible(item.path);
+    const accessible = hasChildren ? true : (unlocked && !isRestrictedStatus);
+    const complete = hasChildren ? false : isComplete(item.path);
+
+    return {
+      label: item.title,
+      icon: item.icon,
+      // Only set 'to' if it's a page and accessible
+      to: (accessible && !hasChildren) ? item.path : undefined,
+      // Use 'magnet-link' slot for leaf nodes to show custom icons
+      slot: hasChildren ? undefined : 'magnet-link',
+      disabled: !accessible && !hasChildren,
+      isComplete: complete, // Custom prop for the slot
+      isRestricted: isRestrictedStatus && !hasChildren, // Custom prop for the slot
+      defaultOpen: hasChildren, // Auto-open folders
+      children: hasChildren ? mapToNavigationMenu(item.children) : undefined,
+    };
+  });
+};
+
+const menuItems = computed(() => mapToNavigationMenu(stages.value));
+
+// Debugging
+watchEffect(() => {
+  console.log('Flat Steps:', flatSteps.value);
+  console.log('Menu Items:', menuItems.value);
+});
 </script>
 
 <template>
@@ -104,75 +161,47 @@ const breadcrumb = computed(() =>
       </template>
 
       <template #default>
-        <!-- Collapsed navigation with icons -->
-        <div v-if="isCollapsed" class="flex flex-col gap-2">
-          <UTooltip v-for="stage in stages" :key="stage.path" placement="right">
-            <template #text>
-              <span>{{ stage.title }}</span>
-              <span
-                v-if="!isContentAccessible(stage)"
-                class="text-xs opacity-75"
-              >
-                ({{ getContentLabel(stage) }})
-              </span>
-            </template>
-
-            <!-- Button with status badge -->
-            <div class="relative inline-flex">
-              <UButton
-                :icon="stage.icon"
-                :to="isContentAccessible(stage) ? stage.path : undefined"
-                :disabled="!isContentAccessible(stage)"
-                color="neutral"
-                variant="ghost"
-                square
-                size="md"
-                :class="{
-                  'bg-primary/10 text-primary': route.path.startsWith(
-                    stage.path,
-                  ),
-                  'opacity-50 cursor-not-allowed': !isContentAccessible(stage),
-                }"
-              />
-
-              <!-- Status badge icon -->
-              <UIcon
-                v-if="!isContentAccessible(stage) && getContentIcon(stage)"
-                :name="getContentIcon(stage)!"
-                class="absolute -top-1 -right-1 size-3 bg-background rounded-full"
-                :class="getContentIconColor(stage)"
-              />
-            </div>
-          </UTooltip>
-        </div>
-
-        <!-- Expanded navigation with proper slots -->
-        <UContentNavigation
-          v-else
-          :navigation="stages"
-          type="single"
-          default-open
-          collapsible
-          highlight
-          highlight-color="primary"
-          color="primary"
+        <UNavigationMenu 
+          :items="menuItems" 
+          orientation="vertical" 
+          :collapsed="isCollapsed"
+          class="w-full px-2 py-2"
+          :ui="{
+            link: 'disabled:opacity-100', 
+            linkLeadingIcon: 'text-muted-foreground',
+            label: 'text-foreground',
+          }"
+          tooltip
         >
-          <!-- ✅ Use link-trailing slot (correct slot name from docs) -->
-          <template #link-trailing="{ link }">
-            <!-- Only show status for inaccessible content -->
-            <div
-              v-if="!isContentAccessible(link)"
-              class="flex items-center gap-1.5"
-            >
-              <UIcon
-                v-if="getContentIcon(link)"
-                :name="getContentIcon(link)!"
-                class="size-3.5"
-                :class="getContentIconColor(link)"
+          <template #magnet-link-trailing="{ item }">
+            <div class="flex items-center gap-2">
+              <UIcon 
+                v-if="item.isRestricted" 
+                name="i-lucide-construction" 
+                class="size-4 text-warning" 
+              />
+              <UIcon 
+                v-else-if="item.disabled" 
+                name="i-lucide-lock" 
+                class="size-4 text-muted-foreground/50" 
+              />
+              <UIcon 
+                v-else-if="item.isComplete" 
+                name="i-lucide-square-check" 
+                class="size-4 text-primary" 
+              />
+              <UIcon 
+                v-else 
+                name="i-lucide-square" 
+                class="size-4 text-muted-foreground/30" 
               />
             </div>
           </template>
-        </UContentNavigation>
+        </UNavigationMenu>
+      </template>
+
+      <template #footer>
+        <UDashboardSidebarCollapse />
       </template>
     </UDashboardSidebar>
 
@@ -181,8 +210,7 @@ const breadcrumb = computed(() =>
       <template #header>
         <UDashboardNavbar>
           <template #title>
-            <UDashboardSidebarCollapse />
-            <UBreadcrumb :items="breadcrumb" />
+            <!-- UDashboardSidebarCollapse was here, but moved to sidebar footer -->
           </template>
           <template #right>
             <div v-if="hasAccess" class="flex items-center gap-3">
@@ -199,10 +227,21 @@ const breadcrumb = computed(() =>
             </div>
           </template>
         </UDashboardNavbar>
+
+        <UDashboardToolbar>
+          <IMagnetProgressIndicator
+            :current-step="currentStepNumber"
+            :total-steps="totalSteps"
+            class="w-full"
+          />
+        </UDashboardToolbar>
       </template>
 
       <template #body>
-        <div class="p-6">
+        <!-- Breadcrumb -->
+        
+        
+        <div class="px-6 py-6 max-w-4xl mx-auto ">
           <slot />
         </div>
       </template>
