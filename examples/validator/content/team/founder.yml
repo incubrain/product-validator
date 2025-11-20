@@ -3,6 +3,7 @@ profile:
   given_name: Drew
   surname: MacGibbon
   name: Drew MacGibbon
+  email: mac@incubrain.org
   role: Product Strategist & Builder
   avatar:
     src: /team/founder-avatar.png

@@ -3,6 +3,7 @@ profile:
   given_name: '⚠️ Your given name'
   surname: '⚠️ Your surname'
   name: '⚠️ Your given name ⚠️ Your surname'
+  email: your-email@domain.com
   role: '⚠️ Your role or title'
   avatar:
     src: /images/team/founder-avatar.jpeg

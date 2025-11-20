@@ -61,6 +61,7 @@ export default defineContentConfig({
           given_name: z.string(),
           surname: z.string(),
           name: z.string(),
+          email: z.string().optional(),
           role: z.string(),
           avatar: z.object({
             src: z.string(),
