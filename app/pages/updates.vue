@@ -1,11 +1,9 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui';
 
-// Fetch founder data from team collection
-const { data: founderData } = await useFounder();
+const { getSiteConfig, getFounder } = useContentCache();
 
-// Fetch config data for social links
-const { getSiteConfig } = useContentCache();
+const { data: founderData } = await getFounder();
 const { data: configData } = await getSiteConfig();
 
 // ✅ Non-blocking data fetch
