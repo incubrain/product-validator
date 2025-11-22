@@ -1,0 +1,16 @@
+type: objection
+label: Technical
+icon: i-lucide-code
+color: warning
+items:
+  - q: What's the tech stack?
+    a: Nuxt 4, Tailwind CSS v4, TypeScript, Nuxt Content for config-driven content, Nuxt UI for components. Modern, well-documented, actively maintained.
+
+  - q: How does the stage system work?
+    a: Define your own stages in config. Each stage unlocks specific sections and features. Ship minimal, add complexity only when validated. Fully customizable.
+
+  - q: Where is lead data stored?
+    a: Encrypted in local KV storage by default. No third-party services required. You own your data completely. Can integrate external providers when needed.
+
+  - q: How hard is it to customize?
+    a: Content is YAML and Markdown. Styles are Tailwind utility classes. Components are standard Vue SFCs. If you know Nuxt, you'll feel at home immediately.

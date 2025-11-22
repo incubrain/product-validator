@@ -1,0 +1,29 @@
+slug: magnet
+primary: true
+title: Template Guide
+description: Step-by-step walkthrough to get your lead funnel live. Video included.
+price: Free
+billingCycle: Instant access
+terms: No email required for template. Guide helps you move faster.
+badge:
+  label: Free Guide
+  color: success
+  variant: solid
+  size: lg
+features:
+  - title: Video walkthrough
+    icon: status-available
+  - title: Configuration guide
+    icon: status-available
+  - title: Deployment checklist
+    icon: status-available
+  - title: Best practices
+    icon: status-available
+  - title: Community access
+    icon: status-available
+variant: solid
+highlight: true
+cta:
+  label: Get the Guide
+  icon: i-lucide-play
+  modal: window

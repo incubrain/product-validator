@@ -1,5 +1,5 @@
 // plugins/exit-intent.client.ts
-import { CONVERSION } from '~~/shared/config/navigation';
+import { STAGE_CONFIG } from '#stage-config';
 
 export default defineNuxtPlugin(() => {
   if (typeof window === 'undefined') return;
@@ -99,7 +99,7 @@ export default defineNuxtPlugin(() => {
   };
 
   const exitIntent = createExitIntent({
-    offerId: CONVERSION.secondary,
+    offerId: STAGE_CONFIG.offers.secondary,
     cooldownDays: 7,
     disabled: false,
     minTimeOnPage: 10,

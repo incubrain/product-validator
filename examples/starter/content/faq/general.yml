@@ -1,0 +1,22 @@
+type: general
+label: General
+icon: i-lucide-info
+color: info
+items:
+  - q: Do I need to be a developer to use this?
+    a: Yes, basic knowledge of Vue/Nuxt and TypeScript is recommended. The template is designed for technical founders who want full control over their lead funnel.
+
+  - q: Can I host this anywhere?
+    a: Absolutely. It's a standard Nuxt 4 application. Works great on Vercel, Railway, Netlify, Cloudflare Pages, or any Node.js hosting.
+
+  - q: Is it really free?
+    a: Yes, the template is open source under the MIT license. Use it for personal or commercial projects. No strings attached.
+
+  - q: How do I customize the design?
+    a: The template uses Tailwind CSS v4. Customize colors, fonts, and spacing in the CSS tokens and app.config.ts. Full design system documentation included.
+
+  - q: What's included in the gated content system?
+    a: Email capture, encrypted lead storage, progress tracking, and a multi-step content delivery system. Replaces the need for separate email campaign tools.
+
+  - q: Can I add payments, bookings, or email integrations?
+    a: Yes. The template uses an event-driven architecture designed for extensibility. Add integrations as you need them, not before.

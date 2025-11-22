@@ -3,7 +3,8 @@ import type { ConfigSource } from '~~/shared/types/config';
 
 export const CONFIG_SOURCES = {
   validator: 'examples/validator/',
-  custom: '',
+  starter: 'examples/starter/',
+  root: '',
 } as const;
 
 /**
@@ -18,15 +19,15 @@ export function getActiveConfigSource(): ConfigSource {
 
   if (source && !(source in CONFIG_SOURCES)) {
     const available = Object.keys(CONFIG_SOURCES)
-      .filter((k) => k !== 'custom')
+      .filter((k) => k !== 'root')
       .join(', ');
     throw new Error(
       `[config-resolver] Invalid NUXT_PUBLIC_CONFIG_SOURCE: "${source}"\n` +
-        `Available: ${available} or leave empty for custom config`,
+        `Available: ${available} or leave empty for root config`,
     );
   }
 
-  const resolvedSource = (source || 'custom') as ConfigSource;
+  const resolvedSource = (source || 'root') as ConfigSource;
   console.log(
     '[config-resolver] Resolved to:',
     resolvedSource,

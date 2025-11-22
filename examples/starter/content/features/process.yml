@@ -1,0 +1,36 @@
+items:
+  - id: deploy-fast
+    title: Deploy in 10 Minutes
+    icon: i-lucide-rocket
+    description: Pre-configured Nuxt 4 template with one-click deployment to Railway or Vercel.
+    result: Live landing page capturing leads
+
+  - id: own-everything
+    title: Own Your Data
+    icon: i-lucide-database
+    description: No vendor lock-in. Your code, your content, your leads. MIT license, fork and customize freely.
+    result: Full control and portability
+
+  - id: progressive-disclosure
+    title: Stage-Based Visibility
+    icon: i-lucide-layers
+    description: Define your own stages. Sections unlock as you progress. Ship minimal, add complexity when validated.
+    result: Focused user experience
+
+  - id: gated-content
+    title: Built-in Lead Magnet Delivery
+    icon: i-lucide-lock
+    description: Email capture unlocks protected content with progress tracking. Replaces email drip campaigns.
+    result: Engaged leads without email platform costs
+
+  - id: modern-stack
+    title: Modern Developer Experience
+    icon: i-lucide-code
+    description: Nuxt 4, Tailwind v4, TypeScript. Hot reload, type-safe config, excellent documentation.
+    result: Fast iteration and customization
+
+  - id: zero-dependencies
+    title: No Third Parties Required
+    icon: i-lucide-unplug
+    description: Everything works out of the box. Add analytics, payments, email only when you need them.
+    result: Launch without setup overhead

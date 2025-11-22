@@ -7,7 +7,7 @@ interface LeadRecord {
   formId: string;
   offer?: string;
   customerStage: string;
-  validationStage?: ValidationStage;
+  currentStage?: StageKey;
   feedback?: string;
   metadata?: Record<string, any>;
   capturedAt: number;

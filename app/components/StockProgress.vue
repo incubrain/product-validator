@@ -1,6 +1,6 @@
 <!-- components/StockProgress.vue -->
 <script setup lang="ts">
-import { CONVERSION } from '~~/shared/config/navigation';
+import { STAGE_CONFIG } from '#stage-config';
 
 interface Props {
   stock: OfferStock;
@@ -10,7 +10,7 @@ interface Props {
 
 const props = withDefaults(defineProps<Props>(), {
   class: '',
-  offerId: CONVERSION.primary,
+  offerId: STAGE_CONFIG.offers.primary,
 });
 
 // Auto-detect if this is a magnet offer (should use live count)

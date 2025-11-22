@@ -13,7 +13,7 @@
     "PROVIDER": "node_server",
     "PORT": "3000",
     "HOST": "0.0.0.0",
-    "NUXT_PUBLIC_CONFIG_SOURCE": "custom"
+    "NUXT_PUBLIC_CONFIG_SOURCE": "root"
   },
   "headers": [
     {

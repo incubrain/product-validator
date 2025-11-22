@@ -4,7 +4,7 @@ if (!import.meta.dev) {
   throw new Error('DevTools should only be used in development');
 }
 
-const { validationStage, hasActiveOverrides } = useDevTools();
+const { currentStage, hasActiveOverrides } = useDevTools();
 </script>
 
 <template>
@@ -18,7 +18,7 @@ const { validationStage, hasActiveOverrides } = useDevTools();
       >
         <div class="flex items-center gap-1.5">
           <UIcon
-            name="i-heroicons-arrow-path"
+            name="i-lucide-layers"
             class="text-xs"
             :class="hasActiveOverrides ? 'text-warning' : 'text-muted'"
           />
@@ -26,7 +26,7 @@ const { validationStage, hasActiveOverrides } = useDevTools();
             class="text-sm font-mono font-medium"
             :class="hasActiveOverrides ? 'text-warning' : 'text-default'"
           >
-            {{ validationStage }}
+            {{ currentStage }}
           </span>
         </div>
       </div>

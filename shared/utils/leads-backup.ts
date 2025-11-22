@@ -1,7 +1,7 @@
 import { writeFile, mkdir } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
-import type { ValidationStage } from '~~/shared/types/config';
+import type { StageKey } from '~~/shared/types/config';
 
 interface LeadRecord {
   emailHash: string;
@@ -9,7 +9,7 @@ interface LeadRecord {
   formId: string;
   offer?: string;
   customerStage: string;
-  validationStage?: ValidationStage;
+  currentStage?: StageKey;
   feedback?: string;
   metadata?: Record<string, any>;
   capturedAt: number;

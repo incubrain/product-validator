@@ -1,6 +1,6 @@
 <!-- layouts/default.vue -->
 <script lang="ts" setup>
-import { CONVERSION } from '#shared/config/navigation';
+import { NAVIGATION } from '#shared/config/navigation';
 const { showLayout } = useSectionVisibility();
 
 const isDev = import.meta.dev;
@@ -11,16 +11,15 @@ const isDev = import.meta.dev;
     <IDevTools v-if="isDev" />
 
     <INavBanner
-      v-if="showLayout('banner') && CONVERSION.banner"
-      :offer-id="CONVERSION.secondary"
-      :sticky="CONVERSION.banner.sticky"
-      :class="CONVERSION.navbar?.sticky ? '' : 'border-b'"
+      v-if="showLayout('banner') && NAVIGATION.layout.banner"
+      :sticky="NAVIGATION.layout.banner.sticky"
+      :class="NAVIGATION.layout.navbar?.sticky ? '' : 'border-b'"
     />
 
     <INavHeader
-      v-if="showLayout('navbar') && CONVERSION.navbar"
-      :sticky="CONVERSION.navbar.sticky"
-      :class="CONVERSION.banner?.sticky ? 'top-(--ui-banner-height)' : 'top-0'"
+      v-if="showLayout('navbar') && NAVIGATION.layout.navbar"
+      :sticky="NAVIGATION.layout.navbar.sticky"
+      :class="NAVIGATION.layout.banner?.sticky ? 'top-(--ui-banner-height)' : 'top-0'"
     />
 
     <main>

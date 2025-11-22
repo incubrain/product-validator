@@ -1,13 +1,14 @@
 <!-- components/nav/Banner.vue -->
 <script setup lang="ts">
+import { STAGE_CONFIG } from '#stage-config';
+
 const props = defineProps<{
-  offerId: OfferID;
   sticky?: boolean;
 }>();
 
 // Fetch offer from collection by ID
 const { getOffer } = useContentCache();
-const { data: offer } = await getOffer(props.offerId);
+const { data: offer } = await getOffer(STAGE_CONFIG.offers.secondary);
 
 const { configSource } = useDevTools();
 

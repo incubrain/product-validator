@@ -1,0 +1,22 @@
+business:
+  name: Product Validator
+  legal_name: Incubrain Pvt. Ltd.
+  founding_year: 2023
+  location: Pune, India
+  logo: /favicon-96x96.png
+
+social:
+  availability: Active on community channels daily. Building this full-time.
+  response_time: 24-48 hours
+  links:
+    - platform: youtube
+      label: YouTube
+      url: https://www.youtube.com/@Incubrain
+    
+    - platform: github
+      label: GitHub
+      url: https://github.com/incubrain
+    
+    - platform: x
+      label: X
+      url: https://x.com/incubrain

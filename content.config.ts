@@ -5,12 +5,11 @@ import { getActiveConfigSource } from './shared/utils/config-resolver';
 import path from 'node:path';
 
 // Determine the root directory for content based on the active source
-// Validator: Uses root 'examples/validator' (which contains a 'content' dir)
 // Custom: Uses project root (which contains a 'content' dir)
 const activeSource = getActiveConfigSource();
-const contentCwd = activeSource === 'validator' 
-  ? path.resolve(process.cwd(), 'examples/validator/content') 
-  : path.resolve(process.cwd(), 'content');
+const contentCwd = activeSource === 'root' 
+  ? path.resolve(process.cwd(), 'content') 
+  : path.resolve(process.cwd(), `examples/${activeSource}/content`);
 
 export default defineContentConfig({
   collections: {
@@ -161,7 +160,6 @@ export default defineContentConfig({
           icon: z.string(),
           description: z.string(),
           // Optional fields for benefits
-          duration: z.string().optional(),
           result: z.string().optional(),
         })),
       }),

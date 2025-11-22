@@ -5,8 +5,8 @@ const props = defineProps<{
 }>();
 
 // Fetch cards from features collection (process.yml)
-const { data: processFile } = await useAsyncData('process-cards', () => 
-  queryCollection('features').where('stem', '=', 'features/process').first()
+const { data: processFile } = await useAsyncData('benefits-cards', () => 
+  queryCollection('features').where('stem', '=', 'features/benefits').first()
 );
 
 const cards = computed(() => processFile.value?.items || []);

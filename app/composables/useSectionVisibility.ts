@@ -1,76 +1,66 @@
 // composables/useSectionVisibility.ts
-import {
-  VISIBILITY_UNLOCK_STAGES,
-  VISIBILITY_LOCK_STAGES,
-  STAGE_ORDER,
-} from '#shared/config/settings';
-import type {
-  SectionKey,
-  LayoutKey,
-  FeatureKey,
-} from '#shared/config/settings';
+import { STAGE_CONFIG } from '#stage-config';
 
 export const useSectionVisibility = () => {
-  const { validationStage } = useDevTools();
+  const { currentStage } = useDevTools();
 
-  const currentStageLevel = computed(() => STAGE_ORDER[validationStage.value]);
+  // Build stage order from config
+  const stageOrder = computed(() => {
+    const order: Record<string, number> = {};
+    STAGE_CONFIG.stages.forEach((stage) => {
+      order[stage.value] = stage.order;
+    });
+    return order;
+  });
 
-  /**
-   * Core visibility check: Has this element unlocked yet?
-   */
-  const isUnlocked = (unlockStage: ValidationStage): boolean => {
-    return currentStageLevel.value >= STAGE_ORDER[unlockStage];
+  const currentStageLevel = computed(() => stageOrder.value[currentStage.value] || 1);
+
+  const isUnlocked = (unlockStage: string): boolean => {
+    const unlockLevel = stageOrder.value[unlockStage];
+    if (unlockLevel === undefined) return true; // Unknown stage = always show
+    return currentStageLevel.value >= unlockLevel;
   };
 
-  /**
-   * Check if element is locked (hidden after certain stage)
-   */
-  const isLocked = (lockStage?: ValidationStage): boolean => {
+  const isLocked = (lockStage?: string): boolean => {
     if (!lockStage) return false;
-    return currentStageLevel.value >= STAGE_ORDER[lockStage];
+    const lockLevel = stageOrder.value[lockStage];
+    if (lockLevel === undefined) return false;
+    return currentStageLevel.value >= lockLevel;
   };
 
-  /**
-   * Check if a layout component should be visible
-   */
-  const showLayout = (layout: LayoutKey): boolean => {
-    const unlockStage = VISIBILITY_UNLOCK_STAGES.layout[layout];
+  const showLayout = (layout: string): boolean => {
+    const unlockStage = STAGE_CONFIG.visibility?.unlock?.layout?.[layout];
+    if (!unlockStage) return true;
     return isUnlocked(unlockStage);
   };
 
-  /**
-   * Check if a page section should be visible
-   */
-  const showSection = (section: SectionKey): boolean => {
-    const unlockStage = VISIBILITY_UNLOCK_STAGES.sections[section];
+  const showSection = (section: string): boolean => {
+    const unlockStage = STAGE_CONFIG.visibility?.unlock?.sections?.[section];
+    if (!unlockStage) return true;
     return isUnlocked(unlockStage);
   };
 
-  /**
-   * Check if a feature should be visible
-   * Supports both unlock (show after X) and lock (hide after Y)
-   */
-  const showFeature = (feature: FeatureKey): boolean => {
-    const unlockStage = VISIBILITY_UNLOCK_STAGES.features[feature];
-    const lockStage = VISIBILITY_LOCK_STAGES.features?.[feature];
+  const showFeature = (feature: string): boolean => {
+    const unlockStage = STAGE_CONFIG.visibility?.unlock?.features?.[feature];
+    const lockStage = STAGE_CONFIG.visibility?.lock?.features?.[feature];
 
+    if (!unlockStage) return true;
     return isUnlocked(unlockStage) && !isLocked(lockStage);
   };
 
-  /**
-   * Get all visible sections for current stage
-   */
   const visibleSections = computed(() => {
-    return Object.entries(VISIBILITY_UNLOCK_STAGES.sections)
+    const sections = STAGE_CONFIG.visibility?.unlock?.sections || {};
+    return Object.entries(sections)
       .filter(([_, unlockStage]) => isUnlocked(unlockStage))
-      .map(([section]) => section as SectionKey);
+      .map(([section]) => section);
   });
 
   return {
-    // New API
     showLayout,
     showSection,
     showFeature,
     visibleSections,
+    currentStage,
+    stageOrder,
   };
 };

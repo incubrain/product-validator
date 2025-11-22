@@ -7,11 +7,11 @@ defineProps<{
 }>();
 
 const breakpoints = useBreakpoints(breakpointsTailwind);
-const smallerThanLg = breakpoints.smaller('lg');
+const smallerThanXl = breakpoints.smaller('xl');
 
 // Fetch steps from features collection (benefits.yml)
-const { data: benefitsFile } = await useAsyncData('benefits', () => 
-  queryCollection('features').where('stem', '=', 'features/benefits').first()
+const { data: benefitsFile } = await useAsyncData('process', () => 
+  queryCollection('features').where('stem', '=', 'features/process').first()
 );
 
 const steps = computed(() => benefitsFile.value?.items || []);
@@ -24,7 +24,7 @@ const { showSection } = useSectionVisibility();
     <UCarousel
       v-if="steps.length"
       v-slot="{ item, index }"
-      :arrows="!smallerThanLg"
+      :arrows="!smallerThanXl"
       loop
       align="start"
       :items="steps"

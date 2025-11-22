@@ -4,7 +4,7 @@ import { getActiveConfigSource } from './shared/utils/config-resolver';
 import path from 'node:path';
 
 const activeSource = getActiveConfigSource();
-const publicDir = activeSource === 'custom' 
+const publicDir = activeSource === 'root' 
   ? 'public' 
   : path.resolve(process.cwd(), `examples/${activeSource}/public`);
 
@@ -131,7 +131,6 @@ export default defineNuxtConfig({
     public: {
       analyticsLink: '',
       configSource: '',
-      validationStage: '',
       scripts: {
         umamiAnalytics: {
           websiteId: '',
@@ -172,6 +171,9 @@ export default defineNuxtConfig({
     '#types': fileURLToPath(
       new URL('./shared/types/config.ts', import.meta.url),
     ),
+    '#stage-config': activeSource === 'root'
+      ? fileURLToPath(new URL('./config/stages.ts', import.meta.url))
+      : fileURLToPath(new URL(`./examples/${activeSource}/config/stages.ts`, import.meta.url)),
   },
 
   router: {

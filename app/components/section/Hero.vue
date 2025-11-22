@@ -1,6 +1,6 @@
 <!-- components/section/Hero.vue -->
 <script setup lang="ts">
-import { CONVERSION } from '#shared/config/navigation'
+import { STAGE_CONFIG } from '#stage-config';
 // Accept data as prop (from MDC)
 const props = defineProps<{
   data?: any;
@@ -114,7 +114,7 @@ const { data: primaryOffer } = await getPrimaryOffer();
         <IButtonCTA
           v-if="showCTA"
           size="xl"
-          :offer-id="CONVERSION.primary"
+          :offer-id="STAGE_CONFIG.offers.primary"
           location="hero"
           anchor
           class="hidden md:inline-flex text-toned font-black"
@@ -122,9 +122,21 @@ const { data: primaryOffer } = await getPrimaryOffer();
       </div>
     </template>
 
-    <!-- Media (Traffic stage onward) -->
-    <template #body>
-      <div v-if="showMedia" class="relative pt-12">
+    <!-- ✅ Bottom slot: Full-width marquees + background effects -->
+    <template #bottom>
+      <!-- Marquees (Full-width, outside container) -->
+      <div v-if="showMarquees" class="space-y-8">
+        <IMarqueeWrapper
+          v-for="(track, index) in proof"
+          :key="track.label"
+          :label="track.label"
+          :badge-color="track.badgeColor"
+          :items="track.items"
+          :track-index="index"
+        />
+      </div>
+
+       <div v-if="showMedia" class="relative py-12 max-w-4xl mx-auto">
         <div class="relative">
           <IVideo
             v-if="hero.media.type === 'video'"
@@ -143,21 +155,6 @@ const { data: primaryOffer } = await getPrimaryOffer();
             class="rounded-2xl shadow-2xl border border-white/10 w-full"
           />
         </div>
-      </div>
-    </template>
-
-    <!-- ✅ Bottom slot: Full-width marquees + background effects -->
-    <template #bottom>
-      <!-- Marquees (Full-width, outside container) -->
-      <div v-if="showMarquees" class="space-y-8 pb-24">
-        <IMarqueeWrapper
-          v-for="(track, index) in proof"
-          :key="track.label"
-          :label="track.label"
-          :badge-color="track.badgeColor"
-          :items="track.items"
-          :track-index="index"
-        />
       </div>
 
       <!-- Background Effects -->

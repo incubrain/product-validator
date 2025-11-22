@@ -61,6 +61,7 @@ const { showSection } = useSectionVisibility();
         v-if="primaryOffer"
         v-bind="primaryOffer"
         :features="transformedFeatures"
+        variant="outline"
         :ui="{
           root: 'bg-primary/5 backdrop-blur-sm',
           features: 'gap-3',

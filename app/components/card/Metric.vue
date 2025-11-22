@@ -1,8 +1,16 @@
 <!-- ~/components/MetricCard.vue -->
 <script setup lang="ts">
-import type { ProcessStep } from '#shared/types/config';
 
-defineProps<ProcessStep & { index: number }>();
+type ProcessStep = {
+  id: string;
+  title: string;
+  icon: string;
+  description: string;
+  result: string;
+  index: number
+};
+
+defineProps<ProcessStep>();
 </script>
 
 <template>

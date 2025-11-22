@@ -20,7 +20,7 @@ export interface ProviderResult {
 export interface AuthorizeResult {
   exists: boolean;
   customerStage?: string;
-  validationStage?: ValidationStage;
+  currentStage?: StageKey;
 }
 
 export interface StorageProvider {

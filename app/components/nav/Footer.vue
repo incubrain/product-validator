@@ -1,6 +1,6 @@
 <!-- components/nav/Footer.vue -->
 <script setup lang="ts">
-import { CONVERSION } from '#shared/config/navigation';
+import { STAGE_CONFIG } from '#stage-config';
 
 // Fetch founder and config data
 const { getFounder, getSiteConfig } = useContentCache();
@@ -68,7 +68,7 @@ const copyrightYear = computed(() =>
             color="neutral"
             aria-label="View Analytics Dashboard"
           />
-          <IButtonCTA :offer-id="CONVERSION.secondary" location="footer" />
+          <IButtonCTA :offer-id="STAGE_CONFIG.offers.secondary" location="footer" />
         </div>
       </UContainer>
     </template>

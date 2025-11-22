@@ -16,7 +16,7 @@ interface EmailCapture {
   formId: string;
   offerId?: string;
   customerStage: 'email_captured' | 'feedback_submitted';
-  validationStage?: ValidationStage;
+  currentStage?: StageKey;
   feedback?: string;
   metadata?: Record<string, any>;
   capturedAt: number;
@@ -116,7 +116,7 @@ export const kvProvider: StorageProvider = {
           formId: data.formId ?? existing.formId,
           offerId: data.offerId ?? existing.offerId,
           customerStage: data.customerStage ?? existing.customerStage,
-          validationStage: data.validationStage ?? existing.validationStage,
+          currentStage: data.currentStage ?? existing.currentStage,
           feedback: data.feedback ?? existing.feedback,
           metadata: cleanMetadata
             ? { ...existing.metadata, ...cleanMetadata }
@@ -139,7 +139,7 @@ export const kvProvider: StorageProvider = {
           formId: data.formId,
           offerId: data.offerId,
           customerStage: data.customerStage || 'email_captured',
-          validationStage: data.validationStage,
+          currentStage: data.currentStage,
           feedback: data.feedback,
           metadata: cleanMetadata,
           capturedAt: timestamp,
@@ -197,7 +197,7 @@ export const kvProvider: StorageProvider = {
   async authorize(email: string): Promise<{
     exists: boolean;
     customerStage?: string;
-    validationStage?: ValidationStage;
+    currentStage?: StageKey;
   }> {
     try {
       const emailHash = hashEmail(email);
@@ -212,7 +212,7 @@ export const kvProvider: StorageProvider = {
       return {
         exists: true,
         customerStage: record.customerStage,
-        validationStage: record.validationStage,
+        currentStage: record.currentStage,
       };
     } catch (error) {
       console.error('[KV Provider] Verify email error:', error);
@@ -270,9 +270,9 @@ export const cachedLeadsMetrics = defineCachedFunction(
         {} as Record<string, number>,
       );
 
-      const byValidationStage = filtered.reduce(
+      const byStageKey = filtered.reduce(
         (acc: Record<string, number>, record: any) => {
-          const stage = record.validationStage || 'unknown';
+          const stage = record.currentStage || 'unknown';
           acc[stage] = (acc[stage] || 0) + 1;
           return acc;
         },
@@ -283,7 +283,7 @@ export const cachedLeadsMetrics = defineCachedFunction(
         total: totalLeads,
         byStage,
         byForm,
-        byValidationStage,
+        byStageKey,
         lastUpdated: Date.now(),
       };
     } catch (err) {
@@ -292,7 +292,7 @@ export const cachedLeadsMetrics = defineCachedFunction(
         total: 0,
         byStage: {},
         byForm: {},
-        byValidationStage: {},
+        byStageKey: {},
         lastUpdated: Date.now(),
         error: 'failed to compute metrics',
       };

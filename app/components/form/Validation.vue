@@ -1,8 +1,7 @@
 <!-- components/form/Validation.vue -->
 <script setup lang="ts">
 import type { Offer } from '#types';
-import { CONVERSION } from '#shared/config/navigation';
-import type { FormType } from '#shared/config/navigation';
+import { STAGE_CONFIG } from '#stage-config';
 import { IFormFakeDoor, IFormMagnet } from '#components';
 
 interface Props {
@@ -11,25 +10,39 @@ interface Props {
 }
 
 const props = defineProps<Props>();
-const { validationStage } = useDevTools();
+const { currentStage } = useDevTools();
 
-const FORM_COMPONENTS: Record<FormType, any> = {
-  fake_door: IFormFakeDoor,
-  magnet: IFormMagnet,
-};
+// Determine if we're before the fake door disable threshold
+const useFakeDoor = computed(() => {
+  const disableAtStage = STAGE_CONFIG.stages.find(
+    s => s.value === STAGE_CONFIG.disableFakeDoorAt
+  );
+  const currentStageConfig = STAGE_CONFIG.stages.find(
+    s => s.value === currentStage.value
+  );
+  
+  const currentOrder = currentStageConfig?.order ?? 0;
+  const disableAtOrder = disableAtStage?.order ?? Infinity;
+  
+  return currentOrder < disableAtOrder;
+});
 
 const formComponent = computed(() => {
-  // Only primary offer uses stage-based form switching
-  if (props.offer.id !== CONVERSION.primary) {
-    return IFormMagnet; // Default for non-primary offers
+  // Secondary offer (direct) doesn't use forms - it's a booking link
+  if (props.offer.slug === STAGE_CONFIG.offers.secondary) {
+    return null;
   }
-
-  // Look up form type for current stage
-  const formType = CONVERSION.conversionTarget[validationStage.value];
-  return FORM_COMPONENTS[formType];
+  
+  // Primary offer: fake door or real form based on stage
+  return useFakeDoor.value ? IFormFakeDoor : IFormMagnet;
 });
 </script>
 
 <template>
-  <component :is="formComponent" :location="location" :offer="offer" />
+  <component 
+    v-if="formComponent" 
+    :is="formComponent" 
+    :location="location" 
+    :offer="offer" 
+  />
 </template>

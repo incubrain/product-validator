@@ -1,0 +1,19 @@
+id: founder
+profile:
+  given_name: Drew
+  surname: MacGibbon
+  name: Drew MacGibbon
+  email: mac@incubrain.org
+  role: Creator
+  avatar:
+    src: /team/founder-avatar.png
+    alt: Drew MacGibbon
+  portrait:
+    src: /team/founder-portrait.png
+    alt: Drew MacGibbon
+story:
+  mission: I built this template because I was tired of paying for tools I didn't own and couldn't customize.
+  background:
+    - After years of using landing page builders and email platforms, I wanted something I could actually control.
+    - This template is what I wish existed when I started — a simple, powerful foundation that grows with you.
+  challenge: Fork it, customize it, make it yours.

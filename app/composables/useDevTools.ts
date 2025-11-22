@@ -1,36 +1,33 @@
 // composables/useDevTools.ts
+import { STAGE_CONFIG } from '#stage-config';
 
 interface DevOverrides {
-  validationStage?: ValidationStage; // ✅ Remove configSource
+  stage?: StageKey;
 }
-
-const stages: ValidationStage[] = [
-  'identity',
-  'attention',
-  'traffic',
-  'conversion',
-  'engagement',
-  'demand',
-];
 
 export const useDevTools = () => {
   const env = useRuntimeConfig().public;
   const isClient = import.meta.client;
   const isDev = import.meta.dev;
-  const configSource = env.configSource as ConfigSource; // ✅ Just read from ENV
+  const configSource = env.configSource as ConfigSource;
+
+  // Get stages from dynamic config
+  const stages = STAGE_CONFIG.stages.map(s => s.value);
+  const defaultStage = STAGE_CONFIG.currentStage;
 
   // SSR-safe reduced API
   if (!isClient || !isDev) {
     return {
-      validationStage: computed(() => env.validationStage as ValidationStage),
+      currentStage: computed(() => defaultStage),
       configSource,
+      stages,
+      stageConfig: STAGE_CONFIG,
       setDevOverrides: () => {},
       resetDevOverrides: () => {},
       cycleStage: () => {},
       hasActiveOverrides: computed(() => false),
-      stages,
       envValues: computed(() => ({
-        validationStage: env.validationStage as ValidationStage,
+        stage: defaultStage,
       })),
       clearAllStorage: () => {},
       logCurrentStorage: () => {},
@@ -39,11 +36,10 @@ export const useDevTools = () => {
   }
 
   const toast = useToast();
-  
   const DEV_OVERRIDES_KEY = `${configSource}_dev_overrides`;
 
   const devOverrides = useState<DevOverrides>('dev-overrides', () => {
-    if (import.meta.server) return
+    if (import.meta.server) return {};
 
     try {
       const stored = localStorage.getItem(DEV_OVERRIDES_KEY);
@@ -54,7 +50,7 @@ export const useDevTools = () => {
   });
 
   const persistOverrides = (overrides: DevOverrides) => {
-    if (import.meta.server) return
+    if (import.meta.server) return;
 
     try {
       if (Object.keys(overrides).length === 0) {
@@ -67,29 +63,31 @@ export const useDevTools = () => {
     }
   };
 
-  const validationStage = computed<ValidationStage>(() => {
+  const currentStage = computed<StageKey>(() => {
     if (import.meta.server) {
-      return env.validationStage as ValidationStage;
+      return defaultStage;
     }
 
-    if (isDev) {
-      return (
-        devOverrides.value.validationStage ||
-        (env.validationStage as ValidationStage)
-      );
+    if (isDev && devOverrides.value.stage) {
+      return devOverrides.value.stage;
     }
 
-    return env.validationStage as ValidationStage;
+    return defaultStage;
   });
 
-  const setDevOverrides = (stage: ValidationStage) => {
-    // ✅ Simplified signature
+  const setDevOverrides = (stage: StageKey) => {
     if (!isDev) {
       console.warn('setDevOverrides only available in development');
       return;
     }
 
-    devOverrides.value = { validationStage: stage };
+    // Validate stage exists in config
+    if (!stages.includes(stage)) {
+      console.warn(`Invalid stage: ${stage}. Available: ${stages.join(', ')}`);
+      return;
+    }
+
+    devOverrides.value = { stage };
     persistOverrides(devOverrides.value);
   };
 
@@ -111,7 +109,7 @@ export const useDevTools = () => {
 
   const cycleStage = () => {
     if (!isDev) return;
-    const currentIndex = stages.indexOf(validationStage.value);
+    const currentIndex = stages.indexOf(currentStage.value);
     const nextIndex = (currentIndex + 1) % stages.length;
     setDevOverrides(stages[nextIndex]);
   };
@@ -121,13 +119,13 @@ export const useDevTools = () => {
   });
 
   const envValues = computed(() => ({
-    validationStage: env.validationStage as ValidationStage,
+    stage: defaultStage,
   }));
 
-  const storagePrefix = computed(() => configSource); // ✅ Now just reads ENV
+  const storagePrefix = computed(() => configSource);
 
   const getStorageSnapshot = () => {
-    if (import.meta.server) return
+    if (import.meta.server) return { localStorage_items: {}, sessionStorage_items: {} };
 
     try {
       const localStorage_items = Object.keys(localStorage)
@@ -186,7 +184,7 @@ export const useDevTools = () => {
 
     toast.add?.({
       title: 'Development Storage Cleared',
-      description: `Cleared ${totalCleared} items (including dev overrides). Page will reload in 3 seconds.`,
+      description: `Cleared ${totalCleared} items. Page will reload in 3 seconds.`,
       color: 'warning',
       duration: 3000,
       actions: [
@@ -203,8 +201,9 @@ export const useDevTools = () => {
   const logCurrentStorage = () => {
     const snapshot = getStorageSnapshot();
     console.group('📦 Storage Snapshot');
-    console.log('Config Source (ENV):', configSource);
-    console.log('Active Stage:', validationStage.value);
+    console.log('Config Source:', configSource);
+    console.log('Active Stage:', currentStage.value);
+    console.log('Available Stages:', stages);
     console.log('Dev Overrides Key:', DEV_OVERRIDES_KEY);
     console.table({
       ...snapshot.localStorage_items,
@@ -226,30 +225,32 @@ export const useDevTools = () => {
       clearAll: clearAllStorage,
       logStorage: logCurrentStorage,
       snapshot: getStorageSnapshot,
-      setStage: setDevOverrides, // ✅ Simplified
+      setStage: setDevOverrides,
       cycleStage,
       resetOverrides: resetDevOverrides,
+      stages: () => console.log('Available stages:', stages),
       status: () => {
         console.table({
           'Storage Key': DEV_OVERRIDES_KEY,
-          'Config Source (ENV)': configSource,
-          'Validation Stage (ENV)': envValues.value.validationStage,
-          'Validation Stage (Active)': validationStage.value,
-          'Validation Stage (Override)':
-            devOverrides.value.validationStage || 'none',
+          'Config Source': configSource,
+          'Stage (ENV)': envValues.value.stage,
+          'Stage (Active)': currentStage.value,
+          'Stage (Override)': devOverrides.value.stage || 'none',
           'Has Overrides': hasActiveOverrides.value,
+          'Available Stages': stages.join(', '),
         });
       },
     };
   }
 
   return {
-    validationStage,
+    currentStage,
+    stages,
+    stageConfig: STAGE_CONFIG,
     setDevOverrides,
     resetDevOverrides,
     cycleStage,
     hasActiveOverrides,
-    stages,
     configSource,
     envValues,
     clearAllStorage,

@@ -1,6 +1,6 @@
 <!-- components/nav/Anchor.vue -->
 <script setup lang="ts">
-import { CONVERSION } from '#shared/config/navigation';
+import { NAVIGATION } from '#shared/config/navigation';
 
 interface Props {
   id: SectionAnchor;
@@ -9,9 +9,9 @@ interface Props {
 const props = defineProps<Props>();
 
 const getStickyOffset = () => {
-  const banner = CONVERSION.banner?.sticky ? 'var(--ui-banner-height)+' : '';
+  const banner = NAVIGATION.layout.banner?.sticky ? 'var(--ui-banner-height)+' : '';
 
-  const navbar = CONVERSION.navbar?.sticky ? 'var(--ui-header-height)+' : '';
+  const navbar = NAVIGATION.layout.navbar?.sticky ? 'var(--ui-header-height)+' : '';
 
   const offset = '--spacing(12)';
 

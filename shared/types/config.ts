@@ -1,28 +1,42 @@
 import type { ButtonProps, PricingPlanProps, BadgeProps } from '@nuxt/ui';
+import { STAGE_CONFIG } from '#stage-config'
 
-// ============================================================================
-// SHARED PRIMITIVES
-// ============================================================================
 
-/**
- * Validation lifecycle stages:
- * - identity: Who are you? What do you stand for? - Decision clarity
- * - attention: Can you grab attention? - social media, direct outreach, guerrilla marketing
- * - traffic: Can you drive consistent visitors? - visitor analytics
- * - conversion: Can you convert visitors into leads? - lead magnet conversion
- * - engagement: Can you keep leads engaged? - magnet engagement / completion rates analysis
- * - demand: Are leads ready to pay? - payment intent analysis
- */
+export interface StageDefinition {
+  value: string;
+  label: string;
+  order: number;
+}
 
-export type ValidationStage =
-  | 'identity'
-  | 'attention'
-  | 'traffic'
-  | 'conversion'
-  | 'engagement'
-  | 'demand';
+export interface VisibilityConfig {
+  layout: Record<string, string>;
+  sections: Record<string, string>;
+  features: Record<string, string>;
+}
 
-export type ConfigSource = 'validator' | 'custom';
+export interface StageConfig {
+  currentStage: string;
+  stages: StageDefinition[];
+  offers: {
+    primary: string;
+    secondary: string;
+  };
+  disableFakeDoorAt: string;
+  visibility: {
+    unlock: VisibilityConfig;
+    lock?: Partial<VisibilityConfig>;
+  };
+  conversionTarget: Record<string, string>
+}
+
+// Infer types
+export type StageKey = typeof STAGE_CONFIG.stages[number]['value'];
+export type LayoutKey = keyof typeof STAGE_CONFIG.visibility.unlock.layout;
+export type SectionKey = keyof typeof STAGE_CONFIG.visibility.unlock.sections;
+export type FormType = typeof STAGE_CONFIG.conversionTarget[StageKey];
+export type FeatureKey = keyof typeof STAGE_CONFIG.visibility.unlock.features;
+
+export type ConfigSource = 'validator' | 'starter' | 'root';
 
 export type Cta = {
   to: ButtonProps['to'];
@@ -50,14 +64,7 @@ export type Image = {
 // PROCESS SECTION
 // ============================================================================
 
-export type ProcessStep = {
-  id: string;
-  title: string;
-  icon: string;
-  duration: string;
-  description: string;
-  result: string;
-};
+
 
 export interface ProofItem {
   name: string;

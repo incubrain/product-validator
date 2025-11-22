@@ -10,15 +10,8 @@ const eventSchema = z.object({
     email: z.string().email().optional(),
     offerId: z.string().optional(),
     customerStage: z.enum(['email_captured', 'feedback_submitted']),
-    validationStage: z
-      .enum([
-        'identity',
-        'attention',
-        'traffic',
-        'conversion',
-        'engagement',
-        'demand',
-      ])
+    currentStage: z
+      .string()
       .optional(),
     feedback: z.string().optional(),
     metadata: z.record(z.any()).optional(),

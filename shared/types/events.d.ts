@@ -30,7 +30,7 @@ export interface EventPayload {
     email?: string;
     offerId?: string;
     customerStage?: string;
-    validationStage?: ValidationStage;
+    currentStage?: StageKey;
     feedback?: string;
     metadata?: Record<string, any>;
   };
