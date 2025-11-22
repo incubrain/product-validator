@@ -1,30 +1,30 @@
 items:
-  - id: one-click-deploy
-    title: One-Click Deploy
+  - id: ship-today
+    title: Ship Today
     icon: i-lucide-rocket
     description: Deploy to Railway or Vercel instantly. No server configuration. Live in under 5 minutes.
 
-  - id: configure-content
-    title: Configure Content
-    icon: i-lucide-settings
-    description: Edit YAML and Markdown files. Set your stages, customize offers, write your copy.
+  - id: own-your-stack
+    title: Own Your Stack
+    icon: i-lucide-database
+    description: Your code, your data, your infrastructure. No platform risk. No surprise pricing changes.
 
-  - id: capture-leads
-    title: Capture Leads
-    icon: i-lucide-user-plus
-    description: Built-in lead capture with encrypted storage. No third-party email platform required.
+  - id: zero-fees
+    title: Zero Monthly Fees
+    icon: i-lucide-wallet
+    description: Stop paying for landing page builders and email tools. Run for free on Vercel/Netlify.
 
-  - id: deliver-content
-    title: Deliver Gated Content
-    icon: i-lucide-lock-open
-    description: Email unlocks protected pages. Progress tracking included. Replaces drip campaigns.
+  - id: validation-first
+    title: Validation First
+    icon: i-lucide-target
+    description: Built for "fake door" testing. Capture intent before you write a single line of product code.
 
-  - id: track-signals
-    title: Track Engagement
-    icon: i-lucide-bar-chart-2
-    description: Event-driven analytics ready. See what resonates. Make data-driven decisions.
+  - id: modern-stack
+    title: Modern Stack
+    icon: i-lucide-cpu
+    description: Nuxt 4, Tailwind v4, TypeScript. The same stack you'll build your actual product with.
 
-  - id: iterate-fast
-    title: Iterate & Scale
-    icon: i-lucide-repeat
-    description: Add integrations as needed. Payments, bookings, email — plug in when validated.
+  - id: no-lockin
+    title: No Vendor Lock-in
+    icon: i-lucide-unlock
+    description: It's just a Nuxt app. Eject anytime. Add any integration. You are in control.

@@ -1,27 +1,27 @@
 slug: direct
 primary: false
-title: Implementation Support
-description: Fast-track your launch with hands-on help from the creator.
-tagline: For founders who want to move fast
-price: $50
-discount: $30
-billingCycle: hour
-terms: Minimum 2 hours. Billed monthly.
+title: Implementation Help
+description: Skip the learning curve. Get your funnel launched in 48 hours.
+tagline: For founders who value speed
+price: $299
+discount: $500
+billingCycle: one-time
+terms: One-time fee. 100% satisfaction guarantee.
 badge:
   label: Optional
   color: secondary
   variant: outline
   size: md
 features:
-  - title: Custom setup and configuration
+  - title: Full installation & setup
     icon: status-available
-  - title: Branding and design integration
+  - title: Custom branding applied
     icon: status-available
-  - title: Analytics and tracking setup
+  - title: Analytics configuration
     icon: status-available
-  - title: Integration guidance
+  - title: Email provider integration
     icon: status-available
-  - title: Strategy consultation
+  - title: 1-hour strategy call
     icon: status-available
 variant: outline
 highlight: false

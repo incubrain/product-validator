@@ -12,8 +12,8 @@ profile:
     src: /team/founder-portrait.png
     alt: Drew MacGibbon
 story:
-  mission: I built this template because I was tired of paying for tools I didn't own and couldn't customize.
+  mission: I built Founder Funnel to give technical founders a way to validate ideas without the "SaaS Tax".
   background:
-    - After years of using landing page builders and email platforms, I wanted something I could actually control.
-    - This template is what I wish existed when I started — a simple, powerful foundation that grows with you.
-  challenge: Fork it, customize it, make it yours.
+    - After launching 10+ products, I realized I was spending more time fighting with drag-and-drop tools than writing code.
+    - This is the stack I use for every new idea. It's free, it's yours, and it scales.
+  challenge: Stop renting your funnel. Start owning it.

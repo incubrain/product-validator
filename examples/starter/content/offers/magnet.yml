@@ -1,29 +1,29 @@
 slug: magnet
 primary: true
-title: Template Guide
-description: Step-by-step walkthrough to get your lead funnel live. Video included.
+title: Template Quick Start
+description: Get up and running in minutes with the official quick start guide.
 price: Free
 billingCycle: Instant access
-terms: No email required for template. Guide helps you move faster.
+terms: Access the template immediately. No email required.
 badge:
   label: Free Guide
   color: success
   variant: solid
   size: lg
 features:
-  - title: Video walkthrough
+  - title: Quick start video
     icon: status-available
-  - title: Configuration guide
+  - title: Configuration docs
     icon: status-available
-  - title: Deployment checklist
+  - title: Deployment guide
     icon: status-available
   - title: Best practices
     icon: status-available
-  - title: Community access
+  - title: Community support
     icon: status-available
 variant: solid
 highlight: true
 cta:
-  label: Get the Guide
+  label: Get Access
   icon: i-lucide-play
   modal: window

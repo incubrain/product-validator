@@ -1,6 +1,6 @@
 ---
-title: Lead Funnel Template
-description: Open-source landing page with built-in gated content delivery for technical founders.
+title: Founder Funnel
+description: Open-source landing page template with built-in gated content delivery for technical founders.
 ---
 
 ::i-section-hero
@@ -11,8 +11,8 @@ data:
     description: MIT License
     to: https://github.com/incubrain/product-validator
   intro:
-    title: Own Your Lead Funnel
-    description: Landing page + gated content delivery in one open-source template. One-click deploy. Own forever.
+    title: Own Your Funnel
+    description: The open-source landing page template for technical founders. Capture leads, deliver gated content, and validate your idea without monthly fees.
   media:
     type: image
     src: /product/gated-dashboard.png
@@ -29,12 +29,12 @@ data:
   intro:
     icon: i-lucide-alert-triangle
     headline: The Problem
-    title: SaaS Subscription Hell
-    description: Landing page tools, email platforms, course software — paying monthly before you know if anyone wants what you're building.
+    title: Stop Renting Your Funnel
+    description: Paying $99/mo for landing page builders, $49/mo for email tools, and $29/mo for link-in-bio tools before you've even validated your idea.
   statement: Own Your Stack • Ship Faster • Pay Nothing •
   bridge:
-    headline: There's a better way
-    message: One open-source template. Landing page + lead capture + gated content.
+    headline: Build on your own terms
+    message: One open-source template. Your code. Your data. Your infrastructure.
     cta:
       label: See How It Works
       to:
@@ -50,8 +50,8 @@ data:
   intro:
     icon: i-lucide-zap
     headline: How It Works
-    title: Live in 5 Minutes
-    description: One-click deploy, configure content, start capturing leads.
+    title: Ship Today, Own Forever
+    description: Clone the repo, configure your content, and deploy to your own cloud.
 ---
 ::
 
@@ -61,8 +61,8 @@ data:
   intro:
     icon: i-lucide-gift
     headline: Get Started
-    title: Free and Open Source
-    description: Clone the template or grab the quick start guide.
+    title: Start Validating Now
+    description: Get the template and start building your funnel today.
   bridge:
     headline: Questions?
     message: Check the FAQ below.
