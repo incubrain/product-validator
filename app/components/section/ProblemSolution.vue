@@ -19,7 +19,7 @@ const { showSection } = useSectionVisibility();
     v-if="showSection('problemSolution')"
     id="#problem-solution"
     :intro="data.intro"
-    :bridge="data.bridge"
+    :cta="data.cta"
     class="bg-muted/50"
   >
     <UPageGrid class="border-y py-4">

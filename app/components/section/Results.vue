@@ -28,7 +28,7 @@ const { showSection } = useSectionVisibility();
 </script>
 
 <template>
-  <ISectionWrapper v-if="showSection('results')" id="#results" :intro="data.intro" :bridge="data.bridge">
+  <ISectionWrapper v-if="showSection('results')" id="#results" :intro="data.intro" :cta="data.cta">
     <div v-if="formattedTestimonials.length">
       <UPageColumns class="gap-0 space-y-0">
         <UPageCard

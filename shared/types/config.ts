@@ -72,6 +72,13 @@ export interface ProofItem {
   note?: string;
 }
 
+export interface SectionCta {
+  headline: string;
+  message: string;
+  button: Cta;
+  primary?: boolean;
+}
+
 // ============================================================================
 // OFFER SECTION
 // ============================================================================

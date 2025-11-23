@@ -34,10 +34,10 @@ data:
     headline: '⚠️ Section headline'
     title: '⚠️ Section title'
     description: '⚠️ Section description'
-  bridge:
+  cta:
     headline: '⚠️ Bridge headline'
     message: '⚠️ Bridge message'
-    cta:
+    button:
       label: '⚠️ CTA label'
       to: '#offer'
       icon: i-lucide-arrow-down
@@ -74,10 +74,10 @@ data:
     headline: '⚠️ Section headline'
     title: '⚠️ Section title'
     description: '⚠️ Section description'
-  bridge:
+  cta:
     headline: '⚠️ Bridge headline'
     message: '⚠️ Bridge message'
-    cta:
+    button:
       label: '⚠️ CTA label'
       to: '#concerns'
       icon: i-lucide-arrow-down
@@ -103,10 +103,10 @@ data:
     headline: '⚠️ Section headline'
     title: '⚠️ Section title'
     description: '⚠️ Section description'
-  bridge:
+  cta:
     headline: '⚠️ Bridge headline'
     message: '⚠️ Bridge message'
-    cta:
+    button:
       label: '⚠️ CTA label'
       to: '#offer'
       icon: i-lucide-rocket

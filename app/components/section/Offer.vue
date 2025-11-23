@@ -47,7 +47,7 @@ const { showSection } = useSectionVisibility();
     v-if="showSection('offer')"
     id="#offer"
     :intro="data.intro"
-    :bridge="data.bridge"
+    :cta="data.cta"
     class="relative"
   >
     <!-- ✅ Subtle radial glow -->

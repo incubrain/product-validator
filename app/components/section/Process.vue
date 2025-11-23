@@ -43,7 +43,7 @@ const { showSection } = useSectionVisibility();
 </script>
 
 <template>
-  <ISectionWrapper v-if="showSection('process')" id="#process" :intro="data.intro" :bridge="data.bridge">
+  <ISectionWrapper v-if="showSection('process')" id="#process" :intro="data.intro" :cta="data.cta">
     <div class="hidden md:grid md:grid-cols-3">
       <div
         v-for="(step, index) in steps"

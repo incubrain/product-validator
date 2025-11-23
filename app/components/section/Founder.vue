@@ -18,7 +18,7 @@ const { showSection } = useSectionVisibility();
     v-if="showSection('founder')"
     id="#founder"
     :intro="data.intro"
-    :bridge="data.bridge"
+    :cta="data.cta"
     :class="`bg-muted/50 ${$attrs.class}`"
   >
     <!-- Hook + Mission Quote (merged in quote box) -->

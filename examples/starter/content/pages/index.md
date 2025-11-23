@@ -29,17 +29,14 @@ data:
   intro:
     icon: i-lucide-alert-triangle
     headline: The Problem
-    title: Stop Renting Your Funnel
-    description: Paying $99/mo for landing page builders, $49/mo for email tools, and $29/mo for link-in-bio tools before you've even validated your idea.
-  statement: Own Your Stack • Ship Faster • Pay Nothing •
-  bridge:
-    headline: Build on your own terms
-    message: One open-source template. Your code. Your data. Your infrastructure.
-    cta:
-      label: See How It Works
-      to:
-        path: /
-        hash: '#process'
+    title: Stop Building in the Dark
+    description: Most founders spend months building products nobody wants. They focus on code before validation.
+  cta:
+    headline: Ready to validate?
+    message: Start by defining your problem and solution clearly.
+    button:
+      label: Get the Template
+      to: '#offer'
       icon: i-lucide-arrow-down
 ---
 ::
@@ -48,21 +45,32 @@ data:
 ---
 data:
   intro:
-    icon: i-lucide-zap
-    headline: How It Works
-    title: Ship Today, Own Forever
-    description: Clone the repo, configure your content, and deploy to your own cloud.
+    icon: i-lucide-package
+    headline: How it works
+    title: From Idea to Validation
+    description: A simple, repeatable process to test your assumptions and build your waitlist.
 ---
 ::
- 
+
+::i-section-founder
+---
+data:
+  intro:
+    icon: i-lucide-user
+    headline: Meet the Creator
+    title: Built by Founders, for Founders
+    description: We've been there. That's why we built this tool.
+---
+::
+
 ::i-section-offer
 ---
 data:
   intro:
-    icon: i-lucide-gift
-    headline: Get Started
-    title: Start Validating Now
-    description: Get the template and start building your funnel today.
+    icon: i-lucide-handshake
+    headline: The Offer
+    title: Everything You Need to Launch
+    description: Get the complete validation stack. Landing page, analytics, and email capture.
 ---
 ::
 
@@ -74,14 +82,12 @@ data:
     headline: FAQ
     title: Common Questions
     description: Everything you need to know about the template.
-  bridge:
-    headline: What are you waiting for?
-    message: Join a community of founder funnel builders shaping the businesses of tomorrow.
-    cta:
-      label: Launch Your Funnel Today
-      to:
-        path: /
-        hash: '#offer'
-      icon: i-lucide-funnel-plus
+  cta:
+    headline: Still have questions?
+    message: Open an issue on GitHub or reach out on Twitter.
+    button:
+      label: GitHub Discussions
+      to: https://github.com/incubrain/product-validator/discussions
+      icon: i-lucide-message-circle
 ---
 ::

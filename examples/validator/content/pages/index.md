@@ -34,10 +34,10 @@ data:
     title: Destroy Your Excuses
     description: Take control of your destiny today or risk wasting years like I did.
   statement: Break Perfectionism - Ship Daily • Validate First - Build For Demand • Stop Chasing Unicorns - Define Your Success •
-  bridge:
+  cta:
     headline: Ready to get started?
     message: No excuses it's free! No strings attached
-    cta:
+    button:
       label: Check out the Validation Kit
       to:
         path: /
@@ -76,10 +76,10 @@ data:
     headline: Limited Early Access
     title: Focus On What Matters
     description: Solve the problems that are holding you back from success.
-  bridge:
+  cta:
     headline: Have concerns?
     message: Honest answers about technical requirements, time investment, competition, and who this isn't for
-    cta:
+    button:
       label: Get Answers
       to:
         path: /
@@ -107,10 +107,10 @@ data:
     headline: Objections & Reality Checks
     title: We Value Transparency
     description: You are early, this product isn't going to be perfect; with your help, we can make it great.
-  bridge:
+  cta:
     headline: Validation is Phase 1. What about Phase 2?
     message: After you validate demand with fake door testing, Phase 2 is building your validated magnet and scaling traffic. We help with both. First validate the signal. Then we help you build what sells.
-    cta:
+    button:
       label: Start Phase 1 Now
       to:
         path: /

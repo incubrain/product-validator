@@ -3,7 +3,7 @@
 interface Props {
   id: SectionAnchor;
   intro: SectionIntro;
-  bridge?: SectionBridge;
+  cta?: SectionCta;
   orientation?: 'vertical' | 'horizontal';
   class?: string;
 }
@@ -13,7 +13,7 @@ const { showFeature } = useSectionVisibility();
 const props = withDefaults(defineProps<Props>(), {
   orientation: 'vertical',
   class: '',
-  bridge: null,
+  cta: null,
 });
 </script>
 
@@ -80,9 +80,9 @@ const props = withDefaults(defineProps<Props>(), {
 
     <slot />
 
-    <INavBridge
-      v-if="bridge && showFeature('sectionBridge')"
-      :bridge="bridge"
+    <INavCta
+      v-if="cta && showFeature('sectionCta')"
+      :cta="cta"
     />
   </UPageSection>
 </template>

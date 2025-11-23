@@ -71,7 +71,7 @@ const { showSection } = useSectionVisibility();
     v-if="showSection('concerns')"
     id="#concerns"
     :intro="data.intro"
-    :bridge="{ ...data.bridge, primary: true }"
+    :cta="data.cta"
   >
     <!-- Enhanced Legend with counts -->
     <div class="space-y-4">
