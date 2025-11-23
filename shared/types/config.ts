@@ -36,7 +36,7 @@ export type SectionKey = keyof typeof STAGE_CONFIG.visibility.unlock.sections;
 export type FormType = typeof STAGE_CONFIG.conversionTarget[StageKey];
 export type FeatureKey = keyof typeof STAGE_CONFIG.visibility.unlock.features;
 
-export type ConfigSource = 'validator' | 'starter' | 'root';
+export type ConfigSource = 'validator' | 'founder-funnel' | 'root';
 
 export type Cta = {
   to: ButtonProps['to'];

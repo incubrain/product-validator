@@ -3,7 +3,7 @@ import type { ConfigSource } from '~~/shared/types/config';
 
 export const CONFIG_SOURCES = {
   validator: 'examples/validator/',
-  starter: 'examples/starter/',
+  'founder-funnel': 'examples/founder-funnel/',
   root: '',
 } as const;
 
