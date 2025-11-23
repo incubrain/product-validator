@@ -1,6 +1,7 @@
 <!-- components/section/Offer.vue -->
 <script setup lang="ts">
 import type { IconProps } from '@nuxt/ui';
+import type { Offer } from '#types';
 
 const props = defineProps<{
   data?: any;
@@ -13,7 +14,7 @@ const { data: offersData } = await useAsyncData('offers', () =>
 
 // Get primary offer
 const primaryOffer = computed(() =>
-  offersData.value?.find((offer) => offer.primary === true),
+  offersData.value?.find((offer) => offer.primary === true) as Offer | undefined,
 );
 
 const STATUS_ICONS: Record<string, IconProps & { class: string }> = {
@@ -93,7 +94,7 @@ const { showSection } = useSectionVisibility();
         </template>
 
         <template #button>
-          <div class="pt-4">
+          <div class="pt-4 w-full">
             <IFormValidation location="offer-section" :offer="primaryOffer" />
           </div>
         </template>
@@ -101,11 +102,28 @@ const { showSection } = useSectionVisibility();
         <template v-if="primaryOffer.stock" #terms>
           <IStockProgress
             :stock="primaryOffer.stock"
-            :offer-id="primaryOffer.id"
+            :offer-id="primaryOffer.slug"
             class="w-full"
           />
         </template>
       </UPricingPlan>
+      <div class="mt-4 flex flex-col gap-4 justify-center items-center"
+v-if="primaryOffer.secondaryCta"
+      >
+<UBadge variant="soft">
+  OR
+</UBadge>
+<UButton
+  block
+  size="xl"
+  :color="primaryOffer.secondaryCta.color || 'neutral'"
+  variant="outline"
+  :label="primaryOffer.secondaryCta.label"
+  :to="primaryOffer.secondaryCta.to"
+  :icon="primaryOffer.secondaryCta.icon"
+  target="_blank"
+/>
+      </div>
     </div>
   </ISectionWrapper>
 </template>

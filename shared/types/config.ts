@@ -119,6 +119,7 @@ export type Offer = Pick<
   primary?: boolean;
   stock?: OfferStock;
   cta: Cta;
+  secondaryCta?: Cta;
   upsells?: OfferUpsell[];
   media?: {
     type: 'video' | 'image';

@@ -120,6 +120,14 @@ export default defineContentConfig({
           color: z.string().optional(),
           note: z.string().nullable().optional(),
         }),
+        secondaryCta: z.object({
+          label: z.string(),
+          to: z.string().optional(),
+          icon: z.string(),
+          modal: z.string().optional(),
+          color: z.string().optional(),
+          note: z.string().nullable().optional(),
+        }).optional(),
         media: z.object({
           type: z.enum(['image', 'video']),
           src: z.string(),

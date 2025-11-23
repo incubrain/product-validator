@@ -27,3 +27,8 @@ cta:
   label: Get Access
   icon: i-lucide-play
   modal: window
+secondaryCta:
+  label: One Click Deploy Template
+  to: '#'
+  icon: i-lucide-rocket
+  color: secondary
