@@ -24,11 +24,11 @@
     "@nuxt/image": "2.0.0",
     "@nuxt/scripts": "0.13.0",
     "@nuxt/test-utils": "3.20.1",
-    "@nuxt/ui": "4.1.0",
+    "@nuxt/ui": "4.2.1",
     "@nuxtjs/seo": "3.2.2",
     "@unhead/vue": "^2.0.19",
-    "@vueuse/core": "^13.9.0",
-    "@vueuse/nuxt": "13.7.0",
+    "@vueuse/core": "^14.0.0",
+    "@vueuse/nuxt": "14.0.0",
     "better-sqlite3": "^12.4.1",
     "canvas-confetti": "^1.9.4",
     "husky": "^9.1.7",
@@ -39,10 +39,9 @@
     "vue-router": "^4.6.3"
   },
   "devDependencies": {
-    "@compodium/nuxt": "0.1.0-beta.11",
-    "@eslint/json": "^0.13.2",
+    "@compodium/nuxt": "0.1.0-beta.12",
     "@nuxt/eslint": "1.10.0",
-    "@nuxt/hints": "1.0.0-alpha.1",
+    "@nuxt/hints": "1.0.0-alpha.2",
     "@types/node": "^22.0.0",
     "vue-tsc": "^3.1.3"
   },
