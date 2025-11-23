@@ -50,7 +50,7 @@ const copyrightYear = computed(() =>
 
     <!-- BOTTOM: Copyright + CTA -->
     <template #bottom>
-      <UContainer class="flex justify-between w-full items-center">
+      <UContainer class="flex flex-col gap-4 lg:flex-row justify-between w-full items-start lg:items-center">
         <p class="text-sm text-muted whitespace-nowrap">
           © {{ copyrightYear }}
           {{ configData?.business.legal_name }}

@@ -54,7 +54,7 @@ data:
     description: Clone the repo, configure your content, and deploy to your own cloud.
 ---
 ::
-
+ 
 ::i-section-offer
 ---
 data:
@@ -63,15 +63,6 @@ data:
     headline: Get Started
     title: Start Validating Now
     description: Get the template and start building your funnel today.
-  bridge:
-    headline: Questions?
-    message: Check the FAQ below.
-    cta:
-      label: View FAQ
-      to:
-        path: /
-        hash: '#concerns'
-      icon: i-lucide-arrow-down
 ---
 ::
 
@@ -84,11 +75,13 @@ data:
     title: Common Questions
     description: Everything you need to know about the template.
   bridge:
-    headline: Still have questions?
-    message: Open an issue on GitHub or reach out on Twitter.
+    headline: What are you waiting for?
+    message: Join a community of founder funnel builders shaping the businesses of tomorrow.
     cta:
-      label: GitHub Discussions
-      to: https://github.com/incubrain/product-validator/discussions
-      icon: i-lucide-message-circle
+      label: Launch Your Funnel Today
+      to:
+        path: /
+        hash: '#offer'
+      icon: i-lucide-funnel-plus
 ---
 ::

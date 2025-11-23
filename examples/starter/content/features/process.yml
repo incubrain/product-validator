@@ -22,15 +22,3 @@ items:
     icon: i-lucide-user-plus
     description: Visitors sign up. Emails are stored locally. No external DB needed.
     result: Building your audience
-
-  - id: deliver
-    title: Deliver Value
-    icon: i-lucide-gift
-    description: Users get instant access to your gated content.
-    result: Trust established
-
-  - id: scale
-    title: Scale
-    icon: i-lucide-trending-up
-    description: Validated? Add Stripe, Supabase, or whatever you need.
-    result: Real business started
