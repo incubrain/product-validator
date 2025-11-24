@@ -29,7 +29,7 @@
     "@unhead/vue": "^2.0.19",
     "@vueuse/core": "^14.0.0",
     "@vueuse/nuxt": "14.0.0",
-    "better-sqlite3": "^12.4.1",
+    "better-sqlite3": "^12.4.6",
     "canvas-confetti": "^1.9.4",
     "husky": "^9.1.7",
     "nuxt": "^4.2.1",
