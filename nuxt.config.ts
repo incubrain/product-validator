@@ -174,6 +174,9 @@ export default defineNuxtConfig({
     '#stage-config': activeSource === 'root'
       ? fileURLToPath(new URL('./config/stages.ts', import.meta.url))
       : fileURLToPath(new URL(`./examples/${activeSource}/config/stages.ts`, import.meta.url)),
+    '#constants': fileURLToPath(
+      new URL('./shared/constants.ts', import.meta.url),
+    ),
   },
 
   router: {
@@ -187,6 +190,10 @@ export default defineNuxtConfig({
       ssr: true,      
       prerender: false
     },
+    '/get/**': { 
+      ssr: true,      
+      prerender: false
+    },
     '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background
     '/magnet': { ssr: false }, // Magnet dashboard SPA-only (client-side rendered)
     '/magnet/**': { ssr: false }, // Magnet pages SPA-only (client-side rendered)
@@ -195,6 +202,7 @@ export default defineNuxtConfig({
   components: [
     { path: '~/components', prefix: 'I' },
     { path: '~/components/ui', prefix: 'UI' },
+    { path: '~/components/OgImage' },
     '~/components',
   ],
 

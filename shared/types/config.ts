@@ -123,6 +123,10 @@ export type Offer = Pick<
 > & {
   features: OfferFeature[];
   slug: OfferID;
+  type?: 'ebook' | 'course' | 'mentorship';
+  seo?: Record<string, any>;
+  head?: Record<string, any>;
+  ogImage?: Record<string, any>;
   primary?: boolean;
   stock?: OfferStock;
   cta: Cta;

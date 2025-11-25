@@ -6,7 +6,26 @@ price: "$50"
 discount: "$30"
 billingCycle: "hour"
 terms: "Billed monthly. Minimum 3 hours."
-highlight: false
+highlight: true
+type: ebook
+seo:
+  title: 'Direct Offer'
+  description: 'Get direct access to the offer.'
+ogImage:
+  component: Offer
+  props:
+    title: 'Direct Offer'
+    description: 'Get direct access to the offer.'
+
+robots: 'index, follow'
+
+sitemap:
+  priority: 0.8
+  changefreq: 'monthly'
+stock:
+  limit: 100
+  claimed: 10
+  type: spots
 variant: "outline"
 primary: false
 features:

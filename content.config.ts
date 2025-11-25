@@ -1,6 +1,7 @@
 // content.config.ts
 import { defineCollection, defineContentConfig, z } from '@nuxt/content';
 import { asSeoCollection } from '@nuxtjs/seo/content';
+import { asOgImageCollection } from 'nuxt-og-image/content';
 import { getActiveConfigSource } from './shared/utils/config-resolver';
 import path from 'node:path';
 
@@ -79,62 +80,65 @@ export default defineContentConfig({
       }),
     }),
 
-    offers: defineCollection({
-      type: 'data',
-      source: {
-        cwd: contentCwd,
-        include: 'offers/*.yml',
-      },
-      schema: z.object({
-        slug: z.string(),
-        primary: z.boolean().optional(),
-        title: z.string(),
-        description: z.string(),
-        price: z.string(),
-        discount: z.string().nullable().optional(),
-        billingCycle: z.string(),
-        terms: z.string(),
-        tagline: z.string().nullable().optional(),
-        badge: z.object({
-          label: z.string(),
-          color: z.enum(['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']),
-          variant: z.enum(['solid', 'outline', 'subtle', 'soft', 'ghost', 'link']),
-          size: z.enum(['xs', 'sm', 'md', 'lg', 'xl']),
-        }).optional(),
-        features: z.array(z.object({
+    offers: defineCollection(
+      asSeoCollection({
+        type: 'data',
+        source: {
+          cwd: contentCwd,
+          include: 'offers/*.yml',
+        },
+        schema: z.object({
+          slug: z.string(),
+          primary: z.boolean().optional(),
           title: z.string(),
-          icon: z.string(),
-        })),
-        variant: z.string(),
-        highlight: z.boolean(),
-        stock: z.object({
-          limit: z.number(),
-          claimed: z.number(),
-          type: z.string(),
-        }).optional(),
-        cta: z.object({
-          label: z.string(),
-          to: z.string().optional(),
-          icon: z.string(),
-          modal: z.string().optional(),
-          color: z.string().optional(),
-          note: z.string().nullable().optional(),
+          description: z.string(),
+          price: z.string(),
+          discount: z.string().nullable().optional(),
+          billingCycle: z.string(),
+          terms: z.string(),
+          tagline: z.string().nullable().optional(),
+          badge: z.object({
+            label: z.string(),
+            color: z.enum(['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']),
+            variant: z.enum(['solid', 'outline', 'subtle', 'soft', 'ghost', 'link']),
+            size: z.enum(['xs', 'sm', 'md', 'lg', 'xl']),
+          }).optional(),
+          features: z.array(z.object({
+            title: z.string(),
+            icon: z.string(),
+          })),
+          variant: z.string(),
+          highlight: z.boolean(),
+          type: z.enum(['ebook', 'course', 'mentorship']).default('ebook'),
+          stock: z.object({
+            limit: z.number(),
+            claimed: z.number(),
+            type: z.string(),
+          }).optional(),
+          cta: z.object({
+            label: z.string(),
+            to: z.string().optional(),
+            icon: z.string(),
+            modal: z.string().optional(),
+            color: z.string().optional(),
+            note: z.string().nullable().optional(),
+          }),
+          secondaryCta: z.object({
+            label: z.string(),
+            to: z.string().optional(),
+            icon: z.string(),
+            modal: z.string().optional(),
+            color: z.string().optional(),
+            note: z.string().nullable().optional(),
+          }).optional(),
+          media: z.object({
+            type: z.enum(['image', 'video']),
+            src: z.string(),
+            alt: z.string(),
+          }).optional(),
         }),
-        secondaryCta: z.object({
-          label: z.string(),
-          to: z.string().optional(),
-          icon: z.string(),
-          modal: z.string().optional(),
-          color: z.string().optional(),
-          note: z.string().nullable().optional(),
-        }).optional(),
-        media: z.object({
-          type: z.enum(['image', 'video']),
-          src: z.string(),
-          alt: z.string(),
-        }).optional(),
       }),
-    }),
+    ),
 
     faq: defineCollection({
       type: 'data',

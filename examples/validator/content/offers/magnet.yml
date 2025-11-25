@@ -21,11 +21,29 @@ features:
     icon: "status-available"
 variant: "outline"
 highlight: true
+type: ebook
 stock:
   limit: 100
-  claimed: 7
-  type: "spots"
+  claimed: 20
+  type: spots
 cta:
   label: "Get Free Validation Kit"
   icon: "i-lucide-rocket"
   modal: "window"
+
+# SEO
+seo:
+  title: 'Validation Kit - Free Course'
+  description: 'Go from idea to validated business model with structured guidance.'
+
+ogImage:
+  component: Offer
+  props:
+    title: 'Validation Kit'
+    description: 'Free Validation Framework'
+
+robots: 'index, follow'
+
+sitemap:
+  priority: 1.0
+  changefreq: 'weekly'

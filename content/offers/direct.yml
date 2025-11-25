@@ -27,3 +27,25 @@ cta:
   icon: i-lucide-handshake
   color: secondary
   note: '⚠️ Small text below button'
+
+# SEO
+seo:
+  title: 'Hire Me Directly'
+  description: 'Work with me directly to accelerate your progress.'
+
+ogImage:
+  component: Offer
+  props:
+    title: 'Hire Me Directly'
+    description: 'Expert guidance and execution support'
+
+robots: 'index, follow'
+
+sitemap:
+  priority: 0.8
+  changefreq: 'monthly'
+
+stock:
+  limit: 10
+  claimed: 2
+  type: hours

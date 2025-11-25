@@ -24,7 +24,24 @@ features:
   - title: 1-hour strategy call
     icon: status-available
 variant: outline
-highlight: false
+highlight: true
+type: ebook
+seo:
+  title: 'Direct Offer'
+  description: 'Get direct access to the offer.'
+ogImage:
+  component: Offer
+  props:
+    title: 'Direct Offer'
+    description: 'Get direct access to the offer.'
+robots: 'index, follow'
+sitemap:
+  priority: 0.8
+  changefreq: 'monthly'
+stock:
+  limit: 100
+  claimed: 10
+  type: spots
 cta:
   label: Book a Call
   to: https://cal.com/drew-macgibbon/strategy-consultation

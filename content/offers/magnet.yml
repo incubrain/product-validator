@@ -21,8 +21,28 @@ features:
     icon: status-coming-soon
 variant: outline
 highlight: true
+type: ebook
+seo:
+  title: '5 Days to Viral Videos - Free Course'
+  description: 'Unlock consistent virality with this free 5-day email course.'
+
+ogImage:
+  component: Offer
+  props:
+    title: '5 Days to Viral Videos'
+    description: 'Free 5-day email course'
+
+robots: 'index, follow'
+
+sitemap:
+  priority: 1.0
+  changefreq: 'weekly'
+stock:
+  limit: 100
+  claimed: 50
+  type: spots
 cta:
-  label: '⚠️ Button text'
-  icon: i-lucide-rocket
+  label: 'Send me Day 1'
+  icon: i-lucide-mail
   modal: window
-  note: '⚠️ Small text below button'
+  note: 'Join 5,000+ creators'

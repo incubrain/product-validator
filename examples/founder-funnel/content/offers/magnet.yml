@@ -23,6 +23,11 @@ features:
     icon: status-available
 variant: solid
 highlight: true
+type: ebook
+stock:
+  limit: 100
+  claimed: 50
+  type: spots
 cta:
   label: Get Access
   icon: i-lucide-play
@@ -32,3 +37,20 @@ secondaryCta:
   to: '#'
   icon: i-lucide-rocket
   color: secondary
+
+# SEO
+seo:
+  title: 'Template Guide - Free Course'
+  description: 'Get up and running in minutes with the official quick start guide.'
+
+ogImage:
+  component: Offer
+  props:
+    title: 'Template Guide'
+    description: 'Free Quick Start Guide'
+
+robots: 'index, follow'
+
+sitemap:
+  priority: 1.0
+  changefreq: 'weekly'
