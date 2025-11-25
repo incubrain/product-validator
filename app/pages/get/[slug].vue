@@ -61,23 +61,26 @@ if (offer.value.price && offer.value.price !== 'Free') {
 
 definePageMeta({ layout: false });
 
-// ✅ Component resolution (extensible for future types)
-const OfferComponent = computed(() => {
-  const componentMap = {
-    'ebook': resolveComponent('IOfferEbook'),
-  };
-  return componentMap[offer.value?.type] || resolveComponent('IOfferEbook');
+// ✅ Track page view on mount
+const { trackEvent } = useEvents();
+onMounted(() => {
+  trackEvent({
+    id: `offer_${offer.value.slug}_view`,
+    type: 'element_viewed',
+    location: `offer-page-${offer.value.slug}`,
+    action: 'page_view',
+    target: `/get/${offer.value.slug}`,
+    data: {
+      offerId: offer.value.slug,
+      metadata: {
+        offer_slug: offer.value.slug,
+        offer_type: offer.value.type,
+        offer_price: offer.value.price,
+        is_primary: offer.value.primary,
+      },
+    },
+  });
 });
-
-// ✅ Stock management
-const { isSoldOut } = useOfferStock(offer.value.stock, offer.value.slug);
-
-// ✅ Analytics tracking
-const { trackCtaClick, trackSoldOut } = useOfferAnalytics(offer);
-
-watch(isSoldOut, (newValue) => {
-  if (newValue) trackSoldOut();
-}, { immediate: true });
 </script>
 
 <template>
@@ -87,6 +90,6 @@ watch(isSoldOut, (newValue) => {
         <NuxtLink to="/"><ILogo /></NuxtLink>
       </div>
     </div>
-    <component :is="OfferComponent" v-if="offer" :offer="offer" />
+    <IOfferPage v-if="offer" :offer="offer" />
   </div>
 </template>

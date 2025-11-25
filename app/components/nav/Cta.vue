@@ -73,7 +73,7 @@ const { data: primaryOffer } = await getPrimaryOffer();
       <template v-if="cta.primary" #footer>
         <!-- ✅ Primary CTA: Form capture like Hero -->
         <div class="max-w-2xl mx-auto pt-4">
-          <IFormFakeDoor
+          <IFormValidation
             location="bridge-cta"
             :offer="primaryOffer"
             layout="horizontal"

@@ -272,7 +272,7 @@ watchEffect(() => {
       </template>
 
       <template #body>
-        <IFormMagnet location="access-gate" :offer />
+        <IFormValidation location="access-gate" :offer />
       </template>
 
       <template #footer>

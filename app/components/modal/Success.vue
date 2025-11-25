@@ -9,6 +9,6 @@ const emit = defineEmits<{ close: [] }>();
     description=""
     @close="emit('close')"
   >
-    <IFormMessage />
+    <slot />
   </IModalWindowed>
 </template>

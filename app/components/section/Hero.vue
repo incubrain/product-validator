@@ -103,7 +103,7 @@ const { data: primaryOffer } = await getPrimaryOffer();
 
         <!-- Countdown Email Form (Identity + Attention only) -->
         <div v-if="showCountdown && primaryOffer" class="max-w-2xl mx-auto">
-          <IFormFakeDoor
+          <IFormValidation
             location="hero-countdown"
             :offer="primaryOffer"
             layout="horizontal"

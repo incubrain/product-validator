@@ -28,7 +28,6 @@ const handleClose = () => {
     @update:open="(val) => !val && handleClose()"
   >
     <template #body>
-      <IFormMessage />
       <slot />
     </template>
 

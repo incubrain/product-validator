@@ -2,11 +2,11 @@
 import type { OfferStock, OfferID } from '#types';
 
 export function useOfferStock(stock?: OfferStock, offerId?: OfferID) {
-  // ✅ TEST TOGGLE: Check URL param for forcing sold-out state
+  // ✅ TEST TOGGLE: Check URL param for forcing unavailable state
   const route = useRoute();
-  const forceSoldOut = computed(() => {
+  const forceUnavailable = computed(() => {
     if (import.meta.dev) {
-      return route.query.soldout === 'true';
+      return route.query.unavailable === 'true';
     }
     return false;
   });
@@ -27,25 +27,25 @@ export function useOfferStock(stock?: OfferStock, offerId?: OfferID) {
     return stock?.claimed || 0;
   });
   
-  const isSoldOut = computed(() => {
-    if (!stock) return false;
+  const isAvailable = computed(() => {
+    if (!stock) return true; // No stock limits = always available
     
     // ✅ TEST TOGGLE: Override with URL param in dev
-    if (forceSoldOut.value) {
-      console.log('[useOfferStock] 🧪 SOLD OUT STATE FORCED via ?soldout=true');
-      return true;
+    if (forceUnavailable.value) {
+      console.log('[useOfferStock] 🧪 UNAVAILABLE STATE FORCED via ?unavailable=true');
+      return false;
     }
     
-    const soldOut = claimed.value >= stock.limit;
-    console.log('[useOfferStock] Sold out check:', {
+    const unavailable = claimed.value >= stock.limit;
+    console.log('[useOfferStock] Availability check:', {
       offerId,
       claimed: claimed.value,
       limit: stock.limit,
-      isSoldOut: soldOut,
-      forceSoldOut: forceSoldOut.value,
+      isAvailable: !unavailable,
+      forceUnavailable: forceUnavailable.value,
     });
     
-    return soldOut;
+    return !unavailable; // Invert: true = available, false = not available
   });
   
   const percentClaimed = computed(() => {
@@ -93,7 +93,7 @@ export function useOfferStock(stock?: OfferStock, offerId?: OfferID) {
   });
   
   return {
-    isSoldOut,
+    isAvailable,
     claimed,
     percentClaimed,
     spotsRemaining,

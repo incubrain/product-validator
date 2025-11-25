@@ -14,6 +14,7 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const {
+  isAvailable,
   percentClaimed,
   label,
   urgencyColor,
@@ -23,7 +24,7 @@ const {
 </script>
 
 <template>
-  <div class="space-y-3 w-full flex flex-col">
+  <div v-if="isAvailable" class="space-y-3 w-full flex flex-col">
     <UProgress
       :model-value="percentClaimed"
       :color="urgencyColor"
