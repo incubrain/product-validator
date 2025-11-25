@@ -220,18 +220,6 @@ export default defineContentConfig({
         }),
       }),
     ),
-    forms: defineCollection(
-      asSeoCollection({
-        type: 'page',
-        source: {
-          cwd: contentCwd,
-          include: 'forms/*.md',
-        },
-        schema: z.object({
-          formId: z.string(),
-        }),
-      }),
-    ),
     magnet: defineCollection(
       asSeoCollection({
         type: 'page',
