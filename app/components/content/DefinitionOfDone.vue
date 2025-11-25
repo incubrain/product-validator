@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { useLocalStorage } from '@vueuse/core';
-
 interface Props {
   title?: string;
   items?: string[];
@@ -12,18 +10,30 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const route = useRoute();
-// Create a unique key for this component instance based on the route path
-// We use a computed property in case the route changes (though unlikely within the same component instance lifecycle for this use case)
-const configSource = useRuntimeConfig().public.configSource;
-const storageKey = computed(() => `${configSource}-magnet-dod-${route.path}`);
+const { local } = useAppStorage();
 
-// Persist the set of checked indices
-const checkedIndices = useLocalStorage<Set<number>>(storageKey.value, new Set(), {
-  serializer: {
-    read: (raw) => new Set(JSON.parse(raw)),
-    write: (value) => JSON.stringify(Array.from(value)),
-  },
-});
+// Create a unique key for this component instance based on the route path
+const storageKey = computed(() => `magnet-dod-${route.path}`);
+
+// Persist the set of checked indices with custom Set serialization
+const checkedIndices = ref<Set<number>>(new Set());
+
+// Initialize from storage
+if (import.meta.client) {
+  const stored = local.get(storageKey.value);
+  if (stored) {
+    try {
+      checkedIndices.value = new Set(JSON.parse(stored));
+    } catch (e) {
+      checkedIndices.value = new Set();
+    }
+  }
+
+  // Watch for changes and persist
+  watch(checkedIndices, (newValue) => {
+    local.set(storageKey.value, JSON.stringify(Array.from(newValue)));
+  }, { deep: true });
+}
 
 const toggleItem = (index: number) => {
   if (checkedIndices.value.has(index)) {

@@ -10,7 +10,7 @@ const props = defineProps<{
 const { getOffer } = useContentCache();
 const { data: offer } = await getOffer(STAGE_CONFIG.offers.secondary);
 
-const { configSource } = useDevTools();
+const configSource = useRuntimeConfig().public.configSource
 
 const bannerClasses = computed(() => ({
   'sticky top-0 z-50': props.sticky,

@@ -1,23 +1,46 @@
-import { createSharedComposable, useLocalStorage } from '@vueuse/core';
+import { createSharedComposable } from '@vueuse/core';
+import { ref, watch } from 'vue'; // Added ref and watch imports
 
 const _useMagnetProgress = () => {
-  const configSource = useRuntimeConfig().public.configSource;
+  const { local } = useAppStorage();
+  
+  const COMPLETED_KEY = 'magnet-progress';
+  const MILESTONES_KEY = 'magnet-milestones';
 
-  // State: Set of completed path strings
-  const completedSteps = useLocalStorage<Set<string>>(`${configSource}-magnet-progress`, new Set(), {
-    serializer: {
-      read: (raw) => new Set(JSON.parse(raw)),
-      write: (value) => JSON.stringify(Array.from(value)),
-    },
-  });
+  // Initialize Sets from storage
+  const completedSteps = ref<Set<string>>(new Set());
+  const shownMilestones = ref<Set<string>>(new Set());
 
-  // Track which milestones we've already shown toasts for
-  const shownMilestones = useLocalStorage<Set<string>>(`${configSource}-magnet-milestones`, new Set(), {
-    serializer: {
-      read: (raw) => new Set(JSON.parse(raw)),
-      write: (value) => JSON.stringify(Array.from(value)),
-    },
-  });
+  if (import.meta.client) {
+    // Load completed steps
+    const storedCompleted = local.get(COMPLETED_KEY);
+    if (storedCompleted) {
+      try {
+        completedSteps.value = new Set(JSON.parse(storedCompleted));
+      } catch (e) {
+        completedSteps.value = new Set();
+      }
+    }
+
+    // Load shown milestones
+    const storedMilestones = local.get(MILESTONES_KEY);
+    if (storedMilestones) {
+      try {
+        shownMilestones.value = new Set(JSON.parse(storedMilestones));
+      } catch (e) {
+        shownMilestones.value = new Set();
+      }
+    }
+
+    // Watch for changes and persist
+    watch(completedSteps, (newValue) => {
+      local.set(COMPLETED_KEY, JSON.stringify(Array.from(newValue)));
+    }, { deep: true });
+
+    watch(shownMilestones, (newValue) => {
+      local.set(MILESTONES_KEY, JSON.stringify(Array.from(newValue)));
+    }, { deep: true });
+  }
 
   // Track validation status of steps (e.g. Definition of Done)
   // Key: path, Value: boolean (true = valid/ready to complete)

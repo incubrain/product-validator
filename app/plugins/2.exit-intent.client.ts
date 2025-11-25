@@ -19,8 +19,9 @@ export default defineNuxtPlugin(() => {
   ) => {
     const { trackEvent } = useEvents();
     const route = useRoute();
+    const { local } = useAppStorage();
     const isShowing = ref(false);
-    const storageKey = `${env.configSource}_exit_intent_triggered`;
+    const STORAGE_KEY = 'exit_intent_triggered';
 
     const { hasInteracted, interactionTime, setup, cleanup } =
       useUserInteraction({
@@ -44,7 +45,7 @@ export default defineNuxtPlugin(() => {
         if (engagementTime < (options.minTimeOnPage || 10)) return;
         if (options.requireInteraction && !hasInteracted.value) return;
 
-        const lastTriggered = localStorage.getItem(storageKey);
+        const lastTriggered = local.get(STORAGE_KEY);
         if (lastTriggered) {
           const now = Date.now();
           const daysSince =
@@ -52,7 +53,7 @@ export default defineNuxtPlugin(() => {
           if (daysSince < (options.cooldownDays || 7)) return;
         }
 
-        localStorage.setItem(storageKey, Date.now().toString());
+        local.set(STORAGE_KEY, Date.now().toString());
       }
 
       // ✅ Trigger via event system instead of direct overlay

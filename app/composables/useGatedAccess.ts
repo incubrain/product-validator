@@ -1,17 +1,22 @@
 // composables/useGatedAccess.ts - SSR-SAFE
-import { useStorage } from '@vueuse/core';
-
 export const useGatedAccess = () => {
-  const env = useRuntimeConfig().public;
-  const storageKey = `${env.configSource}_magnet_email`;
+  const { local } = useAppStorage();
 
-  // ✅ Only use useStorage on client, fallback to ref on server
+  // Use reactive ref with custom getters/setters backed by localStorage
   const email = import.meta.client
-    ? useStorage<string | null>(storageKey, null, localStorage, {
-        listenToStorageChanges: true,
-        writeDefaults: false,
-      })
+    ? ref<string | null>(local.get('magnet_email'))
     : ref<string | null>(null);
+
+  // Watch for changes and persist to localStorage
+  if (import.meta.client) {
+    watch(email, (newValue) => {
+      if (newValue) {
+        local.set('magnet_email', newValue);
+      } else {
+        local.remove('magnet_email');
+      }
+    });
+  }
 
   const isVerifying = useState<boolean>('magnet_isVerifying', () => false);
   const isVerified = useState<boolean>('magnet_isVerified', () => false);

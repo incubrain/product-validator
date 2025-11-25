@@ -6,10 +6,8 @@ interface DevOverrides {
 }
 
 export const useDevTools = () => {
-  const env = useRuntimeConfig().public;
   const isClient = import.meta.client;
   const isDev = import.meta.dev;
-  const configSource = env.configSource as ConfigSource;
 
   // Get stages from dynamic config
   const stages = STAGE_CONFIG.stages.map(s => s.value);
@@ -19,7 +17,6 @@ export const useDevTools = () => {
   if (!isClient || !isDev) {
     return {
       currentStage: computed(() => defaultStage),
-      configSource,
       stages,
       stageConfig: STAGE_CONFIG,
       setDevOverrides: () => {},
@@ -30,19 +27,19 @@ export const useDevTools = () => {
         stage: defaultStage,
       })),
       clearAllStorage: () => {},
-      logCurrentStorage: () => {},
       getStorageSnapshot: () => ({}),
     };
   }
 
   const toast = useToast();
-  const DEV_OVERRIDES_KEY = `${configSource}_dev_overrides`;
+  const { local } = useAppStorage();
+  const DEV_OVERRIDES_KEY = 'dev_overrides';
 
   const devOverrides = useState<DevOverrides>('dev-overrides', () => {
     if (import.meta.server) return {};
 
     try {
-      const stored = localStorage.getItem(DEV_OVERRIDES_KEY);
+      const stored = local.get(DEV_OVERRIDES_KEY);
       return stored ? JSON.parse(stored) : {};
     } catch (e) {
       return {};
@@ -54,9 +51,9 @@ export const useDevTools = () => {
 
     try {
       if (Object.keys(overrides).length === 0) {
-        localStorage.removeItem(DEV_OVERRIDES_KEY);
+        local.remove(DEV_OVERRIDES_KEY);
       } else {
-        localStorage.setItem(DEV_OVERRIDES_KEY, JSON.stringify(overrides));
+        local.set(DEV_OVERRIDES_KEY, JSON.stringify(overrides));
       }
     } catch (error) {
       console.error('Failed to persist dev overrides:', error);
@@ -122,40 +119,16 @@ export const useDevTools = () => {
     stage: defaultStage,
   }));
 
-  const storagePrefix = computed(() => configSource);
 
   const getStorageSnapshot = () => {
     if (import.meta.server) return { localStorage_items: {}, sessionStorage_items: {} };
 
     try {
-      const localStorage_items = Object.keys(localStorage)
-        .filter(
-          (key) =>
-            key.startsWith(storagePrefix.value) ||
-            key.startsWith(`banner-${storagePrefix.value}`) ||
-            key === DEV_OVERRIDES_KEY,
-        )
-        .reduce(
-          (acc, key) => {
-            acc[key] = localStorage.getItem(key);
-            return acc;
-          },
-          {} as Record<string, string | null>,
-        );
-
-      const sessionStorage_items = Object.keys(sessionStorage)
-        .filter(
-          (key) =>
-            key.startsWith(storagePrefix.value) ||
-            key.startsWith(`banner-${storagePrefix.value}`),
-        )
-        .reduce(
-          (acc, key) => {
-            acc[key] = sessionStorage.getItem(key);
-            return acc;
-          },
-          {} as Record<string, string | null>,
-        );
+      const { local, session } = useAppStorage();
+      
+      // Much simpler with all() method!
+      const localStorage_items = local.all();
+      const sessionStorage_items = session.all();
 
       return { localStorage_items, sessionStorage_items };
     } catch (e) {
@@ -166,14 +139,13 @@ export const useDevTools = () => {
   const clearAllStorage = () => {
     if (!isDev) return;
     const before = getStorageSnapshot();
-    Object.keys(before.localStorage_items).forEach((k) =>
-      localStorage.removeItem(k),
-    );
-    Object.keys(before.sessionStorage_items).forEach((k) =>
-      sessionStorage.removeItem(k),
-    );
+    
+    // Use useAppStorage clear methods to remove all prefixed items
+    const { local: localStorage, session: sessionStorage } = useAppStorage();
+    localStorage.clear();
+    sessionStorage.clear();
+    
     devOverrides.value = {};
-    persistOverrides({});
 
     const after = getStorageSnapshot();
     console.info('Storage cleared:', { before, after });
@@ -198,32 +170,10 @@ export const useDevTools = () => {
     setTimeout(() => window?.location.reload(), 3000);
   };
 
-  const logCurrentStorage = () => {
-    const snapshot = getStorageSnapshot();
-    console.group('📦 Storage Snapshot');
-    console.log('Config Source:', configSource);
-    console.log('Active Stage:', currentStage.value);
-    console.log('Available Stages:', stages);
-    console.log('Dev Overrides Key:', DEV_OVERRIDES_KEY);
-    console.table({
-      ...snapshot.localStorage_items,
-      ...snapshot.sessionStorage_items,
-    });
-    console.groupEnd();
-
-    toast.add?.({
-      title: 'Storage Logged',
-      description: 'Check console for storage contents',
-      color: 'info',
-      duration: 2000,
-    });
-  };
-
   if (typeof window !== 'undefined') {
     // @ts-expect-error devTools extension
     window.devTools = {
       clearAll: clearAllStorage,
-      logStorage: logCurrentStorage,
       snapshot: getStorageSnapshot,
       setStage: setDevOverrides,
       cycleStage,
@@ -232,7 +182,6 @@ export const useDevTools = () => {
       status: () => {
         console.table({
           'Storage Key': DEV_OVERRIDES_KEY,
-          'Config Source': configSource,
           'Stage (ENV)': envValues.value.stage,
           'Stage (Active)': currentStage.value,
           'Stage (Override)': devOverrides.value.stage || 'none',
@@ -251,10 +200,8 @@ export const useDevTools = () => {
     resetDevOverrides,
     cycleStage,
     hasActiveOverrides,
-    configSource,
     envValues,
     clearAllStorage,
-    logCurrentStorage,
     getStorageSnapshot,
   };
 };
