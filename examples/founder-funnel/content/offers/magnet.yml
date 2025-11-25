@@ -5,6 +5,10 @@ description: Get up and running in minutes with the official quick start guide.
 price: Free
 billingCycle: Instant access
 terms: Access the template immediately. No email required.
+media: 
+  type: video
+  src: https://www.youtube.com/embed/eikaYXCzI3Q?si=BRvztbTUhE5PVd8h
+  alt: Template Guide
 badge:
   label: Free Guide
   color: success
@@ -37,20 +41,32 @@ secondaryCta:
   to: '#'
   icon: i-lucide-rocket
   color: secondary
-
-# SEO
-seo:
-  title: 'Template Guide - Free Course'
-  description: 'Get up and running in minutes with the official quick start guide.'
-
-ogImage:
-  component: Offer
-  props:
-    title: 'Template Guide'
-    description: 'Free Quick Start Guide'
-
-robots: 'index, follow'
-
-sitemap:
-  priority: 1.0
-  changefreq: 'weekly'
+# Waitlist messaging when offer is unavailable
+waitlist:
+  coming_soon:
+    badge:
+      label: 'Coming Soon'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'Be first to know when we launch.'
+    cta:
+      label: 'Get Early Access'
+      icon: 'i-lucide-bell'
+    success:
+      title: "You're on the list!"
+      message: "We'll email you at launch."
+  
+  unavailable:
+    badge:
+      label: 'Waitlist'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'All spots taken. Join waitlist for next availability.'
+    cta:
+      label: 'Join Waitlist'
+      icon: 'i-lucide-clock'
+    success:
+      title: "You're on the list!"
+      message: "We'll notify you when spots open up."

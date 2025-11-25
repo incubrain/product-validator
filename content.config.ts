@@ -136,6 +136,42 @@ export default defineContentConfig({
             src: z.string(),
             alt: z.string(),
           }).optional(),
+          waitlist: z.object({
+            coming_soon: z.object({
+              badge: z.object({
+                label: z.string(),
+                color: z.enum(['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']),
+                variant: z.enum(['solid', 'outline', 'subtle', 'soft']),
+                size: z.enum(['xs', 'sm', 'md', 'lg', 'xl']),
+              }),
+              description: z.string(),
+              cta: z.object({
+                label: z.string(),
+                icon: z.string(),
+              }),
+              success: z.object({
+                title: z.string(),
+                message: z.string(),
+              }),
+            }),
+            unavailable: z.object({
+              badge: z.object({
+                label: z.string(),
+                color: z.enum(['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']),
+                variant: z.enum(['solid', 'outline', 'subtle', 'soft']),
+                size: z.enum(['xs', 'sm', 'md', 'lg', 'xl']),
+              }),
+              description: z.string(),
+              cta: z.object({
+                label: z.string(),
+                icon: z.string(),
+              }),
+              success: z.object({
+                title: z.string(),
+                message: z.string(),
+              }),
+            }),
+          }).optional(),
         }),
       }),
     ),

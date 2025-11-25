@@ -10,7 +10,7 @@ declare global {
     | 'modal_close';
 
   type TrackedActions =
-    | 'submit_feedback'
+    | 'update_record'
     | 'open_modal'
     | 'close_modal'
     | 'email_captured'

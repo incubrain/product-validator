@@ -46,7 +46,7 @@ export const STAGE_CONFIG = {
     },
   },
   conversionTarget: {
-    'coming-soon': 'fake_door',
+    'coming-soon': 'waitlist',
     'launch': 'magnet',
     'post-launch': 'magnet',
   },

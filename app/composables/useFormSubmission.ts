@@ -6,6 +6,7 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
   formId: FormID;
   schema: T;
   location?: string;
+  metadata?: Record<string, any>;
 }) => {
   const { trackEvent } = useEvents();
   const route = useRoute();
@@ -37,13 +38,14 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
         data: {
           formId: options.formId,
           email: validated.email,
-          offerId: formData.offerId || options.formId,
-          customerStage: 'email_captured',
+          offerId: formData.offerId || options.metadata?.offerId || options.formId,
+          customerStage: options.metadata?.customerStage || 'email_captured',
           currentStage: currentStage.value as StageKey,
           metadata: {
             location: route.path,
             userAgent: navigator.userAgent,
             timestamp: Date.now(),
+            ...options.metadata,
             ...validated,
           },
         },
@@ -120,9 +122,9 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
     }
   };
 
-  const submitFeedback = async (feedback: string) => {
+  const updateRecord = async (updates: Record<string, any>) => {
     if (!recordId.value) {
-      console.error('[useFormSubmission] No recordId for feedback');
+      console.error('[useFormSubmission] No recordId for update');
       toast.add({
         title: 'Error',
         description: 'Session expired. Please refresh and try again.',
@@ -135,32 +137,32 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
 
     try {
       await trackEvent({
-        id: `${options.formId}_feedback`,
+        id: `${options.formId}_update`,
         type: 'form_submitted',
         location: route.path,
-        action: 'submit_feedback',
+        action: 'update_record',
         target: options.formId,
         timestamp: Date.now(),
         data: {
           formId: options.formId,
           recordId: recordId.value,
-          customerStage: 'feedback_submitted',
-          feedback,
+          ...updates,
           metadata: {
             location: route.path,
             timestamp: Date.now(),
+            ...updates.metadata,
           },
         },
       } satisfies EventPayload);
 
       toast.add({
-        title: 'Thanks for your feedback!',
+        title: 'Updated successfully!',
         color: 'success',
       });
     } catch (error) {
-      console.error('[useFormSubmission] Failed to submit feedback:', error);
+      console.error('[useFormSubmission] Failed to update record:', error);
       toast.add({
-        title: 'Failed to submit feedback',
+        title: 'Update failed',
         description: 'Please try again or contact support.',
         color: 'error',
       });
@@ -179,7 +181,7 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
 
   return {
     submit,
-    submitFeedback,
+    updateRecord,
     reset,
     isSubmitting,
     isSuccess,

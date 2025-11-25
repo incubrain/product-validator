@@ -26,18 +26,6 @@ features:
 variant: outline
 highlight: true
 type: ebook
-seo:
-  title: 'Direct Offer'
-  description: 'Get direct access to the offer.'
-ogImage:
-  component: Offer
-  props:
-    title: 'Direct Offer'
-    description: 'Get direct access to the offer.'
-robots: 'index, follow'
-sitemap:
-  priority: 0.8
-  changefreq: 'monthly'
 stock:
   limit: 100
   claimed: 10
@@ -47,3 +35,30 @@ cta:
   to: https://cal.com/drew-macgibbon/strategy-consultation
   icon: i-lucide-calendar
   color: secondary
+waitlist:
+  coming_soon:
+    badge:
+      label: 'Coming Soon'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'Implementation service launching soon. Get notified when available.'
+    cta:
+      label: 'Get Early Access'
+      icon: 'i-lucide-bell'
+    success:
+      title: "You're on the list!"
+      message: "We'll email you at launch."
+  unavailable:
+    badge:
+      label: 'Fully Booked'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'All implementation slots taken. Join waitlist for next opening.'
+    cta:
+      label: 'Join Waitlist'
+      icon: 'i-lucide-clock'
+    success:
+      title: "You're on the list!"
+      message: "We'll notify you when slots open up."

@@ -15,7 +15,7 @@ interface EmailCapture {
   emailEncrypted: string;
   formId: string;
   offerId?: string;
-  customerStage: 'email_captured' | 'feedback_submitted';
+  customerStage: 'email_captured' | 'interest_expressed';
   currentStage?: StageKey;
   feedback?: string;
   metadata?: Record<string, any>;

@@ -137,4 +137,41 @@ export type Offer = Pick<
     src: string;
     alt: string;
   };
+  // Waitlist configuration for unavailable offers
+  waitlist?: {
+    coming_soon: {
+      badge: {
+        label: string;
+        color: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral';
+        variant: 'solid' | 'outline' | 'subtle' | 'soft';
+        size: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+      };
+      description: string;
+      cta: {
+        label: string;
+        icon: string;
+      };
+      success: {
+        title: string;
+        message: string;
+      };
+    };
+    unavailable: {
+      badge: {
+        label: string;
+        color: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral';
+        variant: 'solid' | 'outline' | 'subtle' | 'soft';
+        size: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+      };
+      description: string;
+      cta: {
+        label: string;
+        icon: string;
+      };
+      success: {
+        title: string;
+        message: string;
+      };
+    };
+  };
 };

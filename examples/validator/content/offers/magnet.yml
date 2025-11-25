@@ -30,20 +30,32 @@ cta:
   label: "Get Free Validation Kit"
   icon: "i-lucide-rocket"
   modal: "window"
-
-# SEO
-seo:
-  title: 'Validation Kit - Free Course'
-  description: 'Go from idea to validated business model with structured guidance.'
-
-ogImage:
-  component: Offer
-  props:
-    title: 'Validation Kit'
-    description: 'Free Validation Framework'
-
-robots: 'index, follow'
-
-sitemap:
-  priority: 1.0
-  changefreq: 'weekly'
+# Waitlist messaging when offer is unavailable
+waitlist:
+  coming_soon:
+    badge:
+      label: 'Coming Soon'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'Be first to know when we launch.'
+    cta:
+      label: 'Get Early Access'
+      icon: 'i-lucide-bell'
+    success:
+      title: "You're on the list!"
+      message: "We'll email you at launch."
+  
+  unavailable:
+    badge:
+      label: 'Waitlist Only'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'Limited spots filled. Join the waitlist for next batch.'
+    cta:
+      label: 'Join Waitlist'
+      icon: 'i-lucide-timer'
+    success:
+      title: "You're on the waitlist!"
+      message: "We'll notify you when spots become available."

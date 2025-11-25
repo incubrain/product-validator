@@ -22,21 +22,6 @@ features:
 variant: outline
 highlight: true
 type: ebook
-seo:
-  title: '5 Days to Viral Videos - Free Course'
-  description: 'Unlock consistent virality with this free 5-day email course.'
-
-ogImage:
-  component: Offer
-  props:
-    title: '5 Days to Viral Videos'
-    description: 'Free 5-day email course'
-
-robots: 'index, follow'
-
-sitemap:
-  priority: 1.0
-  changefreq: 'weekly'
 stock:
   limit: 100
   claimed: 50
@@ -46,3 +31,33 @@ cta:
   icon: i-lucide-mail
   modal: window
   note: 'Join 5,000+ creators'
+
+# Waitlist messaging when offer is unavailable
+waitlist:
+  coming_soon:
+    badge:
+      label: 'Coming Soon'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'Be first to know when we launch.'
+    cta:
+      label: 'Get Early Access'
+      icon: 'i-lucide-bell'
+    success:
+      title: "You're on the list!"
+      message: "We'll email you at launch."
+  
+  unavailable:
+    badge:
+      label: 'Sold Out'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'All spots claimed. Join waitlist for next availability.'
+    cta:
+      label: 'Join Waitlist'
+      icon: 'i-lucide-clock'
+    success:
+      title: "You're on the waitlist!"
+      message: "We'll email you when spots open."

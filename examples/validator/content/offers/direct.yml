@@ -8,20 +8,6 @@ billingCycle: "hour"
 terms: "Billed monthly. Minimum 3 hours."
 highlight: true
 type: ebook
-seo:
-  title: 'Direct Offer'
-  description: 'Get direct access to the offer.'
-ogImage:
-  component: Offer
-  props:
-    title: 'Direct Offer'
-    description: 'Get direct access to the offer.'
-
-robots: 'index, follow'
-
-sitemap:
-  priority: 0.8
-  changefreq: 'monthly'
 stock:
   limit: 100
   claimed: 10
@@ -47,3 +33,32 @@ cta:
   icon: "i-lucide-handshake"
   color: "secondary"
   note: "Monthly packages available. First hour: strategy session."
+
+waitlist:
+  coming_soon:
+    badge:
+      label: 'Launching Soon'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'This implementation service is launching soon. Get early access.'
+    cta:
+      label: 'Notify Me'
+      icon: 'i-lucide-bell'
+    success:
+      title: "You're on the list!"
+      message: "We'll email you as soon as this launches."
+  
+  unavailable:
+    badge:
+      label: 'Waitlist Only'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'All implementation slots filled. Join waitlist for next batch.'
+    cta:
+      label: 'Join Waitlist'
+      icon: 'i-lucide-timer'
+    success:
+      title: "You're on the waitlist!"
+      message: "We'll notify you when slots become available."
