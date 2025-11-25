@@ -17,6 +17,20 @@ declare global {
     | string;
 }
 
+export interface TrafficSource {
+  utmSource: string | null;
+  utmMedium: string | null;
+  utmCampaign: string | null;
+  utmContent: string | null;
+  utmTerm: string | null;
+  referrer: string | null;
+  landingPage: string;
+  hasUtms: boolean;
+}
+
+
+
+
 export interface EventPayload {
   id: string;
   type: TrackedEvents;
@@ -32,6 +46,9 @@ export interface EventPayload {
     customerStage?: string;
     currentStage?: StageKey;
     feedback?: string;
+    // User identity and traffic attribution
+    userId?: string;
+    trafficSource?: TrafficSource | null;
     metadata?: Record<string, any>;
   };
   response?: Record<string, any>;

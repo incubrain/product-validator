@@ -19,12 +19,19 @@ export const analyticsHandler = (payload: EventPayload) => {
 
 function sendToAnalytics(payload: EventPayload, analyticsProxy: any) {
   const eventName = `${payload.type}`;
+  
+  // Extract user identity and traffic attribution
+  const userId = payload.data?.userId;
+  const trafficSource = payload.data?.trafficSource;
+
   const eventData = {
     event_id: payload.id,
     location: payload.location,
     action: payload.action,
     target: payload.target,
     timestamp: payload.timestamp,
+    id: userId,
+    ...trafficSource,
   };
 
   switch (payload.type) {
