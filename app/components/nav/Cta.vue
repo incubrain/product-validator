@@ -16,6 +16,7 @@ defineProps<Props>();
 // Fetch primary offer from collection
 const { getPrimaryOffer } = useContentCache();
 const { data: primaryOffer } = await getPrimaryOffer();
+
 </script>
 
 <template>

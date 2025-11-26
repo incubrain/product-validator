@@ -24,7 +24,7 @@ highlight: true
 type: ebook
 stock:
   limit: 100
-  claimed: 50
+  claimed: 10
   type: spots
 cta:
   label: 'Send me Day 1'

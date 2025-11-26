@@ -1,3 +1,5 @@
+import { STAGE_CONFIG } from '#stage-config';
+
 export const useContentCache = () => {
   /**
    * Fetch site-wide configuration (business info, social links)
@@ -21,18 +23,16 @@ export const useContentCache = () => {
   /**
    * Fetch the primary offer (marked with primary: true)
    */
-  const getPrimaryOffer = () => {
-    return useAsyncData('app-primary-offer', () => 
-      queryCollection('offers').where('primary', '=', true).first()
+  const getPrimaryOffer = () => useAsyncData('app-primary-offer', () => 
+      queryCollection('offers').where('stem', '=', `offers/${STAGE_CONFIG.offers.primary}`).first()
     );
-  };
 
   /**
-   * Fetch a specific offer by slug
+   * Fetch a specific offer by id
    */
-  const getOffer = (slug: string) => {
-    return useAsyncData(`app-offer-${slug}`, () => 
-      queryCollection('offers').where('slug', '=', slug).first()
+  const getOffer = (id: string) => {
+    return useAsyncData(`app-offer-${id}`, () => 
+      queryCollection('offers').where('stem', '=', `offers/${id}`).first()
     );
   };
 

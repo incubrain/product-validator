@@ -30,7 +30,7 @@ highlight: true
 type: ebook
 stock:
   limit: 100
-  claimed: 50
+  claimed: 10
   type: spots
 cta:
   label: Get Access
@@ -38,10 +38,9 @@ cta:
   modal: window
 secondaryCta:
   label: One Click Deploy Template
-  to: '#'
+  to: 'https://github.com/incubrain/product-validator'
   icon: i-lucide-rocket
   color: secondary
-# Waitlist messaging when offer is unavailable
 waitlist:
   coming_soon:
     badge:

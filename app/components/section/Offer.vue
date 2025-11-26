@@ -1,21 +1,15 @@
 <!-- components/section/Offer.vue -->
 <script setup lang="ts">
 import type { IconProps } from '@nuxt/ui';
-import type { Offer } from '#types';
 
-const props = defineProps<{
+defineProps<{
   data?: any;
 }>();
 
-// Fetch offers from offers collection
-const { data: offersData } = await useAsyncData('offers', () => 
-  queryCollection('offers').all()
-);
 
 // Get primary offer
-const primaryOffer = computed(() =>
-  offersData.value?.find((offer) => offer.primary === true) as Offer | undefined,
-);
+const { getPrimaryOffer } = useContentCache();
+const { data: primaryOffer } = await getPrimaryOffer();
 
 const STATUS_ICONS: Record<string, IconProps & { class: string }> = {
   'status-available': { name: 'lucide:check', class: 'text-success' },

@@ -16,9 +16,3 @@ items:
     icon: i-lucide-rocket
     description: Push to GitHub. Connect to Vercel or Railway.
     result: Live URL in minutes
-
-  - id: capture
-    title: Capture Leads
-    icon: i-lucide-user-plus
-    description: Visitors sign up. Emails are stored locally. No external DB needed.
-    result: Building your audience

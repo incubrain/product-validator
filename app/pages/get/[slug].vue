@@ -1,26 +1,25 @@
 <!-- RENAME: offers/[slug].vue → get/[slug].vue -->
 <script setup lang="ts">
-import type { Offer } from '#types';
-
 const route = useRoute();
 const slug = route.params.slug as string;
 
-const { getSiteConfig } = useContentCache();
+const { getSiteConfig, getOffer } = useContentCache();
 const { data: configData } = await getSiteConfig();
 const business = computed(() => configData.value?.business);
 
 // Fetch offer
-const { data: offer } = await useAsyncData(`offer-${slug}`, async () => {
-  const offers = await queryCollection('offers').where('slug', '=', slug).all();
-  return offers[0] as Offer | undefined;
-});
+const { data: offer } = await getOffer(slug)
 
 if (!offer.value) {
-  throw createError({ statusCode: 404, statusMessage: 'Offer not found' });
+  throw createError({
+    statusCode: 404,
+    statusMessage: `Offer "${slug}" not found`,
+    fatal: true
+  });
 }
 
-useHead(offer.value.head || {});
-useSeoMeta(offer.value.seo || {});
+// useHead(offer.value.head || {});
+// useSeoMeta(offer.value.seo || {});
 
   
   defineOgImage({
