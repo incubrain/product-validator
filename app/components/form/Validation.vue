@@ -93,6 +93,16 @@ const schema = z.object({
 
 const state = reactive({ email: '' });
 
+// Real-time validation
+const is_valid_email = computed(() => {
+  try {
+    schema.parse({ email: state.email });
+    return true;
+  } catch {
+    return false;
+  }
+});
+
 // Form submission
 const { submit, isSubmitting, isSuccess } = useFormSubmission({
   formId: formType.value,
@@ -141,23 +151,24 @@ const formClasses = computed(() =>
       </div>
       
       <!-- Universal form -->
-      <UForm :state="state" :schema="schema" @submit="handleSubmit">
+      <UForm ref="formRef" :state="state" :schema="schema" @submit="handleSubmit">
         <div :class="formClasses">
-                <UFormField name="email">
-          <UInput
-            v-model="state.email"
-            type="email"
-            placeholder="your@email.com"
-            size="xl"
-            :disabled="isSubmitting"
-            :class="layout === 'horizontal' ? 'flex-1' : 'w-full'"
-          />
+          <UFormField name="email">
+            <UInput
+              v-model="state.email"
+              type="email"
+              placeholder="your@email.com"
+              size="xl"
+              :disabled="isSubmitting"
+              :class="layout === 'horizontal' ? 'flex-1' : 'w-full'"
+            />
           </UFormField>
           <UButton
             type="submit"
             size="xl"
             :block="layout === 'stacked'"
             :loading="isSubmitting"
+            :disabled="!is_valid_email || isSubmitting"
             variant="solid"
             :color="isWaitlist ? 'neutral' : 'primary'"
             class="text-toned font-black cursor-pointer disabled:cursor-not-allowed"
