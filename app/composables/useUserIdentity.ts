@@ -1,4 +1,5 @@
 // composables/useUserIdentity.ts
+import { v4 as uuidv4 } from 'uuid';
 /**
  * Anonymous user identity management
  * Generates and persists user ID before email capture
@@ -8,12 +9,12 @@ export const useUserIdentity = () => {
   const USER_ID_KEY = 'userId';
 
   /**
-   * Generate anonymous User ID using crypto.randomUUID
+   * Generate anonymous User ID using uuidv4
    * Format: user_{uuid}
    */
   const generateUserId = (): string => {
     if (import.meta.server) return '';
-    return `user_${crypto.randomUUID()}`;
+    return `user_${uuidv4()}`;
   };
 
   /**

@@ -35,6 +35,7 @@
     "nuxt": "^4.2.1",
     "nuxt-studio": "1.0.0-alpha.2",
     "typescript": "^5.9.3",
+    "uuid": "^13.0.0",
     "vue": "^3.5.24",
     "vue-router": "^4.6.3"
   },
