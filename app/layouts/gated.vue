@@ -2,7 +2,6 @@
 import { findPageChildren, findPageBreadcrumb } from '@nuxt/content/utils';
 import { mapContentNavigation } from '@nuxt/ui/utils/content';
 
-
 const ROOT_PATH = '/magnet';
 
 const route = useRoute();
@@ -10,12 +9,10 @@ const { hasAccess, email, isVerified, verifyAccess, isVerifying } =
   useGatedAccess();
 
 // Fetch primary offer from collection
-// Fetch primary offer from collection
 const { getPrimaryOffer } = useContentCache();
 const { data: offer } = await getPrimaryOffer();
 
 const { getCompletedCount, initialize, isAccessible, isComplete, flatSteps } = useMagnetProgress();
-
 
 // Fetch navigation for sidebar
 const { data: navigation } = useAsyncData('magnet-navigation', () => {
@@ -68,7 +65,6 @@ const totalSteps = computed(() => {
   return flatSteps.value.length;
 });
 
-
 // ✅ Watch for navigation changes to initialize progress
 watch(navigation, (newNav) => {
   if (newNav) {
@@ -98,13 +94,10 @@ const mapToNavigationMenu = (items: any[]): any[] => {
     const hasChildren = item.children && item.children.length > 0;
     
     // Check content status
-    const status = item.status || 'published'; // Default to published if not set
+    const status = item.status || 'published';
     const isRestrictedStatus = status !== 'published' && status !== 'beta';
     
     // Accessibility logic
-    // A page is accessible if:
-    // 1. It's unlocked via progress (isAccessible)
-    // 2. AND it's not in a restricted status (draft, archived, etc.)
     const unlocked = isAccessible(item.path);
     const accessible = hasChildren ? true : (unlocked && !isRestrictedStatus);
     const complete = hasChildren ? false : isComplete(item.path);
@@ -112,14 +105,12 @@ const mapToNavigationMenu = (items: any[]): any[] => {
     return {
       label: item.title,
       icon: item.icon,
-      // Only set 'to' if it's a page and accessible
       to: (accessible && !hasChildren) ? item.path : undefined,
-      // Use 'magnet-link' slot for leaf nodes to show custom icons
       slot: hasChildren ? undefined : 'magnet-link',
       disabled: !accessible && !hasChildren,
-      isComplete: complete, // Custom prop for the slot
-      isRestricted: isRestrictedStatus && !hasChildren, // Custom prop for the slot
-      defaultOpen: hasChildren, // Auto-open folders
+      isComplete: complete,
+      isRestricted: isRestrictedStatus && !hasChildren,
+      defaultOpen: hasChildren,
       children: hasChildren ? mapToNavigationMenu(item.children) : undefined,
     };
   });
@@ -127,11 +118,11 @@ const mapToNavigationMenu = (items: any[]): any[] => {
 
 const menuItems = computed(() => mapToNavigationMenu(stages.value));
 
-// Debugging
-watchEffect(() => {
-  console.log('Flat Steps:', flatSteps.value);
-  console.log('Menu Items:', menuItems.value);
-});
+// Handle logout
+const handleLogout = () => {
+  // Clear access and redirect
+  navigateTo('/');
+};
 </script>
 
 <template>
@@ -146,7 +137,7 @@ watchEffect(() => {
       :ui="{
         header: 'justify-between',
         body: 'pt-4',
-        footer: 'border-t border-default',
+        footer: 'border-t border-default pt-4',
       }"
     >
       <template #header>
@@ -202,46 +193,62 @@ watchEffect(() => {
       </template>
 
       <template #footer>
-        <UDashboardSidebarCollapse />
-      </template>
+  <div class="space-y-3">
+    <!-- User info (only when expanded and has access) -->
+    <div v-if="hasAccess && !isCollapsed" class="space-y-2">
+      <!-- Email display -->
+      <div class="flex items-center gap-2 px-3 py-2 rounded-md bg-neutral-900/50">
+        <UIcon name="i-lucide-user" class="size-4 text-muted shrink-0" />
+        <span class="text-xs text-muted truncate flex-1">{{ email }}</span>
+      </div>
+      
+      <!-- Logout button -->
+      <UButton
+        label="Logout"
+        icon="i-lucide-log-out"
+        color="neutral"
+        variant="subtle"
+        size="sm"
+        block
+        @click="handleLogout"
+      />
+    </div>
+    
+    <!-- Collapsed state: just logout icon button -->
+    <div v-if="hasAccess && isCollapsed" class="flex flex-col items-center gap-2">
+      <UButton
+        icon="i-lucide-log-out"
+        color="neutral"
+        variant="subtle"
+        size="sm"
+        square
+        @click="handleLogout"
+      />
+    </div>
+    
+    <!-- Collapse toggle (always at bottom, centered when collapsed) -->
+    <div :class="isCollapsed ? 'flex justify-center' : 'flex justify-end'">
+      <UDashboardSidebarCollapse />
+    </div>
+  </div>
+</template>
     </UDashboardSidebar>
 
     <!-- Main Panel -->
     <UDashboardPanel>
       <template #header>
-        <UDashboardNavbar>
-          <template #title>
-            <!-- UDashboardSidebarCollapse was here, but moved to sidebar footer -->
-          </template>
+        <UDashboardNavbar :ui="{ right: 'flex items-center gap-4 flex-1 justify-end' }">
           <template #right>
-            <div v-if="hasAccess" class="flex items-center gap-3">
-              <span class="text-sm text-muted hidden sm:inline">
-                {{ email }}
-              </span>
-              <UButton
-                label="Logout"
-                color="neutral"
-                variant="subtle"
-                to="/"
-                size="sm"
-              />
-            </div>
+            <IMagnetProgressIndicator
+              :current-step="currentStepNumber"
+              :total-steps="totalSteps"
+              class="flex-1 max-w-md"
+            />
           </template>
         </UDashboardNavbar>
-
-        <UDashboardToolbar>
-          <IMagnetProgressIndicator
-            :current-step="currentStepNumber"
-            :total-steps="totalSteps"
-            class="w-full"
-          />
-        </UDashboardToolbar>
       </template>
 
       <template #body>
-        <!-- Breadcrumb -->
-        
-        
         <div 
           class="px-6 py-6 max-w-4xl mx-auto"
           data-dashboard-panel-body
