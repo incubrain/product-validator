@@ -20,9 +20,8 @@ const eventSchema = z.object({
 
 export default defineEventHandler(async (event) => {
   const body = await readBody(event);
-  const config = useRuntimeConfig();
-
   const parsed = eventSchema.safeParse(body);
+
   if (!parsed.success) {
     console.error('[Events] Validation failed:', parsed.error.errors);
     throw createError({
@@ -33,13 +32,13 @@ export default defineEventHandler(async (event) => {
   }
 
   const { recordId, data } = parsed.data;
+    const { provider, url, secret } = getStorageConfig(event);
 
-  // Default to KV storage, but allow override via env
-  const provider = config.storage?.provider ?? 'kv';
+
 
   const result = await storeData(provider, {
-    storageUrl: config.storage?.url,
-    storageSecret: config.storage?.secret,
+    storageUrl: url,
+    storageSecret: secret,
     recordId,
     data,
   });

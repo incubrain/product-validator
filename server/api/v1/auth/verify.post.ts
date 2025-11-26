@@ -3,7 +3,8 @@ import { authorizeEmail } from '~~/server/utils/storage.handler';
 
 export default defineEventHandler(async (event) => {
   const { email } = await readBody(event);
-  const config = useRuntimeConfig();
+  const { provider } = getStorageConfig(event);
+
 
   if (!email) {
     throw createError({
@@ -14,7 +15,6 @@ export default defineEventHandler(async (event) => {
 
   try {
     // Use configured storage provider (defaults to KV)
-    const provider = config.storage?.provider;
     const result = await authorizeEmail(provider, email);
 
     return result;
