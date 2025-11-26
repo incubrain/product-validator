@@ -35,14 +35,17 @@ export const useDevTools = () => {
   const { local } = useAppStorage();
   const DEV_OVERRIDES_KEY = 'dev_overrides';
 
-  const devOverrides = useState<DevOverrides>('dev-overrides', () => {
-    if (import.meta.server) return {};
+  const devOverrides = useState<DevOverrides>('dev-overrides', () => ({}));
 
+  onMounted(() => {
+    if (import.meta.server || !isDev) return;
     try {
       const stored = local.get(DEV_OVERRIDES_KEY);
-      return stored ? JSON.parse(stored) : {};
+      if (stored) {
+        devOverrides.value = JSON.parse(stored);
+      }
     } catch (e) {
-      return {};
+      console.error('Failed to load dev overrides:', e);
     }
   });
 

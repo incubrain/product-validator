@@ -20,6 +20,7 @@ const bannerClasses = computed(() => ({
 
 <template>
   <UBanner
+    v-if="offer"
     :id="`${configSource}_${offer.slug}`"
     icon="i-lucide-heart"
     :title="offer.description"
