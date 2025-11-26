@@ -51,9 +51,11 @@ const { showSection } = useSectionVisibility();
       <div class="w-[80%] h-[80%] bg-primary/5 rounded-full blur-3xl" />
     </div>
 
-    <div class="max-w-md mx-auto relative z-10">
+    <div 
+    v-if="primaryOffer"
+    class="max-w-md mx-auto relative z-10"
+    >
       <UPricingPlan
-        v-if="primaryOffer"
         v-bind="primaryOffer"
         :features="transformedFeatures"
         variant="outline"
@@ -101,22 +103,23 @@ const { showSection } = useSectionVisibility();
           />
         </template>
       </UPricingPlan>
-      <div class="mt-4 flex flex-col gap-4 justify-center items-center"
-v-if="primaryOffer.secondaryCta"
+      <div 
+      v-if="primaryOffer.secondaryCta"
+      class="mt-4 flex flex-col gap-4 justify-center items-center"
       >
-<UBadge variant="soft">
-  OR
-</UBadge>
-<UButton
-  block
-  size="xl"
-  :color="primaryOffer.secondaryCta.color || 'neutral'"
-  variant="outline"
-  :label="primaryOffer.secondaryCta.label"
-  :to="primaryOffer.secondaryCta.to"
-  :icon="primaryOffer.secondaryCta.icon"
-  target="_blank"
-/>
+        <UBadge variant="soft">
+          OR
+        </UBadge>
+        <UButton
+          block
+          size="xl"
+          :color="primaryOffer.secondaryCta.color || 'neutral'"
+          variant="outline"
+          :label="primaryOffer.secondaryCta.label"
+          :to="primaryOffer.secondaryCta.to"
+          :icon="primaryOffer.secondaryCta.icon"
+          target="_blank"
+        />
       </div>
     </div>
   </ISectionWrapper>

@@ -11,7 +11,7 @@ social:
   links:
     - platform: youtube
       label: YouTube
-      url: https://www.youtube.com/@Incubrain
+      url: https://www.youtube.com/@DrewMacGibbon
     
     - platform: github
       label: GitHub
@@ -19,4 +19,4 @@ social:
     
     - platform: x
       label: X
-      url: https://x.com/incubrain
+      url: https://x.com/DrewMacGibbon
