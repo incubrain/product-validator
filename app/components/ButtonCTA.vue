@@ -48,7 +48,7 @@ const handleClick = async () => {
     <UButton
       :label="offer.cta.label"
       :leading-icon="offer.cta.icon"
-      :color="offer.cta.color || 'primary'"
+      :color="(offer.cta.color || 'primary') as any"
       :variant="offer.cta.variant || 'solid'"
       :size="size"
       :block="block"

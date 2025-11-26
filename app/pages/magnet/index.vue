@@ -24,26 +24,14 @@ const { flatSteps, isStepValid } = useMagnetProgress();
 const nextPath = computed(() => {
   const normalizedRoutePath = normalizePath(route.path);
   const currentIndex = flatSteps.value.indexOf(normalizedRoutePath);
-  console.log('[MagnetIndex] nextPath calculation:', {
-    routePath: route.path,
-    normalizedRoutePath,
-    flatSteps: flatSteps.value,
-    currentIndex,
-    isLast: currentIndex === flatSteps.value.length - 1,
-  });
+
   
   if (flatSteps.value.length === 0) return undefined;
   if (currentIndex === -1 || currentIndex === flatSteps.value.length - 1) return undefined;
   return flatSteps.value[currentIndex + 1];
 });
 
-console.log('[MagnetIndex] Page setup:', {
-  routePath: route.path,
-  flatStepsCount: flatSteps.value.length,
-  flatSteps: flatSteps.value,
-  nextPath: nextPath.value,
-  isValid: isStepValid(route.path),
-});
+
 </script>
 
 <template>

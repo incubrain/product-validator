@@ -4,7 +4,7 @@ const { data: page } = await useAsyncData(route.path, () =>
   queryCollection('pages').path(route.path).first()
 );
 
-console.log('PAGE', page.value, route.path)
+
 </script>
 
 <template>

@@ -1,5 +1,6 @@
 // server/api/v1/admin/leads.post.ts
 import { storage } from '~~/server/utils/providers/kv';
+import { nitroFunctionCacheKey } from '~~/server/utils/cache';
 
 interface LeadRecord {
   emailHash: string;
@@ -51,7 +52,7 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  console.log(`[Import] Importing ${body.records.length} leads...`);
+
 
   let restored = 0;
   let skipped = 0;
@@ -94,15 +95,13 @@ export default defineEventHandler(async (event) => {
   // Invalidate metrics cache
   try {
     const cache = useStorage('cache');
-    await cache.removeItem('nitro:functions:metricsLeads:default.json');
-    console.log('[Import] Invalidated metrics cache');
+    const funcKey = nitroFunctionCacheKey('metricsLeads', 'default');
+    await cache.removeItem(funcKey);
   } catch (err) {
     console.warn('[Import] Failed to invalidate cache:', err);
   }
 
-  console.log(
-    `[Import] Complete: ${restored} restored, ${skipped} skipped, ${errors.length} errors`,
-  );
+
 
   return {
     success: errors.length === 0,

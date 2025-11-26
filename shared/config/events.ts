@@ -41,7 +41,7 @@ type EventChainConfig = {
   triggers: TrackedEvents[];
   condition?: (payload: EventPayload) => boolean;
   data?: (payload: EventPayload) => Partial<EventPayload['data']>;
-  requiredFields?: Array<keyof typeof EVENT_FALLBACKS>; // ✅ NEW: Auto-fill missing fields
+  requiredFields?: Array<keyof typeof EVENT_FALLBACKS>; // Auto-fill missing fields
 };
 
 export const EVENT_CHAINS: Partial<Record<TrackedEvents, EventChainConfig>> = {
@@ -50,7 +50,7 @@ export const EVENT_CHAINS: Partial<Record<TrackedEvents, EventChainConfig>> = {
     condition: (payload) => {
       return payload.data?.formId === 'fake_door';
     },
-    requiredFields: ['formId', 'recordId', 'customerStage'], // ✅ Auto-filled if missing
+    requiredFields: ['formId', 'recordId', 'customerStage'],
     data: (payload) => ({
       action: 'windowed_modal',
       formId: payload.data?.formId,

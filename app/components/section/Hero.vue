@@ -11,8 +11,6 @@ const { showFeature, showSection } = useSectionVisibility();
 // Use prop data from MDC
 const hero = computed(() => props.data);
 
-console.log('HERO', hero.value)
-
 // Fetch proof from results collection (customers.yml)
 const { data: proofData } = await useAsyncData('customers-proof', () => 
   queryCollection('results').where('label', 'IS NOT NULL').first()

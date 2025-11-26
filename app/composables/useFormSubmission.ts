@@ -1,7 +1,6 @@
 // composables/useFormSubmission.ts
 import { z } from 'zod';
 
-// composables/useFormSubmission.ts - FIXED
 export const useFormSubmission = <T extends z.ZodSchema>(options: {
   formId: FormID;
   schema: T;

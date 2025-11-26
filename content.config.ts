@@ -4,6 +4,13 @@ import { asSeoCollection } from '@nuxtjs/seo/content';
 import { getActiveConfigSource } from './shared/utils/config-resolver';
 import path from 'node:path';
 
+// Shared schema constants for consistency across collections
+const BADGE_VARIANTS = z.enum(['solid', 'outline', 'subtle', 'soft']);
+const WAITLIST_BADGE_VARIANTS = z.enum(['solid', 'outline', 'subtle', 'soft']);
+const BADGE_COLORS = z.enum(['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']);
+const FAQ_COLORS = z.enum(['error', 'warning', 'success', 'info']);
+const BADGE_SIZES = z.enum(['xs', 'sm', 'md', 'lg', 'xl']);
+
 // Determine the root directory for content based on the active source
 // Custom: Uses project root (which contains a 'content' dir)
 const activeSource = getActiveConfigSource();
@@ -109,9 +116,9 @@ export default defineContentConfig({
           tagline: z.string().nullable().optional(),
           badge: z.object({
             label: z.string(),
-            color: z.enum(['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']),
-            variant: z.enum(['solid', 'outline', 'subtle', 'soft', 'ghost', 'link']),
-            size: z.enum(['xs', 'sm', 'md', 'lg', 'xl']),
+            color: BADGE_COLORS,
+            variant: BADGE_VARIANTS,
+            size: BADGE_SIZES,
           }).optional(),
           features: z.array(z.object({
             title: z.string(),
@@ -150,9 +157,9 @@ export default defineContentConfig({
             coming_soon: z.object({
               badge: z.object({
                 label: z.string(),
-                color: z.enum(['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']),
-                variant: z.enum(['solid', 'outline', 'subtle', 'soft']),
-                size: z.enum(['xs', 'sm', 'md', 'lg', 'xl']),
+                color: BADGE_COLORS,
+                variant: WAITLIST_BADGE_VARIANTS,
+                size: BADGE_SIZES,
               }),
               description: z.string(),
               cta: z.object({
@@ -196,7 +203,7 @@ export default defineContentConfig({
         type: z.enum(['warning', 'objection', 'support', 'general']),
         label: z.string(),
         icon: z.string(),
-        color: z.enum(['error', 'warning', 'success', 'info']),
+        color: FAQ_COLORS,
         items: z.array(z.object({
           q: z.string(),
           a: z.string(),

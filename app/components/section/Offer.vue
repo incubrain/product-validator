@@ -1,6 +1,7 @@
 <!-- components/section/Offer.vue -->
 <script setup lang="ts">
-import type { IconProps } from '@nuxt/ui';
+import type { ButtonProps, BadgeProps } from '#ui/types';
+import { STATUS_ICONS } from '#constants';
 
 defineProps<{
   data?: any;
@@ -10,12 +11,6 @@ defineProps<{
 // Get primary offer
 const { getPrimaryOffer } = useContentCache();
 const { data: primaryOffer } = await getPrimaryOffer();
-
-const STATUS_ICONS: Record<string, IconProps & { class: string }> = {
-  'status-available': { name: 'lucide:check', class: 'text-success' },
-  'status-beta': { name: 'lucide:flask-conical', class: 'text-info' },
-  'status-coming-soon': { name: 'lucide:clock', class: 'text-warning' },
-};
 
 const transformedFeatures = computed(() => {
   if (!primaryOffer.value?.features) return [];
@@ -57,6 +52,7 @@ const { showSection } = useSectionVisibility();
     >
       <UPricingPlan
         v-bind="primaryOffer"
+        :badge="primaryOffer.badge as BadgeProps"
         :features="transformedFeatures"
         variant="outline"
         :ui="{
@@ -113,7 +109,7 @@ const { showSection } = useSectionVisibility();
         <UButton
           block
           size="xl"
-          :color="primaryOffer.secondaryCta.color || 'neutral'"
+          :color="(primaryOffer.secondaryCta.color || 'neutral') as ButtonProps['color']"
           variant="outline"
           :label="primaryOffer.secondaryCta.label"
           :to="primaryOffer.secondaryCta.to"

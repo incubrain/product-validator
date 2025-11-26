@@ -143,6 +143,7 @@ const formClasses = computed(() =>
       <!-- Universal form -->
       <UForm :state="state" :schema="schema" @submit="handleSubmit">
         <div :class="formClasses">
+                <UFormField name="email">
           <UInput
             v-model="state.email"
             type="email"
@@ -151,12 +152,15 @@ const formClasses = computed(() =>
             :disabled="isSubmitting"
             :class="layout === 'horizontal' ? 'flex-1' : 'w-full'"
           />
+          </UFormField>
           <UButton
             type="submit"
             size="xl"
             :block="layout === 'stacked'"
             :loading="isSubmitting"
+            variant="solid"
             :color="isWaitlist ? 'neutral' : 'primary'"
+            class="text-toned font-black cursor-pointer disabled:cursor-not-allowed"
           >
             {{ messaging.cta.label }}
           </UButton>

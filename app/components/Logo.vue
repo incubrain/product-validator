@@ -9,17 +9,26 @@ interface Props {
   showText?: boolean;
 }
 
-withDefaults(defineProps<Props>(), {
+const props = withDefaults(defineProps<Props>(), {
   size: 'md',
   showText: true,
 });
+
+// Size variants
+const sizeMap = {
+  sm: '24px',
+  md: '36px',
+  lg: '48px',
+};
+
+const imageSize = computed(() => sizeMap[props.size]);
 </script>
 
 <template>
   <div class="flex items-center space-x-3">
     <NuxtImg
       :src="business?.logo"
-      width="36px"
+      :width="imageSize"
       height="auto"
       class="p-1 rounded-full bg-elevated border"
     />

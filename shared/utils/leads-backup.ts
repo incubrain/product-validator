@@ -1,26 +1,7 @@
 import { writeFile, mkdir } from 'fs/promises';
 import { existsSync } from 'fs';
 import { join } from 'path';
-import type { StageKey } from '~~/shared/types/config';
-
-interface LeadRecord {
-  emailHash: string;
-  emailEncrypted: string;
-  formId: string;
-  offer?: string;
-  customerStage: string;
-  currentStage?: StageKey;
-  feedback?: string;
-  metadata?: Record<string, any>;
-  capturedAt: number;
-  updatedAt: number;
-  email?: string;
-}
-
-interface ExportResponse {
-  count: number;
-  records: LeadRecord[];
-}
+import type { LeadRecord, ExportResponse } from '~~/shared/types/storage';
 
 async function backupLeads() {
   console.log('🔍 Fetching leads from production...');

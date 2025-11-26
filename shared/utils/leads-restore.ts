@@ -1,33 +1,7 @@
 import { readFile, readdir } from 'fs/promises';
 import { join } from 'path';
 import * as readline from 'readline';
-import type { StageKey } from '~~/shared/types/config';
-
-interface LeadRecord {
-  emailHash: string;
-  emailEncrypted: string;
-  formId: string;
-  offer?: string;
-  customerStage: string;
-  currentStage?: StageKey;
-  feedback?: string;
-  metadata?: Record<string, any>;
-  capturedAt: number;
-  updatedAt: number;
-  email?: string;
-}
-
-interface BackupData {
-  count: number;
-  records: LeadRecord[];
-}
-
-interface ImportResponse {
-  success: boolean;
-  restored: number;
-  skipped: number;
-  errors: string[];
-}
+import type { LeadRecord, BackupData, ImportResponse } from '~~/shared/types/storage';
 
 function createInterface() {
   return readline.createInterface({

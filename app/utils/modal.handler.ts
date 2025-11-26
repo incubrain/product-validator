@@ -1,13 +1,12 @@
 // utils/modal.handler.ts
 import type { EventPayload } from '#shared/types/events';
-import { IModalBottomThird, IModalWindowed, IModalFullscreen } from '#components';
+import { IModalWindowed, IModalFullscreen } from '#components';
 
 /**
  * Modal component registry
  * Maps modal types to their components
  */
 const MODAL_COMPONENTS = {
-  bottomThird: () => IModalBottomThird,
   windowed_modal: () => IModalWindowed,
   fullscreen_modal: () => IModalFullscreen,
   // Add more modals as needed

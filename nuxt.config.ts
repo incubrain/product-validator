@@ -41,8 +41,7 @@ export default defineNuxtConfig({
     description: 'Ship today, build in public, validate in weeks',
   },
 
-  // {DX}: Commented out as it is too buggy and impacting dx significantly
-    studio: {
+  studio: {
       // Studio admin route (default: '/_studio')
       route: '/_studio',
   
@@ -68,7 +67,7 @@ export default defineNuxtConfig({
     modules: [
       '@nuxt/eslint',
       '@compodium/nuxt',
-      // '@nuxt/hints'
+      '@nuxt/hints'
     ],
 
     devtools: { enabled: true },
@@ -106,6 +105,7 @@ export default defineNuxtConfig({
 
     nitro: {
       prerender: {
+        // Intentionally empty - dynamic routes are not prerendered
         routes: [],
         crawlLinks: false,
       },
@@ -202,7 +202,6 @@ export default defineNuxtConfig({
   components: [
     { path: '~/components', prefix: 'I' },
     { path: '~/components/ui', prefix: 'UI' },
-    '~/components',
   ],
 
   experimental: {

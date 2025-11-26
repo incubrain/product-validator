@@ -171,10 +171,7 @@ export const kvProvider: StorageProvider = {
           );
         });
 
-        console.log('[kvProvider] invalidated metrics cache', {
-          funcKey,
-          handlerKey,
-        });
+
       } catch (err) {
         console.warn('[kvProvider] cache invalidation failed', err);
       }

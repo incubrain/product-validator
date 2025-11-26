@@ -9,6 +9,19 @@ export const CONFIG_SOURCES = {
 
 /**
  * Get the active config source from environment
+ * 
+ * Determines which example configuration to use based on NUXT_PUBLIC_CONFIG_SOURCE.
+ * Falls back to 'root' if no source is specified.
+ * 
+ * @returns The resolved config source ('validator', 'founder-funnel', or 'root')
+ * @throws {Error} If an invalid config source is specified
+ * 
+ * @example
+ * ```ts
+ * // .env: NUXT_PUBLIC_CONFIG_SOURCE="validator"
+ * const source = getActiveConfigSource();
+ * // Returns: 'validator'
+ * ```
  */
 export function getActiveConfigSource(): ConfigSource {
   let source = process.env.NUXT_PUBLIC_CONFIG_SOURCE || '';
@@ -37,4 +50,3 @@ export function getActiveConfigSource(): ConfigSource {
 
   return resolvedSource;
 }
-
