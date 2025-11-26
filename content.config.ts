@@ -1,7 +1,6 @@
 // content.config.ts
 import { defineCollection, defineContentConfig, z } from '@nuxt/content';
 import { asSeoCollection } from '@nuxtjs/seo/content';
-import { asOgImageCollection } from 'nuxt-og-image/content';
 import { getActiveConfigSource } from './shared/utils/config-resolver';
 import path from 'node:path';
 
@@ -18,9 +17,20 @@ export default defineContentConfig({
       type: 'page',
       source: {
         cwd: contentCwd,
-        include: 'pages/*.md',
+        include: 'pages/**/*.md',
         prefix: '/'
       },
+      schema: z.object({
+        // Optional fields for updates
+        version: z.string().optional(),
+        date: z.string().optional(),
+        summary: z.string().optional(),
+        // Optional fields for index page values
+        values: z.array(z.object({
+          title: z.string(),
+          description: z.string(),
+        })).optional(),
+      }),
     }),
 
     config: defineCollection({
@@ -236,26 +246,6 @@ export default defineContentConfig({
         badgeColor: z.string().optional(),
       }),
     }),
-
-    // ============================================================================
-    // OTHER CONTENT COLLECTIONS
-    // ============================================================================
-
-    updates: defineCollection(
-      asSeoCollection({
-        type: 'page',
-        source: {
-          cwd: contentCwd,
-          include: 'updates/*.md',
-        },
-        schema: z.object({
-          version: z.string(),
-          date: z.string(),
-          title: z.string(),
-          summary: z.string(),
-        }),
-      }),
-    ),
     magnet: defineCollection(
       asSeoCollection({
         type: 'page',

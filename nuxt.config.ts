@@ -202,7 +202,6 @@ export default defineNuxtConfig({
   components: [
     { path: '~/components', prefix: 'I' },
     { path: '~/components/ui', prefix: 'UI' },
-    { path: '~/components/OgImage' },
     '~/components',
   ],
 

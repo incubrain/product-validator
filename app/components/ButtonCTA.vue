@@ -15,7 +15,6 @@ interface Props {
 
 const props = defineProps<Props>();
 
-const overlay = useOverlay();
 const { executeAction } = useEvents();
 
 // Fetch offer from collection by ID
@@ -48,7 +47,7 @@ const handleClick = async () => {
   <div>
     <UButton
       :label="offer.cta.label"
-      :trailing-icon="offer.cta.icon"
+      :leading-icon="offer.cta.icon"
       :color="offer.cta.color || 'primary'"
       :variant="offer.cta.variant || 'solid'"
       :size="size"

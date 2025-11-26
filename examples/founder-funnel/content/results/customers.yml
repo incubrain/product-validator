@@ -7,7 +7,7 @@ items:
 
   - name: Vue 3
     logo: i-logos-vue
-    note: UI
+    note: Framework
 
   - name: TypeScript
     logo: i-logos-typescript-icon

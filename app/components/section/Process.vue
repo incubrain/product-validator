@@ -1,14 +1,8 @@
 <!-- ~/components/section/Process.vue -->
 <script setup lang="ts">
-import { breakpointsTailwind, useBreakpoints } from '@vueuse/core';
-
 defineProps<{
   data?: any;
 }>();
-
-const breakpoints = useBreakpoints(breakpointsTailwind);
-const smallerThanMd = breakpoints.smaller('md');
-const smallerThanXl = breakpoints.smaller('xl');
 
 const { data: processFile } = await useAsyncData('process', () => 
   queryCollection('features').where('stem', '=', 'features/process').first()
@@ -112,7 +106,7 @@ const { showSection } = useSectionVisibility();
       >
         <template #leading>
           <div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 ring-1 ring-primary/20 mb-4">
-            <UIcon :name="item.icon" class="size-5 text-primary" />
+            <UIcon :name="item.icon" class="size-5 text-secondary" />
           </div>
         </template>
       </UPageCard>
