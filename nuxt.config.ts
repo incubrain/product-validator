@@ -41,6 +41,10 @@ export default defineNuxtConfig({
     description: 'Open-source funnel for technical founders',
   },
 
+  seo: {
+    redirectToCanonicalSiteUrl: true
+  },
+
   // {DX}: studio breaks HMR alpha.2
   // studio: {
   //     // Studio admin route (default: '/_studio')
