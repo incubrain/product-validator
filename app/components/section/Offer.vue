@@ -53,11 +53,11 @@ const { showSection } = useSectionVisibility();
       <div class="flex flex-col items-center lg:items-start gap-6 lg:sticky lg:top-24 lg:self-start">
         <!-- Portrait -->
         <div class="relative group">
-          <div class="absolute inset-0 bg-linear-to-t from-primary/20 to-transparent rounded-full blur-xl group-hover:blur-2xl transition-all duration-300" />
+          <div class="absolute inset-0 bg-linear-to-t from-primary/20 to-transparent blur-xl group-hover:blur-2xl transition-all duration-300" />
           <NuxtImg
             :src="founderData.profile.portrait.src"
             :alt="founderData.profile.portrait.alt"
-            class="w-32 h-32 lg:w-40 lg:h-40 object-cover object-top rounded-full border-2 border-primary/20 shadow-2xl relative z-10"
+            class="w-32 h-32 lg:w-40 lg:h-40 object-cover object-top border border-primary/20 shadow-2xl relative z-10 pt-2 rounded-full"
           />
         </div>
 

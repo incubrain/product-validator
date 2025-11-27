@@ -65,15 +65,15 @@ export const useDevTools = () => {
 
   const currentStage = computed<StageKey>(() => {
     if (import.meta.server) {
-      return defaultStage;
+      return defaultStage
     }
 
-    if (isDev && devOverrides.value.stage) {
-      return devOverrides.value.stage;
+    if (isDev && import.meta.client && devOverrides.value.stage) {
+      return devOverrides.value.stage
     }
 
-    return defaultStage;
-  });
+    return defaultStage
+  })
 
   const setDevOverrides = (stage: StageKey) => {
     if (!isDev) {

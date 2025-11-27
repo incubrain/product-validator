@@ -26,7 +26,7 @@ const props = withDefaults(defineProps<Props>(), {
     :ui="{
       root: 'isolate',
       container:
-        ['flex flex-col lg:grid py-16 sm:py-16 lg:pt-0 gap-12 sm:gap-16 border-neutral/20 border-x lg:px-0', props.hasBottom ? 'lg:pb-0' : 'lg:pb-32'],
+        ['flex flex-col lg:grid py-16 sm:py-16 lg:pt-0 gap-12 sm:gap-16 border-neutral/20 border-x lg:px-0', props.hasBottom ? 'lg:pb-12' : 'lg:pb-32'],
       header: 'space-y-3 mx-auto text-center relative z-100',
       leading: 'w-full lg:px-0 relative pb-4 z-100',
       headline: 'hidden',
@@ -50,6 +50,7 @@ const props = withDefaults(defineProps<Props>(), {
         <UIcon :name="intro.icon" class="text-secondary" />
       </div>
       <span
+        v-if="intro.headline"
         class="absolute -top-4.5 mx-auto font-family-heading uppercase text-success font-bold px-6 py-2 bg-default border-b text-xs sm:text-sm tracking-[0.15em]"
       >
         {{ intro.headline }}

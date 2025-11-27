@@ -1,6 +1,6 @@
 <!-- ~/components/section/ProblemSolution.vue -->
 <script setup lang="ts">
-const props = defineProps<{
+defineProps<{
   data?: any;
 }>();
 

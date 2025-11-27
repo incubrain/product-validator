@@ -28,7 +28,6 @@ data:
 data:
   intro:
     icon: i-lucide-alert-triangle
-    headline: The Problem
     title: Stop Building in the Dark
     description: Most founders spend months building products nobody wants. They focus on code before validation.
   cta:

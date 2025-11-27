@@ -92,7 +92,6 @@ const { data: primaryOffer } = await getPrimaryOffer();
           />
         </div>
 
-        <!-- Countdown Email Form (Identity + Attention only) -->
         <div v-if="showCountdown && primaryOffer" class="max-w-2xl mx-auto">
           <IFormValidation
             location="hero-countdown"
@@ -101,7 +100,6 @@ const { data: primaryOffer } = await getPrimaryOffer();
           />
         </div>
 
-        <!-- Normal CTA (Traffic stage onward) -->
         <IButtonCTA
           v-if="showCTA"
           size="xl"

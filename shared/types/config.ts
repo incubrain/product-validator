@@ -85,7 +85,7 @@ export interface SectionCta {
 
 export type OfferID = 'magnet' | 'direct' | 'low' | 'medium' | 'high';
 
-export type OfferStockType = 'spots' | 'units';
+export type OfferStockType = 'spots' | 'units' | 'hours';
 
 export type FeatureStatus =
   | 'status-available'

@@ -124,15 +124,15 @@ const { showSection } = useSectionVisibility();
               :ui="{
                 item: 'basis-[320px] px-2',
                 viewport: 'overflow-visible',
-                controls: 'relative mt-12 flex justify-start max-w-(--ui-container) mx-auto',
+                controls: 'relative mt-12 hidden md:flex justify-start max-w-(--ui-container) mx-auto',
                 arrows: 'flex gap-4',
-                prev: 'flex relative rounded-none start-0 sm:start-0 top-0 translate-y-0',
-                next: 'flex relative rounded-none end-0 sm:end-0 top-0 translate-y-0',
+                prev: 'flex relative rounded-none ring-default/50 start-0 sm:start-0 top-0 translate-y-0',
+                next: 'flex relative rounded-none ring-default/50 end-0 sm:end-0 top-0 translate-y-0',
               }"
             >
               <UPageCard
                 variant="outline"
-                class="h-full"
+                class="h-full border border-default/50 rounded-none"
                 :ui="{
                   root: 'bg-default hover:bg-muted/50 transition-colors h-full',
                   body: 'space-y-4',
