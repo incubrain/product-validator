@@ -9,7 +9,7 @@ data:
   badge:
     title: We're open-source
     description: helping 70+ founders
-    to: https://github.com/incubrain/product-validator
+    to: https://github.com/incubrain/founder-funnel
   intro:
     title: Sick of Being "Almost Ready" to Launch?
     description: Flip the script, strategically validate your business model BEFORE you build the product

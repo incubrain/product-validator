@@ -42,7 +42,7 @@ ctas:
   secondary:
     strategy: external
     label: "View on GitHub"
-    to: "https://github.com/incubrain/product-validator"
+    to: "https://github.com/incubrain/founder-funnel"
     icon: "i-lucide-github"
     color: "neutral"
 waitlist:

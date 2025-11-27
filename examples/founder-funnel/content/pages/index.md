@@ -9,7 +9,7 @@ data:
   badge:
     title: Open Source
     description: MIT License
-    to: https://github.com/incubrain/product-validator
+    to: https://github.com/incubrain/founder-funnel
   intro:
     title: Own Your Funnel
     description: The open-source landing page template for technical founders. Capture leads, deliver gated content, and validate your idea without monthly fees.
@@ -76,7 +76,7 @@ data:
     message: Open an issue on GitHub or reach out on Twitter.
     button:
       label: GitHub Discussions
-      to: https://github.com/incubrain/product-validator/discussions
+      to: https://github.com/incubrain/founder-funnel/discussions
       icon: i-lucide-message-circle
 ---
 ::

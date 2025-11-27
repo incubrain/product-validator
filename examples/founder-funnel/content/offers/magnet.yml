@@ -48,7 +48,7 @@ ctas:
   secondary:
     strategy: external
     label: One Click Deploy
-    to: https://github.com/incubrain/product-validator
+    to: https://github.com/incubrain/founder-funnel
     icon: i-lucide-rocket
     color: secondary
 

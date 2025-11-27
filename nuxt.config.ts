@@ -59,7 +59,7 @@ export default defineNuxtConfig({
   //     repository: {
   //       provider: 'github', // only GitHub is currently supported
   //       owner: 'incubrain', // your GitHub username or organization
-  //       repo: 'product-validator', // your repository name
+  //       repo: 'founder-funnel', // your repository name
   //       branch: 'main', // the branch to commit to (default: main)
   //       rootDir: activeSource === 'root' ? '' : `examples/${activeSource}`,
   //       private: true,
