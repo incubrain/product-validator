@@ -8,7 +8,7 @@ billingCycle: 'Limited availability'
 terms: '⚠️ Terms of service or billing'
 tagline: '⚠️ Short compelling tagline'
 badge:
-  label: '100 Spots'
+  label: 'Limited Spots'
   color: success
   variant: solid
   size: lg
@@ -26,11 +26,26 @@ stock:
   limit: 100
   claimed: 10
   type: spots
-cta:
-  label: 'Send me Day 1'
-  icon: i-lucide-mail
-  modal: window
-  note: 'Join 5,000+ creators'
+ctas:
+  funnel:
+    strategy: modal
+    label: 'Send me Day 1'
+    icon: i-lucide-mail
+    modal: windowed_modal
+    note: 'Join 5,000+ creators'
+  
+  conversion:
+    strategy: modal
+    label: 'Get Instant Access'
+    icon: i-lucide-download
+    modal: windowed_modal
+  
+  secondary:
+    strategy: external
+    label: 'View Demo'
+    to: 'https://your-demo-link.com'
+    icon: i-lucide-play
+    color: neutral
 
 # Waitlist messaging when offer is unavailable
 waitlist:
@@ -41,9 +56,6 @@ waitlist:
       variant: soft
       size: lg
     description: 'Be first to know when we launch.'
-    cta:
-      label: 'Get Early Access'
-      icon: 'i-lucide-bell'
     success:
       title: "You're on the list!"
       message: "We'll email you at launch."
@@ -55,9 +67,6 @@ waitlist:
       variant: soft
       size: lg
     description: 'All spots claimed. Join waitlist for next availability.'
-    cta:
-      label: 'Join Waitlist'
-      icon: 'i-lucide-clock'
     success:
       title: "You're on the waitlist!"
       message: "We'll email you when spots open."

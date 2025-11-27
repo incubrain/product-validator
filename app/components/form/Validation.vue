@@ -1,16 +1,19 @@
+<!-- app/components/form/Validation.vue -->
 <script setup lang="ts">
 import { z } from 'zod';
-import type { Offer } from '#types';
+import type { Offer, CtaName } from '#types';
 import { STAGE_CONFIG } from '#stage-config';
 
 interface Props {
   location: string;
   offer: Offer;
   layout?: 'stacked' | 'horizontal';
+  ctaName?: CtaName;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   layout: 'stacked',
+  ctaName: 'funnel',
 });
 
 const { currentStage } = useDevTools();
@@ -20,7 +23,6 @@ const { isAvailable } = useOfferStock(props.offer.stock, props.offer.slug);
 const offerState = computed<'available' | 'coming_soon' | 'unavailable'>(() => {
   if (!isAvailable.value) return 'unavailable';
   
-  // Check stage config
   const target = STAGE_CONFIG.conversionTarget[currentStage.value as StageKey];
   if (target === 'waitlist') return 'coming_soon';
   
@@ -29,12 +31,17 @@ const offerState = computed<'available' | 'coming_soon' | 'unavailable'>(() => {
 
 // Determine form type
 const formType = computed<'magnet' | 'waitlist'>(() => {
-  // Secondary offer (direct) doesn't use forms
   if (props.offer.slug === STAGE_CONFIG.offers.secondary) {
-    return 'magnet'; // Won't render anyway
+    return 'magnet';
   }
   
   return offerState.value === 'available' ? 'magnet' : 'waitlist';
+});
+
+// ✅ Get CTA config from offer
+const cta = computed(() => {
+  if (!props.offer.ctas) return null;
+  return props.offer.ctas[props.ctaName];
 });
 
 // Messaging type
@@ -57,7 +64,8 @@ type MessagingType = {
   note?: string;
 };
 
-// Get messaging from offer config
+// Get messaging
+// app/components/form/Validation.vue - Replace messaging computed
 const messaging = computed<MessagingType | null>(() => {
   if (formType.value === 'waitlist') {
     const reason = offerState.value === 'unavailable' ? 'unavailable' : 'coming_soon';
@@ -67,18 +75,23 @@ const messaging = computed<MessagingType | null>(() => {
     return {
       badge: waitlistMsg.badge,
       description: waitlistMsg.description,
-      cta: waitlistMsg.cta,
+      // ✅ Computed CTA - no longer from YAML
+      cta: {
+        label: reason === 'unavailable' ? 'Join Waitlist' : 'Get Early Access',
+        icon: reason === 'unavailable' ? 'i-lucide-clock' : 'i-lucide-bell',
+      },
       success: waitlistMsg.success,
     };
   }
   
-  // Magnet form uses offer CTA
+  // Normal flow unchanged
+  if (!cta.value) return null;
   return {
     cta: {
-      label: props.offer.cta.label,
-      icon: props.offer.cta.icon || 'i-lucide-mail',
+      label: cta.value.label,
+      icon: cta.value.icon || 'i-lucide-mail',
     },
-    note: props.offer.cta.note || undefined,
+    note: cta.value.note,
     success: {
       title: "You're in!",
       message: "Check your email to get started.",
@@ -133,10 +146,7 @@ const formClasses = computed(() =>
     <!-- Form -->
     <div 
       v-if="!isSuccess" 
-      :class="[
-        'space-y-4',
-        isWaitlist && 'bg-neutral-900/50 border border-neutral-800 rounded-lg p-6'
-      ]"
+      class="space-y-4"
     >
       <!-- Waitlist badge/description -->
       <div v-if="isWaitlist && messaging.badge" class="text-center space-y-2">
@@ -168,17 +178,17 @@ const formClasses = computed(() =>
             size="xl"
             :block="layout === 'stacked'"
             :loading="isSubmitting"
-            :disabled="!is_valid_email || isSubmitting"
+            :disabled="state.email && (!is_valid_email || isSubmitting)"
             variant="solid"
             :color="isWaitlist ? 'neutral' : 'primary'"
-            class="text-toned font-black cursor-pointer disabled:cursor-not-allowed"
+            :class="['cursor-pointer disabled:cursor-not-allowed', isWaitlist ? '' : 'text-toned font-black']"
           >
             {{ messaging.cta.label }}
           </UButton>
         </div>
       </UForm>
       
-      <!-- Optional note (magnet only) -->
+      <!-- Optional note -->
       <p v-if="messaging.note" class="text-xs text-muted text-center">
         {{ messaging.note }}
       </p>

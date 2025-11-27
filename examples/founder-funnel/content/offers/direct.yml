@@ -27,21 +27,31 @@ variant: outline
 highlight: true
 type: ebook
 stock:
-  limit: 100
-  claimed: 10
+  limit: 10
+  claimed: 1
   type: spots
-cta:
-  strategy: link
-  label: What you get
-  to: /get/direct
-  icon: i-lucide-arrow-right
-  color: secondary
-conversionCta:
-  strategy: external
-  label: Book a Call
-  to: https://cal.com/drew-macgibbon/strategy-consultation
-  icon: i-lucide-calendar
-  color: primary
+ctas:
+  funnel:
+    strategy: link
+    label: Learn More
+    to: /get/mentorship
+    icon: i-lucide-arrow-right
+    color: secondary
+  
+  conversion:
+    strategy: external
+    label: Book a Call
+    to: https://cal.com/drew-macgibbon/strategy-consultation
+    icon: i-lucide-calendar
+    color: primary
+  
+  secondary:
+    strategy: external
+    label: View Services
+    to: https://incubrain.org
+    icon: i-lucide-external-link
+    color: neutral
+  
 waitlist:
   coming_soon:
     badge:
@@ -50,9 +60,6 @@ waitlist:
       variant: soft
       size: lg
     description: 'Implementation service launching soon. Get notified when available.'
-    cta:
-      label: 'Get Early Access'
-      icon: 'i-lucide-bell'
     success:
       title: "You're on the list!"
       message: "We'll email you at launch."
@@ -63,9 +70,6 @@ waitlist:
       variant: soft
       size: lg
     description: 'All implementation slots taken. Join waitlist for next opening.'
-    cta:
-      label: 'Join Waitlist'
-      icon: 'i-lucide-clock'
     success:
       title: "You're on the list!"
       message: "We'll notify you when slots open up."

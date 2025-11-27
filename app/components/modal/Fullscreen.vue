@@ -66,6 +66,7 @@ const { data: offer } = await getOffer(props.offerId);
         <IButtonCTA
           :offer-id="offerId"
           :location="`${location}_modal`"
+          cta-name="conversion"
           size="xl"
         />
       </div>

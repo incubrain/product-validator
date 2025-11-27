@@ -9,6 +9,8 @@ const props = defineProps<{
 // Fetch offer from collection by ID
 const { getOffer } = useContentCache();
 const { data: offer } = await getOffer(STAGE_CONFIG.offers.secondary);
+const cta = computed(() => offer.value?.ctas.funnel);
+
 
 const configSource = useRuntimeConfig().public.configSource
 
@@ -20,23 +22,23 @@ const bannerClasses = computed(() => ({
 
 <template>
   <UBanner
-    v-if="offer"
-    :id="`${configSource}_${offer.slug}`"
+    v-if="offer && cta"
     icon="i-lucide-heart"
     :title="offer.description"
-    :to="offer.cta.to"
-    :target="offer.cta.to?.startsWith('http') ? '_blank' : undefined"
+    :to="cta.to"
+    :target="cta.to?.startsWith('http') ? '_blank' : undefined"
     :actions="[
       {
-        to: offer.cta.to,
-        target: offer.cta.to?.startsWith('http') ? '_blank' : undefined,
-        label: offer.cta.label,
-        trailingIcon: offer.cta.icon,
+        to: cta.to,
+        target: cta.to?.startsWith('http') ? '_blank' : undefined,
+        label: cta.label,
+        trailingIcon: cta.icon,
         color: 'secondary',
         size: 'sm',
         variant: 'ghost',
       },
     ]"
+    close
     :class="bannerClasses"
     :ui="{
       root: 'hover:bg-default bg-primary-950/60 text-muted h-(--ui-banner-height) backdrop-blur-3xl',
@@ -44,6 +46,5 @@ const bannerClasses = computed(() => ({
       icon: 'size-5 shrink-0 text-error pointer-events-none',
       close: 'text-muted hover:bg-muted cursor-pointer',
     }"
-    close
   />
 </template>

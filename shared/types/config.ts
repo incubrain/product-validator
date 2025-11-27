@@ -38,6 +38,8 @@ export type FeatureKey = keyof typeof STAGE_CONFIG.visibility.unlock.features;
 
 export type ConfigSource = 'validator' | 'founder-funnel' | 'root';
 
+export type CtaName = 'conversion' | 'funnel' | 'secondary';
+
 export type Cta = {
   to: ButtonProps['to'];
   icon?: string;
@@ -129,8 +131,7 @@ export type Offer = Pick<
   ogImage?: Record<string, any>;
   primary?: boolean;
   stock?: OfferStock;
-  cta: Cta;
-  secondaryCta?: Cta;
+  ctas: Record<CtaName, Cta>;
   upsells?: OfferUpsell[];
   media?: {
     type: 'video' | 'image';

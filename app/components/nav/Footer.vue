@@ -68,7 +68,10 @@ const copyrightYear = computed(() =>
             color="neutral"
             aria-label="View Analytics Dashboard"
           />
-          <IButtonCTA :offer-id="STAGE_CONFIG.offers.secondary" location="footer" />
+          <IButtonCTA :offer-id="STAGE_CONFIG.offers.secondary" 
+          location="footer"
+          cta-name="funnel"
+          />
         </div>
       </UContainer>
     </template>

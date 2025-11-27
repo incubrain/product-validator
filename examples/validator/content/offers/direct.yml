@@ -9,8 +9,8 @@ terms: "Billed monthly. Minimum 3 hours."
 highlight: true
 type: ebook
 stock:
-  limit: 100
-  claimed: 10
+  limit: 10
+  claimed: 1
   type: spots
 variant: "outline"
 primary: false
@@ -27,12 +27,28 @@ features:
     icon: "status-available"
   - title: "Custom integration setup (analytics, forms, email sequences)"
     icon: "status-available"
-cta:
-  label: "Book a Call"
-  to: "https://cal.com/drew-macgibbon/strategy-consultation"
-  icon: "i-lucide-handshake"
-  color: "secondary"
-  note: "Monthly packages available. First hour: strategy session."
+ctas:
+  funnel:
+    strategy: link
+    label: "Learn More"
+    to: "/get/direct"
+    icon: "i-lucide-arrow-right"
+    color: "secondary"
+  
+  conversion:
+    strategy: external
+    label: "Book a Call"
+    to: "https://cal.com/drew-macgibbon/strategy-consultation"
+    icon: "i-lucide-calendar"
+    color: "primary"
+    note: "Monthly packages available. First hour: strategy session."
+  
+  secondary:
+    strategy: external
+    label: "View Portfolio"
+    to: "https://incubrain.org"
+    icon: "i-lucide-briefcase"
+    color: "neutral"
 
 waitlist:
   coming_soon:
@@ -42,9 +58,6 @@ waitlist:
       variant: soft
       size: lg
     description: 'This implementation service is launching soon. Get early access.'
-    cta:
-      label: 'Notify Me'
-      icon: 'i-lucide-bell'
     success:
       title: "You're on the list!"
       message: "We'll email you as soon as this launches."
@@ -56,9 +69,6 @@ waitlist:
       variant: soft
       size: lg
     description: 'All implementation slots filled. Join waitlist for next batch.'
-    cta:
-      label: 'Join Waitlist'
-      icon: 'i-lucide-timer'
     success:
       title: "You're on the waitlist!"
       message: "We'll notify you when slots become available."

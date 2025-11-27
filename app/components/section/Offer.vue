@@ -140,19 +140,16 @@ const { showSection } = useSectionVisibility();
         </UPricingPlan>
 
         <div 
-          v-if="primaryOffer.secondaryCta"
+          v-if="primaryOffer.ctas.secondary"
           class="mt-4 flex flex-col gap-4 justify-center items-center"
         >
           <UBadge variant="soft">OR</UBadge>
-          <UButton
-            block
+          <IButtonCTA
+            :offer-id="primaryOffer.slug"
+            cta-name="secondary"
+            location="offer-section-alt"
             size="xl"
-            :color="(primaryOffer.secondaryCta.color || 'neutral') as ButtonProps['color']"
-            variant="outline"
-            :label="primaryOffer.secondaryCta.label"
-            :to="primaryOffer.secondaryCta.to"
-            :icon="primaryOffer.secondaryCta.icon"
-            target="_blank"
+            block
           />
         </div>
       </div>

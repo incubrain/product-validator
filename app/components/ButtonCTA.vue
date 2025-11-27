@@ -1,62 +1,56 @@
 <!-- components/ButtonCTA.vue -->
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui';
+import type { CtaName } from '#types';
 
 interface Props {
   offerId: OfferID;
   location: string;
-
-  // Pass-through to UButton
+  ctaName?: CtaName;
   class?: string;
   size?: ButtonProps['size'];
   block?: boolean;
-  anchor?: boolean;
 }
 
-const props = defineProps<Props>();
+const props = withDefaults(defineProps<Props>(), {
+  ctaName: 'funnel',
+});
 
 const { executeAction } = useEvents();
-
-// Fetch offer from collection by ID
 const { getOffer } = useContentCache();
 const { data: offer } = await getOffer(props.offerId);
 
-// If not form or modal, pass link to UButton
-const to = computed(() => {
-  if (props.anchor) return { path: '/', hash: '#offer' };
-  return offer.value?.cta.to;
+const cta = computed(() => {
+  if (!offer.value?.ctas) return null;
+  return offer.value.ctas[props.ctaName];
 });
 
-const target = computed(() =>
-  typeof offer.value?.cta.to === 'string' &&
-  offer.value.cta.to.startsWith('http')
-    ? '_blank'
-    : undefined,
+const to = computed(() => 
+  cta.value?.to
 );
 
-// Handle click for non-form offers
-const handleClick = async () => {
-  if (props.anchor) return;
+const target = computed(() => 
+  cta.value?.to?.startsWith('http') ? '_blank' : undefined
+);
 
-  // Track the click
+// ✅ Handle click
+const handleClick = async () => {
   await executeAction(props.location, offer.value);
 };
 </script>
 
 <template>
-  <div>
-    <UButton
-      :label="offer.cta.label"
-      :leading-icon="offer.cta.icon"
-      :color="(offer.cta.color || 'primary') as any"
-      :variant="offer.cta.variant || 'solid'"
-      :size="size"
-      :block="block"
-      :class="props.class"
-      :to="to"
-      :target="target"
-      :disabled="offer.cta.disabled"
-      @click="handleClick"
-    />
-  </div>
+  <UButton
+    v-if="cta"
+    :label="cta.label"
+    :leading-icon="cta.icon"
+    :color="(cta.color || 'primary') as any"
+    :variant="cta.variant || 'solid'"
+    :size="size"
+    :block="block"
+    :class="props.class"
+    :to="to"
+    :target="target"
+    @click="handleClick"
+  />
 </template>

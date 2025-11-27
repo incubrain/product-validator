@@ -138,9 +138,9 @@ const { showSection } = useSectionVisibility();
                   body: 'space-y-4',
                 }"
               >
-                <template #leading>
+                <template #leading v-if="item.image">
                   <!-- Optional Image -->
-                  <div v-if="item.image" class="mb-4 -mx-6 -mt-6">
+                  <div class="mb-4 -mx-6 -mt-6">
                     <NuxtImg
                       :src="item.image"
                       :alt="item.title"

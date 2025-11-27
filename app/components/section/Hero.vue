@@ -102,11 +102,10 @@ const { data: primaryOffer } = await getPrimaryOffer();
 
         <IButtonCTA
           v-if="showCTA"
-          size="xl"
           :offer-id="STAGE_CONFIG.offers.primary"
+          cta-name="funnel"
           location="hero"
-          anchor
-          class="inline-flex text-toned font-black"
+          size="xl"
         />
       </div>
     </template>

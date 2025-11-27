@@ -5,11 +5,30 @@ import { getActiveConfigSource } from './shared/utils/config-resolver';
 import path from 'node:path';
 
 // Shared schema constants for consistency across collections
-const BADGE_VARIANTS = z.enum(['solid', 'outline', 'subtle', 'soft']);
+
 const WAITLIST_BADGE_VARIANTS = z.enum(['solid', 'outline', 'subtle', 'soft']);
-const BADGE_COLORS = z.enum(['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']);
 const FAQ_COLORS = z.enum(['error', 'warning', 'success', 'info']);
-const BADGE_SIZES = z.enum(['xs', 'sm', 'md', 'lg', 'xl']);
+
+const BADGE_SCHEMA = z.object({
+  label: z.string(),
+  color: z.enum(['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']),
+  variant: z.enum(['solid', 'outline', 'subtle', 'soft']),
+  size: z.enum(['xs', 'sm', 'md', 'lg', 'xl']),
+});
+
+const CTA_SCHEMA = z.object({
+  strategy: z.enum(['modal', 'link', 'external']).optional(),
+  label: z.string(),
+  to: z.string().optional(),
+  icon: z.string(),
+  modal: z.string().optional(),
+  color: z.string().optional(),
+  variant: z.string().optional(),
+  note: z.string().nullable().optional(),
+});
+
+const CTA_NAME = z.enum(['conversion', 'funnel', 'secondary']);
+
 
 // Determine the root directory for content based on the active source
 // Custom: Uses project root (which contains a 'content' dir)
@@ -114,12 +133,7 @@ export default defineContentConfig({
           billingCycle: z.string(),
           terms: z.string(),
           tagline: z.string().nullable().optional(),
-          badge: z.object({
-            label: z.string(),
-            color: BADGE_COLORS,
-            variant: BADGE_VARIANTS,
-            size: BADGE_SIZES,
-          }).optional(),
+          badge: BADGE_SCHEMA.optional(),
           features: z.array(z.object({
             title: z.string(),
             icon: z.string(),
@@ -132,57 +146,26 @@ export default defineContentConfig({
             claimed: z.number(),
             type: z.string(),
           }).optional(),
-          cta: z.object({
-            label: z.string(),
-            to: z.string().optional(),
-            icon: z.string(),
-            modal: z.string().optional(),
-            color: z.string().optional(),
-            note: z.string().nullable().optional(),
-          }),
-          secondaryCta: z.object({
-            label: z.string(),
-            to: z.string().optional(),
-            icon: z.string(),
-            modal: z.string().optional(),
-            color: z.string().optional(),
-            note: z.string().nullable().optional(),
-          }).optional(),
+          ctas: z.record(CTA_NAME, CTA_SCHEMA),
+
           media: z.object({
             type: z.enum(['image', 'video']),
             src: z.string(),
             alt: z.string(),
           }).optional(),
+
           waitlist: z.object({
             coming_soon: z.object({
-              badge: z.object({
-                label: z.string(),
-                color: BADGE_COLORS,
-                variant: WAITLIST_BADGE_VARIANTS,
-                size: BADGE_SIZES,
-              }),
+              badge: BADGE_SCHEMA,
               description: z.string(),
-              cta: z.object({
-                label: z.string(),
-                icon: z.string(),
-              }),
               success: z.object({
                 title: z.string(),
                 message: z.string(),
               }),
             }),
             unavailable: z.object({
-              badge: z.object({
-                label: z.string(),
-                color: z.enum(['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']),
-                variant: z.enum(['solid', 'outline', 'subtle', 'soft']),
-                size: z.enum(['xs', 'sm', 'md', 'lg', 'xl']),
-              }),
+              badge: BADGE_SCHEMA,
               description: z.string(),
-              cta: z.object({
-                label: z.string(),
-                icon: z.string(),
-              }),
               success: z.object({
                 title: z.string(),
                 message: z.string(),

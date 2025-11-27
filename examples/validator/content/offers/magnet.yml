@@ -26,11 +26,25 @@ stock:
   limit: 100
   claimed: 20
   type: spots
-cta:
-  label: "Get Free Validation Kit"
-  icon: "i-lucide-rocket"
-  modal: "window"
-# Waitlist messaging when offer is unavailable
+ctas:
+  funnel:
+    strategy: modal
+    label: "Get Free Validation Kit"
+    icon: "i-lucide-rocket"
+    modal: "windowed_modal"
+  
+  conversion:
+    strategy: modal
+    label: "Get Instant Access"
+    icon: "i-lucide-download"
+    modal: "windowed_modal"
+  
+  secondary:
+    strategy: external
+    label: "View on GitHub"
+    to: "https://github.com/incubrain/product-validator"
+    icon: "i-lucide-github"
+    color: "neutral"
 waitlist:
   coming_soon:
     badge:
@@ -39,9 +53,6 @@ waitlist:
       variant: soft
       size: lg
     description: 'Be first to know when we launch.'
-    cta:
-      label: 'Get Early Access'
-      icon: 'i-lucide-bell'
     success:
       title: "You're on the list!"
       message: "We'll email you at launch."
@@ -53,9 +64,6 @@ waitlist:
       variant: soft
       size: lg
     description: 'Limited spots filled. Join the waitlist for next batch.'
-    cta:
-      label: 'Join Waitlist'
-      icon: 'i-lucide-timer'
     success:
       title: "You're on the waitlist!"
       message: "We'll notify you when spots become available."

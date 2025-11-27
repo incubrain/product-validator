@@ -80,6 +80,7 @@ useHead({
                 <IButtonCTA
                   :offer-id="STAGE_CONFIG.offers.secondary"
                   location="update-sidebar"
+                  cta-name="funnel"
                   size="sm"
                   class="justify-start"
                 />
@@ -134,6 +135,7 @@ useHead({
                <IButtonCTA
                   :offer-id="STAGE_CONFIG.offers.secondary"
                   location="update-mobile-bottom"
+                  cta-name="funnel"
                   block
                 />
             </div>
