@@ -32,7 +32,9 @@ export const useContentCache = () => {
    */
   const getOffer = (id: string) => {
     return useAsyncData(`app-offer-${id}`, () => 
-      queryCollection('offers').where('stem', '=', `offers/${id}`).first()
+      queryCollection('offers')
+        .orWhere(q => q.where('slug', '=', id).where('stem', '=', `offers/${id}`))
+        .first()
     );
   };
 

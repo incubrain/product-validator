@@ -1,12 +1,12 @@
-slug: direct
+slug: mentorship
 primary: false
-title: Implementation Help
-description: Skip the learning curve. Get your funnel launched in 48 hours.
-tagline: For founders who value speed
-price: $299
+title: Affordable Monthly Mentorship
+description: Get personalized guidance to launch your funnel successfully.
+tagline: For serious entrepreneurs only
+price: $250
 discount: $500
-billingCycle: one-time
-terms: One-time fee. 100% satisfaction guarantee.
+billingCycle: monthly
+terms: Ongoing guidance and priority support included.
 badge:
   label: Optional
   color: secondary
@@ -31,10 +31,17 @@ stock:
   claimed: 10
   type: spots
 cta:
+  strategy: link
+  label: What you get
+  to: /get/direct
+  icon: i-lucide-arrow-right
+  color: secondary
+conversionCta:
+  strategy: external
   label: Book a Call
   to: https://cal.com/drew-macgibbon/strategy-consultation
   icon: i-lucide-calendar
-  color: secondary
+  color: primary
 waitlist:
   coming_soon:
     badge:

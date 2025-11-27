@@ -18,6 +18,10 @@ if (!offer.value) {
   });
 }
 
+if (offer.value.slug !== slug) {
+  navigateTo(`/get/${offer.value.slug}`, { redirectCode: 301 })
+}
+
 // useHead(offer.value.head || {});
 // useSeoMeta(offer.value.seo || {});
 
@@ -30,14 +34,6 @@ if (!offer.value) {
       image: business.value?.logo,
     },
   })
-
-// ✅ DYNAMIC: Use site config instead of hardcoded URL
-const { url: siteUrl } = useSiteConfig();
-const canonicalUrl = `${siteUrl}/get/${slug}`;
-
-useHead({
-  link: [{ rel: 'canonical', href: canonicalUrl }],
-});
 
 // ✅ Schema.org for paid offers
 if (offer.value.price && offer.value.price !== 'Free') {
