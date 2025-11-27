@@ -21,7 +21,7 @@ export default defineNuxtConfig({
     '@nuxt/image',
     '@vueuse/nuxt',
     '@nuxt/scripts',
-    'nuxt-studio',
+    // 'nuxt-studio', // {DX}: studio breaks HMR alpha.2
   ],
 
   hooks: {
@@ -36,30 +36,31 @@ export default defineNuxtConfig({
 
   // {CONFIG}
   site: {
-    url: 'https://product-validator.incubrain.org',
-    name: 'Product Validator',
-    description: 'Ship today, build in public, validate in weeks',
+    url: 'https://founder-funnel.incubrain.org',
+    name: 'Founder Funnel',
+    description: 'Open-source funnel for technical founders',
   },
 
-  studio: {
-      // Studio admin route (default: '/_studio')
-      route: '/_studio',
-  
-      // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
-      development: {
-        sync: true, // Enable development mode
-      },
-  
-      // GitHub repository configuration (owner and repo are required)
-      repository: {
-        provider: 'github', // only GitHub is currently supported
-        owner: 'incubrain', // your GitHub username or organization
-        repo: 'product-validator', // your repository name
-        branch: 'main', // the branch to commit to (default: main)
-        rootDir: activeSource === 'validator' ? 'examples/validator' : '', // optional: if your Nuxt app is in a subdirectory (default: '')
-        private: true,
-      },
-    },
+  // {DX}: studio breaks HMR alpha.2
+  // studio: {
+  //     // Studio admin route (default: '/_studio')
+  //     route: '/_studio',
+  // 
+  //     // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
+  //     // development: {
+  //     //   sync: true, // Enable development mode
+  //     // },
+  // 
+  //     // GitHub repository configuration (owner and repo are required)
+  //     repository: {
+  //       provider: 'github', // only GitHub is currently supported
+  //       owner: 'incubrain', // your GitHub username or organization
+  //       repo: 'product-validator', // your repository name
+  //       branch: 'main', // the branch to commit to (default: main)
+  //       rootDir: activeSource === 'root' ? '' : `examples/${activeSource}`,
+  //       private: true,
+  //     },
+  //   },
 
   ssr: true,
 
@@ -163,6 +164,21 @@ export default defineNuxtConfig({
     },
   },
 
+  // vite: {
+  //   resolve: {
+  //     alias: {
+  //       '#stage-config': fileURLToPath(
+  //         new URL(
+  //           activeSource === 'root' 
+  //             ? './config/stages.ts' 
+  //             : `./examples/${activeSource}/config/stages.ts`,
+  //           import.meta.url
+  //         )
+  //       ),
+  //     }
+  //   }
+  // },
+
   alias: {
     '#theme': fileURLToPath(new URL('./theme/index.ts', import.meta.url)),
     '#config': fileURLToPath(
@@ -194,11 +210,14 @@ export default defineNuxtConfig({
       ssr: true,      
       prerender: false
     },
-    '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background
+    '/story': { ssr: true,      
+      prerender: false }, 
+    '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background 
+    '/updates/**': { swr: 3600 },
     '/magnet': { ssr: false }, // Magnet dashboard SPA-only (client-side rendered)
-    '/magnet/**': { ssr: false }, // Magnet pages SPA-only (client-side rendered)
+    '/magnet/**': { ssr: false },
   },
-
+  
   components: [
     { path: '~/components', prefix: 'I' },
     { path: '~/components/ui', prefix: 'UI' },
