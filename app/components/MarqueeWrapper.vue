@@ -4,8 +4,6 @@ import type { BadgeProps } from '@nuxt/ui';
 import type { ProofItem } from '#types';
 
 interface Props {
-  label: string;
-  badgeColor: BadgeProps['color'];
   items: ProofItem[];
   trackIndex: number;
 }
@@ -34,10 +32,6 @@ const adjustedDuration = computed(() => {
     v-if="showFeature('marqueeProof')"
     class="flex flex-col justify-center items-center gap-4 relative overflow-hidden"
   >
-    <UBadge variant="soft" size="xl" :color="badgeColor">
-      {{ label }}
-    </UBadge>
-
     <UMarquee
       overlay
       :reverse="isReverse"

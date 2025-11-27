@@ -134,7 +134,7 @@ const scrollToTop = () => {
             <UCard
               v-for="(value, index) in values"
               :key="index"
-              class="bg-default backdrop-blur-sm hover:bg-primary-900/20 transition-colors"
+              class="bg-default backdrop-blur-sm hover:bg-primary-900/20 transition-colors text-left"
             >
               <template #header>
                  <h3 class="font-bold text-sm">{{ value.title }}</h3>

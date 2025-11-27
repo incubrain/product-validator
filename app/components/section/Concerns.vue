@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import type { AccordionItem } from '@nuxt/ui';
+import type { AccordionItem, TabsItem } from '@nuxt/ui';
 
 defineProps<{
   data?: any;
@@ -10,25 +10,43 @@ const { data: faqFiles } = await useAsyncData('faqs', () =>
   queryCollection('faq').all()
 );
 
-// Flatten items - files are already sorted by filename (1.warning, 2.objection, etc.)
-const allFaqs = computed(() => {
+// Build tab items from file metadata
+const tabItems = computed<TabsItem[]>(() => {
   if (!faqFiles.value) return [];
   
-  return faqFiles.value.flatMap(file => 
-    file.items.map(item => ({
-      q: item.q,
-      a: item.a,
-      type: file.type,
-      label: file.label,
-      icon: file.icon,
-      color: file.color,
-    }))
-  );
+  return faqFiles.value.map((file, index) => ({
+    label: file.label,
+    icon: file.icon,
+    value: file.type,
+    badge: {
+      label: String(file.items.length),
+      color: 'neutral',
+      variant: 'solid',
+      size: 'xs',
+    },
+    slot: file.type,
+  }));
 });
 
-// Build accordion items - simple and clean!
-const items = computed<AccordionItem[]>(() =>
-  allFaqs.value.map((faq, i) => ({
+// Active tab state
+const activeTab = ref(faqFiles.value?.[0]?.type || '');
+
+// Get FAQs for active tab
+const activeFaqs = computed(() => {
+  const file = faqFiles.value?.find(f => f.type === activeTab.value);
+  if (!file) return [];
+  
+  return file.items.map(item => ({
+    q: item.q,
+    a: item.a,
+    icon: file.icon,
+    color: file.color,
+  }));
+});
+
+// Build accordion items for active tab
+const accordionItems = computed<AccordionItem[]>(() =>
+  activeFaqs.value.map((faq, i) => ({
     value: String(i),
     label: faq.q,
     content: faq.a,
@@ -41,28 +59,6 @@ const items = computed<AccordionItem[]>(() =>
   }))
 );
 
-// Count items by type for legend
-const typeCounts = computed(() => {
-  const counts: Record<string, number> = {};
-  faqFiles.value?.forEach(file => {
-    counts[file.type] = file.items.length;
-  });
-  return counts;
-});
-
-// Legend metadata - just for display
-const legendMeta = computed(() => {
-  const meta: Record<string, { label: string; icon: string; color: string }> = {};
-  faqFiles.value?.forEach(file => {
-    meta[file.type] = {
-      label: file.label,
-      icon: file.icon,
-      color: file.color,
-    };
-  });
-  return meta;
-});
-
 const { showSection } = useSectionVisibility();
 </script>
 
@@ -73,32 +69,32 @@ const { showSection } = useSectionVisibility();
     :intro="data.intro"
     :cta="data.cta"
   >
-    <!-- Enhanced Legend with counts -->
-    <div class="space-y-4">
-      <div class="flex justify-center flex-wrap gap-2">
-        <span
-          v-for="(meta, type) in legendMeta"
-          :key="type"
-          :class="[
-            'inline-flex items-center gap-1.5 rounded-full border px-3 py-1.5 text-xs font-medium',
-            `border-${meta.color}/40`,
-          ]"
-        >
-          <UIcon :name="meta.icon" :class="`size-3.5 text-${meta.color}`" />
-          {{ meta.label }}
-          <UBadge
-            :label="String(typeCounts[type as string])"
-            size="xs"
-            variant="soft"
-          />
-        </span>
-      </div>
-    </div>
+    <!-- Tabs for categories -->
+    <UTabs 
+      v-model="activeTab" 
+      :items="tabItems"
+      :content="false"
+      color="neutral"
+      variant="link"
+      size="md"
+      class="w-full max-w-2xl mx-auto mb-8"
+      :ui="{
+        list: 'justify-center gap-2 border-0',
+        trigger: [
+          'inline-flex items-center gap-1.5 rounded-full border px-4 py-2',
+          'border-neutral-700/40 bg-neutral-900/30',
+          'data-[state=active]:border-primary data-[state=active]:bg-primary/10',
+          'hover:border-neutral-600 hover:bg-neutral-900/50',
+          'transition-all duration-200',
+        ].join(' '),
+        indicator: 'hidden',
+      }"
+    />
 
-    <!-- Accordion -->
-    <div class="w-full mx-auto" v-if="items.length">
+    <!-- Accordion for active tab -->
+    <div class="w-full mx-auto" v-if="accordionItems.length">
       <UAccordion
-        :items="items"
+        :items="accordionItems"
         type="multiple"
         :unmount-on-hide="false"
         :ui="{

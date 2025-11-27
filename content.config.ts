@@ -230,7 +230,6 @@ export default defineContentConfig({
       }),
     }),
 
-    // Renamed from testimonials to results
     results: defineCollection({
       type: 'data',
       source: {
@@ -248,9 +247,6 @@ export default defineContentConfig({
           highlight: z.boolean().optional(),
           avatarUrl: z.string().optional(),
         })).optional(),
-        // For customers.yml (proof track)
-        label: z.string().optional(),
-        badgeColor: z.string().optional(),
       }),
     }),
     magnet: defineCollection(

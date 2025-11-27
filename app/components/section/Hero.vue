@@ -11,18 +11,11 @@ const { showFeature, showSection } = useSectionVisibility();
 // Use prop data from MDC
 const hero = computed(() => props.data);
 
-// Fetch proof from results collection (customers.yml)
-const { data: proofData } = await useAsyncData('customers-proof', () => 
-  queryCollection('results').where('label', 'IS NOT NULL').first()
-);
-const proof = computed(() => proofData.value ? [proofData.value] : []);
-
 // ✅ Explicit feature flags
 const showCountdown = computed(() => showFeature('heroCountdown'));
 const showMedia = computed(
   () => showFeature('heroMedia') && hero.value?.media?.src,
 );
-const showMarquees = computed(() => showFeature('heroMarquees'));
 const showCTA = computed(() => showFeature('heroCTA'));
 
 // Fetch primary offer from collection
@@ -40,7 +33,7 @@ const { data: primaryOffer } = await getPrimaryOffer();
       body: 'px-0',
       wrapper: 'text-center px-0',
       container:
-        'flex flex-col lg:grid py-12 sm:py-24 lg:py-12 gap-0 sm:gap-y-0 lg:px-0',
+        'flex flex-col lg:grid py-12 sm:py-24 lg:pt-12 lg:pb-0 gap-0 sm:gap-y-0 lg:px-0',
       footer: 'mt-10',
     }"
   >
@@ -120,60 +113,47 @@ const { data: primaryOffer } = await getPrimaryOffer();
       </div>
     </template>
 
-    <!-- ✅ Bottom slot: Full-width marquees + background effects -->
-    <template #bottom>
-      <!-- Marquees (Full-width, outside container) -->
-      <div v-if="showMarquees" class="space-y-8">
-        <IMarqueeWrapper
-          v-for="(track, index) in proof"
-          :key="track.label"
-          :label="track.label"
-          :badge-color="track.badgeColor"
-          :items="track.items"
-          :track-index="index"
+    <!-- Media with overlapping label -->
+    <div v-if="showMedia" class="relative pt-12 max-w-4xl mx-auto -mb-12">
+      <div class="relative">
+        <IVideo
+          v-if="hero.media.type === 'video'"
+          :src="hero.media.src"
+          :poster="hero.media.poster"
+          :autoplay="true"
+          :muted="true"
+          :loop="true"
+          aspect-ratio="video"
+          class="rounded-2xl shadow-2xl border border-white/10"
+        />
+        <NuxtImg
+          v-else-if="hero.media.type === 'image'"
+          :src="hero.media.src"
+          :alt="hero.media.alt"
+          class="rounded-t-2xl shadow-2xl border-t border-x border-default/50 w-full"
         />
       </div>
+    </div>
 
-       <div v-if="showMedia" class="relative py-12 max-w-4xl mx-auto">
-        <div class="relative">
-          <IVideo
-            v-if="hero.media.type === 'video'"
-            :src="hero.media.src"
-            :poster="hero.media.poster"
-            :autoplay="true"
-            :muted="true"
-            :loop="true"
-            aspect-ratio="video"
-            class="rounded-2xl shadow-2xl border border-white/10"
-          />
-          <NuxtImg
-            v-else-if="hero.media.type === 'image'"
-            :src="hero.media.src"
-            :alt="hero.media.alt"
-            class="rounded-2xl shadow-2xl border border-white/10 w-full"
-          />
-        </div>
-      </div>
-
-      <!-- Background Effects -->
-      <div
-        class="absolute top-0 inset-0 bg-grid-white/[0.02] pointer-events-none -z-10"
-      />
-      <div
-        class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none -z-10"
-      />
-      <div
-        class="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none -z-10"
-      />
-    </template>
+  
+<!-- Background Effects -->
+<div
+  class="absolute top-0 inset-0 bg-grid-white/[0.02] pointer-events-none -z-10"
+/>
+<div
+  class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none -z-10"
+/>
+<div
+  class="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none -z-10"
+/>
   </UPageHero>
 </template>
 
 <style scoped>
 .bg-grid-white\/\[0\.02\] {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 </style>
