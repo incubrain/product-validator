@@ -55,17 +55,6 @@ data:
 ---
 ::
 
-::i-section-founder
----
-data:
-  intro:
-    icon: i-lucide-user
-    headline: '⚠️ Section headline'
-    title: '⚠️ Section title'
-    description: '⚠️ Section description'
----
-::
-
 ::i-section-offer
 ---
 data:

@@ -16,6 +16,7 @@ type FeatureItem = {
   title: string;
   description: string;
   icon: string;
+  image?: string;
 };
 
 const steps = computed(() => {
@@ -37,7 +38,14 @@ const { showSection } = useSectionVisibility();
 </script>
 
 <template>
-  <ISectionWrapper v-if="showSection('process')" id="#process" :intro="data.intro" :cta="data.cta">
+  <ISectionWrapper 
+    v-if="showSection('process')" 
+    id="#process" 
+    :intro="data.intro" 
+    :cta="data.cta"
+    has-bottom
+  >
+    <!-- Process Steps Grid -->
     <div class="hidden md:grid md:grid-cols-3">
       <div
         v-for="(step, index) in steps"
@@ -60,7 +68,7 @@ const { showSection } = useSectionVisibility();
       </div>
     </div>
 
-    <!-- Mobile: Carousel -->
+    <!-- Mobile: Process Carousel -->
     <UCarousel
       v-if="steps.length"
       v-slot="{ item, index }"
@@ -88,28 +96,78 @@ const { showSection } = useSectionVisibility();
       </div>
     </UCarousel>
 
-    <UPageGrid v-if="features.length" class="gap-0">
-      <UPageCard
-        v-for="(item, index) in features"
-        :key="index"
-        :title="item.title"
-        :description="item.description"
-        spotlight
-        spotlight-color="secondary"
-        variant="outline"
-        :ui="{
-          root: 'rounded-none',
-          header: 'pb-2',
-          title: 'text-base font-semibold',
-          description: 'text-sm text-muted',
-        }"
-      >
-        <template #leading>
-          <div class="flex items-center justify-center size-10 rounded-lg bg-primary/10 ring-1 ring-primary/20 mb-4">
-            <UIcon :name="item.icon" class="size-5 text-secondary" />
+    <!-- Features Carousel in #bottom slot (full width) -->
+    <template #bottom>
+      <div v-if="features.length" class="bg-muted/30 py-16 overflow-hidden">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <!-- Section Header -->
+          <div class="flex items-center justify-between mb-8 max-w-(--ui-container) mx-auto">
+            <h3 class="text-xl sm:text-2xl font-bold text-highlighted">
+              Features
+            </h3>
           </div>
-        </template>
-      </UPageCard>
-    </UPageGrid>
+
+          <div class="block relative">
+            <UCarousel
+              v-slot="{ item }"
+              arrows
+              loop
+              :items="features"
+              :prev="{
+                size: 'xl',
+                square: true,
+              }"
+              :next="{
+                size: 'xl',
+                square: true,
+              }"
+              :ui="{
+                item: 'basis-[320px] px-2',
+                viewport: 'overflow-visible',
+                controls: 'relative mt-12 flex justify-start max-w-(--ui-container) mx-auto',
+                arrows: 'flex gap-4',
+                prev: 'flex relative rounded-none start-0 sm:start-0 top-0 translate-y-0',
+                next: 'flex relative rounded-none end-0 sm:end-0 top-0 translate-y-0',
+              }"
+            >
+              <UPageCard
+                variant="outline"
+                class="h-full"
+                :ui="{
+                  root: 'bg-default hover:bg-muted/50 transition-colors h-full',
+                  body: 'space-y-4',
+                }"
+              >
+                <template #leading>
+                  <!-- Optional Image -->
+                  <div v-if="item.image" class="mb-4 -mx-6 -mt-6">
+                    <NuxtImg
+                      :src="item.image"
+                      :alt="item.title"
+                      class="w-full h-32 object-cover rounded-t-lg"
+                    />
+                  </div>
+                </template>
+
+                <!-- Title + Icon (justify-between) -->
+                <div class="flex items-start justify-between gap-3">
+                  <h4 class="text-base font-semibold text-highlighted flex-1">
+                    {{ item.title }}
+                  </h4>
+                  <div class="flex items-center justify-center size-8 rounded-lg bg-primary/10 ring-1 ring-primary/20 shrink-0">
+                    <UIcon :name="item.icon" class="size-4 text-secondary" />
+                  </div>
+                </div>
+
+                <!-- Description (with more spacing) -->
+                <p class="text-sm text-muted leading-relaxed">
+                  {{ item.description }}
+                </p>
+              </UPageCard>
+            </UCarousel>
+          </div>
+        </div>
+      </div>
+    </template>
   </ISectionWrapper>
 </template>

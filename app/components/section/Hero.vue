@@ -108,7 +108,7 @@ const { data: primaryOffer } = await getPrimaryOffer();
           :offer-id="STAGE_CONFIG.offers.primary"
           location="hero"
           anchor
-          class="hidden md:inline-flex text-toned font-black"
+          class="inline-flex text-toned font-black"
         />
       </div>
     </template>

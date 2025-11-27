@@ -6,6 +6,7 @@ interface Props {
   cta?: SectionCta;
   orientation?: 'vertical' | 'horizontal';
   class?: string;
+  hasBottom?: boolean;
 }
 
 const { showFeature } = useSectionVisibility();
@@ -14,6 +15,7 @@ const props = withDefaults(defineProps<Props>(), {
   orientation: 'vertical',
   class: '',
   cta: null,
+  hasBottom: false,
 });
 </script>
 
@@ -24,7 +26,7 @@ const props = withDefaults(defineProps<Props>(), {
     :ui="{
       root: 'isolate',
       container:
-        'flex flex-col lg:grid py-16 sm:py-16 lg:pb-32 lg:pt-0 gap-12 sm:gap-16 border-neutral/20 border-x lg:px-0',
+        ['flex flex-col lg:grid py-16 sm:py-16 lg:pt-0 gap-12 sm:gap-16 border-neutral/20 border-x lg:px-0', props.hasBottom ? 'lg:pb-0' : 'lg:pb-32'],
       header: 'space-y-3 mx-auto text-center relative z-100',
       leading: 'w-full lg:px-0 relative pb-4 z-100',
       headline: 'hidden',
@@ -79,6 +81,10 @@ const props = withDefaults(defineProps<Props>(), {
     </template>
 
     <slot />
+
+    <template #bottom>
+      <slot name="bottom" />
+    </template>
 
     <INavCta
       v-if="cta && showFeature('sectionCta')"

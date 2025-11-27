@@ -52,16 +52,6 @@ data:
 ---
 ::
 
-::i-section-founder
----
-data:
-  intro:
-    icon: i-lucide-user
-    headline: Meet the Creator
-    title: Built by Founders, for Founders
-    description: We've been there. That's why we built this tool.
----
-::
 
 ::i-section-offer
 ---

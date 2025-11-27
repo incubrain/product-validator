@@ -1,4 +1,3 @@
-<!-- components/section/Offer.vue -->
 <script setup lang="ts">
 import type { ButtonProps, BadgeProps } from '#ui/types';
 import { STATUS_ICONS } from '#constants';
@@ -7,10 +6,13 @@ defineProps<{
   data?: any;
 }>();
 
-
 // Get primary offer
 const { getPrimaryOffer } = useContentCache();
 const { data: primaryOffer } = await getPrimaryOffer();
+
+// Get founder
+const { getFounder } = useContentCache();
+const { data: founderData } = await getFounder();
 
 const transformedFeatures = computed(() => {
   if (!primaryOffer.value?.features) return [];
@@ -39,83 +41,120 @@ const { showSection } = useSectionVisibility();
     :cta="data.cta"
     class="relative"
   >
-    <!-- ✅ Subtle radial glow -->
-    <div
-      class="absolute inset-0 flex items-center justify-center pointer-events-none"
-    >
+    <!-- Background glow -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
       <div class="w-[80%] h-[80%] bg-primary/5 rounded-full blur-3xl" />
     </div>
 
-    <div 
-    v-if="primaryOffer"
-    class="max-w-md mx-auto relative z-10"
-    >
-      <UPricingPlan
-        v-bind="primaryOffer"
-        :badge="primaryOffer.badge as BadgeProps"
-        :features="transformedFeatures"
-        variant="outline"
-        :ui="{
-          root: 'bg-primary/5 backdrop-blur-sm',
-          features: 'gap-3',
-          feature: 'items-center',
-          terms: 'w-full',
-          featureTitle: 'text-sm leading-tight',
-        }"
-      >
-        <template #description>
-          <p class="text-base text-toned">{{ primaryOffer.description }}</p>
-        </template>
-
-        <template #features>
-          <ul class="flex flex-col gap-3 flex-1 mt-6 grow-0">
-            <li
-              v-for="feature in transformedFeatures"
-              :key="feature.title"
-              class="flex items-center gap-2 min-w-0"
-            >
-              <UIcon
-                :name="feature.icon"
-                :class="[feature.class, 'size-5 shrink-0']"
-              />
-              <span class="text-muted text-sm truncate">
-                {{ feature.title }}
-              </span>
-            </li>
-          </ul>
-        </template>
-
-        <template #button>
-          <div class="pt-4 w-full">
-            <IFormValidation location="offer-section" :offer="primaryOffer" />
-          </div>
-        </template>
-
-        <template v-if="primaryOffer.stock" #terms>
-          <IStockProgress
-            :stock="primaryOffer.stock"
-            :offer-id="primaryOffer.slug"
-            class="w-full"
+    <!-- Main content grid -->
+    <div class="grid lg:grid-cols-[400px_1fr] gap-8 lg:gap-12 max-w-6xl mx-auto relative z-10 px-4">
+      
+      <!-- Left: Founder Sidebar -->
+      <div class="flex flex-col items-center lg:items-start gap-6 lg:sticky lg:top-24 lg:self-start">
+        <!-- Portrait -->
+        <div class="relative group">
+          <div class="absolute inset-0 bg-linear-to-t from-primary/20 to-transparent rounded-full blur-xl group-hover:blur-2xl transition-all duration-300" />
+          <NuxtImg
+            :src="founderData.profile.portrait.src"
+            :alt="founderData.profile.portrait.alt"
+            class="w-32 h-32 lg:w-40 lg:h-40 object-cover object-top rounded-full border-2 border-primary/20 shadow-2xl relative z-10"
           />
-        </template>
-      </UPricingPlan>
-      <div 
-      v-if="primaryOffer.secondaryCta"
-      class="mt-4 flex flex-col gap-4 justify-center items-center"
-      >
-        <UBadge variant="soft">
-          OR
-        </UBadge>
+        </div>
+
+        <!-- Name & Role -->
+        <div class="text-center lg:text-left space-y-1">
+          <h3 class="text-xl font-bold text-highlighted">
+            {{ founderData?.profile.name }}
+          </h3>
+          <p class="text-xs uppercase tracking-wider text-muted">
+            {{ founderData?.profile.role }}
+          </p>
+        </div>
+
+        <!-- Quote (with marks) -->
+          <p class="text-base max-w-sm text-center lg:text-left lg:text-lg italic text-dimmed leading-relaxed">
+            {{ founderData?.story.mission }}
+          </p>
+
+        <!-- Read Story Link -->
         <UButton
-          block
-          size="xl"
-          :color="(primaryOffer.secondaryCta.color || 'neutral') as ButtonProps['color']"
-          variant="outline"
-          :label="primaryOffer.secondaryCta.label"
-          :to="primaryOffer.secondaryCta.to"
-          :icon="primaryOffer.secondaryCta.icon"
-          target="_blank"
+          to="/story"
+          label="Read My Story"
+          color="neutral"
+          variant="link"
+          trailing-icon="i-lucide-arrow-right"
+          class="self-center lg:self-start px-0"
         />
+      </div>
+
+      <!-- Right: Offer Card -->
+      <div v-if="primaryOffer" class="max-w-md mx-auto lg:mx-0 w-full">
+        <UPricingPlan
+          v-bind="primaryOffer"
+          :badge="primaryOffer.badge as BadgeProps"
+          :features="transformedFeatures"
+          variant="outline"
+          :ui="{
+            root: 'bg-primary/5 backdrop-blur-sm',
+            features: 'gap-3',
+            feature: 'items-center',
+            terms: 'w-full',
+            featureTitle: 'text-sm leading-tight',
+          }"
+        >
+          <template #description>
+            <p class="text-base text-toned">{{ primaryOffer.description }}</p>
+          </template>
+
+          <template #features>
+            <ul class="flex flex-col gap-3 flex-1 mt-6 grow-0">
+              <li
+                v-for="feature in transformedFeatures"
+                :key="feature.title"
+                class="flex items-center gap-2 min-w-0"
+              >
+                <UIcon
+                  :name="feature.icon"
+                  :class="[feature.class, 'size-5 shrink-0']"
+                />
+                <span class="text-muted text-sm truncate">
+                  {{ feature.title }}
+                </span>
+              </li>
+            </ul>
+          </template>
+
+          <template #button>
+            <div class="pt-4 w-full">
+              <IFormValidation location="offer-section" :offer="primaryOffer" />
+            </div>
+          </template>
+
+          <template v-if="primaryOffer.stock" #terms>
+            <IStockProgress
+              :stock="primaryOffer.stock"
+              :offer-id="primaryOffer.slug"
+              class="w-full"
+            />
+          </template>
+        </UPricingPlan>
+
+        <div 
+          v-if="primaryOffer.secondaryCta"
+          class="mt-4 flex flex-col gap-4 justify-center items-center"
+        >
+          <UBadge variant="soft">OR</UBadge>
+          <UButton
+            block
+            size="xl"
+            :color="(primaryOffer.secondaryCta.color || 'neutral') as ButtonProps['color']"
+            variant="outline"
+            :label="primaryOffer.secondaryCta.label"
+            :to="primaryOffer.secondaryCta.to"
+            :icon="primaryOffer.secondaryCta.icon"
+            target="_blank"
+          />
+        </div>
       </div>
     </div>
   </ISectionWrapper>

@@ -57,17 +57,6 @@ data:
 ---
 ::
 
-::i-section-founder
----
-data:
-  intro:
-    icon: i-lucide-user
-    headline: Learn from my mistakes
-    title: My Scar, 13 Years and $300k+
-    description: The Product Validator only exists because of my suffering; you need not!
----
-::
-
 ::i-section-offer
 ---
 data:
