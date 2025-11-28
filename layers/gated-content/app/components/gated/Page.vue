@@ -1,4 +1,4 @@
-<!-- components/MagnetPage.vue -->
+<!-- components/gated/Page.vue -->
 <script setup lang="ts">
 
 interface Props {
@@ -11,12 +11,13 @@ interface Props {
 const props = defineProps<Props>();
 
 // Calculate total steps from navigation
-const { data: navigation } = await useAsyncData('magnet-nav-steps', () => {
-  return queryCollectionNavigation('magnet');
+const { data: navigation } = await useAsyncData('gated-nav-steps', () => {
+  return queryCollectionNavigation('gated' as any);
 });
 
 const totalSteps = computed(() => {
   if (!navigation.value) return 0;
+  return flatSteps.value.length;
 });
   
   const countLeafNodes = (items: any[]): number => {
@@ -31,7 +32,7 @@ const totalSteps = computed(() => {
     return count;
   };
   
-const { isComplete, isAccessible, initialize } = useMagnetProgress();
+const { isComplete, isAccessible, initialize, flatSteps } = useContentProgress();
 
 // Initialize progress with navigation data
 if (navigation.value) {
@@ -171,7 +172,7 @@ const isStepLocked = (step: any) => {
 
         <!-- Continue Journey Button -->
         <div v-if="nextStepPath" class="flex justify-end pt-4">
-          <IMagnetCompleteButton
+          <GatedCompleteButton
             :current-path="page.path"
             :next-path="nextStepPath"
             :total-steps="totalSteps"
@@ -200,13 +201,13 @@ const isStepLocked = (step: any) => {
         <div v-else class="hidden sm:block" />
 
         <!-- Next / Complete -->
-        <IMagnetCompleteButton
+        <GatedCompleteButton
           v-if="surround[1]"
           :current-path="page.path"
           :next-path="surround[1].path"
           :total-steps="totalSteps"
         />
-        <IMagnetCompleteButton
+        <GatedCompleteButton
           v-else
           :current-path="page.path"
           :total-steps="totalSteps"

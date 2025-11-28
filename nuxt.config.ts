@@ -28,7 +28,7 @@ export default defineNuxtConfig({
     'content:file:afterParse'(ctx) {
       const { content } = ctx;
 
-      if (content.id.startsWith('magnet')) {
+      if (content.id.startsWith('gated')) {
         content.disabled = content.status !== 'published';
       }
     },
@@ -199,6 +199,14 @@ export default defineNuxtConfig({
     ),
   },
 
+  future: {
+    compatibilityVersion: 4,
+  },
+
+  gatedContent: {
+    enabled: true,
+  },
+  
   router: {
     options: {
       scrollBehaviorType: 'smooth',
@@ -218,8 +226,8 @@ export default defineNuxtConfig({
       prerender: false }, 
     '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background 
     '/updates/**': { swr: 3600 },
-    '/magnet': { ssr: false }, // Magnet dashboard SPA-only (client-side rendered)
-    '/magnet/**': { ssr: false },
+    '/gated': { ssr: false }, // gated dashboard SPA-only (client-side rendered)
+    '/gated/**': { ssr: false },
   },
   
   components: [

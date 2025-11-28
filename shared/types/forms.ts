@@ -1,3 +1,3 @@
 // types/forms.ts
 
-export type FormID = 'magnet' | 'waitlist' | 'feedback';
+export type FormID = 'gated' | 'waitlist' | 'feedback';

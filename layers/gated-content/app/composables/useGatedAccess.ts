@@ -1,25 +1,27 @@
 // composables/useGatedAccess.ts - SSR-SAFE
 export const useGatedAccess = () => {
+  const { $coreComposables } = useNuxtApp();
+  const { useAppStorage } = $coreComposables;
   const { local } = useAppStorage();
 
   // Use reactive ref with custom getters/setters backed by localStorage
   const email = import.meta.client
-    ? ref<string | null>(local.get('magnet_email'))
+    ? ref<string | null>(local.get('gated_email'))
     : ref<string | null>(null);
 
   // Watch for changes and persist to localStorage
   if (import.meta.client) {
     watch(email, (newValue) => {
       if (newValue) {
-        local.set('magnet_email', newValue);
+        local.set('gated_email', newValue);
       } else {
-        local.remove('magnet_email');
+        local.remove('gated_email');
       }
     });
   }
 
-  const isVerifying = useState<boolean>('magnet_isVerifying', () => false);
-  const isVerified = useState<boolean>('magnet_isVerified', () => false);
+  const isVerifying = useState<boolean>('gated_isVerifying', () => false);
+  const isVerified = useState<boolean>('gated_isVerified', () => false);
 
   const hasAccess = computed(() => {
     const access = !!email.value && isVerified.value;
@@ -40,10 +42,10 @@ export const useGatedAccess = () => {
     isVerifying.value = true;
 
     try {
-      const data = await $fetch('/api/v1/auth/verify', {
+      const data = await $fetch('/api/v1/gated/verify', {
         method: 'POST',
         body: { email: email.value },
-      });
+      }) as any;
 
       isVerified.value = data?.exists || false;
 

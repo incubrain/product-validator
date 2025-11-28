@@ -5,7 +5,7 @@ const props = defineProps<{
   stageTitle?: string;
 }>();
 
-const { getProgressPercentage, getCompletedCount } = useMagnetProgress();
+const { getProgressPercentage, getCompletedCount } = useContentProgress();
 
 const percentage = computed(() => getProgressPercentage(props.totalSteps));
 </script>

@@ -8,8 +8,7 @@ const props = defineProps<{
   totalSteps?: number;
 }>();
 
-const { markComplete, isComplete, checkAndShowMilestone, isStepValid } = useMagnetProgress();
-const router = useRouter();
+const { markComplete, isComplete, checkAndShowMilestone, isStepValid } = useContentProgress();
 
 const isCompleted = computed(() => isComplete(props.currentPath));
 const isValid = computed(() => isStepValid(props.currentPath));
@@ -104,7 +103,7 @@ const triggerConfetti = () => {
     trailing-icon="i-lucide-arrow-right"
     class="w-full sm:w-auto min-w-64 group transition-all duration-300 shadow-lg hover:shadow-xl"
     :class="{ 'animate-pulse': isCompleted }"
-    data-testid="magnet-progress-button"
+    data-testid="gated-progress-button"
     @click="handleComplete"
   >
     <span class="font-semibold">

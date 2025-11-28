@@ -1,18 +1,18 @@
 export default defineNuxtRouteMiddleware(async (to) => {
   // Only run on magnet routes
-  if (!to.path.startsWith('/magnet')) return;
+  if (!to.path.startsWith('/gated')) return;
 
-  const { isAccessible, getLatestUnlockedStep, flatSteps, initialize } = useMagnetProgress();
+  const { isAccessible, getLatestUnlockedStep, flatSteps, initialize } = useContentProgress();
 
   // Ensure progress is initialized
   if (flatSteps.value.length === 0) {
     try {
-      const navigation = await queryCollectionNavigation('magnet');
+      const navigation = await queryCollectionNavigation('gated');
       if (navigation) {
         initialize(navigation);
       }
     } catch (e) {
-      console.error('Failed to initialize magnet navigation in middleware', e);
+      console.error('Failed to initialize gated navigation in middleware', e);
     }
   }
 

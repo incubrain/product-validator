@@ -11,8 +11,8 @@ export function useOfferStock(stock?: OfferStock, offerId?: OfferID) {
     return false;
   });
 
-  // Auto-detect if this should use live count (only for magnet offer)
-  const useLiveCount = computed(() => offerId === 'magnet');
+  // Auto-detect if this should use live count (only for gated offer)
+  const useLiveCount = computed(() => offerId === 'gated');
   
   // Fetch live count if enabled
   const { data: metrics } = useLiveCount.value

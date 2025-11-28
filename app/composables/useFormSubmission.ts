@@ -54,14 +54,14 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
         recordId.value = response.recordId;
       }
 
-      // ✅ For magnet form: grant access and navigate immediately
+      // ✅ For gated form: grant access and navigate immediately
       // Skip isSuccess to bypass the success message
-      if (validated.email && options.formId === 'magnet') {
+      if (validated.email && options.formId === 'gated') {
         grantAccess(validated.email);
 
         // ✅ Only navigate if NOT from access gate
         if (options.location !== 'access-gate') {
-          await navigateTo('/magnet');
+          await navigateTo('/gated');
           return; // Exit early, don't set isSuccess
         }
 

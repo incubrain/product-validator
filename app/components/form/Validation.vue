@@ -30,12 +30,12 @@ const offerState = computed<'available' | 'coming_soon' | 'unavailable'>(() => {
 });
 
 // Determine form type
-const formType = computed<'magnet' | 'waitlist'>(() => {
+const formType = computed<'gated' | 'waitlist'>(() => {
   if (props.offer.slug === STAGE_CONFIG.offers.secondary) {
-    return 'magnet';
+    return 'gated';
   }
   
-  return offerState.value === 'available' ? 'magnet' : 'waitlist';
+  return offerState.value === 'available' ? 'gated' : 'waitlist';
 });
 
 // ✅ Get CTA config from offer
@@ -124,7 +124,7 @@ const { submit, isSubmitting, isSuccess } = useFormSubmission({
   metadata: {
     reason: offerState.value,
     offerId: props.offer.slug,
-    customerStage: formType.value === 'magnet' ? 'email_captured' : 'interest_expressed',
+    customerStage: formType.value === 'gated' ? 'email_captured' : 'interest_expressed',
   },
 });
 

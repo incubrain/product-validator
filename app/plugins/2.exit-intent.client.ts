@@ -14,7 +14,7 @@ export default defineNuxtPlugin(() => {
       minTimeOnPage?: number;
       requireInteraction?: boolean;
     } = {
-      offerId: 'magnet',
+      offerId: 'gated',
     },
   ) => {
     const { trackEvent } = useEvents();

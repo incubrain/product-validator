@@ -2,7 +2,7 @@
 import { findPageChildren, findPageBreadcrumb } from '@nuxt/content/utils';
 import { mapContentNavigation } from '@nuxt/ui/utils/content';
 
-const ROOT_PATH = '/magnet';
+const ROOT_PATH = '/gated';
 
 const route = useRoute();
 const { hasAccess, email, isVerified, verifyAccess, isVerifying } =
@@ -12,11 +12,11 @@ const { hasAccess, email, isVerified, verifyAccess, isVerifying } =
 const { getPrimaryOffer } = useContentCache();
 const { data: offer } = await getPrimaryOffer();
 
-const { getCompletedCount, initialize, isAccessible, isComplete, flatSteps } = useMagnetProgress();
+const { getCompletedCount, initialize, isAccessible, isComplete, flatSteps } = useContentProgress();
 
 // Fetch navigation for sidebar
-const { data: navigation } = useAsyncData('magnet-navigation', () => {
-  return queryCollectionNavigation('magnet', ['status', 'disabled']);
+const { data: navigation } = useAsyncData('gated-navigation', () => {
+  return queryCollectionNavigation('gated', ['status', 'disabled']);
 });
 
 // ✅ Verify on mount if email exists
@@ -106,7 +106,7 @@ const mapToNavigationMenu = (items: any[]): any[] => {
       label: item.title,
       icon: item.icon,
       to: (accessible && !hasChildren) ? item.path : undefined,
-      slot: hasChildren ? undefined : 'magnet-link',
+      slot: hasChildren ? undefined : 'gated-link',
       disabled: !accessible && !hasChildren,
       isComplete: complete,
       isRestricted: isRestrictedStatus && !hasChildren,
@@ -165,7 +165,7 @@ const handleLogout = () => {
           }"
           tooltip
         >
-          <template #magnet-link-trailing="{ item }">
+          <template #gated-link-trailing="{ item }">
             <div class="flex items-center gap-2">
               <UIcon 
                 v-if="item.isRestricted" 
@@ -239,7 +239,7 @@ const handleLogout = () => {
       <template #header>
         <UDashboardNavbar :ui="{ right: 'flex items-center gap-4 flex-1 justify-end' }">
           <template #right>
-            <IMagnetProgressIndicator
+            <GatedProgressIndicator
               :current-step="currentStepNumber"
               :total-steps="totalSteps"
               class="flex-1 max-w-md"

@@ -1,4 +1,4 @@
-// composables/useContentAccess.ts
+// composables/useContentUnlock.ts
 export type StageStatus =
   | 'published'
   | 'draft'
@@ -7,7 +7,7 @@ export type StageStatus =
   | 'beta'
   | 'deprecated';
 
-export const useContentAccess = () => {
+export const useContentUnlock = () => {
   const isContentAccessible = (stage: any): boolean => {
     const status: StageStatus = stage.status;
 

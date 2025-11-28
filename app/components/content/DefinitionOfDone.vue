@@ -13,7 +13,7 @@ const route = useRoute();
 const { local } = useAppStorage();
 
 // Create a unique key for this component instance based on the route path
-const storageKey = computed(() => `magnet-dod-${route.path}`);
+const storageKey = computed(() => `gated-dod-${route.path}`);
 
 // Persist the set of checked indices with custom Set serialization
 const checkedIndices = ref<Set<number>>(new Set());
@@ -49,7 +49,7 @@ const allDone = computed(() => {
   return props.items.length > 0 && props.items.every((_, i) => checkedIndices.value.has(i));
 });
 
-const { setStepValidity } = useMagnetProgress();
+const { setStepValidity } = useContentProgress();
 
 // Update validity whenever allDone changes
 watch(allDone, (isValid) => {

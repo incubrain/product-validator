@@ -1,10 +1,10 @@
-<!-- pages/magnet/index.vue -->
+<!-- pages/gated/index.vue -->
 <script setup lang="ts">
 definePageMeta({ layout: 'gated' });
 
 const route = useRoute();
-const { data: page } = await useAsyncData('magnet-overview', () => {
-  return queryCollection('magnet').path(route.path).first();
+const { data: page } = await useAsyncData('gated-overview', () => {
+  return queryCollection('gated').path(route.path).first();
 });
 
 if (!page.value) {
@@ -20,7 +20,7 @@ const normalizePath = (path: string) => {
   return path.split('?')[0].split('#')[0].replace(/\/$/, '');
 };
 
-const { flatSteps, isStepValid } = useMagnetProgress();
+const { flatSteps, isStepValid } = useContentProgress();
 const nextPath = computed(() => {
   const normalizedRoutePath = normalizePath(route.path);
   const currentIndex = flatSteps.value.indexOf(normalizedRoutePath);
@@ -35,13 +35,13 @@ const nextPath = computed(() => {
 </script>
 
 <template>
-  <IMagnetPage :page="page">
+  <GatedPage :page="page">
     <div class="mt-8 flex justify-end">
-      <IMagnetCompleteButton 
+      <GatedCompleteButton 
         :current-path="route.path"
         :next-path="nextPath"
         label="Start Your Journey"
       />
     </div>
-  </IMagnetPage>
+  </GatedPage>
 </template>

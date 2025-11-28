@@ -1,11 +1,13 @@
 import { createSharedComposable } from '@vueuse/core';
 import { ref, watch } from 'vue'; // Added ref and watch imports
 
-const _useMagnetProgress = () => {
+const _useContentProgress = () => {
+  const { $coreComposables } = useNuxtApp();
+  const { useAppStorage } = $coreComposables;
   const { local } = useAppStorage();
   
-  const COMPLETED_KEY = 'magnet-progress';
-  const MILESTONES_KEY = 'magnet-milestones';
+  const COMPLETED_KEY = 'gated-progress';
+  const MILESTONES_KEY = 'gated-milestones';
 
   // Initialize Sets from storage
   const completedSteps = ref<Set<string>>(new Set());
@@ -44,7 +46,7 @@ const _useMagnetProgress = () => {
 
   // Track validation status of steps (e.g. Definition of Done)
   // Key: path, Value: boolean (true = valid/ready to complete)
-  const stepValidation = useState<Record<string, boolean>>('magnet-step-validation', () => ({}));
+  const stepValidation = useState<Record<string, boolean>>('gated-step-validation', () => ({}));
 
   const setStepValidity = (path: string, isValid: boolean) => {
     const normalized = normalizePath(path);
@@ -156,7 +158,7 @@ const _useMagnetProgress = () => {
       let paths: string[] = [];
       for (const item of items) {
         // If it's a page (has a path), add it
-        // We include parent pages (like /magnet) if they have a path
+        // We include parent pages (like /content) if they have a path
         const path = item.path;
         if (path) {
           paths.push(normalizePath(path));
@@ -239,4 +241,4 @@ const _useMagnetProgress = () => {
   };
 };
 
-export const useMagnetProgress = createSharedComposable(_useMagnetProgress);
+export const useContentProgress = createSharedComposable(_useContentProgress);

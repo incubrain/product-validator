@@ -3,6 +3,8 @@ import { defineCollection, defineContentConfig, z } from '@nuxt/content';
 import { asSeoCollection } from '@nuxtjs/seo/content';
 import { getActiveConfigSource } from './shared/utils/config-resolver';
 import path from 'node:path';
+import { existsSync } from 'node:fs';
+import { resolve } from 'node:path';
 
 // Shared schema constants for consistency across collections
 
@@ -37,234 +39,230 @@ const contentCwd = activeSource === 'root'
   ? path.resolve(process.cwd(), 'content') 
   : path.resolve(process.cwd(), `examples/${activeSource}/content`);
 
-export default defineContentConfig({
-  collections: {
-    pages: defineCollection({
-      type: 'page',
-      source: {
-        cwd: contentCwd,
-        include: 'pages/**/*.md',
-        prefix: '/'
-      },
-      schema: z.object({
-        // Optional fields for updates
-        version: z.string().optional(),
-        date: z.string().optional(),
-        summary: z.string().optional(),
-        // Optional fields for index page values
-        values: z.array(z.object({
-          title: z.string(),
-          description: z.string(),
-        })).optional(),
-      }),
+// Core collections
+const collections: Record<string, any> = {
+  pages: defineCollection({
+    type: 'page',
+    source: {
+      cwd: contentCwd,
+      include: 'pages/**/*.md',
+      prefix: '/'
+    },
+    schema: z.object({
+      // Optional fields for updates
+      version: z.string().optional(),
+      date: z.string().optional(),
+      summary: z.string().optional(),
+      // Optional fields for index page values
+      values: z.array(z.object({
+        title: z.string(),
+        description: z.string(),
+      })).optional(),
     }),
+  }),
 
-    config: defineCollection({
-      type: 'data',
-      source: {
-        cwd: contentCwd,
-        include: 'config/*.yml',
-      },
-      schema: z.object({
-        business: z.object({
-          name: z.string(),
-          legal_name: z.string(),
-          founding_year: z.number(),
-          location: z.string(),
-          logo: z.string(),
-        }).optional(),
-        social: z.object({
-          availability: z.string(),
-          response_time: z.string(),
-          links: z.array(z.object({
-            platform: z.string(),
-            label: z.string(),
-            url: z.string(),
-          })),
-        }).optional(),
-      }),
-    }),
-
-    team: defineCollection({
-      type: 'data',
-      source: {
-        cwd: contentCwd,
-        include: 'team/*.yml',
-      },
-      schema: z.object({
-        id: z.string(),
-        profile: z.object({
-          given_name: z.string(),
-          surname: z.string(),
-          name: z.string(),
-          email: z.string().optional(),
-          role: z.string(),
-          avatar: z.object({
-            src: z.string(),
-            alt: z.string(),
-          }).optional(),
-          portrait: z.object({
-            src: z.string(),
-            alt: z.string(),
-          }).optional(),
-        }),
-        story: z.object({
-          mission: z.string(),
-          background: z.array(z.string()),
-          challenge: z.string(),
-        }),
-      }),
-    }),
-
-    offers: defineCollection(
-      asSeoCollection({
-        type: 'data',
-        source: {
-          cwd: contentCwd,
-          include: 'offers/*.yml',
-        },
-        schema: z.object({
-          slug: z.string(),
-          primary: z.boolean().optional(),
-          title: z.string(),
-          description: z.string(),
-          price: z.string(),
-          discount: z.string().nullable().optional(),
-          billingCycle: z.string(),
-          terms: z.string(),
-          tagline: z.string().nullable().optional(),
-          badge: BADGE_SCHEMA.optional(),
-          features: z.array(z.object({
-            title: z.string(),
-            icon: z.string(),
-          })),
-          variant: z.string(),
-          highlight: z.boolean(),
-          type: z.enum(['ebook', 'course', 'mentorship']).default('ebook'),
-          stock: z.object({
-            limit: z.number(),
-            claimed: z.number(),
-            type: z.string(),
-          }).optional(),
-          ctas: z.record(CTA_NAME, CTA_SCHEMA),
-
-          media: z.object({
-            type: z.enum(['image', 'video']),
-            src: z.string(),
-            alt: z.string(),
-          }).optional(),
-
-          waitlist: z.object({
-            coming_soon: z.object({
-              badge: BADGE_SCHEMA,
-              description: z.string(),
-              success: z.object({
-                title: z.string(),
-                message: z.string(),
-              }),
-            }),
-            unavailable: z.object({
-              badge: BADGE_SCHEMA,
-              description: z.string(),
-              success: z.object({
-                title: z.string(),
-                message: z.string(),
-              }),
-            }),
-          }).optional(),
-        }),
-      }),
-    ),
-
-    faq: defineCollection({
-      type: 'data',
-      source: {
-        cwd: contentCwd,
-        include: 'faq/*.yml',
-      },
-      schema: z.object({
-        type: z.enum(['warning', 'objection', 'support', 'general']),
-        label: z.string(),
-        icon: z.string(),
-        color: FAQ_COLORS,
-        items: z.array(z.object({
-          q: z.string(),
-          a: z.string(),
+  config: defineCollection({
+    type: 'data',
+    source: {
+      cwd: contentCwd,
+      include: 'config/*.yml',
+    },
+    schema: z.object({
+      business: z.object({
+        name: z.string(),
+        legal_name: z.string(),
+        founding_year: z.number(),
+        location: z.string(),
+        logo: z.string(),
+      }).optional(),
+      social: z.object({
+        availability: z.string(),
+        response_time: z.string(),
+        links: z.array(z.object({
+          platform: z.string(),
+          label: z.string(),
+          url: z.string(),
         })),
+      }).optional(),
+    }),
+  }),
+
+  team: defineCollection({
+    type: 'data',
+    source: {
+      cwd: contentCwd,
+      include: 'team/*.yml',
+    },
+    schema: z.object({
+      id: z.string(),
+      profile: z.object({
+        given_name: z.string(),
+        surname: z.string(),
+        name: z.string(),
+        email: z.string().optional(),
+        role: z.string(),
+        avatar: z.object({
+          src: z.string(),
+          alt: z.string(),
+        }).optional(),
+        portrait: z.object({
+          src: z.string(),
+          alt: z.string(),
+        }).optional(),
+      }),
+      story: z.object({
+        mission: z.string(),
+        background: z.array(z.string()),
+        challenge: z.string(),
       }),
     }),
+  }),
 
-    // Consolidated features collection (benefits + process cards)
-    features: defineCollection({
+  offers: defineCollection(
+    asSeoCollection({
       type: 'data',
       source: {
         cwd: contentCwd,
-        include: 'features/*.yml',
+        include: 'offers/*.yml',
       },
       schema: z.object({
-        items: z.array(z.object({
-          id: z.string(),
+        slug: z.string(),
+        primary: z.boolean().optional(),
+        title: z.string(),
+        description: z.string(),
+        price: z.string(),
+        discount: z.string().nullable().optional(),
+        billingCycle: z.string(),
+        terms: z.string(),
+        tagline: z.string().nullable().optional(),
+        badge: BADGE_SCHEMA.optional(),
+        features: z.array(z.object({
           title: z.string(),
           icon: z.string(),
-          description: z.string(),
-          // Optional fields for benefits
-          result: z.string().optional(),
         })),
-      }),
-    }),
+        variant: z.string(),
+        highlight: z.boolean(),
+        type: z.enum(['ebook', 'course', 'mentorship']).default('ebook'),
+        stock: z.object({
+          limit: z.number(),
+          claimed: z.number(),
+          type: z.string(),
+        }).optional(),
+        ctas: z.record(CTA_NAME, CTA_SCHEMA),
 
-    results: defineCollection({
-      type: 'data',
-      source: {
-        cwd: contentCwd,
-        include: 'results/*.yml',
-      },
-      schema: z.object({
-        // For testimonials.yml
-        items: z.array(z.object({
-          type: z.string().optional(),
-          name: z.string().optional(),
-          role: z.string().optional(),
-          quote: z.string().optional(),
-          link: z.string().optional(),
-          highlight: z.boolean().optional(),
-          avatarUrl: z.string().optional(),
-        })).optional(),
+        media: z.object({
+          type: z.enum(['image', 'video']),
+          src: z.string(),
+          alt: z.string(),
+        }).optional(),
+
+        waitlist: z.object({
+          coming_soon: z.object({
+            badge: BADGE_SCHEMA,
+            description: z.string(),
+            success: z.object({
+              title: z.string(),
+              message: z.string(),
+            }),
+          }),
+          unavailable: z.object({
+            badge: BADGE_SCHEMA,
+            description: z.string(),
+            success: z.object({
+              title: z.string(),
+              message: z.string(),
+            }),
+          }),
+        }).optional(),
       }),
     }),
-    magnet: defineCollection(
+  ),
+
+  faq: defineCollection({
+    type: 'data',
+    source: {
+      cwd: contentCwd,
+      include: 'faq/*.yml',
+    },
+    schema: z.object({
+      type: z.enum(['warning', 'objection', 'support', 'general']),
+      label: z.string(),
+      icon: z.string(),
+      color: FAQ_COLORS,
+      items: z.array(z.object({
+        q: z.string(),
+        a: z.string(),
+      })),
+    }),
+  }),
+
+  // Consolidated features collection (benefits + process cards)
+  features: defineCollection({
+    type: 'data',
+    source: {
+      cwd: contentCwd,
+      include: 'features/*.yml',
+    },
+    schema: z.object({
+      items: z.array(z.object({
+        id: z.string(),
+        title: z.string(),
+        icon: z.string(),
+        description: z.string(),
+        // Optional fields for benefits
+        result: z.string().optional(),
+      })),
+    }),
+  }),
+
+  results: defineCollection({
+    type: 'data',
+    source: {
+      cwd: contentCwd,
+      include: 'results/*.yml',
+    },
+    schema: z.object({
+      // For testimonials.yml
+      items: z.array(z.object({
+        type: z.string().optional(),
+        name: z.string().optional(),
+        role: z.string().optional(),
+        quote: z.string().optional(),
+        link: z.string().optional(),
+        highlight: z.boolean().optional(),
+        avatarUrl: z.string().optional(),
+      })).optional(),
+    }),
+  }),
+};
+
+// Conditionally add gated content if layer exists
+const layerPath = resolve(process.cwd(), 'layers/gated-content');
+if (existsSync(layerPath)) {
+  try {
+    // Dynamic import of the schema
+    // Note: We use a relative path from this config file
+    const { GATED_CONTENT_SCHEMA } = await import('./layers/gated-content/content.schema');
+    
+    // Override source to use project's content directory
+    collections.gated = defineCollection(
       asSeoCollection({
         type: 'page',
         source: {
           cwd: contentCwd,
-          include: 'magnet/**/*.{md,yml}',
-          prefix: '/magnet',
+          include: 'gated/**/*.{md,yml}',
+          prefix: '/gated', // Matches the route prefix we set
         },
-        schema: z.object({
-          title: z.string(),
-          description: z.string().optional(),
-          status: z
-            .enum([
-              'published',
-              'draft',
-              'locked',
-              'feature_flag',
-              'beta',
-              'deprecated',
-              'deprecated_hidden',
-            ])
-            .optional()
-            .default('draft'),
-          disabled: z.boolean(),
-          media: z
-            .object({
-              src: z.string(),
-              alt: z.string().optional(),
-              type: z.enum(['image', 'video']).optional().default('image'),
-            })
-            .optional(),
-        }),
-      }),
-    ),
-  },
+        schema: GATED_CONTENT_SCHEMA
+      })
+    );
+    console.log('[Content Config] Gated content layer detected and registered.');
+  } catch (e) {
+    console.warn('[Content Config] Gated content layer found but schema failed to load:', e);
+  }
+}
+
+export default defineContentConfig({
+  collections,
 });
+

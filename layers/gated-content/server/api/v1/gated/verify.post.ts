@@ -1,8 +1,12 @@
-// server/api/v1/auth/verify.post.ts
+// layers/gated-content/server/api/verify.post.ts
 import { authorizeEmail } from '~~/server/utils/storage.handler';
 
 export default defineEventHandler(async (event) => {
   const { email } = await readBody(event);
+  // We assume getStorageConfig is available globally or auto-imported in server context
+  // If not, we might need to import it. It seems to be an auto-import in the core.
+  // Checking if getStorageConfig is auto-imported. 
+  // In the original file it wasn't imported, so it must be auto-imported.
   const { provider } = getStorageConfig(event);
 
 

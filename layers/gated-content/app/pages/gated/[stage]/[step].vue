@@ -1,15 +1,15 @@
-<!-- pages/magnet/[stage]/[step].vue -->
+<!-- pages/gated/[stage]/[step].vue -->
 <script setup lang="ts">
 definePageMeta({
   layout: 'gated',
 });
 
 const route = useRoute();
-const { isContentAccessible, getContentLabel } = useContentAccess();
+const { isContentAccessible, getContentLabel } = useContentUnlock();
 
 // Fetch current page
-const { data: page } = await useAsyncData(`magnet-${route.params.step}`, () => {
-  return queryCollection('magnet').path(route.path).first();
+const { data: page } = await useAsyncData(`gated-${route.params.step}`, () => {
+  return queryCollection('gated').path(route.path).first();
 });
 
 // Check access immediately
@@ -36,7 +36,7 @@ const { data: surround } = await useAsyncData(
   `${route.params.step}-surround`,
   () => {
     if (!page.value?.path) return null;
-    return queryCollectionItemSurroundings('magnet', page.value.path, {
+    return queryCollectionItemSurroundings('gated', page.value.path, {
       fields: ['title', 'path', 'status'],
     });
   },
@@ -46,5 +46,5 @@ const normalizedSurround = computed(() => surround.value ?? []);
 </script>
 
 <template>
-  <IMagnetPage :page="page" :surround="normalizedSurround" />
+  <GatedPage :page="page" :surround="normalizedSurround" />
 </template>
