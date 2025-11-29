@@ -25,7 +25,6 @@ if (isDev && import.meta.client) {
   defineShortcuts({
     meta_shift_r: useDevTools().clearAllStorage, // cmd+shift+r to clear storage
     meta_shift_e: () => eventTrigger.value?.open(), // ✅ NEW: cmd+shift+e to open event trigger
-    meta_shift_x: () => useGatedAccess().revokeAccess, // cmd+shift+x to revoke access
     meta_shift_arrowright: useDevTools().cycleStage, // cmd+shift+→ to cycle stage
   });
 }
@@ -33,6 +32,9 @@ if (isDev && import.meta.client) {
 
 <template>
   <UApp>
+    <!-- Auth modal (only renders if auth module enabled) -->
+    <AuthModal v-if="$config.public.auth?.enabled" />
+    
     <IDevToolsEventTrigger ref="eventTrigger" v-if="isDev" class="hidden lg:block" />
     <NuxtLayout>
       <NuxtPage />

@@ -168,21 +168,6 @@ export default defineNuxtConfig({
     },
   },
 
-  // vite: {
-  //   resolve: {
-  //     alias: {
-  //       '#stage-config': fileURLToPath(
-  //         new URL(
-  //           activeSource === 'root' 
-  //             ? './config/stages.ts' 
-  //             : `./examples/${activeSource}/config/stages.ts`,
-  //           import.meta.url
-  //         )
-  //       ),
-  //     }
-  //   }
-  // },
-
   alias: {
     '#theme': fileURLToPath(new URL('./theme/index.ts', import.meta.url)),
     '#config': fileURLToPath(
@@ -203,9 +188,24 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
-  gatedContent: {
+  auth: {
     enabled: true,
+    routes: [
+      {
+        pattern: '/dashboard/**',
+        require: true,
+        // redirect: undefined, // Use Modal strategy
+        metadata: { formId: 'email-gate' }
+      },
+      {
+        pattern: '/dashboard',
+        require: true,
+        // redirect: undefined, // Use Modal strategy
+        metadata: { formId: 'email-gate' }
+      }
+    ]
   },
+
   
   router: {
     options: {
@@ -226,8 +226,8 @@ export default defineNuxtConfig({
       prerender: false }, 
     '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background 
     '/updates/**': { swr: 3600 },
-    '/gated': { ssr: false }, // gated dashboard SPA-only (client-side rendered)
-    '/gated/**': { ssr: false },
+    // '/gated': { ssr: false }, // gated dashboard SPA-only (client-side rendered)
+    // '/gated/**': { ssr: false },
   },
   
   components: [

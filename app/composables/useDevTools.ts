@@ -139,7 +139,7 @@ export const useDevTools = () => {
     }
   };
 
-  const clearAllStorage = () => {
+  const clearAllStorage = async () => {
     if (!isDev) return;
     const before = getStorageSnapshot();
     
@@ -147,6 +147,14 @@ export const useDevTools = () => {
     const { local: localStorage, session: sessionStorage } = useAppStorage();
     localStorage.clear();
     sessionStorage.clear();
+    
+    // ✅ Clear Auth Session
+    try {
+      const { signOut } = useAuth();
+      await signOut();
+    } catch (e) {
+      console.warn('Failed to sign out during storage clear:', e);
+    }
     
     devOverrides.value = {};
 
