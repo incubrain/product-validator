@@ -1,6 +1,23 @@
 
 import { defineEventHandler, readBody, createError } from 'h3'
 import { z } from 'zod'
+import { getProviderRegistry } from '../../utils/payments/provider-registry'
+
+/**
+ * Validate that URL is relative (starts with /) or matches site URL
+ * Prevents open redirect vulnerabilities
+ */
+function isValidRedirectUrl(url: string | undefined, siteUrl: string): boolean {
+  if (!url) return true // Optional URLs are fine
+  
+  // Must be relative path
+  if (url.startsWith('/')) return true
+  
+  // Or must start with our site URL
+  if (url.startsWith(siteUrl)) return true
+  
+  return false
+}
 
 const checkoutSchema = z.object({
   productId: z.string(),
@@ -23,7 +40,25 @@ export default defineEventHandler(async (event) => {
   
   const { productId, successUrl, cancelUrl } = validation.data
   
-  // 2. Get User Context (Better-Auth)
+  // 2. Validate redirect URLs
+  const config = useRuntimeConfig()
+  const siteUrl = config.public.siteUrl || ''
+  
+  if (!isValidRedirectUrl(successUrl, siteUrl)) {
+    throw createError({
+      statusCode: 400,
+      message: 'Invalid successUrl - must be relative or match site domain'
+    })
+  }
+  
+  if (!isValidRedirectUrl(cancelUrl, siteUrl)) {
+    throw createError({
+      statusCode: 400,
+      message: 'Invalid cancelUrl - must be relative or match site domain'
+    })
+  }
+  
+  // 3. Get User Context (Better-Auth)
   const session = await auth.api.getSession({
     headers: event.headers
   })
@@ -37,7 +72,6 @@ export default defineEventHandler(async (event) => {
   
   const user = session.user
   
-  const config = useRuntimeConfig()
   const product = config.public.payments?.products?.[productId]
   
   if (!product) {
@@ -47,32 +81,29 @@ export default defineEventHandler(async (event) => {
     })
   }
   
-  // 3. Create Checkout Session
-  let checkoutUrl: string
+  // 3. Get provider from registry
+  const provider = getProviderRegistry().get(product.provider)
   
-  if (product.provider === 'stripe') {
-  // Create checkout session
-  const sessionUrl = await createStripeCheckout({
-    product,
-    productId: body.productId,
-    user,
-    successUrl: body.successUrl,
-    cancelUrl: body.cancelUrl,
-    mode: product.interval ? 'subscription' : 'payment'
-  })
-  checkoutUrl = sessionUrl
-  } else if (product.provider === 'lemonsqueezy') {
-    // checkoutUrl = await createLemonSqueezyCheckout(...)
-    throw createError({
-      statusCode: 501,
-      message: 'LemonSqueezy provider not yet implemented'
-    })
-  } else {
+  if (!provider) {
     throw createError({
       statusCode: 400,
-      message: 'Invalid provider'
+      message: `Provider "${product.provider}" not available. Please contact support.`
     })
   }
+  
+  // 4. Create checkout session via provider
+  const checkoutUrl = await provider.createCheckout({
+    product,
+    productId,
+    user: {
+      id: user.id,
+      email: user.email,
+      name: user.name
+    },
+    successUrl,
+    cancelUrl,
+    mode: product.interval ? 'subscription' : 'payment'
+  })
   
   return { url: checkoutUrl } 
 })

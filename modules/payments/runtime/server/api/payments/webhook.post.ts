@@ -1,9 +1,9 @@
 // modules/payments/runtime/server/api/payments/webhook.post.ts
 import type { H3Event } from 'h3'
 import type { PaymentEvent } from '../../../types/payments'
-import { handleStripeWebhook } from '../../utils/payments/stripe-handler'
-import { handleLemonSqueezyWebhook } from '../../utils/payments/lemonsqueezy-handler'
+import { getProviderRegistry } from '../../utils/payments/provider-registry'
 import { syncPaymentToStorage, updatePaymentStatus } from '../../utils/payments/payment-sync'
+import { WebhookError, isRetryableError, toH3Error } from '../../../../errors'
 
 export default defineEventHandler(async (event) => {
   // Read raw body (required for signature verification)
@@ -15,27 +15,38 @@ export default defineEventHandler(async (event) => {
     })
   }
   
-  // Detect provider by signature header
-  const stripeSignature = getHeader(event, 'stripe-signature')
-  const lemonSqueezySignature = getHeader(event, 'x-signature')
-  
-  let normalizedEvent: PaymentEvent
+  // Auto-detect provider via registry
+  const registry = getProviderRegistry()
+  let normalizedEvent: PaymentEvent | null = null
+  let detectedProvider: string | null = null
   
   try {
-    if (stripeSignature) {
-      console.log('[Payments] 📥 Stripe webhook received')
-      normalizedEvent = await handleStripeWebhook(event, body, stripeSignature)
-    } else if (lemonSqueezySignature) {
-      console.log('[Payments] 📥 LemonSqueezy webhook received')
-      normalizedEvent = await handleLemonSqueezyWebhook(event, body, lemonSqueezySignature)
-    } else {
-      throw createError({ 
-        statusCode: 400, 
-        message: 'Unknown webhook provider - missing signature header' 
-      })
+    // Try each registered provider
+    for (const provider of registry.getAll()) {
+      if (provider.detectWebhook(event)) {
+        detectedProvider = provider.name
+        console.log(`[Payments] 📥 ${provider.name} webhook detected`)
+        
+        // Get signature based on provider
+        const signature = getHeader(event, provider.name === 'stripe' ? 'stripe-signature' : 'x-signature')
+        if (!signature) {
+          throw new WebhookError('Missing signature header', provider.name, false)
+        }
+        
+        normalizedEvent = await provider.handleWebhook(event, body, signature)
+        break
+      }
     }
     
-    console.log(`[Payments] ✅ Webhook verified: ${normalizedEvent.type}`)
+    if (!normalizedEvent) {
+      throw new WebhookError(
+        'Unknown webhook provider - no registered provider detected',
+        undefined,
+        false  // Not retryable - we don't recognize this webhook
+      )
+    }
+    
+    console.log(`[Payments] ✅ Webhook verified: ${normalizedEvent.type} from ${detectedProvider}`)
     
     // Process event based on type
     await processPaymentEvent(normalizedEvent, event)
@@ -45,18 +56,22 @@ export default defineEventHandler(async (event) => {
   } catch (error) {
     console.error('[Payments] ❌ Webhook processing error:', error)
     
-    // Only return error for signature verification failures
-    if (error instanceof Error && error.message.includes('signature')) {
-      throw createError({ 
-        statusCode: 401, 
-        message: 'Invalid signature' 
-      })
+    // Check if error is retryable
+    if (isRetryableError(error)) {
+      // Return 500 to trigger provider retry
+      throw toH3Error(new WebhookError(
+        error instanceof Error ? error.message : 'Temporary webhook processing failure',
+        detectedProvider || undefined,
+        true  // Retryable
+      ))
     }
     
-    // Return success for other errors to prevent endless retries
+    // For non-retryable errors, log and return success to prevent retries
+    console.log('[Payments] ⚠️  Non-retryable error - acknowledging webhook to prevent retries')
     return { 
       received: true, 
-      error: error instanceof Error ? error.message : 'Unknown error' 
+      error: error instanceof Error ? error.message : 'Unknown error',
+      code: 'acknowledged_with_errors'
     }
   }
 })

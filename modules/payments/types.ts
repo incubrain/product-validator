@@ -1,5 +1,73 @@
 // Type definitions for the payments module
 
+import type { H3Event } from 'h3'
+
+// ============================================
+// PROVIDER ABSTRACTION
+// ============================================
+
+/**
+ * Options for creating a checkout session
+ */
+export interface CheckoutOptions {
+  product: PaymentProduct
+  productId: string
+  user: {
+    id: string
+    email: string
+    name?: string
+  }
+  successUrl?: string
+  cancelUrl?: string
+  mode?: 'payment' | 'subscription'
+}
+
+/**
+ * Payment provider interface
+ * Implement this to add a new payment provider
+ */
+export interface PaymentProvider {
+  /** Provider identifier (e.g., 'stripe', 'lemonsqueezy') */
+  name: string
+  
+  /**
+   * Create a checkout session
+   * @returns The checkout URL to redirect the user to
+   */
+  createCheckout(options: CheckoutOptions): Promise<string>
+  
+  /**
+   * Handle incoming webhook event
+   * @returns Normalized PaymentEvent
+   */
+  handleWebhook(event: H3Event, body: string, signature: string): Promise<PaymentEvent>
+  
+  /**
+   * Detect if this provider can handle the webhook
+   * @returns true if this provider should handle the webhook
+   */
+  detectWebhook(event: H3Event): boolean
+  
+  /**
+   * Create a customer portal session (optional, for subscription management)
+   * @returns The portal URL to redirect the user to
+   */
+  createPortalSession?(customerId: string, returnUrl?: string): Promise<string>
+}
+
+/**
+ * Registry for managing payment providers
+ */
+export interface ProviderRegistry {
+  register(provider: PaymentProvider): void
+  get(name: string): PaymentProvider | undefined
+  getAll(): PaymentProvider[]
+}
+
+// ============================================
+// PRODUCT & CONFIG
+// ============================================
+
 export interface PaymentProduct {
   name: string
   provider: 'stripe' | 'lemonsqueezy'
@@ -25,12 +93,13 @@ export interface PaymentsModuleOptions {
   stripe?: {
     enabled: boolean
     publicKey?: string
-    secret?: string // Private config
+    secretKey?: string // Stripe API secret key
+    apiVersion?: string // Stripe API version (optional)
   }
   lemonsqueezy?: {
     enabled: boolean
     storeId?: string
-    secret?: string // Private config
+    secretKey?: string // LemonSqueezy API key
   }
   
   // Product definitions
@@ -40,10 +109,10 @@ export interface PaymentsModuleOptions {
   webhook?: {
     endpoint: string
     stripe?: {
-      secret?: string
+      secret?: string // Webhook signing secret
     }
     lemonsqueezy?: {
-      secret?: string
+      secret?: string // Webhook signing secret
     }
   }
 }
@@ -128,9 +197,17 @@ declare module 'nuxt/schema' {
   interface RuntimeConfig {
     payments?: {
       webhook?: PaymentsModuleOptions['webhook']
+      stripe?: {
+        secretKey?: string
+        apiVersion?: string
+      }
+      lemonsqueezy?: {
+        secretKey?: string
+      }
     }
   }
 }
+
 
 // Hook type augmentation
 declare module '#app' {

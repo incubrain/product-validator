@@ -211,12 +211,15 @@ export default defineNuxtConfig({
     
     // Provider configs
     stripe: {
-      enabled: true,
+      enabled: false,
       publicKey: process.env.STRIPE_PUBLIC_KEY,
+      secretKey: process.env.STRIPE_SECRET_KEY,  // Added for Phase 1 refactor
+      apiVersion: '2025-11-17.clover',  // Optional: specify Stripe API version
     },
     lemonsqueezy: {
       enabled: false, // Optional second provider
       storeId: process.env.LEMONSQUEEZY_STORE_ID,
+      secretKey: process.env.LEMONSQUEEZY_SECRET_KEY,  // Added for Phase 1 refactor
     },
     
     // Product definitions (simple key-value)

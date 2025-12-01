@@ -27,14 +27,69 @@ export default defineNuxtModule<PaymentsModuleOptions>({
     logger.info('Setting up payments module')
     
     // ========================================
+    // CONFIGURATION VALIDATION
+    // ========================================
+    
+    // Validate enabled providers have required configuration
+    if (options.stripe?.enabled) {
+      if (!options.stripe?.secretKey) {
+        throw new Error('[Payments Module] Stripe enabled but secretKey not provided')
+      }
+      if (!options.webhook?.stripe?.secret) {
+        logger.warn('[Payments] Stripe webhook secret not configured - webhooks will fail')
+      }
+      logger.info('[Payments] Stripe provider configured')
+    }
+    
+    if (options.lemonsqueezy?.enabled) {
+      if (!options.lemonsqueezy?.secretKey) {
+        logger.warn('[Payments] LemonSqueezy enabled but secret key not provided - may be needed for API calls')
+      }
+      if (!options.webhook?.lemonsqueezy?.secret) {
+        logger.warn('[Payments] LemonSqueezy webhook secret not configured - webhooks will fail')
+      }
+      logger.info('[Payments] LemonSqueezy provider configured')
+    }
+    
+    // Validate products reference enabled providers
+    if (options.products) {
+      for (const [productId, product] of Object.entries(options.products)) {
+        const providerConfig = options[product.provider]
+        if (!providerConfig?.enabled) {
+          throw new Error(
+            `[Payments Module] Product "${productId}" uses provider "${product.provider}" but it's not enabled. ` +
+            `Enable it in payments.${product.provider}.enabled`
+          )
+        }
+      }
+    }
+    
+    // ========================================
     // RUNTIME CONFIG
     // ========================================
     
     nuxt.options.runtimeConfig.public.payments = options
-    // Private config for webhooks
+    
+    // Private config for secrets
     nuxt.options.runtimeConfig.payments = {
-      webhook: options.webhook
+      webhook: options.webhook,
+      stripe: options.stripe ? {
+        secretKey: options.stripe.secretKey,
+        apiVersion: options.stripe.apiVersion
+      } : undefined,
+      lemonsqueezy: options.lemonsqueezy ? {
+        secretKey: options.lemonsqueezy.secretKey
+      } : undefined
     }
+    
+    // ========================================
+    // PROVIDER REGISTRATION
+    // ========================================
+    
+    // Register providers via Nitro plugin
+    addServerHandler({
+      handler: resolver.resolve('./runtime/server/plugins/register-providers'),
+    })
     
     // ========================================
     // COMPOSABLES
@@ -80,4 +135,19 @@ export default defineNuxtModule<PaymentsModuleOptions>({
 })
 
 // Export types for external use
-export type { PaymentsModuleOptions, CustomerPayment, PaymentSession, PaymentRouteConfig } from './types'
+export type { PaymentsModuleOptions, CustomerPayment, PaymentSession, PaymentRouteConfig, PaymentProvider, CheckoutOptions } from './types'
+
+// Export error classes for external use
+export {
+  PaymentError,
+  CheckoutError,
+  WebhookError,
+  SignatureVerificationError,
+  ProviderNotFoundError,
+  ProductNotFoundError,
+  UnauthorizedError,
+  StorageError,
+  ConfigurationError,
+  toH3Error,
+  isRetryableError
+} from './errors'
