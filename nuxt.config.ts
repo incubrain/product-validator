@@ -24,16 +24,6 @@ export default defineNuxtConfig({
     // 'nuxt-studio', // {DX}: studio breaks HMR alpha.2
   ],
 
-  hooks: {
-    'content:file:afterParse'(ctx) {
-      const { content } = ctx;
-
-      if (content.id.startsWith('gated')) {
-        content.disabled = content.status !== 'published';
-      }
-    },
-  },
-
   // {CONFIG}
   site: {
     url: 'https://founder-funnel.incubrain.org',
@@ -188,64 +178,6 @@ export default defineNuxtConfig({
     compatibilityVersion: 4,
   },
 
-  auth: {
-    enabled: true,
-    routes: [
-      {
-        pattern: '/dashboard/**',
-        require: true,
-        // redirect: undefined, // Use Modal strategy
-        metadata: { formId: 'email-gate' }
-      },
-      {
-        pattern: '/dashboard',
-        require: true,
-        // redirect: undefined, // Use Modal strategy
-        metadata: { formId: 'email-gate' }
-      }
-    ]
-  },
-
-  payments: {
-    enabled: true,
-    
-    // Provider configs
-    stripe: {
-      enabled: false,
-      publicKey: process.env.STRIPE_PUBLIC_KEY,
-      secretKey: process.env.STRIPE_SECRET_KEY,  // Added for Phase 1 refactor
-      apiVersion: '2025-11-17.clover',  // Optional: specify Stripe API version
-    },
-    lemonsqueezy: {
-      enabled: false, // Optional second provider
-      storeId: process.env.LEMONSQUEEZY_STORE_ID,
-      secretKey: process.env.LEMONSQUEEZY_SECRET_KEY,  // Added for Phase 1 refactor
-    },
-    
-    // Product definitions (simple key-value)
-    products: {
-      'direct-hire': {
-        name: 'Direct Hire Consultation',
-        provider: 'stripe',
-        priceId: 'price_xxx', // TODO: Replace with actual price ID
-        amount: 250,
-        currency: 'usd',
-      }
-    },
-    
-    // Webhook config
-    webhook: {
-      endpoint: '/api/payments/webhook',
-      stripe: {
-        secret: process.env.STRIPE_WEBHOOK_SECRET,
-      },
-      lemonsqueezy: {
-        secret: process.env.LEMONSQUEEZY_WEBHOOK_SECRET,
-      }
-    }
-  },
-
-  
   router: {
     options: {
       scrollBehaviorType: 'smooth',
@@ -265,13 +197,10 @@ export default defineNuxtConfig({
       prerender: false }, 
     '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background 
     '/updates/**': { swr: 3600 },
-    // '/gated': { ssr: false }, // gated dashboard SPA-only (client-side rendered)
-    // '/gated/**': { ssr: false },
   },
   
   components: [
     { path: '~/components', prefix: 'I' },
-    { path: '~/components/ui', prefix: 'UI' },
   ],
 
   experimental: {

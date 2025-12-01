@@ -1,9 +1,5 @@
 # content/features/grid.yml
 items:
-  - title: Gated Content System?
-    description: Lock/unlock content based on user progress or email capture. The core of the "Magnet" strategy.
-    icon: i-lucide-lock
-
   - title: Waitlists
     description: Validate before you build, toggle waitlist if unavailable or sold out.
     icon: i-lucide-flask-conical

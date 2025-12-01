@@ -1,6 +1,6 @@
 ---
 title: Founder Funnel
-description: Open-source landing page template with built-in gated content delivery for technical founders.
+description: Open-source landing page template for experienced technical founders.
 ---
 
 ::i-section-hero
@@ -12,7 +12,7 @@ data:
     to: https://github.com/incubrain/founder-funnel
   intro:
     title: Own Your Funnel
-    description: The open-source landing page template for technical founders. Capture leads, deliver gated content, and validate your idea without monthly fees.
+    description: The open-source landing page template for technical founders. Capture leads, and validate your idea without monthly fees.
   media:
     type: image
     src: /product/gated-dashboard.png

@@ -32,9 +32,6 @@ if (isDev && import.meta.client) {
 
 <template>
   <UApp>
-    <!-- Auth modal (only renders if auth module enabled) -->
-    <AuthModal v-if="$config.public.auth?.enabled" />
-    
     <IDevToolsEventTrigger ref="eventTrigger" v-if="isDev" class="hidden lg:block" />
     <NuxtLayout>
       <NuxtPage />

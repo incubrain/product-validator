@@ -11,7 +11,7 @@ export const STAGE_CONFIG = {
     { value: 'launch', label: 'Launch', order: 2 },
     { value: 'post-launch', label: 'Post Launch', order: 3 },
   ],
-  disableFakeDoorAt: 'launch',
+  disableWaitlistAt: 'launch',
   visibility: {
     unlock: {
       layout: {

@@ -7,23 +7,13 @@ declare global {
     | 'form_error'
     | 'form_success'
     | 'modal_open'
-    | 'modal_close'
-    // Payment events
-    | 'payment:checkout'
-    | 'payment:verify'
-    | 'payment:success'
-    | 'payment:failed'
-    | 'payment:refunded';
+    | 'modal_close';
 
   type TrackedActions =
     | 'update_record'
     | 'open_modal'
     | 'close_modal'
     | 'email_captured'
-    | 'create_checkout'
-    | 'verify_payment'
-    | 'payment_verified'
-    | 'checkout_failed'
     | string;
 }
 

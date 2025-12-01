@@ -1,6 +1,4 @@
-// server/utils/storage-handler.ts (renamed from db-handler.ts)
-import { nocodbProvider } from './providers/nocodb';
-import { n8nProvider } from './providers/n8n';
+// server/utils/storage-handler.ts
 import { kvProvider } from './providers/kv';
 
 export interface ProviderParams {
@@ -31,8 +29,6 @@ export interface StorageProvider {
 
 const providers: Record<string, StorageProvider> = {
   kv: kvProvider,
-  nocodb: nocodbProvider,
-  n8n: n8nProvider,
   // future: airtable, baserow, zapier, supabase, etc.
 };
 

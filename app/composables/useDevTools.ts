@@ -148,14 +148,6 @@ export const useDevTools = () => {
     localStorage.clear();
     sessionStorage.clear();
     
-    // ✅ Clear Auth Session
-    try {
-      const { signOut } = useAuth();
-      await signOut();
-    } catch (e) {
-      console.warn('Failed to sign out during storage clear:', e);
-    }
-    
     devOverrides.value = {};
 
     const after = getStorageSnapshot();

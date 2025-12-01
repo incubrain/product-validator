@@ -7,7 +7,7 @@ export const STAGE_CONFIG = {
     secondary: 'direct',
   },
   
-  disableFakeDoorAt: 'engagement',
+  disableWaitlistAt: 'engagement',
   stages: [
     { value: 'identity', label: 'Identity', order: 1 },
     { value: 'attention', label: 'Attention', order: 2 },

@@ -5,7 +5,7 @@ export const STAGE_CONFIG = {
   currentStage: 'launch',
   
   stages: [
-    { value: 'pre-launch', label: 'Pre-Launch', order: 1 },
+    { value: 'waitlist', label: 'Waitlist', order: 1 },
     { value: 'launch', label: 'Launch', order: 2 },
     { value: 'growth', label: 'Growth', order: 3 },
   ],
@@ -15,20 +15,24 @@ export const STAGE_CONFIG = {
     secondary: 'direct',
   },
   
-  disableFakeDoorAt: 'launch',
-  
-  
+  disableWaitlistAt: 'launch',
+
+  conversionTarget: {
+    'waitlist': 'waitlist',
+    'launch': 'magnet',
+    'growth': 'magnet',
+  },
   
   visibility: {
     unlock: {
       layout: {
-        banner: 'pre-launch',
-        navbar: 'pre-launch',
-        footer: 'pre-launch',
+        banner: 'waitlist',
+        navbar: 'waitlist',
+        footer: 'waitlist',
       },
       sections: {
-        hero: 'pre-launch',
-        problemSolution: 'pre-launch',
+        hero: 'waitlist',
+        problemSolution: 'waitlist',
         process: 'launch',
         offer: 'launch',
         concerns: 'launch',
@@ -36,7 +40,7 @@ export const STAGE_CONFIG = {
         results: 'growth',
       },
       features: {
-        heroCountdown: 'pre-launch',
+        heroCountdown: 'waitlist',
         heroCTA: 'launch',
         heroMedia: 'launch',
         heroMarquees: 'growth',

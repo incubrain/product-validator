@@ -21,7 +21,7 @@ export interface StageConfig {
     primary: string;
     secondary: string;
   };
-  disableFakeDoorAt: string;
+  disableWaitlistAt: string;
   visibility: {
     unlock: VisibilityConfig;
     lock?: Partial<VisibilityConfig>;
@@ -85,7 +85,7 @@ export interface SectionCta {
 // OFFER SECTION
 // ============================================================================
 
-export type OfferID = 'gated' | 'direct' | 'low' | 'medium' | 'high';
+export type OfferID = 'waitlist' | 'direct' | 'low' | 'medium' | 'high';
 
 export type OfferStockType = 'spots' | 'units' | 'hours';
 

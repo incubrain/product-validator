@@ -42,7 +42,7 @@ Conversion-optimized sections: hero, problem/solution, process, offer, testimoni
 Capture emails → grant access to sequential content. Built-in progress tracking and completion states.
 
 ### Stage-Based Visibility
-Configure which sections appear at each stage of your product. Pre-launch shows countdown and waitlist. Launch shows full offer. Growth adds testimonials and social proof.
+Configure which sections appear at each stage of your product. Waitlist shows countdown and waitlist. Launch shows full offer. Growth adds testimonials and social proof.
 
 ### Fake Door Testing
 Test demand before building. Collect "interested" signups, then flip a switch to enable real access when ready.
@@ -82,8 +82,7 @@ This generates a single file with the full codebase context. Paste it into Claud
 
 The template includes example configurations showing different use cases:
 
-- **Starter** — Simple 3-stage setup (pre-launch → launch → growth)
-- **Validator** — Full 6-stage validation journey
+- **Founder Funnel** — Simple 3-stage setup (waitlist → launch → growth)
 
 Switch between them via `NUXT_PUBLIC_CONFIG_SOURCE` in your `.env`.
 

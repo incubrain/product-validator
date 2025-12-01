@@ -1,3 +1,4 @@
+
 import type { IconProps } from '@nuxt/ui';
 
 export const STATUS_ICONS: Record<string, IconProps & { class: string }> = {

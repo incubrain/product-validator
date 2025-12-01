@@ -6,7 +6,7 @@ import type { EventPayload } from '#shared/types/events';
  * Generates sensible defaults for missing data
  */
 const EVENT_FALLBACKS = {
-  formId: () => 'fake_door',
+  formId: () => 'waitlist',
   recordId: () => `mock-${Date.now()}`,
   email: () => 'dev@example.com',
   offerId: () => 'magnet',
@@ -48,7 +48,7 @@ export const EVENT_CHAINS: Partial<Record<TrackedEvents, EventChainConfig>> = {
   form_submitted: {
     triggers: ['modal_open'],
     condition: (payload) => {
-      return payload.data?.formId === 'fake_door';
+      return payload.data?.formId === 'waitlist';
     },
     requiredFields: ['formId', 'recordId', 'customerStage'],
     data: (payload) => ({

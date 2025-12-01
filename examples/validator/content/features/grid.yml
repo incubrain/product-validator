@@ -1,10 +1,6 @@
 # content/features/grid.yml
 items:
-  - title: Gated Content System
-    description: Lock/unlock content based on user progress or email capture. The core of the "Magnet" strategy.
-    icon: i-lucide-lock
-
-  - title: Fake Door Testing
+  - title: Waitlists
     description: Validate demand before you build. Measure intent with "Coming Soon" features.
     icon: i-lucide-flask-conical
 

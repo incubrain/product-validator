@@ -90,8 +90,7 @@ They need a system that **forces them to ship** and gather the feedback required
     - Payment integration (Stripe direct connection)
     - Form embeds
 - **Payment options**:
-    - Direct product sales via button links (Stripe, LemonSqueezy, etc.)
-    - In-form payments via FillOutForm + Stripe integration
+    - Direct product sales via button links (Stripe, LemonSqueezy, Razorpay etc.)
     - _(Payment gateway setup outside scope of template guidance)_
 - **Conversion funnel** → Landing → Email sequence → Implementation → Feedback submission → Consultation → Upsell
 - **Structured tracking** → Nuxt events for conversion-focused analytics (signups, completions, submissions)
@@ -284,7 +283,6 @@ Focus on conversion rates, not raw visitor counts:
 ### **Payment Integration Options**
 
 - **Direct sales**: Button links to Stripe/LemonSqueezy/other gateways
-- **In-form payments**: FillOutForm + Stripe for consultations/products
 - **Requirement**: Users must setup payment gateway independently (outside template scope)
 
 ### **Provider-Agnostic (future)**

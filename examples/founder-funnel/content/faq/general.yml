@@ -19,4 +19,4 @@ items:
     a: Local storage + email capture. No backend database required to start.
 
   - q: Can I add payments?
-    a: Yes. It's just a Nuxt app. Add Stripe, LemonSqueezy, or whatever you want.
+    a: Yes. It's just a Nuxt app. Add Stripe, LemonSqueezy, Razorpay or whatever you want.
