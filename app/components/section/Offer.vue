@@ -93,7 +93,7 @@ const { showSection } = useSectionVisibility();
           v-bind="primaryOffer"
           :badge="primaryOffer.badge as BadgeProps"
           :features="transformedFeatures"
-          variant="outline"
+          variant="soft"
           :ui="{
             root: 'bg-primary/5 backdrop-blur-sm',
             features: 'gap-3',

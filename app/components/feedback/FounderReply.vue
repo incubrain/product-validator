@@ -6,7 +6,7 @@ const props = defineProps<{
 const { getFounder } = useContentCache();
 const { data: founder } = await getFounder();
 const route = useRoute();
-const { email: userEmail } = useGatedAccess();
+// const { email: userEmail } = useGatedAccess();
 
 // Logic to construct mailto link
 const mailtoLink = computed(() => {
@@ -14,12 +14,12 @@ const mailtoLink = computed(() => {
 
   const email = founder.value.profile.email;
   const subject = encodeURIComponent(
-    `Question regarding: ${route.meta.title || 'Product Validator'}`,
+    `Question regarding: ${route.meta.title}`,
   );
-  const body = encodeURIComponent(
-    `\n\n---\nContext: ${route.path}\nUser: ${userEmail.value || 'Anonymous'}`,
-  );
-  return `mailto:${email}?subject=${subject}&body=${body}`;
+  // const body = encodeURIComponent(
+  //   `\n\n---\nContext: ${route.path}\nUser: ${userEmail.value || 'Anonymous'}`,
+  // );
+  return `mailto:${email}?subject=${subject}`;
 });
 
 // const { track } = useAnalytics();

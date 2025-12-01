@@ -11,7 +11,7 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
   const route = useRoute();
   const toast = useToast();
   const { currentStage } = useDevTools();
-  const { grantAccess } = useGatedAccess();
+  // const { grantAccess } = useGatedAccess();
 
   const isSubmitting = ref(false);
   const isSuccess = ref(false);
@@ -57,11 +57,11 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
       // ✅ For gated form: grant access and navigate immediately
       // Skip isSuccess to bypass the success message
       if (validated.email && options.formId === 'gated') {
-        grantAccess(validated.email);
+        // grantAccess(validated.email);
 
         // ✅ Only navigate if NOT from access gate
         if (options.location !== 'access-gate') {
-          await navigateTo('/gated');
+          // await navigateTo('/gated');
           return; // Exit early, don't set isSuccess
         }
 

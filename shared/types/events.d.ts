@@ -7,13 +7,23 @@ declare global {
     | 'form_error'
     | 'form_success'
     | 'modal_open'
-    | 'modal_close';
+    | 'modal_close'
+    // Payment events
+    | 'payment:checkout'
+    | 'payment:verify'
+    | 'payment:success'
+    | 'payment:failed'
+    | 'payment:refunded';
 
   type TrackedActions =
     | 'update_record'
     | 'open_modal'
     | 'close_modal'
     | 'email_captured'
+    | 'create_checkout'
+    | 'verify_payment'
+    | 'payment_verified'
+    | 'checkout_failed'
     | string;
 }
 
@@ -38,21 +48,11 @@ export interface EventPayload {
   location: string;
   target?: string;
   timestamp?: number;
-  data?: {
-    formId?: string;
-    recordId?: string;
-    email?: string;
-    offerId?: string;
-    customerStage?: string;
-    currentStage?: StageKey;
-    feedback?: string;
-    // User identity and traffic attribution
-    userId?: string;
-    trafficSource?: TrafficSource | null;
-    metadata?: Record<string, any>;
-  };
+  data?: Record<string, any>;
   response?: Record<string, any>;
   triggersEvent?: string[];
   _devToolsTriggered?: boolean;
   error?: any;
 }
+
+export {}

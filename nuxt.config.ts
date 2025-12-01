@@ -206,6 +206,42 @@ export default defineNuxtConfig({
     ]
   },
 
+  payments: {
+    enabled: true,
+    
+    // Provider configs
+    stripe: {
+      enabled: true,
+      publicKey: process.env.STRIPE_PUBLIC_KEY,
+    },
+    lemonsqueezy: {
+      enabled: false, // Optional second provider
+      storeId: process.env.LEMONSQUEEZY_STORE_ID,
+    },
+    
+    // Product definitions (simple key-value)
+    products: {
+      'direct-hire': {
+        name: 'Direct Hire Consultation',
+        provider: 'stripe',
+        priceId: 'price_xxx', // TODO: Replace with actual price ID
+        amount: 250,
+        currency: 'usd',
+      }
+    },
+    
+    // Webhook config
+    webhook: {
+      endpoint: '/api/payments/webhook',
+      stripe: {
+        secret: process.env.STRIPE_WEBHOOK_SECRET,
+      },
+      lemonsqueezy: {
+        secret: process.env.LEMONSQUEEZY_WEBHOOK_SECRET,
+      }
+    }
+  },
+
   
   router: {
     options: {

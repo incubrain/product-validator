@@ -22,7 +22,6 @@ type EventHandler = (payload: EventPayload) => void | Promise<any>;
 const eventHandlers = new Map<TrackedEvents, EventHandler[]>();
 
 export default defineNuxtPlugin((nuxtApp) => {
-  // Register handlers
   eventHandlers.set('element_clicked', [consoleLogger, analyticsHandler]);
   eventHandlers.set('element_viewed', [consoleLogger, analyticsHandler]);
   eventHandlers.set('exit_intent', [consoleLogger, analyticsHandler]);
@@ -57,9 +56,17 @@ export default defineNuxtPlugin((nuxtApp) => {
     // Execute handlers
     for (const handler of handlers) {
       try {
-        await handler(payload);
+        const result = await handler(payload);
+        
+        // ✅ Store handler response for event chains
+        if (result !== undefined) {
+          payload.response = result;
+        }
       } catch (error) {
         console.error(`Handler failed for ${payload.type}:`, error);
+        
+        // ✅ Store error for event chains
+        payload.error = error;
 
         // ✅ Track error in DevTools visualizer
         if (payload._devToolsTriggered && import.meta.dev) {

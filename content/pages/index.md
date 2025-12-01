@@ -1,5 +1,5 @@
 ---
-title: Product Validator
+title: Your Product Name
 description: '⚠️ Your value proposition description'
 ---
 
