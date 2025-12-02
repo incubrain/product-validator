@@ -1,14 +1,12 @@
 <script setup lang="ts">
 import { useIntersectionObserver, useMediaControls } from '@vueuse/core';
-import { videoStyles } from '#theme';
-import type { VideoVariants } from '#theme';
 import { useUserInteraction } from '~/composables/useUserInteraction';
 
 export interface VideoProps {
   src: string;
   alt?: string;
   poster?: string;
-  aspectRatio?: VideoVariants['aspectRatio'];
+  aspectRatio?: 'square' | 'video' | 'portrait' | 'wide' | 'auto';
   autoplay?: boolean;
   loop?: boolean;
   muted?: boolean;
@@ -154,18 +152,52 @@ const handleMouseLeave = () => {
   }
 };
 
-// Computed styles
-const computedStyles = useTV(videoStyles, {
-  ...props,
-  loading: isLoading.value && shouldLoad.value && !isExternalVideo.value,
-  error: hasError.value && !isExternalVideo.value,
+// Computed styles (inlined from theme/video.ts)
+const rootClass = computed(() => {
+  const classes = [
+    'relative',
+    'overflow-hidden',
+    'bg-black',
+    'transition-all',
+    'duration-300',
+  ];
+
+  // Aspect ratio
+  const aspectRatioClasses = {
+    square: 'aspect-square',
+    video: 'aspect-video',
+    portrait: 'aspect-[3/4]',
+    wide: 'aspect-[21/9]',
+    auto: 'aspect-auto',
+  };
+  classes.push(aspectRatioClasses[props.aspectRatio]);
+
+  // Loading state
+  if (isLoading.value && shouldLoad.value && !isExternalVideo.value) {
+    classes.push('animate-pulse');
+  }
+
+  // Error state
+  if (hasError.value && !isExternalVideo.value) {
+    classes.push('bg-red-900/50');
+  }
+
+  return classes.join(' ');
 });
+
+const videoClass = 'w-full object-cover';
+const overlayClass = 'absolute inset-0 flex items-center justify-center';
+const controlsClass =
+  'absolute inset-0 flex items-center justify-center bg-black/20 hover:bg-black/40 cursor-pointer transition-colors duration-200';
+const loadingStateClass = 'flex items-center justify-center text-white';
+const errorStateClass =
+  'flex flex-col items-center justify-center text-center p-6 text-white';
 </script>
 
 <template>
   <div
     ref="containerRef"
-    :class="computedStyles.root()"
+    :class="rootClass"
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
@@ -188,7 +220,7 @@ const computedStyles = useTV(videoStyles, {
     <video
       v-else-if="shouldLoad && !isExternalVideo"
       ref="videoRef"
-      :class="computedStyles.video()"
+      :class="videoClass"
       :poster="poster"
       :muted="muted"
       :loop="loop"
@@ -207,7 +239,7 @@ const computedStyles = useTV(videoStyles, {
       v-if="
         !isExternalVideo && !controls && !hasError && shouldLoad && showControls
       "
-      :class="computedStyles.controls()"
+      :class="controlsClass"
       class="opacity-100 transition-opacity duration-200"
     >
       <div class="flex items-center gap-4">
@@ -238,16 +270,16 @@ const computedStyles = useTV(videoStyles, {
     <!-- Loading State (self-hosted only) -->
     <div
       v-if="!isExternalVideo && isLoading && shouldLoad"
-      :class="computedStyles.overlay()"
+      :class="overlayClass"
     >
-      <div :class="computedStyles.loadingState()">
+      <div :class="loadingStateClass">
         <UIcon name="i-lucide-loader" class="size-8 animate-spin text-white" />
       </div>
     </div>
 
     <!-- Error State (self-hosted only) -->
-    <div v-if="!isExternalVideo && hasError" :class="computedStyles.overlay()">
-      <div :class="computedStyles.errorState()">
+    <div v-if="!isExternalVideo && hasError" :class="overlayClass">
+      <div :class="errorStateClass">
         <UIcon name="i-lucide-video-off" class="size-12 mb-2" />
         <p class="text-sm mb-3">Failed to load video</p>
         <p class="text-xs opacity-75">{{ src }}</p>
@@ -255,8 +287,8 @@ const computedStyles = useTV(videoStyles, {
     </div>
 
     <!-- Lazy Loading Placeholder -->
-    <div v-if="!shouldLoad" :class="computedStyles.overlay()">
-      <div :class="computedStyles.loadingState()">
+    <div v-if="!shouldLoad" :class="overlayClass">
+      <div :class="loadingStateClass">
         <UIcon name="i-lucide-video" class="size-8 text-white" />
       </div>
     </div>
@@ -264,9 +296,9 @@ const computedStyles = useTV(videoStyles, {
     <!-- Buffering Indicator (self-hosted only) -->
     <div
       v-if="!isExternalVideo && waiting && !hasError && !isLoading"
-      :class="computedStyles.overlay()"
+      :class="overlayClass"
     >
-      <div :class="computedStyles.loadingState()">
+      <div :class="loadingStateClass">
         <UIcon name="i-lucide-loader" class="size-6 animate-spin text-white" />
       </div>
     </div>
