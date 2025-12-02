@@ -6,7 +6,6 @@ business:
   logo: favicon-96x96.png
 social:
   availability: '⚠️ How available you are and where'
-  response_time: '24 hours'
   links:
     - platform: youtube
       label: YouTube

@@ -75,7 +75,6 @@ export default defineContentConfig({
         }).optional(),
         social: z.object({
           availability: z.string(),
-          response_time: z.string(),
           links: z.array(z.object({
             platform: z.string(),
             label: z.string(),
@@ -194,24 +193,6 @@ export default defineContentConfig({
       }),
     }),
 
-    results: defineCollection({
-      type: 'data',
-      source: {
-        cwd: contentCwd,
-        include: 'results/*.yml',
-      },
-      schema: z.object({
-        // For testimonials.yml
-        items: z.array(z.object({
-          type: z.string().optional(),
-          name: z.string().optional(),
-          role: z.string().optional(),
-          quote: z.string().optional(),
-          link: z.string().optional(),
-          highlight: z.boolean().optional(),
-          avatarUrl: z.string().optional(),
-        })).optional(),
-      }),
-    }),
+
   },
 });

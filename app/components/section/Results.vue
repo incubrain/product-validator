@@ -1,14 +1,13 @@
 <script setup lang="ts">
 const props = defineProps<{
-  data?: any;
+  data?: {
+    intro?: any;
+    cta?: any;
+    items?: any[];
+  };
 }>();
 
-// Fetch testimonials from results collection
-const { data: testimonialsFile } = await useAsyncData('testimonials', () => 
-  queryCollection('results').where('stem', '=', 'results/testimonials').first()
-);
-
-const testimonials = computed(() => testimonialsFile.value?.items || []);
+const testimonials = computed(() => props.data?.items || []);
 
 // Format testimonials for UPageCard
 const formattedTestimonials = computed(() =>

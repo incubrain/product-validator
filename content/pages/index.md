@@ -145,8 +145,22 @@ data:
   intro:
     icon: i-lucide-trending-up
     headline: '⚠️ Section headline'
+    headline: '⚠️ Section headline'
     title: '⚠️ Section title'
     description: '⚠️ Section description'
+  items:
+    - type: testimonial
+      name: '⚠️ Customer name'
+      role: '⚠️ Customer role or title'
+      quote: '⚠️ Their testimonial quote'
+      avatarUrl: https://i.pravatar.cc/150?img=11
+      highlight: true
+    - type: testimonial
+      name: '⚠️ Customer name'
+      role: '⚠️ Customer role or title'
+      quote: '⚠️ Their testimonial quote'
+      avatarUrl: https://i.pravatar.cc/150?img=11
+      highlight: false
 ---
 ::
 
