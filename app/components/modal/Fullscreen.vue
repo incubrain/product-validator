@@ -56,7 +56,7 @@ const { data: product } = await getProduct(props.productId);
           </ul>
         </div>
 
-        <IStockProgress
+        <IUrgencyStockRemaining
           v-if="product?.stock"
           :stock="product.stock"
           :product-id="product.id"

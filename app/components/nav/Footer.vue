@@ -48,7 +48,9 @@ const copyrightYear = computed(() =>
 
     <!-- BOTTOM: Copyright + CTA -->
     <template #bottom>
-      <UContainer class="flex flex-col gap-4 lg:flex-row justify-between w-full items-start lg:items-center">
+      <UContainer
+        class="flex flex-col gap-4 lg:flex-row justify-between w-full items-start lg:items-center"
+      >
         <p class="text-sm text-muted whitespace-nowrap">
           © {{ copyrightYear }}
           {{ configData?.business.legal_name }}
@@ -66,9 +68,14 @@ const copyrightYear = computed(() =>
             color="neutral"
             aria-label="View Analytics Dashboard"
           />
-          <IConvertButton :product-id="STAGE_CONFIG.products.secondary" 
-          location="footer"
-          cta-name="funnel"
+          <IConvertButton
+            :product-id="STAGE_CONFIG.products.secondary"
+            location="footer"
+            cta-name="funnel"
+            color="secondary"
+            variant="solid"
+            class="font-black"
+            size="sm"
           />
         </div>
       </UContainer>

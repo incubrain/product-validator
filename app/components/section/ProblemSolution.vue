@@ -20,15 +20,14 @@ const { showSection } = useSectionVisibility();
     id="#problem-solution"
     :intro="data.intro"
     :cta="data.cta"
-    class="bg-muted/50"
   >
-    <UPageGrid class="border-y py-4">
+    <UPageGrid>
       <UPageCard
         v-for="card in cards"
         :key="card.id"
         :title="card.title"
         :description="card.description"
-        variant="ghost"
+        variant="outline"
         :ui="{
           description: 'text-pretty leading-relaxed',
         }"

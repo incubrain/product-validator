@@ -42,18 +42,25 @@ const { showSection } = useSectionVisibility();
     class="relative"
   >
     <!-- Background glow -->
-    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+    <div
+      class="absolute inset-0 flex items-center justify-center pointer-events-none"
+    >
       <div class="w-[80%] h-[80%] bg-primary/5 rounded-full blur-3xl" />
     </div>
 
     <!-- Main content grid -->
-    <div class="grid lg:grid-cols-[400px_1fr] gap-8 lg:gap-12 max-w-6xl mx-auto relative z-10 px-4">
-      
+    <div
+      class="grid lg:grid-cols-[400px_1fr] gap-8 lg:gap-12 max-w-6xl mx-auto relative z-10 px-4"
+    >
       <!-- Left: Founder Sidebar -->
-      <div class="flex flex-col items-center lg:items-start gap-6 lg:sticky lg:top-24 lg:self-start">
+      <div
+        class="flex flex-col items-center lg:items-start gap-6 lg:sticky lg:top-24 lg:self-start"
+      >
         <!-- Portrait -->
         <div class="relative group">
-          <div class="absolute inset-0 bg-linear-to-t from-primary/20 to-transparent blur-xl group-hover:blur-2xl transition-all duration-300" />
+          <div
+            class="absolute inset-0 bg-linear-to-t from-primary/20 to-transparent blur-xl group-hover:blur-2xl transition-all duration-300"
+          />
           <NuxtImg
             :src="founderData.avatar.src"
             :alt="founderData.avatar.alt"
@@ -72,9 +79,11 @@ const { showSection } = useSectionVisibility();
         </div>
 
         <!-- Quote (with marks) -->
-          <p class="text-base max-w-sm text-center lg:text-left lg:text-lg italic text-dimmed leading-relaxed">
-            {{ founderData?.bio }}
-          </p>
+        <p
+          class="text-base max-w-sm text-center lg:text-left lg:text-lg italic text-dimmed leading-relaxed"
+        >
+          {{ founderData?.bio }}
+        </p>
 
         <!-- Read Story Link -->
         <UButton
@@ -93,7 +102,7 @@ const { showSection } = useSectionVisibility();
           v-bind="primaryProduct"
           :badge="primaryProduct.badge as BadgeProps"
           :features="transformedFeatures"
-          variant="soft"
+          variant="subtle"
           :ui="{
             root: 'bg-primary/5 backdrop-blur-sm',
             features: 'gap-3',
@@ -126,12 +135,15 @@ const { showSection } = useSectionVisibility();
 
           <template #button>
             <div class="pt-4 w-full">
-              <IConvertEmail location="product-section" :product="primaryProduct" />
+              <IConvertEmail
+                location="product-section"
+                :product="primaryProduct"
+              />
             </div>
           </template>
 
           <template v-if="primaryProduct.stock" #terms>
-            <IStockProgress
+            <IUrgencyStockRemaining
               :stock="primaryProduct.stock"
               :product-id="primaryProduct.slug"
               class="w-full"
@@ -139,7 +151,7 @@ const { showSection } = useSectionVisibility();
           </template>
         </UPricingPlan>
 
-        <div 
+        <div
           v-if="primaryProduct.ctas.secondary"
           class="mt-4 flex flex-col gap-4 justify-center items-center"
         >
@@ -150,6 +162,8 @@ const { showSection } = useSectionVisibility();
             location="product-section-alt"
             size="xl"
             block
+            variant="outline"
+            color="secondary"
           />
         </div>
       </div>

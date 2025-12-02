@@ -12,8 +12,6 @@ stock:
   limit: 10
   claimed: 1
   type: spots
-variant: "outline"
-primary: false
 features:
   - title: "Weekly 1:1 check-ins + execution planning (not just advice)"
     icon: "status-available"

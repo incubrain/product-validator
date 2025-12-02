@@ -24,7 +24,6 @@ data:
 ---
 data:
   intro:
-    icon: i-lucide-alert-triangle
     title: Stop Building in the Dark
     description: Most founders spend months building products nobody wants. They focus on code before validation.
   cta:
@@ -66,8 +65,6 @@ data:
 ---
 data:
   intro:
-    icon: i-lucide-package
-    headline: How it works
     title: From Idea to Validation
     description: A simple, repeatable process to test your assumptions and build your waitlist.
   steps:
@@ -119,8 +116,6 @@ data:
 ---
 data:
   intro:
-    icon: i-lucide-handshake
-    headline: The Product
     title: Everything You Need to Launch
     description: Get the complete validation stack. Landing page, analytics, and email capture.
 ---
@@ -130,8 +125,6 @@ data:
 ---
 data:
   intro:
-    icon: i-lucide-help-circle
-    headline: FAQ
     title: Common Questions
     description: Everything you need to know about the template.
   cta:

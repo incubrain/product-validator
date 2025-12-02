@@ -1,6 +1,5 @@
 <!-- ~/components/MarqueeWrapper.vue -->
 <script setup lang="ts">
-import type { BadgeProps } from '@nuxt/ui';
 import type { ProofItem } from '#types';
 
 interface Props {

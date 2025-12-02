@@ -7,11 +7,6 @@ price: $250
 discount: $500
 billingCycle: monthly
 terms: Ongoing guidance and priority support included.
-badge:
-  label: Optional
-  color: secondary
-  variant: outline
-  size: md
 features:
   - title: Full installation & setup
     icon: status-available
@@ -23,8 +18,6 @@ features:
     icon: status-available
   - title: 1-hour strategy call
     icon: status-available
-variant: outline
-highlight: true
 type: ebook
 stock:
   limit: 10

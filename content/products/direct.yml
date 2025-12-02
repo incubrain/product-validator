@@ -7,11 +7,6 @@ discount: '$50'
 billingCycle: /hour
 terms: '⚠️ Terms of service or billing'
 tagline: '⚠️ Short compelling tagline'
-badge:
-  label: '⚠️ Badge text'
-  color: neutral
-  variant: outline
-  size: sm
 features:
   - title: '⚠️ Service benefit 1'
     icon: status-available
@@ -19,8 +14,6 @@ features:
     icon: status-available
   - title: '⚠️ Service benefit 3'
     icon: status-coming-soon
-variant: outline
-highlight: false
 ctas:
   funnel:
     strategy: link

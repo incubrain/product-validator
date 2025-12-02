@@ -5,11 +5,6 @@ description: "Go from idea to validated business model with structured guidance 
 price: "Free"
 billingCycle: "Limited for quality control"
 terms: "No credit card required"
-badge:
-  label: "Early Access"
-  color: "success"
-  variant: "solid"
-  size: "lg"
 features:
   - title: "Stage based validation framework"
     icon: "status-available"
@@ -19,8 +14,6 @@ features:
     icon: "status-coming-soon"
   - title: "Exclusive founder community + support chat"
     icon: "status-available"
-variant: "outline"
-highlight: true
 type: ebook
 stock:
   limit: 100

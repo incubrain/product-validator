@@ -9,7 +9,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   reverse: false,
   pauseOnHover: false,
-  baseSpeed: 3, // Default: 50 characters per second
+  baseSpeed: 3,
 });
 
 // Calculate duration based on text length and base speed

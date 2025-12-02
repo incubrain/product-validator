@@ -15,7 +15,6 @@ const hero = computed(() => props.data);
 const showMedia = computed(
   () => showFeature('heroMedia') && hero.value?.media?.src,
 );
-
 </script>
 
 <template>
@@ -28,7 +27,7 @@ const showMedia = computed(
       body: 'px-0',
       wrapper: 'text-center px-0',
       container:
-        'flex flex-col lg:grid py-12 sm:py-24 lg:pt-12 lg:pb-0 gap-0 sm:gap-y-0 lg:px-0',
+        'flex flex-col lg:grid py-12 sm:py-24 lg:pt-12 gap-0 sm:gap-y-0 lg:px-0',
       footer: 'mt-10',
     }"
   >
@@ -73,12 +72,13 @@ const showMedia = computed(
           cta-name="funnel"
           location="hero"
           size="xl"
+          class="font-black text-toned px-4 py-3"
         />
       </div>
     </template>
 
     <!-- Media with overlapping label -->
-    <div v-if="showMedia" class="relative pt-12 max-w-4xl mx-auto -mb-12">
+    <div v-if="showMedia" class="relative pt-24 max-w-4xl mx-auto">
       <div class="relative">
         <IVideo
           v-if="hero.media.type === 'video'"
@@ -94,22 +94,21 @@ const showMedia = computed(
           v-else-if="hero.media.type === 'image'"
           :src="hero.media.src"
           :alt="hero.media.alt"
-          class="rounded-t-2xl shadow-2xl border-t border-x border-default/50 w-full"
+          class="rounded-2xl shadow-2xl border border-default/50 w-full"
         />
       </div>
     </div>
 
-  
-<!-- Background Effects -->
-<div
-  class="absolute top-0 inset-0 bg-grid-white/[0.02] pointer-events-none -z-10"
-/>
-<div
-  class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none -z-10"
-/>
-<div
-  class="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none -z-10"
-/>
+    <!-- Background Effects -->
+    <div
+      class="absolute top-0 inset-0 bg-grid-white/[0.02] pointer-events-none -z-10"
+    />
+    <div
+      class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none -z-10"
+    />
+    <div
+      class="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none -z-10"
+    />
   </UPageHero>
 </template>
 

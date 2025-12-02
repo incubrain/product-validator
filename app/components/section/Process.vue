@@ -18,14 +18,14 @@ type FeatureItem = {
 
 const steps = computed(() => {
   const items = props.data?.steps || [];
-  
+
   if (items.length > 3) {
     console.error(
       `[Process Section] Maximum 3 steps allowed. Found ${items.length}.\n` +
-      `Edit content/pages/index.md to reduce steps.`
+        `Edit content/pages/index.md to reduce steps.`,
     );
   }
-  
+
   return items.slice(0, 3);
 });
 
@@ -35,60 +35,40 @@ const { showSection } = useSectionVisibility();
 </script>
 
 <template>
-  <ISectionWrapper 
-    v-if="showSection('process')" 
-    id="#process" 
-    :intro="data.intro" 
+  <ISectionWrapper
+    v-if="showSection('process')"
+    id="#process"
+    :intro="data.intro"
     :cta="data.cta"
     has-bottom
   >
-    <!-- Process Steps Grid -->
-    <div class="hidden md:grid md:grid-cols-3">
-      <div
-        v-for="(step, index) in steps"
-        :key="step.id"
-        class="flex flex-col items-center text-center p-8 bg-card hover:bg-muted/50 transition-colors"
-      >
-        <!-- Number badge -->
-        <div class="size-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
-          <span class="text-xl font-bold text-primary">{{ index + 1 }}</span>
-        </div>
-        
-        <!-- Icon -->
-        <UIcon :name="step.icon" class="size-8 text-secondary mb-4" />
-        
-        <!-- Title -->
-        <h3 class="text-lg font-bold mb-2">{{ step.title }}</h3>
-        
-        <!-- Result -->
-        <p class="text-sm text-muted">{{ step.result }}</p>
-      </div>
-    </div>
-
     <!-- Mobile: Process Carousel -->
     <UCarousel
       v-if="steps.length"
       v-slot="{ item, index }"
-      class="md:hidden"
-      :arrows="false"
-      :dots="true"
+      :dots="false"
       align="start"
       :items="steps"
+      :active="false"
       :ui="{
-        item: 'basis-[90%]',
+        item: 'basis-[90%] lg:basis-1/3 lg:ps-12',
         dots: 'mt-6',
-        dot: 'w-2 h-2'
+        dot: 'w-2 h-2',
       }"
     >
-      <div class="flex flex-col items-center text-center p-8 border border-default bg-card">
-        <div class="size-12 rounded-full bg-primary/10 flex items-center justify-center mb-4">
+      <div
+        class="flex flex-col items-center text-center p-8 bg-muted/50 rounded-lg"
+      >
+        <div
+          class="size-12 rounded-full bg-primary/10 flex items-center justify-center mb-4"
+        >
           <span class="text-xl font-bold text-primary">{{ index + 1 }}</span>
         </div>
-        
+
         <UIcon :name="item.icon" class="size-8 text-secondary mb-4" />
-        
+
         <h3 class="text-lg font-bold mb-2">{{ item.title }}</h3>
-        
+
         <p class="text-sm text-muted">{{ item.result }}</p>
       </div>
     </UCarousel>
@@ -98,9 +78,11 @@ const { showSection } = useSectionVisibility();
       <div v-if="features.length" class="bg-muted/30 py-16 overflow-hidden">
         <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
           <!-- Section Header -->
-          <div class="flex items-center justify-between mb-8 max-w-(--ui-container) mx-auto">
+          <div
+            class="flex items-center justify-between mb-8 max-w-(--ui-container) mx-auto"
+          >
             <h3 class="text-xl sm:text-2xl font-bold text-highlighted">
-              Features
+              Benefits
             </h3>
           </div>
 
@@ -119,9 +101,10 @@ const { showSection } = useSectionVisibility();
                 square: true,
               }"
               :ui="{
-                item: 'basis-[320px] px-2',
+                item: 'basis-[320px] px-2 h-[360px]',
                 viewport: 'overflow-visible',
-                controls: 'relative mt-12 hidden md:flex justify-start max-w-(--ui-container) mx-auto',
+                controls:
+                  'relative mt-12 hidden md:flex justify-start max-w-(--ui-container) mx-auto',
                 arrows: 'flex gap-4',
                 prev: 'flex relative rounded-none ring-default/50 start-0 sm:start-0 top-0 translate-y-0',
                 next: 'flex relative rounded-none ring-default/50 end-0 sm:end-0 top-0 translate-y-0',
@@ -129,37 +112,39 @@ const { showSection } = useSectionVisibility();
             >
               <UPageCard
                 variant="outline"
-                class="h-full border border-default/50 rounded-none"
+                class="h-full"
                 :ui="{
                   root: 'bg-default hover:bg-muted/50 transition-colors h-full',
                   body: 'space-y-4',
+                  footer: 'w-full',
                 }"
               >
-                <template #leading v-if="item.image">
+                <template #footer>
                   <!-- Optional Image -->
-                  <div class="mb-4 -mx-6 -mt-6">
-                    <NuxtImg
-                      :src="item.image"
-                      :alt="item.title"
-                      class="w-full h-32 object-cover rounded-t-lg"
-                    />
-                  </div>
+                  <NuxtImg
+                    src="https://placehold.co/400"
+                    class="w-full h-32 object-cover"
+                  />
                 </template>
 
                 <!-- Title + Icon (justify-between) -->
-                <div class="flex items-start justify-between gap-3">
-                  <h4 class="text-base font-semibold text-highlighted flex-1">
-                    {{ item.title }}
-                  </h4>
-                  <div class="flex items-center justify-center size-8 rounded-lg bg-primary/10 ring-1 ring-primary/20 shrink-0">
-                    <UIcon :name="item.icon" class="size-4 text-secondary" />
+                <template #body>
+                  <div class="flex items-start justify-between gap-3">
+                    <h4 class="text-base font-semibold text-highlighted flex-1">
+                      {{ item.title }}
+                    </h4>
+                    <div
+                      class="flex items-center justify-center size-8 rounded-lg bg-primary/10 ring-1 ring-primary/20 shrink-0"
+                    >
+                      <UIcon :name="item.icon" class="size-4 text-secondary" />
+                    </div>
                   </div>
-                </div>
 
-                <!-- Description (with more spacing) -->
-                <p class="text-sm text-muted leading-relaxed">
-                  {{ item.description }}
-                </p>
+                  <!-- Description (with more spacing) -->
+                  <p class="text-sm text-muted leading-relaxed">
+                    {{ item.description }}
+                  </p>
+                </template>
               </UPageCard>
             </UCarousel>
           </div>

@@ -16,7 +16,6 @@ defineProps<Props>();
 // Fetch primary product from collection
 const { getPrimaryProduct } = useContentCache();
 const { data: primaryProduct } = await getPrimaryProduct();
-
 </script>
 
 <template>
@@ -24,19 +23,19 @@ const { data: primaryProduct } = await getPrimaryProduct();
     <!-- Corner brackets -->
     <div class="absolute inset-0 pointer-events-none z-10">
       <div
-        class="absolute -top-px -left-px w-12 h-12 border-t-2 border-l-2"
+        class="absolute -top-px -left-px w-12 h-12 border-t-2 border-l-2 rounded-tl-lg"
         :class="cta.primary ? 'border-primary/40' : 'border-secondary/30'"
       />
       <div
-        class="absolute -top-px -right-px w-12 h-12 border-t-2 border-r-2"
+        class="absolute -top-px -right-px w-12 h-12 border-t-2 border-r-2 rounded-tr-lg"
         :class="cta.primary ? 'border-primary/40' : 'border-secondary/30'"
       />
       <div
-        class="absolute -bottom-px -left-px w-12 h-12 border-b-2 border-l-2"
+        class="absolute -bottom-px -left-px w-12 h-12 border-b-2 border-l-2 rounded-bl-lg"
         :class="cta.primary ? 'border-primary/40' : 'border-secondary/30'"
       />
       <div
-        class="absolute -bottom-px -right-px w-12 h-12 border-b-2 border-r-2"
+        class="absolute -bottom-px -right-px w-12 h-12 border-b-2 border-r-2 rounded-br-lg"
         :class="cta.primary ? 'border-primary/40' : 'border-secondary/30'"
       />
     </div>
@@ -45,7 +44,7 @@ const { data: primaryProduct } = await getPrimaryProduct();
       :title="cta.headline"
       :description="cta.message"
       orientation="vertical"
-      variant="naked"
+      variant="outline"
       :links="
         cta.primary
           ? []
@@ -60,7 +59,6 @@ const { data: primaryProduct } = await getPrimaryProduct();
               },
             ]
       "
-      class="rounded-none"
       :ui="{
         container: cta.primary ? 'py-16 sm:py-20' : 'py-12 sm:py-16',
         title: cta.primary
