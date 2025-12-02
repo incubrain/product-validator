@@ -43,6 +43,31 @@ data:
         path: /
         hash: product
       icon: i-lucide-arrow-down
+  items:
+    - id: ship-imperfect
+      title: You ARE Good Enough
+      icon: i-lucide-rocket
+      description: Early-adopters accept imperfection if it works, feedback beats polish
+    - id: build-in-public
+      title: You ARE The Business
+      icon: i-lucide-eye
+      description: Accept your flaws, share your story; to help, people need to know you can
+    - id: you-are-product
+      title: You ARE The Product
+      icon: i-lucide-compass
+      description: A $10k MRR product is hiding in your scars; unpack them
+    - id: you-are-customer
+      title: You ARE The Customer
+      icon: i-lucide-layers
+      description: Don't assume value if you wouldn't use it; self-use is quality control
+    - id: build-idea
+      title: Build The Idea
+      icon: i-lucide-layers
+      description: Share it, refine the packaging, validate demand, paid on delivery
+    - id: ship-daily
+      title: Ship EVERY Day
+      icon: i-lucide-layers
+      description: Share the idea, be human, be bold, connect, rejection fuels success
 ---
 ::
 
@@ -54,6 +79,59 @@ data:
     headline: All You Need - No Distractions
     title: Product Validator Template
     description: Step-by-step system; fail fast, fail early, advance with confidence.
+  steps:
+    - id: stage-1-identity
+      title: You ARE the Business
+      icon: i-lucide-compass
+      description: Your values filter ideas. Know yourself, veto fast.
+      result: Product clarity unlocked
+    - id: stage-2-attention
+      title: Earn Attention Daily
+      icon: i-lucide-megaphone
+      description: Show up daily. Test messages in public, not your head.
+      result: Social habit forms
+    - id: stage-3-traffic
+      title: Prove Message Match
+      icon: i-lucide-mouse-pointer-click
+      description: Social promise = landing reality. High bounce? Refine messaging.
+      result: Website visitors scroll
+    - id: stage-4-conversion
+      title: Capture Intent
+      icon: i-lucide-mail
+      description: Attention without commitment = nothing. Weak offer? No pipeline.
+      result: Visitors convert to leads
+    - id: stage-5-engagement
+      title: Prove Value
+      icon: i-lucide-check-circle
+      description: Leads who ghost = broken promise. No completion? No trust.
+      result: Leads complete content
+    - id: stage-6-demand
+      title: Validate Payment
+      icon: i-lucide-trending-up
+      description: Feedback reveals intent. No payment signal? Pivot now.
+      result: Leads willing to pay
+  features:
+    - title: Waitlists
+      description: Validate demand before you build. Measure intent with "Coming Soon" features.
+      icon: i-lucide-flask-conical
+    - title: Conversion Optimised
+      description: Designed to convert visitors into leads. Clear CTAs, social proof, and trust signals.
+      icon: i-lucide-trending-up
+    - title: Config Driven
+      description: Change your brand, social links, and theme settings from a single YAML file.
+      icon: i-lucide-settings-2
+    - title: Updates Log
+      description: Ship weekly. Track progress in a dedicated updates feed to build customer confidence.
+      icon: i-lucide-history
+    - title: Provider Agnostic
+      description: No vendor lock-in. Swap out payment providers, booking systems, and hosting easily.
+      icon: i-lucide-plug
+    - title: Built-in Analytics
+      description: Pre-configured with Umami. Easily swap for Nuxt Scripts providers like PostHog.
+      icon: i-lucide-bar-chart-3
+    - title: Nuxt Content
+      description: No DB or CMS required. Write in Markdown/YAML and edit visually with Nuxt Studio.
+      icon: i-lucide-file-text
 ---
 ::
 

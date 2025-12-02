@@ -194,25 +194,6 @@ export default defineContentConfig({
       }),
     }),
 
-    // Consolidated features collection (benefits + process cards)
-    features: defineCollection({
-      type: 'data',
-      source: {
-        cwd: contentCwd,
-        include: 'features/*.yml',
-      },
-      schema: z.object({
-        items: z.array(z.object({
-          id: z.string(),
-          title: z.string(),
-          icon: z.string(),
-          description: z.string(),
-          // Optional fields for benefits
-          result: z.string().optional(),
-        })),
-      }),
-    }),
-
     results: defineCollection({
       type: 'data',
       source: {

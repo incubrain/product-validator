@@ -1,16 +1,13 @@
 <!-- ~/components/section/Process.vue -->
 <script setup lang="ts">
-defineProps<{
-  data?: any;
+const props = defineProps<{
+  data?: {
+    intro?: any;
+    cta?: any;
+    steps?: any[];
+    features?: any[];
+  };
 }>();
-
-const { data: processFile } = await useAsyncData('process', () => 
-  queryCollection('features').where('stem', '=', 'features/process').first()
-);
-
-const { data: featuresFile } = await useAsyncData('features-grid', () =>
-  queryCollection('features').where('stem', '=', 'features/grid').first()
-);
 
 type FeatureItem = {
   title: string;
@@ -20,19 +17,19 @@ type FeatureItem = {
 };
 
 const steps = computed(() => {
-  const items = processFile.value?.items || [];
+  const items = props.data?.steps || [];
   
   if (items.length > 3) {
     console.error(
       `[Process Section] Maximum 3 steps allowed. Found ${items.length}.\n` +
-      `Edit content/features/process.yml to reduce steps.`
+      `Edit content/pages/index.md to reduce steps.`
     );
   }
   
   return items.slice(0, 3);
 });
 
-const features = computed(() => (featuresFile.value?.items || []) as FeatureItem[]);
+const features = computed(() => (props.data?.features || []) as FeatureItem[]);
 
 const { showSection } = useSectionVisibility();
 </script>

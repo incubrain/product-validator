@@ -1,15 +1,15 @@
 <!-- ~/components/section/ProblemSolution.vue -->
 <script setup lang="ts">
-defineProps<{
-  data?: any;
+const props = defineProps<{
+  data?: {
+    intro?: any;
+    cta?: any;
+    statement?: string;
+    items?: any[];
+  };
 }>();
 
-// Fetch cards from features collection (process.yml)
-const { data: processFile } = await useAsyncData('benefits-cards', () => 
-  queryCollection('features').where('stem', '=', 'features/benefits').first()
-);
-
-const cards = computed(() => processFile.value?.items || []);
+const cards = computed(() => props.data?.items || []);
 
 const { showSection } = useSectionVisibility();
 </script>
