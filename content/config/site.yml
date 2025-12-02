@@ -3,7 +3,7 @@ business:
   legal_name: '⚠️ Legal entity name'
   founding_year: 2025
   location: '⚠️ City, Country'
-  logo: favicon-96x96.png
+  logo: /favicon-96x96.png
   mission: Your primary overarching mission.
 
 socials:

@@ -19,7 +19,7 @@ export const analyticsHandler = (payload: EventPayload) => {
 
 function sendToAnalytics(payload: EventPayload, analyticsProxy: any) {
   const eventName = `${payload.type}`;
-  
+
   // Extract user identity and traffic attribution
   const userId = payload.data?.userId;
   const trafficSource = payload.data?.trafficSource;
@@ -35,17 +35,6 @@ function sendToAnalytics(payload: EventPayload, analyticsProxy: any) {
   };
 
   switch (payload.type) {
-    case 'element_clicked':
-      if (payload.id.includes('paid') || payload.id.includes('purchase')) {
-        analyticsProxy.track('conversion', {
-          ...eventData,
-          product_type: 'paid',
-          conversion_location: payload.location,
-        });
-      }
-      analyticsProxy.track(eventName, eventData);
-      break;
-
     case 'exit_intent':
       analyticsProxy.track('exit_intent', {
         ...eventData,

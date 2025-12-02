@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<Props>(), {
   ctaName: 'funnel',
 });
 
-const { executeAction } = useEvents();
+const { trackEvent } = useEvents();
 const { getProduct } = useContentCache();
 const { data: product } = await getProduct(props.productId);
 
@@ -25,17 +25,24 @@ const cta = computed(() => {
   return product.value.ctas[props.ctaName];
 });
 
-const to = computed(() => 
-  cta.value?.to
-);
-
-const target = computed(() => 
-  cta.value?.to?.startsWith('http') ? '_blank' : undefined
-);
-
 // ✅ Handle click
 const handleClick = async () => {
-  await executeAction(props.location, product.value);
+  await trackEvent({
+    id: `product_${product.value.slug}_view`,
+    type: 'element_viewed',
+    location: `product-page-${product.value.slug}`,
+    action: 'click',
+    target: `/products/${product.value.slug}`,
+    data: {
+      productId: product.value.slug,
+      metadata: {
+        product_slug: product.value.slug,
+        product_type: product.value.type,
+        product_price: product.value.price,
+        is_primary: product.value.primary,
+      },
+    },
+  });
 };
 </script>
 
@@ -49,8 +56,8 @@ const handleClick = async () => {
     :size="size"
     :block="block"
     :class="props.class"
-    :to="to"
-    :target="target"
+    :to="cta.to"
+    :target="cta.strategy === 'external' ? '_blank' : undefined"
     @click="handleClick"
   />
 </template>

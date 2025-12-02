@@ -2,11 +2,7 @@
 <script setup lang="ts">
 import type { EventPayload } from '#shared/types/events';
 import type { SelectMenuItem } from '@nuxt/ui';
-import {
-  EVENT_METADATA,
-  EVENT_CHAINS,
-  applyFallbacks,
-} from '#shared/config/events';
+import { EVENT_METADATA } from '#shared/config/events';
 
 if (!import.meta.dev) {
   throw new Error('DevToolsEventTrigger should only be used in development');
@@ -29,36 +25,25 @@ const nuxtApp = useNuxtApp();
 // Event chain tracking
 const eventChain = ref<EventExecution[]>([]);
 
-// Listen for event executions
-nuxtApp.hook('devtools:event-executed', (event) => {
+// Listen for dev events
+nuxtApp.hook('events:dev', (event) => {
   const existingEvent = eventChain.value.find((e) => e.id === event.eventId);
+
   if (existingEvent) {
-    existingEvent.status = 'success';
-    existingEvent.data = event.data;
+    existingEvent.status = event.status;
+    if (event.status === 'success') {
+      existingEvent.data = event.data;
+    } else {
+      existingEvent.error = event.error;
+    }
   } else {
     eventChain.value.push({
       id: event.eventId,
       type: event.eventType,
       timestamp: Date.now(),
       data: event.data,
-      status: 'success',
-    });
-  }
-});
-
-// Listen for event errors
-nuxtApp.hook('devtools:event-error', (event) => {
-  const existingEvent = eventChain.value.find((e) => e.id === event.eventId);
-  if (existingEvent) {
-    existingEvent.status = 'error';
-    existingEvent.error = event.error;
-  } else {
-    eventChain.value.push({
-      id: event.eventId,
-      type: event.eventType,
-      timestamp: Date.now(),
       error: event.error,
-      status: 'error',
+      status: event.status,
     });
   }
 });
@@ -92,11 +77,19 @@ const triggerEvent = async () => {
   // Clear previous chain
   eventChain.value = [];
 
-  const eventType = selectedEvent.value.value as TrackedEvents;
-  const chainConfig = EVENT_CHAINS[eventType];
+  // Extract event type from SelectMenuItem
+  const eventType = (
+    typeof selectedEvent.value === 'object' && 'value' in selectedEvent.value
+      ? selectedEvent.value.value
+      : selectedEvent.value
+  ) as TrackedEvents;
 
-  // Auto-generate required data with fallbacks
-  const eventData = applyFallbacks({}, chainConfig?.requiredFields || []);
+  // Provide sensible default data for testing
+  const eventData: Record<string, any> = {
+    productId: 'magnet',
+    location: route.path,
+    formId: 'email_capture',
+  };
 
   const payload: EventPayload = {
     id: `devtools_${Date.now()}`,

@@ -1,67 +1,3 @@
-// shared/config/events.ts
-import type { EventPayload } from '#shared/types/events';
-
-/**
- * Smart fallback data provider
- * Generates sensible defaults for missing data
- */
-const EVENT_FALLBACKS = {
-  formId: () => 'waitlist',
-  email: () => 'dev@example.com',
-  productId: () => 'magnet',
-  currentStage: () => 'traffic' as const,
-  modalType: () => 'windowed',
-  target: () => 'test-element',
-  metadata: () => ({}),
-  location: () => '/',
-} as const;
-
-/**
- * Apply fallbacks to payload data
- * Only fills in missing values, doesn't override existing ones
- */
-function applyFallbacks(
-  data: Record<string, any> = {},
-  requiredFields: Array<keyof typeof EVENT_FALLBACKS> = [],
-): Record<string, any> {
-  const result = { ...data };
-
-  for (const field of requiredFields) {
-    if (result[field] === undefined && EVENT_FALLBACKS[field]) {
-      result[field] = EVENT_FALLBACKS[field]();
-    }
-  }
-
-  return result;
-}
-
-type EventChainConfig = {
-  triggers: TrackedEvents[];
-  condition?: (payload: EventPayload) => boolean;
-  data?: (payload: EventPayload) => Partial<EventPayload['data']>;
-  requiredFields?: Array<keyof typeof EVENT_FALLBACKS>; // Auto-fill missing fields
-};
-
-export const EVENT_CHAINS: Partial<Record<TrackedEvents, EventChainConfig>> = {
-  exit_intent: {
-    triggers: ['modal_open'],
-    requiredFields: ['productId', 'location'],
-    condition: (payload) => {
-      // Only trigger on homepage or in DevTools
-      return payload.location === '/' || payload._devToolsTriggered === true;
-    },
-    data: (payload) => ({
-      action: 'fullscreen_modal',
-      productId: 'direct',
-      location: payload.location,
-    }),
-  },
-} as const;
-
-/**
- * Minimal metadata for DevTools only
- * No duplication of data structure
- */
 export const EVENT_METADATA: Partial<
   Record<
     TrackedEvents,
@@ -85,14 +21,8 @@ export const EVENT_METADATA: Partial<
     icon: 'i-lucide-alert-circle',
     category: 'form',
   },
-  element_clicked: {
-    label: 'Action Click',
-    description: 'Button clicked',
-    icon: 'i-lucide-mouse-pointer-click',
-    category: 'action',
-  },
   element_viewed: {
-    label: 'Action View',
+    label: 'Element View',
     description: 'Element viewed',
     icon: 'i-lucide-eye',
     category: 'action',
@@ -103,7 +33,16 @@ export const EVENT_METADATA: Partial<
     icon: 'i-lucide-log-out',
     category: 'other',
   },
+  modal_open: {
+    label: 'Modal Open',
+    description: 'Modal opened',
+    icon: 'i-lucide-window',
+    category: 'modal',
+  },
+  modal_close: {
+    label: 'Modal Close',
+    description: 'Modal closed',
+    icon: 'i-lucide-x',
+    category: 'modal',
+  },
 } as const;
-
-// Export helper for external use
-export { applyFallbacks, EVENT_FALLBACKS };

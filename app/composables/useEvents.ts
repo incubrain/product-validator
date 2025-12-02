@@ -24,26 +24,5 @@ export const useEvents = () => {
     return payload.response;
   };
 
-  const executeAction = async (location: string, product?: any) => {
-    if (!product) return;
-
-    // Track the interaction
-    await trackEvent({
-      id: `${product.id}_${location}`,
-      type: 'element_clicked',
-      location,
-      action: getActionType(product.cta.to),
-      target: product.cta.to,
-    });
-  };
-
-  const getActionType = (target: string): string => {
-    if (target?.startsWith('#')) return 'scroll';
-    if (target?.startsWith('tel:')) return 'phone';
-    if (target?.startsWith('mailto:')) return 'email';
-    if (target?.startsWith('http')) return 'external';
-    return 'modal';
-  };
-
-  return { executeAction, trackEvent };
+  return { trackEvent };
 };

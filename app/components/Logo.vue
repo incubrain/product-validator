@@ -27,6 +27,7 @@ const imageSize = computed(() => sizeMap[props.size]);
 <template>
   <div class="flex items-center space-x-3">
     <NuxtImg
+      v-if="business?.logo"
       :src="business?.logo"
       :width="imageSize"
       height="auto"

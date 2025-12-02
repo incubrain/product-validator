@@ -124,6 +124,7 @@ export default defineNuxtConfig({
 
   runtimeConfig: {
     public: {
+      debug: true,
       analyticsLink: '',
       configSource: '',
       scripts: {

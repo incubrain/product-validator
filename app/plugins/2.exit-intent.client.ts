@@ -60,11 +60,12 @@ export default defineNuxtPlugin(() => {
       isShowing.value = true;
 
       try {
+        // Open modal directly
         await trackEvent({
-          id: directTrigger ? 'exit_intent_direct' : 'exit_intent',
-          type: 'exit_intent',
+          id: `modal_open_${options.productId}`,
+          type: 'modal_open',
           location: route.path,
-          action: directTrigger ? 'dev_trigger' : 'mouse_leave',
+          action: 'fullscreen_modal',
           target: 'exit_modal',
           data: {
             productId: options.productId,
