@@ -15,9 +15,7 @@ interface EmailCapture {
   emailEncrypted: string;
   formId: string;
   productId?: string;
-  customerStage: 'email_captured' | 'interest_expressed';
   currentStage?: StageKey;
-  feedback?: string;
   metadata?: Record<string, any>;
   capturedAt: number;
   updatedAt: number;
@@ -85,67 +83,54 @@ function sanitizeMetadata(
 export const kvProvider: StorageProvider = {
   name: 'kv',
 
-  async send({ recordId, data }) {
+  async send({ data }) {
     try {
       const email = data.email as string;
-      const emailHash = recordId ?? (email ? hashEmail(email) : null);
 
-      if (!emailHash) {
+      if (!email) {
         return {
           success: false,
-          recordId: `temp_${Date.now()}`,
-          error: 'Email or recordId required',
+          error: 'Email required',
         };
       }
 
+      const emailHash = hashEmail(email);
       const key = `leads:${emailHash}`;
       const timestamp = Date.now();
 
       // Check if record exists
       const existing = await storage.getItem<EmailCapture>(key);
 
+      if (existing) {
+        // Email already captured - skip update
+        console.log('[kvProvider] Email already exists, skipping capture');
+        return {
+          success: true,
+          raw: existing,
+        };
+      }
+
+      // Create new record
+      if (!email) {
+        return {
+          success: false,
+          error: 'Email required for new record',
+        };
+      }
+
       // Sanitize metadata
       const cleanMetadata = sanitizeMetadata(data.metadata);
 
-      let record: EmailCapture;
-
-      if (existing) {
-        // Update existing record
-        record = {
-          ...existing,
-          formId: data.formId ?? existing.formId,
-          productId: data.productId ?? existing.productId,
-          customerStage: data.customerStage ?? existing.customerStage,
-          currentStage: data.currentStage ?? existing.currentStage,
-          feedback: data.feedback ?? existing.feedback,
-          metadata: cleanMetadata
-            ? { ...existing.metadata, ...cleanMetadata }
-            : existing.metadata,
-          updatedAt: timestamp,
-        };
-      } else {
-        // Create new record
-        if (!email) {
-          return {
-            success: false,
-            recordId: `temp_${Date.now()}`,
-            error: 'Email required for new record',
-          };
-        }
-
-        record = {
-          emailHash,
-          emailEncrypted: encryptEmail(email),
-          formId: data.formId,
-          productId: data.productId,
-          customerStage: data.customerStage || 'email_captured',
-          currentStage: data.currentStage,
-          feedback: data.feedback,
-          metadata: cleanMetadata,
-          capturedAt: timestamp,
-          updatedAt: timestamp,
-        };
-      }
+      const record: EmailCapture = {
+        emailHash,
+        emailEncrypted: encryptEmail(email),
+        formId: data.formId,
+        productId: data.productId,
+        currentStage: data.currentStage,
+        metadata: cleanMetadata,
+        capturedAt: timestamp,
+        updatedAt: timestamp,
+      };
 
       await storage.setItem(key, record);
 
@@ -170,22 +155,18 @@ export const kvProvider: StorageProvider = {
             e?.message || e,
           );
         });
-
-
       } catch (err) {
         console.warn('[kvProvider] cache invalidation failed', err);
       }
 
       return {
         success: true,
-        recordId: emailHash,
         raw: record,
       };
     } catch (err) {
       console.error('[kvProvider] Error storing data:', err);
       return {
         success: false,
-        recordId: `temp_${Date.now()}`,
         error: err,
       };
     }
@@ -193,7 +174,6 @@ export const kvProvider: StorageProvider = {
 
   async authorize(email: string): Promise<{
     exists: boolean;
-    customerStage?: string;
     currentStage?: StageKey;
   }> {
     try {
@@ -208,7 +188,6 @@ export const kvProvider: StorageProvider = {
 
       return {
         exists: true,
-        customerStage: record.customerStage,
         currentStage: record.currentStage,
       };
     } catch (error) {
@@ -249,15 +228,6 @@ export const cachedLeadsMetrics = defineCachedFunction(
       const records = await Promise.all(keys.map((k) => storage.getItem(k)));
       const filtered = records.filter(Boolean);
 
-      const byStage = filtered.reduce(
-        (acc: Record<string, number>, record: any) => {
-          const stage = record.customerStage || 'unknown';
-          acc[stage] = (acc[stage] || 0) + 1;
-          return acc;
-        },
-        {} as Record<string, number>,
-      );
-
       const byForm = filtered.reduce(
         (acc: Record<string, number>, record: any) => {
           const form = record.formId || 'unknown';
@@ -267,29 +237,16 @@ export const cachedLeadsMetrics = defineCachedFunction(
         {} as Record<string, number>,
       );
 
-      const byStageKey = filtered.reduce(
-        (acc: Record<string, number>, record: any) => {
-          const stage = record.currentStage || 'unknown';
-          acc[stage] = (acc[stage] || 0) + 1;
-          return acc;
-        },
-        {} as Record<string, number>,
-      );
-
       return {
         total: totalLeads,
-        byStage,
         byForm,
-        byStageKey,
         lastUpdated: Date.now(),
       };
     } catch (err) {
       console.error('[metrics] error computing metrics', err);
       return {
         total: 0,
-        byStage: {},
         byForm: {},
-        byStageKey: {},
         lastUpdated: Date.now(),
         error: 'failed to compute metrics',
       };

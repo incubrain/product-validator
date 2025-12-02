@@ -8,9 +8,7 @@ export interface LeadRecord {
   emailEncrypted: string;
   formId: string;
   product?: string;
-  customerStage: string;
   currentStage?: StageKey;
-  feedback?: string;
   metadata?: Record<string, any>;
   capturedAt: number;
   updatedAt: number;

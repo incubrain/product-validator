@@ -10,7 +10,6 @@ export async function serverPipeHandler(payload: EventPayload): Promise<any> {
     const response = await $fetch('/api/v1/events', {
       method: 'POST',
       body: {
-        recordId: payload.data?.recordId,
         data: payload.data,
         timestamp: payload.timestamp,
       },

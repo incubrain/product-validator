@@ -4,20 +4,17 @@ import { kvProvider } from './providers/kv';
 export interface ProviderParams {
   storageUrl?: string;
   storageSecret?: string;
-  recordId?: string;
   data: Record<string, any>;
 }
 
 export interface ProviderResult {
   success: boolean;
-  recordId: string;
   raw?: any;
   error?: any;
 }
 
 export interface AuthorizeResult {
   exists: boolean;
-  customerStage?: string;
   currentStage?: StageKey;
 }
 
@@ -43,14 +40,14 @@ export async function storeData(
 
   if (!provider) {
     console.warn(`[StorageHandler] Unknown provider: ${providerName}`);
-    return { success: false, recordId: `temp_${Date.now()}` };
+    return { success: false };
   }
 
   try {
     return await provider.send(params);
   } catch (err) {
     console.error(`[StorageHandler] ${providerName} failed:`, err);
-    return { success: false, recordId: `temp_${Date.now()}`, error: err };
+    return { success: false, error: err };
   }
 }
 

@@ -17,15 +17,18 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const { currentStage } = useDevTools();
-const { isAvailable } = useProductStock(props.product.stock, props.product.slug);
+const { isAvailable } = useProductStock(
+  props.product.stock,
+  props.product.slug,
+);
 
 // Determine product state
 const productState = computed<'available' | 'waitlist'>(() => {
   if (!isAvailable.value) return 'waitlist';
-  
+
   const target = STAGE_CONFIG.conversionTarget[currentStage.value as StageKey];
   if (target === 'waitlist') return 'waitlist';
-  
+
   return 'available';
 });
 
@@ -51,7 +54,7 @@ type MessagingType = {
 // Get messaging
 const messaging = computed<MessagingType | null>(() => {
   if (!cta.value) return null;
-  
+
   return {
     cta: {
       label: cta.value.label,
@@ -60,7 +63,7 @@ const messaging = computed<MessagingType | null>(() => {
     note: cta.value.note,
     success: {
       title: "You're in!",
-      message: "Check your email to get started.",
+      message: 'Check your email to get started.',
     },
   };
 });
@@ -82,32 +85,80 @@ const is_valid_email = computed(() => {
   }
 });
 
-// Form submission
-const { submit, isSubmitting, isSuccess } = useFormSubmission({
-  formId: 'email_capture',
-  schema,
-  location: props.location,
-  metadata: {
-    reason: productState.value,
-    productId: props.product.slug,
-    customerStage: 'interest_expressed',
-  },
-});
+// Form submission state
+const { trackEvent } = useEvents();
+const route = useRoute();
+const toast = useToast();
+const isSubmitting = ref(false);
+const isSuccess = ref(false);
 
 const handleSubmit = async () => {
-  await submit(state);
-  
-  // ✅ Redirect to success page after successful submission
-  if (isSuccess.value) {
+  isSubmitting.value = true;
+
+  try {
+    const validated = schema.parse(state);
+
+    await trackEvent({
+      id: `email_capture_submit`,
+      type: 'form_submitted',
+      location: route.path,
+      action: 'submit',
+      target: 'email_capture',
+      timestamp: Date.now(),
+      data: {
+        formId: 'email_capture',
+        email: validated.email,
+        productId: props.product.slug,
+        currentStage: currentStage.value as StageKey,
+        metadata: {
+          location: props.location,
+          reason: productState.value,
+          userAgent: navigator.userAgent,
+          timestamp: Date.now(),
+        },
+      },
+    } satisfies EventPayload);
+
+    isSuccess.value = true;
+
+    // Redirect to success page
     navigateTo(`/products/${props.product.slug}-success`);
+  } catch (error) {
+    console.error('[Email] Submission failed:', error);
+
+    const errorMsg =
+      error instanceof Error
+        ? error.message
+        : 'Something went wrong. Please try again.';
+
+    toast.add({
+      title: 'Submission failed',
+      description: errorMsg,
+      color: 'error',
+    });
+
+    await trackEvent({
+      id: `email_capture_error`,
+      type: 'form_error',
+      location: 'form',
+      action: 'submission_failed',
+      target: 'email_capture',
+      timestamp: Date.now(),
+      data: {
+        formId: 'email_capture',
+      },
+      error: errorMsg,
+    });
+  } finally {
+    isSubmitting.value = false;
   }
 };
 
 // Dynamic classes
-const formClasses = computed(() => 
-  props.layout === 'horizontal' 
-    ? 'flex flex-col sm:flex-row gap-3' 
-    : 'space-y-3'
+const formClasses = computed(() =>
+  props.layout === 'horizontal'
+    ? 'flex flex-col sm:flex-row gap-3'
+    : 'space-y-3',
 );
 </script>
 
@@ -140,7 +191,7 @@ const formClasses = computed(() =>
         </UButton>
       </div>
     </UForm>
-    
+
     <!-- Optional note -->
     <p v-if="messaging.note" class="text-xs text-muted text-center mt-3">
       {{ messaging.note }}

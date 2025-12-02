@@ -7,10 +7,8 @@ import type { EventPayload } from '#shared/types/events';
  */
 const EVENT_FALLBACKS = {
   formId: () => 'waitlist',
-  recordId: () => `mock-${Date.now()}`,
   email: () => 'dev@example.com',
   productId: () => 'magnet',
-  customerStage: () => 'email_captured' as const,
   currentStage: () => 'traffic' as const,
   modalType: () => 'windowed',
   target: () => 'test-element',
