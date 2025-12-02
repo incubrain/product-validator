@@ -48,26 +48,3 @@ stock:
   limit: 10
   claimed: 2
   type: hours
-
-waitlist:
-  coming_soon:
-    badge:
-      label: 'Coming Soon'
-      color: neutral
-      variant: soft
-      size: lg
-    description: 'This service will be available soon. Join the waitlist to be notified.'
-    success:
-      title: "You're on the list!"
-      message: "We'll email you when this becomes available."
-  
-  unavailable:
-    badge:
-      label: 'Waitlist'
-      color: neutral
-      variant: soft
-      size: lg
-    description: 'All hours currently booked. Join waitlist for next availability.'
-    success:
-      title: "You're on the waitlist!"
-      message: "We'll notify you when hours open up."

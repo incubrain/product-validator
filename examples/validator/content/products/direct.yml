@@ -50,25 +50,4 @@ ctas:
     icon: "i-lucide-briefcase"
     color: "neutral"
 
-waitlist:
-  coming_soon:
-    badge:
-      label: 'Launching Soon'
-      color: neutral
-      variant: soft
-      size: lg
-    description: 'This implementation service is launching soon. Get early access.'
-    success:
-      title: "You're on the list!"
-      message: "We'll email you as soon as this launches."
-  
-  unavailable:
-    badge:
-      label: 'Waitlist Only'
-      color: neutral
-      variant: soft
-      size: lg
-    description: 'All implementation slots filled. Join waitlist for next batch.'
-    success:
-      title: "You're on the waitlist!"
-      message: "We'll notify you when slots become available."
+

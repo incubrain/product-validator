@@ -47,26 +47,4 @@ ctas:
     icon: i-lucide-play
     color: neutral
 
-# Waitlist messaging when product is unavailable
-waitlist:
-  coming_soon:
-    badge:
-      label: 'Coming Soon'
-      color: neutral
-      variant: soft
-      size: lg
-    description: 'Be first to know when we launch.'
-    success:
-      title: "You're on the list!"
-      message: "We'll email you at launch."
-  
-  unavailable:
-    badge:
-      label: 'Sold Out'
-      color: neutral
-      variant: soft
-      size: lg
-    description: 'All spots claimed. Join waitlist for next availability.'
-    success:
-      title: "You're on the waitlist!"
-      message: "We'll email you when spots open."
+

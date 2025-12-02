@@ -6,7 +6,6 @@ import path from 'node:path';
 
 // Shared schema constants for consistency across collections
 
-const WAITLIST_BADGE_VARIANTS = z.enum(['solid', 'outline', 'subtle', 'soft']);
 const FAQ_COLORS = z.enum(['error', 'warning', 'success', 'info']);
 
 const BADGE_SCHEMA = z.object({
@@ -140,24 +139,7 @@ export default defineContentConfig({
             alt: z.string(),
           }).optional(),
 
-          waitlist: z.object({
-            coming_soon: z.object({
-              badge: BADGE_SCHEMA,
-              description: z.string(),
-              success: z.object({
-                title: z.string(),
-                message: z.string(),
-              }),
-            }),
-            unavailable: z.object({
-              badge: BADGE_SCHEMA,
-              description: z.string(),
-              success: z.object({
-                title: z.string(),
-                message: z.string(),
-              }),
-            }),
-          }).optional(),
+
         }),
       }),
     ),
@@ -179,7 +161,5 @@ export default defineContentConfig({
         })),
       }),
     }),
-
-
   },
 });

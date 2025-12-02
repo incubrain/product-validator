@@ -1,3 +1,3 @@
 // types/forms.ts
 
-export type FormID = 'waitlist' | 'feedback';
+export type FormID = 'email_capture';

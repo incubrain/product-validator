@@ -20,18 +20,13 @@ const { currentStage } = useDevTools();
 const { isAvailable } = useProductStock(props.product.stock, props.product.slug);
 
 // Determine product state
-const productState = computed<'available' | 'coming_soon' | 'unavailable'>(() => {
-  if (!isAvailable.value) return 'unavailable';
+const productState = computed<'available' | 'waitlist'>(() => {
+  if (!isAvailable.value) return 'waitlist';
   
   const target = STAGE_CONFIG.conversionTarget[currentStage.value as StageKey];
-  if (target === 'waitlist') return 'coming_soon';
+  if (target === 'waitlist') return 'waitlist';
   
   return 'available';
-});
-
-// Determine form type
-const formType = computed<'waitlist'>(() => {
-  return 'waitlist';
 });
 
 // ✅ Get CTA config from product
@@ -42,13 +37,6 @@ const cta = computed(() => {
 
 // Messaging type
 type MessagingType = {
-  badge?: {
-    label: string;
-    color: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral';
-    variant: 'solid' | 'outline' | 'subtle' | 'soft';
-    size: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
-  };
-  description?: string;
   cta: {
     label: string;
     icon: string;
@@ -61,27 +49,9 @@ type MessagingType = {
 };
 
 // Get messaging
-// app/components/form/Validation.vue - Replace messaging computed
 const messaging = computed<MessagingType | null>(() => {
-  if (formType.value === 'waitlist') {
-    const reason = productState.value === 'unavailable' ? 'unavailable' : 'coming_soon';
-    const waitlistMsg = props.product.waitlist?.[reason];
-    if (!waitlistMsg) return null;
-    
-    return {
-      badge: waitlistMsg.badge,
-      description: waitlistMsg.description,
-      // ✅ Computed CTA - no longer from YAML
-      cta: {
-        label: reason === 'unavailable' ? 'Join Waitlist' : 'Get Early Access',
-        icon: reason === 'unavailable' ? 'i-lucide-clock' : 'i-lucide-bell',
-      },
-      success: waitlistMsg.success,
-    };
-  }
-  
-  // Normal flow unchanged
   if (!cta.value) return null;
+  
   return {
     cta: {
       label: cta.value.label,
@@ -114,7 +84,7 @@ const is_valid_email = computed(() => {
 
 // Form submission
 const { submit, isSubmitting, isSuccess } = useFormSubmission({
-  formId: formType.value,
+  formId: 'email_capture',
   schema,
   location: props.location,
   metadata: {
@@ -134,7 +104,6 @@ const handleSubmit = async () => {
 };
 
 // Dynamic classes
-const isWaitlist = computed(() => formType.value === 'waitlist');
 const formClasses = computed(() => 
   props.layout === 'horizontal' 
     ? 'flex flex-col sm:flex-row gap-3' 
@@ -144,18 +113,6 @@ const formClasses = computed(() =>
 
 <template>
   <div v-if="messaging" class="w-full">
-    <!-- Waitlist badge/description -->
-    <div v-if="isWaitlist && messaging.badge" class="text-center space-y-2 mb-4">
-      <UBadge 
-        :color="messaging.badge.color" 
-        :variant="messaging.badge.variant" 
-        :size="messaging.badge.size"
-      >
-        {{ messaging.badge.label }}
-      </UBadge>
-      <p class="text-sm text-muted">{{ messaging.description }}</p>
-    </div>
-    
     <!-- Universal form -->
     <UForm ref="formRef" :state="state" :schema="schema" @submit="handleSubmit">
       <div :class="formClasses">
@@ -176,8 +133,8 @@ const formClasses = computed(() =>
           :loading="isSubmitting"
           :disabled="state.email && (!is_valid_email || isSubmitting)"
           variant="solid"
-          :color="isWaitlist ? 'neutral' : 'primary'"
-          :class="['cursor-pointer disabled:cursor-not-allowed', isWaitlist ? '' : 'text-toned font-black']"
+          color="primary"
+          class="cursor-pointer disabled:cursor-not-allowed text-toned font-black"
         >
           {{ messaging.cta.label }}
         </UButton>

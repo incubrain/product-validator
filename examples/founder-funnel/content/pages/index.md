@@ -129,18 +129,6 @@ data:
 ---
 ::
 
-::i-section-results
----
-data:
-  intro:
-    icon: i-lucide-trending-up
-    headline: Results
-    title: What Founders Say
-    description: Join hundreds of founders building with this template.
-  items: []
----
-::
-
 ::i-section-concerns
 ---
 data:

@@ -51,26 +51,3 @@ ctas:
     to: https://github.com/incubrain/founder-funnel
     icon: i-lucide-rocket
     color: secondary
-
-waitlist:
-  coming_soon:
-    badge:
-      label: 'Coming Soon'
-      color: neutral
-      variant: soft
-      size: lg
-    description: 'Be first to know when we launch.'
-    success:
-      title: "You're on the list!"
-      message: "We'll email you at launch."
-  
-  unavailable:
-    badge:
-      label: 'Waitlist'
-      color: neutral
-      variant: soft
-      size: lg
-    description: 'All spots taken. Join waitlist for next availability.'
-    success:
-      title: "You're on the list!"
-      message: "We'll notify you when spots open up."

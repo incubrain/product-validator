@@ -52,24 +52,3 @@ ctas:
     icon: i-lucide-external-link
     color: neutral
   
-waitlist:
-  coming_soon:
-    badge:
-      label: 'Coming Soon'
-      color: neutral
-      variant: soft
-      size: lg
-    description: 'Implementation service launching soon. Get notified when available.'
-    success:
-      title: "You're on the list!"
-      message: "We'll email you at launch."
-  unavailable:
-    badge:
-      label: 'Fully Booked'
-      color: neutral
-      variant: soft
-      size: lg
-    description: 'All implementation slots taken. Join waitlist for next opening.'
-    success:
-      title: "You're on the list!"
-      message: "We'll notify you when slots open up."
