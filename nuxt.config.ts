@@ -4,9 +4,10 @@ import { getActiveConfigSource } from './shared/utils/config-resolver';
 import path from 'node:path';
 
 const activeSource = getActiveConfigSource();
-const publicDir = activeSource === 'root' 
-  ? 'public' 
-  : path.resolve(process.cwd(), `examples/${activeSource}/public`);
+const publicDir =
+  activeSource === 'root'
+    ? 'public'
+    : path.resolve(process.cwd(), `examples/${activeSource}/public`);
 
 export default defineNuxtConfig({
   dir: {
@@ -32,19 +33,19 @@ export default defineNuxtConfig({
   },
 
   seo: {
-    redirectToCanonicalSiteUrl: true
+    redirectToCanonicalSiteUrl: true,
   },
 
   // {DX}: studio breaks HMR alpha.2
   // studio: {
   //     // Studio admin route (default: '/_studio')
   //     route: '/_studio',
-  // 
+  //
   //     // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
   //     // development: {
   //     //   sync: true, // Enable development mode
   //     // },
-  // 
+  //
   //     // GitHub repository configuration (owner and repo are required)
   //     repository: {
   //       provider: 'github', // only GitHub is currently supported
@@ -59,11 +60,7 @@ export default defineNuxtConfig({
   ssr: true,
 
   $development: {
-    modules: [
-      '@nuxt/eslint',
-      '@compodium/nuxt',
-      '@nuxt/hints'
-    ],
+    modules: ['@nuxt/eslint', '@compodium/nuxt', '@nuxt/hints'],
 
     devtools: { enabled: true },
 
@@ -105,10 +102,6 @@ export default defineNuxtConfig({
         crawlLinks: false,
       },
     },
-  },
-
-  imports: {
-    dirs: ['~~/theme/*.ts'],
   },
 
   app: {
@@ -160,16 +153,21 @@ export default defineNuxtConfig({
   },
 
   alias: {
-    '#theme': fileURLToPath(new URL('./theme/index.ts', import.meta.url)),
     '#config': fileURLToPath(
       new URL('./shared/config/index.ts', import.meta.url),
     ),
     '#types': fileURLToPath(
       new URL('./shared/types/config.ts', import.meta.url),
     ),
-    '#stage-config': activeSource === 'root'
-      ? fileURLToPath(new URL('./config/stages.ts', import.meta.url))
-      : fileURLToPath(new URL(`./examples/${activeSource}/config/stages.ts`, import.meta.url)),
+    '#stage-config':
+      activeSource === 'root'
+        ? fileURLToPath(new URL('./config/stages.ts', import.meta.url))
+        : fileURLToPath(
+            new URL(
+              `./examples/${activeSource}/config/stages.ts`,
+              import.meta.url,
+            ),
+          ),
     '#constants': fileURLToPath(
       new URL('./shared/constants.ts', import.meta.url),
     ),
@@ -186,23 +184,20 @@ export default defineNuxtConfig({
   },
 
   routeRules: {
-    '/': { 
-      ssr: true,      
-      prerender: false
+    '/': {
+      ssr: true,
+      prerender: false,
     },
-    '/products/**': { 
-      ssr: true,      
-      prerender: false
+    '/products/**': {
+      ssr: true,
+      prerender: false,
     },
-    '/story': { ssr: true,      
-      prerender: false }, 
-    '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background 
+    '/story': { ssr: true, prerender: false },
+    '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background
     '/updates/**': { swr: 3600 },
   },
-  
-  components: [
-    { path: '~/components', prefix: 'I' },
-  ],
+
+  components: [{ path: '~/components', prefix: 'I' }],
 
   experimental: {
     defaults: {

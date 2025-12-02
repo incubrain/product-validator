@@ -43,7 +43,6 @@ COPY package.json pnpm-lock.yaml pnpm-workspace.yaml .npmrc tsconfig.json nuxt.c
 # Copy the main app directory
 COPY app ./app
 COPY shared ./shared  
-COPY theme ./theme
 COPY content ./content
 COPY examples ./examples
 

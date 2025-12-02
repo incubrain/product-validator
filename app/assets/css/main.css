@@ -12,8 +12,6 @@
   }
 }
 
-@source "../../../theme";
-@source "../../../shared/config/theme.ts";
 @source "../../../content/**/*";
 
 @import '@nuxt/ui';
