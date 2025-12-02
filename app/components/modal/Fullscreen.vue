@@ -63,7 +63,7 @@ const { data: product } = await getProduct(props.productId);
           class="max-w-sm mx-auto"
         />
 
-        <IButtonCTA
+        <IConvertButton
           :product-id="productId"
           :location="`${location}_modal`"
           cta-name="conversion"

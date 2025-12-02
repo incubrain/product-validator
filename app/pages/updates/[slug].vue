@@ -77,7 +77,7 @@ useHead({
                 label="Back"
                 class="justify-start"
               />
-                <IButtonCTA
+                <IConvertButton
                   :product-id="STAGE_CONFIG.products.secondary"
                   location="update-sidebar"
                   cta-name="funnel"
@@ -132,7 +132,7 @@ useHead({
     
             <!-- Mobile CTA -->
             <div class="lg:hidden mt-12 pt-8 border-t">
-               <IButtonCTA
+               <IConvertButton
                   :product-id="STAGE_CONFIG.products.secondary"
                   location="update-mobile-bottom"
                   cta-name="funnel"

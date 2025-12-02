@@ -1,4 +1,4 @@
-<!-- components/ButtonCTA.vue -->
+<!-- components/ConvertButton.vue -->
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui';
 import type { CtaName } from '#types';

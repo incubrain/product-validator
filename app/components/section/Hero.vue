@@ -93,14 +93,14 @@ const { data: primaryProduct } = await getPrimaryProduct();
         </div>
 
         <div v-if="showCountdown && primaryProduct" class="max-w-2xl mx-auto">
-          <IFormValidation
+          <IConvertEmail
             location="hero-countdown"
             :product="primaryProduct"
             layout="horizontal"
           />
         </div>
 
-        <IButtonCTA
+        <IConvertButton
           v-if="showCTA"
           :product-id="STAGE_CONFIG.products.primary"
           cta-name="funnel"

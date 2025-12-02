@@ -126,7 +126,7 @@ const { showSection } = useSectionVisibility();
 
           <template #button>
             <div class="pt-4 w-full">
-              <IFormValidation location="product-section" :product="primaryProduct" />
+              <IConvertEmail location="product-section" :product="primaryProduct" />
             </div>
           </template>
 
@@ -144,7 +144,7 @@ const { showSection } = useSectionVisibility();
           class="mt-4 flex flex-col gap-4 justify-center items-center"
         >
           <UBadge variant="soft">OR</UBadge>
-          <IButtonCTA
+          <IConvertButton
             :product-id="primaryProduct.slug"
             cta-name="secondary"
             location="product-section-alt"

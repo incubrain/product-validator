@@ -1,4 +1,4 @@
-<!-- app/components/form/Validation.vue -->
+<!-- app/components/convert/Email.vue -->
 <script setup lang="ts">
 import { z } from 'zod';
 import type { Product, CtaName } from '#types';

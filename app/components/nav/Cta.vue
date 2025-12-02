@@ -74,7 +74,7 @@ const { data: primaryProduct } = await getPrimaryProduct();
       <template v-if="cta.primary" #footer>
         <!-- ✅ Primary CTA: Form capture like Hero -->
         <div class="max-w-2xl mx-auto pt-4">
-          <IFormValidation
+          <IConvertEmail
             location="bridge-cta"
             :product="primaryProduct"
             layout="horizontal"

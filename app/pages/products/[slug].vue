@@ -217,7 +217,7 @@ onMounted(() => {
           <div class="bg-white/2 border border-white/10 rounded-2xl p-6 lg:p-8 backdrop-blur-sm space-y-6">
             
             <!-- Show form -->
-            <IFormValidation
+            <IConvertEmail
               v-if="showForm"
               :product="product"
               cta-name="conversion"
@@ -225,7 +225,7 @@ onMounted(() => {
             />
 
             <!-- Show button -->
-            <IButtonCTA
+            <IConvertButton
               v-else
               :product-id="product.slug as any"
               cta-name="conversion"
