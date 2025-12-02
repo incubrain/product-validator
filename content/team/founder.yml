@@ -1,21 +1,9 @@
-id: founder
-profile:
-  given_name: '⚠️ Your given name'
-  surname: '⚠️ Your surname'
-  name: '⚠️ Your given name ⚠️ Your surname'
-  email: your-email@domain.com
-  role: '⚠️ Your role or title'
-  avatar:
-    src: /images/team/founder-avatar.jpeg
-    alt: '⚠️ Replace image of my dog with your own'
-  portrait:
-    src: /images/team/founder-portrait.jpeg
-    alt: '⚠️ Same as above'
-story:
-  mission: '⚠️ Your mission in one sentence'
-  background:
-    - "⚠️ Hi, I'm [Name]; brief intro and hook"
-    - '⚠️ First paragraph of your story'
-    - '⚠️ Second paragraph detailing your journey'
-    - '⚠️ Third paragraph explaining what changed'
-  challenge: '⚠️ Your challenge or call-to-action for the reader'
+slug: your-name
+given_name: '⚠️ Your given name'
+surname: '⚠️ Your surname'
+email: your-email@domain.com
+role: '⚠️ Your role or title'
+avatar:
+  src: /images/team/founder-avatar.jpeg
+  alt: '⚠️ Replace image of my dog with your own'
+bio: '⚠️ Your bio'

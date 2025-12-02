@@ -11,14 +11,14 @@ const { data: configData } = await getSiteConfig();
 
 // Computed properties
 const displayName = computed(
-  () => `Hi, I'm ${founderData.value?.profile.given_name}`,
+  () => `Hi, I'm ${founderData.value?.given_name}`,
 );
-const description = computed(() => founderData.value?.profile.role);
+const description = computed(() => founderData.value?.role);
 
 // Map links to proper format for UButton
 const socialLinks = computed(
   () =>
-    configData.value?.social.links?.map((link) => ({
+    configData.value?.socials?.map((link) => ({
       label: link.label,
       icon: `i-lucide-${link.platform}`,
       to: link.url,
@@ -45,8 +45,8 @@ const socialLinks = computed(
         :orientation="variant === 'mobile' ? 'horizontal' : 'vertical'"
         size="lg"
         :avatar="{
-          src: founderData?.profile.avatar?.src,
-          alt: founderData?.profile.avatar?.alt,
+          src: founderData?.avatar?.src,
+          alt: founderData?.avatar?.alt,
         }"
         :ui="{ root: 'items-start text-left lg:items-end lg:text-right' }"
       />
@@ -54,7 +54,7 @@ const socialLinks = computed(
 
     <!-- Body: short bio message -->
     <p class="text-sm text-toned text-left lg:text-right">
-      {{ founderData?.story.challenge }}
+      {{ founderData?.bio }}
     </p>
 
     <!-- Footer: social links -->

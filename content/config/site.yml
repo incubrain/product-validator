@@ -4,15 +4,15 @@ business:
   founding_year: 2025
   location: '⚠️ City, Country'
   logo: favicon-96x96.png
-social:
-  availability: '⚠️ How available you are and where'
-  links:
-    - platform: youtube
-      label: YouTube
-      url: https://youtube.com/@yourchannel
-    - platform: github
-      label: GitHub
-      url: https://github.com/yourusername
-    - platform: x
-      label: X
-      url: https://x.com/yourusername
+  mission: Your primary overarching mission.
+
+socials:
+  - platform: youtube
+    label: YouTube
+    url: https://youtube.com/@yourchannel
+  - platform: github
+    label: GitHub
+    url: https://github.com/yourusername
+  - platform: x
+    label: X
+    url: https://x.com/yourusername

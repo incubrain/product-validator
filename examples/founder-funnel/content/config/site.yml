@@ -4,18 +4,17 @@ business:
   founding_year: 2023
   location: Pune, India
   logo: /favicon-96x96.png
+  mission: We help technical founders reach inner peace and financial freedom.
 
-social:
-  availability: Active on community channels daily. Building this full-time.
-  links:
-    - platform: youtube
-      label: YouTube
-      url: https://www.youtube.com/@DrewMacGibbon
-    
-    - platform: github
-      label: GitHub
-      url: https://github.com/incubrain
-    
-    - platform: x
-      label: X
-      url: https://x.com/DrewMacGibbon
+socials:
+  - platform: youtube
+    label: YouTube
+    url: https://www.youtube.com/@DrewMacGibbon
+  
+  - platform: github
+    label: GitHub
+    url: https://github.com/incubrain
+  
+  - platform: x
+    label: X
+    url: https://x.com/DrewMacGibbon

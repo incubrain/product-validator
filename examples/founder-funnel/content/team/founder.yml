@@ -1,19 +1,9 @@
-id: founder
-profile:
-  given_name: Drew
-  surname: MacGibbon
-  name: Drew MacGibbon
-  email: mac@incubrain.org
-  role: Creator
-  avatar:
-    src: /team/founder-avatar.png
-    alt: Drew MacGibbon
-  portrait:
-    src: /team/founder-portrait.png
-    alt: Drew MacGibbon
-story:
-  mission: I built Founder Funnel to give technical founders a way to validate ideas without the "SaaS Tax".
-  background:
-    - After launching 10+ products, I realized I was spending more time fighting with drag-and-drop tools than writing code.
-    - This is the stack I use for every new idea. It's free, it's yours, and it scales.
-  challenge: Stop renting your funnel. Start owning it.
+slug: drew-macgibbon
+given_name: Drew
+surname: MacGibbon
+email: mac@incubrain.org
+role: Founder
+avatar:
+  src: /team/founder-avatar.png
+  alt: Drew MacGibbon
+bio: I built Founder Funnel to give technical founders a way to validate ideas without the "SaaS Tax".

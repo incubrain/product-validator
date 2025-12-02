@@ -14,7 +14,7 @@ const { data: configData } = await getSiteConfig();
 // Map links to proper format for UButton
 const socialLinks = computed(
   () =>
-    configData.value?.social.links?.map((link) => ({
+    configData.value?.socials?.map((link) => ({
       label: link.label,
       icon: `i-lucide-${link.platform}`,
       url: link.url,

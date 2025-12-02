@@ -55,8 +55,8 @@ const { showSection } = useSectionVisibility();
         <div class="relative group">
           <div class="absolute inset-0 bg-linear-to-t from-primary/20 to-transparent blur-xl group-hover:blur-2xl transition-all duration-300" />
           <NuxtImg
-            :src="founderData.profile.portrait.src"
-            :alt="founderData.profile.portrait.alt"
+            :src="founderData.avatar.src"
+            :alt="founderData.avatar.alt"
             class="w-32 h-32 lg:w-40 lg:h-40 object-cover object-top border border-primary/20 shadow-2xl relative z-10 pt-2 rounded-full"
           />
         </div>
@@ -64,16 +64,16 @@ const { showSection } = useSectionVisibility();
         <!-- Name & Role -->
         <div class="text-center lg:text-left space-y-1">
           <h3 class="text-xl font-bold text-highlighted">
-            {{ founderData?.profile.name }}
+            {{ founderData?.given_name }} {{ founderData?.surname }}
           </h3>
           <p class="text-xs uppercase tracking-wider text-muted">
-            {{ founderData?.profile.role }}
+            {{ founderData?.role }}
           </p>
         </div>
 
         <!-- Quote (with marks) -->
           <p class="text-base max-w-sm text-center lg:text-left lg:text-lg italic text-dimmed leading-relaxed">
-            {{ founderData?.story.mission }}
+            {{ founderData?.bio }}
           </p>
 
         <!-- Read Story Link -->

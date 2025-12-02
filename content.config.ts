@@ -72,15 +72,13 @@ export default defineContentConfig({
           founding_year: z.number(),
           location: z.string(),
           logo: z.string(),
+          mission: z.string(),
         }).optional(),
-        social: z.object({
-          availability: z.string(),
-          links: z.array(z.object({
-            platform: z.string(),
-            label: z.string(),
-            url: z.string(),
-          })),
-        }).optional(),
+        socials: z.array(z.object({
+          platform: z.string(),
+          label: z.string(),
+          url: z.string(),
+        })).optional(),
       }),
     }),
 
@@ -91,27 +89,16 @@ export default defineContentConfig({
         include: 'team/*.yml',
       },
       schema: z.object({
-        id: z.string(),
-        profile: z.object({
-          given_name: z.string(),
-          surname: z.string(),
-          name: z.string(),
-          email: z.string().optional(),
-          role: z.string(),
-          avatar: z.object({
+        slug: z.string(),
+        given_name: z.string(),
+        surname: z.string(),
+        email: z.string().optional(),
+        role: z.string(),
+        avatar: z.object({
             src: z.string(),
             alt: z.string(),
           }).optional(),
-          portrait: z.object({
-            src: z.string(),
-            alt: z.string(),
-          }).optional(),
-        }),
-        story: z.object({
-          mission: z.string(),
-          background: z.array(z.string()),
-          challenge: z.string(),
-        }),
+        bio: z.string(),
       }),
     }),
 

@@ -21,7 +21,7 @@ const { data: updates, pending } = useAsyncData('updates-list', () =>
 );
 
 // Get social links
-const socialLinks = pickSocialLinks(configData.value?.social.links || [], [
+const socialLinks = pickSocialLinks(configData.value?.socials || [], [
   'youtube',
   'github',
   'x',
@@ -40,8 +40,8 @@ useHead({
 // Authors for changelog
 const authors = [
   {
-    name: `${founderData.value?.profile.given_name} ${founderData.value?.profile.surname}`,
-    avatar: founderData.value?.profile.avatar,
+    name: `${founderData.value?.given_name} ${founderData.value?.surname}`,
+    avatar: founderData.value?.avatar,
     to: socialLinks?.find((link) => link.platform === 'github')?.url,
     target: '_blank',
   },

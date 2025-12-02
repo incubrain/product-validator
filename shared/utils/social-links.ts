@@ -17,7 +17,7 @@ interface SocialLink {
  * 
  * @example
  * ```ts
- * const links = pickSocialLinks(configData.social.links, ['youtube', 'github']);
+ * const links = pickSocialLinks(configData.socials, ['youtube', 'github']);
  * // Returns only YouTube and GitHub links
  * ```
  */

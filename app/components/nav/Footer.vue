@@ -2,9 +2,7 @@
 <script setup lang="ts">
 import { STAGE_CONFIG } from '#stage-config';
 
-// Fetch founder and config data
-const { getFounder, getSiteConfig } = useContentCache();
-const { data: founderData } = await getFounder();
+const { getSiteConfig } = useContentCache();
 const { data: configData } = await getSiteConfig();
 
 const currentYear = new Date().getFullYear();
@@ -38,7 +36,7 @@ const copyrightYear = computed(() =>
         <ILogo size="md" />
         <div class="space-y-2">
           <p class="text-muted leading-relaxed font-written text-sm max-w-md">
-            {{ founderData?.story.mission }}.
+            {{ configData?.business?.mission }}.
           </p>
         </div>
       </div>
