@@ -9,7 +9,7 @@ const EVENT_FALLBACKS = {
   formId: () => 'waitlist',
   recordId: () => `mock-${Date.now()}`,
   email: () => 'dev@example.com',
-  offerId: () => 'magnet',
+  productId: () => 'magnet',
   customerStage: () => 'email_captured' as const,
   currentStage: () => 'traffic' as const,
   modalType: () => 'windowed',
@@ -45,29 +45,16 @@ type EventChainConfig = {
 };
 
 export const EVENT_CHAINS: Partial<Record<TrackedEvents, EventChainConfig>> = {
-  form_submitted: {
-    triggers: ['modal_open'],
-    condition: (payload) => {
-      return payload.data?.formId === 'waitlist';
-    },
-    requiredFields: ['formId', 'recordId', 'customerStage'],
-    data: (payload) => ({
-      action: 'windowed_modal',
-      formId: payload.data?.formId,
-      recordId: payload.data?.recordId,
-    }),
-  },
-
   exit_intent: {
     triggers: ['modal_open'],
-    requiredFields: ['offerId', 'location'],
+    requiredFields: ['productId', 'location'],
     condition: (payload) => {
       // Only trigger on homepage or in DevTools
       return payload.location === '/' || payload._devToolsTriggered === true;
     },
     data: (payload) => ({
       action: 'fullscreen_modal',
-      offerId: 'direct',
+      productId: 'direct',
       location: payload.location,
     }),
   },

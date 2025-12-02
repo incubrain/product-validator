@@ -6,7 +6,7 @@ export default defineAppConfig({
       'check': 'lucide:check',
       'close': 'lucide:x',
       'search': 'lucide:search',
-      // {DX}: Offer status icon aliases
+      // {DX}: Product status icon aliases
       'status-available': 'lucide:check',
       'status-beta': 'lucide:flask-conical',
       'status-coming-soon': 'lucide:clock',

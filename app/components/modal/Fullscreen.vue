@@ -1,15 +1,15 @@
 <!-- components/ModalFullscreen.vue -->
 <script setup lang="ts">
 interface Props {
-  offerId: OfferID;
+  productId: ProductId;
   location: string;
 }
 
 const props = defineProps<Props>();
 const emit = defineEmits<{ close: [] }>();
 
-const { getOffer } = useContentCache();
-const { data: offer } = await getOffer(props.offerId);
+const { getProduct } = useContentCache();
+const { data: product } = await getProduct(props.productId);
 </script>
 
 <template>
@@ -26,27 +26,27 @@ const { data: offer } = await getOffer(props.offerId);
     <template #body>
       <div class="max-w-lg space-y-6">
         <div class="space-y-3">
-          <h2 class="text-3xl font-bold text-primary">{{ offer?.title }}</h2>
-          <p class="text-xl text-toned">{{ offer?.description }}</p>
+          <h2 class="text-3xl font-bold text-primary">{{ product?.title }}</h2>
+          <p class="text-xl text-toned">{{ product?.description }}</p>
         </div>
 
         <div
-          v-if="offer?.media"
+          v-if="product?.media"
           class="w-full aspect-video rounded-lg overflow-hidden"
         >
           <iframe
-            :src="offer.media.src"
-            :title="offer.media.alt"
+            :src="product.media.src"
+            :title="product.media.alt"
             class="w-full h-full"
             frameborder="0"
             allowfullscreen
           />
         </div>
 
-        <div v-if="offer?.features" class="bg-default/50 rounded-xl p-6">
+        <div v-if="product?.features" class="bg-default/50 rounded-xl p-6">
           <ul class="text-left space-y-2 text-sm">
             <li
-              v-for="benefit in offer.features"
+              v-for="benefit in product.features"
               :key="benefit.title"
               class="flex items-center gap-2"
             >
@@ -57,14 +57,14 @@ const { data: offer } = await getOffer(props.offerId);
         </div>
 
         <IStockProgress
-          v-if="offer?.stock"
-          :stock="offer.stock"
-          :offer-id="offer.id"
+          v-if="product?.stock"
+          :stock="product.stock"
+          :product-id="product.id"
           class="max-w-sm mx-auto"
         />
 
         <IButtonCTA
-          :offer-id="offerId"
+          :product-id="productId"
           :location="`${location}_modal`"
           cta-name="conversion"
           size="xl"

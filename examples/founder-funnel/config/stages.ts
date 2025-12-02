@@ -2,7 +2,7 @@ import type { StageConfig } from '#shared/types/config';
 
 export const STAGE_CONFIG = {
   currentStage: 'post-launch',
-  offers: {
+  products: {
     primary: 'magnet',
     secondary: 'direct',
   },
@@ -23,7 +23,7 @@ export const STAGE_CONFIG = {
         hero: 'coming-soon',
         problemSolution: 'launch',
         process: 'launch',
-        offer: 'launch',
+        product: 'launch',
         concerns: 'post-launch',
         founder: 'post-launch',
         results: 'post-launch',

@@ -116,12 +116,12 @@ export default defineContentConfig({
       }),
     }),
 
-    offers: defineCollection(
+    products: defineCollection(
       asSeoCollection({
         type: 'data',
         source: {
           cwd: contentCwd,
-          include: 'offers/*.yml',
+          include: 'products/*.yml',
         },
         schema: z.object({
           slug: z.string(),

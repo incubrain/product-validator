@@ -47,7 +47,7 @@ ctas:
     icon: i-lucide-play
     color: neutral
 
-# Waitlist messaging when offer is unavailable
+# Waitlist messaging when product is unavailable
 waitlist:
   coming_soon:
     badge:

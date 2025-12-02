@@ -34,7 +34,7 @@ ctas:
   funnel:
     strategy: link
     label: Learn More
-    to: /get/mentorship
+    to: /products/mentorship
     icon: i-lucide-arrow-right
     color: secondary
   

@@ -39,7 +39,7 @@ They need a system that **forces them to ship** and gather the feedback required
 
 - **Best part is no part** → Only build what directly validates demand
 - **Email-first delivery** → No PDFs unless necessary, no video requirements
-- Focus exclusively on: Introspection → Offer creation → Validation
+- Focus exclusively on: Introspection → Product creation → Validation
 - Pure value in simplest possible format
 
 ### **Speed Over Perfection**
@@ -118,7 +118,7 @@ They need a system that **forces them to ship** and gather the feedback required
 
 **Email 3: What** (4-6 hours)
 
-- Irresistible offer packaging
+- Irresistible product packaging
 - Competitive positioning
 - Value stacking principles
 
@@ -195,12 +195,12 @@ Additional product tiers (low-ticket, mid-tier MRR, high-ticket MRR) will be dev
 - Map your solution to others with same pain
 - **Gate**: Reply with top pain point + qualification
 
-### **3. What — Offer Creation (4-6 hours)**
+### **3. What — Product Creation (4-6 hours)**
 
-- Irresistible offer packaging principles
+- Irresistible product packaging principles
 - Competitive positioning research
 - Value stacking framework
-- **Gate**: Reply with offer description + positioning
+- **Gate**: Reply with product description + positioning
 
 ### **4. Ship — Implementation (6-10 hours)**
 
@@ -250,7 +250,7 @@ Focus on conversion rates, not raw visitor counts:
 **Below Average on Multiple Metrics:**
 
 - Consider pivot or abandon
-- Messaging/offer likely misaligned with market
+- Messaging/product likely misaligned with market
 
 **Average or Above on Either Metric:**
 

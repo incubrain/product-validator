@@ -1,7 +1,7 @@
 // NEW FILE: Extract stock logic from StockProgress.vue
-import type { OfferStock, OfferID } from '#types';
+import type { ProductStock, ProductId } from '#types';
 
-export function useOfferStock(stock?: OfferStock, offerId?: OfferID) {
+export function useProductStock(stock?: ProductStock, productId?: ProductId) {
   // ✅ TEST TOGGLE: Check URL param for forcing unavailable state
   const route = useRoute();
   const forceUnavailable = computed(() => {
@@ -12,7 +12,7 @@ export function useOfferStock(stock?: OfferStock, offerId?: OfferID) {
   });
 
   // Auto-detect if this should use live count
-  const useLiveCount = computed(() => offerId === 'waitlist');
+  const useLiveCount = computed(() => productId === 'waitlist');
   
   // Fetch live count if enabled
   const { data: metrics } = useLiveCount.value
@@ -32,13 +32,13 @@ export function useOfferStock(stock?: OfferStock, offerId?: OfferID) {
     
     // ✅ TEST TOGGLE: Override with URL param in dev
     if (forceUnavailable.value) {
-      console.log('[useOfferStock] 🧪 UNAVAILABLE STATE FORCED via ?unavailable=true');
+      console.log('[useProductStock] 🧪 UNAVAILABLE STATE FORCED via ?unavailable=true');
       return false;
     }
     
     const unavailable = claimed.value >= stock.limit;
-    console.log('[useOfferStock] Availability check:', {
-      offerId,
+    console.log('[useProductStock] Availability check:', {
+      productId,
       claimed: claimed.value,
       limit: stock.limit,
       isAvailable: !unavailable,

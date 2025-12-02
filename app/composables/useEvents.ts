@@ -24,16 +24,16 @@ export const useEvents = () => {
     return payload.response;
   };
 
-  const executeAction = async (location: string, offer?: any) => {
-    if (!offer) return;
+  const executeAction = async (location: string, product?: any) => {
+    if (!product) return;
 
     // Track the interaction
     await trackEvent({
-      id: `${offer.id}_${location}`,
+      id: `${product.id}_${location}`,
       type: 'element_clicked',
       location,
-      action: getActionType(offer.cta.to),
-      target: offer.cta.to,
+      action: getActionType(product.cta.to),
+      target: product.cta.to,
     });
   };
 

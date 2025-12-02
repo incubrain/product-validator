@@ -21,19 +21,19 @@ export const useContentCache = () => {
   };
 
   /**
-   * Fetch the primary offer (marked with primary: true)
+   * Fetch the primary product (marked with primary: true)
    */
-  const getPrimaryOffer = () => useAsyncData('app-primary-offer', () => 
-      queryCollection('offers').where('stem', '=', `offers/${STAGE_CONFIG.offers.primary}`).first()
+  const getPrimaryProduct = () => useAsyncData('app-primary-product', () => 
+      queryCollection('products').where('stem', '=', `products/${STAGE_CONFIG.products.primary}`).first()
     );
 
   /**
-   * Fetch a specific offer by id
+   * Fetch a specific product by id
    */
-  const getOffer = (id: string) => {
-    return useAsyncData(`app-offer-${id}`, () => 
-      queryCollection('offers')
-        .orWhere(q => q.where('slug', '=', id).where('stem', '=', `offers/${id}`))
+  const getProduct = (id: string) => {
+    return useAsyncData(`app-product-${id}`, () => 
+      queryCollection('products')
+        .orWhere(q => q.where('slug', '=', id).where('stem', '=', `products/${id}`))
         .first()
     );
   };
@@ -41,7 +41,7 @@ export const useContentCache = () => {
   return {
     getSiteConfig,
     getFounder,
-    getPrimaryOffer,
-    getOffer,
+    getPrimaryProduct,
+    getProduct,
   };
 };

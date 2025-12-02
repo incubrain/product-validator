@@ -4,7 +4,7 @@ import type { ButtonProps } from '@nuxt/ui';
 import type { CtaName } from '#types';
 
 interface Props {
-  offerId: OfferID;
+  productId: ProductId;
   location: string;
   ctaName?: CtaName;
   class?: string;
@@ -17,12 +17,12 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const { executeAction } = useEvents();
-const { getOffer } = useContentCache();
-const { data: offer } = await getOffer(props.offerId);
+const { getProduct } = useContentCache();
+const { data: product } = await getProduct(props.productId);
 
 const cta = computed(() => {
-  if (!offer.value?.ctas) return null;
-  return offer.value.ctas[props.ctaName];
+  if (!product.value?.ctas) return null;
+  return product.value.ctas[props.ctaName];
 });
 
 const to = computed(() => 
@@ -35,7 +35,7 @@ const target = computed(() =>
 
 // ✅ Handle click
 const handleClick = async () => {
-  await executeAction(props.location, offer.value);
+  await executeAction(props.location, product.value);
 };
 </script>
 

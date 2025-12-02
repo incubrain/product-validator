@@ -5,23 +5,23 @@ import { STATUS_ICONS } from '#constants';
 const route = useRoute();
 const slug = route.params.slug as string;
 
-const { getSiteConfig, getOffer } = useContentCache();
+const { getSiteConfig, getProduct } = useContentCache();
 const { data: configData } = await getSiteConfig();
 const business = computed(() => configData.value?.business);
 
-// ✅ Always fetch offer data
-const { data: offer } = await getOffer(slug)
+// ✅ Always fetch product data
+const { data: product } = await getProduct(slug)
 
-if (!offer.value) {
+if (!product.value) {
   throw createError({
     statusCode: 404,
-    statusMessage: `Offer "${slug}" not found`,
+    statusMessage: `Product "${slug}" not found`,
     fatal: true
   });
 }
 
-if (offer.value.slug !== slug) {
-  navigateTo(`/products/${offer.value.slug}`, { redirectCode: 301 })
+if (product.value.slug !== slug) {
+  navigateTo(`/products/${product.value.slug}`, { redirectCode: 301 })
 }
 
 // ✅ Try to fetch MDC sales page
@@ -33,22 +33,22 @@ const { data: salesPage } = await useAsyncData(
 
 const hasSalesPage = computed(() => !!salesPage.value);
 
-// --- Offer Page Logic (Inlined) ---
+// --- Product Page Logic (Inlined) ---
 
 const features = computed(() => {
-  if (!offer.value?.features) return [];
-  return offer.value.features.map((f) => ({
+  if (!product.value?.features) return [];
+  return product.value.features.map((f) => ({
     ...f,
     icon: STATUS_ICONS[f.icon] || f.icon,
   }));
 });
 
-const { isAvailable } = useOfferStock(offer.value.stock as any, offer.value.slug as any);
-const hasMedia = computed(() => !!offer.value.media?.src);
-const mediaType = computed(() => offer.value.media?.type || null);
+const { isAvailable } = useProductStock(product.value.stock as any, product.value.slug as any);
+const hasMedia = computed(() => !!product.value.media?.src);
+const mediaType = computed(() => product.value.media?.type || null);
 
 // Determine CTA type
-const ctaConfig = computed(() => offer.value.ctas.conversion);
+const ctaConfig = computed(() => product.value.ctas.conversion);
 
 // Should show form or button?
 const showForm = computed(() => {
@@ -61,22 +61,22 @@ const showForm = computed(() => {
 defineOgImage({
     component: 'Frame',
     props: {
-      title: offer.value.title,
-      description: offer.value.description,
+      title: product.value.title,
+      description: product.value.description,
       image: business.value?.logo,
     },
 })
 
-if (offer.value.price && offer.value.price !== 'Free') {
-  const priceMatch = offer.value.price.match(/\$?(\d+)/);
+if (product.value.price && product.value.price !== 'Free') {
+  const priceMatch = product.value.price.match(/\$?(\d+)/);
   const priceAmount = priceMatch ? priceMatch[1] : '0';
   
   useSchemaOrg([
     defineProduct({
-      name: offer.value.title,
-      description: offer.value.description,
-      image: offer.value.media?.src,
-      offers: {
+      name: product.value.title,
+      description: product.value.description,
+      image: product.value.media?.src,
+      products: {
         price: priceAmount,
         priceCurrency: 'USD',
         availability: 'InStock',
@@ -90,18 +90,18 @@ definePageMeta({ layout: false });
 const { trackEvent } = useEvents();
 onMounted(() => {
   trackEvent({
-    id: `offer_${offer.value.slug}_view`,
+    id: `product_${product.value.slug}_view`,
     type: 'element_viewed',
-    location: `offer-page-${offer.value.slug}`,
+    location: `product-page-${product.value.slug}`,
     action: 'page_view',
-    target: `/products/${offer.value.slug}`,
+    target: `/products/${product.value.slug}`,
     data: {
-      offerId: offer.value.slug,
+      productId: product.value.slug,
       metadata: {
-        offer_slug: offer.value.slug,
-        offer_type: offer.value.type,
-        offer_price: offer.value.price,
-        is_primary: offer.value.primary,
+        product_slug: product.value.slug,
+        product_type: product.value.type,
+        product_price: product.value.price,
+        is_primary: product.value.primary,
         has_sales_page: hasSalesPage.value,
       },
     },
@@ -130,36 +130,36 @@ onMounted(() => {
         <!-- Header -->
         <div class="space-y-6 text-center mb-12 lg:mb-16">
           <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
-            {{ offer.title }}
+            {{ product.title }}
           </h1>
           
           <p class="text-lg sm:text-xl text-muted/80 leading-relaxed max-w-2xl mx-auto">
-            {{ offer.description }}
+            {{ product.description }}
           </p>
           
-          <p v-if="offer.tagline" class="text-sm text-muted/60 italic">
-            {{ offer.tagline }}
+          <p v-if="product.tagline" class="text-sm text-muted/60 italic">
+            {{ product.tagline }}
           </p>
         </div>
 
         
 
         <!-- Pricing -->
-        <div v-if="offer.price && offer.price !== 'Free'" class="mb-12 lg:mb-16">
+        <div v-if="product.price && product.price !== 'Free'" class="mb-12 lg:mb-16">
           <div class="text-center">
             <div class="inline-flex items-baseline gap-2">
-              <span v-if="offer.discount" class="text-2xl text-muted/50 line-through">
-                {{ offer.discount }}
+              <span v-if="product.discount" class="text-2xl text-muted/50 line-through">
+                {{ product.discount }}
               </span>
               <span class="text-5xl lg:text-6xl font-bold text-white">
-                {{ offer.price }}
+                {{ product.price }}
               </span>
-              <span v-if="offer.billingCycle" class="text-lg text-muted/70">
-                {{ offer.billingCycle }}
+              <span v-if="product.billingCycle" class="text-lg text-muted/70">
+                {{ product.billingCycle }}
               </span>
             </div>
-            <p v-if="offer.terms" class="text-sm text-muted/60 mt-3">
-              {{ offer.terms }}
+            <p v-if="product.terms" class="text-sm text-muted/60 mt-3">
+              {{ product.terms }}
             </p>
           </div>
         </div>
@@ -192,15 +192,15 @@ onMounted(() => {
             <div class="aspect-video">
               <IVideo
                 v-if="mediaType === 'video'"
-                :src="offer.media.src"
-                :alt="offer.media.alt || offer.title"
+                :src="product.media.src"
+                :alt="product.media.alt || product.title"
                 class="w-full h-full"
               />
 
               <NuxtImg 
                 v-else-if="mediaType === 'image'" 
-                :src="offer.media.src" 
-                :alt="offer.media.alt || offer.title"
+                :src="product.media.src" 
+                :alt="product.media.alt || product.title"
                 class="w-full h-full object-cover"
               />
             </div>
@@ -209,7 +209,7 @@ onMounted(() => {
 
         <!-- ✅ MDC Sales Content (Injected Here) -->
         <div v-if="hasSalesPage" class="mb-12 lg:mb-16 prose prose-invert max-w-none">
-          <ContentRenderer :value="salesPage" :data="{ offer }" />
+          <ContentRenderer :value="salesPage" :data="{ product }" />
         </div>
 
         <!-- CTA Section -->
@@ -219,15 +219,15 @@ onMounted(() => {
             <!-- Show form -->
             <IFormValidation
               v-if="showForm"
-              :offer="offer"
+              :product="product"
               cta-name="conversion"
-              :location="`sales-page-${offer.slug}`"
+              :location="`sales-page-${product.slug}`"
             />
 
             <!-- Show button -->
             <IButtonCTA
               v-else
-              :offer-id="offer.slug as any"
+              :product-id="product.slug as any"
               cta-name="conversion"
               location="sales-page-bottom"
               size="xl"
@@ -235,8 +235,8 @@ onMounted(() => {
             />
             
             <!-- Stock Progress -->
-            <div v-if="offer.stock && isAvailable" class="pt-4 border-t border-white/5">
-              <IStockProgress :stock="offer.stock as any" :offer-id="offer.slug as any" />
+            <div v-if="product.stock && isAvailable" class="pt-4 border-t border-white/5">
+              <IStockProgress :stock="product.stock as any" :product-id="product.slug as any" />
             </div>
           </div>
         </div>

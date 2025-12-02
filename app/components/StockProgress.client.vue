@@ -3,14 +3,14 @@
 import { STAGE_CONFIG } from '#stage-config';
 
 interface Props {
-  stock: OfferStock;
-  offerId?: OfferID;
+  stock: ProductStock;
+  productId?: ProductId;
   class?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   class: '',
-  offerId: STAGE_CONFIG.offers.primary,
+  productId: STAGE_CONFIG.products.primary,
 });
 
 const {
@@ -19,7 +19,7 @@ const {
   label,
   urgencyColor,
   useLiveCount,
-} = useOfferStock(props.stock, props.offerId);
+} = useProductStock(props.stock, props.productId);
 
 </script>
 

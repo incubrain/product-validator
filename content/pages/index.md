@@ -39,7 +39,7 @@ data:
     message: '⚠️ Bridge message'
     button:
       label: '⚠️ CTA label'
-      to: '#offer'
+      to: '#product'
       icon: i-lucide-arrow-down
 ---
 ::
@@ -55,7 +55,7 @@ data:
 ---
 ::
 
-::i-section-offer
+::i-section-product
 ---
 data:
   intro:
@@ -97,7 +97,7 @@ data:
     message: '⚠️ Bridge message'
     button:
       label: '⚠️ CTA label'
-      to: '#offer'
+      to: '#product'
       icon: i-lucide-rocket
 ---
 ::

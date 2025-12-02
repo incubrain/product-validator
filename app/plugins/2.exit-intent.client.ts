@@ -8,13 +8,13 @@ export default defineNuxtPlugin(() => {
 
   const createExitIntent = (
     options: {
-      offerId: OfferID;
+      productId: ProductId;
       cooldownDays?: number;
       disabled?: boolean;
       minTimeOnPage?: number;
       requireInteraction?: boolean;
     } = {
-      offerId: 'waitlist',
+      productId: 'waitlist',
     },
   ) => {
     const { trackEvent } = useEvents();
@@ -67,7 +67,7 @@ export default defineNuxtPlugin(() => {
           action: directTrigger ? 'dev_trigger' : 'mouse_leave',
           target: 'exit_modal',
           data: {
-            offerId: options.offerId,
+            productId: options.productId,
           },
         });
       } finally {
@@ -100,7 +100,7 @@ export default defineNuxtPlugin(() => {
   };
 
   const exitIntent = createExitIntent({
-    offerId: STAGE_CONFIG.offers.secondary,
+    productId: STAGE_CONFIG.products.secondary,
     cooldownDays: 7,
     disabled: false,
     minTimeOnPage: 10,

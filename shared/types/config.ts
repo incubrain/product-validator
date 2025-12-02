@@ -17,7 +17,7 @@ export interface VisibilityConfig {
 export interface StageConfig {
   currentStage: string;
   stages: StageDefinition[];
-  offers: {
+  products: {
     primary: string;
     secondary: string;
   };
@@ -82,35 +82,35 @@ export interface SectionCta {
 }
 
 // ============================================================================
-// OFFER SECTION
+// PRODUCT SECTION
 // ============================================================================
 
-export type OfferID = 'waitlist' | 'direct' | 'low' | 'medium' | 'high';
+export type ProductId = 'waitlist' | 'direct' | 'low' | 'medium' | 'high';
 
-export type OfferStockType = 'spots' | 'units' | 'hours';
+export type ProductStockType = 'spots' | 'units' | 'hours';
 
 export type FeatureStatus =
   | 'status-available'
   | 'status-beta'
   | 'status-coming-soon';
 
-export type OfferStock = {
+export type ProductStock = {
   limit: number;
   claimed: number;
-  type?: OfferStockType;
+  type?: ProductStockType;
 };
 
-export type OfferUpsell = {
-  target: OfferID;
+export type ProductUpsell = {
+  target: ProductId;
   primary?: boolean;
 };
 
-export type OfferFeature = {
+export type ProductFeature = {
   title: string;
   icon: FeatureStatus;
 };
 
-export type Offer = Pick<
+export type Product = Pick<
   PricingPlanProps,
   | 'title'
   | 'description'
@@ -123,22 +123,22 @@ export type Offer = Pick<
   | 'tagline'
   | 'terms'
 > & {
-  features: OfferFeature[];
-  slug: OfferID;
+  features: ProductFeature[];
+  slug: ProductId;
   type?: 'ebook' | 'course' | 'mentorship';
   seo?: Record<string, any>;
   head?: Record<string, any>;
   ogImage?: Record<string, any>;
   primary?: boolean;
-  stock?: OfferStock;
+  stock?: ProductStock;
   ctas: Record<CtaName, Cta>;
-  upsells?: OfferUpsell[];
+  upsells?: ProductUpsell[];
   media?: {
     type: 'video' | 'image';
     src: string;
     alt: string;
   };
-  // Waitlist configuration for unavailable offers
+  // Waitlist configuration for unavailable products
   waitlist?: {
     coming_soon: {
       badge: {

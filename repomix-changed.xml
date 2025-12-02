@@ -1,0 +1,1546 @@
+<directory_structure>
+app/
+  components/
+    form/
+      Validation.vue
+    section/
+      Offer.vue
+  pages/
+    products/
+      [slug]-success.vue
+      [slug].vue
+content/
+  offers/
+    direct.yml
+examples/
+  founder-funnel/
+    content/
+      offers/
+        direct.yml
+        magnet.yml
+      pages/
+        products/
+          mentorship-success.md
+          mentorship.md
+          template-guide-success.md
+          template-guide.md
+  validator/
+    content/
+      offers/
+        direct.yml
+shared/
+  config/
+    events.ts
+nuxt.config.ts
+package.json
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="app/pages/products/[slug]-success.vue">
+<script setup lang="ts">
+// Get offer slug from query params
+const route = useRoute();
+const offerSlug = route.params.slug as string;
+
+// Redirect to home if no offer specified
+if (!offerSlug) {
+  navigateTo('/');
+}
+
+// Try to fetch the MDC success page for this offer
+const { data: successPage } = await useAsyncData(
+  `product-success-${offerSlug}`,
+  () => queryCollection('pages').path(`/products/${offerSlug}-success`).first(),
+  {
+    // Don't fail if page doesn't exist
+    default: () => null,
+  }
+);
+
+console.log('TEST', offerSlug, successPage.value)
+definePageMeta({ layout: false });
+</script>
+
+<template>
+  <div class="relative min-h-screen flex items-center justify-center bg-linear-to-b from-background to-muted/20">
+    <!-- Logo at top -->
+    <div class="absolute top-6 left-0 right-0 z-50 flex justify-center">
+      <NuxtLink to="/">
+        <ILogo />
+      </NuxtLink>
+    </div>
+
+    <!-- Success Content -->
+    <div class="max-w-2xl w-full mx-auto px-4">
+      <!-- If MDC page exists, render it -->
+      <div v-if="successPage" class="bg-card rounded-2xl p-8 shadow-xl border border-success/20">
+        <ContentRenderer :value="successPage" />
+      </div>
+
+      <!-- Fallback if no MDC page -->
+      <div v-else class="bg-card rounded-2xl p-8 shadow-xl border border-success/20 text-center space-y-6">
+        <div class="flex justify-center">
+          <UIcon 
+            name="i-lucide-check-circle" 
+            class="w-20 h-20 text-success" 
+          />
+        </div>
+
+        <div class="space-y-2">
+          <h1 class="text-2xl font-bold text-white">
+            You're in!
+          </h1>
+          <p class="text-muted">
+            Check your email to get started.
+          </p>
+        </div>
+
+        <div class="pt-2">
+          <UButton
+            to="/"
+            size="lg"
+            variant="outline"
+            color="neutral"
+            block
+          >
+            Return Home
+          </UButton>
+        </div>
+      </div>
+    </div>
+  </div>
+</template>
+</file>
+
+<file path="app/pages/products/[slug].vue">
+<!-- products/[slug].vue -->
+<script setup lang="ts">
+import { STATUS_ICONS } from '#constants';
+
+const route = useRoute();
+const slug = route.params.slug as string;
+
+const { getSiteConfig, getProduct } = useContentCache();
+const { data: configData } = await getSiteConfig();
+const business = computed(() => configData.value?.business);
+
+// ✅ Always fetch offer data
+const { data: offer } = await getProduct(slug)
+
+if (!offer.value) {
+  throw createError({
+    statusCode: 404,
+    statusMessage: `Offer "${slug}" not found`,
+    fatal: true
+  });
+}
+
+if (offer.value.slug !== slug) {
+  navigateTo(`/products/${offer.value.slug}`, { redirectCode: 301 })
+}
+
+// ✅ Try to fetch MDC sales page
+const { data: salesPage } = await useAsyncData(
+  `product-sales-${slug}`,
+  () => queryCollection('pages').path(`/products/${slug}`).first(),
+  { default: () => null }
+);
+
+const hasSalesPage = computed(() => !!salesPage.value);
+
+// --- Offer Page Logic (Inlined) ---
+
+const features = computed(() => {
+  if (!offer.value?.features) return [];
+  return offer.value.features.map((f) => ({
+    ...f,
+    icon: STATUS_ICONS[f.icon] || f.icon,
+  }));
+});
+
+const { isAvailable } = useProductStock(offer.value.stock as any, offer.value.slug as any);
+const hasMedia = computed(() => !!offer.value.media?.src);
+const mediaType = computed(() => offer.value.media?.type || null);
+
+// Determine CTA type
+const ctaConfig = computed(() => offer.value.ctas.conversion);
+
+// Should show form or button?
+const showForm = computed(() => {
+  const strategy = ctaConfig.value?.strategy;
+  return strategy === 'modal' || !strategy;  // Default to form if no strategy
+});
+
+// --- SEO & Tracking ---
+
+defineOgImage({
+    component: 'Frame',
+    props: {
+      title: offer.value.title,
+      description: offer.value.description,
+      image: business.value?.logo,
+    },
+})
+
+if (offer.value.price && offer.value.price !== 'Free') {
+  const priceMatch = offer.value.price.match(/\$?(\d+)/);
+  const priceAmount = priceMatch ? priceMatch[1] : '0';
+  
+  useSchemaOrg([
+    defineProduct({
+      name: offer.value.title,
+      description: offer.value.description,
+      image: offer.value.media?.src,
+      offers: {
+        price: priceAmount,
+        priceCurrency: 'USD',
+        availability: 'InStock',
+      },
+    }),
+  ]);
+}
+
+definePageMeta({ layout: false });
+
+const { trackEvent } = useEvents();
+onMounted(() => {
+  trackEvent({
+    id: `offer_${offer.value.slug}_view`,
+    type: 'element_viewed',
+    location: `offer-page-${offer.value.slug}`,
+    action: 'page_view',
+    target: `/products/${offer.value.slug}`,
+    data: {
+      productId: offer.value.slug,
+      metadata: {
+        offer_slug: offer.value.slug,
+        offer_type: offer.value.type,
+        offer_price: offer.value.price,
+        is_primary: offer.value.primary,
+        has_sales_page: hasSalesPage.value,
+      },
+    },
+  });
+});
+</script>
+
+<template>
+  <div class="min-h-screen flex items-center justify-center relative overflow-hidden py-16 sm:py-20 lg:py-24">
+    <!-- Background -->
+    <div class="absolute inset-0 pointer-events-none">
+      <div class="absolute top-0 right-0 w-1/2 h-full bg-linear-to-l from-primary/5 to-transparent" />
+      <div class="absolute bottom-0 left-0 w-96 h-96 bg-secondary/5 rounded-full blur-3xl" />
+    </div>
+
+    <!-- Logo -->
+    <div class="absolute top-6 left-0 right-0 z-50 flex justify-center pointer-events-none">
+      <div class="pointer-events-auto">
+        <NuxtLink to="/"><ILogo /></NuxtLink>
+      </div>
+    </div>
+
+    <UContainer class="relative z-10">
+      <div class="max-w-3xl mx-auto">
+        
+        <!-- Header -->
+        <div class="space-y-6 text-center mb-12 lg:mb-16">
+          <h1 class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]">
+            {{ offer.title }}
+          </h1>
+          
+          <p class="text-lg sm:text-xl text-muted/80 leading-relaxed max-w-2xl mx-auto">
+            {{ offer.description }}
+          </p>
+          
+          <p v-if="offer.tagline" class="text-sm text-muted/60 italic">
+            {{ offer.tagline }}
+          </p>
+        </div>
+
+        
+
+        <!-- Pricing -->
+        <div v-if="offer.price && offer.price !== 'Free'" class="mb-12 lg:mb-16">
+          <div class="text-center">
+            <div class="inline-flex items-baseline gap-2">
+              <span v-if="offer.discount" class="text-2xl text-muted/50 line-through">
+                {{ offer.discount }}
+              </span>
+              <span class="text-5xl lg:text-6xl font-bold text-white">
+                {{ offer.price }}
+              </span>
+              <span v-if="offer.billingCycle" class="text-lg text-muted/70">
+                {{ offer.billingCycle }}
+              </span>
+            </div>
+            <p v-if="offer.terms" class="text-sm text-muted/60 mt-3">
+              {{ offer.terms }}
+            </p>
+          </div>
+        </div>
+
+        <!-- Features -->
+        <div v-if="features.length" class="mb-12 lg:mb-16">
+          <ul class="space-y-4 max-w-xl mx-auto">
+            <li 
+              v-for="feature in features" 
+              :key="feature.title" 
+              class="flex items-start gap-3 group"
+            >
+              <div class="mt-0.5 shrink-0">
+                <UIcon 
+                  :name="feature.icon" 
+                  class="w-6 h-6 text-success transition-transform group-hover:scale-110" 
+                />
+              </div>
+              <span class="text-base text-toned/90 leading-relaxed">
+                {{ feature.title }}
+              </span>
+            </li>
+          </ul>
+        </div>
+
+        <!-- Media -->
+        <div v-if="hasMedia" class="mb-12 lg:mb-16">
+          <div class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black/20 backdrop-blur-sm">
+
+            <div class="aspect-video">
+              <IVideo
+                v-if="mediaType === 'video'"
+                :src="offer.media.src"
+                :alt="offer.media.alt || offer.title"
+                class="w-full h-full"
+              />
+
+              <NuxtImg 
+                v-else-if="mediaType === 'image'" 
+                :src="offer.media.src" 
+                :alt="offer.media.alt || offer.title"
+                class="w-full h-full object-cover"
+              />
+            </div>
+          </div>
+        </div>
+
+        <!-- ✅ MDC Sales Content (Injected Here) -->
+        <div v-if="hasSalesPage" class="mb-12 lg:mb-16 prose prose-invert max-w-none">
+          <ContentRenderer :value="salesPage" :data="{ offer }" />
+        </div>
+
+        <!-- CTA Section -->
+        <div class="max-w-md mx-auto">
+          <div class="bg-white/2 border border-white/10 rounded-2xl p-6 lg:p-8 backdrop-blur-sm space-y-6">
+            
+            <!-- Show form -->
+            <IFormValidation
+              v-if="showForm"
+              :offer="offer"
+              cta-name="conversion"
+              :location="`sales-page-${offer.slug}`"
+            />
+
+            <!-- Show button -->
+            <IButtonCTA
+              v-else
+              :offer-id="offer.slug as any"
+              cta-name="conversion"
+              location="sales-page-bottom"
+              size="xl"
+              block
+            />
+            
+            <!-- Stock Progress -->
+            <div v-if="offer.stock && isAvailable" class="pt-4 border-t border-white/5">
+              <IStockProgress :stock="offer.stock as any" :offer-id="offer.slug as any" />
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </UContainer>
+  </div>
+</template>
+</file>
+
+<file path="examples/founder-funnel/content/pages/products/mentorship-success.md">
+---
+title: "You're on the waitlist!"
+description: "We'll notify you when consultation hours become available."
+---
+
+# You're on the waitlist!
+
+All consultation hours are currently booked. We'll email you when availability opens up.
+
+### What happens next?
+
+- **Priority access** - You'll be first to know when hours open
+- **No commitment** - Book only if the timing works for you
+- **Updates** - We'll keep you posted on availability
+</file>
+
+<file path="examples/founder-funnel/content/pages/products/mentorship.md">
+---
+title: Affordable Monthly Mentorship
+description: Get personalized guidance to launch your funnel successfully.
+---
+
+# Affordable Monthly Mentorship
+
+Get personalized guidance to launch your funnel successfully. For serious entrepreneurs only.
+
+## What's Included
+
+**Monthly mentorship package:**
+
+- ✅ **Full installation & setup** - We handle the technical details
+- ✅ **Custom branding applied** - Your logo, colors, and style
+- ✅ **Analytics configuration** - Track what matters
+- ✅ **Email provider integration** - Connect your tools
+- ✅ **1-hour strategy call** - Monthly consultation
+
+## Investment
+
+**$250/month** (normally $500)
+
+Ongoing guidance and priority support included.
+
+## Who This Is For
+
+This mentorship is for:
+- Technical founders who want expert guidance
+- Entrepreneurs serious about validation
+- Teams looking to move fast without mistakes
+
+## Limited Availability
+
+Only **10 spots** available to ensure quality. Currently **1 spot** taken.
+
+## Ready to Get Started?
+
+Click "Book a Call" above to schedule your free consultation and see if we're a good fit.
+</file>
+
+<file path="examples/founder-funnel/content/pages/products/template-guide-success.md">
+---
+title: "You're in!"
+description: Check your email to get started with the Founder Funnel Template Guide.
+---
+
+# You're in!
+
+Check your email to get started with the Founder Funnel Template Guide.
+
+### What's Next?
+
+1. **Check your inbox** - We've sent you the template guide
+2. **Review the setup** - Follow the quick start instructions  
+3. **Start building** - Deploy your landing page in minutes
+</file>
+
+<file path="examples/founder-funnel/content/pages/products/template-guide.md">
+---
+title: Founder Funnel Template Guide
+description: Get up and running in minutes with the official quick start guide.
+---
+
+# Founder Funnel Template Guide
+
+Get up and running in minutes with the official quick start guide for the Founder Funnel template.
+
+## What You'll Get
+
+**Instant access to:**
+
+1. **Quick start video** - Step-by-step walkthrough
+2. **Configuration docs** - Customize your funnel
+3. **Deployment guide** - Launch in minutes
+4. **Best practices** - Optimize for conversions
+5. **Community support** - Connect with other founders
+
+## Why This Template?
+
+Built by founders, for founders. No monthly fees, no vendor lock-in, just a clean, validated landing page that works.
+
+### Features
+
+- ✅ Built with Nuxt 3 and Vue
+- ✅ Email capture and validation
+- ✅ Analytics out of the box
+- ✅ Mobile responsive
+- ✅ Dark mode ready
+- ✅ Open source (MIT License)
+
+## Get Started Now
+
+Enter your email above to receive instant access to the template guide.
+</file>
+
+<file path="examples/validator/content/offers/direct.yml">
+slug: direct
+title: "Done-With-You Implementation"
+description: "Hands on accountability + validation guidance."
+tagline: "⚡ Upgrade when: You need momentum, accountability, or technical execution help"
+price: "$50"
+discount: "$30"
+billingCycle: "hour"
+terms: "Billed monthly. Minimum 3 hours."
+highlight: true
+type: ebook
+stock:
+  limit: 10
+  claimed: 1
+  type: spots
+variant: "outline"
+primary: false
+features:
+  - title: "Weekly 1:1 check-ins + execution planning (not just advice)"
+    icon: "status-available"
+  - title: "Strategic mentorship: positioning, offer packaging, messaging"
+    icon: "status-available"
+  - title: "Hands-on development support (or fully managed implementation)"
+    icon: "status-available"
+  - title: "Daily guerrilla marketing playbook + validation strategy"
+    icon: "status-available"
+  - title: "Copywriting + messaging review for conversions"
+    icon: "status-available"
+  - title: "Custom integration setup (analytics, forms, email sequences)"
+    icon: "status-available"
+ctas:
+  funnel:
+    strategy: link
+    label: "Learn More"
+    to: "/products/direct"
+    icon: "i-lucide-arrow-right"
+    color: "secondary"
+  
+  conversion:
+    strategy: external
+    label: "Book a Call"
+    to: "https://cal.com/drew-macgibbon/strategy-consultation"
+    icon: "i-lucide-calendar"
+    color: "primary"
+    note: "Monthly packages available. First hour: strategy session."
+  
+  secondary:
+    strategy: external
+    label: "View Portfolio"
+    to: "https://incubrain.org"
+    icon: "i-lucide-briefcase"
+    color: "neutral"
+
+waitlist:
+  coming_soon:
+    badge:
+      label: 'Launching Soon'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'This implementation service is launching soon. Get early access.'
+    success:
+      title: "You're on the list!"
+      message: "We'll email you as soon as this launches."
+  
+  unavailable:
+    badge:
+      label: 'Waitlist Only'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'All implementation slots filled. Join waitlist for next batch.'
+    success:
+      title: "You're on the waitlist!"
+      message: "We'll notify you when slots become available."
+</file>
+
+<file path="content/offers/direct.yml">
+slug: direct
+primary: false
+title: '⚠️ Hire Me Directly'
+description: '⚠️ Your hourly service description'
+price: '$100'
+discount: '$50'
+billingCycle: /hour
+terms: '⚠️ Terms of service or billing'
+tagline: '⚠️ Short compelling tagline'
+badge:
+  label: '⚠️ Badge text'
+  color: neutral
+  variant: outline
+  size: sm
+features:
+  - title: '⚠️ Service benefit 1'
+    icon: status-available
+  - title: '⚠️ Service benefit 2'
+    icon: status-available
+  - title: '⚠️ Service benefit 3'
+    icon: status-coming-soon
+variant: outline
+highlight: false
+ctas:
+  funnel:
+    strategy: link
+    label: 'Learn More'
+    to: '/products/direct'
+    icon: i-lucide-arrow-right
+    color: secondary
+  
+  conversion:
+    strategy: external
+    label: '⚠️ Button text'
+    to: https://your-booking-link.com
+    icon: i-lucide-handshake
+    color: primary
+    note: '⚠️ Small text below button'
+  
+  secondary:
+    strategy: external
+    label: 'View Work'
+    to: 'https://your-portfolio.com'
+    icon: i-lucide-briefcase
+    color: neutral
+
+stock:
+  limit: 10
+  claimed: 2
+  type: hours
+
+waitlist:
+  coming_soon:
+    badge:
+      label: 'Coming Soon'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'This service will be available soon. Join the waitlist to be notified.'
+    success:
+      title: "You're on the list!"
+      message: "We'll email you when this becomes available."
+  
+  unavailable:
+    badge:
+      label: 'Waitlist'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'All hours currently booked. Join waitlist for next availability.'
+    success:
+      title: "You're on the waitlist!"
+      message: "We'll notify you when hours open up."
+</file>
+
+<file path="examples/founder-funnel/content/offers/direct.yml">
+slug: mentorship
+primary: false
+title: Affordable Monthly Mentorship
+description: Get personalized guidance to launch your funnel successfully.
+tagline: For serious entrepreneurs only
+price: $250
+discount: $500
+billingCycle: monthly
+terms: Ongoing guidance and priority support included.
+badge:
+  label: Optional
+  color: secondary
+  variant: outline
+  size: md
+features:
+  - title: Full installation & setup
+    icon: status-available
+  - title: Custom branding applied
+    icon: status-available
+  - title: Analytics configuration
+    icon: status-available
+  - title: Email provider integration
+    icon: status-available
+  - title: 1-hour strategy call
+    icon: status-available
+variant: outline
+highlight: true
+type: ebook
+stock:
+  limit: 10
+  claimed: 1
+  type: spots
+ctas:
+  funnel:
+    strategy: link
+    label: Learn More
+    to: /products/mentorship
+    icon: i-lucide-arrow-right
+    color: secondary
+  
+  conversion:
+    strategy: external
+    label: Book a Call
+    to: https://cal.com/drew-macgibbon/strategy-consultation
+    icon: i-lucide-calendar
+    color: primary
+  
+  secondary:
+    strategy: external
+    label: View Services
+    to: https://incubrain.org
+    icon: i-lucide-external-link
+    color: neutral
+  
+waitlist:
+  coming_soon:
+    badge:
+      label: 'Coming Soon'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'Implementation service launching soon. Get notified when available.'
+    success:
+      title: "You're on the list!"
+      message: "We'll email you at launch."
+  unavailable:
+    badge:
+      label: 'Fully Booked'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'All implementation slots taken. Join waitlist for next opening.'
+    success:
+      title: "You're on the list!"
+      message: "We'll notify you when slots open up."
+</file>
+
+<file path="shared/config/events.ts">
+// shared/config/events.ts
+import type { EventPayload } from '#shared/types/events';
+
+/**
+ * Smart fallback data provider
+ * Generates sensible defaults for missing data
+ */
+const EVENT_FALLBACKS = {
+  formId: () => 'waitlist',
+  recordId: () => `mock-${Date.now()}`,
+  email: () => 'dev@example.com',
+  productId: () => 'magnet',
+  customerStage: () => 'email_captured' as const,
+  currentStage: () => 'traffic' as const,
+  modalType: () => 'windowed',
+  target: () => 'test-element',
+  metadata: () => ({}),
+  location: () => '/',
+} as const;
+
+/**
+ * Apply fallbacks to payload data
+ * Only fills in missing values, doesn't override existing ones
+ */
+function applyFallbacks(
+  data: Record<string, any> = {},
+  requiredFields: Array<keyof typeof EVENT_FALLBACKS> = [],
+): Record<string, any> {
+  const result = { ...data };
+
+  for (const field of requiredFields) {
+    if (result[field] === undefined && EVENT_FALLBACKS[field]) {
+      result[field] = EVENT_FALLBACKS[field]();
+    }
+  }
+
+  return result;
+}
+
+type EventChainConfig = {
+  triggers: TrackedEvents[];
+  condition?: (payload: EventPayload) => boolean;
+  data?: (payload: EventPayload) => Partial<EventPayload['data']>;
+  requiredFields?: Array<keyof typeof EVENT_FALLBACKS>; // Auto-fill missing fields
+};
+
+export const EVENT_CHAINS: Partial<Record<TrackedEvents, EventChainConfig>> = {
+  exit_intent: {
+    triggers: ['modal_open'],
+    requiredFields: ['productId', 'location'],
+    condition: (payload) => {
+      // Only trigger on homepage or in DevTools
+      return payload.location === '/' || payload._devToolsTriggered === true;
+    },
+    data: (payload) => ({
+      action: 'fullscreen_modal',
+      productId: 'direct',
+      location: payload.location,
+    }),
+  },
+} as const;
+
+/**
+ * Minimal metadata for DevTools only
+ * No duplication of data structure
+ */
+export const EVENT_METADATA: Partial<
+  Record<
+    TrackedEvents,
+    {
+      label: string;
+      description: string;
+      icon: string;
+      category: 'form' | 'modal' | 'action' | 'other';
+    }
+  >
+> = {
+  form_submitted: {
+    label: 'Form Submit',
+    description: 'Server submission → Triggers feedback',
+    icon: 'i-lucide-check-circle',
+    category: 'form',
+  },
+  form_error: {
+    label: 'Form Error',
+    description: 'Validation failed',
+    icon: 'i-lucide-alert-circle',
+    category: 'form',
+  },
+  element_clicked: {
+    label: 'Action Click',
+    description: 'Button clicked',
+    icon: 'i-lucide-mouse-pointer-click',
+    category: 'action',
+  },
+  element_viewed: {
+    label: 'Action View',
+    description: 'Element viewed',
+    icon: 'i-lucide-eye',
+    category: 'action',
+  },
+  exit_intent: {
+    label: 'Exit Intent',
+    description: '→ Exit modal',
+    icon: 'i-lucide-log-out',
+    category: 'other',
+  },
+} as const;
+
+// Export helper for external use
+export { applyFallbacks, EVENT_FALLBACKS };
+</file>
+
+<file path="examples/founder-funnel/content/offers/magnet.yml">
+slug: template-guide
+primary: true
+title: Founder Funnel Template Guide
+description: Get up and running in minutes with the official quick start guide.
+price: Free
+billingCycle: Instant access
+terms: Access the template immediately. No email required.
+media: 
+  type: video
+  src: https://www.youtube.com/embed/eikaYXCzI3Q?si=BRvztbTUhE5PVd8h
+  alt: Template Guide
+badge:
+  label: Free Guide
+  color: success
+  variant: solid
+  size: lg
+features:
+  - title: Quick start video
+    icon: status-available
+  - title: Configuration docs
+    icon: status-available
+  - title: Deployment guide
+    icon: status-available
+  - title: Best practices
+    icon: status-available
+  - title: Community support
+    icon: status-available
+variant: solid
+highlight: true
+type: ebook
+stock:
+  limit: 100
+  claimed: 10
+  type: spots
+ctas:
+  funnel:
+    to: /products/template-guide
+    label: View Details
+    icon: i-lucide-play
+    modal: windowed_modal
+  
+  conversion:
+    strategy: modal
+    label: Get Instant Access
+    icon: i-lucide-download
+    modal: windowed_modal
+
+  secondary:
+    strategy: external
+    label: One Click Deploy
+    to: https://github.com/incubrain/founder-funnel
+    icon: i-lucide-rocket
+    color: secondary
+
+waitlist:
+  coming_soon:
+    badge:
+      label: 'Coming Soon'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'Be first to know when we launch.'
+    success:
+      title: "You're on the list!"
+      message: "We'll email you at launch."
+  
+  unavailable:
+    badge:
+      label: 'Waitlist'
+      color: neutral
+      variant: soft
+      size: lg
+    description: 'All spots taken. Join waitlist for next availability.'
+    success:
+      title: "You're on the list!"
+      message: "We'll notify you when spots open up."
+</file>
+
+<file path="app/components/form/Validation.vue">
+<!-- app/components/form/Validation.vue -->
+<script setup lang="ts">
+import { z } from 'zod';
+import type { Offer, CtaName } from '#types';
+import { STAGE_CONFIG } from '#stage-config';
+
+interface Props {
+  location: string;
+  offer: Offer;
+  layout?: 'stacked' | 'horizontal';
+  ctaName?: CtaName;
+}
+
+const props = withDefaults(defineProps<Props>(), {
+  layout: 'stacked',
+  ctaName: 'funnel',
+});
+
+const { currentStage } = useDevTools();
+const { isAvailable } = useProductStock(props.offer.stock, props.offer.slug);
+
+// Determine offer state
+const offerState = computed<'available' | 'coming_soon' | 'unavailable'>(() => {
+  if (!isAvailable.value) return 'unavailable';
+  
+  const target = STAGE_CONFIG.conversionTarget[currentStage.value as StageKey];
+  if (target === 'waitlist') return 'coming_soon';
+  
+  return 'available';
+});
+
+// Determine form type
+const formType = computed<'waitlist'>(() => {
+  return 'waitlist';
+});
+
+// ✅ Get CTA config from offer
+const cta = computed(() => {
+  if (!props.offer.ctas) return null;
+  return props.offer.ctas[props.ctaName];
+});
+
+// Messaging type
+type MessagingType = {
+  badge?: {
+    label: string;
+    color: 'primary' | 'secondary' | 'success' | 'info' | 'warning' | 'error' | 'neutral';
+    variant: 'solid' | 'outline' | 'subtle' | 'soft';
+    size: 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+  };
+  description?: string;
+  cta: {
+    label: string;
+    icon: string;
+  };
+  success?: {
+    title: string;
+    message: string;
+  };
+  note?: string;
+};
+
+// Get messaging
+// app/components/form/Validation.vue - Replace messaging computed
+const messaging = computed<MessagingType | null>(() => {
+  if (formType.value === 'waitlist') {
+    const reason = offerState.value === 'unavailable' ? 'unavailable' : 'coming_soon';
+    const waitlistMsg = props.offer.waitlist?.[reason];
+    if (!waitlistMsg) return null;
+    
+    return {
+      badge: waitlistMsg.badge,
+      description: waitlistMsg.description,
+      // ✅ Computed CTA - no longer from YAML
+      cta: {
+        label: reason === 'unavailable' ? 'Join Waitlist' : 'Get Early Access',
+        icon: reason === 'unavailable' ? 'i-lucide-clock' : 'i-lucide-bell',
+      },
+      success: waitlistMsg.success,
+    };
+  }
+  
+  // Normal flow unchanged
+  if (!cta.value) return null;
+  return {
+    cta: {
+      label: cta.value.label,
+      icon: cta.value.icon || 'i-lucide-mail',
+    },
+    note: cta.value.note,
+    success: {
+      title: "You're in!",
+      message: "Check your email to get started.",
+    },
+  };
+});
+
+// Schema
+const schema = z.object({
+  email: z.string().email('Please enter a valid email address'),
+});
+
+const state = reactive({ email: '' });
+
+// Real-time validation
+const is_valid_email = computed(() => {
+  try {
+    schema.parse({ email: state.email });
+    return true;
+  } catch {
+    return false;
+  }
+});
+
+// Form submission
+const { submit, isSubmitting, isSuccess } = useFormSubmission({
+  formId: formType.value,
+  schema,
+  location: props.location,
+  metadata: {
+    reason: offerState.value,
+    productId: props.offer.slug,
+    customerStage: 'interest_expressed',
+  },
+});
+
+const handleSubmit = async () => {
+  await submit(state);
+  
+  // ✅ Redirect to success page after successful submission
+  if (isSuccess.value) {
+    navigateTo(`/products/${props.offer.slug}-success`);
+  }
+};
+
+// Dynamic classes
+const isWaitlist = computed(() => formType.value === 'waitlist');
+const formClasses = computed(() => 
+  props.layout === 'horizontal' 
+    ? 'flex flex-col sm:flex-row gap-3' 
+    : 'space-y-3'
+);
+</script>
+
+<template>
+  <div v-if="messaging" class="w-full">
+    <!-- Waitlist badge/description -->
+    <div v-if="isWaitlist && messaging.badge" class="text-center space-y-2 mb-4">
+      <UBadge 
+        :color="messaging.badge.color" 
+        :variant="messaging.badge.variant" 
+        :size="messaging.badge.size"
+      >
+        {{ messaging.badge.label }}
+      </UBadge>
+      <p class="text-sm text-muted">{{ messaging.description }}</p>
+    </div>
+    
+    <!-- Universal form -->
+    <UForm ref="formRef" :state="state" :schema="schema" @submit="handleSubmit">
+      <div :class="formClasses">
+        <UFormField name="email">
+          <UInput
+            v-model="state.email"
+            type="email"
+            placeholder="your@email.com"
+            size="xl"
+            :disabled="isSubmitting"
+            :class="layout === 'horizontal' ? 'flex-1' : 'w-full'"
+          />
+        </UFormField>
+        <UButton
+          type="submit"
+          size="xl"
+          :block="layout === 'stacked'"
+          :loading="isSubmitting"
+          :disabled="state.email && (!is_valid_email || isSubmitting)"
+          variant="solid"
+          :color="isWaitlist ? 'neutral' : 'primary'"
+          :class="['cursor-pointer disabled:cursor-not-allowed', isWaitlist ? '' : 'text-toned font-black']"
+        >
+          {{ messaging.cta.label }}
+        </UButton>
+      </div>
+    </UForm>
+    
+    <!-- Optional note -->
+    <p v-if="messaging.note" class="text-xs text-muted text-center mt-3">
+      {{ messaging.note }}
+    </p>
+  </div>
+</template>
+</file>
+
+<file path="package.json">
+{
+  "name": "founder-funnel",
+  "version": "0.4.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "nuxt build",
+    "dev": "nuxt dev",
+    "generate": "nuxt generate",
+    "preview": "nuxt preview",
+    "postinstall": "nuxt prepare",
+    "prepare": "husky",
+    "lint": "eslint .",
+    "lint:fix": "eslint . --fix",
+    "leads:backup": "tsx --env-file=.env shared/utils/leads-backup.ts",
+    "leads:restore": "tsx --env-file=.env shared/utils/leads-restore.ts",
+    "ship": "git push",
+    "docker": "docker build --memory=4g -t funnel . && docker run --env-file .env --rm -p 3000:3000 funnel",
+    "repomix": "{ git ls-files --others --exclude-standard; git diff --name-only; git diff --cached --name-only; } | sort -u | repomix --stdin -o repomix-changed.xml"
+  },
+  "dependencies": {
+    "@iconify/json": "^2.2.406",
+    "@internationalized/date": "^3.10.0",
+    "@nuxt/content": "^3.8.2",
+    "@nuxt/image": "2.0.0",
+    "@nuxt/scripts": "0.13.0",
+    "@nuxt/test-utils": "3.20.1",
+    "@nuxt/ui": "4.2.1",
+    "@nuxtjs/seo": "3.2.2",
+    "@unhead/vue": "^2.0.19",
+    "@vueuse/core": "^14.0.0",
+    "@vueuse/nuxt": "14.0.0",
+    "better-sqlite3": "^12.4.1",
+    "canvas-confetti": "^1.9.4",
+    "husky": "^9.1.7",
+    "nodemailer": "^7.0.11",
+    "nuxt": "^4.2.1",
+    "nuxt-studio": "1.0.0-alpha.2",
+    "typescript": "^5.9.3",
+    "uuid": "^13.0.0",
+    "vue": "^3.5.24",
+    "vue-router": "^4.6.3"
+  },
+  "devDependencies": {
+    "@compodium/nuxt": "0.1.0-beta.12",
+    "@nuxt/eslint": "1.10.0",
+    "@nuxt/hints": "1.0.0-alpha.2",
+    "@types/node": "^22.0.0",
+    "@types/nodemailer": "^7.0.4",
+    "vue-tsc": "^3.1.3"
+  },
+  "packageManager": "pnpm@10.12.0"
+}
+</file>
+
+<file path="app/components/section/Offer.vue">
+<script setup lang="ts">
+import type { ButtonProps, BadgeProps } from '#ui/types';
+import { STATUS_ICONS } from '#constants';
+
+defineProps<{
+  data?: any;
+}>();
+
+// Get primary offer
+const { getPrimaryOffer } = useContentCache();
+const { data: primaryOffer } = await getPrimaryOffer();
+
+// Get founder
+const { getFounder } = useContentCache();
+const { data: founderData } = await getFounder();
+
+const transformedFeatures = computed(() => {
+  if (!primaryOffer.value?.features) return [];
+
+  return primaryOffer.value.features.map((feature) => {
+    const resolved = STATUS_ICONS[feature.icon] || {
+      name: feature.icon,
+      class: '',
+    };
+    return {
+      title: feature.title,
+      icon: resolved.name,
+      class: resolved.class,
+    };
+  });
+});
+
+const { showSection } = useSectionVisibility();
+</script>
+
+<template>
+  <ISectionWrapper
+    v-if="showSection('offer')"
+    id="#offer"
+    :intro="data.intro"
+    :cta="data.cta"
+    class="relative"
+  >
+    <!-- Background glow -->
+    <div class="absolute inset-0 flex items-center justify-center pointer-events-none">
+      <div class="w-[80%] h-[80%] bg-primary/5 rounded-full blur-3xl" />
+    </div>
+
+    <!-- Main content grid -->
+    <div class="grid lg:grid-cols-[400px_1fr] gap-8 lg:gap-12 max-w-6xl mx-auto relative z-10 px-4">
+      
+      <!-- Left: Founder Sidebar -->
+      <div class="flex flex-col items-center lg:items-start gap-6 lg:sticky lg:top-24 lg:self-start">
+        <!-- Portrait -->
+        <div class="relative group">
+          <div class="absolute inset-0 bg-linear-to-t from-primary/20 to-transparent blur-xl group-hover:blur-2xl transition-all duration-300" />
+          <NuxtImg
+            :src="founderData.profile.portrait.src"
+            :alt="founderData.profile.portrait.alt"
+            class="w-32 h-32 lg:w-40 lg:h-40 object-cover object-top border border-primary/20 shadow-2xl relative z-10 pt-2 rounded-full"
+          />
+        </div>
+
+        <!-- Name & Role -->
+        <div class="text-center lg:text-left space-y-1">
+          <h3 class="text-xl font-bold text-highlighted">
+            {{ founderData?.profile.name }}
+          </h3>
+          <p class="text-xs uppercase tracking-wider text-muted">
+            {{ founderData?.profile.role }}
+          </p>
+        </div>
+
+        <!-- Quote (with marks) -->
+          <p class="text-base max-w-sm text-center lg:text-left lg:text-lg italic text-dimmed leading-relaxed">
+            {{ founderData?.story.mission }}
+          </p>
+
+        <!-- Read Story Link -->
+        <UButton
+          to="/story"
+          label="Read My Story"
+          color="neutral"
+          variant="link"
+          trailing-icon="i-lucide-arrow-right"
+          class="self-center lg:self-start px-0"
+        />
+      </div>
+
+      <!-- Right: Offer Card -->
+      <div v-if="primaryOffer" class="max-w-md mx-auto lg:mx-0 w-full">
+        <UPricingPlan
+          v-bind="primaryOffer as any"
+          :badge="primaryOffer.badge as BadgeProps"
+          :features="transformedFeatures"
+          variant="soft"
+          :ui="{
+            root: 'bg-primary/5 backdrop-blur-sm',
+            features: 'gap-3',
+            feature: 'items-center',
+            terms: 'w-full',
+            featureTitle: 'text-sm leading-tight',
+          }"
+        >
+          <template #description>
+            <p class="text-base text-toned">{{ primaryOffer.description }}</p>
+          </template>
+
+          <template #features>
+            <ul class="flex flex-col gap-3 flex-1 mt-6 grow-0">
+              <li
+                v-for="feature in transformedFeatures"
+                :key="feature.title"
+                class="flex items-center gap-2 min-w-0"
+              >
+                <UIcon
+                  :name="feature.icon"
+                  :class="[feature.class, 'size-5 shrink-0']"
+                />
+                <span class="text-muted text-sm truncate">
+                  {{ feature.title }}
+                </span>
+              </li>
+            </ul>
+          </template>
+
+          <template #button>
+            <div class="pt-4 w-full">
+              <IFormValidation location="offer-section" :offer="primaryOffer" />
+            </div>
+          </template>
+
+          <template v-if="primaryOffer.stock" #terms>
+            <IStockProgress
+              :stock="primaryOffer.stock"
+              :offer-id="primaryOffer.slug"
+              class="w-full"
+            />
+          </template>
+        </UPricingPlan>
+
+        <div 
+          v-if="primaryOffer.ctas.secondary"
+          class="mt-4 flex flex-col gap-4 justify-center items-center"
+        >
+          <UBadge variant="soft">OR</UBadge>
+          <IButtonCTA
+            :offer-id="primaryOffer.slug"
+            cta-name="secondary"
+            location="offer-section-alt"
+            size="xl"
+            block
+          />
+        </div>
+      </div>
+    </div>
+  </ISectionWrapper>
+</template>
+</file>
+
+<file path="nuxt.config.ts">
+// https://nuxt.com/docs/api/configuration/nuxt-config
+import { fileURLToPath } from 'node:url';
+import { getActiveConfigSource } from './shared/utils/config-resolver';
+import path from 'node:path';
+
+const activeSource = getActiveConfigSource();
+const publicDir = activeSource === 'root' 
+  ? 'public' 
+  : path.resolve(process.cwd(), `examples/${activeSource}/public`);
+
+export default defineNuxtConfig({
+  dir: {
+    public: publicDir,
+  },
+
+  modules: [
+    '@nuxtjs/seo',
+    '@nuxt/ui',
+    '@nuxt/content', // <-- Must be after @nuxtjs/seo & @nuxt/ui
+    '@nuxt/fonts',
+    '@nuxt/image',
+    '@vueuse/nuxt',
+    '@nuxt/scripts',
+    // 'nuxt-studio', // {DX}: studio breaks HMR alpha.2
+  ],
+
+  // {CONFIG}
+  site: {
+    url: 'https://founder-funnel.incubrain.org',
+    name: 'Founder Funnel',
+    description: 'Open-source funnel for technical founders',
+  },
+
+  seo: {
+    redirectToCanonicalSiteUrl: true
+  },
+
+  // {DX}: studio breaks HMR alpha.2
+  // studio: {
+  //     // Studio admin route (default: '/_studio')
+  //     route: '/_studio',
+  // 
+  //     // {FIX}: broken, pending triage of this https://github.com/nuxt-content/studio/pull/73
+  //     // development: {
+  //     //   sync: true, // Enable development mode
+  //     // },
+  // 
+  //     // GitHub repository configuration (owner and repo are required)
+  //     repository: {
+  //       provider: 'github', // only GitHub is currently supported
+  //       owner: 'incubrain', // your GitHub username or organization
+  //       repo: 'founder-funnel', // your repository name
+  //       branch: 'main', // the branch to commit to (default: main)
+  //       rootDir: activeSource === 'root' ? '' : `examples/${activeSource}`,
+  //       private: true,
+  //     },
+  //   },
+
+  ssr: true,
+
+  $development: {
+    modules: [
+      '@nuxt/eslint',
+      '@compodium/nuxt',
+      '@nuxt/hints'
+    ],
+
+    devtools: { enabled: true },
+
+    scripts: {
+      registry: {
+        umamiAnalytics: 'mock',
+      },
+    },
+
+    // Dev-specific Nitro config
+    nitro: {
+      debug: true,
+    },
+
+    // TypeScript checking in dev
+    typescript: {
+      typeCheck: false,
+      strict: false,
+    },
+  },
+
+  // {PERF}: Production only performance optimizations
+  $production: {
+    sourcemap: false,
+    experimental: {
+      payloadExtraction: false, // Faster builds
+    },
+
+    scripts: {
+      registry: {
+        umamiAnalytics: true,
+      },
+    },
+
+    nitro: {
+      prerender: {
+        // Intentionally empty - dynamic routes are not prerendered
+        routes: [],
+        crawlLinks: false,
+      },
+    },
+  },
+
+  imports: {
+    dirs: ['~~/theme/*.ts'],
+  },
+
+  app: {
+    pageTransition: {
+      name: 'page',
+      mode: 'out-in',
+    },
+    layoutTransition: {
+      name: 'layout',
+      mode: 'out-in',
+    },
+  },
+
+  runtimeConfig: {
+    public: {
+      analyticsLink: '',
+      configSource: '',
+      scripts: {
+        umamiAnalytics: {
+          websiteId: '',
+          scriptInput: {
+            src: '',
+          },
+        },
+      },
+    },
+    storage: {
+      provider: '',
+      url: '',
+      secret: '',
+    },
+  },
+
+  css: ['~/assets/css/main.css'],
+
+  ui: {
+    theme: {
+      colors: [
+        'primary',
+        'secondary',
+        'neutral',
+        'info',
+        'success',
+        'warning',
+        'error',
+      ],
+    },
+  },
+
+  alias: {
+    '#theme': fileURLToPath(new URL('./theme/index.ts', import.meta.url)),
+    '#config': fileURLToPath(
+      new URL('./shared/config/index.ts', import.meta.url),
+    ),
+    '#types': fileURLToPath(
+      new URL('./shared/types/config.ts', import.meta.url),
+    ),
+    '#stage-config': activeSource === 'root'
+      ? fileURLToPath(new URL('./config/stages.ts', import.meta.url))
+      : fileURLToPath(new URL(`./examples/${activeSource}/config/stages.ts`, import.meta.url)),
+    '#constants': fileURLToPath(
+      new URL('./shared/constants.ts', import.meta.url),
+    ),
+  },
+
+  future: {
+    compatibilityVersion: 4,
+  },
+
+  router: {
+    options: {
+      scrollBehaviorType: 'smooth',
+    },
+  },
+
+  routeRules: {
+    '/': { 
+      ssr: true,      
+      prerender: false
+    },
+    '/products/**': { 
+      ssr: true,      
+      prerender: false
+    },
+    '/story': { ssr: true,      
+      prerender: false }, 
+    '/updates': { swr: 3600 }, // Updates cached for 1 hour, regenerates in background 
+    '/updates/**': { swr: 3600 },
+  },
+  
+  components: [
+    { path: '~/components', prefix: 'I' },
+  ],
+
+  experimental: {
+    defaults: {
+      nuxtLink: {
+        externalRelAttribute: 'noopener noreferrer',
+        prefetch: false,
+        prefetchOn: { interaction: true },
+        trailingSlash: 'remove',
+      },
+    },
+  },
+
+  compatibilityDate: '2025-07-15',
+
+  icon: {
+    serverBundle: {
+      // {DX}: Using full @iconify/json no need to install collection packages
+      // collections array enables tree-shake
+      collections: ['lucide', 'mdi', 'logos'],
+    },
+  },
+});
+</file>
+
+</files>

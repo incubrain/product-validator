@@ -10,7 +10,7 @@ export const STAGE_CONFIG = {
     { value: 'growth', label: 'Growth', order: 3 },
   ],
   
-  offers: {
+  products: {
     primary: 'magnet',
     secondary: 'direct',
   },
@@ -34,7 +34,7 @@ export const STAGE_CONFIG = {
         hero: 'waitlist',
         problemSolution: 'waitlist',
         process: 'launch',
-        offer: 'launch',
+        product: 'launch',
         concerns: 'launch',
         founder: 'growth',
         results: 'growth',

@@ -35,7 +35,7 @@ data:
     message: Start by defining your problem and solution clearly.
     button:
       label: Get the Template
-      to: '#offer'
+      to: '#product'
       icon: i-lucide-arrow-down
 ---
 ::
@@ -52,12 +52,12 @@ data:
 ::
 
 
-::i-section-offer
+::i-section-product
 ---
 data:
   intro:
     icon: i-lucide-handshake
-    headline: The Offer
+    headline: The Product
     title: Everything You Need to Launch
     description: Get the complete validation stack. Landing page, analytics, and email capture.
 ---

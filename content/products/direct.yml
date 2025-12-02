@@ -25,7 +25,7 @@ ctas:
   funnel:
     strategy: link
     label: 'Learn More'
-    to: '/get/direct'
+    to: '/products/direct'
     icon: i-lucide-arrow-right
     color: secondary
   

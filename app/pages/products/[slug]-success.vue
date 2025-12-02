@@ -1,19 +1,19 @@
 <script setup lang="ts">
 import confetti from 'canvas-confetti';
 
-// Get offer slug from query params
+// Get product slug from query params
 const route = useRoute();
-const offerSlug = route.params.slug as string;
+const productSlug = route.params.slug as string;
 
-// Redirect to home if no offer specified
-if (!offerSlug) {
+// Redirect to home if no product specified
+if (!productSlug) {
   navigateTo('/');
 }
 
-// Try to fetch the MDC success page for this offer
+// Try to fetch the MDC success page for this product
 const { data: successPage } = await useAsyncData(
-  `product-success-${offerSlug}`,
-  () => queryCollection('pages').path(`/products/${offerSlug}-success`).first(),
+  `product-success-${productSlug}`,
+  () => queryCollection('pages').path(`/products/${productSlug}-success`).first(),
   {
     // Don't fail if page doesn't exist
     default: () => null,

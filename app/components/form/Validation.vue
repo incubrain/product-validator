@@ -1,12 +1,12 @@
 <!-- app/components/form/Validation.vue -->
 <script setup lang="ts">
 import { z } from 'zod';
-import type { Offer, CtaName } from '#types';
+import type { Product, CtaName } from '#types';
 import { STAGE_CONFIG } from '#stage-config';
 
 interface Props {
   location: string;
-  offer: Offer;
+  product: Product;
   layout?: 'stacked' | 'horizontal';
   ctaName?: CtaName;
 }
@@ -17,10 +17,10 @@ const props = withDefaults(defineProps<Props>(), {
 });
 
 const { currentStage } = useDevTools();
-const { isAvailable } = useOfferStock(props.offer.stock, props.offer.slug);
+const { isAvailable } = useProductStock(props.product.stock, props.product.slug);
 
-// Determine offer state
-const offerState = computed<'available' | 'coming_soon' | 'unavailable'>(() => {
+// Determine product state
+const productState = computed<'available' | 'coming_soon' | 'unavailable'>(() => {
   if (!isAvailable.value) return 'unavailable';
   
   const target = STAGE_CONFIG.conversionTarget[currentStage.value as StageKey];
@@ -34,10 +34,10 @@ const formType = computed<'waitlist'>(() => {
   return 'waitlist';
 });
 
-// ✅ Get CTA config from offer
+// ✅ Get CTA config from product
 const cta = computed(() => {
-  if (!props.offer.ctas) return null;
-  return props.offer.ctas[props.ctaName];
+  if (!props.product.ctas) return null;
+  return props.product.ctas[props.ctaName];
 });
 
 // Messaging type
@@ -64,8 +64,8 @@ type MessagingType = {
 // app/components/form/Validation.vue - Replace messaging computed
 const messaging = computed<MessagingType | null>(() => {
   if (formType.value === 'waitlist') {
-    const reason = offerState.value === 'unavailable' ? 'unavailable' : 'coming_soon';
-    const waitlistMsg = props.offer.waitlist?.[reason];
+    const reason = productState.value === 'unavailable' ? 'unavailable' : 'coming_soon';
+    const waitlistMsg = props.product.waitlist?.[reason];
     if (!waitlistMsg) return null;
     
     return {
@@ -118,8 +118,8 @@ const { submit, isSubmitting, isSuccess } = useFormSubmission({
   schema,
   location: props.location,
   metadata: {
-    reason: offerState.value,
-    offerId: props.offer.slug,
+    reason: productState.value,
+    productId: props.product.slug,
     customerStage: 'interest_expressed',
   },
 });
@@ -129,7 +129,7 @@ const handleSubmit = async () => {
   
   // ✅ Redirect to success page after successful submission
   if (isSuccess.value) {
-    navigateTo(`/products/${props.offer.slug}-success`);
+    navigateTo(`/products/${props.product.slug}-success`);
   }
 };
 

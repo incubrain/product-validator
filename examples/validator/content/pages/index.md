@@ -41,7 +41,7 @@ data:
       label: Check out the Validation Kit
       to:
         path: /
-        hash: offer
+        hash: product
       icon: i-lucide-arrow-down
 ---
 ::
@@ -57,7 +57,7 @@ data:
 ---
 ::
 
-::i-section-offer
+::i-section-product
 ---
 data:
   intro:
@@ -103,7 +103,7 @@ data:
       label: Start Phase 1 Now
       to:
         path: /
-        hash: offer
+        hash: product
       icon: i-lucide-rocket
 ---
 ::

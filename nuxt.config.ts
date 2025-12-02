@@ -189,7 +189,7 @@ export default defineNuxtConfig({
       ssr: true,      
       prerender: false
     },
-    '/get/**': { 
+    '/products/**': { 
       ssr: true,      
       prerender: false
     },

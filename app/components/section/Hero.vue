@@ -18,9 +18,9 @@ const showMedia = computed(
 );
 const showCTA = computed(() => showFeature('heroCTA'));
 
-// Fetch primary offer from collection
-const { getPrimaryOffer } = useContentCache();
-const { data: primaryOffer } = await getPrimaryOffer();
+// Fetch primary product from collection
+const { getPrimaryProduct } = useContentCache();
+const { data: primaryProduct } = await getPrimaryProduct();
 </script>
 
 <template>
@@ -92,17 +92,17 @@ const { data: primaryOffer } = await getPrimaryOffer();
           />
         </div>
 
-        <div v-if="showCountdown && primaryOffer" class="max-w-2xl mx-auto">
+        <div v-if="showCountdown && primaryProduct" class="max-w-2xl mx-auto">
           <IFormValidation
             location="hero-countdown"
-            :offer="primaryOffer"
+            :product="primaryProduct"
             layout="horizontal"
           />
         </div>
 
         <IButtonCTA
           v-if="showCTA"
-          :offer-id="STAGE_CONFIG.offers.primary"
+          :product-id="STAGE_CONFIG.products.primary"
           cta-name="funnel"
           location="hero"
           size="xl"

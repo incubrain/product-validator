@@ -13,9 +13,9 @@ interface Props {
 
 defineProps<Props>();
 
-// Fetch primary offer from collection
-const { getPrimaryOffer } = useContentCache();
-const { data: primaryOffer } = await getPrimaryOffer();
+// Fetch primary product from collection
+const { getPrimaryProduct } = useContentCache();
+const { data: primaryProduct } = await getPrimaryProduct();
 
 </script>
 
@@ -76,7 +76,7 @@ const { data: primaryOffer } = await getPrimaryOffer();
         <div class="max-w-2xl mx-auto pt-4">
           <IFormValidation
             location="bridge-cta"
-            :offer="primaryOffer"
+            :product="primaryProduct"
             layout="horizontal"
           />
         </div>

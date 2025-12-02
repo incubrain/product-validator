@@ -36,7 +36,7 @@ export const useFormSubmission = <T extends z.ZodSchema>(options: {
         data: {
           formId: options.formId,
           email: validated.email,
-          offerId: formData.offerId || options.metadata?.offerId || options.formId,
+          productId: formData.productId || options.metadata?.productId || options.formId,
           customerStage: options.metadata?.customerStage || 'email_captured',
           currentStage: currentStage.value as StageKey,
           metadata: {

@@ -6,10 +6,10 @@ const props = defineProps<{
   sticky?: boolean;
 }>();
 
-// Fetch offer from collection by ID
-const { getOffer } = useContentCache();
-const { data: offer } = await getOffer(STAGE_CONFIG.offers.secondary);
-const cta = computed(() => offer.value?.ctas.funnel);
+// Fetch product from collection by ID
+const { getProduct } = useContentCache();
+const { data: product } = await getProduct(STAGE_CONFIG.products.secondary);
+const cta = computed(() => product.value?.ctas.funnel);
 
 
 const configSource = useRuntimeConfig().public.configSource
@@ -22,9 +22,9 @@ const bannerClasses = computed(() => ({
 
 <template>
   <UBanner
-    v-if="offer && cta"
+    v-if="product && cta"
     icon="i-lucide-heart"
-    :title="offer.description"
+    :title="product.description"
     :to="cta.to"
     :target="cta.to?.startsWith('http') ? '_blank' : undefined"
     :actions="[

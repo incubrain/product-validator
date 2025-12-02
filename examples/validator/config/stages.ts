@@ -2,7 +2,7 @@ import type { StageConfig } from '#shared/types/config';
 
 export const STAGE_CONFIG = {
   currentStage: 'conversion',
-  offers: {
+  products: {
     primary: 'magnet',
     secondary: 'direct',
   },
@@ -27,7 +27,7 @@ export const STAGE_CONFIG = {
         hero: 'identity',
         problemSolution: 'traffic',
         process: 'traffic',
-        offer: 'traffic',
+        product: 'traffic',
         concerns: 'conversion',
         founder: 'engagement',
         results: 'demand',

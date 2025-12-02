@@ -39,7 +39,7 @@ function sendToAnalytics(payload: EventPayload, analyticsProxy: any) {
       if (payload.id.includes('paid') || payload.id.includes('purchase')) {
         analyticsProxy.track('conversion', {
           ...eventData,
-          offer_type: 'paid',
+          product_type: 'paid',
           conversion_location: payload.location,
         });
       }

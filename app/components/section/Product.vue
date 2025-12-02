@@ -6,18 +6,18 @@ defineProps<{
   data?: any;
 }>();
 
-// Get primary offer
-const { getPrimaryOffer } = useContentCache();
-const { data: primaryOffer } = await getPrimaryOffer();
+// Get primary product
+const { getPrimaryProduct } = useContentCache();
+const { data: primaryProduct } = await getPrimaryProduct();
 
 // Get founder
 const { getFounder } = useContentCache();
 const { data: founderData } = await getFounder();
 
 const transformedFeatures = computed(() => {
-  if (!primaryOffer.value?.features) return [];
+  if (!primaryProduct.value?.features) return [];
 
-  return primaryOffer.value.features.map((feature) => {
+  return primaryProduct.value.features.map((feature) => {
     const resolved = STATUS_ICONS[feature.icon] || {
       name: feature.icon,
       class: '',
@@ -35,8 +35,8 @@ const { showSection } = useSectionVisibility();
 
 <template>
   <ISectionWrapper
-    v-if="showSection('offer')"
-    id="#offer"
+    v-if="showSection('product')"
+    id="#product"
     :intro="data.intro"
     :cta="data.cta"
     class="relative"
@@ -87,11 +87,11 @@ const { showSection } = useSectionVisibility();
         />
       </div>
 
-      <!-- Right: Offer Card -->
-      <div v-if="primaryOffer" class="max-w-md mx-auto lg:mx-0 w-full">
+      <!-- Right: Product Card -->
+      <div v-if="primaryProduct" class="max-w-md mx-auto lg:mx-0 w-full">
         <UPricingPlan
-          v-bind="primaryOffer"
-          :badge="primaryOffer.badge as BadgeProps"
+          v-bind="primaryProduct"
+          :badge="primaryProduct.badge as BadgeProps"
           :features="transformedFeatures"
           variant="soft"
           :ui="{
@@ -103,7 +103,7 @@ const { showSection } = useSectionVisibility();
           }"
         >
           <template #description>
-            <p class="text-base text-toned">{{ primaryOffer.description }}</p>
+            <p class="text-base text-toned">{{ primaryProduct.description }}</p>
           </template>
 
           <template #features>
@@ -126,28 +126,28 @@ const { showSection } = useSectionVisibility();
 
           <template #button>
             <div class="pt-4 w-full">
-              <IFormValidation location="offer-section" :offer="primaryOffer" />
+              <IFormValidation location="product-section" :product="primaryProduct" />
             </div>
           </template>
 
-          <template v-if="primaryOffer.stock" #terms>
+          <template v-if="primaryProduct.stock" #terms>
             <IStockProgress
-              :stock="primaryOffer.stock"
-              :offer-id="primaryOffer.slug"
+              :stock="primaryProduct.stock"
+              :product-id="primaryProduct.slug"
               class="w-full"
             />
           </template>
         </UPricingPlan>
 
         <div 
-          v-if="primaryOffer.ctas.secondary"
+          v-if="primaryProduct.ctas.secondary"
           class="mt-4 flex flex-col gap-4 justify-center items-center"
         >
           <UBadge variant="soft">OR</UBadge>
           <IButtonCTA
-            :offer-id="primaryOffer.slug"
+            :product-id="primaryProduct.slug"
             cta-name="secondary"
-            location="offer-section-alt"
+            location="product-section-alt"
             size="xl"
             block
           />

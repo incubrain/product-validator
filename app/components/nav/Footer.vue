@@ -68,7 +68,7 @@ const copyrightYear = computed(() =>
             color="neutral"
             aria-label="View Analytics Dashboard"
           />
-          <IButtonCTA :offer-id="STAGE_CONFIG.offers.secondary" 
+          <IButtonCTA :product-id="STAGE_CONFIG.products.secondary" 
           location="footer"
           cta-name="funnel"
           />
