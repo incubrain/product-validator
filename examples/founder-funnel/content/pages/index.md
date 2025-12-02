@@ -17,9 +17,6 @@ data:
     type: image
     src: /product/gated-dashboard.png
     alt: Template Dashboard Preview
-  countdown:
-    enabled: false
-    showTimer: false
 ---
 ::
 

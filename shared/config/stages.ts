@@ -40,18 +40,11 @@ export const STAGE_CONFIG = {
         results: 'growth',
       },
       features: {
-        heroCountdown: 'waitlist',
-        heroCTA: 'launch',
         heroMedia: 'launch',
         heroMarquees: 'growth',
         footerFounder: 'growth',
         sectionBridge: 'growth',
         marqueeProof: 'growth',
-      },
-    },
-    lock: {
-      features: {
-        heroCountdown: 'launch',
       },
     },
   },

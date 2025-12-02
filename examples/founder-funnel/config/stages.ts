@@ -29,19 +29,11 @@ export const STAGE_CONFIG = {
         results: 'post-launch',
       },
       features: {
-        heroCountdown: 'coming-soon',
-        heroCTA: 'launch',
         heroMedia: 'launch',
         heroMarquees: 'launch',
         footerFounder: 'post-launch',
         sectionBridge: 'post-launch',
         marqueeProof: 'post-launch',
-      },
-    },
-    lock: {
-      features: {
-        // Hide countdown form when CTA button appears
-        heroCountdown: 'launch',
       },
     },
   },

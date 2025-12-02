@@ -17,12 +17,6 @@ data:
     type: video
     src: null
     alt: null
-  countdown:
-    enabled: true
-    launchDate: '2025-12-31T00:00:00Z'
-    message: Launching Soon!
-    fallbackMessage: Launching Any Day Now
-    showTimer: true
 ---
 ::
 

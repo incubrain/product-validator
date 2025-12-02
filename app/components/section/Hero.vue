@@ -12,15 +12,10 @@ const { showFeature, showSection } = useSectionVisibility();
 const hero = computed(() => props.data);
 
 // ✅ Explicit feature flags
-const showCountdown = computed(() => showFeature('heroCountdown'));
 const showMedia = computed(
   () => showFeature('heroMedia') && hero.value?.media?.src,
 );
-const showCTA = computed(() => showFeature('heroCTA'));
 
-// Fetch primary product from collection
-const { getPrimaryProduct } = useContentCache();
-const { data: primaryProduct } = await getPrimaryProduct();
 </script>
 
 <template>
@@ -73,35 +68,7 @@ const { data: primaryProduct } = await getPrimaryProduct();
           {{ hero.intro.description }}
         </p>
 
-        <!-- Countdown Timer (Identity + Attention only) -->
-        <div
-          v-if="showCountdown && hero.countdown.showTimer"
-          class="flex flex-col lg:flex-row gap-3 mx-auto justify-center"
-        >
-          <div class="flex items-center justify-center gap-2">
-            <UIcon name="i-lucide-calendar" class="size-6 text-success" />
-            <span class="text-base font-semibold text-success uppercase">
-              {{ hero.countdown.message }}
-            </span>
-          </div>
-          <ICountdown
-            :target-date="hero.countdown.launchDate"
-            :fallback-message="hero.countdown.fallbackMessage"
-            compact
-            class="lg:min-w-xs"
-          />
-        </div>
-
-        <div v-if="showCountdown && primaryProduct" class="max-w-2xl mx-auto">
-          <IConvertEmail
-            location="hero-countdown"
-            :product="primaryProduct"
-            layout="horizontal"
-          />
-        </div>
-
         <IConvertButton
-          v-if="showCTA"
           :product-id="STAGE_CONFIG.products.primary"
           cta-name="funnel"
           location="hero"

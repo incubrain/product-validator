@@ -33,18 +33,11 @@ export const STAGE_CONFIG = {
         results: 'demand',
       },
       features: {
-        heroCountdown: 'identity',
-        heroCTA: 'traffic',
         heroMedia: 'traffic',
         heroMarquees: 'traffic',
         footerFounder: 'engagement',
         sectionBridge: 'demand',
         marqueeProof: 'conversion',
-      },
-    },
-    lock: {
-      features: {
-        heroCountdown: 'traffic',
       },
     },
   },
