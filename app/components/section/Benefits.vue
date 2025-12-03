@@ -20,6 +20,7 @@ const { showSection } = useSectionVisibility();
     id="#benefits"
     :intro="data.intro"
     :cta="data.cta"
+    has-bottom
   >
     <UPageGrid>
       <UPageCard
@@ -37,6 +38,11 @@ const { showSection } = useSectionVisibility();
         </template>
       </UPageCard>
     </UPageGrid>
-    <IMarqueeText v-if="data.statement" :text="data.statement" />
+    <template #bottom>
+      <IMarqueeText
+        v-if="data.statement"
+        :text="data.statement"
+      />
+    </template>
   </ISectionWrapper>
 </template>

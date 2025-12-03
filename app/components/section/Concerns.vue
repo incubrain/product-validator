@@ -6,14 +6,14 @@ defineProps<{
 }>();
 
 // Fetch FAQs from faq collection
-const { data: faqFiles } = await useAsyncData('faqs', () => 
-  queryCollection('faq').all()
+const { data: faqFiles } = await useAsyncData('faqs', () =>
+  queryCollection('faq').all(),
 );
 
 // Build tab items from file metadata
 const tabItems = computed<TabsItem[]>(() => {
   if (!faqFiles.value) return [];
-  
+
   return faqFiles.value.map((file, index) => ({
     label: file.label,
     icon: file.icon,
@@ -33,10 +33,10 @@ const activeTab = ref(faqFiles.value?.[0]?.type || '');
 
 // Get FAQs for active tab
 const activeFaqs = computed(() => {
-  const file = faqFiles.value?.find(f => f.type === activeTab.value);
+  const file = faqFiles.value?.find((f) => f.type === activeTab.value);
   if (!file) return [];
-  
-  return file.items.map(item => ({
+
+  return file.items.map((item) => ({
     q: item.q,
     a: item.a,
     icon: file.icon,
@@ -56,7 +56,7 @@ const accordionItems = computed<AccordionItem[]>(() =>
       trigger: 'text-base font-medium py-4',
       body: 'text-muted pb-4 pl-7',
     },
-  }))
+  })),
 );
 
 const { showSection } = useSectionVisibility();
@@ -68,10 +68,11 @@ const { showSection } = useSectionVisibility();
     id="#concerns"
     :intro="data.intro"
     :cta="data.cta"
+    has-bottom
   >
     <!-- Tabs for categories -->
-    <UTabs 
-      v-model="activeTab" 
+    <UTabs
+      v-model="activeTab"
       :items="tabItems"
       :content="false"
       color="neutral"

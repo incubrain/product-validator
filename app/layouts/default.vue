@@ -19,10 +19,12 @@ const isDev = import.meta.dev;
     <INavHeader
       v-if="showLayout('navbar') && NAVIGATION.layout.navbar"
       :sticky="NAVIGATION.layout.navbar.sticky"
-      :class="NAVIGATION.layout.banner?.sticky ? 'top-(--ui-banner-height)' : 'top-0'"
+      :class="
+        NAVIGATION.layout.banner?.sticky ? 'top-(--ui-banner-height)' : 'top-0'
+      "
     />
 
-    <main>
+    <main class="pb-12 lg:pb-16">
       <slot />
     </main>
 

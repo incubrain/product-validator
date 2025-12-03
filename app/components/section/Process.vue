@@ -81,7 +81,9 @@ const { showSection } = useSectionVisibility();
           <div
             class="flex items-center justify-between mb-8 max-w-(--ui-container) mx-auto"
           >
-            <h3 class="text-xl sm:text-2xl font-bold text-highlighted">
+            <h3
+              class="text-xl sm:text-2xl font-bold text-center w-full text-highlighted"
+            >
               Benefits
             </h3>
           </div>
@@ -104,10 +106,10 @@ const { showSection } = useSectionVisibility();
                 item: 'basis-[320px] px-2 h-[360px]',
                 viewport: 'overflow-visible',
                 controls:
-                  'relative mt-12 hidden md:flex justify-start max-w-(--ui-container) mx-auto',
+                  'relative mt-12 hidden md:flex justify-center max-w-(--ui-container) mx-auto',
                 arrows: 'flex gap-4',
-                prev: 'flex relative rounded-none ring-default/50 start-0 sm:start-0 top-0 translate-y-0',
-                next: 'flex relative rounded-none ring-default/50 end-0 sm:end-0 top-0 translate-y-0',
+                prev: 'flex relative rounded-lg ring-default start-0 sm:start-0 top-0 translate-y-0',
+                next: 'flex relative rounded-lg ring-default end-0 sm:end-0 top-0 translate-y-0',
               }"
             >
               <UPageCard

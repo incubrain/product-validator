@@ -22,7 +22,7 @@ const adjustedDuration = computed(() => `${duration.value}s`);
 </script>
 
 <template>
-  <div class="relative overflow-hidden w-full py-6">
+  <div class="relative overflow-hidden w-full">
     <UMarquee
       :pause-on-hover="pauseOnHover"
       :reverse="reverse"

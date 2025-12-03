@@ -26,6 +26,7 @@ data:
   intro:
     title: Stop Building in the Dark
     description: Most founders spend months building products nobody wants. They focus on code before validation.
+  statement: Build your business in the right way from day 1
   cta:
     headline: Ready to validate?
     message: Start by defining your problem and solution clearly.

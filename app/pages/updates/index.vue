@@ -174,7 +174,7 @@ const scrollToTop = () => {
       </template>
     </UPageHero>
 
-    <UPageBody>
+    <UPageBody class="border-t">
       <UContainer>
         <!-- Loading skeleton -->
         <div v-if="pending" class="space-y-12">
