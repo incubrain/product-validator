@@ -1,11 +1,11 @@
-// composables/useDevTools.ts
+// composables/useDevConfig.ts
 import { STAGE_CONFIG } from '#stage-config';
 
 interface DevOverrides {
   stage?: StageKey;
 }
 
-export const useDevTools = () => {
+export const useDevConfig = () => {
   const isClient = import.meta.client;
   const isDev = import.meta.dev;
 

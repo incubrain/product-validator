@@ -8,7 +8,7 @@ const isDev = import.meta.dev;
 
 <template>
   <div class="min-h-screen bg-default text-default antialiased">
-    <IDevTools v-if="isDev" />
+    <IDevStages v-if="isDev" />
 
     <INavBanner
       v-if="showLayout('banner') && NAVIGATION.layout.banner"

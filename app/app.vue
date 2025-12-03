@@ -23,16 +23,16 @@ const eventTrigger = ref<{ open: () => void } | null>(null);
 
 if (isDev && import.meta.client) {
   defineShortcuts({
-    meta_shift_r: useDevTools().clearAllStorage, // cmd+shift+r to clear storage
+    meta_shift_r: useDevConfig().clearAllStorage, // cmd+shift+r to clear storage
     meta_shift_e: () => eventTrigger.value?.open(), // ✅ NEW: cmd+shift+e to open event trigger
-    meta_shift_arrowright: useDevTools().cycleStage, // cmd+shift+→ to cycle stage
+    meta_shift_arrowright: useDevConfig().cycleStage, // cmd+shift+→ to cycle stage
   });
 }
 </script>
 
 <template>
   <UApp>
-    <IDevToolsEventTrigger ref="eventTrigger" v-if="isDev" class="hidden lg:block" />
+    <IDevEvents ref="eventTrigger" v-if="isDev" class="hidden lg:block" />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

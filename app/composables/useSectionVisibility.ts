@@ -2,7 +2,7 @@
 import { STAGE_CONFIG } from '#stage-config';
 
 export const useSectionVisibility = () => {
-  const { currentStage } = useDevTools();
+  const { currentStage } = useDevConfig();
 
   // Build stage order from config
   const stageOrder = computed(() => {

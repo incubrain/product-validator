@@ -1,10 +1,10 @@
-<!-- components/DevTools.vue -->
+<!-- components/DevStages.vue -->
 <script setup lang="ts">
 if (!import.meta.dev) {
-  throw new Error('DevTools should only be used in development');
+  throw new Error('DevStages should only be used in development');
 }
 
-const { currentStage, hasActiveOverrides } = useDevTools();
+const { currentStage, hasActiveOverrides } = useDevConfig();
 </script>
 
 <template>

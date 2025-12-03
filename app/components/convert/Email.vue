@@ -16,7 +16,7 @@ const props = withDefaults(defineProps<Props>(), {
   ctaName: 'funnel',
 });
 
-const { currentStage } = useDevTools();
+const { currentStage } = useDevConfig();
 const { isAvailable } = useProductStock(
   props.product.stock,
   props.product.slug,

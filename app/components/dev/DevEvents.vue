@@ -1,11 +1,11 @@
-<!-- components/DevToolsEventTrigger.vue -->
+<!-- components/DevEvents.vue -->
 <script setup lang="ts">
 import type { EventPayload } from '#shared/types/events';
 import type { SelectMenuItem } from '@nuxt/ui';
 import { EVENT_METADATA } from '#shared/config/events';
 
 if (!import.meta.dev) {
-  throw new Error('DevToolsEventTrigger should only be used in development');
+  throw new Error('DevEvents should only be used in development');
 }
 
 type EventExecution = {
