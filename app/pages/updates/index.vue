@@ -8,7 +8,7 @@ const { data: configData } = await getSiteConfig();
 
 // Fetch page metadata (hero, values, etc.)
 const { data: page } = await useAsyncData('updates-page', () =>
-  queryCollection('pages').path('/updates').first()
+  queryCollection('pages').path('/updates').first(),
 );
 
 // Fetch updates list
@@ -17,7 +17,7 @@ const { data: updates, pending } = useAsyncData('updates-list', () =>
     .where('path', 'LIKE', '/updates/%')
     .where('version', 'IS NOT NULL')
     .order('date', 'DESC')
-    .all()
+    .all(),
 );
 
 // Get social links
@@ -32,7 +32,8 @@ useHead({
   meta: [
     {
       name: 'description',
-      content: page.value?.description || 'Product updates and strategic decisions.',
+      content:
+        page.value?.description || 'Product updates and strategic decisions.',
     },
   ],
 });
@@ -83,16 +84,20 @@ const toggleUpdate = (version: string) => {
 
 const allExpanded = computed(() => {
   if (!updates.value) return false;
-  return updates.value.every(update => expandedUpdates.value.has(update.version));
+  return updates.value.every((update) =>
+    expandedUpdates.value.has(update.version),
+  );
 });
 
 const toggleAll = () => {
   if (!updates.value) return;
-  
+
   if (allExpanded.value) {
     expandedUpdates.value.clear();
   } else {
-    updates.value.forEach(update => expandedUpdates.value.add(update.version));
+    updates.value.forEach((update) =>
+      expandedUpdates.value.add(update.version),
+    );
   }
 };
 
@@ -119,57 +124,38 @@ const scrollToTop = () => {
       :title="page?.title"
       :description="page?.description"
       headline="Think different, ship faster"
-      class="bg-muted border-b relative overflow-hidden"
+      class="bg-none!"
     >
       <template #body>
-         <div
-          class="absolute top-0 inset-0 bg-grid-white/[0.02] pointer-events-none -z-10"
+        <div
+          class="absolute top-0 inset-0 bg-grid-white pointer-events-none -z-10"
         />
-        
 
         <!-- Values Section -->
-        <div v-if="values?.length" class="max-w-4xl mx-auto pb-8 lg:pb-0 px-4">
-          <!-- Desktop Grid -->
-          <div class="hidden md:grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-            <UCard
-              v-for="(value, index) in values"
-              :key="index"
-              class="bg-default backdrop-blur-sm hover:bg-primary-900/20 transition-colors text-left"
-            >
-              <template #header>
-                 <h3 class="font-bold text-sm">{{ value.title }}</h3>
-              </template>
-              <p class="text-xs text-muted">{{ value.description }}</p>
-            </UCard>
-          </div>
-
-          <!-- Mobile Carousel -->
-          <UCarousel
-            v-slot="{ item }"
-            class="md:hidden"
-            :arrows="false"
-            :dots="true"
-            align="start"
-            :items="values"
+        <div
+          v-if="values?.length"
+          class="max-w-3xl mx-auto pb-8 lg:pb-0 px-4 bg-default"
+        >
+          <UAccordion
+            type="multiple"
+            :items="
+              values.map((value) => ({
+                label: value.title,
+                content: value.description,
+              }))
+            "
             :ui="{
-              item: 'basis-[85%]',
-              viewport: 'py-2',
-              dot: 'w-2 h-2'
+              trigger: 'text-sm font-semibold',
+              body: 'text-sm text-muted',
             }"
-          >
-            <UCard
-              class="bg-background/50 backdrop-blur-sm h-full mx-2"
-            >
-              <template #header>
-                 <h3 class="font-bold text-sm">{{ item.title }}</h3>
-              </template>
-              <p class="text-xs text-muted">{{ item.description }}</p>
-            </UCard>
-          </UCarousel>
+          />
         </div>
 
         <!-- Social Links Section -->
-        <div v-if="heroLinks.length" class="flex flex-col items-center gap-4 py-8">
+        <div
+          v-if="heroLinks.length"
+          class="flex flex-col items-center gap-4 py-8"
+        >
           <span class="text-sm font-medium text-muted">Follow Our Journey</span>
           <div class="flex items-center gap-2">
             <UButton
@@ -292,7 +278,7 @@ const scrollToTop = () => {
                   <ContentRenderer v-if="update" :value="update" />
                 </div>
                 <div class="flex gap-4 mt-4">
-                   <UButton
+                  <UButton
                     variant="link"
                     icon="i-lucide-chevron-up"
                     trailing
@@ -300,7 +286,7 @@ const scrollToTop = () => {
                   >
                     Show less
                   </UButton>
-                   <UButton
+                  <UButton
                     :to="update.path"
                     variant="ghost"
                     color="neutral"
@@ -325,7 +311,9 @@ const scrollToTop = () => {
                 </div>
 
                 <!-- Version badge (mobile only) -->
-                <div class="lg:hidden inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/5 border border-primary/10">
+                <div
+                  class="lg:hidden inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/5 border border-primary/10"
+                >
                   <UIcon name="i-lucide-tag" class="size-3.5 text-primary" />
                   <span class="text-sm font-semibold font-mono text-primary">
                     {{ update.version }}
@@ -339,40 +327,36 @@ const scrollToTop = () => {
     </UPageBody>
 
     <!-- Scroll to top button -->
-     <div 
-         class="fixed bottom-8 right-8 z-50 space-x-2 "
-
-     >
-     
-     <UButton
-       v-if="showScrollTop"
-       :icon="allExpanded ? 'i-lucide-minimize-2' : 'i-lucide-maximize-2'"
-       size="lg"
-       color="neutral"
-       variant="soft"
-       class="shadow-lg"
-       :aria-label="allExpanded ? 'Collapse all' : 'Expand all'"
-       @click="toggleAll"
-     />
-       <UButton
-         v-if="showScrollTop"
-         icon="i-lucide-arrow-up"
-         size="lg"
-         variant="soft"
-         color="neutral"
-         aria-label="Scroll to top"
-         class="shadow-lg"
-         @click="scrollToTop"
-       />
-     </div>
+    <div class="fixed bottom-8 right-8 z-50 space-x-2">
+      <UButton
+        v-if="showScrollTop"
+        :icon="allExpanded ? 'i-lucide-minimize-2' : 'i-lucide-maximize-2'"
+        size="lg"
+        color="neutral"
+        variant="soft"
+        class="shadow-lg"
+        :aria-label="allExpanded ? 'Collapse all' : 'Expand all'"
+        @click="toggleAll"
+      />
+      <UButton
+        v-if="showScrollTop"
+        icon="i-lucide-arrow-up"
+        size="lg"
+        variant="soft"
+        color="neutral"
+        aria-label="Scroll to top"
+        class="shadow-lg"
+        @click="scrollToTop"
+      />
+    </div>
   </UPage>
 </template>
 
 <style scoped>
-.bg-grid-white\/\[0\.02\] {
+.bg-grid-white {
   background-image:
-    linear-gradient(rgba(255, 255, 255, 0.02) 1px, transparent 1px),
-    linear-gradient(90deg, rgba(255, 255, 255, 0.02) 1px, transparent 1px);
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 60px 60px;
 }
 </style>
