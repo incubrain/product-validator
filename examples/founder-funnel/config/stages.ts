@@ -21,7 +21,7 @@ export const STAGE_CONFIG = {
       },
       sections: {
         hero: 'coming-soon',
-        problemSolution: 'launch',
+        benefits: 'launch',
         process: 'launch',
         product: 'launch',
         concerns: 'post-launch',
@@ -43,4 +43,3 @@ export const STAGE_CONFIG = {
     'post-launch': 'magnet',
   },
 } as const satisfies StageConfig;
-

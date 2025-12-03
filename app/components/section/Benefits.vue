@@ -1,4 +1,4 @@
-<!-- ~/components/section/ProblemSolution.vue -->
+<!-- ~/components/section/benefits.vue -->
 <script setup lang="ts">
 const props = defineProps<{
   data?: {
@@ -16,8 +16,8 @@ const { showSection } = useSectionVisibility();
 
 <template>
   <ISectionWrapper
-    v-if="showSection('problemSolution')"
-    id="#problem-solution"
+    v-if="showSection('benefits')"
+    id="#benefits"
     :intro="data.intro"
     :cta="data.cta"
   >

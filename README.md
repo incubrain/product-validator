@@ -36,7 +36,7 @@ A landing page template for founders who want to validate ideas and capture lead
 ## Core Features
 
 ### Landing Page
-Conversion-optimized sections: hero, problem/solution, process, offer, testimonials, FAQ. All content managed via simple YAML and Markdown files.
+Conversion-optimized sections: hero, benefits, process, product, testimonials, FAQ. All content managed via simple YAML and Markdown files.
 
 ### Gated Content Delivery
 Capture emails → grant access to sequential content. Built-in progress tracking and completion states.

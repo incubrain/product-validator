@@ -6,7 +6,7 @@ export const STAGE_CONFIG = {
     primary: 'magnet',
     secondary: 'direct',
   },
-  
+
   disableWaitlistAt: 'engagement',
   stages: [
     { value: 'identity', label: 'Identity', order: 1 },
@@ -25,7 +25,7 @@ export const STAGE_CONFIG = {
       },
       sections: {
         hero: 'identity',
-        problemSolution: 'traffic',
+        benefits: 'traffic',
         process: 'traffic',
         product: 'traffic',
         concerns: 'conversion',
@@ -41,12 +41,12 @@ export const STAGE_CONFIG = {
       },
     },
   },
-   conversionTarget: {
-    'identity': 'waitlist',
-    'attention': 'waitlist',
-    'traffic': 'waitlist',
-    'conversion': 'waitlist',
-    'engagement': 'magnet',
-    'demand': 'magnet',
+  conversionTarget: {
+    identity: 'waitlist',
+    attention: 'waitlist',
+    traffic: 'waitlist',
+    conversion: 'waitlist',
+    engagement: 'magnet',
+    demand: 'magnet',
   },
 } as const satisfies StageConfig;

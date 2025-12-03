@@ -19,7 +19,7 @@ data:
 ---
 ::
 
-::i-section-problem-solution
+::i-section-benefits
 ---
 data:
   intro:

@@ -1,12 +1,7 @@
 {
-  "editor.formatOnSave": true,
-  "editor.defaultFormatter": "esbenp.prettier-vscode",
-  "tailwindCSS.classAttributes": ["class", "className", "ui"],
+  "tailwindCSS.classAttributes": ["class", "ui"],
   "tailwindCSS.experimental.classRegex": [
     ["ui:\\s*{([^)]*)\\s*}", "(?:'|\"|`)([^']*)(?:'|\"|`)"],
-    ["slots:\\s*{([^}]*)}", "(?:'|\"|`)([^'\"]*?)(?:'|\"|`)"],
-    ["variants:\\s*{([^}]*)}", "(?:'|\"|`)([^'\"]*?)(?:'|\"|`)"],
-    ["tv\\([^)]*\\)", "(?:'|\"|`)([^'\"]*?)(?:'|\"|`)"]
   ],
   "tailwindCSS.experimental.configFile": "app/assets/css/main.css",
   "tailwindCSS.suggestions": true,
@@ -25,16 +20,17 @@
     "typescript": "javascript",
     "javascript": "javascript"
   },
-  "tailwindCSS.classFunctions": ["tv", "clsx", "cn", "createUIComponent"],
   "tailwindCSS.files.exclude": [
     "**/.git/**",
     "**/node_modules/**",
     "**/.nuxt/**",
     "**/.output/**"
   ],
-  "mdc.enableFormatting": true,
-  "mdc.debug": true,
-  "mdc.enableComponentMetadataCompletions": true,
+  "mdc.enableFormatting": false,
+  "[markdown]": {
+    "editor.defaultFormatter": null,
+    "editor.formatOnSave": false
+  },
   "typescript.enablePromptUseWorkspaceTsdk": true,
   "typescript.tsdk": "node_modules/typescript/lib",
   "typescript.preferences.includePackageJsonAutoImports": "on",
