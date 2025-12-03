@@ -1,6 +1,6 @@
 # Founder Funnel
 
-> **Own your funnel. Open-source landing page with built-in gated content delivery for founders.**
+> **Stop paying for landing pages. Start owning your validation.**
 
 <div align="center">
 
@@ -12,43 +12,108 @@
 
 ---
 
-## What Is This?
+## The Problem
 
-A landing page template for founders who want to validate ideas and capture leads — without monthly fees or vendor lock-in.
+You're stuck in the loop:
 
-**Built with:** Nuxt 4 · Tailwind v4 · TypeScript · Nuxt UI
+- "Just one more feature before I launch"
+- "The design isn't perfect yet"
+- "I need to add this integration first"
 
----
+Meanwhile, landing page builders charge $50-300/month. Your content is locked in their platform. Migration means rebuilding from scratch.
 
-## Why Use This?
-
-**The problem:** Landing page tools charge monthly fees, lock your content in their platform, and make migration painful.
-
-**Founder Funnel:**
-
-- **Free forever** — Clone it, own it, deploy anywhere
-- **All-in-one** — Landing page + email capture + gated content delivery
-- **No dependencies to start** — Works out of the box, add integrations when needed
-- **Stage-based visibility** — Show/hide sections as your product evolves
+**You waste months building. Then discover nobody wants it.**
 
 ---
 
-## Core Features
+## The Solution
 
-### Landing Page
-Conversion-optimized sections: hero, benefits, process, product, testimonials, FAQ. All content managed via simple YAML and Markdown files.
+Founder Funnel is an open-source landing page template that helps you **prove demand before you build anything**.
 
-### Gated Content Delivery
-Capture emails → grant access to sequential content. Built-in progress tracking and completion states.
+- **Deploy in 15 minutes** — Live site, capturing signal, tracking conversions
+- **$0/month forever** — Your code, your hosting, your data
+- **Multiple validation paths** — Email signups, presales, service bookings
+- **Own your stack** — No vendor lock-in, swap any tool anytime
+
+**Built with:** Nuxt 4 · Tailwind v4 · TypeScript
+
+---
+
+## What You Get
+
+A complete validation system designed around one question:
+
+**"Is there real demand for this?"**
+
+### Signal Capture
+
+Multiple validation paths depending on your offer:
+
+**Email capture** — Visitors convert to leads for your free magnet  
+**Presales** — Collect payment before building the product  
+**Service bookings** — Sell consultation calls, learn from delivery, systematize into product
+
+Each path generates evidence. You measure signal, then decide.
 
 ### Stage-Based Visibility
-Configure which sections appear at each stage of your product. Waitlist shows countdown and waitlist. Launch shows full offer. Growth adds testimonials and social proof.
 
-### Fake Door Testing
-Test demand before building. Collect "interested" signups, then flip a switch to enable real access when ready.
+Your landing page evolves as you validate:
+- **Early:** Minimal waitlist mode
+- **Launch:** Full product showcase
+- **Growth:** Social proof and testimonials
+
+Configure once. The template handles the rest.
+
+### Conversion-Optimized Sections
+
+Hero · Benefits · Process · Product · Testimonials · FAQ
+
+Built to convert. Not to look pretty in your portfolio.
 
 ### Zero Lock-In
-Your code, your data, your hosting. Swap analytics, email providers, or payment systems anytime.
+
+Standard Nuxt app. Swap analytics providers in 5 minutes. Change hosting in 10. Add any integration you want. **You control everything.**
+
+---
+
+## Validation Paths
+
+### Path 1: Email Capture (Free Magnet)
+
+Offer valuable content in exchange for email signup. Measure conversion rate to validate interest before creating the full deliverable.
+
+**When to use:** Testing demand for courses, guides, frameworks, templates.
+
+### Path 2: Presales (Paid Before Build)
+
+Sell the product before you build it. Payment is the strongest signal.
+
+**When to use:** Digital products, cohort-based courses, software tools.
+
+### Path 3: Service Bookings (Learn Then Systematize)
+
+Sell consulting calls. Deliver service manually. Learn what clients actually need. Systematize the process. Build the product that solves it.
+
+**When to use:** Unclear product-market fit, need revenue while validating, domain expertise without product clarity.
+
+**Philosophy:** Service delivery teaches you what to build. Client feedback reveals real pain points. Systematization creates your product roadmap.
+
+---
+
+## Who This Is For
+
+### Good Fit
+
+- **Technical founders** validating SaaS or digital product ideas
+- **Experienced developers** (3+ years) who can edit config files
+- **Service providers** ready to systematize their delivery
+- **Perfectionists** who need constraints to ship
+
+### Not a Fit
+
+- Non-technical founders needing drag-and-drop builders
+- Anyone wanting fully managed no-code solutions
+- Post-PMF companies already scaling validated products
 
 ---
 
@@ -62,61 +127,106 @@ cp .example.env .env
 pnpm dev
 ```
 
-Open `http://localhost:3000` — replace placeholder content with your own.
+**That's it.** You're running locally.
+
+Replace the placeholder content with your offer. Deploy to Vercel or Railway. Start driving traffic.
 
 ---
 
 ## Understanding the Codebase
 
-Instead of docs that go stale, use [Repomix](https://github.com/yamadashy/repomix) to bundle the codebase and ask an LLM to explain it:
+No docs that go stale. Instead:
 
 ```bash
-npx repomix
+pnpm repomix
 ```
 
-This generates a single file with the full codebase context. Paste it into Claude or ChatGPT and ask whatever you need.
+This bundles your codebase context into a single file. Paste it into Claude or ChatGPT.
+
+**Ask anything:**
+- "How do I change the color scheme?"
+- "Where do I configure email webhooks?"
+- "How does stage-based visibility work?"
+- "How do I add a presales funnel?"
+
+The LLM explains the code directly. Always up-to-date. Zero maintenance.
 
 ---
 
-## Example Configurations
+## Example Configuration
 
-The template includes example configurations showing different use cases:
+**Founder Funnel** — Simple 3-stage setup  
+Waitlist → Launch → Growth
 
-- **Founder Funnel** — Simple 3-stage setup (waitlist → launch → growth)
+Study the example. Adapt the stages to your validation timeline.
 
-Switch between them via `NUXT_PUBLIC_CONFIG_SOURCE` in your `.env`.
-
----
-
-## Who This Is For
-
-**Good fit:**
-- Founders validating SaaS or digital product ideas
-- Technical founders who want to own their stack
-- Anyone tired of monthly landing page fees
-
-**Not a fit:**
-- Non-technical users needing drag-and-drop builders
-- Anyone wanting a fully managed no-code solution
+Switch configuration source in `.env`:
+```
+NUXT_PUBLIC_CONFIG_SOURCE="founder-funnel"
+```
 
 ---
 
-## Future Considerations
+## What We Deliberately Cut
 
-Things we're exploring — nothing fixed:
+This template does **not** include:
 
-- A/B testing
-- NuxtHub integration
-- More example configurations
-- Feedback collection
-- Payment intent tracking
-- Admin dashboard
+- ❌ Email sequence automation
+- ❌ User authentication systems
+- ❌ Payment processing (external links only)
+- ❌ Content delivery platforms
+- ❌ Database management
+- ❌ Admin dashboards
+
+**Why?**
+
+These add complexity that distracts from validation. Once you prove demand, add them to your **actual product** codebase.
+
+The template captures signal. Your product delivers value.
+
+---
+
+## Validation Philosophy
+
+### Measure What Matters
+
+Stop chasing traffic. Focus on **signal**:
+
+- **Email signups** — Are people interested enough to give you their contact?
+- **Presale conversions** — Are people interested enough to pay before you build?
+- **Service bookings** — Are people interested enough to pay for your time?
+
+Quality of signal matters more than quantity of visitors.
+
+### Fail Fast, Fail Early
+
+Weak signal? Your offer doesn't resonate. Pivot or kill the idea.
+
+This is success. You saved months of building something nobody wants.
+
+### Service-to-Product Path
+
+Can't validate with a landing page? Sell service first:
+
+1. Offer paid consulting/implementation
+2. Learn what clients actually need
+3. Systematize your process
+4. Build the product that solves it
+
+Your template supports this path. Service revenue funds validation. Client feedback guides product development.
 
 ---
 
 ## Contributing
 
-Bug fixes, documentation improvements, and new example configurations welcome.
+Found a bug? See a better way? Pull requests welcome for:
+
+- Bug fixes
+- Documentation improvements  
+- New validation path examples
+- Performance optimizations
+
+**Not accepting:** Feature additions that violate "best part is no part" philosophy.
 
 ---
 
@@ -124,8 +234,22 @@ Bug fixes, documentation improvements, and new example configurations welcome.
 
 MIT — Use for personal or commercial projects.
 
-**One restriction:** Don't clone this and sell it as a competing template product.
+**One restriction:** Don't clone this and sell it as a competing template product under a different name.
+
+Everything else? Fair game.
 
 ---
 
-**Ship today. Own forever.**
+## Support
+
+- **Issues:** [GitHub Issues](https://github.com/incubrain/founder-funnel/issues)
+- **Discussions:** [GitHub Discussions](https://github.com/incubrain/founder-funnel/discussions)
+- **Updates:** [Project Updates](https://founder-funnel.incubrain.org/updates)
+
+---
+
+**Stop overthinking. Start validating.**
+
+Deploy your landing page today. Measure real signal tomorrow. Build only when the evidence is clear.
+
+Your future self will thank you.

@@ -137,16 +137,17 @@ const scrollToTop = () => {
           class="max-w-3xl mx-auto pb-8 lg:pb-0 px-4 bg-default"
         >
           <UAccordion
-            type="multiple"
+            default-value="0"
             :items="
-              values.map((value) => ({
+              values.map((value, index) => ({
+                value: String(index),
                 label: value.title,
                 content: value.description,
               }))
             "
             :ui="{
-              trigger: 'text-sm font-semibold',
-              body: 'text-sm text-muted',
+              item: 'text-sm font-semibold px-4',
+              body: 'text-sm text-muted text-left px-2',
             }"
           />
         </div>
