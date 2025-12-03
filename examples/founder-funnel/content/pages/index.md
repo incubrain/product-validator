@@ -122,7 +122,7 @@ data:
 ---
 ::
 
-::i-section-concerns
+::i-section-faq
 ---
 data:
   intro:

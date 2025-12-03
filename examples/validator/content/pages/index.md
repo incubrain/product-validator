@@ -144,7 +144,7 @@ data:
       label: Get Answers
       to:
         path: /
-        hash: concerns
+        hash: faq
       icon: i-lucide-arrow-down
 ---
 ::
@@ -192,7 +192,7 @@ data:
 ---
 ::
 
-::i-section-concerns
+::i-section-faq
 ---
 data:
   intro:

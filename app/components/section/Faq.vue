@@ -64,8 +64,8 @@ const { showSection } = useSectionVisibility();
 
 <template>
   <ISectionWrapper
-    v-if="showSection('concerns')"
-    id="#concerns"
+    v-if="showSection('faq')"
+    id="#faq"
     :intro="data.intro"
     :cta="data.cta"
     has-bottom

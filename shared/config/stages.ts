@@ -35,8 +35,7 @@ export const STAGE_CONFIG = {
         benefits: 'waitlist',
         process: 'launch',
         product: 'launch',
-        concerns: 'launch',
-        founder: 'growth',
+        faq: 'launch',
         results: 'growth',
       },
       features: {

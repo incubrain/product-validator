@@ -28,8 +28,7 @@ export const STAGE_CONFIG = {
         benefits: 'traffic',
         process: 'traffic',
         product: 'traffic',
-        concerns: 'conversion',
-        founder: 'engagement',
+        faq: 'conversion',
         results: 'demand',
       },
       features: {

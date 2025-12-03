@@ -24,8 +24,7 @@ export const STAGE_CONFIG = {
         benefits: 'launch',
         process: 'launch',
         product: 'launch',
-        concerns: 'post-launch',
-        founder: 'post-launch',
+        faq: 'post-launch',
         results: 'post-launch',
       },
       features: {

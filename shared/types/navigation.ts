@@ -2,7 +2,6 @@
 export type SectionAnchor =
   | '#benefits'
   | '#process'
-  | '#founder'
   | '#product'
   | '#results'
-  | '#concerns';
+  | '#faq';

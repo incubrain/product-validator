@@ -128,7 +128,7 @@ data:
     message: '⚠️ Bridge message'
     button:
       label: '⚠️ CTA label'
-      to: '#concerns'
+      to: '#faq'
       icon: i-lucide-arrow-down
 ---
 ::
@@ -158,7 +158,7 @@ data:
 ---
 ::
 
-::i-section-concerns
+::i-section-faq
 ---
 data:
   intro:
