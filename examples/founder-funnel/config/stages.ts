@@ -29,10 +29,8 @@ export const STAGE_CONFIG = {
       },
       features: {
         heroMedia: 'launch',
-        heroMarquees: 'launch',
         footerFounder: 'post-launch',
         sectionBridge: 'post-launch',
-        marqueeProof: 'post-launch',
       },
     },
   },

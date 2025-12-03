@@ -40,10 +40,8 @@ export const STAGE_CONFIG = {
       },
       features: {
         heroMedia: 'launch',
-        heroMarquees: 'growth',
         footerFounder: 'growth',
         sectionBridge: 'growth',
-        marqueeProof: 'growth',
       },
     },
   },

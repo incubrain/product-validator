@@ -38,11 +38,5 @@ const { showSection } = useSectionVisibility();
         </template>
       </UPageCard>
     </UPageGrid>
-    <template #bottom>
-      <IMarqueeText
-        v-if="data.statement"
-        :text="data.statement"
-      />
-    </template>
   </ISectionWrapper>
 </template>
