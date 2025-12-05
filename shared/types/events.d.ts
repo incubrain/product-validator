@@ -4,20 +4,15 @@ declare global {
   type TrackedEvents =
     | 'element_viewed'
     | 'form_submitted'
-    | 'form_error'
-    | 'modal_open'
-    | 'modal_close';
+    | 'form_error';
 
   type TrackedActions =
     | 'page_view'
     | 'click'
     | 'submit'
     | 'submission_failed'
-    | 'exit_intent'
     | 'devtools_trigger'
-    | 'dev_trigger'
-    | 'mouse_leave'
-    | 'fullscreen_modal';
+    | 'dev_trigger';
 }
 
 

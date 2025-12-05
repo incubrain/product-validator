@@ -27,22 +27,4 @@ export const EVENT_METADATA: Partial<
     icon: 'i-lucide-eye',
     category: 'action',
   },
-  exit_intent: {
-    label: 'Exit Intent',
-    description: '→ Exit modal',
-    icon: 'i-lucide-log-out',
-    category: 'other',
-  },
-  modal_open: {
-    label: 'Modal Open',
-    description: 'Modal opened',
-    icon: 'i-lucide-window',
-    category: 'modal',
-  },
-  modal_close: {
-    label: 'Modal Close',
-    description: 'Modal closed',
-    icon: 'i-lucide-x',
-    category: 'modal',
-  },
 } as const;

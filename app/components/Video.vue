@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import { useIntersectionObserver, useMediaControls } from '@vueuse/core';
-import { useUserInteraction } from '~/composables/useUserInteraction';
 
 export interface VideoProps {
   src: string;
@@ -86,51 +85,19 @@ const toggleMute = () => {
   muted.value = !muted.value;
 };
 
-// Autoplay logic (self-hosted only)
-const { hasInteracted, waitForInteraction } = useUserInteraction();
-const autoplayAttempted = ref(false);
-
-watchEffect(async () => {
+// Autoplay logic (self-hosted only) - simple muted autoplay
+watchEffect(() => {
   if (
     videoRef.value &&
     props.autoplay &&
     props.muted &&
     shouldLoad.value &&
     !hasError.value &&
-    !autoplayAttempted.value &&
-    !isExternalVideo.value // Only for self-hosted
+    !isExternalVideo.value
   ) {
-    if (hasInteracted.value) {
-      try {
-        playing.value = true;
-        autoplayAttempted.value = true;
-      } catch (error) {
-        console.warn('Autoplay failed:', error.message);
-      }
-    } else {
-      autoplayAttempted.value = true;
-      waitForInteraction().then(() => {
-        if (
-          videoRef.value &&
-          props.autoplay &&
-          props.muted &&
-          !hasError.value &&
-          shouldLoad.value
-        ) {
-          playing.value = true;
-        }
-      });
-    }
+    playing.value = true;
   }
 });
-
-// Reset autoplay attempt when src changes
-watch(
-  () => props.src,
-  () => {
-    autoplayAttempted.value = false;
-  },
-);
 
 // Set initial muted state (self-hosted only)
 watchEffect(() => {

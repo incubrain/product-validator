@@ -84,7 +84,7 @@ export default defineEventHandler(async (event) => {
     return { success: true };
   } catch (error) {
     logger.error('Failed to send webhook notification:', {
-      url: webhookUrl.substring(0, 50) + '...',
+      url: webhookUrl.substring(0, 10) + '...',
       error: error instanceof Error ? error.message : 'Unknown error',
       troubleshooting: [
         '• Verify webhook URL is correct',
@@ -97,7 +97,7 @@ export default defineEventHandler(async (event) => {
       statusCode: 500,
       statusMessage: 'Webhook Delivery Failed',
       message: `Failed to deliver notification to webhook. ${error instanceof Error ? error.message : 'Unknown error'}`,
-      data: { webhookUrl: webhookUrl.substring(0, 50) + '...' },
+      data: { webhookUrl: webhookUrl.substring(0, 10) + '...' },
     });
   }
 });
