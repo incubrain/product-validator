@@ -129,11 +129,8 @@ export default defineNuxtConfig({
         },
       },
     },
-    storage: {
-      provider: '',
-      url: '',
-      secret: '',
-    },
+    // Server-only config (not exposed to client)
+    webhookUrl: process.env.NUXT_WEBHOOK_URL || '',
   },
 
   css: ['~/assets/css/main.css'],

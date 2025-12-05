@@ -7,7 +7,7 @@ const globalHandlers: EventHandler[] = [analyticsHandler];
 // Event-specific handlers
 const EVENT_HANDLER_CONFIG: Record<TrackedEvents, EventHandler[]> = {
   element_viewed: [],
-  form_submitted: [serverPipeHandler],
+  form_submitted: [webhookHandler],
   form_error: [],
   modal_open: [modalHandler],
   modal_close: [],
