@@ -35,7 +35,18 @@ export interface EventPayload {
   location: string;
   target?: string;
   timestamp?: number;
-  data?: Record<string, any>;
+  data?: {
+    formId?: string;
+    email?: string;
+    currentStage?: string;
+    antiSpam?: {
+      honeypot?: string;
+      timeOnForm?: number;
+      jsToken?: string;
+      turnstileToken?: string;
+    };
+    metadata?: Record<string, any>;
+  };
   response?: Record<string, any>;
   _devToolsTriggered?: boolean;
   error?: any;

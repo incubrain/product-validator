@@ -15,6 +15,7 @@ export async function webhookHandler(payload: EventPayload): Promise<any> {
         email: payload.data.email,
         formId: payload.data.formId,
         metadata: payload.data.metadata,
+        antiSpam: payload.data.antiSpam,
       },
     });
 

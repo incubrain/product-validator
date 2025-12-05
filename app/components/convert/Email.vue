@@ -77,11 +77,27 @@ const toast = useToast();
 const isSubmitting = ref(false);
 const isSuccess = ref(false);
 
+// Anti-spam tracking
+const formRenderedAt = ref(Date.now());
+const honeypot = ref('');
+const jsToken = ref('');
+
+onMounted(() => {
+  jsToken.value = crypto.randomUUID();
+});
+
 const handleSubmit = async () => {
   isSubmitting.value = true;
 
   try {
     const validated = schema.parse(state);
+
+    // Client-side honeypot check (silent reject)
+    if (honeypot.value) {
+      isSuccess.value = true;
+      navigateTo(props.successRedirect);
+      return;
+    }
 
     await trackEvent({
       id: `email_capture_submit`,
@@ -94,6 +110,11 @@ const handleSubmit = async () => {
         formId: 'email_capture',
         email: validated.email,
         currentStage: currentStage.value as StageKey,
+        antiSpam: {
+          honeypot: honeypot.value,
+          timeOnForm: Date.now() - formRenderedAt.value,
+          jsToken: jsToken.value,
+        },
         metadata: {
           location: props.location,
           ctaType: props.ctaType,
@@ -104,10 +125,18 @@ const handleSubmit = async () => {
     } satisfies EventPayload);
 
     isSuccess.value = true;
-
     navigateTo(props.successRedirect);
-  } catch (error) {
-    console.error('[Email] Submission failed:', error);
+  } catch (error: any) {
+    // Validation failed
+    if (error.issues) {
+      toast.add({
+        title: 'Invalid email',
+        description: 'Please check your email address and try again.',
+        color: 'error',
+      });
+      isSubmitting.value = false; // Ensure submission state is reset
+      return; // Stop further processing for validation errors
+    }
 
     const errorMsg =
       error instanceof Error
@@ -149,6 +178,24 @@ const formClasses = computed(() =>
   <div v-if="messaging" class="w-full">
     <!-- Universal form -->
     <UForm ref="formRef" :state="state" :schema="schema" @submit="handleSubmit">
+      <!-- Honeypot field (invisible to humans, bots will fill it) -->
+      <input
+        v-model="honeypot"
+        type="text"
+        name="website"
+        autocomplete="off"
+        tabindex="-1"
+        aria-hidden="true"
+        style="
+          position: absolute;
+          left: -9999px;
+          opacity: 0;
+          pointer-events: none;
+          height: 0;
+          width: 0;
+        "
+      />
+
       <div :class="formClasses">
         <UFormField name="email">
           <UInput
