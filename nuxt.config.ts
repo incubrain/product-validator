@@ -130,7 +130,8 @@ export default defineNuxtConfig({
       },
     },
     // Server-only config (not exposed to client)
-    webhookUrl: process.env.NUXT_WEBHOOK_URL || '',
+    webhookUrl: '',
+    telegramChatId: '',
   },
 
   css: ['~/assets/css/main.css'],
