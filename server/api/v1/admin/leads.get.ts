@@ -5,7 +5,6 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const query = getQuery(event);
 
-  // Check if secret is provided
   if (!query.secret) {
     throw createError({
       statusCode: 400,
@@ -14,7 +13,6 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  // Check if secret is correct
   if (query.secret !== config.storage.secret) {
     throw createError({
       statusCode: 401,

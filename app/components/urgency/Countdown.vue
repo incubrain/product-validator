@@ -12,10 +12,8 @@ const props = withDefaults(defineProps<Props>(), {
   fallbackMessage: 'Launching Any Day Now',
 });
 
-// Reactive current time
 const now = useNow({ interval: 1000 });
 
-// Calculate countdown
 const countdown = computed(() => {
   const target = new Date(props.targetDate).getTime();
   const current = now.value.getTime();
@@ -51,7 +49,6 @@ const displayDate = computed(() => {
   return props.targetDate;
 });
 
-// Recalculate countdown for adjusted date
 const displayCountdown = computed(() => {
   if (!countdown.value.expired) {
     return countdown.value;
@@ -73,7 +70,6 @@ const displayCountdown = computed(() => {
 const showFallbackMessage = computed(() => countdown.value.expired);
 const format = (num: number) => String(num).padStart(2, '0');
 
-// Time units for compact display
 const timeUnits = computed(() => [
   { value: displayCountdown.value.days, label: 'D' },
   { value: displayCountdown.value.hours, label: 'H' },
@@ -83,7 +79,6 @@ const timeUnits = computed(() => [
 </script>
 
 <template>
-  <!-- Compact Mode (Horizontal, Smaller) -->
   <div class="flex items-center justify-center gap-2 sm:gap-3">
     <template v-if="!showFallbackMessage">
       <div

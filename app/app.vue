@@ -17,15 +17,15 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 });
 
+
 // Dev shortcuts
 const isDev = import.meta.dev;
 const eventTrigger = ref<{ open: () => void } | null>(null);
-
 if (isDev && import.meta.client) {
   defineShortcuts({
-    meta_shift_r: useDevConfig().clearAllStorage, // cmd+shift+r to clear storage
-    meta_shift_e: () => eventTrigger.value?.open(), // ✅ NEW: cmd+shift+e to open event trigger
-    meta_shift_arrowright: useDevConfig().cycleStage, // cmd+shift+→ to cycle stage
+    meta_shift_r: useDevConfig().clearAllStorage,
+    meta_shift_e: () => eventTrigger.value?.open(),
+    meta_shift_arrowright: useDevConfig().cycleStage,
   });
 }
 </script>

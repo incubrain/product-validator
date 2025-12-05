@@ -37,7 +37,6 @@ const socialLinks = computed(
       footer: 'p-1 sm:p-2 border-none flex lg:justify-end',
     }"
   >
-    <!-- Header: founder identity -->
     <template #header>
       <UUser
         :name="displayName"
@@ -52,12 +51,10 @@ const socialLinks = computed(
       />
     </template>
 
-    <!-- Body: short bio message -->
     <p class="text-sm text-toned text-left lg:text-right">
       {{ founderData?.bio }}
     </p>
 
-    <!-- Footer: social links -->
     <template #footer>
       <span class="w-auto lg:justify-end space-x-2">
         <UButton

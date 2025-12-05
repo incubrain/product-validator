@@ -1,12 +1,11 @@
 <script setup lang="ts">
 import confetti from 'canvas-confetti';
 
-// Get product slug from query params
 const route = useRoute();
 const productSlug = route.params.slug as string;
 
-// Redirect to home if no product specified
 if (!productSlug) {
+  // Redirect to home if no product specified
   navigateTo('/');
 }
 
@@ -33,21 +32,17 @@ definePageMeta({ layout: false });
 
 <template>
   <div class="relative min-h-screen flex items-center justify-center bg-linear-to-b from-background to-muted/20">
-    <!-- Logo at top -->
     <div class="absolute top-6 left-0 right-0 z-50 flex justify-center">
       <NuxtLink to="/">
         <ILogo />
       </NuxtLink>
     </div>
 
-    <!-- Success Content -->
     <div class="max-w-2xl w-full mx-auto px-4">
-      <!-- If MDC page exists, render it -->
       <div v-if="successPage" class="bg-card rounded-2xl p-8 shadow-xl border border-success/20">
         <ContentRenderer :value="successPage" />
       </div>
 
-      <!-- Improved fallback -->
       <div v-else class="bg-card rounded-2xl p-8 shadow-xl border border-success/20 text-center space-y-6">
         <div class="flex justify-center">
           <UIcon 

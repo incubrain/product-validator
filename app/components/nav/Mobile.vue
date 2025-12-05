@@ -18,9 +18,7 @@ const closeMenu = () => {
 <template>
   <div class="flex flex-col justify-between h-full">
     <nav class="flex flex-col space-y-1">
-      <!-- Main Navigation Items -->
       <template v-for="item in navigationItems" :key="item.label">
-        <!-- Parent Item -->
         <ULink
           :to="item.to"
           class="flex items-center space-x-3 px-3 py-3 rounded-lg text-toned hover:text-secondary hover:bg-elevated transition-colors"

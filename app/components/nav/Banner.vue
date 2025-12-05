@@ -6,7 +6,6 @@ const props = defineProps<{
   sticky?: boolean;
 }>();
 
-// Fetch product from collection by ID
 const { getProduct } = useContentCache();
 const { data: product } = await getProduct(STAGE_CONFIG.products.secondary);
 const cta = computed(() => product.value?.ctas.funnel);

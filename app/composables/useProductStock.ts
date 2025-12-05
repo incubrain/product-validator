@@ -2,7 +2,6 @@
 import type { ProductStock, ProductId } from '#types';
 
 export function useProductStock(stock?: ProductStock, productId?: ProductId) {
-  // ✅ TEST TOGGLE: Check URL param for forcing unavailable state
   const route = useRoute();
   const forceUnavailable = computed(() => {
     if (import.meta.dev) {
@@ -11,15 +10,12 @@ export function useProductStock(stock?: ProductStock, productId?: ProductId) {
     return false;
   });
 
-  // Auto-detect if this should use live count
   const useLiveCount = computed(() => productId === 'waitlist');
   
-  // Fetch live count if enabled
   const { data: metrics } = useLiveCount.value
     ? useFetch('/api/v1/metrics/leads')
     : { data: ref(null) };
   
-  // Use live count or static count
   const claimed = computed(() => {
     if (useLiveCount.value && metrics.value) {
       return metrics.value.total || 0;
@@ -28,9 +24,8 @@ export function useProductStock(stock?: ProductStock, productId?: ProductId) {
   });
   
   const isAvailable = computed(() => {
-    if (!stock) return true; // No stock limits = always available
+    if (!stock) return true;
     
-    // ✅ TEST TOGGLE: Override with URL param in dev
     if (forceUnavailable.value) {
       console.log('[useProductStock] 🧪 UNAVAILABLE STATE FORCED via ?unavailable=true');
       return false;

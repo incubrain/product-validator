@@ -9,7 +9,6 @@ const props = defineProps<{
 
 const testimonials = computed(() => props.data?.items || []);
 
-// Format testimonials for UPageCard
 const formattedTestimonials = computed(() =>
   testimonials.value.map((t) => ({
     quote: t.quote,

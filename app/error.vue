@@ -22,7 +22,6 @@ const handleError = () => clearError({ redirect: '/' });
         header: 'flex flex-col items-center text-center space-y-4 w-full',
       }"
     >
-      <!-- Error Header -->
       <template #header>
         <UIcon name="i-lucide-circle-alert" class="size-8 text-error" />
         <div class="w-full">
@@ -35,14 +34,10 @@ const handleError = () => clearError({ redirect: '/' });
         </div>
       </template>
 
-      <!-- Error Message -->
       <p class="lg:text-lg wrap-break-word w-full">
         {{ error?.message || 'An unexpected error occurred' }}
       </p>
 
-      <!-- Dev Mode: Stack Trace -->
-
-      <!-- Actions -->
       <template #footer>
         <UButton color="primary" size="lg" @click="handleError">
           Go Home

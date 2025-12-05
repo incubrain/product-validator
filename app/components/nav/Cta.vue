@@ -13,7 +13,6 @@ interface Props {
 
 defineProps<Props>();
 
-// Fetch primary product from collection
 const { getPrimaryProduct } = useContentCache();
 const { data: primaryProduct } = await getPrimaryProduct();
 </script>
@@ -70,7 +69,6 @@ const { data: primaryProduct } = await getPrimaryProduct();
       }"
     >
       <template v-if="cta.primary" #footer>
-        <!-- ✅ Primary CTA: Form capture like Hero -->
         <div class="max-w-2xl mx-auto pt-4">
           <IConvertEmail
             location="bridge-cta"

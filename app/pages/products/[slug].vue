@@ -116,7 +116,6 @@ onMounted(() => {
   <div
     class="min-h-screen flex items-center justify-center relative overflow-hidden py-16 sm:py-20 lg:py-24"
   >
-    <!-- Background -->
     <div class="absolute inset-0 pointer-events-none">
       <div
         class="absolute top-0 right-0 w-1/2 h-full bg-linear-to-l from-primary/5 to-transparent"
@@ -126,7 +125,6 @@ onMounted(() => {
       />
     </div>
 
-    <!-- Logo -->
     <div
       class="absolute top-6 left-0 right-0 z-50 flex justify-center pointer-events-none"
     >
@@ -137,7 +135,6 @@ onMounted(() => {
 
     <UContainer class="relative z-10">
       <div class="max-w-3xl mx-auto">
-        <!-- Header -->
         <div class="space-y-6 text-center mb-12 lg:mb-16">
           <h1
             class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]"
@@ -156,7 +153,6 @@ onMounted(() => {
           </p>
         </div>
 
-        <!-- Pricing -->
         <div
           v-if="product.price && product.price !== 'Free'"
           class="mb-12 lg:mb-16"
@@ -182,7 +178,6 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- Features -->
         <div v-if="features.length" class="mb-12 lg:mb-16">
           <ul class="space-y-4 max-w-xl mx-auto">
             <li
@@ -203,7 +198,6 @@ onMounted(() => {
           </ul>
         </div>
 
-        <!-- Media -->
         <div v-if="hasMedia" class="mb-12 lg:mb-16">
           <div
             class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black/20 backdrop-blur-sm"
@@ -226,7 +220,6 @@ onMounted(() => {
           </div>
         </div>
 
-        <!-- ✅ MDC Sales Content (Injected Here) -->
         <div
           v-if="hasSalesPage"
           class="mb-12 lg:mb-16 prose prose-invert max-w-none"
@@ -234,12 +227,10 @@ onMounted(() => {
           <ContentRenderer :value="salesPage" :data="{ product }" />
         </div>
 
-        <!-- CTA Section -->
         <div class="max-w-md mx-auto">
           <div
             class="bg-white/2 border border-white/10 rounded-2xl p-6 lg:p-8 backdrop-blur-sm space-y-6"
           >
-            <!-- Show form -->
             <IConvertEmail
               v-if="showForm"
               :product="product"
@@ -247,7 +238,6 @@ onMounted(() => {
               :location="`sales-page-${product.slug}`"
             />
 
-            <!-- Show button -->
             <IConvertButton
               v-else
               :product-id="product.slug as any"
@@ -257,7 +247,6 @@ onMounted(() => {
               block
             />
 
-            <!-- Stock Progress -->
             <div
               v-if="product.stock && isAvailable"
               class="pt-4 border-t border-white/5"

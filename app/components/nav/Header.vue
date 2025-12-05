@@ -7,7 +7,6 @@ const props = defineProps<{
   sticky?: boolean;
 }>();
 
-// Fetch config data for social links
 const { getSiteConfig } = useContentCache();
 const { data: configData } = await getSiteConfig();
 
@@ -21,7 +20,6 @@ const socialLinks = computed(
     })) || [],
 );
 
-// Dynamic classes for sticky positioning
 const headerClasses = computed(() => ({
   [`sticky z-40 bg-muted/80 backdrop-blur-md border-b border-default ${props.class}`]:
     props.sticky,

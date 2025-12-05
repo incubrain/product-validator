@@ -91,7 +91,6 @@ useHead({
     
         <UPageBody class="max-w-2xl mx-auto">
           <div >
-            <!-- Mobile Header (Back + Meta) -->
             <div class="lg:hidden mb-8 space-y-6">
               <UButton
                 to="/updates"
@@ -130,7 +129,6 @@ useHead({
 
             <UContentSurround :surround="(surround as any)" />
     
-            <!-- Mobile CTA -->
             <div class="lg:hidden mt-12 pt-8 border-t">
                <IConvertButton
                   :product-id="STAGE_CONFIG.products.secondary"

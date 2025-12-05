@@ -152,7 +152,6 @@ const handleMouseLeave = () => {
   }
 };
 
-// Computed styles (inlined from theme/video.ts)
 const rootClass = computed(() => {
   const classes = [
     'relative',
@@ -162,7 +161,6 @@ const rootClass = computed(() => {
     'duration-300',
   ];
 
-  // Aspect ratio
   const aspectRatioClasses = {
     square: 'aspect-square',
     video: 'aspect-video',
@@ -170,14 +168,13 @@ const rootClass = computed(() => {
     wide: 'aspect-[21/9]',
     auto: 'aspect-auto',
   };
+
   classes.push(aspectRatioClasses[props.aspectRatio]);
 
-  // Loading state
   if (isLoading.value && shouldLoad.value && !isExternalVideo.value) {
     classes.push('animate-pulse');
   }
 
-  // Error state
   if (hasError.value && !isExternalVideo.value) {
     classes.push('bg-red-900/50');
   }
@@ -201,7 +198,6 @@ const errorStateClass =
     @mouseenter="handleMouseEnter"
     @mouseleave="handleMouseLeave"
   >
-    <!-- External Video (iframe) -->
     <div
       v-if="isExternalVideo && shouldLoad"
       class="relative w-full aspect-video"
@@ -216,7 +212,6 @@ const errorStateClass =
       />
     </div>
 
-    <!-- Self-hosted Video Element -->
     <video
       v-else-if="shouldLoad && !isExternalVideo"
       ref="videoRef"
@@ -234,7 +229,6 @@ const errorStateClass =
       <p>Your browser doesn't support video playback.</p>
     </video>
 
-    <!-- Custom Controls Overlay (self-hosted only, on hover) -->
     <div
       v-if="
         !isExternalVideo && !controls && !hasError && shouldLoad && showControls
@@ -243,7 +237,6 @@ const errorStateClass =
       class="opacity-100 transition-opacity duration-200"
     >
       <div class="flex items-center gap-4">
-        <!-- Play/Pause Button -->
         <button
           class="p-2 rounded-full bg-black/20 hover:bg-black/40 transition-colors flex cursor-pointer"
           @click="togglePlay"
@@ -254,7 +247,6 @@ const errorStateClass =
           />
         </button>
 
-        <!-- Volume Control -->
         <button
           class="p-2 rounded-full bg-black/20 hover:bg-black/40 transition-colors flex cursor-pointer"
           @click="toggleMute"
@@ -267,7 +259,6 @@ const errorStateClass =
       </div>
     </div>
 
-    <!-- Loading State (self-hosted only) -->
     <div
       v-if="!isExternalVideo && isLoading && shouldLoad"
       :class="overlayClass"
@@ -277,7 +268,6 @@ const errorStateClass =
       </div>
     </div>
 
-    <!-- Error State (self-hosted only) -->
     <div v-if="!isExternalVideo && hasError" :class="overlayClass">
       <div :class="errorStateClass">
         <UIcon name="i-lucide-video-off" class="size-12 mb-2" />
@@ -286,14 +276,12 @@ const errorStateClass =
       </div>
     </div>
 
-    <!-- Lazy Loading Placeholder -->
     <div v-if="!shouldLoad" :class="overlayClass">
       <div :class="loadingStateClass">
         <UIcon name="i-lucide-video" class="size-8 text-white" />
       </div>
     </div>
 
-    <!-- Buffering Indicator (self-hosted only) -->
     <div
       v-if="!isExternalVideo && waiting && !hasError && !isLoading"
       :class="overlayClass"

@@ -26,7 +26,6 @@ export interface StorageProvider {
 
 const providers: Record<string, StorageProvider> = {
   kv: kvProvider,
-  // future: airtable, baserow, zapier, supabase, etc.
 };
 
 /**

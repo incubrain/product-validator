@@ -22,7 +22,6 @@ export default defineEventHandler(async (event) => {
   const config = useRuntimeConfig();
   const query = getQuery(event);
 
-  // Check authentication
   if (!query.secret) {
     throw createError({
       statusCode: 400,
@@ -39,7 +38,6 @@ export default defineEventHandler(async (event) => {
     });
   }
 
-  // Get request body
   const body = await readBody<ImportRequest>(event);
 
   if (!body || !body.records || !Array.isArray(body.records)) {

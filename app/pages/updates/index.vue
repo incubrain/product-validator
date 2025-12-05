@@ -6,12 +6,10 @@ const { getSiteConfig, getFounder } = useContentCache();
 const { data: founderData } = await getFounder();
 const { data: configData } = await getSiteConfig();
 
-// Fetch page metadata (hero, values, etc.)
 const { data: page } = await useAsyncData('updates-page', () =>
   queryCollection('pages').path('/updates').first(),
 );
 
-// Fetch updates list
 const { data: updates, pending } = useAsyncData('updates-list', () =>
   queryCollection('pages')
     .where('path', 'LIKE', '/updates/%')
@@ -20,7 +18,6 @@ const { data: updates, pending } = useAsyncData('updates-list', () =>
     .all(),
 );
 
-// Get social links
 const socialLinks = pickSocialLinks(configData.value?.socials || [], [
   'youtube',
   'github',
@@ -38,7 +35,6 @@ useHead({
   ],
 });
 
-// Authors for changelog
 const authors = [
   {
     name: `${founderData.value?.given_name} ${founderData.value?.surname}`,
@@ -48,7 +44,6 @@ const authors = [
   },
 ];
 
-// Hero links
 const heroLinks = computed(() =>
   socialLinks.map((link) => ({
     label: `Follow on ${link.label}`,
@@ -66,12 +61,8 @@ const heroLinks = computed(() =>
   })),
 );
 
-// Values from frontmatter
 const values = computed(() => page.value?.values || []);
-
-// Expand All Logic
 const expandedUpdates = ref<Set<string>>(new Set());
-
 const isExpanded = (version: string) => expandedUpdates.value.has(version);
 
 const toggleUpdate = (version: string) => {
@@ -101,7 +92,6 @@ const toggleAll = () => {
   }
 };
 
-// Scroll to top
 const showScrollTop = ref(false);
 
 onMounted(() => {
@@ -131,7 +121,6 @@ const scrollToTop = () => {
           class="absolute top-0 inset-0 bg-grid-white pointer-events-none -z-10"
         />
 
-        <!-- Values Section -->
         <div
           v-if="values?.length"
           class="max-w-3xl mx-auto pb-8 lg:pb-0 px-4 bg-default"
@@ -152,7 +141,6 @@ const scrollToTop = () => {
           />
         </div>
 
-        <!-- Social Links Section -->
         <div
           v-if="heroLinks.length"
           class="flex flex-col items-center gap-4 py-8"
@@ -177,7 +165,6 @@ const scrollToTop = () => {
 
     <UPageBody class="border-t">
       <UContainer>
-        <!-- Loading skeleton -->
         <div v-if="pending" class="space-y-12">
           <div v-for="i in 3" :key="i" class="space-y-4">
             <USkeleton class="h-8 w-1/3" />
@@ -187,7 +174,6 @@ const scrollToTop = () => {
           </div>
         </div>
 
-        <!-- Empty state -->
         <UEmpty
           v-else-if="!updates?.length"
           title="No updates yet"
@@ -195,7 +181,6 @@ const scrollToTop = () => {
           icon="i-lucide-inbox"
         />
 
-        <!-- Updates -->
         <UChangelogVersions v-else :indicator="false">
           <UChangelogVersion
             v-for="update in updates"
@@ -220,7 +205,6 @@ const scrollToTop = () => {
 
             <template #indicator>
               <div class="flex flex-col items-end gap-3 text-right">
-                <!-- Version with subtle background -->
                 <div
                   class="inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/5 border border-primary/10"
                 >
@@ -230,7 +214,6 @@ const scrollToTop = () => {
                   </span>
                 </div>
 
-                <!-- Date with icon -->
                 <div class="flex items-center gap-2">
                   <UIcon name="i-lucide-calendar" class="size-3.5 text-muted" />
                   <NuxtTime
@@ -245,7 +228,6 @@ const scrollToTop = () => {
             </template>
 
             <template #body>
-              <!-- Expandable content -->
               <div v-if="!isExpanded(update.version)" class="pt-6">
                 <div class="prose line-clamp-3">
                   <ContentRenderer v-if="update" :value="update" />
@@ -273,7 +255,6 @@ const scrollToTop = () => {
                 </div>
               </div>
 
-              <!-- Full content when expanded -->
               <div v-else class="pt-6">
                 <div class="prose max-w-none">
                   <ContentRenderer v-if="update" :value="update" />
@@ -302,7 +283,6 @@ const scrollToTop = () => {
 
             <template #authors>
               <div class="flex items-center justify-between gap-4 flex-wrap">
-                <!-- Authors -->
                 <div class="flex flex-wrap gap-x-4 gap-y-1.5">
                   <UUser
                     v-for="(author, index) in authors"
@@ -311,7 +291,6 @@ const scrollToTop = () => {
                   />
                 </div>
 
-                <!-- Version badge (mobile only) -->
                 <div
                   class="lg:hidden inline-flex items-center gap-2 px-3 py-1.5 rounded-md bg-primary/5 border border-primary/10"
                 >
@@ -327,7 +306,6 @@ const scrollToTop = () => {
       </UContainer>
     </UPageBody>
 
-    <!-- Scroll to top button -->
     <div class="fixed bottom-8 right-8 z-50 space-x-2">
       <UButton
         v-if="showScrollTop"

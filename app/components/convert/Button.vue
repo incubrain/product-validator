@@ -28,7 +28,6 @@ const cta = computed(() => {
   return product.value.ctas[props.ctaName];
 });
 
-// ✅ Handle click
 const handleClick = async () => {
   await trackEvent({
     id: `product_${product.value.slug}_view`,

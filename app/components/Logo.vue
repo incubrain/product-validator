@@ -1,5 +1,4 @@
 <script setup lang="ts">
-// Fetch business data from config collection
 const { getSiteConfig } = useContentCache();
 const { data: configData } = await getSiteConfig();
 const business = computed(() => configData.value?.business);
@@ -14,7 +13,6 @@ const props = withDefaults(defineProps<Props>(), {
   showText: true,
 });
 
-// Size variants
 const sizeMap = {
   sm: '24px',
   md: '36px',

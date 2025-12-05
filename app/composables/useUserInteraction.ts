@@ -5,7 +5,7 @@ export interface UserInteractionOptions {
   resetOnNavigation?: boolean;
   clientOnly?: boolean;
   debounceMs?: number;
-  autoSetup?: boolean; // NEW: control automatic setup
+  autoSetup?: boolean;
 }
 
 export interface UserInteractionState {
@@ -16,8 +16,8 @@ export interface UserInteractionState {
   waitForInteraction: () => Promise<Event>;
   markAsInteracted: (eventType?: string) => void;
   reset: () => void;
-  setup: () => void; // NEW: manual setup
-  cleanup: () => void; // NEW: manual cleanup
+  setup: () => void;
+  cleanup: () => void;
 }
 
 export const useUserInteraction = (
@@ -40,7 +40,6 @@ export const useUserInteraction = (
     autoSetup = true, // Auto-setup by default for components
   } = options;
 
-  // Core state
   const hasInteractedRef = ref(false);
   const interactionTimeRef = ref<number | null>(null);
   const interactionTypeRef = ref<string | null>(null);
@@ -90,7 +89,6 @@ export const useUserInteraction = (
     isSetup.value = true;
   };
 
-  // Manual cleanup
   const cleanup = () => {
     if (typeof document !== 'undefined' && isSetup.value) {
       events.forEach((eventType) => {
@@ -119,7 +117,6 @@ export const useUserInteraction = (
     }
   }
 
-  // Reset on navigation if enabled
   if (resetOnNavigation) {
     try {
       const router = useRouter();
@@ -134,7 +131,6 @@ export const useUserInteraction = (
     }
   }
 
-  // Computed properties
   const hasInteracted = computed(() => hasInteractedRef.value);
   const interactionTime = computed(() => interactionTimeRef.value);
   const interactionType = computed(() => interactionTypeRef.value);
@@ -143,7 +139,6 @@ export const useUserInteraction = (
     return Date.now() - interactionTimeRef.value;
   });
 
-  // Methods
   const waitForInteraction = (): Promise<Event> => {
     return new Promise((resolve) => {
       if (hasInteractedRef.value) {

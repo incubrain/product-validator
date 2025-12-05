@@ -9,7 +9,6 @@ const { currentStage, hasActiveOverrides } = useDevConfig();
 
 <template>
   <ClientOnly>
-    <!-- Stage Indicator -->
     <div
       class="fixed top-1 left-1 z-999 pointer-events-none flex gap-2 items-center"
     >

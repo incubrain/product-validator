@@ -9,7 +9,6 @@ export const useDevConfig = () => {
   const isClient = import.meta.client;
   const isDev = import.meta.dev;
 
-  // Get stages from dynamic config
   const stages = STAGE_CONFIG.stages.map(s => s.value);
   const defaultStage = STAGE_CONFIG.currentStage;
 
@@ -81,7 +80,6 @@ export const useDevConfig = () => {
       return;
     }
 
-    // Validate stage exists in config
     if (!stages.includes(stage)) {
       console.warn(`Invalid stage: ${stage}. Available: ${stages.join(', ')}`);
       return;
@@ -129,7 +127,6 @@ export const useDevConfig = () => {
     try {
       const { local, session } = useAppStorage();
       
-      // Much simpler with all() method!
       const localStorage_items = local.all();
       const sessionStorage_items = session.all();
 
@@ -143,7 +140,6 @@ export const useDevConfig = () => {
     if (!isDev) return;
     const before = getStorageSnapshot();
     
-    // Use useAppStorage clear methods to remove all prefixed items
     const { local: localStorage, session: sessionStorage } = useAppStorage();
     localStorage.clear();
     sessionStorage.clear();

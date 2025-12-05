@@ -30,7 +30,6 @@ const copyrightYear = computed(() =>
         'order-3 flex items-center justify-start lg:justify-end lg:flex-1 gap-x-1.5',
     }"
   >
-    <!-- TOP: Brand + Description + Founder Card -->
     <template v-if="showFeature('footerFounder')" #left>
       <div class="flex flex-col items-start gap-4">
         <ILogo size="md" />
@@ -46,7 +45,6 @@ const copyrightYear = computed(() =>
       <ICardFounder />
     </template>
 
-    <!-- BOTTOM: Copyright + CTA -->
     <template #bottom>
       <UContainer
         class="flex flex-col gap-4 lg:flex-row justify-between w-full items-start lg:items-center"

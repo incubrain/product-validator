@@ -42,7 +42,6 @@ const props = withDefaults(defineProps<Props>(), {
 
     <template #title>
       <div class="space-y-3 pt-6">
-        <!-- Main title with gradient underline -->
         <h2
           class="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight"
         >
@@ -55,7 +54,6 @@ const props = withDefaults(defineProps<Props>(), {
           />
         </div>
 
-        <!-- Description -->
         <p
           class="text-base text-muted/90 font-family-body tracking-normal max-w-xl mx-auto pt-3"
         >

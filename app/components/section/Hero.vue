@@ -1,17 +1,15 @@
 <!-- components/section/Hero.vue -->
 <script setup lang="ts">
 import { STAGE_CONFIG } from '#stage-config';
-// Accept data as prop (from MDC)
+
 const props = defineProps<{
   data?: any;
 }>();
 
 const { showFeature, showSection } = useSectionVisibility();
 
-// Use prop data from MDC
 const hero = computed(() => props.data);
 
-// ✅ Explicit feature flags
 const showMedia = computed(
   () => showFeature('heroMedia') && hero.value?.media?.src,
 );

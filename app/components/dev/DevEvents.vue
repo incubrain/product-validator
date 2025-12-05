@@ -22,12 +22,10 @@ const { trackEvent } = useEvents();
 const route = useRoute();
 const nuxtApp = useNuxtApp();
 
-// Event chain tracking
-const eventChain = ref<EventExecution[]>([]);
+const eventChainTracking = ref<EventExecution[]>([]);
 
-// Listen for dev events
 nuxtApp.hook('events:dev', (event) => {
-  const existingEvent = eventChain.value.find((e) => e.id === event.eventId);
+  const existingEvent = eventChainTracking.value.find((e) => e.id === event.eventId);
 
   if (existingEvent) {
     existingEvent.status = event.status;
@@ -37,7 +35,7 @@ nuxtApp.hook('events:dev', (event) => {
       existingEvent.error = event.error;
     }
   } else {
-    eventChain.value.push({
+    eventChainTracking.value.push({
       id: event.eventId,
       type: event.eventType,
       timestamp: Date.now(),
@@ -48,7 +46,6 @@ nuxtApp.hook('events:dev', (event) => {
   }
 });
 
-// Transform metadata into grouped items
 const groupedItems = computed<SelectMenuItem[][]>(() => {
   const byCategory: Record<string, SelectMenuItem[]> = {
     form: [{ type: 'label', label: 'Form Events' }],
@@ -74,10 +71,8 @@ const selectedEvent = ref<SelectMenuItem | null>(null);
 const triggerEvent = async () => {
   if (!selectedEvent.value) return;
 
-  // Clear previous chain
-  eventChain.value = [];
+  eventChainTracking.value = [];
 
-  // Extract event type from SelectMenuItem
   const eventType = (
     typeof selectedEvent.value === 'object' && 'value' in selectedEvent.value
       ? selectedEvent.value.value
@@ -108,7 +103,7 @@ const triggerEvent = async () => {
 const handleClose = () => {
   isOpen.value = false;
   selectedEvent.value = null;
-  eventChain.value = [];
+  eventChainTracking.value = [];
 };
 
 const getStatusColor = (status: EventExecution['status']) => {
@@ -156,7 +151,6 @@ defineExpose({
 
       <template #body>
         <div class="space-y-4">
-          <!-- Event Selection -->
           <div class="space-y-2">
             <label class="text-sm font-medium">Select Event</label>
             <USelectMenu
@@ -193,7 +187,6 @@ defineExpose({
             </USelectMenu>
           </div>
 
-          <!-- Info Box -->
           <div
             v-if="selectedEvent"
             class="p-3 bg-muted/50 rounded-lg text-xs space-y-1"
@@ -204,14 +197,13 @@ defineExpose({
             </div>
           </div>
 
-          <!-- Event Chain (shown after trigger) -->
-          <div v-if="eventChain.length > 0" class="space-y-2">
+          <div v-if="eventChainTracking.length > 0" class="space-y-2">
             <div class="flex items-center justify-between">
               <div class="flex items-center gap-2">
                 <UIcon name="i-lucide-activity" class="text-primary size-4" />
                 <span class="text-sm font-semibold">Event Chain</span>
                 <UBadge
-                  :label="String(eventChain.length)"
+                  :label="String(eventChainTracking.length)"
                   size="xs"
                   color="primary"
                 />
@@ -222,7 +214,7 @@ defineExpose({
                 variant="ghost"
                 size="xs"
                 square
-                @click="eventChain = []"
+                @click="eventChainTracking = []"
               />
             </div>
 
@@ -230,12 +222,11 @@ defineExpose({
               class="border border-default rounded-lg divide-y divide-default max-h-60 overflow-y-auto"
             >
               <div
-                v-for="(event, index) in eventChain"
+                v-for="(event, index) in eventChainTracking"
                 :key="event.id"
                 class="p-3 hover:bg-muted/50 transition-colors"
               >
                 <div class="flex items-start gap-2">
-                  <!-- Chain number -->
                   <div
                     class="size-6 rounded-full flex items-center justify-center text-xs font-mono font-bold shrink-0 mt-0.5"
                     :class="[
@@ -247,7 +238,6 @@ defineExpose({
                     {{ index + 1 }}
                   </div>
 
-                  <!-- Event details -->
                   <div class="flex-1 min-w-0 space-y-1">
                     <div class="flex items-center gap-2">
                       <UIcon
@@ -268,7 +258,6 @@ defineExpose({
                       />
                     </div>
 
-                    <!-- Error details -->
                     <div
                       v-if="event.error"
                       class="text-xs text-error space-y-1"
@@ -281,7 +270,6 @@ defineExpose({
                       </div>
                     </div>
 
-                    <!-- Data preview -->
                     <details
                       v-if="event.data && Object.keys(event.data).length > 0"
                       class="text-xs"

@@ -6,11 +6,9 @@ defineProps<{
   data?: any;
 }>();
 
-// Get primary product
 const { getPrimaryProduct } = useContentCache();
 const { data: primaryProduct } = await getPrimaryProduct();
 
-// Get founder
 const { getFounder } = useContentCache();
 const { data: founderData } = await getFounder();
 
@@ -41,22 +39,18 @@ const { showSection } = useSectionVisibility();
     :cta="data.cta"
     class="relative"
   >
-    <!-- Background glow -->
     <div
       class="absolute inset-0 flex items-center justify-center pointer-events-none"
     >
       <div class="w-[80%] h-[80%] bg-primary/5 rounded-full blur-3xl" />
     </div>
 
-    <!-- Main content grid -->
     <div
       class="grid lg:grid-cols-[400px_1fr] gap-8 lg:gap-12 max-w-6xl mx-auto relative z-10 px-4"
     >
-      <!-- Left: Founder Sidebar -->
       <div
         class="flex flex-col items-center lg:items-start gap-6 lg:sticky lg:top-24 lg:self-start"
       >
-        <!-- Portrait -->
         <div class="relative group">
           <div
             class="absolute inset-0 bg-linear-to-t from-primary/20 to-transparent blur-xl group-hover:blur-2xl transition-all duration-300"
@@ -68,7 +62,6 @@ const { showSection } = useSectionVisibility();
           />
         </div>
 
-        <!-- Name & Role -->
         <div class="text-center lg:text-left space-y-1">
           <h3 class="text-xl font-bold text-highlighted">
             {{ founderData?.given_name }} {{ founderData?.surname }}
@@ -78,14 +71,12 @@ const { showSection } = useSectionVisibility();
           </p>
         </div>
 
-        <!-- Quote (with marks) -->
         <p
           class="text-base max-w-sm text-center lg:text-left lg:text-lg italic text-dimmed leading-relaxed"
         >
           {{ founderData?.bio }}
         </p>
 
-        <!-- Read Story Link -->
         <UButton
           to="/story"
           label="Read My Story"
@@ -96,7 +87,6 @@ const { showSection } = useSectionVisibility();
         />
       </div>
 
-      <!-- Right: Product Card -->
       <div v-if="primaryProduct" class="max-w-md mx-auto lg:mx-0 w-full">
         <UPricingPlan
           v-bind="primaryProduct"

@@ -13,7 +13,6 @@ export const useEvents = () => {
       timestamp: Date.now(),
       data: {
         ...event.data,
-        // Auto-inject user identity and traffic attribution
         userId,
         trafficSource,
       },

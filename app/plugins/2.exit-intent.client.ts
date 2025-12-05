@@ -35,7 +35,6 @@ export default defineNuxtPlugin(() => {
     const fire = async (directTrigger: boolean = false) => {
       if (isShowing.value) return;
 
-      // Skip checks for direct triggers (DevTools)
       if (!directTrigger) {
         const engagementTime = interactionTime.value
           ? (Date.now() - interactionTime.value) / 1000
@@ -56,7 +55,6 @@ export default defineNuxtPlugin(() => {
         local.set(STORAGE_KEY, Date.now().toString());
       }
 
-      // ✅ Trigger via event system instead of direct overlay
       isShowing.value = true;
 
       try {

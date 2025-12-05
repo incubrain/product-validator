@@ -29,7 +29,6 @@ export interface StageConfig {
   conversionTarget: Record<string, string>
 }
 
-// Infer types
 export type StageKey = typeof STAGE_CONFIG.stages[number]['value'];
 export type LayoutKey = keyof typeof STAGE_CONFIG.visibility.unlock.layout;
 export type SectionKey = keyof typeof STAGE_CONFIG.visibility.unlock.sections;

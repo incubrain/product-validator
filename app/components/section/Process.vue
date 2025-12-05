@@ -42,7 +42,6 @@ const { showSection } = useSectionVisibility();
     :cta="data.cta"
     has-bottom
   >
-    <!-- Mobile: Process Carousel -->
     <UCarousel
       v-if="steps.length"
       v-slot="{ item, index }"
@@ -73,11 +72,9 @@ const { showSection } = useSectionVisibility();
       </div>
     </UCarousel>
 
-    <!-- Features Carousel in #bottom slot (full width) -->
     <template #bottom>
       <div v-if="features.length" class="bg-muted/30 py-16 overflow-hidden">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <!-- Section Header -->
+        <div>
           <div
             class="flex items-center justify-between mb-8 max-w-(--ui-container) mx-auto"
           >
@@ -88,7 +85,7 @@ const { showSection } = useSectionVisibility();
             </h3>
           </div>
 
-          <div class="block relative">
+          <div>
             <UCarousel
               v-slot="{ item }"
               arrows
@@ -105,6 +102,7 @@ const { showSection } = useSectionVisibility();
               :ui="{
                 item: 'basis-[320px] px-2 h-[360px]',
                 viewport: 'overflow-visible',
+
                 controls:
                   'relative mt-12 hidden md:flex justify-center max-w-(--ui-container) mx-auto',
                 arrows: 'flex gap-4',
@@ -122,14 +120,12 @@ const { showSection } = useSectionVisibility();
                 }"
               >
                 <template #footer>
-                  <!-- Optional Image -->
                   <NuxtImg
                     src="https://placehold.co/400"
                     class="w-full h-32 object-cover"
                   />
                 </template>
 
-                <!-- Title + Icon (justify-between) -->
                 <template #body>
                   <div class="flex items-start justify-between gap-3">
                     <h4 class="text-base font-semibold text-highlighted flex-1">
@@ -142,7 +138,6 @@ const { showSection } = useSectionVisibility();
                     </div>
                   </div>
 
-                  <!-- Description (with more spacing) -->
                   <p class="text-sm text-muted leading-relaxed">
                     {{ item.description }}
                   </p>
