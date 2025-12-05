@@ -17,7 +17,7 @@ function detectPlatform(url: string): WebhookPlatform {
   
   if (lowerUrl.includes('api.telegram.org')) return 'telegram';
   if (lowerUrl.includes('hooks.slack.com')) return 'slack';
-  if (lowerUrl.includes('discord.com/api/webhooks')) return 'discord';
+  if (lowerUrl.includes('discord.com/api/webhooks') || lowerUrl.includes('discordapp.com/api/webhooks')) return 'discord';
   
   return 'unknown';
 }
@@ -116,14 +116,14 @@ export default defineEventHandler(async (event) => {
     logger.box({
       title: '❌ Webhook Not Configured',
       message: [
-        'Choose ONE platform for lead notifications:',
+        'Choose ONE or MORE platforms for lead notifications:',
         '',
-        '• Telegram: https://core.telegram.org/bots/api#sendmessage',
+        '• Telegram: https://api.telegram.org/bots/api#sendmessage',
         '• Slack: https://api.slack.com/messaging/webhooks',
         '• Discord: Server Settings → Integrations → Webhooks',
         '',
-        'Add to .env file:',
-        'NUXT_WEBHOOK_URL=<your-webhook-url>',
+        'Add to .env file (comma-separated for multiple):',
+        'NUXT_WEBHOOK_URL=<url1>,<url2>,<url3>',
         '',
         'For Telegram, also add:',
         'NUXT_TELEGRAM_CHAT_ID=<your-chat-id>',
@@ -143,82 +143,101 @@ export default defineEventHandler(async (event) => {
     });
   }
   
-  // Detect platform and format message
-  const platform = detectPlatform(webhookUrl);
+  // Parse multiple webhook URLs (comma-separated)
+  const webhookUrls = webhookUrl.split(',').map(url => url.trim()).filter(Boolean);
+  
+  if (webhookUrls.length === 0) {
+    throw createError({
+      statusCode: 500,
+      statusMessage: 'Webhook Not Configured',
+      message: 'No valid webhook URLs found',
+    });
+  }
+  
   const telegramChatId = config.telegramChatId;
   
-  let message;
-  try {
-    message = formatMessage(platform, parsed.data, telegramChatId);
-    
-    // Debug logging for Telegram
-    if (platform === 'telegram') {
-      logger.info('Telegram payload:', {
-        url: webhookUrl,
-        chatId: telegramChatId,
-        chatIdType: typeof telegramChatId,
-        message: JSON.stringify(message, null, 2),
-      });
-    }
-  } catch (error) {
-    logger.error('Failed to format webhook message:', {
-      platform,
-      error: error instanceof Error ? error.message : 'Unknown error',
-    });
-    
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Webhook Configuration Error',
-      message: error instanceof Error ? error.message : 'Failed to format webhook message',
-    });
+  // Send to all webhooks in parallel
+  const results = await Promise.allSettled(
+    webhookUrls.map(async (url) => {
+      const platform = detectPlatform(url);
+      
+      let message;
+      try {
+        message = formatMessage(platform, parsed.data, telegramChatId);
+      } catch (error) {
+        logger.error(`[${platform}] Failed to format message:`, {
+          error: error instanceof Error ? error.message : 'Unknown error',
+        });
+        throw error;
+      }
+      
+      try {
+        const response = await $fetch(url, {
+          method: 'POST',
+          body: message,
+        });
+        
+        // Validate Telegram response
+        if (platform === 'telegram' && response && typeof response === 'object') {
+          const telegramResponse = response as { ok: boolean; description?: string; error_code?: number };
+          
+          if (!telegramResponse.ok) {
+            logger.error('[telegram] API returned error:', {
+              ok: telegramResponse.ok,
+              error_code: telegramResponse.error_code,
+              description: telegramResponse.description,
+              sentPayload: message,
+            });
+            
+            throw new Error(telegramResponse.description || 'Telegram API returned ok: false');
+          }
+        }
+        
+        logger.success(`[${platform}] Lead delivered:`, parsed.data.email);
+        
+        return { platform, url: url.substring(0, 30) + '...', success: true };
+      } catch (error: any) {
+        logger.error(`[${platform}] Delivery failed:`, {
+          url: url.substring(0, 10) + '...',
+          error: error instanceof Error ? error.message : 'Unknown error',
+        });
+        
+        throw error;
+      }
+    })
+  );
+  
+  // Analyze results
+  const successful = results.filter(r => r.status === 'fulfilled');
+  const failed = results.filter(r => r.status === 'rejected');
+  
+  logger.info('Webhook delivery summary:', {
+    total: webhookUrls.length,
+    successful: successful.length,
+    failed: failed.length,
+  });
+  
+  // Return success if at least one webhook succeeded
+  if (successful.length > 0) {
+    return {
+      success: true,
+      delivered: successful.length,
+      failed: failed.length,
+      platforms: successful.map(r => (r as PromiseFulfilledResult<any>).value),
+    };
   }
   
-  // Send to webhook
-  try {
-    const response = await $fetch(webhookUrl, {
-      method: 'POST',
-      body: message,
-    });
-    
-    // Log successful Telegram response
-    if (platform === 'telegram') {
-      logger.success('[telegram] Response:', response);
-    }
-    
-    logger.success(`[${platform}] Lead captured:`, parsed.data.email);
-    
-    return { success: true, platform };
-  } catch (error: any) {
-    // Enhanced Telegram error debugging
-    if (platform === 'telegram') {
-      logger.error('Telegram API Error Details:', {
-        chatId: telegramChatId,
-        messagePayload: message,
-        error: error?.data || error?.message || error,
-        statusCode: error?.statusCode,
-      });
-    }
-    
-    logger.error('Failed to send webhook notification:', {
-      platform,
-      url: webhookUrl.substring(0, 10) + '...',
-      error: error instanceof Error ? error.message : 'Unknown error',
-      troubleshooting: [
-        '• Verify webhook URL is correct',
-        '• Check webhook is not revoked',
-        platform === 'telegram' ? '• Ensure NUXT_TELEGRAM_CHAT_ID is set' : null,
-        '• Test URL manually with curl',
-      ].filter(Boolean),
-    });
-    
-    throw createError({
-      statusCode: 500,
-      statusMessage: 'Webhook Delivery Failed',
-      message: `Failed to deliver notification to ${platform}. ${error instanceof Error ? error.message : 'Unknown error'}`,
-      data: { 
-        platform,
-        webhookUrl: webhookUrl.substring(0, 10) + '...',
-      },
-    });
-  }
+  // All failed - throw error
+  throw createError({
+    statusCode: 500,
+    statusMessage: 'All Webhooks Failed',
+    message: `Failed to deliver to all ${webhookUrls.length} configured webhook(s)`,
+    data: {
+      attempted: webhookUrls.length,
+      failures: failed.map((r, i) => ({
+        url: webhookUrls[i].substring(0, 30) + '...',
+        error: (r as PromiseRejectedResult).reason?.message || 'Unknown error',
+      })),
+    },
+  });
 });
