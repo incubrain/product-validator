@@ -56,13 +56,6 @@ const { data: product } = await getProduct(props.productId);
           </ul>
         </div>
 
-        <IUrgencyStockRemaining
-          v-if="product?.stock"
-          :stock="product.stock"
-          :product-id="product.id"
-          class="max-w-sm mx-auto"
-        />
-
         <IConvertButton
           :product-id="productId"
           :location="`${location}_modal`"

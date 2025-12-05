@@ -66,8 +66,7 @@ const showMedia = computed(
         </p>
 
         <IConvertButton
-          :product-id="STAGE_CONFIG.products.primary"
-          cta-name="funnel"
+          cta-type="hero"
           location="hero"
           size="xl"
           class="font-black text-toned px-4 py-3"

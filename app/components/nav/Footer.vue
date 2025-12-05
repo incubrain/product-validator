@@ -67,9 +67,8 @@ const copyrightYear = computed(() =>
             aria-label="View Analytics Dashboard"
           />
           <IConvertButton
-            :product-id="STAGE_CONFIG.products.secondary"
+            cta-type="footer"
             location="footer"
-            cta-name="funnel"
             color="secondary"
             variant="solid"
             class="font-black"

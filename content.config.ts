@@ -4,29 +4,7 @@ import { asSeoCollection } from '@nuxtjs/seo/content';
 import { getActiveConfigSource } from './shared/utils/config-resolver';
 import path from 'node:path';
 
-// Shared schema constants for consistency across collections
-
 const FAQ_COLORS = z.enum(['error', 'warning', 'success', 'info']);
-
-const BADGE_SCHEMA = z.object({
-  label: z.string(),
-  color: z.enum(['primary', 'secondary', 'success', 'info', 'warning', 'error', 'neutral']),
-  variant: z.enum(['solid', 'outline', 'subtle', 'soft']),
-  size: z.enum(['xs', 'sm', 'md', 'lg', 'xl']),
-});
-
-const CTA_SCHEMA = z.object({
-  strategy: z.enum(['modal', 'link', 'external']).optional(),
-  label: z.string(),
-  to: z.string().optional(),
-  icon: z.string(),
-  modal: z.string().optional(),
-  color: z.string().optional(),
-  variant: z.string().optional(),
-  note: z.string().nullable().optional(),
-});
-
-const CTA_NAME = z.enum(['conversion', 'funnel', 'secondary']);
 
 
 // Determine the root directory for content based on the active source
@@ -94,55 +72,12 @@ export default defineContentConfig({
         email: z.string().optional(),
         role: z.string(),
         avatar: z.object({
-            src: z.string(),
-            alt: z.string(),
-          }).optional(),
+          src: z.string(),
+          alt: z.string(),
+        }).optional(),
         bio: z.string(),
       }),
     }),
-
-    products: defineCollection(
-      asSeoCollection({
-        type: 'data',
-        source: {
-          cwd: contentCwd,
-          include: 'products/*.yml',
-        },
-        schema: z.object({
-          slug: z.string(),
-          primary: z.boolean().optional(),
-          title: z.string(),
-          description: z.string(),
-          price: z.string(),
-          discount: z.string().nullable().optional(),
-          billingCycle: z.string(),
-          terms: z.string(),
-          tagline: z.string().nullable().optional(),
-          badge: BADGE_SCHEMA.optional(),
-          features: z.array(z.object({
-            title: z.string(),
-            icon: z.string(),
-          })),
-          variant: z.string(),
-          highlight: z.boolean(),
-          type: z.enum(['ebook', 'course', 'mentorship']).default('ebook'),
-          stock: z.object({
-            limit: z.number(),
-            claimed: z.number(),
-            type: z.string(),
-          }).optional(),
-          ctas: z.record(CTA_NAME, CTA_SCHEMA),
-
-          media: z.object({
-            type: z.enum(['image', 'video']),
-            src: z.string(),
-            alt: z.string(),
-          }).optional(),
-
-
-        }),
-      }),
-    ),
 
     faq: defineCollection({
       type: 'data',

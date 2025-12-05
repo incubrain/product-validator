@@ -116,6 +116,20 @@ data:
 ::i-section-product
 ---
 data:
+  title: Founder Funnel Template Guide
+  description: Get up and running in minutes with the official quick start guide
+  price: Free
+  features:
+    - title: Quick start video
+      icon: status-available
+    - title: Configuration docs
+      icon: status-available
+    - title: Deployment guide
+      icon: status-available
+    - title: Best practices
+      icon: status-available
+    - title: Community support
+      icon: status-available
   intro:
     title: Everything You Need to Launch
     description: Get the complete validation stack. Landing page, analytics, and email capture.

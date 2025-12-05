@@ -1,17 +1,13 @@
 <!-- components/nav/Banner.vue -->
 <script setup lang="ts">
-import { STAGE_CONFIG } from '#stage-config';
+import NAVIGATION from '#shared/config/navigation';
 
 const props = defineProps<{
   sticky?: boolean;
 }>();
 
-const { getProduct } = useContentCache();
-const { data: product } = await getProduct(STAGE_CONFIG.products.secondary);
-const cta = computed(() => product.value?.ctas.funnel);
-
-
-const configSource = useRuntimeConfig().public.configSource
+const cta = NAVIGATION.ctas.banner;
+const configSource = useRuntimeConfig().public.configSource;
 
 const bannerClasses = computed(() => ({
   'sticky top-0 z-50': props.sticky,
@@ -21,11 +17,9 @@ const bannerClasses = computed(() => ({
 
 <template>
   <UBanner
-    v-if="product && cta"
-    icon="i-lucide-heart"
-    :title="product.description"
-    :to="cta.to"
-    :target="cta.to?.startsWith('http') ? '_blank' : undefined"
+    v-if="cta"
+    :title="cta.label"
+    :class="bannerClasses"
     :actions="[
       {
         to: cta.to,
@@ -38,7 +32,6 @@ const bannerClasses = computed(() => ({
       },
     ]"
     close
-    :class="bannerClasses"
     :ui="{
       root: 'hover:bg-default bg-primary-950/60 text-muted h-(--ui-banner-height) backdrop-blur-3xl',
       title: 'text-sm text-muted font-medium truncate pl-3',

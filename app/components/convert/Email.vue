@@ -1,42 +1,27 @@
+```
 <!-- app/components/convert/Email.vue -->
 <script setup lang="ts">
 import { z } from 'zod';
-import type { Product, CtaName } from '#types';
 import { STAGE_CONFIG } from '#stage-config';
+import NAVIGATION from '#shared/config/navigation';
 
 interface Props {
   location: string;
-  product: Product;
+  ctaType?: 'hero' | 'conversion';
   layout?: 'stacked' | 'horizontal';
-  ctaName?: CtaName;
+  successRedirect?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
   layout: 'stacked',
-  ctaName: 'funnel',
+  ctaType: 'conversion',
+  successRedirect: '/products/template-guide-success',
 });
 
 const { currentStage } = useDevConfig();
-const { isAvailable } = useProductStock(
-  props.product.stock,
-  props.product.slug,
-);
-
-// Determine product state
-const productState = computed<'available' | 'waitlist'>(() => {
-  if (!isAvailable.value) return 'waitlist';
-
-  const target = STAGE_CONFIG.conversionTarget[currentStage.value as StageKey];
-  if (target === 'waitlist') return 'waitlist';
-
-  return 'available';
-});
 
 // ✅ Get CTA config from product
-const cta = computed(() => {
-  if (!props.product.ctas) return null;
-  return props.product.ctas[props.ctaName];
-});
+const cta = computed(() => NAVIGATION.ctas[props.ctaType]);
 
 // Messaging type
 type MessagingType = {
@@ -108,11 +93,10 @@ const handleSubmit = async () => {
       data: {
         formId: 'email_capture',
         email: validated.email,
-        productId: props.product.slug,
         currentStage: currentStage.value as StageKey,
         metadata: {
           location: props.location,
-          reason: productState.value,
+          ctaType: props.ctaType,
           userAgent: navigator.userAgent,
           timestamp: Date.now(),
         },
@@ -121,8 +105,7 @@ const handleSubmit = async () => {
 
     isSuccess.value = true;
 
-    // Redirect to success page
-    navigateTo(`/products/${props.product.slug}-success`);
+    navigateTo(props.successRedirect);
   } catch (error) {
     console.error('[Email] Submission failed:', error);
 

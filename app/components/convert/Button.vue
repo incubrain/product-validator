@@ -1,12 +1,11 @@
 <!-- components/ConvertButton.vue -->
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui';
-import type { CtaName } from '#types';
+import NAVIGATION from '#shared/config/navigation';
 
 interface Props {
-  productId: ProductId;
+  ctaType?: 'hero' | 'banner' | 'footer' | 'conversion' | 'secondary';
   location: string;
-  ctaName?: CtaName;
   size?: ButtonProps['size'];
   block?: boolean;
   color?: ButtonProps['color'];
@@ -14,35 +13,25 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  ctaName: 'funnel',
+  ctaType: 'conversion',
   color: 'primary',
   variant: 'solid',
 });
 
 const { trackEvent } = useEvents();
-const { getProduct } = useContentCache();
-const { data: product } = await getProduct(props.productId);
 
-const cta = computed(() => {
-  if (!product.value?.ctas) return null;
-  return product.value.ctas[props.ctaName];
-});
+const cta = computed(() => NAVIGATION.ctas[props.ctaType]);
 
 const handleClick = async () => {
   await trackEvent({
-    id: `product_${product.value.slug}_view`,
+    id: `cta_${props.ctaType}_click`,
     type: 'element_viewed',
-    location: `product-page-${product.value.slug}`,
+    location: props.location,
     action: 'click',
-    target: `/products/${product.value.slug}`,
+    target: cta.value.to,
     data: {
-      productId: product.value.slug,
-      metadata: {
-        product_slug: product.value.slug,
-        product_type: product.value.type,
-        product_price: product.value.price,
-        is_primary: product.value.primary,
-      },
+      ctaType: props.ctaType,
+      ctaLabel: cta.value.label,
     },
   });
 };
@@ -59,7 +48,7 @@ const handleClick = async () => {
     :block="block"
     :class="$attrs.class"
     :to="cta.to"
-    :target="cta.strategy === 'external' ? '_blank' : undefined"
+    :target="cta.to.startsWith('http') ? '_blank' : undefined"
     @click="handleClick"
   />
 </template>

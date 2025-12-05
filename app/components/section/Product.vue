@@ -2,20 +2,28 @@
 import type { ButtonProps, BadgeProps } from '#ui/types';
 import { STATUS_ICONS } from '#constants';
 
-defineProps<{
-  data?: any;
-}>();
+interface ProductData {
+  title: string;
+  description: string;
+  price: string;
+  features: Array<{ title: string; icon: string }>;
+  intro?: { title: string; description: string };
+  cta?: any;
+}
 
-const { getPrimaryProduct } = useContentCache();
-const { data: primaryProduct } = await getPrimaryProduct();
+interface Props {
+  data?: ProductData;
+}
+
+const props = defineProps<Props>();
 
 const { getFounder } = useContentCache();
 const { data: founderData } = await getFounder();
 
 const transformedFeatures = computed(() => {
-  if (!primaryProduct.value?.features) return [];
+  if (!props.data?.features) return [];
 
-  return primaryProduct.value.features.map((feature) => {
+  return props.data.features.map((feature) => {
     const resolved = STATUS_ICONS[feature.icon] || {
       name: feature.icon,
       class: '',
@@ -87,10 +95,10 @@ const { showSection } = useSectionVisibility();
         />
       </div>
 
-      <div v-if="primaryProduct" class="max-w-md mx-auto lg:mx-0 w-full">
+      <div v-if="data" class="max-w-md mx-auto lg:mx-0 w-full">
         <UPricingPlan
-          v-bind="primaryProduct"
-          :badge="primaryProduct.badge as BadgeProps"
+          v-bind="data"
+          :badge="data.badge as BadgeProps"
           :features="transformedFeatures"
           variant="subtle"
           :ui="{
@@ -102,7 +110,7 @@ const { showSection } = useSectionVisibility();
           }"
         >
           <template #description>
-            <p class="text-base text-toned">{{ primaryProduct.description }}</p>
+            <p class="text-base text-toned">{{ data.description }}</p>
           </template>
 
           <template #features>
@@ -125,30 +133,15 @@ const { showSection } = useSectionVisibility();
 
           <template #button>
             <div class="pt-4 w-full">
-              <IConvertEmail
-                location="product-section"
-                :product="primaryProduct"
-              />
+              <IConvertEmail location="product-section" cta-type="conversion" />
             </div>
-          </template>
-
-          <template v-if="primaryProduct.stock" #terms>
-            <IUrgencyStockRemaining
-              :stock="primaryProduct.stock"
-              :product-id="primaryProduct.slug"
-              class="w-full"
-            />
           </template>
         </UPricingPlan>
 
-        <div
-          v-if="primaryProduct.ctas.secondary"
-          class="mt-4 flex flex-col gap-4 justify-center items-center"
-        >
+        <div class="mt-4 flex flex-col gap-4 justify-center items-center">
           <UBadge variant="soft">OR</UBadge>
           <IConvertButton
-            :product-id="primaryProduct.slug"
-            cta-name="secondary"
+            cta-type="secondary"
             location="product-section-alt"
             size="xl"
             block

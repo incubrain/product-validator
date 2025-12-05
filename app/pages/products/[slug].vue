@@ -1,16 +1,16 @@
 <!-- products/[slug].vue -->
 <script setup lang="ts">
-import { STATUS_ICONS } from '#constants';
-
 const route = useRoute();
 const slug = route.params.slug as string;
 
-const { getSiteConfig, getProduct } = useContentCache();
+const { getSiteConfig } = useContentCache();
 const { data: configData } = await getSiteConfig();
 const business = computed(() => configData.value?.business);
 
-// ✅ Always fetch product data
-const { data: product } = await getProduct(slug);
+// Fetch product page from pages collection (MDC)
+const { data: product } = await useAsyncData(`product-page-${slug}`, () =>
+  queryCollection('pages').path(`/products/${slug}`).first(),
+);
 
 if (!product.value) {
   throw createError({
@@ -20,46 +20,7 @@ if (!product.value) {
   });
 }
 
-if (product.value.slug !== slug) {
-  navigateTo(`/products/${product.value.slug}`, { redirectCode: 301 });
-}
-
-// ✅ Try to fetch MDC sales page
-const { data: salesPage } = await useAsyncData(
-  `product-sales-${slug}`,
-  () => queryCollection('pages').path(`/products/${slug}`).first(),
-  { default: () => null },
-);
-
-const hasSalesPage = computed(() => !!salesPage.value);
-
-// --- Product Page Logic (Inlined) ---
-
-const features = computed(() => {
-  if (!product.value?.features) return [];
-  return product.value.features.map((f) => ({
-    ...f,
-    icon: STATUS_ICONS[f.icon] || f.icon,
-  }));
-});
-
-const { isAvailable } = useProductStock(
-  product.value.stock as any,
-  product.value.slug as any,
-);
-const hasMedia = computed(() => !!product.value.media?.src);
-const mediaType = computed(() => product.value.media?.type || null);
-
-// Determine CTA type
-const ctaConfig = computed(() => product.value.ctas.conversion);
-
-// Should show form or button?
-const showForm = computed(() => {
-  const strategy = ctaConfig.value?.strategy;
-  return strategy === 'modal' || !strategy; // Default to form if no strategy
-});
-
-// --- SEO & Tracking ---
+definePageMeta({ layout: false });
 
 defineOgImage({
   component: 'Frame',
@@ -70,43 +31,16 @@ defineOgImage({
   },
 });
 
-if (product.value.price && product.value.price !== 'Free') {
-  const priceMatch = product.value.price.match(/\$?(\d+)/);
-  const priceAmount = priceMatch ? priceMatch[1] : '0';
-
-  useSchemaOrg([
-    defineProduct({
-      name: product.value.title,
-      description: product.value.description,
-      image: product.value.media?.src,
-      products: {
-        price: priceAmount,
-        priceCurrency: 'USD',
-        availability: 'InStock',
-      },
-    }),
-  ]);
-}
-
-definePageMeta({ layout: false });
-
 const { trackEvent } = useEvents();
 onMounted(() => {
   trackEvent({
-    id: `product_${product.value.slug}_view`,
+    id: `product_${slug}_view`,
     type: 'element_viewed',
-    location: `product-page-${product.value.slug}`,
+    location: `product-page-${slug}`,
     action: 'page_view',
-    target: `/products/${product.value.slug}`,
+    target: `/products/${slug}`,
     data: {
-      productId: product.value.slug,
-      metadata: {
-        product_slug: product.value.slug,
-        product_type: product.value.type,
-        product_price: product.value.price,
-        is_primary: product.value.primary,
-        has_sales_page: hasSalesPage.value,
-      },
+      productSlug: slug,
     },
   });
 });
@@ -147,84 +81,10 @@ onMounted(() => {
           >
             {{ product.description }}
           </p>
-
-          <p v-if="product.tagline" class="text-sm text-muted/60 italic">
-            {{ product.tagline }}
-          </p>
         </div>
 
-        <div
-          v-if="product.price && product.price !== 'Free'"
-          class="mb-12 lg:mb-16"
-        >
-          <div class="text-center">
-            <div class="inline-flex items-baseline gap-2">
-              <span
-                v-if="product.discount"
-                class="text-2xl text-muted/50 line-through"
-              >
-                {{ product.discount }}
-              </span>
-              <span class="text-5xl lg:text-6xl font-bold text-white">
-                {{ product.price }}
-              </span>
-              <span v-if="product.billingCycle" class="text-lg text-muted/70">
-                {{ product.billingCycle }}
-              </span>
-            </div>
-            <p v-if="product.terms" class="text-sm text-muted/60 mt-3">
-              {{ product.terms }}
-            </p>
-          </div>
-        </div>
-
-        <div v-if="features.length" class="mb-12 lg:mb-16">
-          <ul class="space-y-4 max-w-xl mx-auto">
-            <li
-              v-for="feature in features"
-              :key="feature.title"
-              class="flex items-start gap-3 group"
-            >
-              <div class="mt-0.5 shrink-0">
-                <UIcon
-                  :name="feature.icon"
-                  class="w-6 h-6 text-success transition-transform group-hover:scale-110"
-                />
-              </div>
-              <span class="text-base text-toned/90 leading-relaxed">
-                {{ feature.title }}
-              </span>
-            </li>
-          </ul>
-        </div>
-
-        <div v-if="hasMedia" class="mb-12 lg:mb-16">
-          <div
-            class="relative rounded-2xl overflow-hidden border border-white/10 shadow-2xl bg-black/20 backdrop-blur-sm"
-          >
-            <div class="aspect-video">
-              <IVideo
-                v-if="mediaType === 'video'"
-                :src="product.media.src"
-                :alt="product.media.alt || product.title"
-                class="w-full h-full"
-              />
-
-              <NuxtImg
-                v-else-if="mediaType === 'image'"
-                :src="product.media.src"
-                :alt="product.media.alt || product.title"
-                class="w-full h-full object-cover"
-              />
-            </div>
-          </div>
-        </div>
-
-        <div
-          v-if="hasSalesPage"
-          class="mb-12 lg:mb-16 prose prose-invert max-w-none"
-        >
-          <ContentRenderer :value="salesPage" :data="{ product }" />
+        <div class="mb-12 lg:mb-16 prose prose-invert max-w-none">
+          <ContentRenderer :value="product" />
         </div>
 
         <div class="max-w-md mx-auto">
@@ -232,30 +92,10 @@ onMounted(() => {
             class="bg-white/2 border border-white/10 rounded-2xl p-6 lg:p-8 backdrop-blur-sm space-y-6"
           >
             <IConvertEmail
-              v-if="showForm"
-              :product="product"
-              cta-name="conversion"
-              :location="`sales-page-${product.slug}`"
+              cta-type="conversion"
+              :location="`sales-page-${slug}`"
+              :success-redirect="`/products/${slug}-success`"
             />
-
-            <IConvertButton
-              v-else
-              :product-id="product.slug as any"
-              cta-name="conversion"
-              location="sales-page-bottom"
-              size="xl"
-              block
-            />
-
-            <div
-              v-if="product.stock && isAvailable"
-              class="pt-4 border-t border-white/5"
-            >
-              <IUrgencyStockRemaining
-                :stock="product.stock as any"
-                :product-id="product.slug as any"
-              />
-            </div>
           </div>
         </div>
       </div>

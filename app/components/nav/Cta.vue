@@ -12,9 +12,6 @@ interface Props {
 }
 
 defineProps<Props>();
-
-const { getPrimaryProduct } = useContentCache();
-const { data: primaryProduct } = await getPrimaryProduct();
 </script>
 
 <template>
@@ -72,7 +69,7 @@ const { data: primaryProduct } = await getPrimaryProduct();
         <div class="max-w-2xl mx-auto pt-4">
           <IConvertEmail
             location="bridge-cta"
-            :product="primaryProduct"
+            cta-type="conversion"
             layout="horizontal"
           />
         </div>
