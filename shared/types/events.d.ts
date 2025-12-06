@@ -5,7 +5,8 @@ declare global {
     | 'element_viewed'
     | 'form_submitted'
     | 'form_error'
-    | 'cta_click';
+    | 'cta_click'
+    | 'section_view';
 
   type TrackedActions =
     | 'page_view'
@@ -13,7 +14,8 @@ declare global {
     | 'submit'
     | 'submission_failed'
     | 'devtools_trigger'
-    | 'dev_trigger';
+    | 'dev_trigger'
+    | 'view';
 }
 
 export interface TrafficSource {

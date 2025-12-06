@@ -1,5 +1,6 @@
 <!-- app/components/section/SectionWrapper.vue -->
 <script setup lang="ts">
+import { useIntersectionObserver } from '@vueuse/core';
 interface Props {
   id: SectionAnchor;
   intro: {
@@ -20,10 +21,33 @@ const props = withDefaults(defineProps<Props>(), {
   cta: null,
   hasBottom: false,
 });
+
+const sectionRef = ref(null);
+const { trackEvent } = useEvents();
+
+useIntersectionObserver(
+  sectionRef,
+  ([{ isIntersecting }]) => {
+    if (isIntersecting) {
+      trackEvent({
+        id: props.id,
+        type: 'section_view',
+        action: 'view',
+        location: props.id,
+      });
+    }
+  },
+  {
+    threshold: 0.2,
+    // @ts-ignore - triggerOnce is valid in usage but types might be strict
+    triggerOnce: true,
+  },
+);
 </script>
 
 <template>
   <UPageSection
+    ref="sectionRef"
     :orientation="orientation"
     :class="props.class"
     :ui="{

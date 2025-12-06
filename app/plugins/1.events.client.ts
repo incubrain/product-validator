@@ -9,6 +9,8 @@ const EVENT_HANDLER_CONFIG: Record<TrackedEvents, EventHandler[]> = {
   element_viewed: [],
   form_submitted: [webhookHandler],
   form_error: [],
+  section_view: [],
+  cta_click: [],
 };
 
 // Handler map (built once in setup)
