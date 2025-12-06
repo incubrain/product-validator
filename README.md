@@ -66,7 +66,7 @@ Configure once. The template handles the rest.
 
 ### Conversion-Optimized Sections
 
-Hero · Benefits · Process · Product · Testimonials · FAQ
+Hero · Benefits · Outcome · Product · Testimonials · FAQ
 
 Built to convert. Not to look pretty in your portfolio.
 

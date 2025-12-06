@@ -33,7 +33,7 @@ export const STAGE_CONFIG = {
       sections: {
         hero: 'waitlist',
         benefits: 'waitlist',
-        process: 'launch',
+        outcome: 'launch',
         product: 'launch',
         faq: 'launch',
         results: 'growth',

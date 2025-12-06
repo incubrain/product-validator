@@ -62,7 +62,7 @@ data:
 ---
 ::
 
-::i-section-process
+::i-section-outcome
 ---
 data:
   intro:

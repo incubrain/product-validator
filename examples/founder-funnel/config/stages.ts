@@ -22,7 +22,7 @@ export const STAGE_CONFIG = {
       sections: {
         hero: 'coming-soon',
         benefits: 'launch',
-        process: 'launch',
+        outcome: 'launch',
         product: 'launch',
         faq: 'post-launch',
         results: 'post-launch',

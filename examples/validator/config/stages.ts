@@ -26,7 +26,7 @@ export const STAGE_CONFIG = {
       sections: {
         hero: 'identity',
         benefits: 'traffic',
-        process: 'traffic',
+        outcome: 'traffic',
         product: 'traffic',
         faq: 'conversion',
         results: 'demand',

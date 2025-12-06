@@ -1,4 +1,4 @@
-<!-- ~/components/section/Process.vue -->
+<!-- ~/components/section/Outcome.vue -->
 <script setup lang="ts">
 const props = defineProps<{
   data?: {
@@ -21,7 +21,7 @@ const steps = computed(() => {
 
   if (items.length > 3) {
     console.error(
-      `[Process Section] Maximum 3 steps allowed. Found ${items.length}.\n` +
+      `[Outcome Section] Maximum 3 process steps allowed. Found ${items.length}.\n` +
         `Edit content/pages/index.md to reduce steps.`,
     );
   }
@@ -36,8 +36,8 @@ const { showSection } = useSectionVisibility();
 
 <template>
   <ISectionWrapper
-    v-if="showSection('process')"
-    id="#process"
+    v-if="showSection('outcome')"
+    id="#outcome"
     :intro="data.intro"
     :cta="data.cta"
     has-bottom
