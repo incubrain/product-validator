@@ -25,11 +25,7 @@ export default defineContentConfig({
         version: z.string().optional(),
         date: z.string().optional(),
         summary: z.string().optional(),
-        // Optional fields for index page values
-        values: z.array(z.object({
-          title: z.string(),
-          description: z.string(),
-        })).optional(),
+
       }),
     }),
 
@@ -88,13 +84,13 @@ export default defineContentConfig({
         include: 'faq/*.yml',
       },
       schema: z.object({
-        type: z.enum(['warning', 'objection', 'support', 'general']),
+        type: z.enum(['warning', 'objection', 'support', 'general', 'values']),
         label: z.string(),
         icon: z.string(),
         color: FAQ_COLORS,
         items: z.array(z.object({
-          q: z.string(),
-          a: z.string(),
+          label: z.string(),
+          content: z.string(),
         })),
       }),
     }),

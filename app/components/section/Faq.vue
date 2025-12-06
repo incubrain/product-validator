@@ -34,8 +34,8 @@ const activeFaqs = computed(() => {
   if (!file) return [];
 
   return file.items.map((item) => ({
-    q: item.q,
-    a: item.a,
+    label: item.label,
+    content: item.content,
     icon: file.icon,
     color: file.color,
   }));
@@ -45,8 +45,8 @@ const activeFaqs = computed(() => {
 const accordionItems = computed<AccordionItem[]>(() =>
   activeFaqs.value.map((faq, i) => ({
     value: String(i),
-    label: faq.q,
-    content: faq.a,
+    label: faq.label,
+    content: faq.content,
     icon: faq.icon,
     ui: {
       leadingIcon: `text-${faq.color}`,

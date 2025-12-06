@@ -61,7 +61,6 @@ const heroLinks = computed(() =>
   })),
 );
 
-const values = computed(() => page.value?.values || []);
 const expandedUpdates = ref<Set<string>>(new Set());
 const isExpanded = (version: string) => expandedUpdates.value.has(version);
 
@@ -121,25 +120,7 @@ const scrollToTop = () => {
           class="absolute top-0 inset-0 bg-grid-white pointer-events-none -z-10"
         />
 
-        <div
-          v-if="values?.length"
-          class="max-w-3xl mx-auto pb-8 lg:pb-0 px-4 bg-default"
-        >
-          <UAccordion
-            default-value="0"
-            :items="
-              values.map((value, index) => ({
-                value: String(index),
-                label: value.title,
-                content: value.description,
-              }))
-            "
-            :ui="{
-              item: 'text-sm font-semibold px-4',
-              body: 'text-sm text-muted text-left px-2',
-            }"
-          />
-        </div>
+        <IValuesAccordion />
 
         <div
           v-if="heroLinks.length"

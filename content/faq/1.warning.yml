@@ -3,5 +3,5 @@ label: Warning
 icon: i-lucide-alert-triangle
 color: error
 items:
-  - q: '⚠️ Question about time commitment?'
-    a: '⚠️ Honest answer about effort required'
+  - label: '⚠️ Question about time commitment?'
+    content: '⚠️ Honest answer about effort required'

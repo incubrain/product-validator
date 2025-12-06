@@ -3,11 +3,29 @@ label: Warnings
 icon: i-lucide-triangle-alert
 color: error
 items:
-  - q: How much time does this really take?
-    a: Stage 1 (Deploy Minimal) - <10 minutes to go live. Stage 2 (Traffic Validation) - 1-2 weeks driving 10+ daily visitors through guerrilla marketing (expect 4-6 hours/day on outreach, community engagement, direct messaging). Stage 3 (Conversion Validation) - 2-4 weeks refining offer and adding full sections based on feedback. Stage 4 (Engagement) - 2-4 weeks building and delivering validated magnet. Stage 5 (Monetization) - Ongoing feedback calls and upsells. Total - 6-12 weeks to validated business model. Most founders underestimate the marketing effort—validation is 80% marketing, 20% building.
-  
-  - q: Who should NOT use this?
-    a: Non-technical founders without dev support or willingness to learn basics, post-PMF companies already scaling validated products, B2B enterprise with 12+ month sales cycles, or anyone expecting passive validation without daily marketing effort. If you can't commit 4-6 hours/day to marketing during validation phases, this won't work.
-  
-  - q: What are the technical requirements?
-    a: Basic dev setup - Node.js, Git, text editor. Entry-level technical skills needed—if you can edit config files and use AI (ChatGPT/Claude) to understand a codebase, you're qualified. No advanced coding required. This is about execution and marketing, not technical complexity.
+  - label: How much time does this really take?
+    content:
+      Stage 1 (Deploy Minimal) - <10 minutes to go live. Stage 2 (Traffic
+      Validation) - 1-2 weeks driving 10+ daily visitors through guerrilla
+      marketing (expect 4-6 hours/day on outreach, community engagement, direct
+      messaging). Stage 3 (Conversion Validation) - 2-4 weeks refining offer and
+      adding full sections based on feedback. Stage 4 (Engagement) - 2-4 weeks
+      building and delivering validated magnet. Stage 5 (Monetization) - Ongoing
+      feedback calls and upsells. Total - 6-12 weeks to validated business
+      model. Most founders underestimate the marketing effort—validation is 80%
+      marketing, 20% building.
+
+  - label: Who should NOT use this?
+    content:
+      Non-technical founders without dev support or willingness to learn basics,
+      post-PMF companies already scaling validated products, B2B enterprise with
+      12+ month sales cycles, or anyone expecting passive validation without
+      daily marketing effort. If you can't commit 4-6 hours/day to marketing
+      during validation phases, this won't work.
+
+  - label: What are the technical requirements?
+    content:
+      Basic dev setup - Node.js, Git, text editor. Entry-level technical skills
+      needed—if you can edit config files and use AI (ChatGPT/Claude) to
+      understand a codebase, you're qualified. No advanced coding required. This
+      is about execution and marketing, not technical complexity.

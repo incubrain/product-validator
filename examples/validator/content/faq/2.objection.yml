@@ -3,17 +3,24 @@ label: Objections
 icon: i-lucide-message-square
 color: warning
 items:
-  - q: Why not use ClickFunnels, Kajabi, or other funnel/no-code platforms?
-    a: Cost - $147-399/month forever vs $0-50 one-time. Lock-in - They own your data and design—migrating means rebuilding from scratch. Assumption - They assume you have a validated offer and know how to market. Reality - 42% of startups fail building products nobody wants (CB Insights). Platforms skip validation methodology entirely. This gives you - (1) Stage-by-stage validation framework, (2) Technical ownership from day one, (3) Free forever, (4) Guidance from idea → validated business. No-code is faster for simple pages, but when you need custom features or want to scale, platform limitations hurt. Start with ownership.
-  
-  - q: I can build a landing page myself. Why use a template?
-    a: True—but this isn't just a landing page. It's a complete validation system - staged rollout (5 phases), conversion-optimized sections, analytics integration, email capture, feedback systems, guerrilla marketing playbook, success metrics framework, and strategic guidance. 200+ hours of research and iteration compressed into a free template. You could rebuild it, but why? It's open-source—fork it, customize it, make it yours. Focus your time on marketing and validation, not reinventing infrastructure.
-  
-  - q: What if I validate and it fails? Isn't that wasted time?
-    a: That's the entire point—fail fast in weeks, not months. Each stage has clear success metrics - Traffic (<10/day = pivot channel), Conversion (<5% = refine offer), Engagement (<20% = improve magnet), Monetization (<10% interest = revisit pain points). You iterate within each stage until you hit thresholds, then advance. Failed validation prevents building products nobody wants—it's not wasted time, it's compressed learning. Evidence-based pivots are success.
-  
-  - q: I don't have an audience. How can I validate without traffic?
-    a: Most founders start with zero audience—that's why Stage 2 focuses entirely on guerrilla marketing. Baseline goal - 10 visitors/day through free channels (Reddit communities, niche forums, direct outreach, Twitter/X engagement, cold email). Magnet includes distribution playbook - community submission tactics, outreach templates, where to find your early adopters. Validation forces you to learn one marketing channel deeply. If you can't drive 10 visitors/day, you can't build a business—better to learn that in Week 1 than Month 6.
-  
-  - q: I've tried validation before and got no traction. Why will this work?
-    a: Common failure - validating hypothetical interest ('Would you use this?') instead of real commitment (email signup, consultation booking, payment intent). This template forces concrete actions at each stage with measurable thresholds. Plus - expert feedback calls catch positioning issues early, staged rollout prevents overwhelm, success metrics show exactly where you're stuck, and the framework guides iteration until validation or evidence-based pivot. It's not about trying harder—it's about testing the right signals with clear decision criteria.
+  - label: I don't have an audience. How can I validate without traffic?
+    content:
+      Most founders start with zero audience—that's why Stage 2 focuses entirely
+      on guerrilla marketing. Baseline goal - 10 visitors/day through free
+      channels (Reddit communities, niche forums, direct outreach, Twitter/X
+      engagement, cold email). Magnet includes distribution playbook - community
+      submission tactics, outreach templates, where to find your early adopters.
+      Validation forces you to learn one marketing channel deeply. If you can't
+      drive 10 visitors/day, you can't build a business—better to learn that in
+      Week 1 than Month 6.
+
+  - label: I've tried validation before and got no traction. Why will this work?
+    content:
+      Common failure - validating hypothetical interest ('Would you use this?')
+      instead of real commitment (email signup, consultation booking, payment
+      intent). This template forces concrete actions at each stage with
+      measurable thresholds. Plus - expert feedback calls catch positioning
+      issues early, staged rollout prevents overwhelm, success metrics show
+      exactly where you're stuck, and the framework guides iteration until
+      validation or evidence-based pivot. It's not about trying harder—it's
+      about testing the right signals with clear decision criteria.

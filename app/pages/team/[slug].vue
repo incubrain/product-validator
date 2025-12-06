@@ -1,6 +1,8 @@
 <script setup lang="ts">
 const route = useRoute();
+import { useClipboard } from '@vueuse/core';
 import { OFFERS } from '#shared/config/navigation';
+
 const { trackEvent } = useEvents();
 
 // Fetch team member from existing collection
@@ -77,7 +79,8 @@ const shareProfile = async () => {
     }
   } else {
     // Fallback to copy link
-    copyToClipboard(window.location.href);
+    const { copy } = useClipboard({ source: window.location.href });
+    copy();
   }
 };
 
@@ -92,14 +95,6 @@ const qrUrl = computed(() => {
 });
 
 // Copy functionality
-const copyToClipboard = async (text: string) => {
-  try {
-    await navigator.clipboard.writeText(text);
-    // Could add toast here if needed, but for now silent success/failure is acceptable or reliance on UI feedback
-  } catch (err) {
-    console.error('Failed to copy:', err);
-  }
-};
 
 // SEO
 useHead({
@@ -233,25 +228,6 @@ useHead({
 
                 <!-- QR Code -->
                 <ITeamQRCode :url="qrUrl" />
-
-                <!-- URL with copy button -->
-                <div class="w-full">
-                  <div
-                    class="flex items-center gap-2 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg"
-                  >
-                    <input
-                      :value="qrUrl"
-                      readonly
-                      class="flex-1 bg-transparent text-xs text-gray-600 dark:text-gray-400 truncate outline-none"
-                    />
-                    <UButton
-                      icon="i-heroicons-clipboard-document"
-                      size="sm"
-                      variant="ghost"
-                      @click="copyToClipboard(qrUrl)"
-                    />
-                  </div>
-                </div>
               </div>
             </template>
           </UModal>
@@ -260,7 +236,14 @@ useHead({
         <!-- Right Column: Story -->
         <div class="lg:col-span-2">
           <div class="max-w-3xl">
-            <article v-if="story" class="prose prose-lg dark:prose-invert">
+            <article
+              v-if="story"
+              class="prose prose-lg dark:prose-invert space-y-8"
+            >
+              <h1 class="text-4xl font-bold">{{ story.title }}</h1>
+              <p class="text-xl text-gray-600 dark:text-gray-400 mb-8">
+                {{ story.description }}
+              </p>
               <ContentRenderer :value="story" />
             </article>
 
@@ -276,7 +259,7 @@ useHead({
             />
 
             <div class="my-12">
-              <UPageCTA
+              <INavCta
                 title="Want to work together?"
                 description="We are building a team of A-players who want to help founders succeed."
                 orientation="vertical"
@@ -303,7 +286,7 @@ useHead({
                     class="font-black"
                   />
                 </template>
-              </UPageCTA>
+              </INavCta>
             </div>
           </div>
         </div>

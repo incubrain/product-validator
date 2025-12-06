@@ -1,11 +1,15 @@
 ---
 title: Founder Story
-description: The story behind the Product Validator
+description: The story behind the Founder Funnel
 ---
 
-# My Story
-
-<iframe width="560" height="315" src="https://www.youtube.com/embed/x-nOBBb0Pr8?si=TMpge5PsOEi17M94" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
+<iframe 
+style="
+    width: 100%;
+    aspect-ratio: 16/9;
+    border: none;
+  "
+  src="https://www.youtube.com/embed/x-nOBBb0Pr8?si=TMpge5PsOEi17M94" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
 
 Hi, I'm Mac; I created the Product Validator to break my cycle; after 13 years as a struggling founder and an ADHD diagnosis I've identified what was blocking me.
 

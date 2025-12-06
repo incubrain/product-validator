@@ -3,5 +3,5 @@ label: Support
 icon: i-lucide-life-buoy
 color: success
 items:
-  - q: '⚠️ What support is available?'
-    a: '⚠️ Your support channels and response times'
+  - label: '⚠️ What support is available?'
+    content: '⚠️ Your support channels and response times'

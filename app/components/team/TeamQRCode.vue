@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import QRCode from 'qrcode';
+import { useClipboard } from '@vueuse/core';
 
 const props = withDefaults(
   defineProps<{
@@ -53,6 +54,8 @@ const downloadQR = () => {
   link.href = qrSrc.value;
   link.click();
 };
+
+const { copy, copied } = useClipboard({ source: props.url });
 </script>
 
 <template>
@@ -101,5 +104,25 @@ const downloadQR = () => {
       variant="outline"
       :disabled="!qrSrc || isLoading || isError"
     />
+
+    <div class="w-full">
+      <div
+        class="flex items-center gap-2 p-3 bg-gray-100 dark:bg-gray-800 rounded-lg"
+      >
+        <input
+          :value="url"
+          readonly
+          class="flex-1 bg-transparent text-xs text-gray-600 dark:text-gray-400 outline-none"
+        />
+        <UButton
+          :icon="
+            copied ? 'i-heroicons-check' : 'i-heroicons-clipboard-document'
+          "
+          size="sm"
+          variant="ghost"
+          @click="copy()"
+        />
+      </div>
+    </div>
   </div>
 </template>

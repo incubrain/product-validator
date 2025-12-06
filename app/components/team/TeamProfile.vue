@@ -52,11 +52,7 @@ const props = defineProps<{
       </div>
 
       <!-- Bio - increase size and add breathing room -->
-      <p
-        class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed max-w-xs"
-      >
-        {{ member.bio }}
-      </p>
+      <slot />
 
       <!-- Visual separator before CTAs -->
       <div class="w-full border-t border-gray-100 dark:border-gray-800 my-2" />

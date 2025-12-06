@@ -58,6 +58,11 @@ onMounted(() => {
       <div v-else class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
         <div v-for="member in members" :key="member.slug">
           <ITeamProfile :member="member">
+            <p
+              class="text-sm text-gray-600 dark:text-gray-300 leading-relaxed max-w-xs"
+            >
+              {{ member.bio }}
+            </p>
             <template #footer>
               <UButton
                 label="View Profile"
@@ -73,6 +78,8 @@ onMounted(() => {
           </ITeamProfile>
         </div>
       </div>
+
+      <IValuesAccordion title="Our Core Values" class="mt-24" />
 
       <!-- Working with us content -->
       <div v-if="page" class="max-w-3xl mx-auto mt-24">

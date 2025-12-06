@@ -3,8 +3,17 @@ label: Support
 icon: i-lucide-headphones
 color: success
 items:
-  - q: What support is available?
-    a: Free template - GitHub issues, YouTube tutorials, community Discord. Magnet users - Priority community support (24-48hr response). Accelerator - Weekly group calls + async support. Direct hire - $27/hr custom development and strategic guidance. All tiers get access to the validation framework and marketing playbooks.
-  
-  - q: Where is the documentation?
-    a: Currently - README setup guide + inline code comments + YouTube walkthrough series. Comprehensive docs coming after template refinement (Q2 2025). For now - AI assistants (ChatGPT/Claude) can explain any part of the codebase—this is intentionally designed to be AI-readable.
+  - label: What support is available?
+    content:
+      Free template - GitHub issues, YouTube tutorials, community Discord.
+      Magnet users - Priority community support (24-48hr response). Accelerator
+      - Weekly group calls + async support. Direct hire - $27/hr custom
+      development and strategic guidance. All tiers get access to the validation
+      framework and marketing playbooks.
+
+  - label: Where is the documentation?
+    content:
+      Currently - README setup guide + inline code comments + YouTube
+      walkthrough series. Comprehensive docs coming after template refinement
+      (Q2 2025). For now - AI assistants (ChatGPT/Claude) can explain any part
+      of the codebase—this is intentionally designed to be AI-readable.

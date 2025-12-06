@@ -1,6 +1,5 @@
 <!-- components/nav/Footer.vue -->
 <script setup lang="ts">
-import { STAGE_CONFIG } from '#stage-config';
 import { NAVIGATION } from '#shared/config/navigation';
 
 const { getSiteConfig } = useContentCache();
@@ -27,7 +26,7 @@ const copyrightYear = computed(() =>
       bottom: 'py-8 lg:py-12 bg-muted border-t',
       left: 'order-1 flex items-center justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0',
       center:
-        'order-2 flex flex-col sm:flex-row items-center justify-center gap-4 mt-6 lg:mt-0 w-full lg:w-auto',
+        'order-2 flex flex-col sm:flex-row items-start justify-start lg:items-center lg:justify-center gap-4 mt-6 lg:mt-0 w-full lg:w-auto',
       right:
         'order-3 flex items-center justify-start lg:justify-end lg:flex-1 gap-x-1.5',
     }"
