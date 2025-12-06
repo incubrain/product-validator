@@ -3,15 +3,11 @@ import { fileURLToPath } from 'node:url';
 import { getActiveConfigSource } from './shared/utils/config-resolver';
 import path from 'node:path';
 
-const activeSource = getActiveConfigSource();
-const publicDir =
-  activeSource === 'root'
-    ? 'public'
-    : path.resolve(process.cwd(), `examples/${activeSource}/public`);
+const appConfig = getActiveConfigSource();
 
 export default defineNuxtConfig({
   dir: {
-    public: publicDir,
+    public: appConfig.publicDir,
   },
 
   modules: [
@@ -52,7 +48,7 @@ export default defineNuxtConfig({
   //       owner: 'incubrain', // your GitHub username or organization
   //       repo: 'founder-funnel', // your repository name
   //       branch: 'main', // the branch to commit to (default: main)
-  //       rootDir: activeSource === 'root' ? '' : `examples/${activeSource}`,
+  //       rootDir: appConfig.prefix,
   //       private: true,
   //     },
   //   },
@@ -157,15 +153,7 @@ export default defineNuxtConfig({
     '#types': fileURLToPath(
       new URL('./shared/types/config.ts', import.meta.url),
     ),
-    '#stage-config':
-      activeSource === 'root'
-        ? fileURLToPath(new URL('./config/stages.ts', import.meta.url))
-        : fileURLToPath(
-            new URL(
-              `./examples/${activeSource}/config/stages.ts`,
-              import.meta.url,
-            ),
-          ),
+    '#stage-config': path.resolve(appConfig.configDir, 'stages.ts'),
     '#constants': fileURLToPath(
       new URL('./shared/constants.ts', import.meta.url),
     ),

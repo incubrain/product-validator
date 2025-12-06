@@ -9,17 +9,14 @@ const FAQ_COLORS = z.enum(['error', 'warning', 'success', 'info']);
 
 // Determine the root directory for content based on the active source
 // Custom: Uses project root (which contains a 'content' dir)
-const activeSource = getActiveConfigSource();
-const contentCwd = activeSource === 'root' 
-  ? path.resolve(process.cwd(), 'content') 
-  : path.resolve(process.cwd(), `examples/${activeSource}/content`);
+const appConfig = getActiveConfigSource();
 
 export default defineContentConfig({
   collections: {
     pages: defineCollection({
       type: 'page',
       source: {
-        cwd: contentCwd,
+        cwd: appConfig.contentDir,
         include: 'pages/**/*.md',
         prefix: '/'
       },
@@ -39,7 +36,7 @@ export default defineContentConfig({
     config: defineCollection({
       type: 'data',
       source: {
-        cwd: contentCwd,
+        cwd: appConfig.contentDir,
         include: 'config/*.yml',
       },
       schema: z.object({
@@ -62,7 +59,7 @@ export default defineContentConfig({
     team: defineCollection({
       type: 'data',
       source: {
-        cwd: contentCwd,
+        cwd: appConfig.contentDir,
         include: 'team/*.yml',
       },
       schema: z.object({
@@ -82,7 +79,7 @@ export default defineContentConfig({
     faq: defineCollection({
       type: 'data',
       source: {
-        cwd: contentCwd,
+        cwd: appConfig.contentDir,
         include: 'faq/*.yml',
       },
       schema: z.object({

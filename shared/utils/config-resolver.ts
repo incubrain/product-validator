@@ -1,52 +1,67 @@
 // shared/utils/config-resolver.ts
+import path from 'node:path';
 import type { ConfigSource } from '~~/shared/types/config';
 
-export const CONFIG_SOURCES = {
-  validator: 'examples/validator/',
-  'founder-funnel': 'examples/founder-funnel/',
-  root: '',
-} as const;
+export interface ConfigPaths {
+  /** The config source name: 'validator' | 'founder-funnel' | 'root' */
+  source: ConfigSource;
+  /** Relative prefix path for examples (e.g., 'examples/validator') or empty string for root */
+  prefix: string;
+  /** Absolute path to the public directory */
+  publicDir: string;
+  /** Absolute path to the content directory */
+  contentDir: string;
+  /** Absolute path to the config directory */
+  configDir: string;
+}
 
 /**
- * Get the active config source from environment
+ * Get active configuration paths
  * 
- * Determines which example configuration to use based on NUXT_PUBLIC_CONFIG_SOURCE.
- * Falls back to 'root' if no source is specified.
+ * Determines which example configuration to use based on NUXT_PUBLIC_CONFIG_SOURCE
+ * and returns ready-to-use absolute paths for all config-related directories.
  * 
- * @returns The resolved config source ('validator', 'founder-funnel', or 'root')
- * @throws {Error} If an invalid config source is specified
+ * @returns Configuration object with source name and absolute paths
  * 
  * @example
  * ```ts
  * // .env: NUXT_PUBLIC_CONFIG_SOURCE="validator"
- * const source = getActiveConfigSource();
- * // Returns: 'validator'
+ * const config = getActiveConfigSource();
+ * // Returns: {
+ * //   source: 'validator',
+ * //   prefix: 'examples/validator',
+ * //   publicDir: '/absolute/path/to/examples/validator/public',
+ * //   contentDir: '/absolute/path/to/examples/validator/content',
+ * //   configDir: '/absolute/path/to/examples/validator/config',
+ * // }
  * ```
  */
-export function getActiveConfigSource(): ConfigSource {
+export function getActiveConfigSource(): ConfigPaths {
   let source = process.env.NUXT_PUBLIC_CONFIG_SOURCE || '';
 
   if (import.meta.client) {
     source = useRuntimeConfig().public.configSource;
   }
 
-  if (source && !(source in CONFIG_SOURCES)) {
-    const available = Object.keys(CONFIG_SOURCES)
-      .filter((k) => k !== 'root')
-      .join(', ');
-    throw new Error(
-      `[config-resolver] Invalid NUXT_PUBLIC_CONFIG_SOURCE: "${source}"\n` +
-        `Available: ${available} or leave empty for root config`,
-    );
-  }
-
   const resolvedSource = (source || 'root') as ConfigSource;
-  console.log(
-    '[config-resolver] Resolved to:',
-    resolvedSource,
-    '→',
-    CONFIG_SOURCES[resolvedSource],
-  );
+  const prefix = resolvedSource === 'root' ? '' : `examples/${resolvedSource}`;
+  const cwd = process.cwd();
 
-  return resolvedSource;
+  // Construct absolute paths
+  const basePath = resolvedSource === 'root' ? cwd : path.resolve(cwd, prefix);
+  
+  const config: ConfigPaths = {
+    source: resolvedSource,
+    prefix,
+    publicDir: resolvedSource === 'root' ? 'public' : path.resolve(cwd, prefix, 'public'),
+    contentDir: path.resolve(basePath, 'content'),
+    configDir: path.resolve(basePath, 'config'),
+  };
+
+  console.log('[config-resolver] Resolved to:', {
+    source: config.source,
+    prefix: config.prefix,
+  });
+
+  return config;
 }
