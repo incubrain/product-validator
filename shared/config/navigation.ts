@@ -1,6 +1,13 @@
 // shared/config/navigation.ts
 import type { NavigationMenuItem } from '@nuxt/ui';
 
+export type SectionAnchor =
+  | '#benefits'
+  | '#outcome'
+  | '#product'
+  | '#results'
+  | '#faq';
+
 export interface CtaConfig {
   label: string;
   to: string;

@@ -49,7 +49,6 @@ nuxtApp.hook('events:dev', (event) => {
 const groupedItems = computed<SelectMenuItem[][]>(() => {
   const byCategory: Record<string, SelectMenuItem[]> = {
     form: [{ type: 'label', label: 'Form Events' }],
-    modal: [{ type: 'label', label: 'Modal Events' }],
     action: [{ type: 'label', label: 'Action Events' }],
     other: [{ type: 'label', label: 'Other Events' }],
   };

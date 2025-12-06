@@ -1,11 +1,5 @@
 <!-- components/nav/Cta.vue -->
 <script setup lang="ts">
-interface SectionCta {
-  headline: string;
-  message: string;
-  button: Cta;
-  primary?: boolean;
-}
 
 interface Props {
   cta: SectionCta;

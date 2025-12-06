@@ -2,7 +2,10 @@
 <script setup lang="ts">
 interface Props {
   id: SectionAnchor;
-  intro: SectionIntro;
+  intro: {
+    title: string;
+    description: string;
+  };
   cta?: SectionCta;
   orientation?: 'vertical' | 'horizontal';
   class?: string;

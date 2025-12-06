@@ -15,8 +15,6 @@ declare global {
     | 'dev_trigger';
 }
 
-
-
 export interface TrafficSource {
   utmSource: string | null;
   utmMedium: string | null;

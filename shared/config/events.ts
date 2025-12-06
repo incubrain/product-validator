@@ -5,7 +5,7 @@ export const EVENT_METADATA: Partial<
       label: string;
       description: string;
       icon: string;
-      category: 'form' | 'modal' | 'action' | 'other';
+      category: 'form' | 'action' | 'other';
     }
   >
 > = {
