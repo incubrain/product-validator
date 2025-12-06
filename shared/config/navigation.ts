@@ -28,6 +28,13 @@ export interface NavigationConfig {
     conversion: CtaConfig;
     secondary?: CtaConfig;
   };
+  footerLinks: {
+    label: string;
+    children: {
+      label: string;
+      to: string;
+    }[];
+  }[];
 }
 
 // Define unique offers (Canonical sources)
@@ -60,6 +67,23 @@ export const NAVIGATION: NavigationConfig = {
       label: 'Updates',
       to: '/updates',
       icon: 'i-lucide-file-text',
+    },
+  ],
+  footerLinks: [
+    {
+      label: 'About',
+      children: [
+        { label: 'Team', to: '/team' },
+        { label: 'Updates', to: '/updates' },
+        { label: 'Join Us', to: '/team/join-us' },
+      ],
+    },
+    {
+      label: 'Offers',
+      children: [
+        { label: 'Template Guide', to: '/products/template-guide' },
+        { label: 'Mentorship', to: '/products/mentorship' },
+      ],
     },
   ],
   ctas: {

@@ -1,6 +1,7 @@
 <!-- components/nav/Footer.vue -->
 <script setup lang="ts">
 import { STAGE_CONFIG } from '#stage-config';
+import { NAVIGATION } from '#shared/config/navigation';
 
 const { getSiteConfig } = useContentCache();
 const { data: configData } = await getSiteConfig();
@@ -25,7 +26,8 @@ const copyrightYear = computed(() =>
       top: 'py-8 lg:py-12',
       bottom: 'py-8 lg:py-12 bg-muted border-t',
       left: 'order-1 flex items-center justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0',
-      center: 'order-2 flex items-center justify-center mt-3 lg:mt-0',
+      center:
+        'order-2 flex flex-col sm:flex-row items-center justify-center gap-4 mt-6 lg:mt-0 w-full lg:w-auto',
       right:
         'order-3 flex items-center justify-start lg:justify-end lg:flex-1 gap-x-1.5',
     }"
@@ -40,6 +42,33 @@ const copyrightYear = computed(() =>
         </div>
       </div>
     </template>
+
+    <div
+      v-if="NAVIGATION.footerLinks?.length"
+      class="grid grid-cols-2 gap-8 lg:gap-12"
+    >
+      <div
+        v-for="group in NAVIGATION.footerLinks"
+        :key="group.label"
+        class="flex flex-col gap-4"
+      >
+        <span class="text-sm font-semibold text-gray-900 dark:text-white">
+          {{ group.label }}
+        </span>
+        <div class="flex flex-col gap-3">
+          <UButton
+            v-for="link in group.children"
+            :key="link.to"
+            :to="link.to"
+            :label="link.label"
+            variant="link"
+            color="neutral"
+            class="text-sm text-muted hover:text-primary transition-colors p-0 justify-start h-auto"
+            :ui="{ base: 'justify-start' }"
+          />
+        </div>
+      </div>
+    </div>
 
     <template v-if="showFeature('footerFounder')" #right>
       <ICardFounder />

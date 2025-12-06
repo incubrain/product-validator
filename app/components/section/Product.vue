@@ -86,7 +86,7 @@ const { showSection } = useSectionVisibility();
         </p>
 
         <UButton
-          to="/story"
+          :to="`/team/${founderData.slug}`"
           label="Read My Story"
           color="neutral"
           variant="link"
