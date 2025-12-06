@@ -74,7 +74,7 @@ useHead({
                 label="Back"
                 class="justify-start"
               />
-              <IConvertButton
+              <ConvertButton
                 cta-type="banner"
                 location="sticky-cta-desktop"
                 size="sm"
@@ -135,7 +135,7 @@ useHead({
           <UContentSurround :surround="surround as any" />
 
           <div class="lg:hidden mt-12 pt-8 border-t">
-            <IConvertButton
+            <ConvertButton
               cta-type="banner"
               location="sticky-cta-mobile"
               size="lg"

@@ -60,7 +60,7 @@ const { showSection } = useSectionVisibility();
 </script>
 
 <template>
-  <ISectionWrapper
+  <SectionWrapper
     v-if="showSection('faq')"
     id="#faq"
     :intro="data.intro"
@@ -102,5 +102,5 @@ const { showSection } = useSectionVisibility();
         }"
       />
     </div>
-  </ISectionWrapper>
+  </SectionWrapper>
 </template>

@@ -33,7 +33,7 @@ const copyrightYear = computed(() =>
   >
     <template v-if="showFeature('footerFounder')" #left>
       <div class="flex flex-col items-start gap-4">
-        <ILogo size="md" />
+        <Logo size="md" />
         <div class="space-y-2">
           <p class="text-muted leading-relaxed font-written text-sm max-w-md">
             {{ configData?.business?.mission }}.
@@ -70,7 +70,7 @@ const copyrightYear = computed(() =>
     </div>
 
     <template v-if="showFeature('footerFounder')" #right>
-      <ICardFounder />
+      <CardFounder />
     </template>
 
     <template #bottom>
@@ -94,7 +94,7 @@ const copyrightYear = computed(() =>
             color="neutral"
             aria-label="View Analytics Dashboard"
           />
-          <IConvertButton
+          <ConvertButton
             cta-type="footer"
             location="footer"
             color="secondary"

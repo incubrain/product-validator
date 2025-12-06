@@ -63,7 +63,7 @@ onMounted(() => {
       class="absolute top-6 left-0 right-0 z-50 flex justify-center pointer-events-none"
     >
       <div class="pointer-events-auto">
-        <NuxtLink to="/"><ILogo /></NuxtLink>
+        <NuxtLink to="/"><Logo /></NuxtLink>
       </div>
     </div>
 
@@ -91,7 +91,7 @@ onMounted(() => {
           <div
             class="bg-white/2 border border-white/10 rounded-2xl p-6 lg:p-8 backdrop-blur-sm space-y-6"
           >
-            <IConvertEmail
+            <ConvertEmail
               cta-type="conversion"
               :location="`sales-page-${slug}`"
               :success-redirect="`/products/${slug}-success`"

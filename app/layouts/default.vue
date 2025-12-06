@@ -8,15 +8,15 @@ const isDev = import.meta.dev;
 
 <template>
   <div class="min-h-screen bg-default text-default antialiased">
-    <IDevStages v-if="isDev" />
+    <DevStages v-if="isDev" />
 
-    <INavBanner
+    <NavBanner
       v-if="showLayout('banner') && NAVIGATION.layout.banner"
       :sticky="NAVIGATION.layout.banner.sticky"
       :class="NAVIGATION.layout.navbar?.sticky ? '' : 'border-b'"
     />
 
-    <INavHeader
+    <NavHeader
       v-if="showLayout('navbar') && NAVIGATION.layout.navbar"
       :sticky="NAVIGATION.layout.navbar.sticky"
       :class="
@@ -28,6 +28,6 @@ const isDev = import.meta.dev;
       <slot />
     </main>
 
-    <INavFooter v-if="showLayout('footer')" />
+    <NavFooter v-if="showLayout('footer')" />
   </div>
 </template>

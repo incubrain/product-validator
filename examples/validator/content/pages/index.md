@@ -3,7 +3,7 @@ title: Product Validator
 description: Sick of Being "Almost Ready" to Launch? Flip the script, strategically validate your business model BEFORE you build the product
 ---
 
-::i-section-hero
+::section-hero
 ---
 data:
   badge:
@@ -19,7 +19,7 @@ data:
 ---
 ::
 
-::i-section-benefits
+::section-benefits
 ---
 data:
   intro:
@@ -65,7 +65,7 @@ data:
 ---
 ::
 
-::i-section-outcome
+::section-outcome
 ---
 data:
   intro:
@@ -129,7 +129,7 @@ data:
 ---
 ::
 
-::i-section-product
+::section-product
 ---
 data:
   intro:
@@ -149,7 +149,7 @@ data:
 ---
 ::
 
-::i-section-results
+::section-results
 ---
 data:
   intro:
@@ -192,7 +192,7 @@ data:
 ---
 ::
 
-::i-section-faq
+::section-faq
 ---
 data:
   intro:

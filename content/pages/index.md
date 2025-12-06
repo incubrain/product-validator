@@ -3,7 +3,7 @@ title: Your Product Name
 description: '⚠️ Your value proposition description'
 ---
 
-::i-section-hero
+::section-hero
 ---
 data:
   badge:
@@ -20,7 +20,7 @@ data:
 ---
 ::
 
-::i-section-benefits
+::section-benefits
 ---
 data:
   intro:
@@ -63,7 +63,7 @@ data:
 ---
 ::
 
-::i-section-outcome
+::section-outcome
 ---
 data:
   intro:
@@ -115,7 +115,7 @@ data:
 ---
 ::
 
-::i-section-product
+::section-product
 ---
 data:
   intro:
@@ -133,7 +133,7 @@ data:
 ---
 ::
 
-::i-section-results
+::section-results
 ---
 data:
   intro:
@@ -158,7 +158,7 @@ data:
 ---
 ::
 
-::i-section-faq
+::section-faq
 ---
 data:
   intro:

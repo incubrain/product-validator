@@ -40,7 +40,7 @@ const props = withDefaults(defineProps<Props>(), {
     }"
   >
     <template #top>
-      <INavAnchor :id="id" />
+      <NavAnchor :id="id" />
     </template>
 
     <template #title>
@@ -71,7 +71,7 @@ const props = withDefaults(defineProps<Props>(), {
       <div class="pt-12 lg:pt-16 space-y-12 lg:space-y-16">
         <slot name="bottom" />
         <UContainer class="lg:px-0">
-          <INavCta v-if="cta && showFeature('sectionCta')" :cta="cta" />
+          <NavCta v-if="cta && showFeature('sectionCta')" :cta="cta" />
         </UContainer>
       </div>
     </template>

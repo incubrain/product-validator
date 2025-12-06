@@ -15,7 +15,7 @@ const { showSection } = useSectionVisibility();
 </script>
 
 <template>
-  <ISectionWrapper
+  <SectionWrapper
     v-if="showSection('benefits')"
     id="#benefits"
     :intro="data.intro"
@@ -38,5 +38,5 @@ const { showSection } = useSectionVisibility();
         </template>
       </UPageCard>
     </UPageGrid>
-  </ISectionWrapper>
+  </SectionWrapper>
 </template>

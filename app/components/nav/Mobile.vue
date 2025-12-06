@@ -45,7 +45,7 @@ const closeMenu = () => {
     </nav>
 
     <div class="space-y-4 text-center border-t pt-4">
-      <ICardFounder variant="mobile" />
+      <CardFounder variant="mobile" />
     </div>
   </div>
 </template>

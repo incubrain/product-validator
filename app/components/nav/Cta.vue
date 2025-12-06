@@ -87,7 +87,7 @@ const defaultLinks = computed(() => {
 
       <template v-if="cta?.primary" #footer>
         <div class="max-w-2xl mx-auto pt-4">
-          <IConvertEmail
+          <ConvertEmail
             location="bridge-cta"
             cta-type="conversion"
             layout="horizontal"

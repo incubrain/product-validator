@@ -183,8 +183,6 @@ export default defineNuxtConfig({
     '/updates/**': { swr: 3600 },
   },
 
-  components: [{ path: '~/components', prefix: 'I' }],
-
   experimental: {
     defaults: {
       nuxtLink: {

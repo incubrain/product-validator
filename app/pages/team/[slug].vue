@@ -150,10 +150,10 @@ useHead({
       >
         <!-- Left Column: Profile & QR Trigger -->
         <div class="space-y-8 lg:col-span-1 lg:sticky lg:top-4 self-start">
-          <ITeamProfile :member="member">
+          <TeamProfile :member="member">
             <template #actions>
               <!-- Iterate directly over OFFERS from config -->
-              <IConvertButton
+              <ConvertButton
                 v-for="(offer, key) in OFFERS"
                 :key="key"
                 v-bind="offer"
@@ -166,7 +166,7 @@ useHead({
               />
 
               <!-- Secondary Local CTA (if configured and unique) -->
-              <IConvertButton
+              <ConvertButton
                 v-if="member.cta?.secondary"
                 :label="member.cta.secondary.text"
                 :to="member.cta.secondary.url"
@@ -179,7 +179,7 @@ useHead({
                 class="w-full font-black"
               />
             </template>
-          </ITeamProfile>
+          </TeamProfile>
 
           <!-- Share Actions -->
           <div class="flex gap-4">
@@ -227,7 +227,7 @@ useHead({
                 </div>
 
                 <!-- QR Code -->
-                <ITeamQRCode :url="qrUrl" />
+                <TeamQRCode :url="qrUrl" />
               </div>
             </template>
           </UModal>
@@ -259,14 +259,14 @@ useHead({
             />
 
             <div class="my-12">
-              <INavCta
+              <NavCta
                 title="Want to work together?"
                 description="We are building a team of A-players who want to help founders succeed."
                 orientation="vertical"
                 variant="outline"
               >
                 <template #links>
-                  <IConvertButton
+                  <ConvertButton
                     to="/team"
                     label="Meet the Team"
                     location="founder_profile_cta"
@@ -275,7 +275,7 @@ useHead({
                     color="neutral"
                     variant="link"
                   />
-                  <IConvertButton
+                  <ConvertButton
                     to="/team/join-us"
                     label="Join the Team"
                     location="founder_profile_cta"
@@ -286,7 +286,7 @@ useHead({
                     class="font-black"
                   />
                 </template>
-              </INavCta>
+              </NavCta>
             </div>
           </div>
         </div>

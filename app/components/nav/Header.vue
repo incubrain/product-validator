@@ -30,7 +30,7 @@ const headerClasses = computed(() => ({
 <template>
   <UHeader mode="slideover" :class="headerClasses" to="/">
     <template #title>
-      <ILogo size="md" />
+      <Logo size="md" />
     </template>
 
     <UNavigationMenu
@@ -57,7 +57,7 @@ const headerClasses = computed(() => ({
     </template>
 
     <template #body>
-      <INavMobile :navigation-items="NAVIGATION.main" />
+      <NavMobile :navigation-items="NAVIGATION.main" />
     </template>
   </UHeader>
 </template>

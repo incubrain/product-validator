@@ -17,7 +17,6 @@ useSeoMeta({
   twitterCard: 'summary_large_image',
 });
 
-
 // Dev shortcuts
 const isDev = import.meta.dev;
 const eventTrigger = ref<{ open: () => void } | null>(null);
@@ -32,7 +31,7 @@ if (isDev && import.meta.client) {
 
 <template>
   <UApp>
-    <IDevEvents ref="eventTrigger" v-if="isDev" class="hidden lg:block" />
+    <DevEvents ref="eventTrigger" v-if="isDev" class="hidden lg:block" />
     <NuxtLayout>
       <NuxtPage />
     </NuxtLayout>

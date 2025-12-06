@@ -120,7 +120,7 @@ const scrollToTop = () => {
           class="absolute top-0 inset-0 bg-grid-white pointer-events-none -z-10"
         />
 
-        <IValuesAccordion />
+        <ValuesAccordion />
 
         <div
           v-if="heroLinks.length"

@@ -3,7 +3,7 @@ title: Founder Funnel
 description: Open-source landing page template for experienced technical founders.
 ---
 
-::i-section-hero
+::section-hero
 ---
 data:
   badge:
@@ -20,7 +20,7 @@ data:
 ---
 ::
 
-::i-section-benefits
+::section-benefits
 ---
 data:
   intro:
@@ -62,7 +62,7 @@ data:
 ---
 ::
 
-::i-section-outcome
+::section-outcome
 ---
 data:
   intro:
@@ -113,7 +113,7 @@ data:
 ::
 
 
-::i-section-product
+::section-product
 ---
 data:
   title: Founder Funnel Template Guide
@@ -136,7 +136,7 @@ data:
 ---
 ::
 
-::i-section-faq
+::section-faq
 ---
 data:
   intro:

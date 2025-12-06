@@ -40,7 +40,7 @@ const { showSection } = useSectionVisibility();
 </script>
 
 <template>
-  <ISectionWrapper
+  <SectionWrapper
     v-if="showSection('product')"
     id="#product"
     :intro="data.intro"
@@ -133,14 +133,14 @@ const { showSection } = useSectionVisibility();
 
           <template #button>
             <div class="pt-4 w-full">
-              <IConvertEmail location="product-section" cta-type="conversion" />
+              <ConvertEmail location="product-section" cta-type="conversion" />
             </div>
           </template>
         </UPricingPlan>
 
         <div class="mt-4 flex flex-col gap-4 justify-center items-center">
           <UBadge variant="soft">OR</UBadge>
-          <IConvertButton
+          <ConvertButton
             cta-type="secondary"
             location="product-section-alt"
             size="xl"
@@ -151,5 +151,5 @@ const { showSection } = useSectionVisibility();
         </div>
       </div>
     </div>
-  </ISectionWrapper>
+  </SectionWrapper>
 </template>

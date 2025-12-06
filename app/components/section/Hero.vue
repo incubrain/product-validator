@@ -65,7 +65,7 @@ const showMedia = computed(
           {{ hero.intro.description }}
         </p>
 
-        <IConvertButton
+        <ConvertButton
           cta-type="hero"
           location="hero"
           size="xl"
@@ -77,7 +77,7 @@ const showMedia = computed(
     <!-- Media with overlapping label -->
     <div v-if="showMedia" class="relative pt-24 max-w-4xl mx-auto">
       <div class="relative">
-        <IVideo
+        <Video
           v-if="hero.media.type === 'video'"
           :src="hero.media.src"
           :poster="hero.media.poster"
