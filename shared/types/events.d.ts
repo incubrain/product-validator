@@ -4,7 +4,8 @@ declare global {
   type TrackedEvents =
     | 'element_viewed'
     | 'form_submitted'
-    | 'form_error';
+    | 'form_error'
+    | 'cta_click';
 
   type TrackedActions =
     | 'page_view'

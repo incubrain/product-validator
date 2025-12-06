@@ -73,6 +73,11 @@ export default defineContentConfig({
           alt: z.string(),
         }).optional(),
         bio: z.string(),
+        links: z.array(z.object({
+          label: z.string(),
+          url: z.string(),
+          icon: z.string(),
+        })).optional(),
       }),
     }),
 

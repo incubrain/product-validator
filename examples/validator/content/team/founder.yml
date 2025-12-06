@@ -1,9 +1,20 @@
-slug: drew-macgibbon
-given_name: Drew
-surname: MacGibbon
-email: mac@incubrain.org
-role: Founder
+given_name: 'Drew'
+surname: 'MacGibbon'
+role: 'Founder'
 avatar:
   src: /team/founder-avatar.png
-  alt: avatar image of Drew MacGibbon
-bio: My mission for the Product Validator is to help 100 struggling founders acheive financial freedom.
+  alt: '⚠️ Replace image of my dog with your own'
+bio:
+  'My mission for the Founder Funnel is to help 100 struggling founders achieve
+  financial freedom.'
+
+links:
+  - label: 'X'
+    url: 'https://x.com/DrewMacGibbon'
+    icon: 'i-simple-icons-x'
+  - label: 'YouTube'
+    url: 'https://www.youtube.com/@DrewMacGibbon'
+    icon: 'i-simple-icons-youtube'
+  - label: 'GitHub'
+    url: 'https://github.com/Drew-Macgibbon'
+    icon: 'i-simple-icons-github'

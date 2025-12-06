@@ -32,6 +32,7 @@
     "nodemailer": "^7.0.11",
     "nuxt": "^4.2.1",
     "nuxt-studio": "1.0.0-alpha.2",
+    "qrcode": "^1.5.4",
     "typescript": "^5.9.3",
     "uuid": "^13.0.0",
     "vue": "^3.5.24",
@@ -43,6 +44,7 @@
     "@nuxt/hints": "1.0.0-alpha.2",
     "@types/node": "^22.0.0",
     "@types/nodemailer": "^7.0.4",
+    "@types/qrcode": "^1.5.6",
     "vitest": "^4.0.15",
     "vue-tsc": "^3.1.3"
   },

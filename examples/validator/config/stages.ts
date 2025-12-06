@@ -2,11 +2,6 @@ import type { StageConfig } from '#shared/types/config';
 
 export const STAGE_CONFIG = {
   currentStage: 'conversion',
-  products: {
-    primary: 'magnet',
-    secondary: 'direct',
-  },
-
   disableWaitlistAt: 'engagement',
   stages: [
     { value: 'identity', label: 'Identity', order: 1 },

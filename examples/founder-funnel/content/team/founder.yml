@@ -6,4 +6,16 @@ role: Founder
 avatar:
   src: /team/founder-avatar.png
   alt: Drew MacGibbon
-bio: I built Founder Funnel to give technical founders a way to validate ideas without the "SaaS Tax".
+bio:
+  'My mission for the Founder Funnel is to help 100 struggling founders achieve
+  financial freedom.'
+links:
+  - label: 'X'
+    url: 'https://x.com/DrewMacGibbon'
+    icon: 'i-simple-icons-x'
+  - label: 'YouTube'
+    url: 'https://www.youtube.com/@DrewMacGibbon'
+    icon: 'i-simple-icons-youtube'
+  - label: 'GitHub'
+    url: 'https://github.com/Drew-Macgibbon'
+    icon: 'i-simple-icons-github'

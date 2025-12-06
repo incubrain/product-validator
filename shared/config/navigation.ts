@@ -30,6 +30,26 @@ export interface NavigationConfig {
   };
 }
 
+// Define unique offers (Canonical sources)
+export const OFFERS = {
+  template: {
+    label: 'Get Template Guide',
+    to: '/products/template-guide',
+    icon: 'i-lucide-download',
+    note: 'No email required',
+  },
+  mentorship: {
+    label: '1-on-1 Mentorship',
+    to: '/products/mentorship',
+    icon: 'i-lucide-user-plus',
+  },
+  github: {
+    label: 'One Click Deploy',
+    to: 'https://github.com/incubrain/founder-funnel',
+    icon: 'i-lucide-rocket',
+  },
+} as const;
+
 export const NAVIGATION: NavigationConfig = {
   layout: {
     banner: { sticky: true },
@@ -43,34 +63,21 @@ export const NAVIGATION: NavigationConfig = {
     },
   ],
   ctas: {
-    hero: {
-      label: 'Get Template Guide',
-      to: '/products/template-guide',
-      icon: 'i-lucide-download',
-      note: 'No email required'
-    },
-    banner: {
-      label: '1-on-1 Mentorship',
-      to: '/products/mentorship',
-      icon: 'i-lucide-user-plus'
-    },
+    hero: OFFERS.template,
+    banner: OFFERS.mentorship,
     footer: {
+      ...OFFERS.mentorship,
       label: 'Hire Me',
-      to: '/products/mentorship',
-      icon: 'i-lucide-calendar'
+      icon: 'i-lucide-calendar',
     },
     conversion: {
+      ...OFFERS.template,
       label: 'Get Instant Access',
-      to: '/products/template-guide',
       icon: 'i-lucide-play',
-      note: 'Start building today'
+      note: 'Start building today',
     },
-    secondary: {
-      label: 'One Click Deploy',
-      to: 'https://github.com/incubrain/founder-funnel',
-      icon: 'i-lucide-rocket'
-    }
-  }
+    secondary: OFFERS.github,
+  },
 } as const;
 
 export default NAVIGATION;

@@ -5,6 +5,10 @@ import NAVIGATION from '#shared/config/navigation';
 
 interface Props {
   ctaType?: 'hero' | 'banner' | 'footer' | 'conversion' | 'secondary';
+  to?: ButtonProps['to'];
+  label?: ButtonProps['label'];
+  icon?: ButtonProps['icon'];
+  note?: string;
   location: string;
   size?: ButtonProps['size'];
   block?: boolean;
@@ -13,24 +17,36 @@ interface Props {
 }
 
 const props = withDefaults(defineProps<Props>(), {
-  ctaType: 'conversion',
+  ctaType: undefined,
   color: 'primary',
   variant: 'solid',
 });
 
 const { trackEvent } = useEvents();
 
-const cta = computed(() => NAVIGATION.ctas[props.ctaType]);
+const cta = computed(() => {
+  if (props.to)
+    return {
+      to: props.to,
+      label: props.label,
+      icon: props.icon,
+      note: props.note,
+    };
+  if (props.ctaType) return NAVIGATION.ctas[props.ctaType];
+  return null;
+});
 
 const handleClick = async () => {
+  if (!cta.value) return;
+
   await trackEvent({
-    id: `cta_${props.ctaType}_click`,
-    type: 'element_viewed',
+    id: `cta_${props.ctaType || 'custom'}_click`,
+    type: 'cta_click',
     location: props.location,
     action: 'click',
     target: cta.value.to,
     data: {
-      ctaType: props.ctaType,
+      ctaType: props.ctaType || 'custom',
       ctaLabel: cta.value.label,
     },
   });

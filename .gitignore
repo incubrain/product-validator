@@ -19,6 +19,7 @@ logs
 .idea
 .eslintcache
 repomix-output.*
+repomix-changed.*
 **/repomix-output.*
 
 # Local env files
