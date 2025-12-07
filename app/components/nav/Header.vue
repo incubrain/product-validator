@@ -23,7 +23,8 @@ const socialLinks = computed(
 const headerClasses = computed(() => ({
   [`sticky z-40 bg-muted/80 backdrop-blur-md border-b border-default ${props.class}`]:
     props.sticky,
-  'relative z-0 border-b border-default/60': !props.sticky,
+  [`relative z-100 border-b border-default/60 bg-muted/95 backdrop-blur-xl ${props.class}`]:
+    !props.sticky,
 }));
 </script>
 

@@ -8,20 +8,18 @@ const isDev = import.meta.dev;
 
 <template>
   <div class="min-h-screen bg-default text-default antialiased">
-    <DevStages v-if="isDev" />
+    <DevStages v-if="isDev" class="hidden lg:fixed" />
 
     <NavBanner
       v-if="showLayout('banner') && NAVIGATION.layout.banner"
       :sticky="NAVIGATION.layout.banner.sticky"
-      :class="NAVIGATION.layout.navbar?.sticky ? '' : 'border-b'"
+      :class="NAVIGATION.layout.navbar?.sticky ? 'fixed top-0' : 'border-b'"
     />
 
     <NavHeader
       v-if="showLayout('navbar') && NAVIGATION.layout.navbar"
       :sticky="NAVIGATION.layout.navbar.sticky"
-      :class="
-        NAVIGATION.layout.banner?.sticky ? 'top-(--ui-banner-height)' : 'top-0'
-      "
+      :class="NAVIGATION.layout.banner?.sticky ? 'block top-0' : 'top-0'"
     />
 
     <main class="pb-12 lg:pb-16">

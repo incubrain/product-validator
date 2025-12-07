@@ -2,22 +2,7 @@
 title: Founder Funnel
 description: Open-source landing page template for experienced technical founders.
 ---
-
-::section-hero
----
-data:
-  badge:
-    title: Open Source
-    description: MIT License
-    to: https://github.com/incubrain/founder-funnel
-  intro:
-    title: Own Your Funnel
-    description: The open-source landing page template for technical founders. Capture leads, and validate your idea without monthly fees.
-  media:
-    type: image
-    src: /product/gated-dashboard.png
-    alt: Template Dashboard Preview
----
+::section-hero2
 ::
 
 ::section-benefits

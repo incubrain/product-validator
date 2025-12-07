@@ -198,7 +198,8 @@ const scrollToTop = () => {
                 <div class="flex items-center gap-2">
                   <UIcon name="i-lucide-calendar" class="size-3.5 text-muted" />
                   <NuxtTime
-                    class="text-xs text-muted font-medium tracking-wide uppercase"
+                    class="text-xs text-muted font-medium tracking-wide"
+                    locale="en-US"
                     :datetime="update.date"
                     year="numeric"
                     month="short"

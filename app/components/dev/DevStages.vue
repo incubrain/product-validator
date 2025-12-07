@@ -10,7 +10,7 @@ const { currentStage, hasActiveOverrides } = useDevConfig();
 <template>
   <ClientOnly>
     <div
-      class="fixed top-1 left-1 z-999 pointer-events-none flex gap-2 items-center"
+      class="fixed top-1 left-1 z-90 pointer-events-none flex gap-2 items-center"
     >
       <div
         class="flex items-center gap-2 px-3 py-2 rounded-lg bg-elevated/90 backdrop-blur-sm shadow-lg border border-default"

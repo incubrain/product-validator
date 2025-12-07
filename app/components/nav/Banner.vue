@@ -7,10 +7,9 @@ const props = defineProps<{
 }>();
 
 const cta = NAVIGATION.ctas.banner;
-const configSource = useRuntimeConfig().public.configSource;
 
 const bannerClasses = computed(() => ({
-  'sticky top-0 z-50': props.sticky,
+  'fixed top-0 z-50': props.sticky,
   'relative': !props.sticky,
 }));
 </script>
@@ -19,7 +18,7 @@ const bannerClasses = computed(() => ({
   <UBanner
     v-if="cta"
     :title="cta.label"
-    :class="bannerClasses"
+    :class="[bannerClasses, $attrs.class]"
     :actions="[
       {
         to: cta.to,
