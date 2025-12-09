@@ -48,9 +48,12 @@ const { showSection } = useSectionVisibility();
     class="relative"
   >
     <div
+      class="absolute top-0 inset-0 bg-grid-white/[0.02] pointer-events-none z-0"
+    />
+    <div
       class="absolute inset-0 flex items-center justify-center pointer-events-none"
     >
-      <div class="w-[80%] h-[80%] bg-primary/5 rounded-full blur-3xl" />
+      <div class="w-[80%] h-[80%] bg-primary-500/10 rounded-full blur-3xl" />
     </div>
 
     <div
@@ -59,7 +62,7 @@ const { showSection } = useSectionVisibility();
       <div
         class="flex flex-col items-center lg:items-start gap-6 lg:sticky lg:top-24 lg:self-start"
       >
-        <div class="relative group">
+        <div class="relative group bg-default rounded-full">
           <div
             class="absolute inset-0 bg-linear-to-t from-primary/20 to-transparent blur-xl group-hover:blur-2xl transition-all duration-300"
           />
@@ -100,9 +103,9 @@ const { showSection } = useSectionVisibility();
           v-bind="data"
           :badge="data.badge as BadgeProps"
           :features="transformedFeatures"
-          variant="subtle"
+          variant="soft"
           :ui="{
-            root: 'bg-primary/5 backdrop-blur-sm',
+            root: 'bg-muted backdrop-blur-sm',
             features: 'gap-3',
             feature: 'items-center',
             terms: 'w-full',
@@ -153,3 +156,12 @@ const { showSection } = useSectionVisibility();
     </div>
   </SectionWrapper>
 </template>
+
+<style scoped>
+.bg-grid-white\/\[0\.02\] {
+  background-image:
+    linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
+  background-size: 60px 60px;
+}
+</style>

@@ -28,7 +28,7 @@ const { showSection } = useSectionVisibility();
         :key="card.id"
         :title="card.title"
         :description="card.description"
-        variant="outline"
+        variant="soft"
         :ui="{
           description: 'text-pretty leading-relaxed',
         }"

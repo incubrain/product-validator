@@ -93,7 +93,7 @@ const { showSection } = useSectionVisibility();
         :items="accordionItems"
         :unmount-on-hide="false"
         :ui="{
-          item: 'border-b border-default/50 first:border-t last:mb-0 overflow-hidden last:border-b',
+          item: 'border-b border-neutral-800 first:border-t last:mb-0 overflow-hidden last:border-b',
           trigger:
             'group flex-1 flex items-center gap-3 font-medium text-sm p-4 hover:bg-muted/30 transition-colors',
           body: 'text-sm p-4 leading-relaxed',

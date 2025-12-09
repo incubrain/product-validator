@@ -58,7 +58,7 @@ const { showSection } = useSectionVisibility();
       <!-- 2. Typography Hero (Centered & Massive) -->
       <div class="text-center max-w-4xl mx-auto space-y-6 md:space-y-6 mb-8">
         <h1
-          class="font-heading font-black text-5xl sm:text-6xl md:text-7xl lg:text-7xl tracking-tight leading-[1.1]"
+          class="font-heading font-black text-5xl sm:text-7xl lg:text-8xl text-center tracking-tighter mb-8 leading-[1.1]"
         >
           <span class="block text-white">{{ hero.intro.title }}</span>
           <span

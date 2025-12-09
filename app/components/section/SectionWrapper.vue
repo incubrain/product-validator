@@ -53,7 +53,7 @@ useIntersectionObserver(
     :ui="{
       root: 'isolate',
       container: [
-        'flex flex-col lg:grid py-16 sm:py-16 gap-12 sm:gap-16 lg:px-0',
+        'flex flex-col lg:grid py-24 sm:py-24 gap-12 sm:gap-16 lg:px-0',
         props.hasBottom ? 'lg:pb-0 pb-0' : 'lg:pb-32',
       ],
       header: 'space-y-3 mx-auto text-center relative z-100',
@@ -68,21 +68,15 @@ useIntersectionObserver(
     </template>
 
     <template #title>
-      <div class="space-y-3 pt-6">
+      <div class="space-y-4 pt-6">
         <h2
-          class="text-2xl sm:text-3xl lg:text-4xl font-bold leading-tight tracking-tight"
+          class="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight uppercase"
         >
           {{ intro.title }}
         </h2>
 
-        <div class="flex justify-center">
-          <div
-            class="h-1 w-20 bg-linear-to-r from-transparent via-success to-transparent"
-          />
-        </div>
-
         <p
-          class="text-base text-muted/90 font-family-body tracking-normal max-w-xl mx-auto pt-3"
+          class="text-lg sm:text-xl text-muted leading-relaxed max-w-2xl mx-auto pt-2"
         >
           {{ intro.description }}
         </p>

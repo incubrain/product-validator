@@ -55,9 +55,7 @@ const { showSection } = useSectionVisibility();
         dot: 'w-2 h-2',
       }"
     >
-      <div
-        class="flex flex-col items-center text-center p-8 bg-muted/50 rounded-lg"
-      >
+      <div class="flex flex-col items-center text-center p-8 rounded-lg">
         <div
           class="size-12 rounded-full bg-primary/10 flex items-center justify-center mb-4"
         >
@@ -66,7 +64,7 @@ const { showSection } = useSectionVisibility();
 
         <UIcon :name="item.icon" class="size-8 text-secondary mb-4" />
 
-        <h3 class="text-lg font-bold mb-2">{{ item.title }}</h3>
+        <h3 class="text-lg font-heading font-bold mb-2">{{ item.title }}</h3>
 
         <p class="text-sm text-muted">{{ item.result }}</p>
       </div>
@@ -81,7 +79,7 @@ const { showSection } = useSectionVisibility();
             <h3
               class="text-xl sm:text-2xl font-bold text-center w-full text-highlighted"
             >
-              Benefits
+              How It Works
             </h3>
           </div>
 
@@ -111,7 +109,7 @@ const { showSection } = useSectionVisibility();
               }"
             >
               <UPageCard
-                variant="outline"
+                variant="soft"
                 class="h-full"
                 :ui="{
                   root: 'bg-default hover:bg-muted/50 transition-colors h-full',
@@ -128,7 +126,9 @@ const { showSection } = useSectionVisibility();
 
                 <template #body>
                   <div class="flex items-start justify-between gap-3">
-                    <h4 class="text-base font-semibold text-highlighted flex-1">
+                    <h4
+                      class="text-base font-heading font-bold text-highlighted flex-1"
+                    >
                       {{ item.title }}
                     </h4>
                     <div

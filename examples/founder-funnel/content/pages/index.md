@@ -10,40 +10,40 @@ description: Open-source landing page template for experienced technical founder
 data:
   intro:
     title: Stop Building in the Dark
-    description: Most founders spend months building products nobody wants. They focus on code before validation.
-  statement: Build your business in the right way from day 1
+    description: 42% of startups fail because they build products nobody wants. Stop guessing and start validating.
+  statement: The "Default to No" Philosophy
   cta:
     headline: Ready to validate?
-    message: Start by defining your problem and solution clearly.
+    message: Define your problem, capture the signal, and prove the market exists.
     button:
-      label: Get the Template
+      label: Start Validating
       to: '#product'
       icon: i-lucide-arrow-down
   items:
-    - id: ship-today
-      title: Ship Today
-      icon: i-lucide-rocket
-      description: Deploy to Railway or Vercel instantly. No server configuration. Live in under 5 minutes.
-    - id: own-your-stack
-      title: Own Your Stack
-      icon: i-lucide-database
-      description: Your code, your data, your infrastructure. No platform risk. No surprise pricing changes.
-    - id: zero-fees
-      title: Zero Monthly Fees
-      icon: i-lucide-wallet
-      description: Stop paying for landing page builders and email tools. Run for free on Vercel/Netlify.
-    - id: validation-first
-      title: Validation First
-      icon: i-lucide-target
-      description: Built for "fake door" testing. Capture intent before you write a single line of product code.
-    - id: modern-stack
-      title: Modern Stack
-      icon: i-lucide-cpu
-      description: Nuxt 4, Tailwind v4, TypeScript. The same stack you'll build your actual product with.
-    - id: no-lockin
-      title: No Vendor Lock-in
-      icon: i-lucide-unlock
-      description: It's just a Nuxt app. Eject anytime. Add any integration. You are in control.
+    - id: eliminate-creep
+      title: Eliminate Feature Creep
+      icon: i-lucide-shield-alert
+      description: "Default to NO. If a feature doesn't capture signal or prove demand, it doesn't belong here. Focus on the core value proposition."
+    - id: test-fast
+      title: Test in Hours, Not Weeks
+      icon: i-lucide-timer-reset
+      description: "Clone, configure, and deploy in under 30 minutes. Don't waste momentum building infrastructure before you have customers."
+    - id: get-data
+      title: Get Real Data
+      icon: i-lucide-bar-chart-4
+      description: "Opinions don't matter. Measure intent through email captures, presales, and clicks. Let the market dictate your roadmap."
+    - id: multiple-paths
+      title: Validate Any Model
+      icon: i-lucide-split
+      description: "Whether it's SaaS, a digital product, or a service—capture the right signal. Email, payments, or bookings."
+    - id: best-part-no-part
+      title: Best Part matches No Part
+      icon: i-lucide-scissors
+      description: "The most reliable system is the simplest one. We removed the complexity so you can focus on the message."
+    - id: vendor-independent
+      title: You Own The Stack
+      icon: i-lucide-database-zap
+      description: "No lock-in. It's just a Nuxt app. When you validate demand, you already have the foundation to build the full product."
 ---
 ::
 
@@ -51,73 +51,66 @@ data:
 ---
 data:
   intro:
-    title: From Idea to Validation
-    description: A simple, repeatable process to test your assumptions and build your waitlist.
+    title: From Idea to First Customer
+    description: A simple, repeatable process to bridge the gap between "I have an idea" and "People want this."
   steps:
-    - id: clone
-      title: Clone & Install
-      icon: i-lucide-download
-      description: Fork the repo and install dependencies. It's a standard Nuxt 4 app.
-      result: Local dev environment ready
-    - id: configure
-      title: Configure Content
-      icon: i-lucide-settings
-      description: Update `site.yml` and `magnet.yml`. Add your copy in Markdown.
-      result: Personalized landing page
+    - id: define
+      title: 1. Define the Offer
+      icon: i-lucide-pencil-ruler
+      description: "Clarify the problem and your solution in `site.yml`. Focus on the \"Who\" and the \"Why\"."
+      result: Clear Value Prop
     - id: deploy
-      title: Deploy
+      title: 2. Deploy & Share
       icon: i-lucide-rocket
-      description: Push to GitHub. Connect to Vercel or Railway.
-      result: Live URL in minutes
+      description: "Push to production in minutes. Share your link where your customers hang out."
+      result: Live Traffic
+    - id: measure
+      title: 3. Measure Signal
+      icon: i-lucide-activity
+      description: "Watch the events stream in. Analyze conversion rates. Decide: Pivot or Build."
+      result: Hard Evidence
   features:
-    - title: Waitlists
-      description: Validate before you build, toggle waitlist if unavailable or sold out.
-      icon: i-lucide-flask-conical
-    - title: Conversion Optimised?
-      description: Designed to convert visitors into leads. Clear CTAs, UTM ready, social proof, and trust signals.
+    - title: "Signal Capture"
+      description: "Proven patterns for email waitlists, presale payments, and service bookings."
+      icon: i-lucide-magnet
+    - title: "Conversion Optimized"
+      description: "Components designed to turn visitors into leads. Social proof, clean CTAs, and trust signals."
       icon: i-lucide-trending-up
-    - title: Config Driven?
-      description: Change your brand, social links, and theme settings from a single YAML file.
-      icon: i-lucide-settings-2
-    - title: Launch Stages
-      description: Focus on the right things at the right time, reach milestones, increment the stage, unlock and configure new features. 
-      icon: i-lucide-settings-2
-    - title: Updates Log
-      description: Ship weekly updates with the goal of reaching v1.0. Consistency builds customer confidence and accountability.
-      icon: i-lucide-history
-    - title: Provider Agnostic
-      description: No vendor lock-in. Swap out payment providers, booking systems, and hosting easily.
-      icon: i-lucide-plug
-    - title: Event Driven Analytics
-      description: Pre-configured with Umami. Easily swap for Nuxt Scripts providers like Plausible or GoogleAnalytics.
-      icon: i-lucide-bar-chart-3
-    - title: Nuxt Content
-      description: Built-in CMS, write in Markdown/YAML and edit visually with Nuxt Studio.
+    - title: "Event Analytics"
+      description: "Know exactly where your users come from and what they do. Zero-config Umami integration."
+      icon: i-lucide-line-chart
+    - title: "Markdown Driven"
+      description: "Manage your content in simple files. No complex CMS or database required to start."
       icon: i-lucide-file-text
+    - title: "Webhook Ready"
+      description: "Stream your leads directly to Slack, Discord, or your CRM. Own your data."
+      icon: i-lucide-webhook
+    - title: "Open Source"
+      description: "Built for developers by developers. Extend it, change it, own it."
+      icon: i-lucide-github
 ---
 ::
-
 
 ::section-product
 ---
 data:
-  title: Founder Funnel Template Guide
-  description: Get up and running in minutes with the official quick start guide
+  title: The Validation Template
+  description: Stop building. Start validating.
   price: Free
   features:
-    - title: Quick start video
+    - title: "Nuxt 4 + Tailwind v4"
       icon: status-available
-    - title: Configuration docs
+    - title: "Conversion Components"
       icon: status-available
-    - title: Deployment guide
+    - title: "Analytics Intergration"
       icon: status-available
-    - title: Best practices
+    - title: "Automated SEO"
       icon: status-available
-    - title: Community support
+    - title: "Zero Dependencies"
       icon: status-available
   intro:
-    title: Everything You Need to Launch
-    description: Get the complete validation stack. Landing page, analytics, and email capture.
+    title: Everything You Need to Validate
+    description: Don't spend $50/mo on landing page builders. Use the stack you already know.
 ---
 ::
 
@@ -126,13 +119,13 @@ data:
 data:
   intro:
     title: Common Questions
-    description: Everything you need to know about the template.
+    description: Answers to help you decide if this template is right for you.
   cta:
     headline: Still have questions?
-    message: Open an issue on GitHub or reach out on Twitter.
+    message: Check the code or ask the community.
     button:
-      label: GitHub Discussions
-      to: https://github.com/incubrain/founder-funnel/discussions
-      icon: i-lucide-message-circle
+      label: GitHub Repo
+      to: https://github.com/incubrain/founder-funnel
+      icon: i-lucide-github
 ---
 ::

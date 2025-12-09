@@ -6,7 +6,9 @@
   --spacing: 0.25rem;
 
   /* Font families */
-  --font-sans: 'Orbitron', sans-serif;
+  --font-sans:
+    ui-sans-serif, system-ui, sans-serif, 'Apple Color Emoji', 'Segoe UI Emoji',
+    'Segoe UI Symbol', 'Noto Color Emoji';
   --font-mono: 'JetBrains Mono', monospace;
   --font-serif: 'Georgia', serif;
 
@@ -49,11 +51,11 @@
   h4,
   h5,
   h6 {
-    font-family: var(--font-family-heading);
+    font-family: var(--font-sans);
   }
 
   body {
-    font-family: var(--font-family-body);
+    font-family: var(--font-sans);
   }
 
   code,
