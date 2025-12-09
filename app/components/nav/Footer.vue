@@ -7,8 +7,6 @@ const { data: configData } = await getSiteConfig();
 
 const currentYear = new Date().getFullYear();
 
-const { showFeature } = useSectionVisibility();
-
 const copyrightYear = computed(() =>
   configData.value?.business.founding_year === currentYear
     ? `${currentYear}`
@@ -31,7 +29,7 @@ const copyrightYear = computed(() =>
         'order-3 flex items-center justify-start lg:justify-end lg:flex-1 gap-x-1.5',
     }"
   >
-    <template v-if="showFeature('footerFounder')" #left>
+    <template #left>
       <div class="flex flex-col items-start gap-4">
         <Logo size="md" />
         <div class="space-y-2">
@@ -69,7 +67,7 @@ const copyrightYear = computed(() =>
       </div>
     </div>
 
-    <template v-if="showFeature('footerFounder')" #right>
+    <template #right>
       <CardFounder />
     </template>
 

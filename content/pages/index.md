@@ -1,117 +1,56 @@
 ---
 title: Your Product Name
-description: '⚠️ Your value proposition description'
+description: One-sentence value proposition. What do you do for whom?
 ---
+
+<!-- 
+  🚀 PROGRESSIVE VALIDATION TEMPLATE
+  
+  Start minimal. Expand as you validate.
+  
+  STAGE 1 (Always visible):
+    - Hero: Value prop + primary CTA
+    - Product: What you're offering + email capture
+  
+  STAGE 2 (Uncomment when driving traffic):
+    - Benefits: Why your solution matters
+    - Outcome: How it works, what they get
+  
+  STAGE 3 (Uncomment when fielding questions):
+    - FAQ: Address objections and technical details
+  
+  STAGE 4 (Uncomment when you have proof):
+    - Results: Testimonials and social proof
+  
+  To show a section: Remove <!-- and -->
+  To hide a section: Wrap in <!-- -->
+-->
+
+<!-- ============================================ -->
+<!-- STAGE 1: MINIMAL VALIDATION                 -->
+<!-- ============================================ -->
 
 ::section-hero
 ---
 data:
   badge:
-    title: '⚠️ Badge title'
-    description: '⚠️ Badge description'
-    to: https://example.com
+    title: Open Source
+    description: MIT Licensed
+    to: https://github.com/yourusername/your-repo
   intro:
-    title: '⚠️ Your compelling headline'
-    description: '⚠️ Your value proposition description'
+    # Answer: What problem do you solve? For whom?
+    # Example: "Ship Validated Products" not "Revolutionary Platform"
+    title: Your Outcome-Focused Headline
+    
+    # One sentence. What do they get? Why does it matter?
+    # Example: "Help technical founders validate before building—so they don't waste months on products nobody wants."
+    description: The core value proposition that makes someone care.
+  
   media:
-    type: video
-    src: null
-    alt: null
----
-::
-
-::section-benefits
----
-data:
-  intro:
-    icon: i-lucide-alert-triangle
-    headline: '⚠️ Section headline'
-    title: '⚠️ Section title'
-    description: '⚠️ Section description'
-  cta:
-    headline: '⚠️ Bridge headline'
-    message: '⚠️ Bridge message'
-    button:
-      label: '⚠️ CTA label'
-      to: '#product'
-      icon: i-lucide-arrow-down
-  items:
-    - id: benefit-1
-      title: '⚠️ Benefit Title 1'
-      icon: i-lucide-alert-circle
-      description: '⚠️ Describe the specific benefit your audience receives and how your solution addresses this benefit'
-    - id: benefit-2
-      title: '⚠️ Benefit Title 2'
-      icon: i-lucide-alert-circle
-      description: '⚠️ Describe the specific benefit your audience receives and how your solution addresses this benefit'
-    - id: benefit-3
-      title: '⚠️ Benefit Title 3'
-      icon: i-lucide-alert-circle
-      description: '⚠️ Describe the specific benefit your audience receives and how your solution addresses this benefit'
-    - id: benefit-4
-      title: '⚠️ Benefit Title 4'
-      icon: i-lucide-alert-circle
-      description: '⚠️ Describe the specific benefit your audience receives and how your solution addresses this benefit'
-    - id: benefit-5
-      title: '⚠️ Benefit Title 5'
-      icon: i-lucide-alert-circle
-      description: '⚠️ Describe the specific benefit your audience receives and how your solution addresses this benefit'
-    - id: benefit-6
-      title: '⚠️ Benefit Title 6'
-      icon: i-lucide-alert-circle
-      description: '⚠️ Describe the specific benefit your audience receives and how your solution addresses this benefit'
----
-::
-
-::section-outcome
----
-data:
-  intro:
-    icon: i-lucide-package
-    headline: '⚠️ Section headline'
-    title: '⚠️ Section title'
-    description: '⚠️ Section description'
-  steps:
-    - id: setup
-      title: '⚠️ First Action'
-      icon: i-lucide-circle-play
-      description: '⚠️ What does the user do first? Keep it simple and actionable.'
-      result: '⚠️ What specific outcome do they get? (1 sentence max)'
-    - id: configure
-      title: '⚠️ Main Action'
-      icon: i-lucide-settings
-      description: '⚠️ What is the core value-creating action?'
-      result: '⚠️ What tangible result do they see?'
-    - id: complete
-      title: '⚠️ Final Step'
-      icon: i-lucide-check-circle
-      description: '⚠️ What completes the initial value delivery?'
-      result: '⚠️ What is the final outcome they achieve?'
-  features:
-    - id: feature-1
-      title: '⚠️ Core Feature Name'
-      icon: i-lucide-zap
-      description: '⚠️ What problem does this solve? How does it help the user? Keep it focused on outcomes, not technical details.'
-    - id: feature-2
-      title: '⚠️ Key Differentiator'
-      icon: i-lucide-shield-check
-      description: '⚠️ What makes this different from competitors? Why should they care?'
-    - id: feature-3
-      title: '⚠️ Time/Cost Saver'
-      icon: i-lucide-clock
-      description: '⚠️ How does this save time or reduce complexity? Quantify if possible.'
-    - id: feature-4
-      title: '⚠️ Trust Builder'
-      icon: i-lucide-lock
-      description: '⚠️ What gives users confidence? Security, reliability, or proven results?'
-    - id: feature-5
-      title: '⚠️ Flexibility Point'
-      icon: i-lucide-sliders-horizontal
-      description: '⚠️ How does this adapt to their needs? Customization or control?'
-    - id: feature-6
-      title: '⚠️ Growth Enabler'
-      icon: i-lucide-trending-up
-      description: '⚠️ How does this help them scale or improve over time?'
+    # Start with 'image', switch to 'video' when you have one
+    type: image
+    src: /product/hero-screenshot.png
+    alt: Screenshot showing your product's main value
 ---
 ::
 
@@ -119,59 +58,205 @@ data:
 ---
 data:
   intro:
-    icon: i-lucide-handshake
-    headline: '⚠️ Section headline'
-    title: '⚠️ Section title'
-    description: '⚠️ Section description'
-  cta:
-    headline: '⚠️ Bridge headline'
-    message: '⚠️ Bridge message'
-    button:
-      label: '⚠️ CTA label'
-      to: '#faq'
-      icon: i-lucide-arrow-down
+    # What are they signing up for?
+    title: What You're Offering
+    
+    # Be specific: "Email course" vs "Resources", "Template" vs "Solution"
+    description: The thing they get when they give you their email.
+  
+  # Free? $49? "Launching Q2 2025"?
+  price: Free
+  
+  features:
+    # What's included? Be concrete, not abstract.
+    # Good: "Nuxt 4 + Tailwind starter"
+    # Bad: "Modern tech stack"
+    
+    - title: Specific deliverable 1
+      icon: status-available
+    
+    - title: Specific deliverable 2
+      icon: status-available
+    
+    - title: Specific deliverable 3
+      icon: status-available
+    
+    # Use status-beta for "coming soon" features
+    - title: Future deliverable
+      icon: status-beta
 ---
 ::
 
-::section-results
+<!-- ============================================ -->
+<!-- STAGE 2: DRIVING TRAFFIC                    -->
+<!-- Uncomment when you need to explain WHY      -->
+<!-- ============================================ -->
+
+<!-- 
+::section-benefits
 ---
 data:
   intro:
-    icon: i-lucide-trending-up
-    headline: '⚠️ Section headline'
-    headline: '⚠️ Section headline'
-    title: '⚠️ Section title'
-    description: '⚠️ Section description'
+    # The pain point your audience feels daily
+    title: The Problem Your Audience Has
+    
+    # Why does this problem matter? What's at stake?
+    description: Quantify the pain if possible—"42% of startups fail because..." beats "This is a common problem."
+  
+  cta:
+    headline: Ready to solve this?
+    message: One sentence transitioning to your offer.
+    button:
+      label: See How It Works
+      to: '#product'
+      icon: i-lucide-arrow-down
+  
   items:
-    - type: testimonial
-      name: '⚠️ Customer name'
-      role: '⚠️ Customer role or title'
-      quote: '⚠️ Their testimonial quote'
-      avatarUrl: https://i.pravatar.cc/150?img=11
-      highlight: true
-    - type: testimonial
-      name: '⚠️ Customer name'
-      role: '⚠️ Customer role or title'
-      quote: '⚠️ Their testimonial quote'
-      avatarUrl: https://i.pravatar.cc/150?img=11
-      highlight: false
+    # Pick 3-6 benefits. Focus on OUTCOMES, not features.
+    # Formula: [Outcome] so you can [Result]
+    
+    - id: benefit-1
+      # Not: "Fast Performance"
+      # Yes: "Ship in 30 Minutes"
+      title: Specific outcome they get
+      icon: i-lucide-zap
+      # Why does this outcome matter? What does it enable?
+      description: The tactical benefit explained in 1-2 sentences. Focus on what changes for them.
+    
+    - id: benefit-2
+      title: Another concrete outcome
+      icon: i-lucide-shield
+      description: Why this matters to them specifically.
+    
+    - id: benefit-3
+      title: Third outcome
+      icon: i-lucide-target
+      description: The result they care about.
 ---
 ::
+-->
 
+<!-- 
+::section-outcome
+---
+data:
+  intro:
+    # What's the journey from "I need this" to "I'm using it"?
+    title: How This Actually Works
+    description: The bridge from awareness to action.
+  
+  steps:
+    # Max 3 steps. Keep it simple.
+    # Pattern: Action → Result
+    
+    - id: step-1
+      # What do they do first?
+      title: 1. The First Action
+      icon: i-lucide-download
+      # How long? How hard? Be honest.
+      description: What they actually do—be specific. "Run npm install" not "Easy setup."
+      # What do they have after this step?
+      result: Tangible output after step 1
+    
+    - id: step-2
+      title: 2. The Core Action
+      icon: i-lucide-edit
+      description: The main value-creating activity.
+      result: What they achieve here
+    
+    - id: step-3
+      title: 3. Go Live
+      icon: i-lucide-rocket
+      description: The final step that delivers value.
+      result: The end state they reach
+  
+  features:
+    # Supporting capabilities—what makes the steps above possible?
+    # Pick 4-6. Be specific, not generic.
+    
+    - title: Core capability 1
+      description: What problem does this solve? How does it help complete the steps above?
+      icon: i-lucide-zap
+    
+    - title: Key differentiator
+      description: Why is this better than alternatives? What's unique?
+      icon: i-lucide-star
+    
+    - title: Time/effort saver
+      description: What does this eliminate? What does it automate?
+      icon: i-lucide-clock
+    
+    - title: Trust signal
+      description: What gives them confidence? Open source? Battle-tested? Used by X companies?
+      icon: i-lucide-shield-check
+---
+::
+-->
+
+<!-- ============================================ -->
+<!-- STAGE 3: ANSWERING OBJECTIONS              -->
+<!-- Uncomment when you have common questions    -->
+<!-- ============================================ -->
+
+<!-- 
 ::section-faq
 ---
 data:
   intro:
-    icon: i-lucide-help-circle
-    headline: '⚠️ Section headline'
-    title: '⚠️ Section title'
-    description: '⚠️ Section description'
+    title: Common Questions
+    # Why should they read this section?
+    description: Answers to help you decide if this is right for you.
+  
   cta:
-    headline: '⚠️ Bridge headline'
-    message: '⚠️ Bridge message'
+    headline: Still have questions?
+    message: Check the docs or ask the community.
     button:
-      label: '⚠️ CTA label'
-      to: '#product'
-      icon: i-lucide-rocket
+      label: View Documentation
+      to: https://docs.yourproduct.com
+      icon: i-lucide-book-open
+---
+:: 
+-->
+
+
+<!-- ============================================ -->
+<!-- STAGE 4: SOCIAL PROOF                       -->
+<!-- Uncomment when you have testimonials/metrics -->
+<!-- ============================================ -->
+
+<!-- 
+::section-results
+---
+data:
+  intro:
+    title: Results from Real Users
+    description: What happens when people actually use this.
+  
+  items:
+    # Real testimonials > fake ones
+    # If you don't have testimonials yet, DELETE this section
+    
+    - quote: Specific outcome they achieved. "Saved me 40 hours" beats "This is great!"
+      name: Real Person Name
+      role: Their title or credibility marker
+      avatarUrl: /testimonials/person-1.jpg
+      link: https://twitter.com/theirhandle
+      highlight: false
+    
+    # Highlight your strongest testimonial
+    - quote: Your best result. Make this one count.
+      name: Another Real Person
+      role: Why we should trust them
+      avatarUrl: /testimonials/person-2.jpg
+      link: null
+      highlight: true
+    
+    - quote: Third testimonial for credibility.
+      name: Third Person
+      role: Their context
+      avatarUrl: /testimonials/person-3.jpg
+      link: null
+      highlight: false
 ---
 ::
+-->

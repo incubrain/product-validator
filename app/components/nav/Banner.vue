@@ -2,9 +2,14 @@
 <script setup lang="ts">
 import NAVIGATION from '#shared/config/navigation';
 
-const props = defineProps<{
-  sticky?: boolean;
-}>();
+const props = withDefaults(
+  defineProps<{
+    sticky?: boolean;
+  }>(),
+  {
+    sticky: true,
+  },
+);
 
 const cta = NAVIGATION.ctas.banner;
 

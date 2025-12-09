@@ -35,13 +35,10 @@ const transformedFeatures = computed(() => {
     };
   });
 });
-
-const { showSection } = useSectionVisibility();
 </script>
 
 <template>
   <SectionWrapper
-    v-if="showSection('product')"
     id="#product"
     :intro="data.intro"
     :cta="data.cta"
@@ -101,7 +98,6 @@ const { showSection } = useSectionVisibility();
       <div v-if="data" class="max-w-md mx-auto lg:mx-0 w-full">
         <UPricingPlan
           v-bind="data"
-          :badge="data.badge as BadgeProps"
           :features="transformedFeatures"
           variant="soft"
           :ui="{

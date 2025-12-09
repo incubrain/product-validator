@@ -1,23 +1,16 @@
 <!-- components/section/Hero.vue -->
 <script setup lang="ts">
-import { STAGE_CONFIG } from '#stage-config';
-
 const props = defineProps<{
   data?: any;
 }>();
 
-const { showFeature, showSection } = useSectionVisibility();
-
 const hero = computed(() => props.data);
 
-const showMedia = computed(
-  () => showFeature('heroMedia') && hero.value?.media?.src,
-);
+const showMedia = computed(() => hero.value?.media?.src);
 </script>
 
 <template>
   <UPageHero
-    v-if="showSection('hero')"
     orientation="vertical"
     class="bg-linear-to-b from-default via-muted to-default text-white relative overflow-hidden min-h-[calc(100vh-var(--ui-banner-height)-var(--ui-header-height))]"
     :ui="{
@@ -29,7 +22,6 @@ const showMedia = computed(
       footer: 'mt-10',
     }"
   >
-    <!-- Badge (Same across all stages) -->
     <template #headline>
       <div class="flex justify-center items-center pb-8">
         <ULink
@@ -52,12 +44,10 @@ const showMedia = computed(
       </div>
     </template>
 
-    <!-- Title (Same size across all stages) -->
     <template #title>
       {{ hero.intro.title }}
     </template>
 
-    <!-- Description Area (Conditional content based on stage) -->
     <template #description>
       <div class="max-w-3xl mx-auto space-y-6">
         <!-- Description Text (All stages) -->

@@ -13,8 +13,6 @@ interface Props {
   hasBottom?: boolean;
 }
 
-const { showFeature } = useSectionVisibility();
-
 const props = withDefaults(defineProps<Props>(), {
   orientation: 'vertical',
   class: '',
@@ -89,7 +87,7 @@ useIntersectionObserver(
       <div class="pt-12 lg:pt-16 space-y-12 lg:space-y-16">
         <slot name="bottom" />
         <UContainer class="lg:px-0">
-          <NavCta v-if="cta && showFeature('sectionCta')" :cta="cta" />
+          <NavCta v-if="cta" :cta="cta" />
         </UContainer>
       </div>
     </template>

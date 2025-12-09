@@ -2,10 +2,15 @@
 <script setup lang="ts">
 import { NAVIGATION } from '#shared/config/navigation';
 
-const props = defineProps<{
-  class?: string;
-  sticky?: boolean;
-}>();
+const props = withDefaults(
+  defineProps<{
+    class?: string;
+    sticky?: boolean;
+  }>(),
+  {
+    sticky: false,
+  },
+);
 
 const { getSiteConfig } = useContentCache();
 const { data: configData } = await getSiteConfig();

@@ -55,18 +55,10 @@ const accordionItems = computed<AccordionItem[]>(() =>
     },
   })),
 );
-
-const { showSection } = useSectionVisibility();
 </script>
 
 <template>
-  <SectionWrapper
-    v-if="showSection('faq')"
-    id="#faq"
-    :intro="data.intro"
-    :cta="data.cta"
-    has-bottom
-  >
+  <SectionWrapper id="#faq" :intro="data.intro" :cta="data.cta" has-bottom>
     <UTabs
       v-model="activeTab"
       :items="tabItems"

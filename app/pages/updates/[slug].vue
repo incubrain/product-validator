@@ -1,6 +1,4 @@
 <script setup lang="ts">
-import { STAGE_CONFIG } from '#stage-config';
-
 const route = useRoute();
 const slug = route.params.slug as string;
 

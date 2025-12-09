@@ -24,7 +24,6 @@ if (isDev && import.meta.client) {
   defineShortcuts({
     meta_shift_r: useDevConfig().clearAllStorage,
     meta_shift_e: () => eventTrigger.value?.open(),
-    meta_shift_arrowright: useDevConfig().cycleStage,
   });
 }
 </script>

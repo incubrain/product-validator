@@ -55,14 +55,8 @@ Multiple validation paths depending on your offer:
 
 Each path generates evidence. You measure signal, then decide.
 
-### Stage-Based Visibility
 
-Your landing page evolves as you validate:
-- **Early:** Minimal waitlist mode
-- **Launch:** Full product showcase
-- **Growth:** Social proof and testimonials
 
-Configure once. The template handles the rest.
 
 ### Conversion-Optimized Sections
 
@@ -119,17 +113,121 @@ Sell consulting calls. Deliver service manually. Learn what clients actually nee
 
 ## Quick Start
 
+1. **Clone & Install**
+   ```bash
+   git clone https://github.com/incubrain/founder-funnel.git
+   cd founder-funnel
+   pnpm install
+   ```
+
+2. **Customize Content**
+   
+   Edit `content/pages/index.md` — uncomment sections as you need them:
+```markdown
+   <!-- Start minimal: Hero + Product only -->
+   ::section-hero
+   ::
+   
+   ::section-product
+   ::
+   
+   <!-- Uncomment when driving traffic -->
+   <!-- ::section-benefits
+   :: -->
+```
+   
+   Then edit `content/config/site.yml` with your business info.
+
+3. **Set Up Webhooks**
+   
+   Configure where leads go (Telegram, Slack, Discord):
 ```bash
-git clone https://github.com/incubrain/founder-funnel your-project
-cd your-project
-pnpm install
-cp .example.env .env
-pnpm dev
+   cp .env.example .env
+   # Add your webhook URL
+   NUXT_WEBHOOK_URL=https://discord.com/api/webhooks/...
 ```
 
-**That's it.** You're running locally.
+4. **Deploy**
+   
+   ```bash
+   pnpm run build
+   # Deploy to Vercel, Railway, or your host
+   ```
 
-Replace the placeholder content with your offer. Deploy to Vercel or Railway. Start driving traffic.
+## Content Structure
+
+The template uses **progressive disclosure**—start minimal, expand as you validate.
+
+### Editing Content
+
+Open `content/pages/index.md` and follow the inline guides:
+```markdown
+::section-hero
+---
+data:
+  intro:
+    # Answer: What problem do you solve? For whom?
+    title: Your Outcome-Focused Headline
+---
+::
+```
+
+Each section includes:
+- **Decision guides** — When to use this section
+- **Anti-examples** — What NOT to write  
+- **Structure templates** — How to organize your copy
+
+### Progressive Sections
+
+**Stage 1: Minimal (Always visible)**
+- `section-hero` — Value prop + CTA
+- `section-product` — Offer + email capture
+
+**Stage 2: Launch (Uncomment when driving traffic)**
+- `section-benefits` — Why your solution matters
+- `section-outcome` — How it works, what they get
+
+**Stage 3: Growth (Uncomment when fielding questions)**
+- `section-faq` — Address objections
+
+**Stage 4: Proof (Uncomment when you have results)**
+- `section-results` — Testimonials and metrics
+
+**To show a section:** Remove `<!--` and `-->`  
+**To hide a section:** Wrap in `<!-- -->`
+
+### Example Workflow
+```markdown
+<!-- Day 1: Just launched -->
+::section-hero
+::
+::section-product
+::
+
+<!-- Week 2: Driving traffic, explaining value -->
+::section-hero
+::
+::section-benefits
+::
+::section-product
+::
+
+<!-- Month 2: Questions + testimonials -->
+::section-hero
+::
+::section-benefits
+::
+::section-outcome
+::
+::section-product
+::
+::section-faq
+::
+::section-results
+::
+```
+
+No config files. Just uncomment sections as you grow.
 
 ---
 
@@ -146,24 +244,10 @@ This bundles your codebase context into a single file. Paste it into Claude or C
 **Ask anything:**
 - "How do I change the color scheme?"
 - "Where do I configure email webhooks?"
-- "How does stage-based visibility work?"
+- "How do I hide a section?"
 - "How do I add a presales funnel?"
 
 The LLM explains the code directly. Always up-to-date. Zero maintenance.
-
----
-
-## Example Configuration
-
-**Founder Funnel** — Simple 3-stage setup  
-Waitlist → Launch → Growth
-
-Study the example. Adapt the stages to your validation timeline.
-
-Switch configuration source in `.env`:
-```
-NUXT_PUBLIC_CONFIG_SOURCE="founder-funnel"
-```
 
 ---
 

@@ -127,7 +127,7 @@ Provides landing page infrastructure optimized for conversion. Supports multiple
 
 Removes decision paralysis through constraints. Forces shipping through simplicity. Makes the right path obvious and the wrong path difficult.
 
-Stage-based visibility prevents overwhelm. Configuration-driven content eliminates design paralysis. Zero external dependencies enable instant deployment.
+Progressive content structure eliminates design paralysis. Zero external dependencies enable instant deployment.
 
 ### **A Philosophical Statement**
 
@@ -153,7 +153,7 @@ These optimize conversion of validated offers. Validation happens first.
 
 ### **Not a Framework**
 
-Does not prescribe rigid validation stages, required metrics, or mandatory processes.
+- Does not prescribe rigid processes, required metrics, or specific validation steps.
 
 Provides tools. Founders choose how to use them.
 
@@ -220,10 +220,8 @@ Visitor books paid consultation. Founder delivers service → learns pain points
 ### **Landing Page Infrastructure**
 Six conversion-optimized sections managed through YAML/Markdown. No design decisions required. Content focus only.
 
-### **Stage-Based Visibility**
-Configure which sections appear based on validation progress. Early = minimal. Launch = full. Growth = social proof.
 
-Prevents overwhelm. Maintains focus on current goals.
+
 
 ### **Event-Driven Analytics**
 Pre-configured Umami integration. All behavioral data captured through event system. Swap providers without changing event code.
@@ -261,11 +259,6 @@ External links (Stripe, LemonSqueezy) prove payment intent without building chec
 Webhook stream sufficient for validation. Storage decisions happen during product build.
 
 **Exception:** May integrate NuxtHub if truly one-click and adds zero complexity.
-
-### **Multi-Stage Frameworks**
-Stages create artificial complexity. Binary decisions beat staged progressions.
-
-**Real question:** "Is the signal strong enough to build?" Not "What stage am I in?"
 
 ---
 
@@ -325,7 +318,7 @@ The question: "Do people want this?"
 
 The answer: Measurable evidence (signups, bookings, payment intent).
 
-Everything else — stages, frameworks, dashboards, sequences — is theater disguised as progress.
+Everything else — frameworks, dashboards, sequences — is theater disguised as progress.
 
 **This template strips away the theater.**
 

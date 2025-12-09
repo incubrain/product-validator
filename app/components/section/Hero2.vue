@@ -22,13 +22,10 @@ const hero = {
     alt: 'App Dashboard',
   },
 };
-
-const { showSection } = useSectionVisibility();
 </script>
 
 <template>
   <section
-    v-if="showSection('hero')"
     class="relative overflow-hidden bg-neutral-950 text-white min-h-[85vh] flex items-center justify-center pt-12 pb-16"
   >
     <!-- Background: Clean & Deep -->

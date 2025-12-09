@@ -153,7 +153,6 @@ export default defineNuxtConfig({
     '#types': fileURLToPath(
       new URL('./shared/types/config.ts', import.meta.url),
     ),
-    '#stage-config': path.resolve(appConfig.configDir, 'stages.ts'),
     '#constants': fileURLToPath(
       new URL('./shared/constants.ts', import.meta.url),
     ),

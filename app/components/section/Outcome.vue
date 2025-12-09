@@ -30,18 +30,10 @@ const steps = computed(() => {
 });
 
 const features = computed(() => (props.data?.features || []) as FeatureItem[]);
-
-const { showSection } = useSectionVisibility();
 </script>
 
 <template>
-  <SectionWrapper
-    v-if="showSection('outcome')"
-    id="#outcome"
-    :intro="data.intro"
-    :cta="data.cta"
-    has-bottom
-  >
+  <SectionWrapper id="#outcome" :intro="data.intro" :cta="data.cta" has-bottom>
     <UCarousel
       v-if="steps.length"
       v-slot="{ item, index }"

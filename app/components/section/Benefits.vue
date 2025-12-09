@@ -10,18 +10,10 @@ const props = defineProps<{
 }>();
 
 const cards = computed(() => props.data?.items || []);
-
-const { showSection } = useSectionVisibility();
 </script>
 
 <template>
-  <SectionWrapper
-    v-if="showSection('benefits')"
-    id="#benefits"
-    :intro="data.intro"
-    :cta="data.cta"
-    has-bottom
-  >
+  <SectionWrapper id="#benefits" :intro="data.intro" :cta="data.cta" has-bottom>
     <UPageGrid>
       <UPageCard
         v-for="card in cards"

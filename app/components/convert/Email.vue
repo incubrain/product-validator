@@ -2,7 +2,6 @@
 <!-- app/components/convert/Email.vue -->
 <script setup lang="ts">
 import { z } from 'zod';
-import { STAGE_CONFIG } from '#stage-config';
 import NAVIGATION from '#shared/config/navigation';
 
 interface Props {
@@ -17,8 +16,6 @@ const props = withDefaults(defineProps<Props>(), {
   ctaType: 'conversion',
   successRedirect: '/products/template-guide-success',
 });
-
-const { currentStage } = useDevConfig();
 
 // ✅ Get CTA config from product
 const cta = computed(() => NAVIGATION.ctas[props.ctaType]);
@@ -109,7 +106,6 @@ const handleSubmit = async () => {
       data: {
         formId: 'email_capture',
         email: validated.email,
-        currentStage: currentStage.value as StageKey,
         antiSpam: {
           honeypot: honeypot.value,
           timeOnForm: Date.now() - formRenderedAt.value,
