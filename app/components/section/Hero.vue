@@ -50,7 +50,6 @@ const showMedia = computed(() => hero.value?.media?.src);
 
     <template #description>
       <div class="max-w-3xl mx-auto space-y-6">
-        <!-- Description Text (All stages) -->
         <p class="text-xl sm:text-2xl text-dimmed font-medium leading-relaxed">
           {{ hero.intro.description }}
         </p>

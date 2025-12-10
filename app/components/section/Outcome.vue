@@ -1,4 +1,3 @@
-<!-- ~/components/section/Outcome.vue -->
 <script setup lang="ts">
 const props = defineProps<{
   data?: {
@@ -34,33 +33,29 @@ const features = computed(() => (props.data?.features || []) as FeatureItem[]);
 
 <template>
   <SectionWrapper id="#outcome" :intro="data.intro" :cta="data.cta" has-bottom>
-    <UCarousel
+    <!-- FIXED: Remove carousel, use responsive grid instead -->
+    <div
       v-if="steps.length"
-      v-slot="{ item, index }"
-      :dots="false"
-      align="start"
-      :items="steps"
-      :active="false"
-      :ui="{
-        item: 'basis-[90%] lg:basis-1/3 lg:ps-12',
-        dots: 'mt-6',
-        dot: 'w-2 h-2',
-      }"
+      class="grid grid-cols-1 md:grid-cols-3 gap-8 lg:gap-12"
     >
-      <div class="flex flex-col items-center text-center p-8 rounded-lg">
+      <div
+        v-for="(step, index) in steps"
+        :key="step.id"
+        class="flex flex-col items-center text-center p-8 rounded-lg"
+      >
         <div
           class="size-12 rounded-full bg-primary/10 flex items-center justify-center mb-4"
         >
           <span class="text-xl font-bold text-primary">{{ index + 1 }}</span>
         </div>
 
-        <UIcon :name="item.icon" class="size-8 text-secondary mb-4" />
+        <UIcon :name="step.icon" class="size-8 text-secondary mb-4" />
 
-        <h3 class="text-lg font-heading font-bold mb-2">{{ item.title }}</h3>
+        <h3 class="text-lg font-heading font-bold mb-2">{{ step.title }}</h3>
 
-        <p class="text-sm text-muted">{{ item.result }}</p>
+        <p class="text-sm text-muted">{{ step.result }}</p>
       </div>
-    </UCarousel>
+    </div>
 
     <template #bottom>
       <div v-if="features.length" class="bg-muted/30 py-16 overflow-hidden">
@@ -92,7 +87,6 @@ const features = computed(() => (props.data?.features || []) as FeatureItem[]);
               :ui="{
                 item: 'basis-[320px] px-2 h-[360px]',
                 viewport: 'overflow-visible',
-
                 controls:
                   'relative mt-12 hidden md:flex justify-center max-w-(--ui-container) mx-auto',
                 arrows: 'flex gap-4',

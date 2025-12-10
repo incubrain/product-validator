@@ -22,8 +22,6 @@ const displayTitle = computed(() => props.title || props.cta?.headline);
 const displayDescription = computed(
   () => props.description || props.cta?.message,
 );
-const isPrimary = computed(() => props.cta?.primary ?? false);
-
 // Generate links only if cta object is present and using default button logic
 const defaultLinks = computed(() => {
   if (props.cta && !props.cta.primary) {
@@ -47,20 +45,16 @@ const defaultLinks = computed(() => {
     <!-- Corner brackets -->
     <div class="absolute inset-0 pointer-events-none z-10">
       <div
-        class="absolute -top-px -left-px w-12 h-12 border-t-2 border-l-2 rounded-tl-lg"
-        :class="isPrimary ? 'border-primary/40' : 'border-secondary/30'"
+        class="absolute -top-px -left-px w-12 h-12 border-t-2 border-l-2 rounded-tl-lg border-secondary/30"
       />
       <div
-        class="absolute -top-px -right-px w-12 h-12 border-t-2 border-r-2 rounded-tr-lg"
-        :class="isPrimary ? 'border-primary/40' : 'border-secondary/30'"
+        class="absolute -top-px -right-px w-12 h-12 border-t-2 border-r-2 rounded-tr-lg border-secondary/30"
       />
       <div
-        class="absolute -bottom-px -left-px w-12 h-12 border-b-2 border-l-2 rounded-bl-lg"
-        :class="isPrimary ? 'border-primary/40' : 'border-secondary/30'"
+        class="absolute -bottom-px -left-px w-12 h-12 border-b-2 border-l-2 rounded-bl-lg border-secondary/30"
       />
       <div
-        class="absolute -bottom-px -right-px w-12 h-12 border-b-2 border-r-2 rounded-br-lg"
-        :class="isPrimary ? 'border-primary/40' : 'border-secondary/30'"
+        class="absolute -bottom-px -right-px w-12 h-12 border-b-2 border-r-2 rounded-br-lg border-secondary/30"
       />
     </div>
 
@@ -71,13 +65,9 @@ const defaultLinks = computed(() => {
       :variant="variant"
       :links="defaultLinks"
       :ui="{
-        container: isPrimary ? 'py-16 sm:py-20' : 'py-12 sm:py-16',
-        title: isPrimary
-          ? 'text-2xl sm:text-3xl font-bold text-primary'
-          : 'text-lg sm:text-xl font-bold text-secondary',
-        description: isPrimary
-          ? 'text-base sm:text-lg'
-          : 'text-sm sm:text-base',
+        container: 'py-16 sm:py-20',
+        title: 'text-xl font-bold text-secondary',
+        description: 'text-sm sm:text-base',
       }"
     >
       <!-- Expose slots -->

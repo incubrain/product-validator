@@ -1,27 +1,42 @@
 <!-- components/section/Hero2.vue -->
 <script setup lang="ts">
-const hero = {
-  badge: {
-    label: 'Open Source',
-    sub: 'MIT License',
-    to: 'https://github.com/incubrain/founder-funnel',
-    stars: '139,737', // Example number from reference, can be dynamic later
-  },
-  intro: {
-    title: 'Own Your Funnel',
-    highlight: 'Start Validating.',
-    description:
-      'The open-source landing page template for technical founders. Capture leads, and validate your idea without monthly fees.',
-  },
-  cta: {
-    primary: 'Get Started',
-    secondary: 'One Click Deploy',
-  },
-  media: {
-    src: '/product/gated-dashboard.png', // Ensure this path is correct
-    alt: 'App Dashboard',
-  },
-};
+const props = defineProps<{
+  data: {
+    badge: {
+      label: string;
+      sub: string;
+      to: string;
+      stars: string;
+      icon: string;
+      starIcon: string;
+    };
+    intro: {
+      title: string;
+      highlight: string;
+      description: string;
+    };
+    cta: {
+      primary: string;
+      secondary: string;
+    };
+    media: {
+      src: string;
+      alt: string;
+    };
+    metric: {
+      icon: string;
+      label: string;
+      value: string;
+      delta: string;
+    };
+    trusted: {
+      text: string;
+      icons: string[];
+    };
+  };
+}>();
+
+const hero = computed(() => props.data);
 </script>
 
 <template>
@@ -46,16 +61,16 @@ const hero = {
         target="_blank"
         class="mb-6 inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900/50 px-3 py-1 text-sm text-neutral-300 transition-colors hover:border-neutral-700 hover:bg-neutral-800"
       >
-        <UIcon name="i-simple-icons-github" class="h-4 w-4" />
-        <span class="font-medium text-white">GitHub</span>
-        <span class="text-neutral-500">★</span>
+        <UIcon :name="hero.badge.icon" class="h-4 w-4" />
+        <span class="font-medium text-white">{{ hero.badge.label }}</span>
+        <span class="text-neutral-500">{{ hero.badge.starIcon }}</span>
         <span>{{ hero.badge.stars }}</span>
       </a>
 
       <!-- 2. Typography Hero (Centered & Massive) -->
       <div class="text-center max-w-4xl mx-auto space-y-6 md:space-y-6 mb-8">
         <h1
-          class="font-heading font-black text-5xl sm:text-7xl lg:text-8xl text-center tracking-tighter mb-8 leading-[1.1]"
+          class="font-heading font-black text-5xl sm:text-7xl lg:text-7xl text-center tracking-tight mb-8 leading-[1.1]"
         >
           <span class="block text-white">{{ hero.intro.title }}</span>
           <span
@@ -92,7 +107,10 @@ const hero = {
             class="font-medium text-neutral-400 hover:text-white transition-colors"
           >
             {{ hero.cta.secondary }}
-            <UIcon name="i-lucide-arrow-right" class="ml-1 w-4 h-4" />
+            <UIcon
+              :name="hero.cta.secondaryIcon || 'i-lucide-arrow-right'"
+              class="ml-1 w-4 h-4"
+            />
           </UButton>
         </div>
       </div>
@@ -123,12 +141,17 @@ const hero = {
             <div
               class="h-10 w-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-500"
             >
-              <UIcon name="i-lucide-trending-up" class="w-6 h-6" />
+              <UIcon :name="hero.metric.icon" class="w-6 h-6" />
             </div>
             <div>
-              <div class="text-xs text-neutral-400">Monthly Revenue</div>
+              <div class="text-xs text-neutral-400">
+                {{ hero.metric.label }}
+              </div>
               <div class="text-sm font-bold text-white">
-                $12,038 <span class="text-green-500 text-xs">+21%</span>
+                {{ hero.metric.value }}
+                <span class="text-green-500 text-xs">{{
+                  hero.metric.delta
+                }}</span>
               </div>
             </div>
           </div>
@@ -139,16 +162,17 @@ const hero = {
       <div
         class="mt-10 pt-1 border-t border-white/5 w-full max-w-5xl flex flex-col md:flex-row items-center justify-between gap-6 text-neutral-500 text-sm"
       >
-        <span>Trusted by builders at 1,000+ startups</span>
+        <span>{{ hero.trusted.text }}</span>
         <div
           class="flex gap-6 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
         >
           <!-- Tech Stack Icons instead of Logos -->
-          <UIcon name="i-simple-icons-nuxtdotjs" class="w-6 h-6" />
-          <UIcon name="i-simple-icons-tailwindcss" class="w-6 h-6" />
-          <UIcon name="i-simple-icons-typescript" class="w-6 h-6" />
-          <UIcon name="i-simple-icons-vercel" class="w-6 h-6" />
-          <UIcon name="i-simple-icons-supabase" class="w-6 h-6" />
+          <UIcon
+            v-for="icon in hero.trusted.icons"
+            :key="icon"
+            :name="icon"
+            class="w-6 h-6"
+          />
         </div>
       </div>
     </div>

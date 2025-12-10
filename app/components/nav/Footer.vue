@@ -12,6 +12,16 @@ const copyrightYear = computed(() =>
     ? `${currentYear}`
     : `${configData.value?.business.founding_year} - ${currentYear}`,
 );
+
+const socialLinks = computed(
+  () =>
+    configData.value?.socials?.map((link) => ({
+      label: link.label,
+      icon: `i-lucide-${link.platform}`,
+      to: link.url,
+      target: link.url.startsWith('https') ? '_blank' : '_self',
+    })) || [],
+);
 </script>
 
 <template>
@@ -68,7 +78,20 @@ const copyrightYear = computed(() =>
     </div>
 
     <template #right>
-      <CardFounder />
+      <span class="text-sm font-semibold text-gray-900 dark:text-white">Follow Us</span>
+      <span class="w-auto lg:justify-end space-x-2">
+        <UButton
+          v-for="social in socialLinks"
+          :key="social.label"
+          :icon="social.icon"
+          color="secondary"
+          variant="ghost"
+          size="sm"
+          :to="social.to"
+          :target="social.target"
+          :aria-label="social.label"
+        />
+      </span>
     </template>
 
     <template #bottom>

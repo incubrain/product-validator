@@ -22,7 +22,7 @@ const cards = computed(() => props.data?.items || []);
         :description="card.description"
         variant="soft"
         :ui="{
-          description: 'text-pretty leading-relaxed',
+          description: 'text-pretty leading-relaxed text-dimmed',
         }"
       >
         <template #leading>

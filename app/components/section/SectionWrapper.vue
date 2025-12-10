@@ -47,6 +47,7 @@ useIntersectionObserver(
   <UPageSection
     ref="sectionRef"
     :orientation="orientation"
+    v-bind="intro"
     :class="props.class"
     :ui="{
       root: 'isolate',
@@ -57,34 +58,18 @@ useIntersectionObserver(
       header: 'space-y-3 mx-auto text-center relative z-100',
       leading: 'w-full lg:px-0 relative pb-4 z-100',
       headline: 'hidden',
-      title: 'max-w-4xl mx-auto',
-      description: 'text-sm sm:text-base text-muted/80 max-w-2xl mx-auto',
+      title: 'max-w-3xl mx-auto',
+      description: 'text-sm sm:text-base text-dimmed max-w-xl mx-auto',
     }"
   >
     <template #top>
       <NavAnchor :id="id" />
     </template>
 
-    <template #title>
-      <div class="space-y-4 pt-6">
-        <h2
-          class="text-3xl sm:text-4xl lg:text-5xl font-black leading-tight tracking-tight uppercase"
-        >
-          {{ intro.title }}
-        </h2>
-
-        <p
-          class="text-lg sm:text-xl text-muted leading-relaxed max-w-2xl mx-auto pt-2"
-        >
-          {{ intro.description }}
-        </p>
-      </div>
-    </template>
-
     <slot />
 
     <template #bottom>
-      <div class="pt-12 lg:pt-16 space-y-12 lg:space-y-16">
+      <div class="pt-12 lg:pt-16">
         <slot name="bottom" />
         <UContainer class="lg:px-0">
           <NavCta v-if="cta" :cta="cta" />
