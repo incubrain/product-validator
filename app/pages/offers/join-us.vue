@@ -1,12 +1,12 @@
-<!-- team/join-us.vue -->
+<!-- offers/join-us.vue -->
 <script setup lang="ts">
 const { getSiteConfig } = useContentCache();
 const { data: configData } = await getSiteConfig();
 const business = computed(() => configData.value?.business);
 
 // Fetch join page content
-const { data: page } = await useAsyncData('team-join-us', () =>
-  queryCollection('pages').path('/team/join-us').first(),
+const { data: page } = await useAsyncData('offers-join-us', () =>
+  queryCollection('pages').path('/offers/join-us').first(),
 );
 
 if (!page.value) {
@@ -35,7 +35,7 @@ onMounted(() => {
     type: 'page_view',
     location: 'join-team-page',
     action: 'view',
-    target: '/team/join-us',
+    target: '/offers/join-us',
   });
 });
 </script>

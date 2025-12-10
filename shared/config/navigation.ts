@@ -73,9 +73,8 @@ export const NAVIGATION: NavigationConfig = {
     {
       label: 'About',
       children: [
-        { label: 'Team', to: '/team' },
+        { label: 'Founder', to: '/founder' },
         { label: 'Updates', to: '/updates' },
-        { label: 'Join Us', to: '/team/join-us' },
       ],
     },
     {
@@ -83,6 +82,7 @@ export const NAVIGATION: NavigationConfig = {
       children: [
         { label: 'Template Guide', to: '/offers/template-guide' },
         { label: 'Mentorship', to: '/offers/mentorship' },
+        { label: 'Join Us', to: '/offers/join-us' },
       ],
     },
   ],

@@ -1,48 +1,35 @@
 <script setup lang="ts">
-const route = useRoute();
 import { useClipboard } from '@vueuse/core';
 import { OFFERS } from '#shared/config/navigation';
 
 const { trackEvent } = useEvents();
 
-// Fetch team member from existing collection
-const { data: member, pending: memberPending } = await useAsyncData(
-  `team-${route.params.slug}`,
-  () =>
-    queryCollection('team')
-      .where('slug', '=', route.params.slug as string)
-      .first(),
+// Fetch founder data
+const { data: founder, pending: founderPending } = await useAsyncData(
+  'founder-profile',
+  () => queryCollection('team').where('stem', '=', 'team/founder').first()
 );
-
-if (!memberPending.value && !member.value) {
-  throw createError({
-    statusCode: 404,
-    message: 'Team member not found',
-  });
-}
 
 // Fetch story content
 const { data: story, pending: storyPending } = await useAsyncData(
-  `team-story-${route.params.slug}`,
-  () => queryCollection('pages').path(`/team/${route.params.slug}`).first(),
+  'founder-story',
+  () => queryCollection('pages').path('/founder').first()
 );
 
-// Combined loading state
-const isLoading = computed(() => memberPending.value || storyPending.value);
+const isLoading = computed(() => founderPending.value || storyPending.value);
 
 // Track page view
 onMounted(() => {
-  if (member.value) {
+  if (founder.value) {
     trackEvent({
-      id: `team_page_view_${route.params.slug}`,
+      id: 'founder_page_view',
       type: 'element_viewed',
-      location: 'team_page',
+      location: 'founder_page',
       action: 'page_view',
-      target: route.path,
+      target: '/founder',
       data: {
         metadata: {
-          slug: route.params.slug as string,
-          name: `${member.value.given_name} ${member.value.surname}`,
+          name: `${founder.value.given_name} ${founder.value.surname}`,
         },
       },
     });
@@ -50,6 +37,7 @@ onMounted(() => {
 });
 
 // Modal State
+const route = useRoute();
 const isShareOpen = ref(false);
 
 // Handle query param trigger
@@ -60,14 +48,14 @@ watch(
       isShareOpen.value = true;
     }
   },
-  { immediate: true },
+  { immediate: true }
 );
 
 // Web Share API
 const shareProfile = async () => {
   const shareData = {
-    title: `Connect with ${member.value.given_name}`,
-    text: `Connect with ${member.value.given_name} ${member.value.surname} - ${member.value.role}`,
+    title: `Connect with ${founder.value.given_name}`,
+    text: `Connect with ${founder.value.given_name} ${founder.value.surname} - ${founder.value.role}`,
     url: window.location.href,
   };
 
@@ -87,22 +75,20 @@ const shareProfile = async () => {
 // Generate QR URL with UTM params
 const baseUrl = useRequestURL().origin;
 const qrUrl = computed(() => {
-  const url = new URL(`${baseUrl}/team/${route.params.slug}`);
+  const url = new URL(`${baseUrl}/founder`);
   url.searchParams.set('utm_source', 'qr');
   url.searchParams.set('utm_medium', 'inperson');
-  url.searchParams.set('utm_campaign', route.params.slug as string);
+  url.searchParams.set('utm_campaign', 'founder');
   return url.toString();
 });
 
-// Copy functionality
-
 // SEO
 useHead({
-  title: member.value
-    ? `${member.value.given_name} ${member.value.surname} - ${member.value.role}`
-    : 'Team Member',
-  meta: member.value
-    ? [{ name: 'description', content: member.value.bio }]
+  title: founder.value
+    ? `${founder.value.given_name} ${founder.value.surname} - ${founder.value.role}`
+    : 'Founder',
+  meta: founder.value
+    ? [{ name: 'description', content: founder.value.bio }]
     : [],
 });
 </script>
@@ -110,7 +96,7 @@ useHead({
 <template>
   <div class="min-h-screen py-16">
     <UContainer>
-      <!-- Loading State - Refined to match new layout -->
+      <!-- Loading State -->
       <div
         v-if="isLoading"
         class="grid grid-cols-1 lg:grid-cols-3 gap-8 lg:gap-12"
@@ -135,11 +121,6 @@ useHead({
           <USkeleton class="h-5 w-full rounded-lg" />
           <USkeleton class="h-5 w-full rounded-lg" />
           <USkeleton class="h-5 w-5/6 rounded-lg" />
-          <div class="pt-8 space-y-3">
-            <USkeleton class="h-5 w-full rounded-lg" />
-            <USkeleton class="h-5 w-full rounded-lg" />
-            <USkeleton class="h-5 w-4/5 rounded-lg" />
-          </div>
         </div>
       </div>
 
@@ -150,14 +131,14 @@ useHead({
       >
         <!-- Left Column: Profile & QR Trigger -->
         <div class="space-y-8 lg:col-span-1 lg:sticky lg:top-4 self-start">
-          <TeamProfile :member="member">
+          <TeamProfile :member="founder">
             <template #actions>
               <!-- Iterate directly over OFFERS from config -->
               <ConvertButton
                 v-for="(offer, key) in OFFERS"
                 :key="key"
                 v-bind="offer"
-                location="team_profile"
+                location="founder_profile"
                 size="xl"
                 color="primary"
                 variant="subtle"
@@ -167,10 +148,10 @@ useHead({
 
               <!-- Secondary Local CTA (if configured and unique) -->
               <ConvertButton
-                v-if="member.cta?.secondary"
-                :label="member.cta.secondary.text"
-                :to="member.cta.secondary.url"
-                location="team_profile"
+                v-if="founder.cta?.secondary"
+                :label="founder.cta.secondary.text"
+                :to="founder.cta.secondary.url"
+                location="founder_profile"
                 cta-type="secondary"
                 variant="subtle"
                 size="lg"
@@ -219,7 +200,7 @@ useHead({
                   <p
                     class="text-sm font-medium text-gray-900 dark:text-gray-100"
                   >
-                    Scan to connect with {{ member.given_name }}
+                    Scan to connect with {{ founder.given_name }}
                   </p>
                   <p class="text-xs text-gray-500 dark:text-gray-400">
                     Point your camera at the QR code
@@ -252,7 +233,7 @@ useHead({
               v-else
               icon="i-lucide-file-text"
               title="No story available"
-              description="This team member hasn't added their story yet."
+              description="The founder story hasn't been added yet."
               variant="subtle"
               size="lg"
               class="my-12"
@@ -267,16 +248,7 @@ useHead({
               >
                 <template #links>
                   <ConvertButton
-                    to="/team"
-                    label="Meet the Team"
-                    location="founder_profile_cta"
-                    icon="i-heroicons-users"
-                    size="xl"
-                    color="neutral"
-                    variant="link"
-                  />
-                  <ConvertButton
-                    to="/team/join-us"
+                    to="/offers/join-us"
                     label="Join the Team"
                     location="founder_profile_cta"
                     icon="i-heroicons-briefcase"

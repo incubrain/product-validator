@@ -85,7 +85,7 @@ const transformedFeatures = computed(() => {
         </p>
 
         <UButton
-          :to="`/team/${founderData.slug}`"
+          to="/founder"
           label="Read My Story"
           color="neutral"
           variant="link"
