@@ -22,7 +22,6 @@ function sendToAnalytics(payload: EventPayload, analyticsProxy: any) {
 
   // Extract user identity and traffic attribution
   const userId = payload.data?.userId;
-  const trafficSource = payload.data?.trafficSource;
 
   const eventData = {
     event_id: payload.id,
@@ -31,17 +30,9 @@ function sendToAnalytics(payload: EventPayload, analyticsProxy: any) {
     target: payload.target,
     timestamp: payload.timestamp,
     id: userId,
-    ...trafficSource,
   };
 
   switch (payload.type) {
-    case 'exit_intent':
-      analyticsProxy.track('exit_intent', {
-        ...eventData,
-        trigger_location: payload.location,
-      });
-      break;
-
     case 'form_submitted':
       analyticsProxy.track('form_submitted', eventData);
       break;

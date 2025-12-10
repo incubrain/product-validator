@@ -18,17 +18,6 @@ declare global {
     | 'view';
 }
 
-export interface TrafficSource {
-  utmSource: string | null;
-  utmMedium: string | null;
-  utmCampaign: string | null;
-  utmContent: string | null;
-  utmTerm: string | null;
-  referrer: string | null;
-  landingPage: string;
-  hasUtms: boolean;
-}
-
 export interface EventPayload {
   id: string;
   type: TrackedEvents;

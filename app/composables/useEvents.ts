@@ -2,11 +2,9 @@
 export const useEvents = () => {
   const nuxtApp = useNuxtApp();
   const { getUserId } = useUserIdentity();
-  const { getSource } = useTrafficSource();
 
   const trackEvent = async (event: EventPayload) => {
     const userId = getUserId();
-    const trafficSource = getSource();
 
     const payload = {
       ...event,
@@ -14,7 +12,6 @@ export const useEvents = () => {
       data: {
         ...event.data,
         userId,
-        trafficSource,
       },
     } satisfies EventPayload;
 
