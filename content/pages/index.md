@@ -21,9 +21,6 @@ description: One-sentence value proposition. What do you do for whom?
   
   STAGE 4 (Uncomment when you have proof):
     - Results: Testimonials and social proof
-  
-  To show a section: Remove <!-- and -->
-  To hide a section: Wrap in <!-- -->
 -->
 
 <!-- ============================================ -->

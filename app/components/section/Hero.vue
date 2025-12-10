@@ -1,108 +1,196 @@
-<!-- components/section/Hero.vue -->
+<!-- components/section/Hero2.vue -->
 <script setup lang="ts">
 const props = defineProps<{
-  data?: any;
+  data: {
+    badge: {
+      label: string;
+      to: string;
+      description: string;
+      icon: string;
+    };
+    intro: {
+      title: string;
+      highlight: string;
+      description: string;
+    };
+    cta: {
+      primary: string;
+      secondary: string;
+    };
+    media: {
+      src: string;
+      alt: string;
+    };
+    metric: {
+      icon: string;
+      label: string;
+      value: string;
+      delta: string;
+    };
+    trusted: {
+      text: string;
+      icons: string[];
+    };
+  };
 }>();
 
 const hero = computed(() => props.data);
-
-const showMedia = computed(() => hero.value?.media?.src);
 </script>
 
 <template>
-  <UPageHero
-    orientation="vertical"
-    class="bg-linear-to-b from-default via-muted to-default text-white relative overflow-hidden min-h-[calc(100vh-var(--ui-banner-height)-var(--ui-header-height))]"
-    :ui="{
-      root: 'px-0',
-      body: 'px-0',
-      wrapper: 'text-center px-0',
-      container:
-        'flex flex-col lg:grid py-12 sm:py-24 lg:pt-12 gap-0 sm:gap-y-0 lg:px-0',
-      footer: 'mt-10',
-    }"
+  <section
+    class="relative overflow-hidden bg-neutral-950 text-white min-h-[85vh] flex items-center justify-center pt-12 pb-16"
   >
-    <template #headline>
-      <div class="flex justify-center items-center pb-8">
-        <ULink
-          v-if="hero.badge"
-          :to="hero.badge.to"
-          target="_blank"
-          class="group flex items-center gap-2 rounded-full border border-default bg-default/50 px-4 py-2 shadow-sm hover:bg-muted/50 transition"
+    <div
+      class="absolute inset-0 bg-[radial-gradient(ellipse_80%_80%_at_40%_-20%,rgba(0,156,24,0.2),rgba(255,255,255,0))]"
+    />
+
+    <div
+      class="absolute top-0 inset-0 bg-grid-white/[0.02] pointer-events-none z-0"
+    />
+
+    <div
+      class="relative z-10 w-full max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col items-center"
+    >
+      <a
+        :href="hero.badge.to"
+        target="_blank"
+        class="mb-6 inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900/50 px-3 py-1 text-sm text-neutral-300 transition-colors hover:border-neutral-700 hover:bg-neutral-800"
+      >
+        <UIcon :name="hero.badge.icon" class="h-4 w-4" />
+        <span class="font-medium text-white">{{ hero.badge.label }}</span>
+        <span>{{ hero.badge.description }}</span>
+      </a>
+
+      <div class="text-center max-w-4xl mx-auto space-y-6 md:space-y-6 mb-8">
+        <h1
+          class="font-heading font-black text-5xl sm:text-7xl lg:text-7xl text-center tracking-tight mb-8 leading-[1.1]"
         >
-          <span class="text-sm font-semibold text-dimmed">
-            {{ hero.badge.title }}
-          </span>
-          <span class="h-4 w-px bg-inverted" />
+          <span class="block text-white">{{ hero.intro.title }}</span>
           <span
-            class="text-sm font-medium text-secondary group-hover:underline flex items-center gap-1"
+            class="block bg-linear-to-r from-primary-400 to-primary-600 bg-clip-text text-transparent"
           >
-            {{ hero.badge.description }}
-            <UIcon name="i-lucide-star" class="size-4" />
+            {{ hero.intro.highlight }}
           </span>
-        </ULink>
-      </div>
-    </template>
+        </h1>
 
-    <template #title>
-      {{ hero.intro.title }}
-    </template>
-
-    <template #description>
-      <div class="max-w-3xl mx-auto space-y-6">
-        <p class="text-xl sm:text-2xl text-dimmed font-medium leading-relaxed">
+        <p
+          class="font-serif text-lg sm:text-xl md:text-2xl text-neutral-400 max-w-2xl mx-auto leading-relaxed"
+        >
           {{ hero.intro.description }}
         </p>
 
-        <ConvertButton
-          cta-type="hero"
-          location="hero"
-          size="xl"
-          class="font-black text-toned px-4 py-3"
-        />
-      </div>
-    </template>
+        <div
+          class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
+        >
+          <ConvertButton
+            cta-type="hero"
+            location="hero"
+            size="xl"
+            class="min-w-[160px] text-lg h-12 px-8 rounded-full font-black text-toned"
+          >
+            {{ hero.cta.primary }}
+          </ConvertButton>
 
-    <!-- Media with overlapping label -->
-    <div v-if="showMedia" class="relative pt-24 max-w-4xl mx-auto">
-      <div class="relative">
-        <Video
-          v-if="hero.media.type === 'video'"
-          :src="hero.media.src"
-          :poster="hero.media.poster"
-          :autoplay="true"
-          :muted="true"
-          :loop="true"
-          aspect-ratio="video"
-          class="rounded-2xl shadow-2xl border border-white/10"
-        />
-        <NuxtImg
-          v-else-if="hero.media.type === 'image'"
-          :src="hero.media.src"
-          :alt="hero.media.alt"
-          class="rounded-2xl shadow-2xl border border-default/50 w-full"
-        />
+          <UButton
+            to="#demo"
+            variant="link"
+            color="neutral"
+            size="xl"
+            class="font-medium text-neutral-400 hover:text-white transition-colors"
+          >
+            {{ hero.cta.secondary }}
+            <UIcon
+              :name="hero.cta.secondaryIcon || 'i-lucide-arrow-right'"
+              class="ml-1 w-4 h-4"
+            />
+          </UButton>
+        </div>
+      </div>
+
+      <div
+        class="relative w-full max-w-5xl mx-auto mt-8 md:mt-12 group perspective-1000"
+      >
+        <div
+          class="absolute -inset-1 bg-linear-to-r from-primary-500 to-secondary-500 rounded-2xl blur opacity-20 group-hover:opacity-40 transition duration-1000 group-hover:duration-200"
+        ></div>
+
+        <div
+          class="relative rounded-xl bg-neutral-900 border border-neutral-800 p-2 shadow-2xl ring-1 ring-white/10 transform transition-transform duration-700 hover:scale-[1.01] hover:rotate-x-1"
+        >
+          <NuxtImg
+            :src="hero.media.src"
+            :alt="hero.media.alt"
+            class="rounded-lg shadow-inner w-full h-auto object-cover border border-neutral-900/50"
+          />
+
+          <div
+            class="absolute -right-4 top-10 md:-right-12 md:top-20 bg-neutral-900 border border-neutral-800 p-4 rounded-lg shadow-xl items-center gap-3 animate-bounce-slow hidden sm:flex"
+          >
+            <div
+              class="h-10 w-10 rounded-full bg-green-500/10 flex items-center justify-center text-green-500"
+            >
+              <UIcon :name="hero.metric.icon" class="w-6 h-6" />
+            </div>
+            <div>
+              <div class="text-xs text-neutral-400">
+                {{ hero.metric.label }}
+              </div>
+              <div class="text-sm font-bold text-white">
+                {{ hero.metric.value }}
+                <span class="text-green-500 text-xs">{{
+                  hero.metric.delta
+                }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div
+        class="mt-10 pt-1 border-t border-white/5 w-full max-w-5xl flex flex-col md:flex-row items-center justify-between gap-6 text-neutral-500 text-sm"
+      >
+        <span>{{ hero.trusted.text }}</span>
+        <div
+          class="flex gap-6 grayscale opacity-50 hover:grayscale-0 hover:opacity-100 transition-all duration-500"
+        >
+          <UIcon
+            v-for="icon in hero.trusted.icons"
+            :key="icon"
+            :name="icon"
+            class="w-6 h-6"
+          />
+        </div>
       </div>
     </div>
-
-    <!-- Background Effects -->
-    <div
-      class="absolute top-0 inset-0 bg-grid-white/[0.02] pointer-events-none -z-10"
-    />
-    <div
-      class="absolute top-1/4 left-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none -z-10"
-    />
-    <div
-      class="absolute top-1/4 right-1/4 w-96 h-96 bg-primary-300/10 rounded-full blur-3xl pointer-events-none -z-10"
-    />
-  </UPageHero>
+  </section>
 </template>
 
 <style scoped>
+.perspective-1000 {
+  perspective: 1000px;
+}
+.rotate-x-1 {
+  transform: rotateX(1deg);
+}
+
 .bg-grid-white\/\[0\.02\] {
   background-image:
     linear-gradient(rgba(255, 255, 255, 0.04) 1px, transparent 1px),
     linear-gradient(90deg, rgba(255, 255, 255, 0.04) 1px, transparent 1px);
   background-size: 60px 60px;
+}
+
+@keyframes bounce-slow {
+  0%,
+  100% {
+    transform: translateY(0);
+  }
+  50% {
+    transform: translateY(-10px);
+  }
+}
+.animate-bounce-slow {
+  animation: bounce-slow 4s infinite ease-in-out;
 }
 </style>

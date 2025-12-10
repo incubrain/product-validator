@@ -143,7 +143,7 @@ const scrollToTop = () => {
       </template>
     </UPageHero>
 
-    <UPageBody class="border-t">
+    <UPageBody>
       <UContainer>
         <div v-if="pending" class="space-y-12">
           <div v-for="i in 3" :key="i" class="space-y-4">

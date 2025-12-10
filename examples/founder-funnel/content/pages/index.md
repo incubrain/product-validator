@@ -3,16 +3,14 @@ title: Founder Funnel
 description: Open-source landing page template for experienced technical founders.
 ---
 
-::section-hero2
+::section-hero
 ---
 data:
   badge:
     label: Open Source
-    sub: MIT License
+    description: 74 ★
     to: https://github.com/incubrain/founder-funnel
-    stars: 139,737
     icon: i-simple-icons-github
-    starIcon: ★
 
   intro:
     title: Own Your Funnel
@@ -35,7 +33,7 @@ data:
     delta: "+21%"
 
   trusted:
-    text: "Trusted by builders at 1,000+ startups"
+    text: "Trusted by builders at 70+ startups"
     icons:
       - i-simple-icons-nuxtdotjs
       - i-simple-icons-tailwindcss
