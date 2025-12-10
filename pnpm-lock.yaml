@@ -62,9 +62,6 @@ importers:
       typescript:
         specifier: ^5.9.3
         version: 5.9.3
-      uuid:
-        specifier: ^13.0.0
-        version: 13.0.0
       vue:
         specifier: ^3.5.24
         version: 3.5.24(typescript@5.9.3)
@@ -6021,10 +6018,6 @@ packages:
 
   util-deprecate@1.0.2:
     resolution: {integrity: sha512-EPD5q1uXyFxJpCrLnCc1nHnq3gOa6DZBocAIiI2TaSCA7VCJ1UJDMagCzIkXNsUYfD1daK//LTEQ8xiIbrHtcw==}
-
-  uuid@13.0.0:
-    resolution: {integrity: sha512-XQegIaBTVUjSHliKqcnFqYypAd4S+WCYt5NIeRs6w/UAry7z8Y9j5ZwRRL4kzq9U3sD6v+85er9FvkEaBpji2w==}
-    hasBin: true
 
   valibot@1.1.0:
     resolution: {integrity: sha512-Nk8lX30Qhu+9txPYTwM0cFlWLdPFsFr6LblzqIySfbZph9+BFsAHsNvHOymEviUepeIW6KFHzpX8TKhbptBXXw==}
@@ -14044,8 +14037,6 @@ snapshots:
       punycode: 2.3.1
 
   util-deprecate@1.0.2: {}
-
-  uuid@13.0.0: {}
 
   valibot@1.1.0(typescript@5.9.3):
     optionalDependencies:

@@ -1,33 +1,33 @@
 // composables/useUserIdentity.ts
-import { v4 as uuidv4 } from 'uuid';
+
 /**
- * Anonymous user identity management
- * Generates and persists user ID before email capture
+ * Anonymous user identity for cross-session tracking
+ * 
+ * Generates a unique ID on first call and persists in localStorage.
+ * Subsequent calls return the existing ID.
+ * 
+ * Uses Web Crypto API (built-in, no dependencies)
  */
 export const useUserIdentity = () => {
   const { local } = useAppStorage();
   const USER_ID_KEY = 'userId';
 
   /**
-   * Generate anonymous User ID using uuidv4
-   * Format: user_{uuid}
-   */
-  const generateUserId = (): string => {
-    if (import.meta.server) return '';
-    return `user_${uuidv4()}`;
-  };
-
-  /**
-   * Get existing User ID or create new one
-   * Persists in localStorage for cross-session tracking
+   * Get or create user ID
+   * - Returns existing ID if found in localStorage
+   * - Generates new ID on first call and persists it
+   * - Returns empty string on server (SSR guard)
    */
   const getUserId = (): string => {
+    // SSR guard
     if (import.meta.server) return '';
     
+    // Check if ID already exists
     let userId = local.get(USER_ID_KEY);
 
+    // If not, create and store it
     if (!userId) {
-      userId = generateUserId();
+      userId = `user_${crypto.randomUUID()}`;
       local.set(USER_ID_KEY, userId);
     }
 

@@ -28,6 +28,7 @@ export interface EventPayload {
   data?: {
     formId?: string;
     email?: string;
+    userId?: string;
     antiSpam?: {
       honeypot?: string;
       timeOnForm?: number;
