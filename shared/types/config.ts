@@ -1,7 +1,7 @@
 // shared/types/config.ts
 import type { ButtonProps } from '@nuxt/ui';
 
-export type ConfigSource = 'validator' | 'founder-funnel' | 'root';
+export type ConfigSource = 'founder-funnel' | 'root';
 
 export interface SectionCta {
   headline: string;

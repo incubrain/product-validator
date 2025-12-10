@@ -3,9 +3,9 @@ import path from 'node:path';
 import type { ConfigSource } from '~~/shared/types/config';
 
 export interface ConfigPaths {
-  /** The config source name: 'validator' | 'founder-funnel' | 'root' */
+  /** The config source name: 'founder-funnel' | 'root' */
   source: ConfigSource;
-  /** Relative prefix path for examples (e.g., 'examples/validator') or empty string for root */
+  /** Relative prefix path for examples (e.g., 'examples/founder-funnel') or empty string for root */
   prefix: string;
   /** Absolute path to the public directory */
   publicDir: string;
@@ -25,14 +25,14 @@ export interface ConfigPaths {
  * 
  * @example
  * ```ts
- * // .env: NUXT_PUBLIC_CONFIG_SOURCE="validator"
+ * // .env: NUXT_PUBLIC_CONFIG_SOURCE="founder-funnel"
  * const config = getActiveConfigSource();
  * // Returns: {
- * //   source: 'validator',
- * //   prefix: 'examples/validator',
- * //   publicDir: '/absolute/path/to/examples/validator/public',
- * //   contentDir: '/absolute/path/to/examples/validator/content',
- * //   configDir: '/absolute/path/to/examples/validator/config',
+ * //   source: 'founder-funnel',
+ * //   prefix: 'examples/founder-funnel',
+ * //   publicDir: '/absolute/path/to/examples/founder-funnel/public',
+ * //   contentDir: '/absolute/path/to/examples/founder-funnel/content',
+ * //   configDir: '/absolute/path/to/examples/founder-funnel/config',
  * // }
  * ```
  */
