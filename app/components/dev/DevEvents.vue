@@ -80,7 +80,7 @@ const triggerEvent = async () => {
 
   // Provide sensible default data for testing
   const eventData: Record<string, any> = {
-    productId: 'magnet',
+    offerId: 'magnet',
     location: route.path,
     formId: 'email_capture',
   };

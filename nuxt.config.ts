@@ -173,7 +173,7 @@ export default defineNuxtConfig({
       ssr: true,
       prerender: false,
     },
-    '/products/**': {
+    '/offers/**': {
       ssr: true,
       prerender: false,
     },

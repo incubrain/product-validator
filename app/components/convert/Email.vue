@@ -14,7 +14,7 @@ interface Props {
 const props = withDefaults(defineProps<Props>(), {
   layout: 'stacked',
   ctaType: 'conversion',
-  successRedirect: '/products/template-guide-success',
+  successRedirect: '/offers/template-guide-success',
 });
 
 // ✅ Get CTA config from product

@@ -29,6 +29,7 @@ export interface EventPayload {
     formId?: string;
     email?: string;
     userId?: string;
+    offerId?: string;
     antiSpam?: {
       honeypot?: string;
       timeOnForm?: number;

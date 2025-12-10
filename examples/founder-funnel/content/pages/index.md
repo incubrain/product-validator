@@ -57,7 +57,7 @@ data:
     message: Define your problem, capture the signal, and prove the market exists.
     button:
       label: Start Validating
-      to: '#product'
+      to: '#offer'
       icon: i-lucide-arrow-down
   items:
     - id: eliminate-creep
@@ -131,7 +131,7 @@ data:
 ---
 ::
 
-::section-product
+::section-offer
 ---
 data:
   title: The Validation Template

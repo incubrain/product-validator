@@ -1,4 +1,4 @@
-<!-- products/[slug].vue -->
+<!-- offers/[slug].vue -->
 <script setup lang="ts">
 const route = useRoute();
 const slug = route.params.slug as string;
@@ -9,7 +9,7 @@ const business = computed(() => configData.value?.business);
 
 // Fetch product page from pages collection (MDC)
 const { data: product } = await useAsyncData(`product-page-${slug}`, () =>
-  queryCollection('pages').path(`/products/${slug}`).first(),
+  queryCollection('pages').path(`/offers/${slug}`).first(),
 );
 
 if (!product.value) {
@@ -38,9 +38,9 @@ onMounted(() => {
     type: 'element_viewed',
     location: `product-page-${slug}`,
     action: 'page_view',
-    target: `/products/${slug}`,
+    target: `/offers/${slug}`,
     data: {
-      productSlug: slug,
+      offerId: slug,
     },
   });
 });
@@ -94,7 +94,7 @@ onMounted(() => {
             <ConvertEmail
               cta-type="conversion"
               :location="`sales-page-${slug}`"
-              :success-redirect="`/products/${slug}-success`"
+              :success-redirect="`/offers/${slug}-success`"
             />
           </div>
         </div>

@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import type { ButtonProps, BadgeProps } from '#ui/types';
 import { STATUS_ICONS } from '#constants';
 
 interface ProductData {
@@ -39,7 +38,7 @@ const transformedFeatures = computed(() => {
 
 <template>
   <SectionWrapper
-    id="#product"
+    id="#offer"
     :intro="data.intro"
     :cta="data.cta"
     class="relative"

@@ -108,7 +108,7 @@ data:
     message: One sentence transitioning to your offer.
     button:
       label: See How It Works
-      to: '#product'
+      to: '#offer'
       icon: i-lucide-arrow-down
   
   items:

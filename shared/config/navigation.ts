@@ -4,7 +4,7 @@ import type { NavigationMenuItem } from '@nuxt/ui';
 export type SectionAnchor =
   | '#benefits'
   | '#outcome'
-  | '#product'
+  | '#offer'
   | '#results'
   | '#faq';
 
@@ -41,13 +41,13 @@ export interface NavigationConfig {
 export const OFFERS = {
   template: {
     label: 'Get Template Guide',
-    to: '/products/template-guide',
+    to: '/offers/template-guide',
     icon: 'i-lucide-download',
     note: 'No email required',
   },
   mentorship: {
     label: '1-on-1 Mentorship',
-    to: '/products/mentorship',
+    to: '/offers/mentorship',
     icon: 'i-lucide-user-plus',
   },
   github: {
@@ -81,8 +81,8 @@ export const NAVIGATION: NavigationConfig = {
     {
       label: 'Offers',
       children: [
-        { label: 'Template Guide', to: '/products/template-guide' },
-        { label: 'Mentorship', to: '/products/mentorship' },
+        { label: 'Template Guide', to: '/offers/template-guide' },
+        { label: 'Mentorship', to: '/offers/mentorship' },
       ],
     },
   ],
