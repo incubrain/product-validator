@@ -18,11 +18,10 @@ const { data: updates, pending } = useAsyncData('updates-list', () =>
     .all(),
 );
 
-const socialLinks = pickSocialLinks(configData.value?.socials || [], [
-  'youtube',
-  'github',
-  'x',
-]);
+const socialLinks =
+  configData.value?.socials?.filter((link) =>
+    ['youtube', 'github', 'x'].includes(link.platform),
+  ) || [];
 
 useHead({
   title: page.value?.title || 'Updates',

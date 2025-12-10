@@ -27,16 +27,16 @@ const socialLinks = computed(
 <template>
   <UFooter
     :ui="{
-      root: 'border-t border-default/60 pt-4',
+      root: 'border-t border-default/60',
       container:
-        'py-8 lg:py-4 flex flex-col gap-3 lg:flex-row lg:items-start lg:justify-between lg:gap-x-3',
+        'py-8 lg:py-12 flex flex-col lg:flex-row lg:items-start lg:justify-between  gap-8 lg:gap-12',
       top: 'py-8 lg:py-12',
       bottom: 'py-8 lg:py-12 bg-muted border-t',
       left: 'order-1 flex items-center justify-start lg:flex-1 gap-x-1.5 mt-3 lg:mt-0',
       center:
-        'order-2 flex flex-col sm:flex-row items-start justify-start lg:items-center lg:justify-center gap-4 mt-6 lg:mt-0 w-full lg:w-auto',
+        'order-2 flex flex-col sm:flex-row items-start justify-start lg:flex-1 lg:items-center lg:justify-center gap-4 mt-6 lg:mt-0 w-full lg:w-auto',
       right:
-        'order-3 flex items-center justify-start lg:justify-end lg:flex-1 gap-x-1.5',
+        'order-3 items-center justify-start lg:justify-end flex flex-col lg:flex-1 gap-4',
     }"
   >
     <template #left>
@@ -52,7 +52,7 @@ const socialLinks = computed(
 
     <div
       v-if="NAVIGATION.footerLinks?.length"
-      class="grid grid-cols-2 gap-8 lg:gap-12"
+      class="grid grid-cols-2 mx-auto gap-8 lg:gap-12 w-full"
     >
       <div
         v-for="group in NAVIGATION.footerLinks"
@@ -78,20 +78,25 @@ const socialLinks = computed(
     </div>
 
     <template #right>
-      <span class="text-sm font-semibold text-gray-900 dark:text-white">Follow Us</span>
-      <span class="w-auto lg:justify-end space-x-2">
-        <UButton
-          v-for="social in socialLinks"
-          :key="social.label"
-          :icon="social.icon"
-          color="secondary"
-          variant="ghost"
-          size="sm"
-          :to="social.to"
-          :target="social.target"
-          :aria-label="social.label"
-        />
-      </span>
+      <div class="flex flex-col gap-4">
+        <span class="text-sm font-semibold text-gray-900 dark:text-white"
+          >Follow Us</span
+        >
+        <span class="w-auto lg:justify-end gap-3 flex">
+          <UButton
+            v-for="social in socialLinks"
+            :key="social.label"
+            :icon="social.icon"
+            color="secondary"
+            variant="soft"
+            size="md"
+            class="rounded-full p-2"
+            :to="social.to"
+            :target="social.target"
+            :aria-label="social.label"
+          />
+        </span>
+      </div>
     </template>
 
     <template #bottom>
