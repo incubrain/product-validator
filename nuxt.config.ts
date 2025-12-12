@@ -14,6 +14,7 @@ export default defineNuxtConfig({
     '@nuxtjs/seo',
     '@nuxt/ui',
     '@nuxt/content', // <-- Must be after @nuxtjs/seo & @nuxt/ui
+    'nuxt-llms', // <-- Add AFTER @nuxt/content
     '@nuxt/fonts',
     '@nuxt/image',
     '@vueuse/nuxt',
@@ -30,6 +31,62 @@ export default defineNuxtConfig({
 
   seo: {
     redirectToCanonicalSiteUrl: true,
+  },
+
+  llms: {
+    domain: 'https://founder-funnel.incubrain.org',
+    title: 'Founder Funnel',
+    description: 'Open-source landing page template for technical founders validating product ideas',
+    
+    sections: [
+      // High Priority: Revenue Pages (Offers)
+      {
+        title: 'Product Offers',
+        description: 'Ways to work with us - mentorship, templates, and opportunities',
+        contentCollection: 'pages',
+        contentFilters: [
+          { field: 'path', operator: 'LIKE', value: '/offers/%' },
+          { field: 'path', operator: 'NOT LIKE', value: '%-success' }, // Exclude success pages
+        ],
+      },
+      
+      // Medium Priority: About/Story
+      {
+        title: 'About',
+        description: 'Founder story and mission',
+        contentCollection: 'pages',
+        contentFilters: [
+          { field: 'path', operator: '=', value: '/founder' },
+        ],
+      },
+      
+      // Medium Priority: Updates/Changelog
+      {
+        title: 'Updates',
+        description: 'Product updates and strategic decisions',
+        contentCollection: 'pages',
+        contentFilters: [
+          { field: 'path', operator: 'LIKE', value: '/updates/%' },
+          { field: 'version', operator: 'IS NOT NULL' }, // Only versioned updates
+        ],
+      },
+      
+      // Low Priority: Home Page
+      {
+        title: 'Overview',
+        description: 'Product overview and value proposition',
+        contentCollection: 'pages',
+        contentFilters: [
+          { field: 'path', operator: '=', value: '/' },
+        ],
+      },
+    ],
+    
+    notes: [
+      'This is an open-source project (MIT License)',
+      'Template designed for technical founders validating ideas',
+      'Built with Nuxt 4, Tailwind v4, TypeScript',
+    ],
   },
 
   // {DX}: studio breaks HMR alpha.2
