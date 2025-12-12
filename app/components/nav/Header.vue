@@ -12,19 +12,6 @@ const props = withDefaults(
   },
 );
 
-const { getSiteConfig } = useContentCache();
-const { data: configData } = await getSiteConfig();
-
-// Map links to proper format for UButton
-const socialLinks = computed(
-  () =>
-    configData.value?.socials?.map((link) => ({
-      label: link.label,
-      icon: `i-lucide-${link.platform}`,
-      url: link.url,
-    })) || [],
-);
-
 const headerClasses = computed(() => ({
   [`sticky z-40 bg-muted/80 backdrop-blur-md border-b border-default ${props.class}`]:
     props.sticky,
@@ -48,16 +35,13 @@ const headerClasses = computed(() => ({
 
     <template #right>
       <div class="hidden md:flex items-center gap-1">
-        <UButton
-          v-for="social in socialLinks"
-          :key="social.label"
-          :icon="social.icon"
-          color="neutral"
-          variant="ghost"
+        <ConvertSocial
+          location="header"
           size="sm"
-          :to="social.url"
-          target="_blank"
-          :aria-label="social.label"
+          variant="ghost"
+          color="neutral"
+          :rounded="false"
+          gap="tight"
         />
       </div>
     </template>

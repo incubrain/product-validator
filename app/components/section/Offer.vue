@@ -85,7 +85,7 @@ const transformedFeatures = computed(() => {
         </p>
 
         <UButton
-          to="/founder"
+          to="/founder?tab=story"
           label="Read My Story"
           color="neutral"
           variant="link"
@@ -131,19 +131,22 @@ const transformedFeatures = computed(() => {
 
           <template #button>
             <div class="pt-4 w-full">
-              <ConvertEmail location="product-section" cta-type="conversion" />
+              <ConvertEmail location="product-section" />
             </div>
           </template>
         </UPricingPlan>
 
         <div class="mt-4 flex flex-col gap-4 justify-center items-center">
           <UBadge variant="soft">OR</UBadge>
-          <ConvertButton
-            cta-type="secondary"
+          <ConvertFunnel
+            to="/offers/mentorship"
+            label="Book a Call Instead"
+            icon="i-lucide-calendar"
             location="product-section-alt"
             size="xl"
             block
-            variant="outline"
+            variant="button"
+            button-variant="outline"
             color="secondary"
           />
         </div>

@@ -10,6 +10,9 @@ defineProps<Props>();
 
 const isOpen = defineModel<boolean>('open', { default: false });
 
+const { getFounder } = useContentCache();
+const { data: founder } = await getFounder();
+
 const closeMenu = () => {
   isOpen.value = false;
 };
@@ -44,8 +47,18 @@ const closeMenu = () => {
       </template>
     </nav>
 
-    <div class="space-y-4 text-center border-t pt-4">
-      <CardFounder variant="mobile" />
+    <!-- Social Links Only -->
+    <div class="border-t border-default pt-4 pb-2">
+      <div class="flex justify-center">
+        <ConvertSocial
+          location="mobile-menu"
+          size="lg"
+          variant="ghost"
+          color="neutral"
+          :rounded="false"
+          gap="normal"
+        />
+      </div>
     </div>
   </div>
 </template>

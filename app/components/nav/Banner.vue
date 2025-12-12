@@ -1,38 +1,70 @@
 <!-- components/nav/Banner.vue -->
 <script setup lang="ts">
-import NAVIGATION from '#shared/config/navigation';
-
 const props = withDefaults(
   defineProps<{
     sticky?: boolean;
+    title?: string;
+    offerSlug?: string;
+    to?: string;
+    label?: string;
+    icon?: string;
   }>(),
   {
     sticky: true,
+    title: 'Limited spots available',
+    offerSlug: 'mentorship',
   },
 );
 
-const cta = NAVIGATION.ctas.banner;
+// 🎯 Use composable
+const { getOffer } = useContentCache();
+const { data: offer } = props.offerSlug
+  ? await getOffer(props.offerSlug)
+  : { data: ref(null) };
+
+const cta = computed(() => ({
+  to: props.to || (props.offerSlug ? `/offers/${props.offerSlug}` : '#'),
+  label:
+    props.label || offer.value?.ctaLabel || offer.value?.title || 'Learn More',
+  icon: props.icon || offer.value?.icon || 'i-lucide-arrow-right',
+}));
 
 const bannerClasses = computed(() => ({
   'fixed top-0 z-50': props.sticky,
   'relative': !props.sticky,
 }));
+
+const { trackEvent } = useEvents();
+
+const handleClick = () => {
+  trackEvent({
+    id: 'banner_click',
+    type: 'cta_click',
+    location: 'banner',
+    action: 'click',
+    target: cta.value.to,
+    data: {
+      offerSlug: props.offerSlug,
+      ctaLabel: cta.value.label,
+    },
+  });
+};
 </script>
 
 <template>
   <UBanner
-    v-if="cta"
-    :title="cta.label"
+    :title="title"
     :class="[bannerClasses, $attrs.class]"
     :actions="[
       {
         to: cta.to,
-        target: cta.to?.startsWith('http') ? '_blank' : undefined,
+        target: cta.to.startsWith('http') ? '_blank' : undefined,
         label: cta.label,
         trailingIcon: cta.icon,
         color: 'secondary',
         size: 'sm',
         variant: 'ghost',
+        onClick: handleClick,
       },
     ]"
     close

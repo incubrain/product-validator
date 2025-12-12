@@ -13,15 +13,6 @@ const copyrightYear = computed(() =>
     : `${configData.value?.business.founding_year} - ${currentYear}`,
 );
 
-const socialLinks = computed(
-  () =>
-    configData.value?.socials?.map((link) => ({
-      label: link.label,
-      icon: `i-lucide-${link.platform}`,
-      to: link.url,
-      target: link.url.startsWith('https') ? '_blank' : '_self',
-    })) || [],
-);
 </script>
 
 <template>
@@ -79,23 +70,14 @@ const socialLinks = computed(
 
     <template #right>
       <div class="flex flex-col gap-4">
-        <span class="text-sm font-semibold text-gray-900 dark:text-white"
-          >Follow Us</span
-        >
-        <span class="w-auto lg:justify-end gap-3 flex">
-          <UButton
-            v-for="social in socialLinks"
-            :key="social.label"
-            :icon="social.icon"
-            color="secondary"
-            variant="soft"
-            size="md"
-            class="rounded-full p-2"
-            :to="social.to"
-            :target="social.target"
-            :aria-label="social.label"
-          />
-        </span>
+        <span class="text-sm font-semibold">Follow Us</span>
+        <ConvertSocial
+          location="footer"
+          size="md"
+          variant="soft"
+          color="secondary"
+          gap="normal"
+        />
       </div>
     </template>
 
@@ -120,12 +102,12 @@ const socialLinks = computed(
             color="neutral"
             aria-label="View Analytics Dashboard"
           />
-          <ConvertButton
-            cta-type="footer"
+          <ConvertFunnel
+            to="/offers/mentorship"
+            label="Hire Me"
+            icon="i-lucide-calendar"
             location="footer"
             color="secondary"
-            variant="solid"
-            class="font-black"
             size="sm"
           />
         </div>

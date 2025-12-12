@@ -8,26 +8,13 @@ export type SectionAnchor =
   | '#results'
   | '#faq';
 
-export interface CtaConfig {
-  label: string;
-  to: string;
-  icon: string;
-  note?: string;
-}
-
 export interface NavigationConfig {
   layout: {
-    banner: { sticky: boolean };
+    banner: { sticky: boolean; offer: string };
     navbar: { sticky: boolean };
+    footer: { offer: string };
   };
   main: NavigationMenuItem[];
-  ctas: {
-    hero: CtaConfig;
-    banner: CtaConfig;
-    footer: CtaConfig;
-    conversion: CtaConfig;
-    secondary?: CtaConfig;
-  };
   footerLinks: {
     label: string;
     children: {
@@ -37,30 +24,11 @@ export interface NavigationConfig {
   }[];
 }
 
-// Define unique offers (Canonical sources)
-export const OFFERS = {
-  template: {
-    label: 'Get Template Guide',
-    to: '/offers/template-guide',
-    icon: 'i-lucide-download',
-    note: 'No email required',
-  },
-  mentorship: {
-    label: '1-on-1 Mentorship',
-    to: '/offers/mentorship',
-    icon: 'i-lucide-user-plus',
-  },
-  github: {
-    label: 'One Click Deploy',
-    to: 'https://github.com/incubrain/founder-funnel',
-    icon: 'i-lucide-rocket',
-  },
-} as const;
-
 export const NAVIGATION: NavigationConfig = {
   layout: {
-    banner: { sticky: true },
+    banner: { sticky: true, offer: 'mentorship' },
     navbar: { sticky: false },
+    footer: { offer: 'join-us' },
   },
   main: [
     {
@@ -86,22 +54,6 @@ export const NAVIGATION: NavigationConfig = {
       ],
     },
   ],
-  ctas: {
-    hero: OFFERS.template,
-    banner: OFFERS.mentorship,
-    footer: {
-      ...OFFERS.mentorship,
-      label: 'Hire Me',
-      icon: 'i-lucide-calendar',
-    },
-    conversion: {
-      ...OFFERS.template,
-      label: 'Get Instant Access',
-      icon: 'i-lucide-play',
-      note: 'Start building today',
-    },
-    secondary: OFFERS.github,
-  },
 } as const;
 
 export default NAVIGATION;

@@ -78,7 +78,7 @@ const defaultLinks = computed(() => {
       <template v-if="cta?.primary" #footer>
         <div class="max-w-2xl mx-auto pt-4">
           <ConvertEmail
-            location="bridge-cta"
+            location="section-cta"
             cta-type="conversion"
             layout="horizontal"
           />

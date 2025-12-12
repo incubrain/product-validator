@@ -83,14 +83,12 @@ const hero = computed(() => props.data);
         <div
           class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-4"
         >
-          <ConvertButton
-            cta-type="hero"
+          <ConvertFunnel
+            offer-slug="template-guide"
             location="hero"
             size="xl"
-            class="min-w-[160px] text-lg h-12 px-8 rounded-full font-black text-toned"
-          >
-            {{ hero.cta.primary }}
-          </ConvertButton>
+            class="font-black text-toned"
+          />
 
           <UButton
             to="#demo"

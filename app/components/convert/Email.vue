@@ -1,53 +1,19 @@
-```
 <!-- app/components/convert/Email.vue -->
 <script setup lang="ts">
 import { z } from 'zod';
-import NAVIGATION from '#shared/config/navigation';
 
 interface Props {
   location: string;
-  ctaType?: 'hero' | 'conversion';
+  label?: string;
+  note?: string;
   layout?: 'stacked' | 'horizontal';
   successRedirect?: string;
 }
 
 const props = withDefaults(defineProps<Props>(), {
+  label: 'Get Access',
   layout: 'stacked',
-  ctaType: 'conversion',
   successRedirect: '/offers/template-guide-success',
-});
-
-// ✅ Get CTA config from product
-const cta = computed(() => NAVIGATION.ctas[props.ctaType]);
-
-// Messaging type
-type MessagingType = {
-  cta: {
-    label: string;
-    icon: string;
-  };
-  success?: {
-    title: string;
-    message: string;
-  };
-  note?: string;
-};
-
-// Get messaging
-const messaging = computed<MessagingType | null>(() => {
-  if (!cta.value) return null;
-
-  return {
-    cta: {
-      label: cta.value.label,
-      icon: cta.value.icon || 'i-lucide-mail',
-    },
-    note: cta.value.note,
-    success: {
-      title: "You're in!",
-      message: 'Check your email to get started.',
-    },
-  };
 });
 
 // Schema
@@ -113,7 +79,6 @@ const handleSubmit = async () => {
         },
         metadata: {
           location: props.location,
-          ctaType: props.ctaType,
           userAgent: navigator.userAgent,
           timestamp: Date.now(),
         },
@@ -130,8 +95,8 @@ const handleSubmit = async () => {
         description: 'Please check your email address and try again.',
         color: 'error',
       });
-      isSubmitting.value = false; // Ensure submission state is reset
-      return; // Stop further processing for validation errors
+      isSubmitting.value = false;
+      return;
     }
 
     const errorMsg =
@@ -171,7 +136,7 @@ const formClasses = computed(() =>
 </script>
 
 <template>
-  <div v-if="messaging" class="w-full">
+  <div class="w-full">
     <!-- Universal form -->
     <UForm ref="formRef" :state="state" :schema="schema" @submit="handleSubmit">
       <!-- Honeypot field (invisible to humans, bots will fill it) -->
@@ -213,14 +178,14 @@ const formClasses = computed(() =>
           color="primary"
           class="cursor-pointer disabled:cursor-not-allowed text-toned font-black"
         >
-          {{ messaging.cta.label }}
+          {{ label }}
         </UButton>
       </div>
     </UForm>
 
     <!-- Optional note -->
-    <p v-if="messaging.note" class="text-xs text-muted text-center mt-3">
-      {{ messaging.note }}
+    <p v-if="note" class="text-xs text-muted text-center mt-3">
+      {{ note }}
     </p>
   </div>
 </template>

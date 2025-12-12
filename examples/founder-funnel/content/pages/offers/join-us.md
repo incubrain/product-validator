@@ -1,16 +1,34 @@
 ---
 title: Join the Core Team
-description: We're looking for A-players to help us build the future of founder success.
+description: We're looking for A-players in Pune, India
+schemaOrg:
+  - "@type": JobPosting
+    title: Full Stack Developer
+    jobLocation:
+      "@type": Place
+      address:
+        "@type": PostalAddress
+        addressLocality: Pune
+        addressCountry: IN
 ---
 
 ## Why join us?
 
-We aren't just building software; we're building a movement. We believe that every founder deserves a fair shot at success.
+We aren't just building software; we're building a movement.
 
-### Who we are looking for
+## Who we are looking for
 
 - **Builders**: You love to create.
 - **Learners**: You are constantly growing.
 - **Owners**: You take responsibility.
 
-If you are ready to do the best work of your life, we want to hear from you.
+**Location Requirement:** Must be based in Pune, India for in-person collaboration.
+
+::convert-apply
+---
+email: mac@incubrain.org
+label: Apply Now (Pune Only)
+location: join-us-page
+block: true
+---
+::

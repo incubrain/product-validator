@@ -1,4 +1,4 @@
-<!-- offers/[slug].vue -->
+<!-- app/pages/offers/[slug].vue -->
 <script setup lang="ts">
 const route = useRoute();
 const slug = route.params.slug as string;
@@ -7,26 +7,45 @@ const { getSiteConfig } = useContentCache();
 const { data: configData } = await getSiteConfig();
 const business = computed(() => configData.value?.business);
 
-// Fetch product page from pages collection (MDC)
-const { data: product } = await useAsyncData(`product-page-${slug}`, () =>
+// Fetch offer page
+const { data: offer } = await useAsyncData(`offer-page-${slug}`, () =>
   queryCollection('pages').path(`/offers/${slug}`).first(),
 );
 
-if (!product.value) {
+if (!offer.value) {
   throw createError({
     statusCode: 404,
-    statusMessage: `Product "${slug}" not found`,
+    statusMessage: `Offer "${slug}" not found`,
     fatal: true,
   });
 }
+
+// ✅ CRITICAL: Trigger Schema.org rendering
+useHead(offer.value.head || {});
+
+// ✅ Static SEO meta (server-only for performance)
+if (import.meta.server) {
+  useSeoMeta({
+    description: offer.value.description,
+    ogDescription: offer.value.description,
+    ogImage: offer.value.image,
+    twitterCard: 'summary_large_image',
+  });
+}
+
+// ✅ Reactive title (client + server)
+useSeoMeta({
+  title: () => offer.value.title,
+  ogTitle: () => offer.value.title,
+});
 
 definePageMeta({ layout: false });
 
 defineOgImage({
   component: 'Frame',
   props: {
-    title: product.value.title,
-    description: product.value.description,
+    title: offer.value.title,
+    description: offer.value.description,
     image: business.value?.logo,
   },
 });
@@ -34,9 +53,9 @@ defineOgImage({
 const { trackEvent } = useEvents();
 onMounted(() => {
   trackEvent({
-    id: `product_${slug}_view`,
+    id: `offer_${slug}_view`,
     type: 'element_viewed',
-    location: `product-page-${slug}`,
+    location: `offer-page-${slug}`,
     action: 'page_view',
     target: `/offers/${slug}`,
     data: {
@@ -73,30 +92,19 @@ onMounted(() => {
           <h1
             class="text-4xl sm:text-5xl lg:text-6xl font-bold tracking-tight text-white leading-[1.1]"
           >
-            {{ product.title }}
+            {{ offer.title }}
           </h1>
 
           <p
             class="text-lg sm:text-xl text-muted/80 leading-relaxed max-w-2xl mx-auto"
           >
-            {{ product.description }}
+            {{ offer.description }}
           </p>
         </div>
 
+        <!-- ✅ MDC Content (includes embedded CTAs via ::convert-email) -->
         <div class="mb-12 lg:mb-16 prose prose-invert max-w-none">
-          <ContentRenderer :value="product" />
-        </div>
-
-        <div class="max-w-md mx-auto">
-          <div
-            class="bg-white/2 border border-white/10 rounded-2xl p-6 lg:p-8 backdrop-blur-sm space-y-6"
-          >
-            <ConvertEmail
-              cta-type="conversion"
-              :location="`sales-page-${slug}`"
-              :success-redirect="`/offers/${slug}-success`"
-            />
-          </div>
+          <ContentRenderer :value="offer" />
         </div>
       </div>
     </UContainer>

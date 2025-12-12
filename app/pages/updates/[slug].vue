@@ -26,7 +26,7 @@ useHead({
   meta: [
     {
       name: 'description',
-      content: update.value.summary,
+      content: update.value.description,
     },
   ],
 });
@@ -72,12 +72,11 @@ useHead({
                 label="Back"
                 class="justify-start"
               />
-              <ConvertButton
-                cta-type="banner"
-                location="sticky-cta-desktop"
+              <ConvertFunnel
+                offer-slug="mentorship"
+                location="update-sidebar"
                 size="sm"
                 color="secondary"
-                variant="solid"
               />
             </div>
           </div>
@@ -121,7 +120,7 @@ useHead({
             {{ update.title }}
           </h1>
           <p class="text-xl text-muted leading-relaxed mb-8">
-            {{ update.summary }}
+            {{ update.description }}
           </p>
 
           <article class="prose max-w-none">

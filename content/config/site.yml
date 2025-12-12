@@ -2,17 +2,28 @@ business:
   name: '⚠️ Product name'
   legal_name: '⚠️ Legal entity name'
   founding_year: 2025
-  location: '⚠️ City, Country'
   logo: /favicon-96x96.png
   mission: Your primary overarching mission.
 
-socials:
-  - platform: youtube
-    label: YouTube
-    url: https://youtube.com/@yourchannel
-  - platform: github
-    label: GitHub
-    url: https://github.com/yourusername
-  - platform: x
-    label: X
-    url: https://x.com/yourusername
+founder:
+  slug: your-name
+  given_name: '⚠️ Your given name'
+  surname: '⚠️ Your surname'
+  email: your-email@domain.com
+  role: '⚠️ Your role or title'
+  avatar:
+    src: /images/team/founder-avatar.jpeg
+    alt: '⚠️ Replace image of my dog with your own'
+  bio:
+    'My mission for the Founder Funnel is to help 100 struggling founders achieve
+    financial freedom.'
+  links:
+    - label: 'X'
+      url: 'https://x.com/DrewMacGibbon'
+      icon: 'i-simple-icons-x'
+    - label: 'YouTube'
+      url: 'https://www.youtube.com/@DrewMacGibbon'
+      icon: 'i-simple-icons-youtube'
+    - label: 'GitHub'
+      url: 'https://github.com/Drew-Macgibbon'
+      icon: 'i-simple-icons-github'

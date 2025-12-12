@@ -13,7 +13,7 @@ const appConfig = getActiveConfigSource();
 
 export default defineContentConfig({
   collections: {
-    pages: defineCollection({
+    pages: defineCollection(asSeoCollection({
       type: 'page',
       source: {
         cwd: appConfig.contentDir,
@@ -21,13 +21,15 @@ export default defineContentConfig({
         prefix: '/'
       },
       schema: z.object({
+        title: z.string(),
+        description: z.string().optional(),
+        image: z.string().optional(),
         // Optional fields for updates
         version: z.string().optional(),
         date: z.string().optional(),
-        summary: z.string().optional(),
 
       }),
-    }),
+    })),
 
     config: defineCollection({
       type: 'data',
@@ -40,40 +42,25 @@ export default defineContentConfig({
           name: z.string(),
           legal_name: z.string(),
           founding_year: z.number(),
-          location: z.string(),
           logo: z.string(),
           mission: z.string(),
-        }).optional(),
-        socials: z.array(z.object({
-          platform: z.string(),
-          label: z.string(),
-          url: z.string(),
-        })).optional(),
-      }),
-    }),
-
-    team: defineCollection({
-      type: 'data',
-      source: {
-        cwd: appConfig.contentDir,
-        include: 'team/*.yml',
-      },
-      schema: z.object({
-        slug: z.string(),
-        given_name: z.string(),
-        surname: z.string(),
-        email: z.string().optional(),
-        role: z.string(),
-        avatar: z.object({
-          src: z.string(),
-          alt: z.string(),
-        }).optional(),
-        bio: z.string(),
-        links: z.array(z.object({
-          label: z.string(),
-          url: z.string(),
-          icon: z.string(),
-        })).optional(),
+        }),
+        founder: z.object({
+          given_name: z.string(),
+          surname: z.string(),
+          email: z.string().email(),
+          role: z.string(),
+          avatar: z.object({
+            src: z.string(),
+            alt: z.string(),
+          }),
+          bio: z.string(),
+          links: z.array(z.object({
+            label: z.string(),
+            url: z.string(),
+            icon: z.string(),
+          })).optional(),
+        }),
       }),
     }),
 

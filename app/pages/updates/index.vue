@@ -1,10 +1,8 @@
 <script setup lang="ts">
 import type { ButtonProps } from '@nuxt/ui';
 
-const { getSiteConfig, getFounder } = useContentCache();
-
+const { getFounder } = useContentCache();
 const { data: founderData } = await getFounder();
-const { data: configData } = await getSiteConfig();
 
 const { data: page } = await useAsyncData('updates-page', () =>
   queryCollection('pages').path('/updates').first(),
@@ -17,11 +15,6 @@ const { data: updates, pending } = useAsyncData('updates-list', () =>
     .order('date', 'DESC')
     .all(),
 );
-
-const socialLinks =
-  configData.value?.socials?.filter((link) =>
-    ['youtube', 'github', 'x'].includes(link.platform),
-  ) || [];
 
 useHead({
   title: page.value?.title || 'Updates',
@@ -38,27 +31,10 @@ const authors = [
   {
     name: `${founderData.value?.given_name} ${founderData.value?.surname}`,
     avatar: founderData.value?.avatar,
-    to: socialLinks?.find((link) => link.platform === 'github')?.url,
+    to: founderData.value?.links?.find((link) => link.label === 'GitHub')?.url,
     target: '_blank',
   },
 ];
-
-const heroLinks = computed(() =>
-  socialLinks.map((link) => ({
-    label: `Follow on ${link.label}`,
-    to: link.url,
-    icon: link.platform,
-    color:
-      link.platform === 'youtube'
-        ? 'primary'
-        : ('neutral' as ButtonProps['color']),
-    variant:
-      link.platform === 'youtube'
-        ? 'solid'
-        : ('ghost' as ButtonProps['variant']),
-    target: '_blank',
-  })),
-);
 
 const expandedUpdates = ref<Set<string>>(new Set());
 const isExpanded = (version: string) => expandedUpdates.value.has(version);
@@ -121,24 +97,16 @@ const scrollToTop = () => {
 
         <ValuesAccordion />
 
-        <div
-          v-if="heroLinks.length"
-          class="flex flex-col items-center gap-4 py-8"
-        >
+        <div class="flex flex-col items-center gap-4 py-8">
           <span class="text-sm font-medium text-muted">Follow Our Journey</span>
-          <div class="flex items-center gap-2">
-            <UButton
-              v-for="link in heroLinks"
-              :key="link.to"
-              :icon="link.icon"
-              :to="link.to"
-              :target="link.target"
-              color="neutral"
-              variant="ghost"
-              size="lg"
-              :aria-label="link.label"
-            />
-          </div>
+          <ConvertSocial
+            location="updates-hero"
+            size="lg"
+            variant="ghost"
+            color="neutral"
+            :rounded="false"
+            gap="normal"
+          />
         </div>
       </template>
     </UPageHero>
@@ -166,7 +134,7 @@ const scrollToTop = () => {
             v-for="update in updates"
             :key="update.version"
             :title="update.title"
-            :description="update.summary"
+            :description="update.description"
             :date="update.date"
             :authors="authors"
             :badge="undefined"
